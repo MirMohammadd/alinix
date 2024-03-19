@@ -6,6 +6,9 @@
 #include "types.h"
 #include "string.h"
 
+static BOOL g_caps_lock = FALSE;
+static BOOL g_shift_pressed = FALSE;
+char g_ch = 0, g_scan_code = 0;
 
 char g_scan_code_chars[128] = {
     0, 27, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', '\b',
@@ -64,4 +67,10 @@ char alternate_chars(char ch){
 
 
     }
+}
+
+void keyboard_handler(REGISTERS *r){
+    int scancode;
+
+    g_ch = 0;
 }

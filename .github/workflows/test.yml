@@ -36,7 +36,8 @@ jobs:
         run: |
           mkdir ~/temp
           cd ~/temp
-          ct-ng menuconfig
+          cp /path/to/existing/config .config  # Use an existing sample configuration file
+          ct-ng oldconfig  # Use existing config and adjust if necessary
       
       - name: Build cross-compiler
         run: |

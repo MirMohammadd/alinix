@@ -17,7 +17,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y wget make gcc git qemu-user-static help2man libtool-bin
+          sudo apt-get install -y wget make gcc git qemu-user-static help2man libtool
       
       - name: Download and install crosstool-ng
         run: |
@@ -30,15 +30,21 @@ jobs:
       
       - name: Install libtool
         run: |
-          sudo apt-get install -y libtool-bin
+          sudo apt-get install -y libtool
       
-      - name: Configure cross-compiler
+      - name: Create default configuration file
         run: |
           mkdir ~/temp
           cd ~/temp
-          ct-ng defconfig
-          ct-ng savedefconfig
-          sed -i 's/CT_ARCH_x86_64=y/CT_ARCH_x86=y/' .config
+          echo "CT_ARCH_x86=y" > .config
+          echo "CT_TARGET_x86_64_unknown_linux_gnu=y" >> .config
+          echo "CT_CC_GCC_LINARO=y" >> .config
+          echo "CT_CC_LANG_CXX=y" >> .config
+      
+      - name: Configure cross-compiler
+        run: |
+          cd ~/temp
+          ct-ng oldconfig
       
       - name: Build cross-compiler
         run: |

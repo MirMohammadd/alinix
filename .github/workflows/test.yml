@@ -36,10 +36,7 @@ jobs:
         run: |
           mkdir ~/temp
           cd ~/temp
-          ct-ng menuconfig
-          # Manually configure cross-compiler options
-          # Set target architecture to x86
-          # Exit and save configuration
+          ct-ng defconfig
       
       - name: Build cross-compiler
         run: |

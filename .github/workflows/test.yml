@@ -17,7 +17,7 @@ jobs:
       - name: Set up QEMU
         uses: docker://multiarch/qemu-user-static:x86_64-i386
         with:
-          args: -s 128
+          args: -- -s 128
     
       - name: Install dependencies
         run: |

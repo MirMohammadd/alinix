@@ -36,18 +36,11 @@ jobs:
         run: |
           mkdir ~/temp
           cd ~/temp
-          echo "CT_ARCH_x86=y" > .config
-          echo "CT_TARGET_x86_64_unknown_linux_gnu=y" >> .config
-          echo "CT_CC_GCC_LINARO=y" >> .config
-          echo "CT_CC_LANG_CXX=y" >> .config
-      
-      - name: Configure cross-compiler
-        run: |
-          cd ~/temp
-          ct-ng oldconfig
+          ct-ng menuconfig
       
       - name: Build cross-compiler
         run: |
+          cd ~/temp
           ct-ng build
       
       - name: Clone Fudge OS repository

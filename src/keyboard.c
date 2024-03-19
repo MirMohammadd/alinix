@@ -73,4 +73,30 @@ void keyboard_handler(REGISTERS *r){
     int scancode;
 
     g_ch = 0;
+    scancode = get_scancode();
+
+    if (scancode & 0x80){
+        
+    }
+    else {
+        switch(scancode){
+            case SCAN_CODE_KEY_CAPS_LOCK: 
+                if (g_caps_lock == FALSE)
+                    g_caps_lock = TRUE;
+                else 
+                    g_caps_lock = FALSE;
+                break;
+            
+            case SCAN_CODE_KEY_ENTER:
+                g_ch = "\n";
+                break;
+            
+            case SCAN_CODE_KEY_TAB:
+                g_ch = "\t";
+                break;
+            
+            
+
+        }
+    }
 }

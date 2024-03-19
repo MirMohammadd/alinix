@@ -132,3 +132,29 @@ void keyboard_handler(REGISTERS *r){
         }
     }
 }
+
+void keyboard_init() {
+    isr_register_interrupt_handler(IRQ_BASE + 1, keyboard_handler);
+}
+
+
+// a blocking character read
+char kb_getchar() {
+    char c;
+
+    while(g_ch <= 0);
+    c = g_ch;
+    g_ch = 0;
+    return c;
+}
+
+char kb_get_scancode() {
+    char code;
+
+    while(g_scan_code <= 0);
+    code = g_scan_code;
+    g_ch = 0;
+    g_scan_code = 0;
+    return code;
+}
+

@@ -1,0 +1,12 @@
+To execute a program simply type the name of the program.
+
+hello                       | Hello World!
+ls                          | Print files in current working tree
+
+A program does not use arguments. It only uses streams.
+
+echo /data/help.txt         | Print content of help.txt to stdout
+cd /                        | Change to root directory
+cd /system/                 | Change to home directory (from anywhere)
+cd system/                  | Change to home directory (from root)
+

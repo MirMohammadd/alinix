@@ -1,0 +1,151 @@
+#!/bin/bash
+
+qemu_bin="qemu-system-x86_64"
+qemu_flags="-nodefaults -enable-kvm"
+qemu_flags_run="-smp 4 -kernel fudge -initrd fudge.cpio -vga std -serial stdio"
+qemu_flags_runiso="-smp 4 -cdrom fudge.iso -vga std -serial stdio"
+
+getdisk() {
+    if test -f "disks/node-$1-sda.qcow2"
+    then
+        echo "-drive file=disks/node-$1-sda.qcow2,format=qcow2,if=ide,index=0"
+    fi
+}
+
+getnetwork() {
+    echo "-device rtl8139,netdev=eth0,bus=pci.0,addr=0x4 -netdev tap,id=eth0,ifname=node-$1-eth0,script=no,downscript=no"
+}
+
+run() {
+    sttybak=$(stty -g)
+
+    echo "Running: $qemu_bin $qemu_flags $2"
+    echo "Use ctrl+] to kill node-$1"
+
+    stty intr ^]
+    $qemu_bin $qemu_flags $2
+    stty $sttybak
+}
+
+cmd_run() {
+    run $1 "$qemu_flags_run $(getnetwork $1) $(getdisk $1)"
+}
+
+cmd_runsimple() {
+    run $1 "$qemu_flags_run $(getdisk $1)"
+}
+
+cmd_runiso() {
+    run $1 "$qemu_flags_runiso $(getnetwork $1) $(getdisk $1)"
+}
+
+cmd_runisosimple() {
+    run $1 "$qemu_flags_runiso $(getdisk $1)"
+}
+
+cmd_nat() {
+    sysctl -w net.ipv4.conf.all.forwarding=1
+    iptables -t nat -A POSTROUTING -o $1 -j MASQUERADE
+}
+
+cmd_connect() {
+    networks="eth0"
+
+    for net in $networks
+    do
+        bridge="bridge-$net"
+        address="10.0.5.80/24"
+
+        if ! test -e /sys/class/net/$bridge
+        then
+            ip link add $bridge type bridge
+            ip link set $bridge up
+            ip addr add $address dev $bridge
+        fi
+
+        for interface in $(ls -1 /sys/class/net | grep node-.*-$net)
+        do
+            ip link set $interface master $bridge
+            ip link set $interface up
+        done
+    done
+}
+
+cmd_disconnect() {
+    networks="eth0"
+
+    for net in $networks
+    do
+        bridge="bridge-$net"
+        address="10.0.5.80/24"
+
+        for interface in $(ls -1 /sys/class/net | grep node-.*-$net)
+        do
+            ip link set $interface down
+            ip link set $interface nomaster
+        done
+
+        if test -e /sys/class/net/$bridge
+        then
+            ip addr del $address dev $bridge
+            ip link set $bridge down
+            ip link del $bridge type bridge
+        fi
+    done
+}
+
+cmd_mkdisk() {
+    mkdir -p disks
+    echo -n "Creating sda disk... "
+    qemu-img create -q -f qcow2 disks/node-$1-sda.qcow2 5G
+    echo "done"
+}
+
+cmd_nbd_connect() {
+    device="$1"
+    disk="disks/node-$2-sda.qcow2"
+
+    modprobe nbd
+    qemu-nbd --connect $device $disk
+}
+
+cmd_nbd_disconnect() {
+    device="$1"
+
+    modprobe nbd
+    qemu-nbd --disconnect $device
+}
+
+cmd_prepdisk() {
+    device="/dev/nbd0"
+    part="/dev/nbd0p1"
+
+    cmd_nbd_connect $device $1
+    echo -e "o\nn\n\n\n\n\nw\n" | fdisk $device
+    mkfs.ext2 $part
+    cmd_nbd_disconnect $device
+}
+
+cmd_help() {
+    echo "Commands:"
+    echo "    run <id>"
+    echo "    runiso <id>"
+    echo "    runsimple <id>"
+    echo "    runisosimple <id>"
+    echo "    nat <iface>"
+    echo "    connect"
+    echo "    disconnect"
+    echo "    mkdisk <id>"
+    echo "    nbd_connect <dev> <id>"
+    echo "    nbd_disconnect <dev>"
+    echo "    prepdisk <id>"
+}
+
+case "$1" in
+run|runiso|runsimple|runisosimple|nat|connect|disconnect|mkdisk|nbd_connect|nbd_disconnect|prepdisk)
+    "cmd_$@"
+    ;;
+*)
+    "cmd_help"
+    ;;
+esac

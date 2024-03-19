@@ -1,4 +1,4 @@
-name: BadBlueKernel
+name: BadBlueKernel-Build
 
 on:
   push:
@@ -19,12 +19,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y wget make gcc git qemu-user-static
       
-      - name: Add universe repository and install crosstool-ng
-        run: |
-          sudo add-apt-repository universe
-          sudo apt-get update
-          sudo apt-get install -y crosstool-ng
-      
       - name: Download and install crosstool-ng
         run: |
           wget http://crosstool-ng.org/download/crosstool-ng/crosstool-ng-1.26.0.tar.bz2
@@ -40,7 +34,8 @@ jobs:
           cd ~/temp
           ct-ng menuconfig
           # Manually configure cross-compiler options
-          # Press 'exit' and save configuration
+          # Set target architecture to x86
+          # Exit and save configuration
       
       - name: Build cross-compiler
         run: |
@@ -55,6 +50,6 @@ jobs:
         run: |
           export PATH=/home/$(whoami)/x-tools/i386-unknown-elf/bin:$PATH
       
-      - name: Build Fudge OS
+      - name: Build BadBlueKernel
         run: |
           make

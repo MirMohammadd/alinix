@@ -19,6 +19,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y wget make gcc git qemu-user-static help2man libtool
       
+      - name: Install help2man
+        run: |
+          sudo apt-get install -y help2man
+      
       - name: Download and install crosstool-ng
         run: |
           wget http://crosstool-ng.org/download/crosstool-ng/crosstool-ng-1.26.0.tar.bz2

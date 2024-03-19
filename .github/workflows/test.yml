@@ -17,7 +17,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y wget make gcc git qemu-user-static help2man
+          sudo apt-get install -y wget make gcc git qemu-user-static help2man libtool
       
       - name: Download and install crosstool-ng
         run: |

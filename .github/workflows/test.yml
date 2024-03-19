@@ -1,22 +1,59 @@
-name: Make
+name: BadBlueKernel
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
-  build:
+  build_and_test:
+    name: Build and Test Fudge OS
     runs-on: ubuntu-latest
-
+    
     steps:
-    - uses: actions/checkout@v3
-
-    - name: Install apt dependencies
-      run: |
-        sudo apt update
-        sudo apt install -y make nasm grub2-common mtools
-
-    - name: Build
-      run: make
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Set up QEMU
+        uses: docker://multiarch/qemu-user-static:x86_64-i386
+        with:
+          args: -s 128
+    
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget make gcc git
+      
+      - name: Download and install crosstool-ng
+        run: |
+          wget http://crosstool-ng.org/download/crosstool-ng/crosstool-ng-1.26.0.tar.bz2
+          tar xjf crosstool-ng-1.26.0.tar.bz2
+          cd crosstool-ng-1.26.0
+          ./configure
+          make
+          sudo make install
+      
+      - name: Configure cross-compiler
+        run: |
+          mkdir ~/temp
+          cd ~/temp
+          ct-ng menuconfig
+          # Manually configure cross-compiler options
+          # Press 'exit' and save configuration
+      
+      - name: Build cross-compiler
+        run: |
+          ct-ng build
+      
+      - name: Clone Fudge OS repository
+        run: |
+          git clone git://github.com/jezze/fudge.git
+          cd fudge
+      
+      - name: Set cross-compiler path
+        run: |
+          export PATH=/home/$(whoami)/x-tools/i386-unknown-elf/bin:$PATH
+      
+      - name: Build Fudge OS
+        run: |
+          make

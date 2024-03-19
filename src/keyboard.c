@@ -95,7 +95,39 @@ void keyboard_handler(REGISTERS *r){
                 g_ch = "\t";
                 break;
             
+            case SCAN_CODE_KEY_LEFT_SHIFT:
+                g_shift_pressed = TRUE;
+                break;
             
+            case SCAN_CODE_KEY_UP:
+                console_scroll(SCROLL_UP);
+                break;
+            
+            case SCAN_CODE_KEY_DOWN:
+                console_scroll(SCROLL_DOWN);
+                break;
+            default:
+                g_ch = g_scan_code_chars[scancode];
+                // if caps in on, covert to upper
+                if (g_caps_lock) {
+                    // if shift is pressed before
+                    if (g_shift_pressed) {
+                        // replace alternate chars
+                        g_ch = alternate_chars(g_ch);
+                    } else
+                        g_ch = upper(g_ch);
+                } else {
+                    if (g_shift_pressed) {
+                        if (isalpha(g_ch))
+                            g_ch = upper(g_ch);
+                        else 
+                            // replace alternate chars
+                        g_ch = alternate_chars(g_ch);
+                    } else
+                        g_ch = g_scan_code_chars[scancode];
+                    g_shift_pressed = FALSE;
+                }
+                break;
 
         }
     }

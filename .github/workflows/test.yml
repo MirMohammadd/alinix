@@ -17,7 +17,13 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y wget make gcc git qemu-user-static crosstool-ng
+          sudo apt-get install -y wget make gcc git qemu-user-static
+      
+      - name: Add universe repository and install crosstool-ng
+        run: |
+          sudo add-apt-repository universe
+          sudo apt-get update
+          sudo apt-get install -y crosstool-ng
       
       - name: Download and install crosstool-ng
         run: |

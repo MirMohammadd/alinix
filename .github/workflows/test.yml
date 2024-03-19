@@ -19,9 +19,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y wget make gcc git qemu-user-static help2man libtool
       
-      - name: Install help2man
+      - name: Install help2man and libtool
         run: |
-          sudo apt-get install -y help2man
+          sudo apt-get install -y help2man libtool
       
       - name: Download and install crosstool-ng
         run: |

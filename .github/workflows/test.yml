@@ -1,0 +1,22 @@
+name: Make
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install apt dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y make nasm grub2-common mtools
+
+    - name: Build
+      run: make

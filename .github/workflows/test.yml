@@ -32,11 +32,14 @@ jobs:
         run: |
           sudo apt-get install -y libtool
       
-      - name: Create default configuration file
+      - name: Configure cross-compiler
         run: |
           mkdir ~/temp
           cd ~/temp
-          ct-ng defconfig
+          ct-ng menuconfig
+          # Manually configure cross-compiler options
+          # Set target architecture to x86
+          # Exit and save configuration
       
       - name: Build cross-compiler
         run: |

@@ -20,20 +20,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential git wget bzip2 xz-utils unzip help2man libtool-bin nasm
-
-      - name: Download crosstool-ng Source Code
-        run: wget http://crosstool-ng.org/download/crosstool-ng/crosstool-ng-1.26.0.tar.bz2
-
-      - name: Extract crosstool-ng Source Code
-        run: tar xjf crosstool-ng-1.26.0.tar.bz2
-
-      - name: Configure and Install crosstool-ng
-        run: |
-          cd crosstool-ng-1.26.0
-          ./configure
-          make
-          sudo make install
-
       - name: Compile2Iso
         run: |
           make

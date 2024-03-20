@@ -2,12 +2,12 @@
 #include <multiboot.h>
 #include <kernel.h>
 #include <stddef.h>
-#include <video.h>
+#include <io/video.h>
 #include <pic8259.h>
 #include <8253.h>
 #include <gdt.h>
 #include <idt.h>
-#include <cpuid.h>
+#include <hardware/cpuid.h>
 #include <stdio.h>
 #include <string.h>
 #include <io.h>

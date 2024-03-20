@@ -16,29 +16,29 @@ else
 	SU = sudo bash -c
 endif
 
-CFLAGS = -nostdlib \
-         -nostdinc \
-         -g \
-         -fomit-frame-pointer \
-         -fno-builtin \
-         -fno-stack-protector \
-         -Wall \
-         -march=i686 \
-         -m32 \
-         -std=gnu99 \
-         -I./src/include \
-         -I./src/include/io \
-         -I./src/include/drivers \
-         -I./src/include/libc \
-         -I./src/include/hardware \
-         -I./src/include/system \
-         -I./src/include/shell \
-         -I./src/include/misc \
-         -I./src/include/fs \
-         -I./src/include/sys \
-         -DBOCHS_DEBUG \
-         -D$(MEMORY)
-
+CFLAGS = -nostdlib\
+	-nostdinc\
+	-g\
+	-fomit-frame-pointer\
+	-fno-builtin\
+	-fno-stack-protector\
+	-Wall\
+	-Werror\
+	-march=i686\
+	-m32\
+	-std=gnu99\
+	-I./src/include\
+	-I./src/include/io\
+	-I./src/include/drivers\
+	-I./src/include/libc\
+	-I./src/include/hardware\
+	-I./src/include/system\
+	-I./src/include/shell\
+	-I./src/include/misc\
+	-I./src/include/fs\
+	-I./src/include/sys\
+	-DBOCHS_DEBUG\
+	-D$(MEMORY)
 
 OBJ = $(GENDIR)/kernel.o\
 	$(GENDIR)/io/video.o\
@@ -175,3 +175,4 @@ it:
 
 en:
 	cp src/include/lng/en.h src/include/use.h
+

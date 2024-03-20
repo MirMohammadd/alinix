@@ -1,13 +1,13 @@
-#include <system/elf.h>
+#include <elf.h>
 #include <multiboot.h>
 #include <kernel.h>
 #include <stddef.h>
-#include <io/video.h>
+#include <video.h>
 #include <pic8259.h>
 #include <8253.h>
 #include <gdt.h>
 #include <idt.h>
-#include <hardware/cpuid.h>
+#include <cpuid.h>
 #include <stdio.h>
 #include <string.h>
 #include <io.h>

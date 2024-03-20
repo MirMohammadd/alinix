@@ -36,7 +36,7 @@ jobs:
         run: |
           mkdir ~/temp
           cd ~/temp
-          ct-ng defconfig
+          ct-ng menuconfig
       
       - name: Build cross-compiler
         run: |

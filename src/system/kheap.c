@@ -33,9 +33,7 @@ static void glue_chunk (header_t *chunk);
 uint32_t heap_max = HEAP_START;
 header_t *heap_first = 0;
 
-void kernel_init_heap ()
-{
-}
+void kernel_init_heap ();
 
 void *kmalloc (uint32_t l)
 {

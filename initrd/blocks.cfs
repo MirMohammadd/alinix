@@ -1,0 +1,4 @@
+{block 0}
+execute(macro) display_macro(cr)
+define(;) hex_compileshort(c3) compileword(,) hex_executeshort(c3) execute(,)
+{block 1}

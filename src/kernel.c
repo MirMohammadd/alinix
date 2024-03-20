@@ -31,6 +31,9 @@
 #include <debug.h>
 #endif
 
+int shell(void *);
+
+
 unsigned int *current_page_table;
 extern unsigned int end;
 multiboot_info_t *boot_informations;

@@ -34,16 +34,13 @@ jobs:
           make
           sudo make install
 
-      - name: Configure Cross-Compiler
-        run: |
-          mkdir ~/temp
-          cd ~/temp
-          ct-ng menuconfig
-          # Manually configure the target architecture to x86 and save the configuration
+      - name: Copy Pre-generated .config File
+        run: cp /path/to/your/pre-generated/config/.config crosstool-ng-1.26.0/.config
 
       - name: Build Cross-Compiler
         run: |
-          ct-ng build
+          cd crosstool-ng-1.26.0
+          make
 
       - name: Clone Fudge Repository
         run: git clone git://github.com/jezze/fudge.git

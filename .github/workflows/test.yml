@@ -34,25 +34,16 @@ jobs:
           make
           sudo make install
 
-      - name: Build Cross-Compiler
+      - name: Compile2Iso
         run: |
-          ct-ng build
+          make
 
-      - name: Clone Fudge Repository
-        run: git clone git://github.com/jezze/fudge.git
 
       - name: Set PATH for Cross-Compiler
         run: export PATH=/home/$(whoami)/x-tools/i386-unknown-elf/bin:$PATH
 
-      - name: Build Fudge
+      - name: Build BadBlueKernel
         run: |
-          cd fudge
           make
 
-      - name: Run Fudge in QEMU
-        run: |
-          ./vmctrl runsimple node1
 
-      - name: Test Fudge
-        run: |
-          # Add testing commands here

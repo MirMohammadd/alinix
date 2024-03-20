@@ -1,11 +1,16 @@
-#include <kernel/resource.h>
-#include <kernel/debug.h>
-#include <kernel/descriptor.h>
-#include <kernel/binary.h>
-#include <kernel/mailbox.h>
-#include <kernel/task.h>
-#include <kernel/core.h>
-#include <kernel/link.h>
-#include <kernel/service.h>
-#include <kernel/kernel.h>
-#include <kernel/abi.h>
+#ifndef _KERNEL_H
+#define _KERNEL_H
+
+#include <multiboot.h>
+#define asmlinkage __attribute__((regparm(0)))
+
+extern multiboot_info_t *boot_informations;
+extern char *module_start;
+extern unsigned int module_end;
+asmlinkage void _start(struct multiboot_info*);
+int main_loop(struct multiboot_info*);
+
+#define DREAMOS_VER "DreamOS ver 0.3 - trunk"
+#define SITEURL "www.dreamos.org"
+
+#endif

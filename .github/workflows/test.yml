@@ -19,7 +19,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential git wget bzip2 xz-utils unzip help2man libtool-bin
+          sudo apt-get install -y build-essential git wget bzip2 xz-utils unzip help2man libtool
 
       - name: Download crosstool-ng Source Code
         run: wget http://crosstool-ng.org/download/crosstool-ng/crosstool-ng-1.26.0.tar.bz2
@@ -36,7 +36,6 @@ jobs:
 
       - name: Build Cross-Compiler
         run: |
-          cd crosstool-ng-1.26.0
           ct-ng build
 
       - name: Clone Fudge Repository

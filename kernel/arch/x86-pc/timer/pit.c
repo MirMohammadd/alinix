@@ -21,6 +21,7 @@
 #define CHANNEL0  0x40	/* Raise an IRQ periodically */
 #define CHANNEL1  0x41	/* DRAM refresh */
 #define CHANNEL2  0x42	/* PC speaker */
+#define PIT_MODE_3_COUNTER 0x36 /*this macro will define mode 3 counter value*/
 #define CONTROL_REGISTER 0x43
 
 

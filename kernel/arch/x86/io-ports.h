@@ -58,5 +58,13 @@
 #define inl(port,val) \
     asm volatile("in %d0, %w1" : "=a"(val) : "Nd"(port))
 
+/**
+ * An instruction to outputs 32 bit value from a register to specified port.
+ * @param port
+ * @return value
+*/
+#define outl(port,val) \
+    asm volatile("in %d0, %w1" : "=a"(val) : "Nd"(port))
+
 	
 #endif // _IO_PORTS_H_ 

@@ -1,7 +1,7 @@
 ; @see http://wiki.osdev.org/Bare_Bones
 ; Slightly modified by me
 
-extern roentgenium_main	; this is our kernel's entry point
+extern HeisenKernel_main	; this is our kernel's entry point
 
 ; Setting up the Multiboot header - see GRUB docs for details
 MBALIGN		equ	1<<0		; align loaded modules on page boundaries
@@ -32,7 +32,7 @@ multiboot_entry:
 	mov [magic], ebx		; multiboot magic number
 	mov [multiboot_info], eax	; multiboot data structure
 
-	call roentgenium_main		; calling the kernel
+	call HeisenKernel_main		; calling the kernel
 
 hang:
 	hlt				; something bad happened, machine halted

@@ -34,8 +34,8 @@ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
 	colorforth/compiler.o                   \
 	arch/x86-pc/startup.o
 
-KERNEL          = $(BUILD_PATH)/roentgenium.elf
-MULTIBOOT_IMAGE	= $(BUILD_PATH)/roentgenium.iso
+KERNEL          = $(BUILD_PATH)/HeisenKernel.elf
+MULTIBOOT_IMAGE	= $(BUILD_PATH)/HeisenKernel.iso
 
 all: kernel initrd cdrom
 
@@ -76,5 +76,5 @@ clean:
 		rm -R $(BUILD_PATH); \
 	fi
 	$(RM) $(OBJECTS)
-	$(RM) $(BOOTLOADER_PATH)/iso/boot/roentgenium.elf
+	$(RM) $(BOOTLOADER_PATH)/iso/boot/HeisenKernel.elf
 	$(RM) $(INITRD_PATH)/initrd.img

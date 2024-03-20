@@ -25,7 +25,7 @@
 /**
  * The kernel entry point. All starts from here!
  */
-void roentgenium_main(uint32_t magic, uint32_t address)
+void HeisenKernel_main(uint32_t magic, uint32_t address)
 {
     uint16_t retval;
     multiboot_info_t *mbi;

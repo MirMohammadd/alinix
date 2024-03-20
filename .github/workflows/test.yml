@@ -1,35 +1,22 @@
-name: Fudge Build and Test
+name: HiesenKernel
 
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - main  # Adjust branch name as needed
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Specify the operating system you're using
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2  # This step checks out your repository
 
       - name: Install Dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential git wget bzip2 xz-utils unzip help2man libtool-bin nasm
-      - name: Compile2Iso
-        run: |
-          make
-
-
-      - name: Set PATH for Cross-Compiler
-        run: export PATH=/home/$(whoami)/x-tools/i386-unknown-elf/bin:$PATH
-
-      - name: Build BadBlueKernel
-        run: |
-          make
-
-
+          
+      - name: Run Make Command
+        run: make  # This step runs the make command

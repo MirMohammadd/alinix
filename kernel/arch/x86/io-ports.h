@@ -66,5 +66,13 @@
 #define outl(port,val) \
     asm volatile("in %d0, %w1" : "=a"(val) : "Nd"(port))
 
-	
+/**
+ * reads a word (16 bits) from the specified port and stores the result in a variable
+ * @param port
+ * @return value
+*/
+#define inw(port, val) \
+    asm volatile("in %w0, %w1" : "=a"(val) : "Nd"(port))
+
+
 #endif // _IO_PORTS_H_ 

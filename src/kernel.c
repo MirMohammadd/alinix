@@ -14,7 +14,7 @@
 #include <keyboard.h>
 #include <paging.h>
 #include <use.h>
-#include <shell.h>
+#include <shell/shell.h>
 #include <syscall.h>
 #include <kheap.h>
 #include <vfs.h>

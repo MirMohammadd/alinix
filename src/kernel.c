@@ -109,10 +109,10 @@ int main_loop(struct multiboot_info *boot_info)
 #ifdef BOCHS_DEBUG
 	dbg_bochs_print("DreamOS Debug String for Bochs\n");
 #endif
-	// timer_init ();
+	timer_init ();
     //We disable floppy driver motor
-    // fdc_disable_motor();
+    fdc_disable_motor();
 
-	// kernel_create_thread(shell, "shell", 0);
+	kernel_create_thread(shell, "shell", 0);
     return 0;
 }

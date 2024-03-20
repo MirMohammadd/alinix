@@ -20,5 +20,5 @@ jobs:
           
       - name: Run Make Command
         run: |
-          cd thirdparty
+          cd kernel
           make

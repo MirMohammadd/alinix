@@ -23,6 +23,7 @@
 #define CHANNEL2  0x42	/* PC speaker */
 #define PIT_MODE_3_COUNTER 0x36 /*this macro will define mode 3 counter value*/
 #define CONTROL_REGISTER 0x43
+#define PIT_READ_BACK_COMMAND 0xc2 /*PIT read back command*/
 
 
 

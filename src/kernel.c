@@ -31,7 +31,6 @@
 #include <debug.h>
 #endif
 
-int shell(void *);
 
 
 unsigned int *current_page_table;

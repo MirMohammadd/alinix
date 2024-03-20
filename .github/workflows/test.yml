@@ -20,5 +20,5 @@ jobs:
           
       - name: Run Make Command
         run: |
-          cd extra
+          cd thirdparty
           make

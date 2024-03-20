@@ -14,7 +14,7 @@
 #include <keyboard.h>
 #include <paging.h>
 #include <use.h>
-#include <shell/shell.h>
+#include <shell.h>
 #include <syscall.h>
 #include <kheap.h>
 #include <vfs.h>
@@ -113,6 +113,6 @@ int main_loop(struct multiboot_info *boot_info)
     //We disable floppy driver motor
     fdc_disable_motor();
 
-	kernel_create_thread(shell, "shell", 0);
+	// kernel_create_thread(shell, "shell", 0);
     return 0;
 }

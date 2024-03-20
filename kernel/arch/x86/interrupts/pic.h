@@ -4,6 +4,16 @@
 #include <lib/types.h>
 #include "irq.h"
 
+
+
+#define ICW1_INIT 0x10
+#define ICW4_8086 0x01
+#define OCW2_EOI 0x20 /*Set the mode of PIC controllers*/
+#define OCW3_READ_ISR 0x0b
+#define OCW3_READ_IRR 0x0a /*define a value for the  read irr command register*/
+#define EOI 0x20 /*End if interrupt command*/
+
+
 /**
  * @file pic.h Programmable Interruptr Controller
  * @date 2010

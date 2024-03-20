@@ -1,25 +1,27 @@
-name: BadBlueKernel-Build
+name: Fudge Build and Test
 
 on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  build_and_test:
-    name: Build and Test Fudge OS
+  build:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v2
-      
-      - name: Install dependencies
+
+      - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y wget make gcc git qemu-user-static help2man libtool-bin
-      
-      - name: Download and install crosstool-ng
+          sudo apt-get install -y build-essential git wget bzip2
+
+      - name: Download and Install crosstool-ng
         run: |
           wget http://crosstool-ng.org/download/crosstool-ng/crosstool-ng-1.26.0.tar.bz2
           tar xjf crosstool-ng-1.26.0.tar.bz2
@@ -27,31 +29,33 @@ jobs:
           ./configure
           make
           sudo make install
-      
-      - name: Install libtool
-        run: |
-          sudo apt-get install -y libtool
-      
-      - name: Configure cross-compiler
+
+      - name: Configure Cross-Compiler
         run: |
           mkdir ~/temp
           cd ~/temp
           ct-ng menuconfig
-      
-      - name: Build cross-compiler
+          # Manually configure the target architecture to x86 and save the configuration
+
+      - name: Build Cross-Compiler
         run: |
-          cd ~/temp
           ct-ng build
-      
-      - name: Clone Fudge OS repository
+
+      - name: Clone Fudge Repository
+        run: git clone git://github.com/jezze/fudge.git
+
+      - name: Set PATH for Cross-Compiler
+        run: export PATH=/home/$(whoami)/x-tools/i386-unknown-elf/bin:$PATH
+
+      - name: Build Fudge
         run: |
-          git clone git://github.com/jezze/fudge.git
           cd fudge
-      
-      - name: Set cross-compiler path
-        run: |
-          export PATH=/home/$(whoami)/x-tools/i386-unknown-elf/bin:$PATH
-      
-      - name: Build BadBlueKernel
-        run: |
           make
+
+      - name: Run Fudge in QEMU
+        run: |
+          ./vmctrl runsimple node1
+
+      - name: Test Fudge
+        run: |
+          # Add testing commands here

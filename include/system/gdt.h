@@ -1,0 +1,53 @@
+#ifndef _GDT_H
+#define _GDT_H
+#include <stddef.h>
+
+#define GDT_SIZE 10
+
+//For opt_2 argument
+#define GRANULARITY 0x80
+#define SZBITS 0x40
+//#define GRANULARITY 0x40
+
+//For opt_1 argument
+#define PRESENT 0x80
+#define NOT_PRESENT 0x00
+#define KERNEL 0x00
+#define RING1 0x01
+#define RING2 0x02
+#define USER 0x03
+#define CODE 0x10
+#define MEMORY 0x00
+#define DATA 0x10
+
+//For Data Type Option
+#define R_ONLY 0x00
+#define R_ONLY_A 0x01
+#define R_WRITE 0x02
+#define R_WRITE_A 0x03
+
+/*!  \struct gdt_desc
+     \brief Struttura dati che rappresenta un descrittore della GDT
+ */
+typedef struct gdt_desc {
+	unsigned short int segment_limit_low; /**<Primi 16 bit del limite (20 bit in totale)*/
+	unsigned short int segment_base_low; /**<Primi 2 byte della base del segmento*/
+	unsigned char base_mid; /**<base del segmento*/
+	unsigned char options_1; /**<Type (4bit) - S (1) bit -DPL (2 bit) - P(1 bit)*/
+	unsigned char options_2; /**<SegLimit_hi(4 bit) AVL(1 bit) L(1 bit) D/B(1 bit) G(1bit)*/
+	unsigned char base_high; /**<Ultimi 8 bit del base address*/
+} __attribute__((packed)) GDT_Descriptor;
+
+/*!  \struct gdt_r
+     \brief Struttura dati che serve a caricare la GDT nel GDTR
+ */
+typedef struct gdt_r {
+	unsigned short int gdt_limit;/**< la dimensione della GDT (in numero di entry)*/
+	unsigned int gdt_base;/**< l'indirizzo iniziale della GDT*/
+} __attribute__((packed)) GDT_Register;
+
+void kernel_set_gdtr(GDT_Descriptor *, unsigned short int, int, int);
+void kernel_add_gdt_seg(int, unsigned int, unsigned int,unsigned char, unsigned char);
+void kernel_init_gdt();
+
+#endif

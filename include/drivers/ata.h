@@ -82,7 +82,15 @@ typedef struct ata_drive{
     int lba_mode; // 1 LBA48 else LBA28
     uint32_t total_sectors_28;
     uint64_t total_sectors_48;
-};
+}drive_t;
+
+typedef struct ata_drives{
+    drive_t cur_hdd;
+    drive_t primary_master;
+    drive_t primary_slave;
+    drive_t secondary_master;
+    drive_t secondary_slave;
+}ata_drives_t;
 
 
 #endif // ATA_H

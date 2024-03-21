@@ -35,6 +35,12 @@
 
 #define ATA_PRIMARY_LBA_MID         0x1F4
 
+/**
+ * @note This will define the upper 8 bits of LBA for the primary ATA hard drive
+*/
+
+#define ATA_PRIMARY_LBA_HIGH        0x1F5
+
 
 
 

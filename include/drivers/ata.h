@@ -11,6 +11,7 @@
  * furnished to do so, subject to the following conditions:
  *
  * @author Heisenberg
+ * @file ata.h
 
  */
 #ifndef ATA_H
@@ -41,7 +42,29 @@
 
 #define ATA_PRIMARY_LBA_HIGH        0x1F5
 
+/**
+ * @note other ATA macros
+*/
 
+#define ATA_PRIMARY_DRIVE_SEL       0x1F6
+#define ATA_PRIMARY_STATUS          0x1F7
+#define ATA_PRIMARY_IRQ             14
+
+/**
+ * @note other ATA macros (secondary)
+*/
+
+#define ATA_SECONDARY_DATA          0x170
+#define ATA_SECONDARY_ERR           0x171
+#define ATA_SECONDARY_SECTORS       0x172
+#define ATA_SECONDARY_LBA_LOW       0x173
+#define ATA_SECONDARY_LBA_MID       0x174
+#define ATA_SECONDARY_LBA_HIGH      0x175
+#define ATA_SECONDARY_DRIVE_SEL     0x176
+#define ATA_SECONDARY_STATUS        0x177
+#define ATA_SECONDARY_IRQ           15
+
+#define ATA_IDENTIFY                0xEC
 
 
 #endif // ATA_H

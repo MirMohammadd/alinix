@@ -67,4 +67,22 @@
 #define ATA_IDENTIFY                0xEC
 
 
+typedef struct ata_drive{
+    int present;
+    int type; // master or slave
+    uint32_t data_reg;
+    uint32_t err_reg;
+    uint32_t sectors_reg;
+    uint32_t lba_low_reg;
+    uint32_t lba_mid_reg;
+    uint32_t lba_high_reg;
+    uint32_t sel_reg;
+    uint32_t status_reg;
+    uint32_t irq_num;
+    int lba_mode; // 1 LBA48 else LBA28
+    uint32_t total_sectors_28;
+    uint64_t total_sectors_48;
+};
+
+
 #endif // ATA_H

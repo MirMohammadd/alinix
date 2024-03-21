@@ -93,4 +93,12 @@ typedef struct ata_drives{
 }ata_drives_t;
 
 
+void ata_init();
+void ata_wait_for_irq();
+void ata_info_fill(drive_t *drive, int type, uint32_t data, uint32_t err, uint32_t sect, uint32_t lba_low, uint32_t lba_mid, uint32_t lba_high, uint32_t sel, uint32_t status, uint32_t irq);
+void identify(drive_t *drive);
+void delay_400ns();
+char *ata_read_sector(int lba);
+
+
 #endif // ATA_H

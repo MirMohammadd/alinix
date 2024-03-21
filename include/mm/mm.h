@@ -33,7 +33,8 @@
 
 
 typedef uint32_t mm_addr_t;
-typedef uint32_t mm_addr_t;
+typedef uint32_t vmm_addr_t;
+
 
 
 typedef struct mem_info{
@@ -53,6 +54,25 @@ typedef struct memory_region {
     uint32_t type;
 } __attribute__((__packed__)) mem_region_t;
 
+void pmm_init(uint32_t mem_size, mm_addr_t *mmap_addr, uint32_t mmap_len);
+void pmm_set_bit(int bit);
+void pmm_unset_bit(int bit);
+int pmm_first_free();
+void pmm_init_reg(mm_addr_t addr, uint32_t size);
+void pmm_deinit_reg(mm_addr_t addr, uint32_t size);
+void *pmm_malloc();
+void pmm_free(mm_addr_t *frame);
 
+mm_addr_t *get_mem_map();
+uint32_t get_mem_size();
+uint32_t get_used_blocks();
+uint32_t get_max_blocks();
+
+void enable_paging();
+void load_pdbr(mm_addr_t addr);
+mm_addr_t get_pdbr();
+void flush_tlb(vmm_addr_t addr);
+int get_cr0();
+int get_cr2();
 
 #endif

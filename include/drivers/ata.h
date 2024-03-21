@@ -17,6 +17,25 @@
 #define ATA_H
 
 #include <types.h>
+/**
+ * represents the I/O port address for accessing the primary data register of the ATA controller.
+ * @note reads the primary errors and etc from the primary ATA hard drive
+*/
+#define ATA_PRIMARY_DATA            0x1F0
+#define ATA_PRIMARY_ERROR           0x1F1
+#define ATA_PRIMARY_SECTORS         0x1F2
+/**
+ * @note access lower 8 bits of LBA for the primary ATA hard drive
+*/
+#define ATA_PRIMARY_LBA_LOW         0x1F3
+
+/**
+ * @note This will define the upper 8 bits of LBA for the primary ATA hard drive
+*/
+
+#define ATA_PRIMARY_LBA_MID         0x1F4
+
+
 
 
 #endif // ATA_H

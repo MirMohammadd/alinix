@@ -7,6 +7,13 @@
 #define __always_inline inline
 #endif
 
+#ifndef false
+#define false 0
+#endif
+#ifndef true
+#define true 1
+#endif
+
 
 
 /**

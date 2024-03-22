@@ -8,8 +8,8 @@
  * warranty of any kind, whether express or implied.
  */
 
-#ifndef __LINUX_MBUS_H
-#define __LINUX_MBUS_H
+#ifndef __HEISEN_MBUS_H
+#define __HEISEN_MBUS_H
 
 #include <heisen/types.h>
 #include <heisen/errno.h>
@@ -115,4 +115,4 @@ static inline int mvebu_mbus_get_dram_win_info(phys_addr_t phyaddr, uint8_t *tar
 }
 #endif /* CONFIG_MVEBU_MBUS */
 
-#endif /* __LINUX_MBUS_H */
+#endif /* __HEISEN_MBUS_H */

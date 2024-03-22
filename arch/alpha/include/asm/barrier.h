@@ -17,6 +17,6 @@
 #define __ASM_SMP_MB
 #endif
 
-#include <asm-generic/barrier.h>
+// #include <asm-generic/barrier.h>
 
 #endif		/* __BARRIER_H */

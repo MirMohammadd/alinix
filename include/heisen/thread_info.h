@@ -6,13 +6,12 @@
 
 #ifndef _LINUX_THREAD_INFO_H
 #define _LINUX_THREAD_INFO_H
-#include <linux/restart_block.h>
-#include <linux/errno.h>
 
 #include <heisen/typing.h>
 #include <heisen/limits.h>
 #include <heisen/bug.h>
 #include <heisen/errno.h>
+#include <heisen/restart_block.h>
 #ifdef CONFIG_THREAD_INFO_IN_TASK
 /*
  * For CONFIG_THREAD_INFO_IN_TASK kernels we need <asm/current.h> for the
@@ -23,8 +22,7 @@
 #define current_thread_info() ((struct thread_info *)current)
 #endif
 
-#include <linux/bitops.h>
-
+#include <heisen/bitops.h>
 /*
  * For per-arch arch_within_stack_frames() implementations, defined in
  * asm/thread_info.h.

@@ -24,7 +24,7 @@
 
 #include <heisen/compiler_types.h>
 #include <heisen/kasan-checks.h>
-#include <linux/kcsan-checks.h>
+#include <heisen/kcsan-checks.h>
 
 /*
  * Yes, this permits 64-bit accesses on 32-bit architectures. These will

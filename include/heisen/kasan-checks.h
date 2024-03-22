@@ -1,7 +1,7 @@
-#ifndef _LINUX_KASAN_CHECKS_H
-#define _LINUX_KASAN_CHECKS_H
+#ifndef _HEISENKASAN_CHECKS_H
+#define _HEISENKASAN_CHECKS_H
 
-#include <linux/types.h>
+#include <heisen/types.h>
 
 /*
  * The annotations present in this file are only relevant for the software

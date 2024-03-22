@@ -23,7 +23,7 @@
 #ifndef __ASSEMBLY__
 
 #include <heisen/compiler_types.h>
-#include <linux/kasan-checks.h>
+#include <heisen/kasan-checks.h>
 #include <linux/kcsan-checks.h>
 
 /*

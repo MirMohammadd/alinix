@@ -54,7 +54,7 @@ typedef __builtin_va_list va_list;
 #define va_arg(ap,type) __builtin_va_arg(ap,type)
 
 #define __EXPORTED_HEADERS__
-#include <uapi/linux/types.h>
+#include <uapi/heisen/types.h>
 
 #ifndef __ASSEMBLY__
 
@@ -299,4 +299,5 @@ typedef int (*cmp_r_func_t)(const void *a, const void *b, const void *priv);
 typedef int (*cmp_func_t)(const void *a, const void *b);
 
 
+#endif
 #endif

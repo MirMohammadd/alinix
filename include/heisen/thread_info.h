@@ -6,16 +6,13 @@
 
 #ifndef _LINUX_THREAD_INFO_H
 #define _LINUX_THREAD_INFO_H
-#include <linux/types.h>
-#include <linux/limits.h>
-#include <linux/bug.h>
 #include <linux/restart_block.h>
 #include <linux/errno.h>
 
 #include <heisen/typing.h>
 #include <heisen/limits.h>
-#include <heisen/build_bug.h>
-
+#include <heisen/bug.h>
+#include <heisen/errno.h>
 #ifdef CONFIG_THREAD_INFO_IN_TASK
 /*
  * For CONFIG_THREAD_INFO_IN_TASK kernels we need <asm/current.h> for the

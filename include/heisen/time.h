@@ -1,10 +1,9 @@
 #ifndef _HEISEN_TIME_H
 #define _HEISEN_TIME_H
 
-# include <linux/cache.h>
-# include <linux/math64.h>
-# include <linux/time64.h>
-
+#include <heisen/math64.h>
+#include <heisen/time64.h>
+#include <heisen/cache.h>
 
 extern struct timezone sys_tz;
 

@@ -33,7 +33,6 @@
 
 #ifndef __ASSEMBLY__
 #include <asm/uncached.h>
-#include <asm/u
 
 extern unsigned long shm_align_mask;
 extern unsigned long max_low_pfn, min_low_pfn;

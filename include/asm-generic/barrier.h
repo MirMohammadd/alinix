@@ -14,7 +14,7 @@
 #ifndef __ASSEMBLY__
 
 #include <heisen/compiler.h>
-#include <linux/kcsan-checks.h>
+// #include <linux/kcsan-checks.h>
 #include <asm/rwonce.h>
 
 #ifndef nop

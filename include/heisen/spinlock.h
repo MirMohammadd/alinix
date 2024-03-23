@@ -61,7 +61,16 @@
 #include <linux/bottom_half.h>
 #include <linux/lockdep.h>
 #include <linux/cleanup.h>
+
+
+
+#include <heisen/compiler.h>
+#include <heisen/thread_info.h>
+#include <heisen/stringify.h>
 #include <asm/barrier.h>
+
+
+
 #include <asm/mmiowb.h>
 
 

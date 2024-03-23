@@ -5,8 +5,5 @@ struct exception_table_entry{
     unsigned long insn,fixup;
 };
 
-struct pt_regs;
-extern int fixup_exception(struct pt_regs *regs);
-
 
 #endif // __ASM_GENERIC_EXTABLE_H

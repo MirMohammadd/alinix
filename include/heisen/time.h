@@ -56,8 +56,7 @@ struct tm {
 
 void time64_to_tm(time64_t totalsecs, int offset, struct tm *result);
 
-# include <linux/time32.h>
-
+#include <heisen/time32.h>
 static inline bool itimerspec64_valid(const struct itimerspec64 *its)
 {
 	if (!timespec64_valid(&(its->it_interval)) ||

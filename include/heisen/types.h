@@ -4,6 +4,7 @@
 
 #define __EXPORTED_HEADERS__
 #include <uapi/heisen/types.h>
+#include <heisen/typing.h>
 #define NULL 0
 
 typedef unsigned char uint8;
@@ -71,14 +72,14 @@ typedef __s128 s128;
 typedef __u128 u128;
 #endif
 
-typedef u32 __kernel_dev_t;
+typedef uint32_t __kernel_dev_t;
 
 typedef __kernel_fd_set		fd_set;
 typedef __kernel_dev_t		dev_t;
 typedef __kernel_ulong_t	ino_t;
 typedef __kernel_mode_t		mode_t;
 typedef unsigned short		umode_t;
-typedef u32			nlink_t;
+typedef uint32_t			nlink_t;
 typedef __kernel_off_t		off_t;
 typedef __kernel_pid_t		pid_t;
 typedef __kernel_daddr_t	daddr_t;
@@ -152,22 +153,22 @@ typedef unsigned long		ulong;
 #ifndef __BIT_TYPES_DEFINED__
 #define __BIT_TYPES_DEFINED__
 
-typedef u8			u_int8_t;
+typedef uint8_t			u_int8_t;
 typedef s8			int8_t;
-typedef u16			u_int16_t;
+typedef uint16_t			u_int16_t;
 typedef s16			int16_t;
-typedef u32			u_int32_t;
+typedef uint32_t			u_int32_t;
 typedef s32			int32_t;
 
 #endif /* !(__BIT_TYPES_DEFINED__) */
 
-typedef u8			uint8_t;
-typedef u16			uint16_t;
-typedef u32			uint32_t;
+typedef uint8_t			uint8_t;
+typedef uint16_t			uint16_t;
+typedef uint32_t			uint32_t;
 
 #if defined(__GNUC__)
-typedef u64			uint64_t;
-typedef u64			u_int64_t;
+typedef uint64_t			uint64_t;
+typedef uint64_t			u_int64_t;
 typedef s64			int64_t;
 #endif
 
@@ -187,8 +188,8 @@ typedef s64	ktime_t;
  *
  * blkcnt_t is the type of the inode's block count.
  */
-typedef u64 sector_t;
-typedef u64 blkcnt_t;
+typedef uint64_t sector_t;
+typedef uint64_t blkcnt_t;
 
 /*
  * The type of an index into the pagecache.
@@ -205,9 +206,9 @@ typedef u64 blkcnt_t;
  * so they don't care about the size of the actual bus addresses.
  */
 #ifdef CONFIG_ARCH_DMA_ADDR_T_64BIT
-typedef u64 dma_addr_t;
+typedef uint64_t dma_addr_t;
 #else
-typedef u32 dma_addr_t;
+typedef uint32_t dma_addr_t;
 #endif
 
 typedef unsigned int __bitwise gfp_t;
@@ -215,9 +216,9 @@ typedef unsigned int __bitwise slab_flags_t;
 typedef unsigned int __bitwise fmode_t;
 
 #ifdef CONFIG_PHYS_ADDR_T_64BIT
-typedef u64 phys_addr_t;
+typedef uint64_t phys_addr_t;
 #else
-typedef u32 phys_addr_t;
+typedef uint32_t phys_addr_t;
 #endif
 
 typedef phys_addr_t resource_size_t;

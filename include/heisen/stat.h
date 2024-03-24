@@ -14,13 +14,12 @@
 #define UTIME_NOW	((1l << 30) - 1l)
 #define UTIME_OMIT	((1l << 30) - 2l)
 
-#include <linux/types.h>
-#include <linux/time.h>
-#include <linux/uidgid.h>
+#include <heisen/types.h>
+#include <heisen/time.h>
+#include <heisen/uidgid.h>
 
 #include <heisen/typing.h>
 #include <heisen/time.h>
-#include <heisen/
 
 struct kstat {
 	u32		result_mask;	/* What fields the user got */

@@ -5,7 +5,7 @@
 #include <linux/percpu.h>
 
 #include <heisen/typing.h>
-#include <heisen/per
+#include <heisen/percpu.h>
 
 void topology_normalize_cpu_scale(void);
 int topology_update_cpu_topology(void);

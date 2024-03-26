@@ -1,4 +1,10 @@
+#ifndef TYPING_H
+#define  TYPING_H
 #define NULL 0
+
+#ifndef __TEST__
+#include <sys/types.h>
+#endif
 
 typedef unsigned char uint8;
 typedef unsigned short uint16;
@@ -116,7 +122,7 @@ typedef signed short int16_t;
 typedef signed int int32_t;
 typedef signed long long int64_t;
 
-typedef unsigned int size_t;
+typedef unsigned long long int size_t;
 
 typedef int pid_t;
 
@@ -135,3 +141,6 @@ typedef struct regs16 {
     uint16_t ds;
     uint16_t eflags;
 } __attribute__ ((packed)) regs16_t;
+
+
+#endif // TYPING_H

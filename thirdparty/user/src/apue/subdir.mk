@@ -1,1 +1,0 @@
-dirs := signals ipc1

@@ -5,7 +5,7 @@
 #include <heisen/typing.h>
 
 typedef struct {
-    uint64_t smpep : 1;
+    uint64_t smep : 1;
     uint64_t smap : 1;
     uint64_t hugepage : 1;
     uint64_t x2apic : 1;
@@ -18,10 +18,9 @@ typedef struct {
     uint64_t apic_freq;
     uint64_t xsave_bits;
     uint32_t xsave_sz;
-}cpu_info_t;
+} cpuinfo_t;
 
 void cpuid_init(void);
 cpuinfo_t* get_cpuid(void);
-
 
 #endif // _HEISEN_CPU_ID_H

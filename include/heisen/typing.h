@@ -6,6 +6,8 @@
 #include <sys/types.h>
 #endif
 
+#define TLS __attribute__((address_space(256)))
+
 
 
 #define PRIVATE __attribute__((visibility("hidden")))

@@ -6,6 +6,15 @@
 #include <sys/types.h>
 #endif
 
+
+
+#define PRIVATE __attribute__((visibility("hidden")))
+#define VOID void
+#define INTEGER int
+#define STRING char*
+#define FLOAT  double
+
+
 typedef unsigned char uint8;
 typedef unsigned short uint16;
 typedef unsigned int uint32;
@@ -57,6 +66,23 @@ typedef __kernel_long_t		__kernel_suseconds_t;
 #ifndef __kernel_daddr_t
 typedef int		__kernel_daddr_t;
 #endif
+
+typedef enum {
+  timer_features_none = 0,
+  timer_features_oneshot = (1 << 0),
+  timer_features_periodic = (1 << 1),
+  timer_features_read = (1 << 2),
+  timer_features_persistent = (1 << 3),
+  timer_features_absolute = (1 << 4),
+  timer_features_64bit = (1 << 5),
+  timer_features_write = (1 << 6),
+  timer_features_local = (1 << 7),
+  timer_features_pcie_msg_intr = (1 << 8),
+  timer_features_fixed_intr = (1 << 9),
+  timer_features_counter = (1 << 10),
+} timer_features_t;
+
+typedef struct timer_handlers timer_handlers_t;
 
 #ifndef __kernel_uid32_t
 typedef unsigned int	__kernel_uid32_t;

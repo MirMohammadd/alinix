@@ -143,4 +143,7 @@ typedef struct regs16 {
 } __attribute__ ((packed)) regs16_t;
 
 
+typedef _Bool bool;  /* for boolean expressions */
+
+
 #endif // TYPING_H

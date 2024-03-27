@@ -4,6 +4,7 @@
 #include <graphics.h>
 #include <gui/window.h>
 #include <gui/font.h>
+#include <heisen/stdbool.h>
 
 static int x;
 static int y;
@@ -122,6 +123,26 @@ void refresh_screen() {
         memcpy(vbemem.mem, vbemem.buffer, vbemem.buffer_size);
     }
 }
+// TODO Updated here for dynamic widget
+
+
+void createWidget(bool anime){
+    for (;;){
+        paint_desktop();
+        if (anime == false) break;
+
+    }
+}
+
+void updateWidgetText(struct video_mem *videoM,int x,int y,int xMax,int yMax){
+    for (x = 0; x <= xMax; ++x)
+        for (y = 0;y <= yMax;++y)
+            videoM->heigth = y;
+            videoM->width = x;
+    draw_pixel(videoM->width,videoM->heigth,0x000000);
+};
+
+// TODO Updated here for dynamic widget
 
 void draw_pixel(int x, int y, uint32_t color) {
     if(x < 0 || x > vbemem.xres || y < 0 || y > vbemem.yres)

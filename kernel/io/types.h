@@ -42,6 +42,7 @@ typedef unsigned long long uint64;
 typedef long long int64;
 typedef int64 qword;
 typedef uint32 size_t; 
+typedef signed long int         int32_t; 	/**< 32 bits signed */
 typedef uint32 fd_t;
 
 #endif

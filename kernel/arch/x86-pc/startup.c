@@ -35,18 +35,36 @@ void print_string(const char *str) {
     // Loop through the string and print each character
     while (*str != '\0') {
         if (*str == '\n') {
-            // Move to the next line
+            // Move to the beginning of the next line
             offset += VGA_WIDTH - offset % VGA_WIDTH;
         } else {
             // Write the character and attribute byte to the VGA buffer
             vga_buffer[offset] = (uint16_t)(*str) | (uint16_t)(VGA_ATTRIBUTE_BYTE << 8);
             ++offset;
         }
+
         // Move to the next character in the string
         ++str;
+
+        // Check if we reached the end of the screen, if so, scroll
+        if (offset >= VGA_WIDTH * VGA_HEIGHT) {
+            // Copy each row to the row above it
+            for (int i = 0; i < VGA_HEIGHT - 1; ++i) {
+                for (int j = 0; j < VGA_WIDTH; ++j) {
+                    vga_buffer[i * VGA_WIDTH + j] = vga_buffer[(i + 1) * VGA_WIDTH + j];
+                }
+            }
+
+            // Clear the last row
+            for (int i = 0; i < VGA_WIDTH; ++i) {
+                vga_buffer[(VGA_HEIGHT - 1) * VGA_WIDTH + i] = (uint16_t)(' ') | (uint16_t)(VGA_ATTRIBUTE_BYTE << 8);
+            }
+
+            // Reset the offset to the beginning of the last row
+            offset = (VGA_HEIGHT - 1) * VGA_WIDTH;
+        }
     }
 }
-
 
 /**
  * The kernel entry point. All starts from here!

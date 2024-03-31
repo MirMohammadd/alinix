@@ -22,7 +22,7 @@ void console_ungetchar_bound(uint8 n);
 void console_gotoxy(uint16 x, uint16 y);
 
 void console_putstr(const char *str);
-void printf(const char *format, ...);
+// void printf(const char *format, ...);
 
 // read string from console, but no backing
 void getstr(char *buffer);

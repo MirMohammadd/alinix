@@ -21,6 +21,7 @@
 #include <io/console.h>
 #include <colorforth/colorforth.h>
 #include <io/terminal.h>
+#include <asm/print.h>
 
 
 
@@ -79,6 +80,7 @@ void roentgenium_main(uint32_t magic, uint32_t address)
 
     // Enable interrupts
     asm volatile("sti");
+    PrintAsm("Hello Kernel!!!");
 
     // Console
     console_setup(&cons, vga_display_character);

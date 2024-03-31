@@ -44,5 +44,9 @@ typedef int64 qword;
 typedef uint32 size_t; 
 typedef signed long int         int32_t; 	/**< 32 bits signed */
 typedef uint32 fd_t;
+typedef enum {
+    FALSE,
+    TRUE
+} BOOL;
 
 #endif

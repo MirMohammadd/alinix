@@ -261,19 +261,19 @@ void command_color(char* args){
 void shell_initialize() {
   print("Initializing shell...\t");
   memset(commands, sizeof(commands), 0);
-  register_command("help", helpMenu, "Displays this menu.");
-  register_command("ping", pong, "Responds with PONG!");
-  register_command("cls", cls, "Clears the terminal.");
-  register_command("todo", TODO, "Prints the short term list of things to do.");
-  register_command("echo", echo, "Print given string.");
-  register_command("break", linebreak, "Print a red separating line.");
-  register_command("color", command_color, "Set the terminal colors.");
+  registerCommand("help", helpMenu, "Displays this menu.");
+  registerCommand("ping", pong, "Responds with PONG!");
+  registerCommand("cls", cls, "Clears the terminal.");
+  registerCommand("todo", TODO, "Prints the short term list of things to do.");
+  registerCommand("echo", echo, "Print given string.");
+  registerCommand("break", linebreak, "Print a red separating line.");
+  registerCommand("color", command_color, "Set the terminal colors.");
   print("done");
   terminal_linebreak();
-  shell_print_kernel();
+  shellPrintKernel();
 }
 
-void shell_print_kernel() {
+void shellPrintKernel() {
   uint8_t color = terminal_get_color();
   terminal_set_color(terminal_get_background(), 0xC);
   print("kernel>");
@@ -282,7 +282,7 @@ void shell_print_kernel() {
 typedef void func(char* parameters);
 
 
-void shell_handle_command() {
+void shellHandleCommand() {
   char* cmd_buf = (char*)kalloc(sizeof(char) * (keyIndex + 1));
   cmd_buf[keyIndex] = 0;
   memcpy(buffer, cmd_buf, keyIndex);

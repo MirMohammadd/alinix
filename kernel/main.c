@@ -10,6 +10,13 @@
 #include <proc/sched.h>
 #include "graphics.h"
 #include "terminal.h"
+#include "yutani.h"
+
+static yutani_t * yctx;
+static yutani_window_t * window = NULL;
+static char * title_str;
+
+
 int kmain(multiboot_info_t *info) {
     
     video_init(25, 80);
@@ -34,6 +41,9 @@ int kmain(multiboot_info_t *info) {
     ata_init();
     
     sched_init();
+
+
+	yutani_window_advertise_icon(yctx, window, title_str, "star");
 
 
     

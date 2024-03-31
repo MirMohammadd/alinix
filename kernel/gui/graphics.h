@@ -1,9 +1,8 @@
 #pragma once
 
 #include "_cheader.h"
-#include <stdint.h>
-#include <stddef.h>
-
+#include "stdint.h"
+#include "stddef.h"
 _Begin_C_Header
 
 #define GFX_W(ctx)  ((ctx)->width)			/* Display width */

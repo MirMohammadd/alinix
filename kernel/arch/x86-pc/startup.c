@@ -122,7 +122,6 @@ void roentgenium_main(uint32_t magic, uint32_t address)
     // Enable interrupts
     asm volatile("sti");
 
-    print_string("Hello world");
 
     // Console
     console_setup(&cons, vga_display_character);

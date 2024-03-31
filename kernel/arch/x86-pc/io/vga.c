@@ -158,6 +158,22 @@ void vga_display_character(uchar_t character)
 			else
 				symbol.position_x += 4;
 			break;
+		
+		case KEY_F7:
+			*video = "Welcome to the Heisen Kernel!";
+			*(video+1) = symbol.attributes;
+
+		if (symbol.position_x > VGA_COLUMNS_MAX_INDEX)
+			{
+				symbol.position_x = 0;
+				symbol.position_y++;
+			}
+
+			if (symbol.position_y > VGA_LINES_MAX_INDEX)
+				vga_scroll_up(symbol.position_y - VGA_LINES_MAX_INDEX);
+	
+
+
 
 		default: /* Other characters */
 			*video     = character;

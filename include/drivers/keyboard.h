@@ -105,4 +105,9 @@ void keyboard_set_leds(int num, int capslock, int scroll);
 char getchar();
 void gets(char *str);
 
+#define BACKSPACE 14
+#define ESCAPE 1
+#define PAGEUP 73
+#define PAGEDOWN 81
+
 #endif

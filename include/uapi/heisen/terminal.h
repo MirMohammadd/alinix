@@ -1,7 +1,7 @@
-#ifndef _HEISEN_TERMINAL_H
-#define  _HEISEN_TERMINAL_H
+#ifndef __HEISEN_TERMINAL_H
+#define  __HEISEN_TERMINAL_H
 
-#include <heisen/typing.h>
+#include <typing.h>
 
 #define TERMINAL_COMMAND_PORT 0x3D4
 #define TERMINAL_DATA_PORT 0x3D5
@@ -44,4 +44,4 @@ void printsf(char* str, char* repl);
 uint8_t terminal_get_background();
 uint8_t terminal_get_foreground();
 
-#endif // _HEISEN_TERMINAL_H
+#endif // __HEISEN_TERMINAL_H

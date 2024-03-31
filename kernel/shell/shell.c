@@ -1,8 +1,8 @@
-#include <keyboard.h>
+#include <drivers/keyboard.h>
 #include <shell.h>
-#include <memory.h>
 #include <string.h>
 #include <terminal.h>
+#include <heisen/terminal.h>
 
 char buffer[200];
 

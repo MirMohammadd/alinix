@@ -15,7 +15,6 @@
  */
 #ifndef IO_H 
 #define IO_H
-#include <heisen/typing.h>
 
 #ifndef NULL
 #define NULL 0

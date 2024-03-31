@@ -16,6 +16,8 @@
 #ifndef IO_H 
 #define IO_H
 
+
+
 #ifndef NULL
 #define NULL 0
 #endif 
@@ -27,6 +29,12 @@ typedef unsigned int uint32;
 typedef signed char sint8;
 typedef signed short sint16;
 typedef signed int sint32;
+typedef unsigned char           uint8_t;  
+typedef unsigned long long int  uint64_t;	/**< 64 bits unsigned */
+typedef unsigned long int       uint32_t; 	/**< 32 bits unsigned */
+typedef unsigned short int      uint16_t; 	/**< 16 bits unsigned */
+typedef unsigned char           uint8_t;  	/**< 8  bits unsigned */
+typedef unsigned char           uchar_t;  	/**< 8  bits unsigned */
 typedef uint8 byte;
 typedef uint16 word;
 typedef uint32 dword;

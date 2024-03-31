@@ -8,6 +8,7 @@
 #include <drivers/mouse.h>
 #include <drivers/video.h>
 #include <proc/sched.h>
+#include "graphics.h"
 int kmain(multiboot_info_t *info) {
     
     video_init(25, 80);

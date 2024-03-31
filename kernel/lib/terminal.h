@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TERMINAL_H
+#define TERMINAL_H
 #include "types.h"
 #include "terminal.h"
 
@@ -42,3 +43,5 @@ void printsf(char* str, char* repl);
 
 uint8_t terminal_get_background();
 uint8_t terminal_get_foreground();
+
+#endif

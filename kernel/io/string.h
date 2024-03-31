@@ -7,13 +7,9 @@ uint32 digit_count(int num, int base);
 
 void kfree(void* memory);
 
-void *memset(void *dst, char c, uint32 n);
-
-void *memcpy(void *dst, const void *src, uint32 n);
-
 int memcmp(uint8 *s1, uint8 *s2, uint32 n);
 
-BOOL strncmp(char *a, char *b, uint32 n); 
+// BOOL strncmp(char *a, char *b, uint32 n); 
 
 int strlen(const char *s);
 

@@ -23,6 +23,7 @@
 #include "console.h"
 #include "terminal.h"
 #include "string.h"
+#include "memory.h"
 
 #define CONSOLE_BUFFER_LENGTH 64
 
@@ -32,7 +33,13 @@ uint16_t keyIndex = 0;
 
 command_t commands[10];
 uint8_t commandIndex = 0;
-
+uint8_t* ptr = (uint8_t*) 3145728;
+void* kalloc(size_t size){
+	void* ret = (void*) ptr;
+	ptr += size;
+	ptr+= 2;
+	return ret;
+}
 
 struct console
 {

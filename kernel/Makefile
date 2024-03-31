@@ -24,6 +24,7 @@ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
 	arch/x86-pc/timer/pit.o                 \
 	arch/x86-pc/io/keyboard.o               \
 	lib/libc.o                              \
+	lib/terminal.o
 	memory/physical-memory.o                \
 	arch/x86/threading/cpu-context.o        \
 	arch/x86/threading/cpu-context-switch.o \

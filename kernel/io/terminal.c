@@ -1,5 +1,6 @@
 //some constants
 #include "types.h"
+#include "terminal.h"
 const uint16_t WIDTH = 80;
 const uint16_t HEIGHT = 25;
 

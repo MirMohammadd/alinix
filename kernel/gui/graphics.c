@@ -6,7 +6,7 @@
  * of the NCSA / University of Illinois License - see LICENSE.md
  * Copyright (C) 2012-2021 K. Lange
  */
-#include "stdint.h"
+#include <stdint.h>
 #include <string.h>
 #include <stdio.h>
 #include <math.h>

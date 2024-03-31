@@ -34,10 +34,12 @@ int kmain(multiboot_info_t *info) {
     ata_init();
     
     sched_init();
+
+    terminal_writeline("Hello World");
+
     
     while(1)
         halt();
-        terminal_writeline("Hello World");
     
     return 0;
 }

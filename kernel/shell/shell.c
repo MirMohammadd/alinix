@@ -1,8 +1,8 @@
-#include <heisen/shell.h>
-#include <heisen/memory.h>
 #include <keyboard.h>
-#include <heisen/string.h>
-#include <heisen/terminal.h>
+#include <shell.h>
+#include <memory.h>
+#include <string.h>
+#include <terminal.h>
 
 char buffer[200];
 

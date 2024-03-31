@@ -159,7 +159,7 @@ void vga_display_character(uchar_t character)
 				symbol.position_x += 4;
 			break;
 		
-		case KEY_F7:
+		case KEY_ESCAPE:
 			*video = "Welcome to the Heisen Kernel!";
 			*(video+1) = symbol.attributes;
 

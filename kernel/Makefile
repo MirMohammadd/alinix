@@ -33,7 +33,6 @@ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
 	colorforth/editor.o                     \
 	colorforth/compiler.o                   \
 	arch/x86-pc/startup.o                   \
-	shell/shell.o
 
 KERNEL          = $(BUILD_PATH)/roentgenium.elf
 MULTIBOOT_IMAGE	= $(BUILD_PATH)/heisen.iso

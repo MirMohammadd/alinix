@@ -66,6 +66,7 @@ cdrom:
     mv $(KERNEL) $(BOOTLOADER_PATH)/iso/boot/
     grub-mkrescue -o $(MULTIBOOT_IMAGE) $(BOOTLOADER_PATH)/iso/
 
+
 initrd:
     $(generating) '$@'
     ../tools/blocks_converter.py tocf ../initrd/blocks.cfs $(INITRD_PATH)/initrd.img

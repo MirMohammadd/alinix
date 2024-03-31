@@ -80,12 +80,10 @@ void roentgenium_main(uint32_t magic, uint32_t address)
 
     // Enable interrupts
     asm volatile("sti");
-    PrintAsm("Hello Kernel!!!");
 
     // Console
     console_setup(&cons, vga_display_character);
 
-    println("Hello wRold!");
     // colorForth
     colorforth_initialize();
 
@@ -96,4 +94,5 @@ void roentgenium_main(uint32_t magic, uint32_t address)
     args->initrd_end = initrd_end;
 
     thread_create("editor", editor, args);
+    PrintAsm("Hello Kernel!!!");
 }

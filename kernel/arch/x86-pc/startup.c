@@ -22,6 +22,32 @@
 #include <colorforth/colorforth.h>
 
 
+
+#define VGA_TEXT_BUFFER_ADDR 0xB8000
+#define VGA_WIDTH 80
+#define VGA_HEIGHT 25
+#define VGA_ATTRIBUTE_BYTE 0x0F // White text on black background
+
+void print_string(const char *str) {
+    uint16_t *vga_buffer = (uint16_t*)VGA_TEXT_BUFFER_ADDR;
+    int offset = 0;
+    
+    // Loop through the string and print each character
+    while (*str != '\0') {
+        if (*str == '\n') {
+            // Move to the next line
+            offset += VGA_WIDTH - offset % VGA_WIDTH;
+        } else {
+            // Write the character and attribute byte to the VGA buffer
+            vga_buffer[offset] = (uint16_t)(*str) | (uint16_t)(VGA_ATTRIBUTE_BYTE << 8);
+            ++offset;
+        }
+        // Move to the next character in the string
+        ++str;
+    }
+}
+
+
 /**
  * The kernel entry point. All starts from here!
  */
@@ -78,8 +104,11 @@ void roentgenium_main(uint32_t magic, uint32_t address)
     // Enable interrupts
     asm volatile("sti");
 
+    print_string("Hello world");
+
     // Console
     console_setup(&cons, vga_display_character);
+
 
     // colorForth
     colorforth_initialize();

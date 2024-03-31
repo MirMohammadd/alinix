@@ -21,7 +21,6 @@
 #include <io/console.h>
 #include <colorforth/colorforth.h>
 #include <io/terminal.h>
-#include <asm/print.h>
 
 
 

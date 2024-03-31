@@ -30,6 +30,7 @@ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
 	threading/thread.o                      \
 	threading/scheduler.o                   \
 	io/console.o                            \
+	lib/memory.o                            \
 	io/terminal.o                           \
 	io/string.o                             \
 	colorforth/editor.o                     \

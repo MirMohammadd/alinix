@@ -36,6 +36,9 @@ int kmain(multiboot_info_t *info) {
     
     while(1)
         halt();
+        double m[2][3];
+
+		gfx_matrix_identity(m);
     
     return 0;
 }

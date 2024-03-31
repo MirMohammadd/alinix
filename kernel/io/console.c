@@ -22,6 +22,7 @@
 #include "shell.h"
 #include "console.h"
 #include "terminal.h"
+#include <string.h>
 
 #define CONSOLE_BUFFER_LENGTH 64
 

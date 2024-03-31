@@ -18,7 +18,7 @@ static char * title_str;
 
 
 int kmain(multiboot_info_t *info) {
-    
+    d
     // video_init(25, 80);
     // clear();
     

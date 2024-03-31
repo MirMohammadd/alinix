@@ -22,4 +22,4 @@ jobs:
       - name: Run Make Command
         run: |
           cd kernel
-          make
+          make cdrom

@@ -8,6 +8,8 @@
 #include <drivers/mouse.h>
 #include <drivers/video.h>
 #include <proc/sched.h>
+#include "graphics.h"
+#include "terminal.h"
 int kmain(multiboot_info_t *info) {
     
     video_init(25, 80);
@@ -35,6 +37,7 @@ int kmain(multiboot_info_t *info) {
     
     while(1)
         halt();
+        terminal_writeline("Hello World");
     
     return 0;
 }

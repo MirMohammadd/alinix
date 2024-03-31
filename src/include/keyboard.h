@@ -113,6 +113,11 @@
 #define SCAN_CODE_KEY_F11         0x57
 #define SCAN_CODE_KEY_F12         0x58
 
+#define BACKSPACE 14
+#define ESCAPE 1
+#define PAGEUP 73
+#define PAGEDOWN 81
+
 
 void keyboard_init();
 

@@ -20,6 +20,13 @@
 #include <threading/scheduler.h>
 #include <io/console.h>
 #include <colorforth/colorforth.h>
+#include "graphics.h"
+#include "yutani.h"
+
+static yutani_t * yctx;
+static yutani_window_t * window = NULL;
+static char * title_str;
+
 
 
 /**
@@ -79,7 +86,10 @@ void roentgenium_main(uint32_t magic, uint32_t address)
     asm volatile("sti");
 
     // Console
-    console_setup(&cons, vga_display_character);
+    // console_setup(&cons, vga_display_character);
+    yutani_window_advertise_icon(yctx, window, title_str, "star");
+
+    
 
     // colorForth
     colorforth_initialize();

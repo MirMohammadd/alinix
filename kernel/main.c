@@ -18,37 +18,37 @@ static char * title_str;
 
 
 int kmain(multiboot_info_t *info) {
-    d
-    // video_init(25, 80);
-    // clear();
     
-    // pmm_init(info->mem_high + info->mem_low, (uint32_t *) info->mmap_addr, info->mmap_len);
-    // vmm_init();
-    // kheap_init();
+    video_init(25, 80);
+    clear();
     
-    // vbe_init(info);
+    pmm_init(info->mem_high + info->mem_low, (uint32_t *) info->mmap_addr, info->mmap_len);
+    vmm_init();
+    kheap_init();
     
-    // hal_init();
+    vbe_init(info);
     
-    // // keyboard_init();
-    // mouse_init();
+    hal_init();
     
-    // syscall_init();
-    // install_tss();
+    keyboard_init();
+    mouse_init();
     
-    // vfs_init();
-    // floppy_init();
-    // ata_init();
+    syscall_init();
+    install_tss();
     
-    // sched_init();
+    vfs_init();
+    floppy_init();
+    ata_init();
+    
+    sched_init();
 
 
-	// yutani_window_advertise_icon(yctx, window, title_str, "star");
+	yutani_window_advertise_icon(yctx, window, title_str, "star");
 
 
     
-    // while(1)
-    //     halt();
+    while(1)
+        halt();
     
-    // return 0;
+    return 0;
 }

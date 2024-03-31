@@ -1,71 +1,75 @@
-VERBOSE = on # Set this to see commands being run
-COLOR   = on
+# Set this to see commands being run
+VERBOSE = off
 
+# Set this to enable or disable colorized output
+COLOR = on
+
+# Include messages.make
 include messages.make
 
-CC      = gcc
-PWD    := $(shell pwd)
-CFLAGS  = -Wall -Wextra -m32 -Wa,--32 -nostdlib -nostdinc -ffreestanding -fgnu89-inline -I$(PWD)
+# Compiler settings
+CC = gcc
+PWD := $(shell pwd)
+CFLAGS = -Wall -Wextra -m32 -Wa,--32 -nostdlib -nostdinc -ffreestanding -fgnu89-inline -I$(PWD)
 LDFLAGS = --warn-common -melf_i386 --strip-all
 
+# Paths
 BOOTLOADER_PATH = arch/x86-pc/bootstrap
-BUILD_PATH      = ../build
-INITRD_PATH     = arch/x86-pc/bootstrap/iso
+BUILD_PATH = ../build
+INITRD_PATH = arch/x86-pc/bootstrap/iso
 
-OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
-    arch/x86-pc/io/vga.o                    \
-    arch/x86/mmu/gdt.o                      \
-    arch/x86/interrupts/idt.o               \
-    arch/x86/interrupts/isr-stubs.o         \
-    arch/x86/interrupts/isr.o               \
-    arch/x86/interrupts/pic.o               \
-    arch/x86/interrupts/irq-stubs.o         \
-    arch/x86/interrupts/irq.o               \
-    arch/x86-pc/timer/pit.o                 \
-    arch/x86-pc/io/keyboard.o               \
-    lib/libc.o                              \
-    memory/physical-memory.o                \
-    arch/x86/threading/cpu-context.o        \
+# Object files
+OBJECTS = $(BOOTLOADER_PATH)/multiboot.o \
+    arch/x86-pc/io/vga.o \
+    arch/x86/mmu/gdt.o \
+    arch/x86/interrupts/idt.o \
+    arch/x86/interrupts/isr-stubs.o \
+    arch/x86/interrupts/isr.o \
+    arch/x86/interrupts/pic.o \
+    arch/x86/interrupts/irq-stubs.o \
+    arch/x86/interrupts/irq.o \
+    arch/x86-pc/timer/pit.o \
+    arch/x86-pc/io/keyboard.o \
+    lib/libc.o \
+    memory/physical-memory.o \
+    arch/x86/threading/cpu-context.o \
     arch/x86/threading/cpu-context-switch.o \
-    threading/thread.o                      \
-    threading/scheduler.o                   \
-    io/console.o                            \
-    colorforth/editor.o                     \
-    colorforth/compiler.o                   \
-    arch/x86-pc/startup.o                   \
-    kernel/shell/shell.o
+    threading/thread.o \
+    threading/scheduler.o \
+    io/console.o \
+    colorforth/editor.o \
+    colorforth/compiler.o \
+    arch/x86-pc/startup.o \
+    shell/shell.o  # Add shell.o to the OBJECTS variable
 
-KERNEL          = $(BUILD_PATH)/roentgenium.elf
+# Targets
+KERNEL = $(BUILD_PATH)/roentgenium.elf
 MULTIBOOT_IMAGE = $(BUILD_PATH)/heisen.iso
 
-linking     = $(call message,Linking)
-compiling   = $(call message,Compiling)
-assembling  = $(call message,Assembling)
-generating  = $(call message,Generating)
-cleaning    = $(call message,Cleaning)
-
+# Rules
 all: kernel initrd cdrom
 
 kernel: $(KERNEL)
 
 $(KERNEL): $(OBJECTS)
-    @mkdir -p $(BUILD_PATH)
-    $(linking) '$@'
-    $(CC) $(LDFLAGS) -T arch/x86-pc/linker.ld -o $@ $^
+    @if [ ! -d $(BUILD_PATH) ]; then \
+        mkdir $(BUILD_PATH); \
+    fi
+    $(linking) '$< > $@'
+    $(LD) $(LDFLAGS) -T arch/x86-pc/linker.ld -o $@ $^
 
 %.o: %.c
-    $(compiling) '$@'
+    $(compiling) '$< > $@'
     $(CC) -c $< -o $@ $(CFLAGS)
 
 %.o: %.asm
-    $(assembling) '$@'
-    nasm -f elf $< -o $@
+    $(assembling) '$< > $@'
+    nasm -f elf $<
 
 cdrom:
     $(generating) '$@'
     mv $(KERNEL) $(BOOTLOADER_PATH)/iso/boot/
     grub-mkrescue -o $(MULTIBOOT_IMAGE) $(BOOTLOADER_PATH)/iso/
-
 
 initrd:
     $(generating) '$@'
@@ -76,7 +80,9 @@ run:
 
 clean:
     $(cleaning)
-    rm -rf $(BUILD_PATH)
+    @if [ -d $(BUILD_PATH) ]; then \
+        rm -R $(BUILD_PATH); \
+    fi
     $(RM) $(OBJECTS)
     $(RM) $(BOOTLOADER_PATH)/iso/boot/roentgenium.elf
     $(RM) $(INITRD_PATH)/initrd.img

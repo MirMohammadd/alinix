@@ -11,7 +11,7 @@
 #pragma once
 
 #include <gui/_cheader.h>
-#include <std/stdio.h>
+#include "stdio.h"
 #include <stdint.h>
 #include <stdbool.h>
 #include <std/stdbool.h>

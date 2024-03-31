@@ -1,14 +1,14 @@
 #include "string.h"
 #include "terminal.h"
 #include "types.h"
-uint16_t strlen(char* c){
-	char i;
-	uint16_t length = 0;
-	while((i = c[length]) != 0){
-		length++;
-	}
-	return length;
-}
+// uint16_t strlen(char* c){
+// 	char i;
+// 	uint16_t length = 0;
+// 	while((i = c[length]) != 0){
+// 		length++;
+// 	}
+// 	return length;
+// }
 
 
 char digit_to_char(uint8_t input){

@@ -35,7 +35,6 @@ int kmain(multiboot_info_t *info) {
     
     sched_init();
 
-    terminal_writeline("Hello World");
 
     
     while(1)

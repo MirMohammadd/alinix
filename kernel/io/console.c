@@ -294,7 +294,7 @@ void shellHandleCommand() {
   cmd_buf[keyIndex] = 0;
   memcpy(buffer, cmd_buf, keyIndex);
   int len = strlen(cmd_buf);
-  shell_reset_buffer();
+  shellResetBuffer();
 
   int space_index = string_index_of_char(cmd_buf, ' ');
   char* command;

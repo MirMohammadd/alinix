@@ -224,9 +224,9 @@ void terminal_up() {
 	terminal_set_cursor_position(0xFF, 0xFF);
 }
 
-void printf(char* str, int32_t rpl){
-	printsf(str, int_to_string(rpl));
-}
+// void printf(char* str, int32_t rpl){
+// 	printsf(str, int_to_string(rpl));
+// }
 
 void uprintf(char* str, uint32_t rpl){
 	printsf(str, uint_to_string(rpl));

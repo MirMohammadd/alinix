@@ -36,7 +36,7 @@ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
 	shell/shell.o
 
 KERNEL          = $(BUILD_PATH)/roentgenium.elf
-MULTIBOOT_IMAGE	= $(BUILD_PATH)/roentgenium.iso
+MULTIBOOT_IMAGE	= $(BUILD_PATH)/heisen.iso
 
 all: kernel initrd cdrom
 

@@ -20,8 +20,10 @@
 #include <threading/scheduler.h>
 #include <io/console.h>
 #include <colorforth/colorforth.h>
-#include "graphics.h"
-#include "yutani.h"
+
+
+#include <gui/graphics.h>
+#include <yutani/yutani.h>
 
 static yutani_t * yctx;
 static yutani_window_t * window = NULL;

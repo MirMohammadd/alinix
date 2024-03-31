@@ -83,6 +83,7 @@ void roentgenium_main(uint32_t magic, uint32_t address)
 
     // colorForth
     colorforth_initialize();
+    printf("Hellllllopw");
 
     struct editor_args *args = malloc(sizeof(struct editor_args));
 

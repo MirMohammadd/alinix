@@ -1,4 +1,4 @@
-VERBOSE = off # Set this to see commands being run
+VERBOSE = on # Set this to see commands being run
 COLOR   = on
 
 include messages.make

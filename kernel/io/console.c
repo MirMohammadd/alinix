@@ -77,6 +77,8 @@ ret_t console_setup(struct console **terminal_out,
 
 	*terminal_out = terminal;
 
+  println("Hello world!");
+
 	return KERNEL_OK;
 }
 

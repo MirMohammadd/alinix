@@ -18,7 +18,6 @@
 #include <lib/status.h>
 #include <lib/libc.h>
 #include <lib/queue.h>
-
 #include "shell.h"
 #include "console.h"
 #include "terminal.h"

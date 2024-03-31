@@ -20,6 +20,8 @@
 #include <threading/scheduler.h>
 #include <io/console.h>
 #include <colorforth/colorforth.h>
+#include <io/terminal.h>
+
 
 
 /**
@@ -81,9 +83,9 @@ void roentgenium_main(uint32_t magic, uint32_t address)
     // Console
     console_setup(&cons, vga_display_character);
 
+    println("Hello wRold!");
     // colorForth
     colorforth_initialize();
-    printf("Hellllllopw");
 
     struct editor_args *args = malloc(sizeof(struct editor_args));
 

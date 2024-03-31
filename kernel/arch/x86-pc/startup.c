@@ -94,5 +94,4 @@ void roentgenium_main(uint32_t magic, uint32_t address)
     args->initrd_end = initrd_end;
 
     thread_create("editor", editor, args);
-    PrintAsm("Hello Kernel!!!");
 }

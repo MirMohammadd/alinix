@@ -23,6 +23,7 @@
 #include "terminal.h"
 #include "string.h"
 #include "memory.h"
+#include <asm/print.h>
 
 #define CONSOLE_BUFFER_LENGTH 64
 
@@ -56,6 +57,8 @@ TAILQ_HEAD(, console) consoles_list;
 ret_t console_setup(struct console **terminal_out,
 		void (*write_function)(uchar_t c))
 {
+  PrintAsm("Hello Kernel!!!");
+
 	struct console *terminal;
 
 	TAILQ_INIT(&consoles_list);

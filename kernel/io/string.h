@@ -1,38 +1,22 @@
 #ifndef STRING_H
 #define STRING_H
 
-// #include "types.h"
-
-// uint32 digit_count(int num, int base);
-
-// void kfree(void* memory);
-
-// int memcmp(uint8 *s1, uint8 *s2, uint32 n);
-
-// // BOOL strncmp(char *a, char *b, uint32 n); 
-
-// int strlen(const char *s);
-
-// int strcmp(const char *s1, char *s2);
-
-// int strcpy(char *dst, const char *src);
-
-// void strcat(char *dest, const char *src);
-
-// void strncat(char *dest, const char *src, int n);
-
-// uint32 strsplit(char* str, char delim);
-
-// int isspace(char c);
-
-// int isalpha(char c);
-// char upper(char c);
-// char lower(char c);
-
-// void itoa(char *buf, int base, int d);
-
-// void * malloc(int nbytes);
-// int str_to_int(char* ch);
-// int toDeci(int hex, int base);
-
+uint16_t strlen(char* c);
+char digit_to_char(uint8_t input);
+char* substring(char* str, uint16_t start, uint16_t end);
+char* concat(char* str1, char* str2);
+uint8_t string_starts_with(char* full, char* start);
+char** string_split(char* str, char delim, int* arr_length);
+uint8_t strcmp(char* str1, char* str2);
+int32_t string_index_of_char(char* str, char look);
+uint8_t hexchar_to_decimal(char input);
+char* number_to_string_template(uint32_t input, uint8_t base, uint8_t sign_bit,
+		char* prefix);
+//common aliases for number_to_string_template
+char* int_to_string(int32_t input);
+char* uint_to_string(uint32_t input);
+char* int_to_hexstring(int32_t input);
+char* uint_to_hexstring(uint32_t input);
+char* int_to_binstring(int32_t input);
+char* uint_to_binstring(uint32_t input);
 #endif

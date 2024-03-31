@@ -1,6 +1,8 @@
 #ifndef STRING_H
 #define STRING_H
 
+#include "types.h"
+
 // size_t strlen(char* c);
 char digit_to_char(uint8_t input);
 char* substring(char* str, uint16_t start, uint16_t end);

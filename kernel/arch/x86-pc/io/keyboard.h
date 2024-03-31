@@ -69,6 +69,11 @@
 #define KEY_PAGE_UP	0x49
 #define KEY_PAGE_DOWN	0x51
 
+#define BACKSPACE 14
+#define ESCAPE 1
+#define PAGEUP 73
+#define PAGEDOWN 81
+
 /** Handles keyboard
  *
  * @param r Registers status during the interrupt

@@ -20,7 +20,6 @@
 #include <lib/queue.h>
 
 #include "shell.h"
-#include <drivers/keyboard.h>
 #include "console.h"
 
 #define CONSOLE_BUFFER_LENGTH 64

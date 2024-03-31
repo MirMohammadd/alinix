@@ -30,7 +30,7 @@ int kmain(multiboot_info_t *info) {
     
     hal_init();
     
-    keyboard_init();
+    // keyboard_init();
     mouse_init();
     
     syscall_init();

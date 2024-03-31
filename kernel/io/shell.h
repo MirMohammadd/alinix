@@ -1,7 +1,7 @@
 #ifndef _HEISEN_SHELL_H
 #define _HEISEN_SHELL_H
 
-
+#include "types.h"
 typedef struct command{
     uint8_t present;
     char* command;

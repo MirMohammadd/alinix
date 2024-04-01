@@ -69,6 +69,9 @@
 #define KEY_PAGE_UP	0x49
 #define KEY_PAGE_DOWN	0x51
 
+#define CAPS_LOCK 0x3A
+
+
 #define BACKSPACE 14
 #define ESCAPE 1
 #define PAGEUP 73

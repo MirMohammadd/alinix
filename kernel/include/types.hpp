@@ -1,7 +1,6 @@
 #ifndef _HEISEN_KERNEL_INCLUDE_KERNEL_H
 #define _HEISEN_KERNEL_INCLUDE_KERNEL_H
 
-
 namespace LIBHeisenKernel
 {
     #define STATIC_ASSERT(condition) typedef char p__LINE__[ (condition) ? 1 : -1];

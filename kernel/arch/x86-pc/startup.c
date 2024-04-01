@@ -22,7 +22,6 @@
 #include <colorforth/colorforth.h>
 #include <arch/x86-pc/io/video.h>
 
-void _kcolor(char color);
 
 /**
  * The kernel entry point. All starts from here!

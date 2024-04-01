@@ -45,7 +45,7 @@ void _kscrollup();
 void _kscrolldown();
 void _kntohex (char *, unsigned int);
 void _knntos(char *, int, int );
-void _kcolor(char color);
+extern void _kcolor(char color);
 
 unsigned short shell_mess_col, shell_mess_line;
 

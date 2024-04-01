@@ -6,13 +6,6 @@
 
 
 
-// Scrolling buffer 
-char upbuffer[_SCR_H][_SCR_W*2];
-char downbuffer[_SCR_H][_SCR_W*2];
-int is_scrolled=0;
-int is_shifted_once=0;
-unsigned int last_tab=0;
-int last_x=0, last_y=0;
 
 
 char *VIDEO_MEM = (char*) 0xb8000,

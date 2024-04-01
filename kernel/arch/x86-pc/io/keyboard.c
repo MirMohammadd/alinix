@@ -139,6 +139,7 @@ void keyboard_interrupt_handler(int number)
 	if (scancode < 0x80)
 	{
 		console_add_character(terminal, scancode);
+		console_add_character(terminal,"Hello Kernel!");
 	}
 }
 

@@ -1,17 +1,8 @@
-
-#include <arch/x86-pc/gui/shared.hpp>
-
-#include <arch/x86-pc/gui/ui/gui.hpp>
-
-
-
-#include <arch/x86-pc/gui/gui/widgets/button.hpp>
-
-#include <arch/x86-pc/gui/gui/widgets/control.hpp>
-
-
-#include <arch/x86-pc/gui/gui/widgets/scrollbar.hpp>
-
+#include <new.hpp>
+#include <gui/gui.hpp>
+#include <gui/widgets/button.hpp>
+#include <gui/widgets/control.hpp>
+#include <gui/widgets/scrollbar.hpp>
 #include <gui/widgets/window.hpp>
 #include <gui/directgui.hpp>
 #include <convert.hpp>
@@ -19,7 +10,7 @@
 #include <log.hpp>
 #include <proc.hpp>
 
-using namespace LIBHeisenKernel;
+using namespace LIBCactusOS;
 
 Window* mainWindow = 0;
 

@@ -2,8 +2,7 @@
 #ifndef STRING_H
 #define STRING_H
 
-#include <stddef.h>
-#include <sys/types.h>
+#include "stddef.h"
 
 char *strncpy(char *dest, const char *source, size_t n);
 int strncmp(const char *s1, const char *s2, size_t n);

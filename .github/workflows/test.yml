@@ -23,6 +23,7 @@ jobs:
           tar -xzf gcc-11.2.0.tar.gz
           cd gcc-11.2.0
           ./configure --target=i686-elf --prefix="$HOME/opt/cross" --disable-nls --enable-languages=c,c++ --without-headers
+          i686-elf-gcc --version
 
           
       - name: Run Make Command

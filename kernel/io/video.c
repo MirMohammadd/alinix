@@ -1,4 +1,3 @@
-#include <io/video.h>
 #include <stddef.h>
 #include <string.h>
 #include <arch/x86-pc/io/video.h>

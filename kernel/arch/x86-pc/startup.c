@@ -21,9 +21,7 @@
 #include <io/console.h>
 #include <colorforth/colorforth.h>
 #include <arch/x86-pc/io/video.h>
-#include <gui/widgets/button.hpp>
-
-
+#include <kernel/include/gui/widgets/button.hpp>
 
 /**
  * The kernel entry point. All starts from here!

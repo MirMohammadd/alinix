@@ -1,4 +1,6 @@
 #include <stdint.h>
+
+
 void WriteCharacter(unsigned char c, unsigned char forecolour, unsigned char backcolour, int x, int y){
     uint16_t attrib = (backcolour << 4) | (forecolour & 0x0F);
     volatile uint16_t * where;
@@ -7,4 +9,5 @@ void WriteCharacter(unsigned char c, unsigned char forecolour, unsigned char bac
     // TODO Free this memory space!!!
 
 }
+
 

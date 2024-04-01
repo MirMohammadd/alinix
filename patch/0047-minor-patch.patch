@@ -1,0 +1,37 @@
+From 9694925ef3995edf5a2f63bf2b031de31e7ddad2 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 22:08:28 -0400
+Subject: [PATCH 47/50] minor patch
+
+---
+ kernel/arch/x86-pc/io/video.h | 1 -
+ kernel/io/video.c             | 1 +
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernel/arch/x86-pc/io/video.h b/kernel/arch/x86-pc/io/video.h
+index 6d7ba2a..08ff427 100644
+--- a/kernel/arch/x86-pc/io/video.h
++++ b/kernel/arch/x86-pc/io/video.h
+@@ -47,6 +47,5 @@ void _kntohex (char *, unsigned int);
+ void _knntos(char *, int, int );
+ extern void _kcolor(char color);
+ 
+-unsigned short shell_mess_col, shell_mess_line;
+ 
+ #endif /* _VIDEO_H_HEISEN */
+\ No newline at end of file
+diff --git a/kernel/io/video.c b/kernel/io/video.c
+index 44cb755..96eaea2 100644
+--- a/kernel/io/video.c
++++ b/kernel/io/video.c
+@@ -4,6 +4,7 @@
+ #include <arch/x86-pc/lib/stdarg.h>
+ #include <arch/x86-pc/lib/stddef.h>
+ 
++unsigned short shell_mess_col, shell_mess_line;
+ 
+ 
+ 
+-- 
+2.43.0
+

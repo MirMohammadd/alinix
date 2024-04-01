@@ -1,0 +1,26 @@
+From 7ba2d1db69db66b41b3fb125cc97d1b7c17e664a Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 21:52:35 -0400
+Subject: [PATCH 38/50] Patch
+
+---
+ kernel/arch/x86-pc/io/video.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/kernel/arch/x86-pc/io/video.h b/kernel/arch/x86-pc/io/video.h
+index ff981d0..2bd34d2 100644
+--- a/kernel/arch/x86-pc/io/video.h
++++ b/kernel/arch/x86-pc/io/video.h
+@@ -45,6 +45,8 @@ void _kscrollup();
+ void _kscrolldown();
+ void _kntohex (char *, unsigned int);
+ void _knntos(char *, int, int );
++void _kcolor(char color);
++
+ unsigned short shell_mess_col, shell_mess_line;
+ 
+ #endif /* _VIDEO_H_HEISEN */
+\ No newline at end of file
+-- 
+2.43.0
+

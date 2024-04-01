@@ -1,0 +1,51 @@
+From 158ece80473b5573526ace03abd12b9b36f73a65 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 16:51:32 -0400
+Subject: [PATCH 07/50] Minor updates
+
+---
+ kernel/Makefile       | 1 -
+ kernel/gui/Makefile   | 2 +-
+ kernel/gui/graphics.c | 4 ++--
+ 3 files changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/kernel/Makefile b/kernel/Makefile
+index a41cb2e..376d27f 100644
+--- a/kernel/Makefile
++++ b/kernel/Makefile
+@@ -35,7 +35,6 @@ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
+ 	colorforth/editor.o                     \
+ 	colorforth/compiler.o                   \
+ 	arch/x86-pc/startup.o                   \
+-	gui/graphics.o
+ 
+ KERNEL          = $(BUILD_PATH)/roentgenium.elf
+ MULTIBOOT_IMAGE	= $(BUILD_PATH)/heisen.iso
+diff --git a/kernel/gui/Makefile b/kernel/gui/Makefile
+index 20e4d14..e8499ac 100644
+--- a/kernel/gui/Makefile
++++ b/kernel/gui/Makefile
+@@ -1,2 +1,2 @@
+ all:
+-	$(CC) $(CFLAGS) window.c
+\ No newline at end of file
++	$(CC) $(CFLAGS) window.c graphics.c
+\ No newline at end of file
+diff --git a/kernel/gui/graphics.c b/kernel/gui/graphics.c
+index 54aeda8..1e10e93 100644
+--- a/kernel/gui/graphics.c
++++ b/kernel/gui/graphics.c
+@@ -6,8 +6,8 @@
+  * of the NCSA / University of Illinois License - see LICENSE.md
+  * Copyright (C) 2012-2021 K. Lange
+  */
+-#include "stdint.h" /* For uint32_t, etc. */
+-// #include <string.h>
++#include <stdint.h>
++#include <string.h>
+ #include <stdio.h>
+ #include <math.h>
+ #include <fcntl.h>
+-- 
+2.43.0
+

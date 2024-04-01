@@ -1,0 +1,21 @@
+From d96e3934a7d4cc380a653791a8017ed94241beb7 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 21:34:51 -0400
+Subject: [PATCH 31/50] Patch
+
+---
+ kernel/io/video.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/kernel/io/video.c b/kernel/io/video.c
+index 7411551..b5513c1 100644
+--- a/kernel/io/video.c
++++ b/kernel/io/video.c
+@@ -1,4 +1,3 @@
+-#include <io/video.h>
+ #include <stddef.h>
+ #include <string.h>
+ #include <arch/x86-pc/io/video.h>
+-- 
+2.43.0
+

@@ -1,0 +1,25 @@
+From eb9dc10f68d5b71e6865d1dcdaa54dd39ff837f5 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 21:07:06 -0400
+Subject: [PATCH 23/50] Patch
+
+---
+ .github/workflows/test.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index f44793f..3643d07 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -3,7 +3,7 @@ name: HiesenKernel
+ on:
+   push:
+     branches:
+-      - main  # Adjust branch name as needed
++      - GUI  # Adjust branch name as needed
+ 
+ jobs:
+   build:
+-- 
+2.43.0
+

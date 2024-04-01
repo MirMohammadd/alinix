@@ -1,0 +1,35 @@
+From 9792e2821290a66baf58838ae21a4f5a0021fbbf Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 17:40:00 -0400
+Subject: [PATCH 15/50] Updated the patch
+
+---
+ kernel/Makefile        | 1 -
+ kernel/yutani/Makefile | 2 ++
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+ create mode 100644 kernel/yutani/Makefile
+
+diff --git a/kernel/Makefile b/kernel/Makefile
+index ed8b991..376d27f 100644
+--- a/kernel/Makefile
++++ b/kernel/Makefile
+@@ -35,7 +35,6 @@ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
+ 	colorforth/editor.o                     \
+ 	colorforth/compiler.o                   \
+ 	arch/x86-pc/startup.o                   \
+-	yutani/yutani.o                        \
+ 
+ KERNEL          = $(BUILD_PATH)/roentgenium.elf
+ MULTIBOOT_IMAGE	= $(BUILD_PATH)/heisen.iso
+diff --git a/kernel/yutani/Makefile b/kernel/yutani/Makefile
+new file mode 100644
+index 0000000..b4609df
+--- /dev/null
++++ b/kernel/yutani/Makefile
+@@ -0,0 +1,2 @@
++all:
++	$(CC) $(CFLAGS) yutani.o
+\ No newline at end of file
+-- 
+2.43.0
+

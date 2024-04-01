@@ -1,0 +1,83 @@
+From c7e4e1c2b951b6e43979b71c08c5ab74bc76fde1 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 21:33:58 -0400
+Subject: [PATCH 30/50] Minor update for patch
+
+---
+ kernel/arch/x86-pc/io/video.h | 50 +++++++++++++++++++++++++++++++++++
+ kernel/io/video.c             |  1 +
+ 2 files changed, 51 insertions(+)
+ create mode 100644 kernel/arch/x86-pc/io/video.h
+
+diff --git a/kernel/arch/x86-pc/io/video.h b/kernel/arch/x86-pc/io/video.h
+new file mode 100644
+index 0000000..ff981d0
+--- /dev/null
++++ b/kernel/arch/x86-pc/io/video.h
+@@ -0,0 +1,50 @@
++#ifndef _VIDEO_H_HEISEN
++#define _VIDEO_H_HEISEN
++
++#define _SCR_W 80
++#define _SCR_H 25
++
++#define BLACK 0
++#define BLUE 1
++#define GREEN 2
++#define CYAN 3
++#define RED 4
++#define MAGENTA 5
++#define BROWN 6
++#define GREY 7
++#define DARK_GREY 8
++#define BRIGHT_BLUE 9
++#define BRIGHT_GREEN 10
++#define BRIGHT_CYAN 11
++#define BRIGHT_RED 12
++#define BRIGHT_MAGENTA 13
++#define YELLOW 14
++#define WHITE 15
++
++
++#define OK_POS 70
++
++void _kntos(char*, unsigned int, int);
++void _kputc(char);
++void _kcolor(char);
++void _kputs(char *);
++void _kbackspace();
++void _kesetcursor(unsigned int, unsigned int);
++void _kgoto(int, int);
++void _ksetcursauto();
++void _kshiftAll();
++void _ktab();
++void _kclear();
++void _knewline();
++void _kminline();
++void _kprintOK();
++int _kgetline();
++int _kgetcolumn();
++void _krotate_buffer();
++void _kscrollup();
++void _kscrolldown();
++void _kntohex (char *, unsigned int);
++void _knntos(char *, int, int );
++unsigned short shell_mess_col, shell_mess_line;
++
++#endif /* _VIDEO_H_HEISEN */
+\ No newline at end of file
+diff --git a/kernel/io/video.c b/kernel/io/video.c
+index 0bc1339..7411551 100644
+--- a/kernel/io/video.c
++++ b/kernel/io/video.c
+@@ -1,6 +1,7 @@
+ #include <io/video.h>
+ #include <stddef.h>
+ #include <string.h>
++#include <arch/x86-pc/io/video.h>
+ 
+ char *VIDEO_MEM = (char*) 0xb8000,
+      *VIDEO_PTR = (char*) 0xb8000,
+-- 
+2.43.0
+

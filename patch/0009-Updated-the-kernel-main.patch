@@ -1,0 +1,27 @@
+From 9da1c3fd8225315234c5e516f6418f8c1ebd4375 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 17:02:36 -0400
+Subject: [PATCH 09/50] Updated the kernel main
+
+---
+ kernel/main.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/kernel/main.c b/kernel/main.c
+index 5ae2e06..03ed5ba 100644
+--- a/kernel/main.c
++++ b/kernel/main.c
+@@ -36,6 +36,9 @@ int kmain(multiboot_info_t *info) {
+     
+     while(1)
+         halt();
++        double m[2][3];
++
++		gfx_matrix_identity(m);
+     
+     return 0;
+ }
+\ No newline at end of file
+-- 
+2.43.0
+

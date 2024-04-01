@@ -1,0 +1,24 @@
+From e6da8891180caa858a2588c12db11b23bd920bfd Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 21:50:55 -0400
+Subject: [PATCH 37/50] Patch
+
+---
+ kernel/Makefile | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/kernel/Makefile b/kernel/Makefile
+index 3244769..376d27f 100644
+--- a/kernel/Makefile
++++ b/kernel/Makefile
+@@ -14,7 +14,6 @@ INITRD_PATH     = arch/x86-pc/bootstrap/iso
+ 
+ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
+ 	arch/x86-pc/io/vga.o                    \
+-	io/video.o								\
+ 	arch/x86/mmu/gdt.o                      \
+ 	arch/x86/interrupts/idt.o               \
+ 	arch/x86/interrupts/isr-stubs.o         \
+-- 
+2.43.0
+

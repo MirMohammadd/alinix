@@ -1,0 +1,25 @@
+From 3e58ce39a157c1660ec8e57a6e99911d5192d4ea Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 22:10:19 -0400
+Subject: [PATCH 48/50] Conflict resolved for the merging
+
+---
+ .github/workflows/test.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index 3643d07..f44793f 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -3,7 +3,7 @@ name: HiesenKernel
+ on:
+   push:
+     branches:
+-      - GUI  # Adjust branch name as needed
++      - main  # Adjust branch name as needed
+ 
+ jobs:
+   build:
+-- 
+2.43.0
+

@@ -1,0 +1,38 @@
+From 85793c209431e4092fdc585cca41c2c2f9cecd86 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 21:56:23 -0400
+Subject: [PATCH 40/50] Patch
+
+---
+ kernel/arch/x86-pc/io/video.h | 2 +-
+ kernel/arch/x86-pc/startup.c  | 1 -
+ 2 files changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/kernel/arch/x86-pc/io/video.h b/kernel/arch/x86-pc/io/video.h
+index 2bd34d2..6d7ba2a 100644
+--- a/kernel/arch/x86-pc/io/video.h
++++ b/kernel/arch/x86-pc/io/video.h
+@@ -45,7 +45,7 @@ void _kscrollup();
+ void _kscrolldown();
+ void _kntohex (char *, unsigned int);
+ void _knntos(char *, int, int );
+-void _kcolor(char color);
++extern void _kcolor(char color);
+ 
+ unsigned short shell_mess_col, shell_mess_line;
+ 
+diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.c
+index e1e2ba3..22b7f8d 100644
+--- a/kernel/arch/x86-pc/startup.c
++++ b/kernel/arch/x86-pc/startup.c
+@@ -22,7 +22,6 @@
+ #include <colorforth/colorforth.h>
+ #include <arch/x86-pc/io/video.h>
+ 
+-void _kcolor(char color);
+ 
+ /**
+  * The kernel entry point. All starts from here!
+-- 
+2.43.0
+

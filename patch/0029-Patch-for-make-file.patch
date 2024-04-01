@@ -1,0 +1,32 @@
+From 512bff5421d664712630dd54933726c7c5ba4782 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 21:30:19 -0400
+Subject: [PATCH 29/50] Patch for make file
+
+---
+ kernel/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernel/Makefile b/kernel/Makefile
+index dd80f3d..3244769 100644
+--- a/kernel/Makefile
++++ b/kernel/Makefile
+@@ -14,6 +14,7 @@ INITRD_PATH     = arch/x86-pc/bootstrap/iso
+ 
+ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
+ 	arch/x86-pc/io/vga.o                    \
++	io/video.o								\
+ 	arch/x86/mmu/gdt.o                      \
+ 	arch/x86/interrupts/idt.o               \
+ 	arch/x86/interrupts/isr-stubs.o         \
+@@ -35,7 +36,6 @@ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
+ 	colorforth/editor.o                     \
+ 	colorforth/compiler.o                   \
+ 	arch/x86-pc/startup.o                   \
+-	io/video.o
+ 
+ KERNEL          = $(BUILD_PATH)/roentgenium.elf
+ MULTIBOOT_IMAGE	= $(BUILD_PATH)/heisen.iso
+-- 
+2.43.0
+

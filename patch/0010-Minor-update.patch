@@ -1,0 +1,36 @@
+From 0e759bd736004abb5b22ad323056b0c4b529d08c Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 17:08:39 -0400
+Subject: [PATCH 10/50] Minor update
+
+---
+ kernel/main.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/kernel/main.c b/kernel/main.c
+index 03ed5ba..2872936 100644
+--- a/kernel/main.c
++++ b/kernel/main.c
+@@ -9,6 +9,7 @@
+ #include <drivers/video.h>
+ #include <proc/sched.h>
+ #include "graphics.h"
++#include "terminal.h"
+ int kmain(multiboot_info_t *info) {
+     
+     video_init(25, 80);
+@@ -36,9 +37,7 @@ int kmain(multiboot_info_t *info) {
+     
+     while(1)
+         halt();
+-        double m[2][3];
+-
+-		gfx_matrix_identity(m);
++        terminal_writeline("Hello World");
+     
+     return 0;
+ }
+\ No newline at end of file
+-- 
+2.43.0
+

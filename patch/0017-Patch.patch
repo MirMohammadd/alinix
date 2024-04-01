@@ -1,0 +1,62 @@
+From d042a8376d70e2f65ef65cff6f5aee99ebce4105 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 19:13:09 -0400
+Subject: [PATCH 17/50] Patch
+
+---
+ kernel/arch/x86-pc/startup.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
+
+diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.c
+index c987229..bd47bb0 100644
+--- a/kernel/arch/x86-pc/startup.c
++++ b/kernel/arch/x86-pc/startup.c
+@@ -22,6 +22,32 @@
+ #include <colorforth/colorforth.h>
+ 
+ 
++
++#define VGA_TEXT_BUFFER_ADDR 0xB8000
++#define VGA_WIDTH 80
++#define VGA_HEIGHT 25
++#define VGA_ATTRIBUTE_BYTE 0x0F // White text on black background
++
++void print_string(const char *str) {
++    uint16_t *vga_buffer = (uint16_t*)VGA_TEXT_BUFFER_ADDR;
++    int offset = 0;
++    
++    // Loop through the string and print each character
++    while (*str != '\0') {
++        if (*str == '\n') {
++            // Move to the next line
++            offset += VGA_WIDTH - offset % VGA_WIDTH;
++        } else {
++            // Write the character and attribute byte to the VGA buffer
++            vga_buffer[offset] = (uint16_t)(*str) | (uint16_t)(VGA_ATTRIBUTE_BYTE << 8);
++            ++offset;
++        }
++        // Move to the next character in the string
++        ++str;
++    }
++}
++
++
+ /**
+  * The kernel entry point. All starts from here!
+  */
+@@ -78,9 +104,12 @@ void roentgenium_main(uint32_t magic, uint32_t address)
+     // Enable interrupts
+     asm volatile("sti");
+ 
++    print_string("Hello world");
++
+     // Console
+     console_setup(&cons, vga_display_character);
+ 
++
+     // colorForth
+     colorforth_initialize();
+ 
+-- 
+2.43.0
+

@@ -1,0 +1,225 @@
+From 6f2f986a453341141541b01b48bc91c06e4b19b0 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 21:42:07 -0400
+Subject: [PATCH 32/50] Patch
+
+---
+ kernel/arch/x86-pc/lib/ctype.h  | 18 ++++++++++
+ kernel/arch/x86-pc/lib/stdarg.h | 20 +++++++++++
+ kernel/arch/x86-pc/lib/stddef.h | 29 ++++++++++++++++
+ kernel/arch/x86-pc/lib/stdio.h  | 25 ++++++++++++++
+ kernel/arch/x86-pc/lib/string.h | 61 +++++++++++++++++++++++++++++++++
+ kernel/io/video.c               |  6 ++--
+ 6 files changed, 157 insertions(+), 2 deletions(-)
+ create mode 100644 kernel/arch/x86-pc/lib/ctype.h
+ create mode 100644 kernel/arch/x86-pc/lib/stdarg.h
+ create mode 100644 kernel/arch/x86-pc/lib/stddef.h
+ create mode 100644 kernel/arch/x86-pc/lib/stdio.h
+ create mode 100644 kernel/arch/x86-pc/lib/string.h
+
+diff --git a/kernel/arch/x86-pc/lib/ctype.h b/kernel/arch/x86-pc/lib/ctype.h
+new file mode 100644
+index 0000000..5c7d432
+--- /dev/null
++++ b/kernel/arch/x86-pc/lib/ctype.h
+@@ -0,0 +1,18 @@
++#ifndef __CTYPE_H
++#define __CTYPE_H
++
++#define OFFSET 32 /* Distance from a uppercase character to the correspondent lowercase in ASCII */
++
++int isdigit(int c);
++int isalpha(int c);
++int isalnum(int c);
++int isxdigit(int c);
++int islower(int c);
++int isupper(int c);
++int tolower(int c);
++int toupper(int c);
++int isspace(int c);
++int iscntrl(int c);
++int ispunct(int c);
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/lib/stdarg.h b/kernel/arch/x86-pc/lib/stdarg.h
+new file mode 100644
+index 0000000..1530876
+--- /dev/null
++++ b/kernel/arch/x86-pc/lib/stdarg.h
+@@ -0,0 +1,20 @@
++#ifndef LIBCSTDARGH
++#define	LIBCSTDARGH
++
++typedef char *va_list;
++
++#define	STACKITEM	int
++
++#define	VA_SIZE(TYPE)					\
++	((sizeof(TYPE) + sizeof(STACKITEM) - 1)	\
++		& ~(sizeof(STACKITEM) - 1))
++
++#define	va_start(AP, LASTARG)	\
++	(AP=((va_list)&(LASTARG) + VA_SIZE(LASTARG)))
++
++#define va_end(AP)
++
++#define va_arg(AP, TYPE)	\
++	(AP += VA_SIZE(TYPE), *((TYPE *)(AP - VA_SIZE(TYPE))))
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/lib/stddef.h b/kernel/arch/x86-pc/lib/stddef.h
+new file mode 100644
+index 0000000..92bbba9
+--- /dev/null
++++ b/kernel/arch/x86-pc/lib/stddef.h
+@@ -0,0 +1,29 @@
++#ifndef __STDDEF__H
++#define __STDDEF__H
++
++#ifndef NULL
++#define NULL ((void*)0)
++#endif
++
++#ifndef EOF
++#define EOF (-1)
++#endif
++
++#define BUFSIZ 512
++
++#define KERNEL_SIZE 0x200
++
++#ifndef TRUE 
++#define TRUE 1
++#endif
++
++#ifndef FALSE
++#define FALSE 0 
++#endif
++
++typedef unsigned int size_t;
++typedef unsigned long long qword;
++typedef unsigned short int ushort;
++typedef unsigned char byte;
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/lib/stdio.h b/kernel/arch/x86-pc/lib/stdio.h
+new file mode 100644
+index 0000000..eab2d99
+--- /dev/null
++++ b/kernel/arch/x86-pc/lib/stdio.h
+@@ -0,0 +1,25 @@
++
++
++#ifndef _STDIO_H
++#define _STDIO_H
++
++#include <stdarg.h>
++
++#define MAX_DIGITS_IN_INTEGER 11
++
++#ifndef EOF
++#define EOF (-1)
++#endif
++
++void putchar (char ch);
++int atoi (const char *);
++int printf (const char *, ...);
++int puts (char *s);
++int scanf (const char *, ...);
++char *gets (char *);
++int getchar (void);
++
++int vsprintf(char *buf, const char *fmt, va_list args);
++int sprintf(char *buf, const char *fmt, ...);
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/lib/string.h b/kernel/arch/x86-pc/lib/string.h
+new file mode 100644
+index 0000000..7a8317c
+--- /dev/null
++++ b/kernel/arch/x86-pc/lib/string.h
+@@ -0,0 +1,61 @@
++
++#ifndef STRING_H
++#define STRING_H
++
++#include <stddef.h>
++#include <sys/types.h>
++
++char *strncpy(char *dest, const char *source, size_t n);
++int strncmp(const char *s1, const char *s2, size_t n);
++int stricmp(const char *s1, const char *s2);
++int strnicmp(const char *s1, const char *s2, size_t n);
++char *strchr(const char *s, int ch);
++char *strrchr(const char *s, int ch);
++char *strstr(const char *s1, const char *s2);
++size_t strspn(const char *string, const char *control);
++size_t strcspn(const char *string, const char *control);
++char *strpbrk(const char *string, const char *control);
++
++int strcasecmp(const char *s1, const char *s2);
++int strncasecmp(const char *s1, const char *s2, size_t n);
++
++int strcoll(const char *s1, const char *s2);
++
++char *strdup(const char *s);
++
++char *strlwr(char *s);
++char *strupr(char *s);
++
++char *strncat(char *s1, const char *s2, size_t n);
++char *strnset(char *s, int c, size_t n);
++char *strset(char *s, int c);
++char *strrev(char *s);
++char *strtok(char *string, const char *control);
++char *strtok_r(char *string, const char *control, char **lasts);
++
++char *strerror(int errnum);
++char *strsignal(int signum);
++
++void *memmove(void *dst, const void *src, size_t n);
++void *memchr(const void *buf, int ch, size_t n);
++
++void *memccpy(void *dst, const void *src, int c, size_t n);
++int memicmp(const void *buf1, const void *buf2, size_t n);
++
++// Intrinsic functions
++
++void *memcpy(void *, const void *, size_t);
++int memcmp(const void *, const void *, size_t);
++void *memset(void *, int, size_t);
++
++char *strcpy(char *, const char *);
++char *strcat(char *, const char *);
++int strcmp(const char *, const char *);
++size_t strlen(const char *);
++
++// Written by shainer
++
++char *strtok (char *, const char *);
++int _kstrncmp (const char *, const char *, int);
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/io/video.c b/kernel/io/video.c
+index b5513c1..d8fbb4e 100644
+--- a/kernel/io/video.c
++++ b/kernel/io/video.c
+@@ -1,6 +1,8 @@
+-#include <stddef.h>
+-#include <string.h>
++#include <arch/x86-pc/lib/stdio.h>
++#include <arch/x86-pc/lib/string.h>
+ #include <arch/x86-pc/io/video.h>
++#include <arch/x86-pc/lib/stdarg.h>
++#include <arch/x86-pc/lib/stddef.h>
+ 
+ char *VIDEO_MEM = (char*) 0xb8000,
+      *VIDEO_PTR = (char*) 0xb8000,
+-- 
+2.43.0
+

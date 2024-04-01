@@ -1,0 +1,24 @@
+From f6e5006a69429343d52d435a5c7629024727e51f Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 22:01:56 -0400
+Subject: [PATCH 44/50] Patch
+
+---
+ kernel/Makefile | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/kernel/Makefile b/kernel/Makefile
+index d065f55..f121eef 100644
+--- a/kernel/Makefile
++++ b/kernel/Makefile
+@@ -35,7 +35,6 @@ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
+ 	colorforth/editor.o                     \
+ 	colorforth/compiler.o                   \
+ 	arch/x86-pc/startup.o                   \
+-	io/video.o								\
+ 
+ 
+ KERNEL          = $(BUILD_PATH)/roentgenium.elf
+-- 
+2.43.0
+

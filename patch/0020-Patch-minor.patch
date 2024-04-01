@@ -1,0 +1,25 @@
+From dc8b27cc335bafc1f7c2ded96f9bd13a677dc176 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 19:24:15 -0400
+Subject: [PATCH 20/50] Patch minor
+
+---
+ kernel/arch/x86-pc/io/vga.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernel/arch/x86-pc/io/vga.c b/kernel/arch/x86-pc/io/vga.c
+index fbb648d..b6f923e 100644
+--- a/kernel/arch/x86-pc/io/vga.c
++++ b/kernel/arch/x86-pc/io/vga.c
+@@ -159,7 +159,7 @@ void vga_display_character(uchar_t character)
+ 				symbol.position_x += 4;
+ 			break;
+ 		
+-		case KEY_F7:
++		case KEY_ESCAPE:
+ 			*video = "Welcome to the Heisen Kernel!";
+ 			*(video+1) = symbol.attributes;
+ 
+-- 
+2.43.0
+

@@ -1,0 +1,25 @@
+From 5b212b3d9606f4e74dd24bf3d32b0da57deb9804 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 21:49:42 -0400
+Subject: [PATCH 36/50] Patch
+
+---
+ kernel/arch/x86-pc/startup.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.c
+index f1c4ffb..22b7f8d 100644
+--- a/kernel/arch/x86-pc/startup.c
++++ b/kernel/arch/x86-pc/startup.c
+@@ -20,7 +20,7 @@
+ #include <threading/scheduler.h>
+ #include <io/console.h>
+ #include <colorforth/colorforth.h>
+-#include <io/video.h>
++#include <arch/x86-pc/io/video.h>
+ 
+ 
+ /**
+-- 
+2.43.0
+

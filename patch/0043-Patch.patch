@@ -1,0 +1,25 @@
+From 1746b741f7cfd1b2098b3e30e13594d4b2b5b1fd Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 22:00:02 -0400
+Subject: [PATCH 43/50] Patch
+
+---
+ src/include/io/video.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/include/io/video.h b/src/include/io/video.h
+index fe1c643..11a9b41 100644
+--- a/src/include/io/video.h
++++ b/src/include/io/video.h
+@@ -45,6 +45,6 @@ void _kscrollup();
+ void _kscrolldown();
+ void _kntohex (char *, unsigned int);
+ void _knntos(char *, int, int );
+-unsigned short shell_mess_col, shell_mess_line;
++// unsigned short shell_mess_col, shell_mess_line;
+ 
+ #endif /* _VIDEO_H */
+\ No newline at end of file
+-- 
+2.43.0
+

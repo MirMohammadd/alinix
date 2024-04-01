@@ -1,0 +1,90 @@
+From 596c8c9cf95524610782c8d942cb2d65360562a5 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 21:17:26 -0400
+Subject: [PATCH 25/50] Minor patch
+
+---
+ kernel/terminal/commands.c | 62 +++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 61 insertions(+), 1 deletion(-)
+
+diff --git a/kernel/terminal/commands.c b/kernel/terminal/commands.c
+index a5dd61f..ef4c41d 100644
+--- a/kernel/terminal/commands.c
++++ b/kernel/terminal/commands.c
+@@ -5,6 +5,9 @@
+ #include "commands.h"
+ #include "shell.h"
+ 
++#include <stddef.h>
++#include <dirent.h>
++
+ int argc;
+ char **argv;
+ 
+@@ -59,4 +62,61 @@ void newfile(){
+ 
+ void whoami(){
+     printf("%s\n", current_user.username);
+-}
+\ No newline at end of file
++}
++
++void cd( ){
++	//char *relpath;		
++	char abspath[CURPATH_LEN];
++	DIR *dirp=NULL;	
++	if(argc != 2) {
++		printf("Bad usage. Try 'ls -l' and then 'cd dir'.\n");
++		return;
++	} else {
++		int i=0;
++		//int rel_size = 0;		
++		memset(abspath, '\0', CURPATH_LEN);				
++		if(argv[1][0] == '/') {
++			i = get_mountpoint_id(argv[1]);		
++			strcpy(abspath, argv[1]);
++			//printf("abspath: %s\n", abspath);
++			dirp=opendir(argv[1]);
++		}
++		else if(!strncmp(argv[1], "..", 2)) {
++			printf(".. option %s\n", argv[1]);
++			return;
++		}
++		else if(argv[1][0]=='.') {
++			//printf(". option\n");			
++			if(strlen(argv[1]) == 1) return;
++			else printf("str_len: %d\n", strlen(argv[1]));
++		}		
++		else {			
++			int abs_size = 0;			
++			abs_size = strlen(current_user.cur_path);
++			strcpy(abspath, current_user.cur_path);
++			if(abspath[abs_size-1] == '/')
++				strncat(abspath, argv[1], strlen(argv[1]));
++			else {
++				strncat(abspath, "/", strlen(argv[1]));
++				strncat(abspath, argv[1], strlen(argv[1]));
++			}	
++			dirp=opendir(abspath);			
++		}		
++		if(dirp!=NULL){			
++			closedir(dirp);
++		}		
++		//rel_size = strlen(argv[1]) - strlen(mountpoint_list[i].mountpoint);
++		if(i == -1) {			
++			printf("cd: %s: No such file or directory\n", argv[1]);
++			return;
++		}
++		else {
++			strcpy(current_user.cur_path, abspath);
++		}
++		/*if(rel_size >0){
++			relpath = get_rel_path(i, argv[1]);
++			free(relpath);
++		}*/
++	}
++}
++
+-- 
+2.43.0
+

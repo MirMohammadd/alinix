@@ -1,0 +1,39 @@
+From df49ffe140eaaeb25ecf603959f6fc96544a03af Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 16:14:53 -0400
+Subject: [PATCH 04/50] Minor
+
+---
+ .github/workflows/test.yml | 2 +-
+ kernel/gui/graphics.c      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index aa843f1..ae00431 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -16,7 +16,7 @@ jobs:
+       - name: Install Dependencies
+         run: |
+           sudo apt-get update
+-          sudo apt-get install -y build-essential git wget bzip2 xz-utils unzip help2man libtool-bin nasm python2 python3 python-pip grub-common xorriso mtools
++          sudo apt-get install -y build-essential git wget bzip2 xz-utils unzip help2man libtool-bin nasm python2 python3 python-pip grub-common xorriso mtools  build-essential
+           python2 -m pip install -r kernel/requirements.txt
+           
+       - name: Run Make Command
+diff --git a/kernel/gui/graphics.c b/kernel/gui/graphics.c
+index 00ecca5..1e10e93 100644
+--- a/kernel/gui/graphics.c
++++ b/kernel/gui/graphics.c
+@@ -6,7 +6,7 @@
+  * of the NCSA / University of Illinois License - see LICENSE.md
+  * Copyright (C) 2012-2021 K. Lange
+  */
+-#include "stdint.h"
++#include <stdint.h>
+ #include <string.h>
+ #include <stdio.h>
+ #include <math.h>
+-- 
+2.43.0
+

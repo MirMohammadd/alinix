@@ -1,0 +1,114 @@
+From 1517ad55e50bf82013501540226942314f72bb5e Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 21:15:31 -0400
+Subject: [PATCH 24/50] Update for the kernel
+
+---
+ kernel/lib/stdio.c         | 18 ++++++++++++++++
+ kernel/lib/stdio.h         |  6 ++++++
+ kernel/terminal/commands.c | 43 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 67 insertions(+)
+ create mode 100644 kernel/lib/stdio.c
+ create mode 100644 kernel/lib/stdio.h
+
+diff --git a/kernel/lib/stdio.c b/kernel/lib/stdio.c
+new file mode 100644
+index 0000000..de8393e
+--- /dev/null
++++ b/kernel/lib/stdio.c
+@@ -0,0 +1,18 @@
++#include <libc/stdarg.h>
++
++
++int printf (const char *format, ...)
++{
++    va_list ap;
++    int len=0;
++    	
++    /* Start variabile argument's list */
++    va_start (ap, format);
++	char buffer[1024];
++
++	len = vsprintf(buffer, format, ap);
++	_kputs(buffer);
++    va_end (ap); // end of arguments
++
++    return len;
++}
+\ No newline at end of file
+diff --git a/kernel/lib/stdio.h b/kernel/lib/stdio.h
+new file mode 100644
+index 0000000..1794b1c
+--- /dev/null
++++ b/kernel/lib/stdio.h
+@@ -0,0 +1,6 @@
++#ifndef _HEISEN_KERNEL_STDIO_H
++#define _HEISEN_KERNEL_STDIO_H
++
++extern int printf(const char *format, ...);
++
++#endif 
+\ No newline at end of file
+diff --git a/kernel/terminal/commands.c b/kernel/terminal/commands.c
+index 94a5d06..a5dd61f 100644
+--- a/kernel/terminal/commands.c
++++ b/kernel/terminal/commands.c
+@@ -1,6 +1,12 @@
+ #include <io/video.h>
++#include <lib/stdio.h>
++#include <fcntl.h>
+ 
+ #include "commands.h"
++#include "shell.h"
++
++int argc;
++char **argv;
+ 
+ void alogo(){
+     _kcolor(BRIGHT_GREEN);
+@@ -16,4 +22,41 @@ void alogo(){
+ 
+ void help(){
+ 
++}
++
++void pwd(){
++    printf("%s\n",current_user.cur_path);
++}
++
++
++void newfile(){
++	if(argc!=2){
++		printf("Bad usage. Try newfile --help for more informations\n");
++	}
++	else {
++		if(strcmp(argv[1], "--help")==0) {
++			printf("newfile FILENAME - Make a new file, and prompt for it's content\n");
++		}
++		else {
++			int fd;			
++			fd = open(argv[1], O_RDONLY);
++			if(fd>=0) printf("-ERROR: %s File already exist\n", argv[1]);
++			else {
++				char text[256];
++				printf("Filename: %s\n", argv[1]);
++				close(fd);
++				fd = open(argv[1], O_RDWR|O_CREAT|O_APPEND);		
++				if(fd>=0){ 
++					printf("Type your text here, actually only one line available!!\n");
++					scanf("%s", text);
++					write(fd,text, strlen(text));
++					if(close(fd)==-1) printf("something went wrong\n");
++				}
++			}
++		}
++	}
++}
++
++void whoami(){
++    printf("%s\n", current_user.username);
+ }
+\ No newline at end of file
+-- 
+2.43.0
+

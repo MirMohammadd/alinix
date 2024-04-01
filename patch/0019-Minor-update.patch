@@ -1,0 +1,63 @@
+From 8b9a9df902c908a8ab48f090ab5ad4942e3c518a Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 19:22:53 -0400
+Subject: [PATCH 19/50] Minor update
+
+---
+ kernel/arch/x86-pc/io/keyboard.h |  1 +
+ kernel/arch/x86-pc/io/vga.c      | 16 ++++++++++++++++
+ kernel/arch/x86-pc/startup.c     |  1 -
+ 3 files changed, 17 insertions(+), 1 deletion(-)
+
+diff --git a/kernel/arch/x86-pc/io/keyboard.h b/kernel/arch/x86-pc/io/keyboard.h
+index 4123a15..984279a 100644
+--- a/kernel/arch/x86-pc/io/keyboard.h
++++ b/kernel/arch/x86-pc/io/keyboard.h
+@@ -84,4 +84,5 @@ void keyboard_setup(struct console *term);
+ 
+ char keyboard_get_keymap(uchar_t i);
+ 
++
+ #endif // _KEYBOARD_H_
+diff --git a/kernel/arch/x86-pc/io/vga.c b/kernel/arch/x86-pc/io/vga.c
+index 12045fb..fbb648d 100644
+--- a/kernel/arch/x86-pc/io/vga.c
++++ b/kernel/arch/x86-pc/io/vga.c
+@@ -158,6 +158,22 @@ void vga_display_character(uchar_t character)
+ 			else
+ 				symbol.position_x += 4;
+ 			break;
++		
++		case KEY_F7:
++			*video = "Welcome to the Heisen Kernel!";
++			*(video+1) = symbol.attributes;
++
++		if (symbol.position_x > VGA_COLUMNS_MAX_INDEX)
++			{
++				symbol.position_x = 0;
++				symbol.position_y++;
++			}
++
++			if (symbol.position_y > VGA_LINES_MAX_INDEX)
++				vga_scroll_up(symbol.position_y - VGA_LINES_MAX_INDEX);
++	
++
++
+ 
+ 		default: /* Other characters */
+ 			*video     = character;
+diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.c
+index 08e1a60..ffcbf49 100644
+--- a/kernel/arch/x86-pc/startup.c
++++ b/kernel/arch/x86-pc/startup.c
+@@ -122,7 +122,6 @@ void roentgenium_main(uint32_t magic, uint32_t address)
+     // Enable interrupts
+     asm volatile("sti");
+ 
+-    print_string("Hello world");
+ 
+     // Console
+     console_setup(&cons, vga_display_character);
+-- 
+2.43.0
+

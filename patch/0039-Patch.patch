@@ -1,0 +1,24 @@
+From 3ffdec3e0e2be2f2447420c8f332b6ddc3c39fa1 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 21:53:58 -0400
+Subject: [PATCH 39/50] Patch
+
+---
+ kernel/arch/x86-pc/startup.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.c
+index 22b7f8d..e1e2ba3 100644
+--- a/kernel/arch/x86-pc/startup.c
++++ b/kernel/arch/x86-pc/startup.c
+@@ -22,6 +22,7 @@
+ #include <colorforth/colorforth.h>
+ #include <arch/x86-pc/io/video.h>
+ 
++void _kcolor(char color);
+ 
+ /**
+  * The kernel entry point. All starts from here!
+-- 
+2.43.0
+

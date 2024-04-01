@@ -1,0 +1,30 @@
+From df072dba0bfc8b1db8960670b9dc29818bc402a8 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 21:48:24 -0400
+Subject: [PATCH 35/50] Minor patch
+
+---
+ kernel/io/video.c | 7 -------
+ 1 file changed, 7 deletions(-)
+
+diff --git a/kernel/io/video.c b/kernel/io/video.c
+index f38bec3..44cb755 100644
+--- a/kernel/io/video.c
++++ b/kernel/io/video.c
+@@ -6,13 +6,6 @@
+ 
+ 
+ 
+-// Scrolling buffer 
+-char upbuffer[_SCR_H][_SCR_W*2];
+-char downbuffer[_SCR_H][_SCR_W*2];
+-int is_scrolled=0;
+-int is_shifted_once=0;
+-unsigned int last_tab=0;
+-int last_x=0, last_y=0;
+ 
+ 
+ char *VIDEO_MEM = (char*) 0xb8000,
+-- 
+2.43.0
+

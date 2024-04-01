@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - Caps  # Adjust branch name as needed
+      - main
 
 jobs:
   build:

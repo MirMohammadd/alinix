@@ -47,6 +47,6 @@ void _kntohex (char *, unsigned int);
 void _knntos(char *, int, int );
 extern void _kcolor(char color);
 
-// unsigned short shell_mess_col, shell_mess_line;
+unsigned short shell_mess_col, shell_mess_line;
 
 #endif /* _VIDEO_H_HEISEN */

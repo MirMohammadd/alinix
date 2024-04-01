@@ -23,6 +23,8 @@
 #include <arch/x86-pc/io/video.h>
 
 
+
+
 /**
  * The kernel entry point. All starts from here!
  */

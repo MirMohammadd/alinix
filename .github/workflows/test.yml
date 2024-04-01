@@ -3,7 +3,8 @@ name: HiesenKernel
 on:
   push:
     branches:
-      - main  # Adjust branch name as needed
+      - Caps  # Adjust branch name as needed
+      - main
 
 jobs:
   build:
@@ -16,10 +17,23 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential git wget bzip2 xz-utils unzip help2man libtool-bin nasm python2 python3 python-pip grub-common xorriso mtools  build-essential
+          sudo apt-get install -y build-essential git wget bzip2 xz-utils unzip help2man libtool-bin nasm python2 python3 python-pip grub-common xorriso mtools  build-essential build-essential gcc-multilib g++-multilib build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo  
           python2 -m pip install -r kernel/requirements.txt
+          wget https://ftp.gnu.org/gnu/gcc/gcc-11.2.0/gcc-11.2.0.tar.gz
+          tar -xzf gcc-11.2.0.tar.gz
+          cd gcc-11.2.0
+          ./configure --target=i686-elf --prefix="$HOME/opt/cross" --disable-nls --enable-languages=c,c++ --without-headers
+          make
+          sudo make install
+          i686-elf-gcc --version
+
+
+
           
       - name: Run Make Command
         run: |
           cd kernel
+          make
+          cd ..
+          cd apps 
           make

@@ -86,7 +86,6 @@ void roentgenium_main(uint32_t magic, uint32_t address)
     uint16_t buffer_len = sizeof(buff) - 1; // -1 to exclude the null terminator
 
     // Call console_write to write the buff to the console
-    console_write(&cons, buff, buffer_len);
 
 
     // colorForth

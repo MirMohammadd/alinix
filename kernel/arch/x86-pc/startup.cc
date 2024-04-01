@@ -22,6 +22,17 @@
 #include <colorforth/colorforth.h>
 #include <arch/x86-pc/io/video.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+// Include the C++ header file here
+    #include <arch/x86-pc/gui/shared.hpp>
+
+
+#ifdef __cplusplus
+}
+#endif
 
 
 /**

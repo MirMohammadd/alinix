@@ -1,5 +1,8 @@
-#include <arch/x86-pc/gui/new.hpp>
-#include <arch/x86-pc/gui/gui/gui.hpp>
+
+#include <arch/x86-pc/gui/shared.hpp>
+
+#include <arch/x86-pc/gui/ui/gui.hpp>
+
 
 
 #include <arch/x86-pc/gui/gui/widgets/button.hpp>

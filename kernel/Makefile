@@ -14,6 +14,7 @@ INITRD_PATH     = arch/x86-pc/bootstrap/iso
 
 OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
 	arch/x86-pc/io/vga.o                    \
+	io/video.o								\
 	arch/x86/mmu/gdt.o                      \
 	arch/x86/interrupts/idt.o               \
 	arch/x86/interrupts/isr-stubs.o         \
@@ -35,7 +36,6 @@ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
 	colorforth/editor.o                     \
 	colorforth/compiler.o                   \
 	arch/x86-pc/startup.o                   \
-	io/video.o
 
 KERNEL          = $(BUILD_PATH)/roentgenium.elf
 MULTIBOOT_IMAGE	= $(BUILD_PATH)/heisen.iso

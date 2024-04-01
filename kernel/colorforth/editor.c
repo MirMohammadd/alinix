@@ -91,7 +91,12 @@ handle_input(uchar_t scancode)
 	static bool_t escape = FALSE;
 	static uint8_t i = 0;
 	static char word[32];
+	static bool_t capsLock = FALSE;
 
+	if (scancode == capsLock){
+		capsLock = TRUE;
+		return;
+	}
 	if (scancode == KEY_ESCAPE)
 	{
 		escape = TRUE;
@@ -153,6 +158,10 @@ handle_input(uchar_t scancode)
 			default:
 				;
 		}
+	}
+
+	if (capsLock){
+		return keyboard_special_caps_keys(scancode);
 	}
 
 	switch(scancode)

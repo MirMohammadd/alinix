@@ -155,56 +155,56 @@ void keyboard_setup(struct console *term)
 
 char keyboard_special_caps_keys(char key){
 	switch (key){
-			case 'a':
+			case A_KEY:
 				return "A";
-			case 'b':
+			case B_KEY:
 				return "B";
-			case 'c':
+			case C_KEY:
 				return "C";
-			case 'd':
+			case D_KEY:
 				return "D";
-			case 'e':
+			case E_KEY:
 				return "E";
-			case 'f':
+			case F_KEY:
 				return "F";
-			case 'g':
+			case G_KEY:
 				return "G";
-			case 'h':
+			case H_KEY:
 				return "H";
-			case 'i':
+			case I_KEY:
 				return "I";
-			case 'j':
+			case J_KEY:
 				return "J";
-			case  'k':
+			case  K_KEY:
 				return "K";
-			case 'l':
+			case L_KEY:
 				return  "L";
-			case 'm':
+			case M_KEY:
 				return  "M";
-			case  'n':
+			case  N_KEY:
 				return   "N";
 			case 'o':
 				return   "O";
-			case 'p':
+			case P_KEY:
 				return "P";
-			case 'q':
+			case Q_KEY:
 				return "Q";
-			case  'r':
+			case  R_KEY:
 				return "R";
-			case  's':
+			case  S_KEY:
 				return "S";
-			case  't':
+			case  T_KEY:
 				return  "T";
-			case  'u':
+			case  U_KEY:
 				return  "U";
-			case 'v':
+			case V_KEY:
 				return "V";
-			case  'w':
+			case  W_KEY:
 				return "W";
-			case  'x' : return "X";
+			case  X_KEY : return "X";
 
-			case 'y': return  "Y";
+			case Y_KEY: return  "Y";
 
-			case 'z':return "Z";
+			case Z_KEY:return "Z";
 		}
 	}

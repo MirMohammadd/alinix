@@ -24,3 +24,5 @@ jobs:
         run: |
           cd kernel
           make
+          cd arch/x86-pc
+          make

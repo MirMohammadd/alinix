@@ -1,7 +1,7 @@
 #ifndef _HEISEN_SHARED_HPP
 #define _HEISEN_SHARED_HPP
 
-#include <types.hpp>
+#include "types.hpp"
 
 namespace LIBHeisenKernel
 {

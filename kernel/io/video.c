@@ -4,6 +4,7 @@
 #include <arch/x86-pc/lib/stdarg.h>
 #include <arch/x86-pc/lib/stddef.h>
 
+unsigned short shell_mess_col, shell_mess_line;
 
 
 

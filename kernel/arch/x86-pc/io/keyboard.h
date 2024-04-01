@@ -77,6 +77,35 @@
 #define PAGEUP 73
 #define PAGEDOWN 81
 
+
+/*Keyboard key scancode defined here (ascii)*/
+#define Q_KEY 0x18
+#define W_KEY 0x19
+#define E_KEY 0x1A
+#define R_KEY 0x1B
+#define T_KEY 0x1C
+#define Y_KEY 0x1D
+#define U_KEY 0x1E
+#define I_KEY 0x1F
+#define O_KEY 0x20
+#define P_KEY 0x21
+#define A_KEY 0x26
+#define S_KEY 0x27
+#define D_KEY 0x20
+#define F_KEY 0x29
+#define G_KEY 0x2A
+#define H_KEY 0x2B
+#define J_KEY 0x2C
+#define K_KEY 0X2D
+#define L_KEY 0x2E
+#define Z_KEY 0x35
+#define X_KEY 0x36
+#define C_KEY 0x37
+#define V_KEY 0x38
+#define B_KEY 0x39
+#define N_KEY 0x3B
+#define M_KEY 0x3C
+
 /** Handles keyboard
  *
  * @param r Registers status during the interrupt

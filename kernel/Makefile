@@ -14,7 +14,6 @@ INITRD_PATH     = arch/x86-pc/bootstrap/iso
 
 OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
 	arch/x86-pc/io/vga.o                    \
-	io/video.o								\
 	arch/x86/mmu/gdt.o                      \
 	arch/x86/interrupts/idt.o               \
 	arch/x86/interrupts/isr-stubs.o         \

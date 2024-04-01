@@ -120,3 +120,25 @@ void cd( ){
 	}
 }
 
+void more(){
+	if(argc==1) 
+		printf("Usage:\n\t more filename\nfor read a file\n");
+	else {
+		if(argc<3) {
+			int i;
+			char buf;
+			//printf("File to open: %s\n", argv[1]);
+			i = open(argv[1], O_RDONLY, 42);
+			if(i>-1) {
+				int j=0;		
+				while(read(i, &buf, 1)!= (int) NULL) {
+					putchar(buf);			
+					j++;
+				}	
+				putchar('\n');			
+				close(i);
+			}		
+		}
+		else printf("too many arguments\n");
+	}
+}

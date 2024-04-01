@@ -87,5 +87,7 @@ void keyboard_setup(struct console *term);
 
 char keyboard_get_keymap(uchar_t i);
 
+char keyboard_special_caps_keys(char key);
+
 
 #endif // _KEYBOARD_H_

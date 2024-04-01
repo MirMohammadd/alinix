@@ -1,6 +1,8 @@
-#include <stddef.h>
-#include <string.h>
+#include <arch/x86-pc/lib/stdio.h>
+#include <arch/x86-pc/lib/string.h>
 #include <arch/x86-pc/io/video.h>
+#include <arch/x86-pc/lib/stdarg.h>
+#include <arch/x86-pc/lib/stddef.h>
 
 char *VIDEO_MEM = (char*) 0xb8000,
      *VIDEO_PTR = (char*) 0xb8000,

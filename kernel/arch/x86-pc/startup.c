@@ -21,6 +21,8 @@
 #include <io/console.h>
 #include <colorforth/colorforth.h>
 #include <arch/x86-pc/io/video.h>
+#include <gui/widgets/button.hpp>
+
 
 
 /**

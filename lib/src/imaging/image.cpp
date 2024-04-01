@@ -1,16 +1,16 @@
 #include <imaging/image.h>
-#include <log.h>
-#include <string.h>
-#include <math.h>
-#include <vfs.h>
-#include <heap.h>
+#include <log.hpp>
+#include <string.hpp>
+#include <math.hpp>
+#include <vfs.hpp>
+#include <heap.hpp>
 
 #include <imaging/bmpformat.h>
 #include <imaging/jpeg_decoder.h>
 #include <imaging/pngformat.h>
 
-using namespace LIBCactusOS;
-using namespace LIBCactusOS::Imaging;
+using namespace LIBHeisenKernel;
+using namespace LIBHeisenKernel::Imaging;
 
 Image::Image(const int width, const int height)
 {

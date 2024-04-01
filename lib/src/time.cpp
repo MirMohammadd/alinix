@@ -1,8 +1,8 @@
-#include <time.h>
+#include <time.hpp>
 
-#include <syscall.h>
+#include <syscall.hpp>
 
-using namespace LIBCactusOS;
+using namespace LIBHeisenKernel;
 
 void Time::Sleep(uint32_t ms)
 {

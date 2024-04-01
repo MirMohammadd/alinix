@@ -4,8 +4,8 @@
 #include <math.h>
 #include <vfs.h>
 
-using namespace LIBCactusOS;
-using namespace LIBCactusOS::Imaging;
+using namespace LIBHeisenKernel;
+using namespace LIBHeisenKernel::Imaging;
 
 Image* Imaging::ConvertBMP(const char* filepath)
 {

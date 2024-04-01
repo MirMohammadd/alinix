@@ -1,12 +1,12 @@
-#include <systeminfo.h>
-#include <syscall.h>
-#include <proc.h>
-#include <heap.h>
-#include <string.h>
-#include <types.h>
-#include <log.h>
+#include <systeminfo.hpp>
+#include <syscall.hpp>
+#include <proc.hpp>
+#include <heap.hpp>
+#include <string.hpp>
+#include <types.hpp>
+#include <log.hpp>
 
-using namespace LIBCactusOS;
+using namespace LIBHeisenKernel;
 
 SIPropertyProvider SystemInfo::Properties = SIPropertyProvider("properties");
 

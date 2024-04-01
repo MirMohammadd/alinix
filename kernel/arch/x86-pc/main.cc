@@ -1,6 +1,9 @@
-#include <new.hpp>
-#include <gui/gui.hpp>
-#include <gui/widgets/button.hpp>
+#include <arch/x86-pc/gui/new.hpp>
+#include <arch/x86-pc/gui/gui/gui.hpp>
+
+
+#include <arch/x86-pc/gui/gui/widgets/button.hpp>
+
 #include <gui/widgets/control.hpp>
 #include <gui/widgets/scrollbar.hpp>
 #include <gui/widgets/window.hpp>

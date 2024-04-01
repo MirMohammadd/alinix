@@ -84,4 +84,5 @@ void keyboard_setup(struct console *term);
 
 char keyboard_get_keymap(uchar_t i);
 
+
 #endif // _KEYBOARD_H_

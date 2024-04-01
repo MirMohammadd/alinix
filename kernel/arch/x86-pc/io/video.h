@@ -1,5 +1,5 @@
-#ifndef _VIDEO_H
-#define _VIDEO_H
+#ifndef _VIDEO_H_HEISEN
+#define _VIDEO_H_HEISEN
 
 #define _SCR_W 80
 #define _SCR_H 25
@@ -45,6 +45,7 @@ void _kscrollup();
 void _kscrolldown();
 void _kntohex (char *, unsigned int);
 void _knntos(char *, int, int );
-// unsigned short shell_mess_col, shell_mess_line;
+extern void _kcolor(char color);
 
-#endif /* _VIDEO_H */
+
+#endif /* _VIDEO_H_HEISEN */

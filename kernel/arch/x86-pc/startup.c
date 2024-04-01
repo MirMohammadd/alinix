@@ -20,6 +20,7 @@
 #include <threading/scheduler.h>
 #include <io/console.h>
 #include <colorforth/colorforth.h>
+#include <arch/x86-pc/io/video.h>
 
 
 /**
@@ -27,6 +28,7 @@
  */
 void roentgenium_main(uint32_t magic, uint32_t address)
 {
+    _kcolor(WHITE);
     uint16_t retval;
     multiboot_info_t *mbi;
     mbi = (multiboot_info_t *)address;
@@ -78,8 +80,11 @@ void roentgenium_main(uint32_t magic, uint32_t address)
     // Enable interrupts
     asm volatile("sti");
 
+
     // Console
     console_setup(&cons, vga_display_character);
+
+
 
     // colorForth
     colorforth_initialize();

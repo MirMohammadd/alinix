@@ -3,7 +3,7 @@ name: HiesenKernel
 on:
   push:
     branches:
-      - main  # Adjust branch name as needed
+      - GUI  # Adjust branch name as needed
 
 jobs:
   build:

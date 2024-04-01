@@ -11,7 +11,7 @@
 #include <gui/fonts/font.hpp>
 #include <gui/colors.hpp>
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     // Defines the alignment of a specific entry
     // This is for the x and the y direction

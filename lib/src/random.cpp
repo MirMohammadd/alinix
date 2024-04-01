@@ -1,6 +1,6 @@
-#include <random.h>
+#include <random.hpp>
 
-using namespace LIBCactusOS;
+using namespace LIBHeisenKernel;
 
 uint32_t next = 12;
 

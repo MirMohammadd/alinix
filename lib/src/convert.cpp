@@ -1,7 +1,7 @@
 #include <convert.h>
 #include <string.h>
 
-using namespace LIBCactusOS;
+using namespace LIBHeisenKernel;
 
 int IsSpace(char c)
 {

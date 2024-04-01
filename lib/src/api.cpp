@@ -4,7 +4,7 @@
 #include <log.h>
 #include <proc.h>
 
-using namespace LIBCactusOS;
+using namespace LIBHeisenKernel;
 
 void API::Initialize()
 {

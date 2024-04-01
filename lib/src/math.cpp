@@ -2,7 +2,7 @@
 #include <types.h>
 #include <log.h>
 
-using namespace LIBCactusOS;
+using namespace LIBHeisenKernel;
 
 uint32_t getMXCSR (void)
 {

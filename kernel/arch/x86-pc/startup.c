@@ -21,7 +21,9 @@
 #include <io/console.h>
 #include <colorforth/colorforth.h>
 #include <arch/x86-pc/io/video.h>
-#include <arch/x86-pc/gui/shared.hpp>
+#include <arch/x86-pc/gui/test.h>
+
+
 /**
  * The kernel entry point. All starts from here!
  */

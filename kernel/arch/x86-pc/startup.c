@@ -20,6 +20,7 @@
 #include <threading/scheduler.h>
 #include <io/console.h>
 #include <colorforth/colorforth.h>
+#include <io/video.h>
 
 
 /**
@@ -27,7 +28,7 @@
  */
 void roentgenium_main(uint32_t magic, uint32_t address)
 {
-    char buff[] = "Hello Kernel!!!";
+    _kcolor(WHITE);
     uint16_t retval;
     multiboot_info_t *mbi;
     mbi = (multiboot_info_t *)address;
@@ -83,9 +84,6 @@ void roentgenium_main(uint32_t magic, uint32_t address)
     // Console
     console_setup(&cons, vga_display_character);
 
-    uint16_t buffer_len = sizeof(buff) - 1; // -1 to exclude the null terminator
-
-    // Call console_write to write the buff to the console
 
 
     // colorForth

@@ -22,7 +22,6 @@
 #include <colorforth/colorforth.h>
 #include <arch/x86-pc/io/video.h>
 
-#include <arch/x86-pc/gui/shared.hpp>
 
 
 /**

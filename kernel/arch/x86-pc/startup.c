@@ -20,7 +20,7 @@
 #include <threading/scheduler.h>
 #include <io/console.h>
 #include <colorforth/colorforth.h>
-#include <io/video.h>
+#include <arch/x86-pc/io/video.h>
 
 
 /**

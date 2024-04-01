@@ -6,7 +6,9 @@
 
 #include <arch/x86-pc/gui/gui/widgets/control.hpp>
 
-#include <gui/widgets/scrollbar.hpp>
+
+#include <arch/x86-pc/gui/gui/widgets/scrollbar.hpp>
+
 #include <gui/widgets/window.hpp>
 #include <gui/directgui.hpp>
 #include <convert.hpp>

@@ -5,6 +5,9 @@
 #include "commands.h"
 #include "shell.h"
 
+#include <stddef.h>
+#include <dirent.h>
+
 int argc;
 char **argv;
 
@@ -60,3 +63,60 @@ void newfile(){
 void whoami(){
     printf("%s\n", current_user.username);
 }
+
+void cd( ){
+	//char *relpath;		
+	char abspath[CURPATH_LEN];
+	DIR *dirp=NULL;	
+	if(argc != 2) {
+		printf("Bad usage. Try 'ls -l' and then 'cd dir'.\n");
+		return;
+	} else {
+		int i=0;
+		//int rel_size = 0;		
+		memset(abspath, '\0', CURPATH_LEN);				
+		if(argv[1][0] == '/') {
+			i = get_mountpoint_id(argv[1]);		
+			strcpy(abspath, argv[1]);
+			//printf("abspath: %s\n", abspath);
+			dirp=opendir(argv[1]);
+		}
+		else if(!strncmp(argv[1], "..", 2)) {
+			printf(".. option %s\n", argv[1]);
+			return;
+		}
+		else if(argv[1][0]=='.') {
+			//printf(". option\n");			
+			if(strlen(argv[1]) == 1) return;
+			else printf("str_len: %d\n", strlen(argv[1]));
+		}		
+		else {			
+			int abs_size = 0;			
+			abs_size = strlen(current_user.cur_path);
+			strcpy(abspath, current_user.cur_path);
+			if(abspath[abs_size-1] == '/')
+				strncat(abspath, argv[1], strlen(argv[1]));
+			else {
+				strncat(abspath, "/", strlen(argv[1]));
+				strncat(abspath, argv[1], strlen(argv[1]));
+			}	
+			dirp=opendir(abspath);			
+		}		
+		if(dirp!=NULL){			
+			closedir(dirp);
+		}		
+		//rel_size = strlen(argv[1]) - strlen(mountpoint_list[i].mountpoint);
+		if(i == -1) {			
+			printf("cd: %s: No such file or directory\n", argv[1]);
+			return;
+		}
+		else {
+			strcpy(current_user.cur_path, abspath);
+		}
+		/*if(rel_size >0){
+			relpath = get_rel_path(i, argv[1]);
+			free(relpath);
+		}*/
+	}
+}
+

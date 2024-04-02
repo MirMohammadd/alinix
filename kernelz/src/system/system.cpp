@@ -6,7 +6,7 @@ using namespace HeisenOs::common;
 using namespace HeisenOs::core;
 using namespace HeisenOs::system;
 using namespace HeisenOs::system::drivers;
-using namespace LIBCactusOS;
+using namespace LIBHeisenKernel;
 
 multiboot_info_t* System::mbi = 0;
 PIT* System::pit = 0;

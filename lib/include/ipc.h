@@ -1,7 +1,7 @@
 #ifndef __LIBCACTUSOS__IPC_H
 #define __LIBCACTUSOS__IPC_H
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     enum IPCMessageType : int
     {

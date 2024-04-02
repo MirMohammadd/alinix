@@ -4,7 +4,7 @@
 #include <log.h>
 
 
-using namespace LIBCactusOS;
+using namespace LIBHeisenKernel;
 
 Font* FontParser::FromFile(char* filename)
 {

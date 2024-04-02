@@ -1,6 +1,6 @@
 #include <gui/fonts/font.h>
 
-using namespace LIBCactusOS;
+using namespace LIBHeisenKernel;
 
 void Font::BoundingBox(char* string, int* retW, int* retH)
 {

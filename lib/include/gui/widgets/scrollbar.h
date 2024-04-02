@@ -6,7 +6,7 @@
 #include <gui/events.h>
 #include <gui/colors.h>
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     // Different type of scrollbars
     enum ScrollBarType

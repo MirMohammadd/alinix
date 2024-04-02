@@ -10,8 +10,9 @@
 #include <gui/property.h>
 #include <gui/fonts/font.h>
 #include <gui/colors.h>
-
-namespace LIBCactusOS
+// LIBHeisenKernel
+// LIBCactusOS_
+namespace LIBHeisenKernel
 {
     // Defines the alignment of a specific entry
     // This is for the x and the y direction

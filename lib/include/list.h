@@ -1,7 +1,7 @@
 #ifndef __CACTUSOS__COMMON__LIST_H
 #define __CACTUSOS__COMMON__LIST_H
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     template <typename T>
     struct ListNode
@@ -73,7 +73,7 @@ namespace LIBCactusOS
     };
 }
 
-using namespace LIBCactusOS;
+using namespace LIBHeisenKernel;
 
 /////////////
 // Implementations

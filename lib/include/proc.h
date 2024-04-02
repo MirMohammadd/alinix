@@ -7,7 +7,7 @@
 #include <list.h>
 #include <shared.h>
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     #define DECLARE_LOCK(name) volatile int name ## Locked
     #define LOCK(name) \

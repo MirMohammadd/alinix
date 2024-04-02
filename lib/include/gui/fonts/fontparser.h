@@ -4,7 +4,7 @@
 #include <types.h>
 #include <gui/fonts/font.h>
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     // Header of a CactusOS Font File (CFF)
     struct CFFHeader

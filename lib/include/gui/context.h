@@ -7,7 +7,7 @@
 #include <gui/widgets/control.h>
 #include <shared.h>
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {   
     /**
      * Represents a region of framebuffer shared between client and server

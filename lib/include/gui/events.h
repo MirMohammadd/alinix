@@ -5,7 +5,7 @@
 #include <gui/widgets/control.h>
 #include <shared.h>
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     // A class that defines a callback function 
     template<typename ArgumentType>

@@ -3,7 +3,7 @@
 #include <string.h>
 #include <proc.h>
 
-using namespace LIBCactusOS;
+using namespace LIBHeisenKernel;
 
 #define ENTRIES_PER_BYTE 8
 #define ARRAY_ENTRY_SIZE 4

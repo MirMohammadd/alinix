@@ -1,9 +1,9 @@
 #include <gui/property.h>
 #include <gui/widgets/control.h>
 
-using namespace LIBCactusOS;
+using namespace LIBHeisenKernel;
 
-void LIBCactusOS::UpdateGUIPropertyTargetGUI(Control* target)
+void LIBHeisenKernel::UpdateGUIPropertyTargetGUI(Control* target)
 {
     if(target) target->ForcePaint();
 }

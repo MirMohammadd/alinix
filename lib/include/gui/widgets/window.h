@@ -6,7 +6,7 @@
 #include <gui/context.h>
 #include <gui/property.h>
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     class Button;
     

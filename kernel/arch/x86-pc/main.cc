@@ -10,7 +10,7 @@
 #include <log.hpp>
 #include <proc.hpp>
 
-using namespace LIBCactusOS;
+using namespace LIBHeisenKernel;
 
 Window* mainWindow = 0;
 

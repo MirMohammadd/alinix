@@ -3,7 +3,7 @@
 
 #include <gui/widgets/control.h>
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     class Label : public Control
     {

@@ -19,10 +19,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y build-essential git wget bzip2 xz-utils unzip help2man libtool-bin nasm python2 python3 python-pip grub-common xorriso mtools  build-essential build-essential gcc-multilib g++-multilib build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo  
           python2 -m pip install -r kernel/requirements.txt
-          git clone https://github.com/lordmilko/i686-elf-tools
-          cd i686-elf-tools
-          ./i686-elf-tools.sh linux
-          cd ..
+          docker run -it -v "/home/admin:/root" --rm lordmilko/i686-elf-tools
+          docker run -it -v "/home/admin:/root" --rm lordmilko/i686-elf-tools -gv 9.2.0 -bv 2.34 -dv 9.1
+          sudo -s
+          wget https://raw.githubusercontent.com/lordmilko/i686-elf-tools/master/i686-elf-tools.sh
+          chmod +x ./i686-elf-tools.sh
+          ./i686-elf-tools.sh
+
 
 
 

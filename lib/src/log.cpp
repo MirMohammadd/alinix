@@ -50,7 +50,6 @@ void LIBHeisenKernel::Print(const char* __restrict__ format, ...)
 			format += amount;
 			continue;
 		}
- LIBCactusOS
 		const char* format_begun_at = format++;
  
 		if (*format == 'c') {

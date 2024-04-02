@@ -1,8 +1,8 @@
 #include <system/bootconsole.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::system;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::system;
 
 /*/////////////////
 // Static variable initialisations
@@ -50,7 +50,7 @@ void BootConsole::Init(bool enableSerial)
     if(enableSerial)
     {
         Serialport::Init(COMPort::COM1);
-        BootConsole::WriteLine("Start of serial log for CactusOS");
+        BootConsole::WriteLine("Start of serial log for HeisenOs");
     }
 }
 

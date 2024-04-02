@@ -1,9 +1,9 @@
 #include <core/fpu.h>
 #include <common/memoryoperations.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::core;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::core;
 
 void FPU::Enable()
 {

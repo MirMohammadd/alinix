@@ -2,10 +2,10 @@
 #include <core/virtualmemory.h>
 #include <system/system.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::core;
-using namespace CactusOS::system;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::core;
+using namespace HeisenOs::system;
 
 bool SharedMemory::CreateSharedRegion(Process* proc1, Process* proc2, uint32_t virtStart, uint32_t len)
 {

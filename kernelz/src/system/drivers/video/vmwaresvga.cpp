@@ -2,11 +2,11 @@
 
 #include <system/system.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::system;
-using namespace CactusOS::system::drivers;
-using namespace CactusOS::core;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::system;
+using namespace HeisenOs::system::drivers;
+using namespace HeisenOs::core;
 
 VMWARESVGAII::VMWARESVGAII(PCIDevice* pciDev)
 : Driver("VMWare SVGAII", "VMWare Graphics Adapter"),

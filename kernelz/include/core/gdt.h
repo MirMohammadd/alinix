@@ -3,9 +3,9 @@
 
 #include <common/types.h>
 
-using namespace CactusOS::common;
+using namespace HeisenOs::common;
 
-namespace CactusOS
+namespace HeisenOs
 {
     namespace core
     {

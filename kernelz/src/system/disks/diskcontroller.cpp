@@ -1,8 +1,8 @@
 #include <system/disks/diskcontroller.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::system;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::system;
 
 DiskController::DiskController()
 { }

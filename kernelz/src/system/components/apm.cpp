@@ -2,10 +2,10 @@
 
 #include <system/system.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::core;
-using namespace CactusOS::system;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::core;
+using namespace HeisenOs::system;
 
 APMController::APMController()
 : SystemComponent("APM Controller", "Controls Advanced Power Management via BIOS calls")

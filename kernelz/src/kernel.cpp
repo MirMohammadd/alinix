@@ -16,10 +16,10 @@
 #include <core/power.h>
 #include <installer/installer.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::core;
-using namespace CactusOS::system;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::core;
+using namespace HeisenOs::system;
 
 extern "C" uint32_t _kernel_base;
 extern "C" uint32_t _kernel_end;

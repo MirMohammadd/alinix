@@ -6,7 +6,7 @@
 #include <common/convert.h>
 #include <core/idt.h>
 
-namespace CactusOS
+namespace HeisenOs
 {
     namespace core
     {

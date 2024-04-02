@@ -1,8 +1,8 @@
 #include <system/usb/usbendpoint.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::system;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::system;
 
 USBEndpoint::USBEndpoint(struct ENDPOINT_DESC* src)
 {

@@ -1,8 +1,8 @@
 #include <core/tss.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::core;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::core;
 
 static TSSEntry tss;
 

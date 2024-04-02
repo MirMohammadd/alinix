@@ -4,9 +4,9 @@
 #include <system/disks/partitionmanager.h>
 #include <system/vfs/fat.h>
 
-namespace CactusOS
+namespace HeisenOs
 {
-    // Class responsible for installing CactusOS on a hard drive
+    // Class responsible for installing HeisenOs on a hard drive
     class Installer
     {
     public:

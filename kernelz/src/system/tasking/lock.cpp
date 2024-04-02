@@ -1,8 +1,8 @@
 #include <system/tasking/lock.h>
 #include <system/system.h>
 
-using namespace CactusOS;
-using namespace CactusOS::system;
+using namespace HeisenOs;
+using namespace HeisenOs::system;
 
 extern "C" int TestAndSet(int newValue, int* ptr);
 

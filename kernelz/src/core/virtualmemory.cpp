@@ -2,10 +2,10 @@
 #include <system/log.h>
 #include <system/debugger.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::core;
-using namespace CactusOS::system;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::core;
+using namespace HeisenOs::system;
 
 void VirtualMemoryManager::ReloadCR3()
 {

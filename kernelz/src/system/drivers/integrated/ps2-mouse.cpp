@@ -2,11 +2,11 @@
 #include <core/port.h>
 #include <system/system.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::system;
-using namespace CactusOS::system::drivers;
-using namespace CactusOS::core;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::system;
+using namespace HeisenOs::system::drivers;
+using namespace HeisenOs::core;
 
 PS2MouseDriver::PS2MouseDriver()
 : InterruptHandler(0x2C), Driver("PS2 Mouse", "Driver for a generic ps2 mouse")

@@ -1,10 +1,10 @@
 #include <system/components/pci.h>
 #include <system/system.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::core;
-using namespace CactusOS::system;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::core;
+using namespace HeisenOs::system;
 
 bool PCIController::DeviceHasFunctions(uint16_t bus, uint16_t device)
 {

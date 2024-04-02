@@ -8,10 +8,10 @@
 #include <stdbool.h>
 #include <stdarg.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::core;
-using namespace CactusOS::system;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::core;
+using namespace HeisenOs::system;
 
 char* logLevelMessage[3] {
     "[Info]",
@@ -28,7 +28,7 @@ uint32_t GetMSSinceBoot()
 }
 #endif
 
-void CactusOS::system::Print(const char* data, uint32_t length) {
+void HeisenOs::system::Print(const char* data, uint32_t length) {
     if(System::screenMode == ScreenMode::TextMode)
     {
         for (uint32_t i = 0; i < length; i++)
@@ -41,7 +41,7 @@ void CactusOS::system::Print(const char* data, uint32_t length) {
     }
 }
 
-void CactusOS::system::Log(LogLevel level, const char* __restrict__ format, ...)
+void HeisenOs::system::Log(LogLevel level, const char* __restrict__ format, ...)
 {
     uint8_t prevColor = BootConsole::ForegroundColor;
     if(System::screenMode == ScreenMode::TextMode)

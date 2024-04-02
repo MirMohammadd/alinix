@@ -2,10 +2,10 @@
 #include <system/system.h>
 #include <system/memory/deviceheap.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::system;
-using namespace CactusOS::core;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::system;
+using namespace HeisenOs::core;
 
 static const uint16_t codeSegment = 0x2000;
 static const uint16_t stackSegment = 0x8000;

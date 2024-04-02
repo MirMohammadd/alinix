@@ -4,10 +4,10 @@
 #include <system/syscalls/implementations/cactusos.h>
 #include <system/syscalls/implementations/linux.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::system;
-using namespace CactusOS::core;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::system;
+using namespace HeisenOs::core;
 
 SystemCallHandler::SystemCallHandler()
 : InterruptHandler(0x80) {
@@ -26,7 +26,7 @@ uint32_t SystemCallHandler::HandleInterrupt(uint32_t esp)
         case 0: //Linux Systemcall
             return (uint32_t)LinuxSyscalls::HandleSyscall((CPUState*)esp);
             break;
-        case 1: //CactusOS Systemcall
+        case 1: //HeisenOs Systemcall
             return (uint32_t)CactusOSSyscalls::HandleSyscall((CPUState*)esp);
             break;   
         default:

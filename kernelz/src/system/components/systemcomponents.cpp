@@ -1,8 +1,8 @@
 #include <system/components/systemcomponent.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::system;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::system;
 
 SystemComponent::SystemComponent(char* name, char* description)
 {

@@ -7,7 +7,7 @@
 #include <core/idt.h>
 #include <core/tss.h>
 
-namespace CactusOS
+namespace HeisenOs
 {
     namespace system
     {

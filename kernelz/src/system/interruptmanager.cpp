@@ -1,8 +1,8 @@
 #include <system/interruptmanager.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::system;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::system;
 
 
 InterruptHandler::InterruptHandler(uint8_t interruptNumber)

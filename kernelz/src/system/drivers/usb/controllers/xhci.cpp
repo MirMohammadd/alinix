@@ -3,11 +3,11 @@
 #include <system/drivers/usb/controllers/xhci.h>
 #include <system/system.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::core;
-using namespace CactusOS::system;
-using namespace CactusOS::system::drivers;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::core;
+using namespace HeisenOs::system;
+using namespace HeisenOs::system::drivers;
 
 XHCIController::XHCIController(PCIDevice* device)
 : USBController(xHCI), Driver("XHCI USB Controller", "Controller for a XHCI device"),

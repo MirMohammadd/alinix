@@ -44,7 +44,7 @@
 
 #define GDB_BREAK() asm("int $3");
 
-namespace CactusOS
+namespace HeisenOs
 {
     namespace system
     {

@@ -3,7 +3,7 @@
 
 #include <system/components/systemcomponent.h>
 
-namespace CactusOS
+namespace HeisenOs
 {
     namespace system
     {

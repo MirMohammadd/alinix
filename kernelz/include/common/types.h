@@ -1,7 +1,7 @@
 #ifndef CACTUSOS__COMMON__TYPES_H
 #define CACTUSOS__COMMON__TYPES_H
 
-namespace CactusOS
+namespace HeisenOs
 {
     namespace common
     {

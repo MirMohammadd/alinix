@@ -4,10 +4,10 @@
 #include <system/memory/deviceheap.h>
 #include <system/tasking/elf.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::core;
-using namespace CactusOS::system;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::core;
+using namespace HeisenOs::system;
 
 static int currentPID = 1;
 List<Process*> ProcessHelper::Processes;

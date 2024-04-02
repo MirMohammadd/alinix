@@ -3,7 +3,7 @@
 
 #include <system/components/graphicsdevice.h>
 
-namespace CactusOS
+namespace HeisenOs
 {
     namespace system
     {

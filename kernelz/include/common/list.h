@@ -3,7 +3,7 @@
 
 #include <system/tasking/lock.h>
 
-namespace CactusOS
+namespace HeisenOs
 {
     namespace common
     {
@@ -88,7 +88,7 @@ namespace CactusOS
     }
 }
 
-using namespace CactusOS::common;
+using namespace HeisenOs::common;
 
 /////////////
 // Implementations

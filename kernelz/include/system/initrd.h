@@ -6,7 +6,7 @@
 #include <system/bootconsole.h>
 #include <common/string.h>
 
-namespace CactusOS
+namespace HeisenOs
 {
     namespace system
     {

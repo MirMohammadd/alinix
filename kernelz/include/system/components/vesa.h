@@ -6,7 +6,7 @@
 #include <system/components/graphicsdevice.h>
 #include <core/virtualmemory.h>
 
-namespace CactusOS
+namespace HeisenOs
 {
     namespace system
     {

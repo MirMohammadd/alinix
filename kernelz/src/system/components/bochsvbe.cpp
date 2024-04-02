@@ -5,10 +5,10 @@ https://wiki.osdev.org/Bochs_VBE_Extensions
 #include <system/components/bochsvbe.h>
 #include <system/system.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::system;
-using namespace CactusOS::core;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::system;
+using namespace HeisenOs::core;
 
 BochsVBE::BochsVBE()
 : GraphicsDevice("Bochs VBE Adapter"),

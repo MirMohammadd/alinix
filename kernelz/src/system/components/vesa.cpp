@@ -5,10 +5,10 @@ http://www.petesqbsite.com/sections/tutorials/tuts/vbe3.pdf
 #include <system/components/vesa.h>
 #include <system/system.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::system;
-using namespace CactusOS::core;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::system;
+using namespace HeisenOs::core;
 
 uint16_t* RealPTRToAddr(Real_Pointer ptr){
     return (uint16_t*)((ptr.B * 0x10) + ptr.A);

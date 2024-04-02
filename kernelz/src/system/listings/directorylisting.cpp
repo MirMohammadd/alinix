@@ -1,10 +1,10 @@
 #include <system/listings/directorylisting.h>
 #include <system/system.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::core;
-using namespace CactusOS::system;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::core;
+using namespace HeisenOs::system;
 
 // List which holds the files in the current requested directory.
 List<LIBCactusOS::VFSEntry>* currentDirectoryList = 0;

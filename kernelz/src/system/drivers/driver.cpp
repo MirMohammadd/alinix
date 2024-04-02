@@ -1,9 +1,9 @@
 #include <system/drivers/driver.h>
 #include <system/log.h>
 
-using namespace CactusOS;
-using namespace CactusOS::system;
-using namespace CactusOS::system::drivers;
+using namespace HeisenOs;
+using namespace HeisenOs::system;
+using namespace HeisenOs::system::drivers;
 
 Driver::Driver(char* name, char* description)
 {

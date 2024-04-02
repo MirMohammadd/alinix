@@ -1,9 +1,9 @@
 #include <system/vfs/virtualfilesystem.h>
 #include <system/log.h>
 
-using namespace CactusOS::common;
-using namespace CactusOS::core;
-using namespace CactusOS::system;
+using namespace HeisenOs::common;
+using namespace HeisenOs::core;
+using namespace HeisenOs::system;
 
 VirtualFileSystem::VirtualFileSystem(Disk* disk, common::uint32_t start, common::uint32_t size, char* name)
 {

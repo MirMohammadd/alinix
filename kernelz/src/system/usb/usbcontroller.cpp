@@ -2,11 +2,11 @@
 #include <system/drivers/usb/usbdefs.h>
 #include <system/system.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::core;
-using namespace CactusOS::system;
-using namespace CactusOS::system::drivers;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::core;
+using namespace HeisenOs::system;
+using namespace HeisenOs::system::drivers;
 
 USBController::USBController(USBControllerType usbType)
 {

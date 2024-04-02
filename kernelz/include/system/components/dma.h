@@ -6,7 +6,7 @@
 #include <system/components/systemcomponent.h>
 #include <common/types.h>
 
-namespace CactusOS
+namespace HeisenOs
 {
     namespace system
     {

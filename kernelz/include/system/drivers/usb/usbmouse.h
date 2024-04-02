@@ -4,7 +4,7 @@
 #include <system/drivers/usb/usbdriver.h>
 #include <system/usb/hidparser.h>
 
-namespace CactusOS
+namespace HeisenOs
 {
     namespace system
     {

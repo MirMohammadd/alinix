@@ -2,10 +2,10 @@
 
 #include <system/system.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::core;
-using namespace CactusOS::system;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::core;
+using namespace HeisenOs::system;
 
 DMAController::DMAController()
 : SystemComponent("Direct Memory Access Controller (DMA)", "Controller for the legacy Intel 8237 DMA chip")

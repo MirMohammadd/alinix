@@ -1,9 +1,9 @@
 #include <common/print.h>
 
-using namespace CactusOS;
-using namespace CactusOS::system;
-using namespace CactusOS::common;
-using namespace CactusOS::core;
+using namespace HeisenOs;
+using namespace HeisenOs::system;
+using namespace HeisenOs::common;
+using namespace HeisenOs::core;
 
 void Print::printfHex(uint8_t key)
 {

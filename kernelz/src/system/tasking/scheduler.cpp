@@ -3,10 +3,10 @@
 #include <system/system.h>
 #include <core/tss.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::system;
-using namespace CactusOS::core;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::system;
+using namespace HeisenOs::core;
 
 extern "C" void enter_usermode(uint32_t location, uint32_t stackAddress, uint32_t flags);
 

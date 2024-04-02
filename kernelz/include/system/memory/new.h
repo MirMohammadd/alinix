@@ -4,7 +4,7 @@
 #include <stddef.h>
 #include <system/memory/heap.h>
 
-using namespace CactusOS::system;
+using namespace HeisenOs::system;
  
 void *operator new(size_t size)
 {

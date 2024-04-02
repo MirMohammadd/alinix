@@ -3,7 +3,7 @@
 
 #include <system/drivers/usb/usbdefs.h>
 
-namespace CactusOS
+namespace HeisenOs
 {
     namespace system
     {

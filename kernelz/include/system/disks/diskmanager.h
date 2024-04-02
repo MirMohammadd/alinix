@@ -11,7 +11,7 @@
 #include <system/bootconsole.h>
 #include <system/disks/disk.h>
 
-namespace CactusOS
+namespace HeisenOs
 {
     namespace system
     {

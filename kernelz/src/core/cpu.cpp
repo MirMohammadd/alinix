@@ -1,10 +1,10 @@
 #include <core/cpu.h>
 #include <system/bootconsole.h>
 
-using namespace CactusOS;
-using namespace CactusOS::core;
-using namespace CactusOS::common;
-using namespace CactusOS::system;
+using namespace HeisenOs;
+using namespace HeisenOs::core;
+using namespace HeisenOs::common;
+using namespace HeisenOs::system;
 
 extern "C" void EnableSSE();
 

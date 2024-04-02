@@ -3,7 +3,7 @@
 
 #include <system/bootconsole.h>
 
-namespace CactusOS
+namespace HeisenOs
 {
     #define TEXT_COLOR system::VGA_COLOR_WHITE
 

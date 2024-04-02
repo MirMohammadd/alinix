@@ -3,11 +3,11 @@
 #include <system/log.h>
 #include <system/system.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::core;
-using namespace CactusOS::system;
-using namespace CactusOS::system::drivers;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::core;
+using namespace HeisenOs::system;
+using namespace HeisenOs::system::drivers;
 
 // Create new driver for a MSD
 USBMassStorageDriver::USBMassStorageDriver(USBDevice* dev)

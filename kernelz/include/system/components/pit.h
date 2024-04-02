@@ -5,7 +5,7 @@
 #include <system/components/systemcomponent.h>
 #include <core/port.h>
 
-namespace CactusOS
+namespace HeisenOs
 {
     namespace system
     {

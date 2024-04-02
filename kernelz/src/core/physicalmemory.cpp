@@ -1,10 +1,10 @@
 #include <core/physicalmemory.h>
 #include <common/print.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::core;
-using namespace CactusOS::system;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::core;
+using namespace HeisenOs::system;
 
 uint32_t PhysicalMemoryManager::memorySize = 0;
 uint32_t PhysicalMemoryManager::usedBlocks = 0;

@@ -7,7 +7,7 @@
 #include <system/bootconsole.h>
 #include <system/initrd.h>
 
-namespace CactusOS
+namespace HeisenOs
 {
     namespace system
     {
@@ -43,8 +43,8 @@ namespace CactusOS
         {
             bool prefetchable;
             BaseAddressRegisterType type;
-            CactusOS::common::uint32_t size;
-            CactusOS::common::uint64_t address;
+            HeisenOs::common::uint32_t size;
+            HeisenOs::common::uint64_t address;
         };
 
         class PCIController : public SystemComponent

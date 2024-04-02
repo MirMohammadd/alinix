@@ -2,10 +2,10 @@
 #include <core/idt.h>
 #include <system/system.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::core;
-using namespace CactusOS::system;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::core;
+using namespace HeisenOs::system;
 
 ////////////
 // Shutdown code from: https://forum.osdev.org/viewtopic.php?t=16990

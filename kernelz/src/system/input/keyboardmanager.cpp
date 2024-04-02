@@ -2,9 +2,9 @@
 #include <../../lib/include/shared.h>
 #include <system/system.h>
 
-using namespace CactusOS;
-using namespace CactusOS::common;
-using namespace CactusOS::system;
+using namespace HeisenOs;
+using namespace HeisenOs::common;
+using namespace HeisenOs::system;
 
 KeyboardManager::KeyboardManager()
 { 

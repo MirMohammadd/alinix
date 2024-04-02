@@ -6,7 +6,7 @@
 
 #include <stdarg.h>
 
-namespace CactusOS
+namespace HeisenOs
 {
     namespace system
     {

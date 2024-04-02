@@ -19,6 +19,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y build-essential git wget bzip2 xz-utils unzip help2man libtool-bin nasm python2 python3 python-pip grub-common xorriso mtools  build-essential build-essential gcc-multilib g++-multilib build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo  
           python2 -m pip install -r kernel/requirements.txt
+          git clone https://github.com/lordmilko/i686-elf-tools
+          cd i686-elf-tools
+          ./i686-elf-tools.sh linux
+          cd ..
 
 
 

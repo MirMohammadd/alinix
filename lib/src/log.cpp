@@ -22,7 +22,7 @@
 #include <convert.h>
 #include <proc.h>
 
-using namespace LIBHeisenKernel;
+// using namespace LIBHeisenKernel;
 
 void LIBHeisenKernel::Log(LogLevel level, char* msg)
 {
@@ -50,7 +50,6 @@ void LIBHeisenKernel::Print(const char* __restrict__ format, ...)
 			format += amount;
 			continue;
 		}
- 
 		const char* format_begun_at = format++;
  
 		if (*format == 'c') {

@@ -3,7 +3,7 @@
 #include <math.h>
 #include <gui/colors.h>
 
-using namespace LIBCactusOS;
+using namespace LIBHeisenKernel;
 
 Canvas::Canvas(void* buffer, int w, int h)
 {

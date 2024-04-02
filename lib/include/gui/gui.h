@@ -5,7 +5,7 @@
 #include <gui/widgets/window.h>
 #include <gui/context.h>
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     // Event definitions
     enum GUIEvents

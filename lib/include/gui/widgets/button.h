@@ -4,7 +4,7 @@
 #include <gui/widgets/control.h>
 #include <gui/gui.h>
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     /**
      * A GUI button

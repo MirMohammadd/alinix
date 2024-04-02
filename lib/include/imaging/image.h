@@ -4,7 +4,7 @@
 #include <types.h>
 #include <gui/canvas.h>
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     namespace Imaging
     {

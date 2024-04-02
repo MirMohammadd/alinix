@@ -4,7 +4,7 @@
 #include <types.h>
 #include <list.h>
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     /**
      * A class that describes a rectangular shape

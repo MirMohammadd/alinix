@@ -5,7 +5,7 @@
 // Data structures shared between userspace and kernel
 /////////////////
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     #define VFS_NAME_LENGTH 255
 

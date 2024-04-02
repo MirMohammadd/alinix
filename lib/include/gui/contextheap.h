@@ -3,7 +3,7 @@
 
 #include <types.h>
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     //Class that provides functions for allocating memory space for contexts.
     //Note: Memory region is not allocated, just a block that is reserved after allocating.

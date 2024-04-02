@@ -3,7 +3,7 @@
 
 #include <types.h>
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     #ifndef align_up
     #define align_up(num, align) \

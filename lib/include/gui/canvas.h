@@ -4,7 +4,7 @@
 #include <types.h>
 #include <gui/fonts/font.h>
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     class Canvas
     {

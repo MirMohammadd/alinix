@@ -3,7 +3,7 @@
 
 #include <types.h>
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     #define MATH_PI 3.14159265358979323846
 

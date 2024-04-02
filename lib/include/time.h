@@ -3,7 +3,7 @@
 
 #include <types.h>
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     class Time
     {

@@ -3,7 +3,7 @@
 
 #include <types.h>
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     // Union describing a ARGB color in the following format:
     // 0xAARRGGBB

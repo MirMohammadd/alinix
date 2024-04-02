@@ -4,7 +4,7 @@
 #include <gui/widgets/control.h>
 #include <gui/widgets/scrollbar.h>
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     class ScrollBox : public Control
     {

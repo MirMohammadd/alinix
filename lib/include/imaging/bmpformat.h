@@ -3,7 +3,7 @@
 
 #include <imaging/image.h>
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     namespace Imaging
     {

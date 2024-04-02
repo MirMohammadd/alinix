@@ -5,7 +5,7 @@
 #include <imaging/image.h>
 #include <gui/gui.h>
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     class ListViewItem
     {

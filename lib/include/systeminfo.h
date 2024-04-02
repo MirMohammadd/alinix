@@ -7,7 +7,7 @@
 #include <types.h>
 #endif
 
-namespace LIBCactusOS
+namespace LIBHeisenKernel
 {
     #define SYSTEM_INFO_ADDR 0xBFFEE000
 

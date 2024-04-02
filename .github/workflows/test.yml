@@ -26,7 +26,7 @@ jobs:
           # chmod +x ./i686-elf-tools.sh
           # ./i686-elf-tools.sh
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          brew install git wget bzip2 xz unzip nasm python@2 python@3 xorriso mtools gcc@11 bison flex gmp mpfr texinfo
+          brew install git wget bzip2 xz unzip nasm python@3 xorriso mtools gcc@11 bison flex gmp mpfr texinfo
           python2 -m pip install -r kernel/requirements.txt
           brew tap nativeos/i686-elf-toolchain
           brew install i686-elf-binutils i686-elf-gcc i686-elf-newlib

@@ -78,7 +78,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 
 
 CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
-	i686-elf-ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
+	gcc $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
 
 CactusOS.iso: CactusOS.bin
 	cd lib/ && $(MAKE)

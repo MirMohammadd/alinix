@@ -8,7 +8,7 @@ HandleException\num\():
 .macro HandleExceptionNoError num
 .global HandleException\num\()
 HandleException\num\():
-    pushl $0 # Add empty error code
+    pushl $0 ; Add empty error code
     pushl $\num
     jmp interrupthandler
 .endm
@@ -65,16 +65,16 @@ HandleInterruptRequest 0xDD
 HandleInterruptRequest 0x60
 
 interrupthandler:    
-	cli # Stop Interrupts
+	cli ; Stop Interrupts
 	
-    # Save Registers
+    ; Save Registers
     pusha
 	pushl %ds
 	pushl %es
 	pushl %fs
 	pushl %gs
 
-    # load the kernel data segment descriptor
+    ; load the kernel data segment descriptor
 	mov $0x10, %ax
 	mov %ax, %ds
 	mov %ax, %es
@@ -82,21 +82,21 @@ interrupthandler:
 	mov %ax, %gs
 
 	pushl %esp
-	# Call the kernel IRQ handler
+	; Call the kernel IRQ handler
 	call _ZN8CactusOS4core24InterruptDescriptorTable15HandleInterruptEPNS0_8CPUStateE
 	mov %eax, %esp
 
-    # Restore Registers
+    ; Restore Registers
 	popl %gs
 	popl %fs
 	popl %es
 	popl %ds
 	popa
 
-    # Clean up
+    ; Clean up
 	add $8, %esp
 
-	sti # Restart Interrupts
+	sti ; Restart Interrupts
     iret
 
 .global IgnoreInterrupt

@@ -63,9 +63,9 @@ $(KRNLOBJDIR)/gdb/i386-stub.o: $(KRNLSRCDIR)/gdb/i386-stub.c
 ####################################
 #GAS assembly files
 ####################################
-$(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
-	mkdir -p $(@D)
-	nasm $(ASPARAMS) -f elf32 $< -o $@
+# $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
+# 	mkdir -p $(@D)
+# 	nasm $(ASPARAMS) -f elf32 $< -o $@
 
 ####################################
 #NASM assembly files

@@ -5,7 +5,7 @@
 #include <common/memoryoperations.h>
 #include <core/gdt.h>
 
-namespace CactusOS
+namespace HeisenOs
 {
     namespace core
     {

@@ -18,7 +18,7 @@ void IPCManager::HandleSend(core::CPUState* state, Process* proc)
 {
     //Log(Info, "IPC Send from process %s", proc->fileName);
     // Get message pointer from ebx register
-    LIBCactusOS::IPCMessage* msg = (LIBCactusOS::IPCMessage*)state->EBX;
+    LIBHeisenKernel::IPCMessage* msg = (LIBHeisenKernel::IPCMessage*)state->EBX;
     
     //Check if the source is valid
     if (msg->source != proc->id) {
@@ -83,7 +83,7 @@ void IPCManager::HandleReceive(core::CPUState* state, Process* proc)
 
     //If we get here we are either unblocked or there was already a message ready to receive
     int messageIndex = 0;
-    LIBCactusOS::IPCMessage message = proc->ipcMessages.GetAt(messageIndex);
+    LIBHeisenKernel::IPCMessage message = proc->ipcMessages.GetAt(messageIndex);
     
     //Loop throug all the messages until we find a correct one.
     while ((message.dest != proc->id || (recvFrom == -1 ? false : recvFrom != message.source) || (type == -1 ? false : type != message.type)) && (messageIndex < proc->ipcMessages.size())) { //Is the message not for us or not from the correct source
@@ -99,8 +99,8 @@ void IPCManager::HandleReceive(core::CPUState* state, Process* proc)
     }
 
     //Copy message
-    LIBCactusOS::IPCMessage* targetMessage = (LIBCactusOS::IPCMessage*)state->EBX;
-    MemoryOperations::memcpy(targetMessage, &message, sizeof(LIBCactusOS::IPCMessage));
+    LIBHeisenKernel::IPCMessage* targetMessage = (LIBHeisenKernel::IPCMessage*)state->EBX;
+    MemoryOperations::memcpy(targetMessage, &message, sizeof(LIBHeisenKernel::IPCMessage));
 
     //Remove it from the list
     proc->ipcMessages.Remove(messageIndex);

@@ -210,9 +210,9 @@ DirectoryRecord* ISO9660::GetEntry(const char* path)
     return 0;
 }
 
-List<LIBCactusOS::VFSEntry>* ISO9660::DirectoryList(const char* path)
+List<LIBHeisenKernel::VFSEntry>* ISO9660::DirectoryList(const char* path)
 {
-    List<LIBCactusOS::VFSEntry>* result = new List<LIBCactusOS::VFSEntry>();
+    List<LIBHeisenKernel::VFSEntry>* result = new List<LIBHeisenKernel::VFSEntry>();
     DirectoryRecord* parent = String::strlen(path) > 0 ? GetEntry(path) : rootDirectory;
     if(parent == 0 || GetEntryType(parent) == Iso_File)
         return result;
@@ -240,8 +240,8 @@ List<LIBCactusOS::VFSEntry>* ISO9660::DirectoryList(const char* path)
             {
                 char* entryName = GetRecordName(record);
                 if(entryName != 0) {
-                    LIBCactusOS::VFSEntry entry;
-                    MemoryOperations::memset(&entry, 0, sizeof(LIBCactusOS::VFSEntry));
+                    LIBHeisenKernel::VFSEntry entry;
+                    MemoryOperations::memset(&entry, 0, sizeof(LIBHeisenKernel::VFSEntry));
 
                     // Fill in the info
                     entry.size = record->data_length;

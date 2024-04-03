@@ -44,7 +44,7 @@ KRNLOBJS := $(subst $(KRNLSRCDIR),$(KRNLOBJDIR),$(KRNLOBJS)) #Replace the kernel
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.cpp
 	mkdir -p $(@D)
-	i686-elf-g++ $(G++PARAMS) -c -o $@ $<
+	i686-elf-gcc $(G++PARAMS) -c -o $@ $<
 
 ####################################
 #C source files

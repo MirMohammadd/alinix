@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: arch-latest  # Specify the operating system you're using
+    runs-on: Ubuntu-latest  # Specify the operating system you're using
 
     steps:
       - name: Checkout Repository

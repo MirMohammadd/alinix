@@ -25,6 +25,8 @@
 
 INCLUDEDIRS := kernelz/include
 QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../qemuTrace.txt -d cpu_reset #-readconfig qemu-usb-config.cfg -drive if=none,id=stick,file=disk.img -device usb-storage,bus=ehci.0,drive=stick
+LOADERFILE = kernelz/src
+
 
 
 G++PARAMS := -m32 -g -D CACTUSOSKERNELz -I $(INCLUDEDIRS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
@@ -72,9 +74,17 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
 ####################################
 #NASM assembly files
 ####################################
+$/(KRNLOBJDIR)/%.o: $(LOADERFILE)/%.s
+	mkdir -p $(@D)
+	nasm -f elf32 $< -o $@
+
+	
+
 $/(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 	mkdir -p $(@D)
 	nasm -f elf32 -O0 $< -o $@ 2>/dev/null || true
+
+
 
 
 

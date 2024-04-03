@@ -26,8 +26,8 @@ jobs:
           # chmod +x ./i686-elf-tools.sh
           # ./i686-elf-tools.sh
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          brew install git wget bzip2 xz unzip nasm python@3 xorriso mtools gcc@11
-          python3 -m pip install -r kernel/requirements.txt
+          # brew install git wget bzip2 xz unzip nasm python@3 xorriso mtools gcc@11
+          # python3 -m pip install -r kernel/requirements.txt
           # brew tap nativeos/i686-elf-toolchain
           brew services start selenium-server
           brew install i686-elf-binutils i686-elf-gcc i686-elf-newlib

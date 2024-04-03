@@ -1,0 +1,25 @@
+name: CI/CD with i686-elf-gcc
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gcc-multilib qemu qemu-system-x86 nasm xorriso grub-common grub-pc-bin mtools make gcc-i686-linux-gnu binutils-i686-linux-gnu
+
+    - name: Build project
+      run: make build # Replace 'make build' with your build command

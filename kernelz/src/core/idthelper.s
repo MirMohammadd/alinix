@@ -18,6 +18,7 @@ HandleInterruptRequest\num:
     jmp interrupthandler
 .endm
 
+HandleExceptionNoError:
 HandleExceptionNoError 0x00
 HandleExceptionNoError 0x01
 HandleExceptionNoError 0x02
@@ -26,6 +27,7 @@ HandleExceptionNoError 0x04
 HandleExceptionNoError 0x05
 HandleExceptionNoError 0x06
 HandleExceptionNoError 0x07
+HandleExceptionWithError:
 HandleExceptionWithError 0x08
 HandleExceptionNoError 0x09
 HandleExceptionWithError 0x0A
@@ -33,12 +35,14 @@ HandleExceptionWithError 0x0B
 HandleExceptionWithError 0x0C
 HandleExceptionWithError 0x0D
 HandleExceptionWithError 0x0E
+HandleExceptionNoError:
 HandleExceptionNoError 0x0F
 HandleExceptionNoError 0x10
 HandleExceptionNoError 0x11
 HandleExceptionNoError 0x12
 HandleExceptionNoError 0x13
 
+HandleInterruptRequest:
 HandleInterruptRequest 0x00
 HandleInterruptRequest 0x01
 HandleInterruptRequest 0x02
@@ -94,6 +98,6 @@ interrupthandler:
     sti ; Restart Interrupts
     iret
 
-.global IgnoreInterrupt
+.globl IgnoreInterrupt
 IgnoreInterrupt:
     iret

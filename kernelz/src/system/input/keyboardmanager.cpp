@@ -19,7 +19,7 @@ void KeyboardManager::HandleKeyChange(Keyboard* src, uint32_t key, bool pressed)
     //Log(Info, "Got key %d from keyboard, pressed = %b", key, pressed);
     
     bool updateLeds = false;
-    LIBCactusOS::KeypressPacket packet = {.startByte = KEYPACKET_START, .keyCode = 0, .flags = pressed ? LIBCactusOS::Pressed : LIBCactusOS::NoFlags};
+    LIBHeisenKernel::KeypressPacket packet = {.startByte = KEYPACKET_START, .keyCode = 0, .flags = pressed ? LIBHeisenKernel::Pressed : LIBHeisenKernel::NoFlags};
 
     ////////////
     // Update keyboards globals
@@ -34,22 +34,22 @@ void KeyboardManager::HandleKeyChange(Keyboard* src, uint32_t key, bool pressed)
     }
     
     // Update packet flags
-    packet.flags = (packet.flags | (this->sharedStatus.CapsLock ? LIBCactusOS::CapsLock : LIBCactusOS::NoFlags));
-    packet.flags = (packet.flags | (this->sharedStatus.NumLock ? LIBCactusOS::NumLock : LIBCactusOS::NoFlags));
+    packet.flags = (packet.flags | (this->sharedStatus.CapsLock ? LIBHeisenKernel::CapsLock : LIBHeisenKernel::NoFlags));
+    packet.flags = (packet.flags | (this->sharedStatus.NumLock ? LIBHeisenKernel::NumLock : LIBHeisenKernel::NoFlags));
     
-    packet.flags = (packet.flags | (src->status.LeftShift ? LIBCactusOS::LeftShift : LIBCactusOS::NoFlags));
-    packet.flags = (packet.flags | (src->status.RightShift ? LIBCactusOS::RightShift : LIBCactusOS::NoFlags));
-    packet.flags = (packet.flags | (src->status.LeftControl ? LIBCactusOS::LeftControl : LIBCactusOS::NoFlags));
-    packet.flags = (packet.flags | (src->status.RightControl ? LIBCactusOS::RightControl : LIBCactusOS::NoFlags));
-    packet.flags = (packet.flags | (src->status.Alt ? LIBCactusOS::Alt : LIBCactusOS::NoFlags));
+    packet.flags = (packet.flags | (src->status.LeftShift ? LIBHeisenKernel::LeftShift : LIBHeisenKernel::NoFlags));
+    packet.flags = (packet.flags | (src->status.RightShift ? LIBHeisenKernel::RightShift : LIBHeisenKernel::NoFlags));
+    packet.flags = (packet.flags | (src->status.LeftControl ? LIBHeisenKernel::LeftControl : LIBHeisenKernel::NoFlags));
+    packet.flags = (packet.flags | (src->status.RightControl ? LIBHeisenKernel::RightControl : LIBHeisenKernel::NoFlags));
+    packet.flags = (packet.flags | (src->status.Alt ? LIBHeisenKernel::Alt : LIBHeisenKernel::NoFlags));
 
     // Set keycode
     packet.keyCode = key;
 
     if(System::screenMode == ScreenMode::GraphicsMode)
-        for(int i = 0; i < (int)sizeof(LIBCactusOS::KeypressPacket); i++)
+        for(int i = 0; i < (int)sizeof(LIBHeisenKernel::KeypressPacket); i++)
             this->Write(*((char*)((uint32_t)&packet + i)));
-    else if(System::setupMode == true && (packet.flags & LIBCactusOS::Pressed))
+    else if(System::setupMode == true && (packet.flags & LIBHeisenKernel::Pressed))
         this->Write(key); //Make things easier for the setup
 
     if(updateLeds) {

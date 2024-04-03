@@ -141,7 +141,7 @@ namespace HeisenOs
             // Get size of specified file in bytes
             uint32_t GetFileSize(const char* filename);
             // Returns list of context inside a directory
-            List<LIBCactusOS::VFSEntry>* DirectoryList(const char* path);
+            List<LIBHeisenKernel::VFSEntry>* DirectoryList(const char* path);
         };
     }
 }

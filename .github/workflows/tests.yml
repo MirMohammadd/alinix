@@ -30,4 +30,4 @@ jobs:
       run: export PATH="$PATH:/path/to/i686-elf-gcc-directory" # Replace with the actual path to i686-elf-gcc directory
 
     - name: Build project
-      run: make all # Replace 'make build' with your build command
+      run: make run # Replace 'make build' with your build command

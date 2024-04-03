@@ -4,22 +4,42 @@
 # .s files are GAS assembly
 # .asm files are nasm assembly
 ##########
+#####################
+#xHCI
+# nec-usb-xhci
+# qemu-xhci
+#EHCI
+# usb-ehci
+# ich9-usb-ehci1
+#UHCI
+# ich9-usb-uhci1
+# ich9-usb-uhci2
+# ich9-usb-uhci3
+# piix3-usb-uhci
+# piix4-usb-uhci
+# vt82c686b-usb-uhci
+#OHCI
+# sysbus-ohci
+# pci-ohci
+#######################
 
-INCLUDEDIRS := kernel/arch/x86-pc/bootstrap/include
+INCLUDEDIRS := kernelz/include
 QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../qemuTrace.txt -d cpu_reset #-readconfig qemu-usb-config.cfg -drive if=none,id=stick,file=disk.img -device usb-storage,bus=ehci.0,drive=stick
+
 
 G++PARAMS := -m32 -g -D CACTUSOSKERNELz -I $(INCLUDEDIRS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
 GCCPARAMS := -m32 -g -D CACTUSOSKERNELz -I $(INCLUDEDIRS) -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas
-ASPARAMS :=
-LDPARAMS := -m32
+ASPARAMS := 
+LDPARAMS := -m32 
 # elf_i386
 
-KRNLSRCDIR := /Users/alimirmohammad/HeisenKernel/kernel/arch/x86-pc/bootstrap/src
-KRNLOBJDIR := /Users/alimirmohammad/HeisenKernel/kernel/arch/x86-pc/bootstrap/obj
+KRNLSRCDIR := kernelz/src
+KRNLOBJDIR := kernelz/obj
 
 KRNLFILES := $(shell find $(KRNLSRCDIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) #Find all the files that end with .cpp/.s/.asm/.c
 KRNLOBJS := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(KRNLFILES))))) #Replace the .cpp/.s/.asm/.c extension with .o
 KRNLOBJS := $(subst $(KRNLSRCDIR),$(KRNLOBJDIR),$(KRNLOBJS)) #Replace the kernelz/src part with kernelz/obj
+
 
 ####################################
 #C++ source files
@@ -52,9 +72,16 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
 ####################################
 #NASM assembly files
 ####################################
-$(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
-	mkdir -p $(@D)
-	nasm -f elf32 -O0 $< -o $@ 2>/dev/null || true
+# $/(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
+# 	mkdir -p $(@D)
+# 	nasm -f elf32 -O0 $< -o $@ 2>/dev/null || true
+
+# $/(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
+# 	mkdir -p $(@D)
+# 	nasm -f elf32 -O0 $< -o $@ 2>/dev/null || true
+
+
+
 
 CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
 	gcc $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
@@ -62,7 +89,7 @@ CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
 CactusOS.iso: CactusOS.bin
 	cd lib/ && $(MAKE)
 	cd apps/ && $(MAKE)
-
+	
 	nm -a CactusOS.bin | sort -d > isofiles/debug.sym
 	cp -r isofiles/. iso
 	mkdir iso/boot
@@ -130,6 +157,7 @@ debug: CactusOS.iso
 	pyuic5 tools/advancedDebugger/mainGUI.ui -o tools/advancedDebugger/mainWindow.py
 	qemu-system-i386 -cdrom CactusOS.iso $(QEMUOPTIONS) -serial pty &
 	/usr/bin/python3 tools/advancedDebugger/main.py
+
 
 filelist:
 	@echo "Source Files:"

@@ -30,7 +30,8 @@ jobs:
           # python3 -m pip install -r kernel/requirements.txt
           # brew tap nativeos/i686-elf-toolchain
           brew services start selenium-server
-          brew install i686-elf-binutils i686-elf-gcc i686-elf-newlib
+          brew install i686-elf-binutils 
+          # i686-elf-gcc i686-elf-newlib
 
 
 

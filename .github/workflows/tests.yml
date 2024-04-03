@@ -1,0 +1,33 @@
+name: CI/CD with i686-elf-gcc
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gcc-multilib qemu qemu-system-x86 nasm xorriso grub-common grub-pc-bin mtools make
+        sudo apt-get install -y gcc-11-i686-linux-gnu || true
+        sudo apt-get install -y gcc-i686-linux-gnu
+
+    - name: Try to fix broken packages
+      run: sudo apt-get install -f
+
+    - name: Set PATH for i686-elf-gcc
+      run: export PATH="$PATH:/path/to/i686-elf-gcc-directory" # Replace with the actual path to i686-elf-gcc directory
+
+    - name: Build project
+      run: make  # Replace 'make build' with your build command

@@ -1,22 +1,18 @@
 .macro HandleExceptionWithError num
-.global HandleException\num\()
-HandleException\num\():
+HandleException\num:
     pushl $\num
     jmp interrupthandler
 .endm
 
 .macro HandleExceptionNoError num
-.global HandleException\num\()
-HandleException\num\():
+HandleException\num:
     pushl $0 ; Add empty error code
     pushl $\num
     jmp interrupthandler
 .endm
 
-
 .macro HandleInterruptRequest num
-.global HandleInterruptRequest\num\()
-HandleInterruptRequest\num\():
+HandleInterruptRequest\num:
     pushl $0
     pushl $\num + 0x20
     jmp interrupthandler
@@ -60,43 +56,42 @@ HandleInterruptRequest 0x0D
 HandleInterruptRequest 0x0E
 HandleInterruptRequest 0x0F
 HandleInterruptRequest 0x31
-
 HandleInterruptRequest 0xDD
 HandleInterruptRequest 0x60
 
-interrupthandler:    
-	cli ; Stop Interrupts
-	
+interrupthandler:
+    cli ; Stop Interrupts
+    
     ; Save Registers
     pusha
-	pushl %ds
-	pushl %es
-	pushl %fs
-	pushl %gs
+    pushl %ds
+    pushl %es
+    pushl %fs
+    pushl %gs
 
     ; load the kernel data segment descriptor
-	mov $0x10, %ax
-	mov %ax, %ds
-	mov %ax, %es
-	mov %ax, %fs
-	mov %ax, %gs
+    mov $0x10, %ax
+    mov %ax, %ds
+    mov %ax, %es
+    mov %ax, %fs
+    mov %ax, %gs
 
-	pushl %esp
-	; Call the kernel IRQ handler
-	call _ZN8CactusOS4core24InterruptDescriptorTable15HandleInterruptEPNS0_8CPUStateE
-	mov %eax, %esp
+    pushl %esp
+    ; Call the kernel IRQ handler
+    call _ZN8CactusOS4core24InterruptDescriptorTable15HandleInterruptEPNS0_8CPUStateE
+    mov %eax, %esp
 
     ; Restore Registers
-	popl %gs
-	popl %fs
-	popl %es
-	popl %ds
-	popa
+    popl %gs
+    popl %fs
+    popl %es
+    popl %ds
+    popa
 
     ; Clean up
-	add $8, %esp
+    add $8, %esp
 
-	sti ; Restart Interrupts
+    sti ; Restart Interrupts
     iret
 
 .global IgnoreInterrupt

@@ -28,7 +28,7 @@ jobs:
 
     - name: Set PATH for i686-elf-gcc and i686-elf-g++
       run: |
-        export PATH="$PATH:/path/to/i686-elf-gcc-directory/bin:/path/to/i686-elf-g++-directory/bin" # Replace with the actual paths to i686-elf-gcc and i686-elf-g++ directories
+        export PATH="$PATH:/usr/bin:/usr/local/bin:/path/to/i686-elf-gcc-directory/bin:/path/to/i686-elf-g++-directory/bin" # Replace with the actual paths to i686-elf-gcc and i686-elf-g++ directories
 
     - name: Build project
       run: make run # Replace 'make build' with your build command

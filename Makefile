@@ -65,7 +65,7 @@ $(KRNLOBJDIR)/gdb/i386-stub.o: $(KRNLSRCDIR)/gdb/i386-stub.c
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
 	mkdir -p $(@D)
-	nasm  -f elf32 $< -o $@
+	nasm  -f --no-error elf32 $< -o $@
 
 # $(ASPARAMS)
 
@@ -74,7 +74,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 	mkdir -p $(@D)
-	nasm -f elf32 -O0 $< -o $@
+	nasm -f --no-error elf32 -O0 $< -o $@
 
 
 

@@ -5,6 +5,7 @@
         jmp interrupthandler
 .endm
 
+; Define macros for interrupt handling
 .macro HandleInterruptRequest num
     HandleInterruptRequest\num:
         pushl $0

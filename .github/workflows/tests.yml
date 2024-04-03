@@ -1,4 +1,4 @@
-name: CI/CD with i686-elf-gcc
+name: CI/CD with i686-elf-gcc and i686-elf-g++
 
 on:
   push:
@@ -20,14 +20,15 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y gcc-multilib qemu qemu-system-x86 nasm xorriso grub-common grub-pc-bin mtools make
-        sudo apt-get install -y gcc-11-i686-linux-gnu || true
-        sudo apt-get install -y gcc-i686-linux-gnu
+        sudo apt-get install -y gcc-11-i686-linux-gnu g++-11-i686-linux-gnu || true
+        sudo apt-get install -y gcc-i686-linux-gnu g++-i686-linux-gnu
 
     - name: Try to fix broken packages
       run: sudo apt-get install -f
 
-    - name: Set PATH for i686-elf-gcc
-      run: export PATH="$PATH:/path/to/i686-elf-gcc-directory" # Replace with the actual path to i686-elf-gcc directory
+    - name: Set PATH for i686-elf-gcc and i686-elf-g++
+      run: |
+        export PATH="$PATH:/path/to/i686-elf-gcc-directory/bin:/path/to/i686-elf-g++-directory/bin" # Replace with the actual paths to i686-elf-gcc and i686-elf-g++ directories
 
     - name: Build project
       run: make run # Replace 'make build' with your build command

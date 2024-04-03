@@ -31,8 +31,8 @@ GCCPARAMS := -m32 -g -D CACTUSOSKERNELz -I $(INCLUDEDIRS) -Wall -fno-omit-frame-
 ASPARAMS := 
 LDPARAMS := -m32 elf_i386
 
-KRNLSRCDIR := kernelz/src
-KRNLOBJDIR := kernelz/obj
+KRNLSRCDIR := /kernelz/src
+KRNLOBJDIR := /kernelz/obj
 
 KRNLFILES := $(shell find $(KRNLSRCDIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) #Find all the files that end with .cpp/.s/.asm/.c
 KRNLOBJS := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(KRNLFILES))))) #Replace the .cpp/.s/.asm/.c extension with .o

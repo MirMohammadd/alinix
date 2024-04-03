@@ -33,4 +33,4 @@ jobs:
     - name: Build project
       run: |
         nasm -f elf32 -O0 kernelz/src/core/cpuhelper.asm -o kernelz/obj/core/cpuhelper.o
-        make # Replace 'make' with your build command
+        make run # Replace 'make' with your build command

@@ -1,24 +1,23 @@
 language: c
 
-matrix:
-  include:
-    - os: linux
-      dist: xenial
-      compiler: gcc
-      addons:
-        apt:
-          packages:
-            - gcc-multilib
-            - qemu
-            - qemu-system-x86
-            - nasm
-            - xorriso
-            - grub-common
-            - grub-pc-bin
-            - mtools
-            - make
-            - gcc-i686-linux-gnu
-            - binutils-i686-linux-gnu
+os: linux
+dist: xenial
+compiler: gcc
+
+addons:
+  apt:
+    packages:
+      - gcc-multilib
+      - qemu
+      - qemu-system-x86
+      - nasm
+      - xorriso
+      - grub-common
+      - grub-pc-bin
+      - mtools
+      - make
+      - gcc-i686-linux-gnu
+      - binutils-i686-linux-gnu
 
 script:
-  - make  # Replace 'make build' with your build command
+  - make # Replace 'make build' with your build command

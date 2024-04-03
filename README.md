@@ -11,3 +11,4 @@ BadBlueKernel is a sophisticated operating system kernel designed to embody the 
 
 # IMPORTANT
 Note: this project has been using part of fudge kernel at https://github.com/jezze/fudge/blob/master/lib/hash/crc.c and other kernels at https://wiki.osdev.org/Projects and all rights will be reserved
+

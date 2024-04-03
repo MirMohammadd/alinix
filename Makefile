@@ -28,8 +28,9 @@ QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../q
 
 G++PARAMS := -m32 -g -D CACTUSOSKERNELz -I $(INCLUDEDIRS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
 GCCPARAMS := -m32 -g -D CACTUSOSKERNELz -I $(INCLUDEDIRS) -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas
-ASPARAMS := --32
-LDPARAMS := -m elf_i386
+ASPARAMS := 
+LDPARAMS := -m32 
+# elf_i386
 
 KRNLSRCDIR := kernelz/src
 KRNLOBJDIR := kernelz/obj
@@ -44,40 +45,41 @@ KRNLOBJS := $(subst $(KRNLSRCDIR),$(KRNLOBJDIR),$(KRNLOBJS)) #Replace the kernel
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.cpp
 	mkdir -p $(@D)
-	i686-elf-g++ $(G++PARAMS) -c -o $@ $<
+	g++ $(G++PARAMS) -I. $(find /usr/include -type d -printf '-I%s\n') $(find . -type d -printf '-I%s\n') -c -o $@ $<
 
 ####################################
 #C source files
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.c
 	mkdir -p $(@D)
-	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
+	gcc $(GCCPARAMS) -I. $(find /usr/include -type d -printf '-I%s\n') $(find . -type d -printf '-I%s\n') -c -o $@ $<
 
 ####################################
 #GDB Stub
 ####################################
 $(KRNLOBJDIR)/gdb/i386-stub.o: $(KRNLSRCDIR)/gdb/i386-stub.c
 	mkdir -p $(@D)
-	i686-elf-gcc $(GCCPARAMS) -fleading-underscore -c -o $@ $<
+	gcc $(GCCPARAMS) -I. $(find /usr/include -type d -printf '-I%s\n') $(find . -type d -printf '-I%s\n') -fleading-underscore -c -o $@ $<
 
 ####################################
 #GAS assembly files
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
 	mkdir -p $(@D)
-	i686-elf-as $(ASPARAMS) -o $@ $<
+	nasm -f elf32 $< -o $@ 2>/dev/null || true
 
 ####################################
 #NASM assembly files
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 	mkdir -p $(@D)
-	nasm -f elf32 -O0 $< -o $@
+	nasm -f elf32 -O0 $< -o $@ 2>/dev/null || true
+
 
 
 
 CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
-	i686-elf-ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
+	gcc $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
 
 CactusOS.iso: CactusOS.bin
 	cd lib/ && $(MAKE)

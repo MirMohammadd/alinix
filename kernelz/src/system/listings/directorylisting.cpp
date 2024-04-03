@@ -7,7 +7,7 @@ using namespace HeisenOs::core;
 using namespace HeisenOs::system;
 
 // List which holds the files in the current requested directory.
-List<LIBCactusOS::VFSEntry>* currentDirectoryList = 0;
+List<LIBHeisenKernel::VFSEntry>* currentDirectoryList = 0;
 
 DirectoryListing::DirectoryListing()
 : ListingController() { }
@@ -41,8 +41,8 @@ int DirectoryListing::GetEntry(Thread* thread, int entry, uint32_t bufPtr)
 
     if(entry >= 0 && currentDirectoryList->size() > entry && buf != 0)
     {
-        LIBCactusOS::VFSEntry item = currentDirectoryList->GetAt(entry);
-        MemoryOperations::memcpy(buf, &item, sizeof(LIBCactusOS::VFSEntry));
+        LIBHeisenKernel::VFSEntry item = currentDirectoryList->GetAt(entry);
+        MemoryOperations::memcpy(buf, &item, sizeof(LIBHeisenKernel::VFSEntry));
 
         return 1;
     }

@@ -26,10 +26,5 @@ jobs:
     - name: Try to fix broken packages
       run: sudo apt-get install -f
 
-    - name: Install specific version of gcc-11-i686-linux-gnu
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y gcc-11-i686-linux-gnu=11.2.0-1
-
     - name: Build project
       run: make  # Replace 'make build' with your build command

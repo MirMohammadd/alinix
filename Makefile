@@ -65,16 +65,14 @@ $(KRNLOBJDIR)/gdb/i386-stub.o: $(KRNLSRCDIR)/gdb/i386-stub.c
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
 	mkdir -p $(@D)
-	nasm  -f --no-error elf32 $< -o $@
-
-# $(ASPARAMS)
+	nasm -f elf32 --no-error $< -o $@ 2>/dev/null
 
 ####################################
 #NASM assembly files
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 	mkdir -p $(@D)
-	nasm -f --no-error elf32 -O0 $< -o $@
+	nasm -f elf32 --no-error -O0 $< -o $@ 2>/dev/null
 
 
 

@@ -77,7 +77,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 
 
 CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
-	ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
+	gcc -fno-pie $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
 CactusOS.iso: CactusOS.bin
 	cd lib/ && $(MAKE)
 	cd apps/ && $(MAKE)

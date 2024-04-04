@@ -2,6 +2,7 @@
 #include <gui/widgets/button.h>
 #include <gui/widgets/label.h>
 #include <gui/directgui.h>
+#include <gui/widgets/control.h>
 
 
 using namespace LIBHeisenKernel;
@@ -9,10 +10,18 @@ using namespace LIBHeisenKernel;
 
 int main(){
     GUI::SetDefaultFont();
-    Context* mainScreen = GUI::RequestContext(160, 160, GUI::Width-160, 0);
-    if(mainScreen == 0)
-        return -1;
+    Window* mainWindow = new Window(800, 600, 0, 0);
+    mainWindow->titleString = "Settings";
+    mainWindow->backColor = 0xFF150534;
 
-    DirectGUI::DrawString("Settings",3,14,0xFF000000);
-    
+    Button* SystemButton = new Button("System");
+    SystemButton->width = 130 -2;
+    SystemButton->height = 47;
+    SystemButton->x = 1;
+    SystemButton->y = 2;
+    SystemButton->MouseClick += SystemButtonCallback;
+}
+
+void SystemButtonCallback(void* sender, MouseButtonArgs arg){
+    DoSyscall(SYSCALL_SHUTDOWN);
 }

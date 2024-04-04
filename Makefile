@@ -74,15 +74,15 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
 ####################################
 #NASM assembly files
 ####################################
-$/(KRNLOBJDIR)/%.o: $(LOADERFILE)/%.s
-	mkdir -p $(@D)
-	nasm -f elf32 $< -o $@
-
-
-
-# $/(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
+# $/(KRNLOBJDIR)/%.o: $(LOADERFILE)/%.s
 # 	mkdir -p $(@D)
-# 	nasm -f elf32 -O0 $< -o $@ 2>/dev/null || true
+# 	nasm -f elf32 $< -o $@
+
+
+
+$/(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
+	mkdir -p $(@D)
+	nasm -f elf32 -O0 $< -o $@ 2>/dev/null || true
 
 
 

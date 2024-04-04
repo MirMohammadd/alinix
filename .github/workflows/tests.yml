@@ -32,5 +32,5 @@ jobs:
 
     - name: Build project
       run: |
-        nasm -f elf32 -O0 kernelz/src/core/cpuhelper.asm -o kernelz/obj/core/cpuhelper.o
-        make qemu # Replace 'make' with your build command
+        # nasm -f elf32 -O0 kernelz/src/core/cpuhelper.asm -o kernelz/obj/core/cpuhelper.o
+        make grub-core # Replace 'make' with your build command

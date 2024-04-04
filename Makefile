@@ -18,114 +18,114 @@ KRNLOBJS := $(subst $(KRNLSRCDIR),$(KRNLOBJDIR),$(KRNLOBJS)) #Replace the kernel
 #C++ source files
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.cpp
-    mkdir -p $(@D)
-    g++ $(G++PARAMS) -I. $(find /usr/include -type d -printf '-I%s\n') $(find . -type d -printf '-I%s\n') -c -o $@ $<
+	mkdir -p $(@D)
+	g++ $(G++PARAMS) -I. $(find /usr/include -type d -printf '-I%s\n') $(find . -type d -printf '-I%s\n') -c -o $@ $<
 
 ####################################
 #C source files
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.c
-    mkdir -p $(@D)
-    gcc $(GCCPARAMS) -I. $(find /usr/include -type d -printf '-I%s\n') $(find . -type d -printf '-I%s\n') -c -o $@ $<
+	mkdir -p $(@D)
+	gcc $(GCCPARAMS) -I. $(find /usr/include -type d -printf '-I%s\n') $(find . -type d -printf '-I%s\n') -c -o $@ $<
 
 ####################################
 #GDB Stub
 ####################################
 $(KRNLOBJDIR)/gdb/i386-stub.o: $(KRNLSRCDIR)/gdb/i386-stub.c
-    mkdir -p $(@D)
-    gcc $(GCCPARAMS) -I. $(find /usr/include -type d -printf '-I%s\n') $(find . -type d -printf '-I%s\n') -fleading-underscore -c -o $@ $<
+	mkdir -p $(@D)
+	gcc $(GCCPARAMS) -I. $(find /usr/include -type d -printf '-I%s\n') $(find . -type d -printf '-I%s\n') -fleading-underscore -c -o $@ $<
 
 ####################################
 #GAS assembly files
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
-    mkdir -p $(@D)
-    nasm -f elf32 $< -o $@ 2>/dev/null || true
+	mkdir -p $(@D)
+	nasm -f elf32 $< -o $@ 2>/dev/null || true
 
 ####################################
 #NASM assembly files
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
-    mkdir -p $(@D)
-    nasm -f elf32 -O0 $< -o $@ 2>/dev/null || true
+	mkdir -p $(@D)
+	nasm -f elf32 -O0 $< -o $@ 2>/dev/null || true
 
 CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
-    gcc $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
+	gcc $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
 
 CactusOS.iso: CactusOS.bin
-    cd lib/ && $(MAKE)
-    cd apps/ && $(MAKE)
-    nm -a CactusOS.bin | sort -d > isofiles/debug.sym
-    cp -r isofiles/. iso
-    mkdir iso/boot
-    mkdir iso/boot/grub
-    cp CactusOS.bin iso/boot/CactusOS.bin
-    cp grub.cfg iso/boot/grub/grub.cfg
-    grub-mkrescue --output=CactusOS.iso iso
-    rm -rf iso
+	cd lib/ && $(MAKE)
+	cd apps/ && $(MAKE)
+	nm -a CactusOS.bin | sort -d > isofiles/debug.sym
+	cp -r isofiles/. iso
+	mkdir iso/boot
+	mkdir iso/boot/grub
+	cp CactusOS.bin iso/boot/CactusOS.bin
+	cp grub.cfg iso/boot/grub/grub.cfg
+	grub-mkrescue --output=CactusOS.iso iso
+	rm -rf iso
 
-.PHONY: clean qemu kdbg run filelist serialDBG qemuDBG qemuGDB
+.PHONY: clean qemu kdbg run filelist serialDBG qemuDBG
 
 clean:
-    rm -rf $(KRNLOBJDIR) CactusOS.bin CactusOS.iso
-    cd lib/ && $(MAKE) clean
-    cd apps/ && $(MAKE) clean
-    rm -rf isofiles/apps/*.bin
-    rm -rf isofiles/apps/*.sym
+	rm -rf $(KRNLOBJDIR) CactusOS.bin CactusOS.iso
+	cd lib/ && $(MAKE) clean
+	cd apps/ && $(MAKE) clean
+	rm -rf isofiles/apps/*.bin
+	rm -rf isofiles/apps/*.sym
 
 qemu: CactusOS.iso
-    qemu-system-i386 -cdrom CactusOS.iso -serial stdio $(QEMUOPTIONS)
+	qemu-system-i386 -cdrom CactusOS.iso -serial stdio $(QEMUOPTIONS)
 
 qemuDBG: CactusOS.iso
-    qemu-system-i386 -cdrom CactusOS.iso -serial stdio $(QEMUOPTIONS) -s -S &
+	qemu-system-i386 -cdrom CactusOS.iso -serial stdio $(QEMUOPTIONS) -s -S &
 
 qemuGDB: CactusOS.iso
-    qemu-system-i386 -cdrom CactusOS.iso $(QEMUOPTIONS) -serial pty &
-    gdb -ex 'file CactusOS.bin' -ex 'target remote /dev/pts/1' -q
+	qemu-system-i386 -cdrom CactusOS.iso $(QEMUOPTIONS) -serial pty &
+	gdb -ex 'file CactusOS.bin' -ex 'target remote /dev/pts/1' -q
 
 run: CactusOS.iso
-    vboxmanage startvm "CactusOS" -E VBOX_GUI_DBG_AUTO_SHOW=true -E VBOX_GUI_DBG_ENABLED=true &
-    rm "CactusOS.log"
-    echo "" > "CactusOS.log"
-    tail -f "CactusOS.log"
+	vboxmanage startvm "CactusOS" -E VBOX_GUI_DBG_AUTO_SHOW=true -E VBOX_GUI_DBG_ENABLED=true &
+	rm "CactusOS.log"
+	echo "" > "CactusOS.log"
+	tail -f "CactusOS.log"
 
 serialDBG:
-    gcc -o tools/serialDebugger/a.out tools/serialDebugger/main.c
-    sudo ./tools/serialDebugger/a.out
+	gcc -o tools/serialDebugger/a.out tools/serialDebugger/main.c
+	sudo ./tools/serialDebugger/a.out
 
 kdbg: CactusOS.iso
-    qemu-system-i386 $(QEMUOPTIONS) -cdrom CactusOS.iso -serial stdio -s -S &
-    kdbg -r localhost:1234 CactusOS.bin
+	qemu-system-i386 $(QEMUOPTIONS) -cdrom CactusOS.iso -serial stdio -s -S &
+	kdbg -r localhost:1234 CactusOS.bin
 
 grub-core:
-    grub-mkimage -o isofiles/setup/core.img -O i386-pc -p="(hd0,msdos1)/boot/grub" --config=grubcore.cfg -v configfile biosdisk part_msdos fat normal multiboot echo
+	grub-mkimage -o isofiles/setup/core.img -O i386-pc -p="(hd0,msdos1)/boot/grub" --config=grubcore.cfg -v configfile biosdisk part_msdos fat normal multiboot echo
 
 # Only rebuild LIBCactusOS and the apps without recompiling the kernelz
 fastApps:
-    rm -rf isofiles/apps/*.bin
-    cd lib/ && $(MAKE) clean && $(MAKE)
-    cd apps/ && $(MAKE) clean && $(MAKE)
-    rm CactusOS.iso
+	rm -rf isofiles/apps/*.bin
+	cd lib/ && $(MAKE) clean && $(MAKE)
+	cd apps/ && $(MAKE) clean && $(MAKE)
+	rm CactusOS.iso
 
 turboApps:
-    rm -rf isofiles/apps/*.bin
-    cd apps/ && $(MAKE) clean && $(MAKE)
-    rm CactusOS.iso
+	rm -rf isofiles/apps/*.bin
+	cd apps/ && $(MAKE) clean && $(MAKE)
+	rm CactusOS.iso
 
 installUSB: CactusOS.iso CactusOS.bin isofiles/debug.sym isofiles/apps
-    rm -rf /media/remco/ISOIMAGE/apps/*.bin
-    cp -r isofiles/apps/* /media/remco/ISOIMAGE/apps/
-    cp isofiles/debug.sym /media/remco/ISOIMAGE/debug.sym
-    cp CactusOS.bin /media/remco/ISOIMAGE/boot/CactusOS.bin
-    umount /media/remco/ISOIMAGE
+	rm -rf /media/remco/ISOIMAGE/apps/*.bin
+	cp -r isofiles/apps/* /media/remco/ISOIMAGE/apps/
+	cp isofiles/debug.sym /media/remco/ISOIMAGE/debug.sym
+	cp CactusOS.bin /media/remco/ISOIMAGE/boot/CactusOS.bin
+	umount /media/remco/ISOIMAGE
 
 debug: CactusOS.iso
-    pyuic5 tools/advancedDebugger/mainGUI.ui -o tools/advancedDebugger/mainWindow.py
-    qemu-system-i386 -cdrom CactusOS.iso $(QEMUOPTIONS) -serial pty &
-    /usr/bin/python3 tools/advancedDebugger/main.py
+	pyuic5 tools/advancedDebugger/mainGUI.ui -o tools/advancedDebugger/mainWindow.py
+	qemu-system-i386 -cdrom CactusOS.iso $(QEMUOPTIONS) -serial pty &
+	/usr/bin/python3 tools/advancedDebugger/main.py
 
 filelist:
-    @echo "Source Files:"
-    @echo -$(KRNLFILES)
-    @echo "Object Files:"
-    @echo -$(KRNLOBJS)
+	@echo "Source Files:"
+	@echo -$(KRNLFILES)
+	@echo "Object Files:"
+	@echo -$(KRNLOBJS)

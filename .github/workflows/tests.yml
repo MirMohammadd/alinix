@@ -19,7 +19,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y gcc-multilib qemu qemu-system-x86 nasm xorriso grub-common grub-pc-bin mtools make
+        sudo apt-get install -y gcc-multilib qemu qemu-system-x86 nasm xorriso grub-common grub-pc-bin mtools make binutils-gold tcc
         sudo apt-get install -y gcc-11-i686-linux-gnu g++-11-i686-linux-gnu || true
         sudo apt-get install -y gcc-i686-linux-gnu g++-i686-linux-gnu
 
@@ -33,4 +33,4 @@ jobs:
     - name: Build project
       run: |
         nasm -f elf32 -O0 kernelz/src/core/cpuhelper.asm -o kernelz/obj/core/cpuhelper.o
-        make grub-core # Replace 'make' with your build command
+        make qemu # Replace 'make' with your build command

@@ -26,12 +26,10 @@
 INCLUDEDIRS := kernelz/include
 QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../qemuTrace.txt -d cpu_reset #-readconfig qemu-usb-config.cfg -drive if=none,id=stick,file=disk.img -device usb-storage,bus=ehci.0,drive=stick
 
-
-G++PARAMS := -m32 -g -D CACTUSOSKERNELz -I $(INCLUDEDIRS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
-GCCPARAMS := -m32 -g -D CACTUSOSKERNELz -I $(INCLUDEDIRS) -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas
-ASPARAMS := 
-LDPARAMS := -m32 
-# elf_i386
+G++PARAMS := -m32 -g -D HEISENOSKERNEL -I $(INCLUDEDIRS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -std=c++20
+GCCPARAMS := -m32 -g -D HEISENOSKERNEL -I $(INCLUDEDIRS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -ffreestanding -fno-builtin -Wno-unknown-pragmas
+ASPARAMS := --32
+LDPARAMS := -m32 -no-pie
 
 KRNLSRCDIR := kernelz/src
 KRNLOBJDIR := kernelz/obj
@@ -46,44 +44,40 @@ KRNLOBJS := $(subst $(KRNLSRCDIR),$(KRNLOBJDIR),$(KRNLOBJS)) #Replace the kernel
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.cpp
 	mkdir -p $(@D)
-	g++ $(G++PARAMS) -I. $(find /usr/include -type d -printf '-I%s\n') $(find . -type d -printf '-I%s\n') -c -o $@ $<
+	g++ $(G++PARAMS) -c -o $@ $<
 
 ####################################
 #C source files
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.c
 	mkdir -p $(@D)
-	gcc $(GCCPARAMS) -I. $(find /usr/include -type d -printf '-I%s\n') $(find . -type d -printf '-I%s\n') -c -o $@ $<
+	gcc $(GCCPARAMS) -c -o $@ $<
 
 ####################################
 #GDB Stub
 ####################################
 $(KRNLOBJDIR)/gdb/i386-stub.o: $(KRNLSRCDIR)/gdb/i386-stub.c
 	mkdir -p $(@D)
-	gcc $(GCCPARAMS) -I. $(find /usr/include -type d -printf '-I%s\n') $(find . -type d -printf '-I%s\n') -fleading-underscore -c -o $@ $<
+	gcc $(GCCPARAMS) -fleading-underscore -c -o $@ $<
 
 ####################################
 #GAS assembly files
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
 	mkdir -p $(@D)
-	nasm -f elf32 $< -o $@ 2>/dev/null || true
+	as $(ASPARAMS) -o $@ $<
 
 ####################################
 #NASM assembly files
 ####################################
-$/(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
+$(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 	mkdir -p $(@D)
-	nasm -f elf32 -O0 $< -o $@ 2>/dev/null || true
-
-
-
+	nasm -f elf32 -O0 $< -o $@
 
 
 
 CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
-	gcc $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
-
+	gcc -fno-pie $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
 CactusOS.iso: CactusOS.bin
 	cd lib/ && $(MAKE)
 	cd apps/ && $(MAKE)

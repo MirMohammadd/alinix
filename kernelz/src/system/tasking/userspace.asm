@@ -1,39 +1,33 @@
-enter_usermode:
-    ; Save RBP and RSP
-    push rbp
-    mov rbp, rsp
+section .text
 
-    ; Disable interrupts
+global enter_usermode
+
+enter_usermode:
+    push ebp
+    mov ebp, esp
+
     cli
 
-    ; Load data segment descriptor (0x23 for user mode)
     mov ax, 0x23
     mov ds, ax
     mov es, ax
     mov fs, ax
     mov gs, ax
 
-    ; Push stack segment selector (0x23 for user mode)
     push 0x23
 
-    ; Load new stack pointer
-    mov rcx, [rbp + 8]
-    mov rsp, rcx
+    mov ecx, dword [ebp + 8]   
+    mov esp, ecx
 
-    ; Push flags onto stack
-    pushfq
-    pop rax
+    pushfd
+    pop eax
 
-    ; OR EFLAGS from arg 3
-    or rax, [rbp + 16]
-    push rax
+    or eax, dword [ebp + 12]   
+    push eax
 
-    ; Push code segment selector (0x1B for user mode)
     push 0x1B
 
-    ; Load new instruction pointer
-    mov rax, [rbp + 16]
-    push rax
+    mov eax, dword [ebp + 12]  
+    push eax
 
-    ; Return to user mode
-    iretq
+    iretd

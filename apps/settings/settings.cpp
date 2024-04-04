@@ -13,7 +13,11 @@ void SystemArgumentsCallBack(void* sender, MouseButtonArgs args){
     Window* SystemWindow = new Window(400, 300, 0, 0);
     SystemWindow->titleString = "System Settings";
     SystemWindow->backColor = 0xFF150534;
+    SystemWindow->height = 300;
+    SystemWindow->width = 400;
+    
     Print("Opened System Settings\n");
+
     
 }
 

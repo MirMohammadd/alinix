@@ -89,5 +89,10 @@
 #define inw(port, val) \
     asm volatile("in %w0, %w1" : "=a"(val) : "Nd"(port))
 
+#define inwA(port) ({ \
+    unsigned short _v; \
+    __asm__ __volatile__ ("inw %w1, %0" : "=a" (_v) : "Nd" (port)); \
+    _v; \
+})
 
 #endif // _IO_PORTS_H_ 

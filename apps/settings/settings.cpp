@@ -5,9 +5,11 @@
 #include <gui/widgets/control.h>
 #include <log.h>
 #include <hardware/ata.hpp>
+#include <imaging/image.h>
 
 
 using namespace LIBHeisenKernel;
+using namespace Imaging;
 char* path = "B:\\settings.jpg";
 
 
@@ -31,11 +33,7 @@ void SystemArgumentsCallBack(void* sender, MouseButtonArgs args){
     CapacityDiskButton->x = 1;
     CapacityDiskButton->MouseClick += CapacityDriveCallback;
     SystemWindow->AddChild(CapacityDiskButton);
-
-    
     Print("Opened System Settings\n");
-
-    
 
     
 }
@@ -43,9 +41,11 @@ void SystemArgumentsCallBack(void* sender, MouseButtonArgs args){
 int main(){
     GUI::SetDefaultFont();
     Window* mainWindow = new Window(800, 600, 0, 0);
+    Image* logo = Image::CreateFromFile(path);
+    if(logo)
+        logo->DrawTo(DirectGUI::GetCanvas(), GUI::Width / 2 - logo->GetWidth()/2, GUI::Height / 2 - logo->GetHeight()/2);
     mainWindow->titleString = "Settings";
     mainWindow->backColor = 0xFF150534;
-
     Button* SystemButton = new Button("System");
     SystemButton->width = 130 -2;
     SystemButton->height = 47;

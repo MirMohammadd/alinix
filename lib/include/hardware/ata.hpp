@@ -16,6 +16,7 @@
 #include <types.h>
 uint64_t ata_identify_drive(uint8_t drive);
 
+double getDriveSize(uint8_t driveInBytes);
 
 
 #endif 

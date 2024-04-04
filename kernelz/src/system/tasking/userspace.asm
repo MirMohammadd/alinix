@@ -16,18 +16,18 @@ enter_usermode:
 
     push 0x23
 
-    mov rcx, [rbp + 8]      
+    mov rcx, qword [rbp + 8]    
     mov rsp, rcx
 
     pushfq
     pop rax
 
-    or rax, [rbp + 16]     
+    or rax, qword [rbp + 16]   
     push rax
 
     push 0x1B
 
-    mov rax, [rbp + 16]     
+    mov rax, qword [rbp + 16]   
     push rax
 
     iretq

@@ -50,7 +50,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 	nasm -f elf32 -O0 $< -o $@ 2>/dev/null || true
 
 CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
-	gcc $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
+	gcc $(LDPARAMS) -T kernelz/linker.ld -o CactusOS.bin $(KRNLOBJS)
 
 CactusOS.iso: CactusOS.bin
 	cd lib/ && $(MAKE)

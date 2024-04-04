@@ -29,7 +29,7 @@ QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../q
 G++PARAMS := -m32 -g -D HEISENOSKERNEL -I $(INCLUDEDIRS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -std=c++20
 GCCPARAMS := -m32 -g -D HEISENOSKERNEL -I $(INCLUDEDIRS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -ffreestanding -fno-builtin -Wno-unknown-pragmas
 ASPARAMS := --32
-LDPARAMS := -m elf_i386
+LDPARAMS := -m32 -no-pie
 
 KRNLSRCDIR := kernelz/src
 KRNLOBJDIR := kernelz/obj

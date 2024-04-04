@@ -35,7 +35,7 @@ ASPARAMS :=
 LDPARAMS := -m32 
 # elf_i386
 
-KRNLSRCDIR := kernelz/src
+KRNLSRCDIR := kernelz/obj
 KRNLOBJDIR := kernelz/obj
 
 KRNLFILES := $(shell find $(KRNLSRCDIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) #Find all the files that end with .cpp/.s/.asm/.c

@@ -61,6 +61,6 @@ namespace HeisenOs
     {
         return no * (1024_MB);
     }
-}
+};
 
 #endif

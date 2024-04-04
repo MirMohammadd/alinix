@@ -3,8 +3,8 @@ section .text
 global enter_usermode
 
 enter_usermode:
-    push rbp
-    mov rbp, rsp
+    push ebp
+    mov ebp, esp
 
     cli
 
@@ -16,18 +16,18 @@ enter_usermode:
 
     push 0x23
 
-    mov rcx, qword [rbp + 8]    
-    mov rsp, rcx
+    mov ecx, dword [ebp + 8]   
+    mov esp, ecx
 
-    pushfq
-    pop rax
+    pushfd
+    pop eax
 
-    or rax, qword [rbp + 16]   
-    push rax
+    or eax, dword [ebp + 12]   
+    push eax
 
     push 0x1B
 
-    mov rax, qword [rbp + 16]   
-    push rax
+    mov eax, dword [ebp + 12]  
+    push eax
 
-    iretq
+    iretd

@@ -15,7 +15,7 @@ char* path = "B:\\settings.jpg";
 void CapacityDriveCallback(void* sender, MouseButtonArgs args){
     double size = getDriveSize(0);
     Print("Drive Size: %f\n", size);
-    
+
 }
 
 void SystemArgumentsCallBack(void* sender, MouseButtonArgs args){
@@ -29,7 +29,9 @@ void SystemArgumentsCallBack(void* sender, MouseButtonArgs args){
     CapacityDiskButton->height = 49;
     CapacityDiskButton->y = 50;
     CapacityDiskButton->x = 1;
+    CapacityDiskButton->MouseClick += CapacityDriveCallback;
     SystemWindow->AddChild(CapacityDiskButton);
+
     
     Print("Opened System Settings\n");
 

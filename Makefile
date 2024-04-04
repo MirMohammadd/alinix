@@ -44,21 +44,21 @@ KRNLOBJS := $(subst $(KRNLSRCDIR),$(KRNLOBJDIR),$(KRNLOBJS)) #Replace the kernel
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.cpp
 	mkdir -p $(@D)
-	i686-elf-g++ $(G++PARAMS) -c -o $@ $<
+	g++ $(G++PARAMS) -c -o $@ $<
 
 ####################################
 #C source files
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.c
 	mkdir -p $(@D)
-	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
+	gcc $(GCCPARAMS) -c -o $@ $<
 
 ####################################
 #GDB Stub
 ####################################
 $(KRNLOBJDIR)/gdb/i386-stub.o: $(KRNLSRCDIR)/gdb/i386-stub.c
 	mkdir -p $(@D)
-	i686-elf-gcc $(GCCPARAMS) -fleading-underscore -c -o $@ $<
+	gcc $(GCCPARAMS) -fleading-underscore -c -o $@ $<
 
 ####################################
 #GAS assembly files

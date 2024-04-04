@@ -1,11 +1,9 @@
-; Define macros for exception handling
 .macro HandleException num
     HandleException\num:
         pushl $\num
         jmp interrupthandler
 .endm
 
-; Define macros for interrupt handling
 .macro HandleInterruptRequest num
     HandleInterruptRequest\num:
         pushl $0
@@ -13,7 +11,6 @@
         jmp interrupthandler
 .endm
 
-; Define exception and interrupt handlers
 HandleException 0
 HandleException 1
 HandleException 2
@@ -48,10 +45,9 @@ HandleInterruptRequest 13
 HandleInterruptRequest 14
 HandleInterruptRequest 15
 HandleInterruptRequest 31
-HandleInterruptRequest 221 ; Example value, replace with actual interrupt number
+HandleInterruptRequest 221 
 
 interrupthandler:
-    ; Your interrupt handling code here
 
 .global IgnoreInterrupt
 IgnoreInterrupt:

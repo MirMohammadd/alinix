@@ -3,6 +3,7 @@
 
 #include "types.h"
 #include "llist.h"
+#include "xhci.h"
 
 
 #if !defined(__cplusplus)

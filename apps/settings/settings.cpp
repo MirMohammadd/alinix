@@ -6,6 +6,7 @@
 #include <log.h>
 #include <hardware/ata.hpp>
 #include <imaging/image.h>
+#include "usb3.h"
 
 
 using namespace LIBHeisenKernel;

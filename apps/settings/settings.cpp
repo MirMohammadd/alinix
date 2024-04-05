@@ -17,7 +17,6 @@ char* path = "B:\\settings.jpg";
 void CapacityDriveCallback(void* sender, MouseButtonArgs args){
     double size = getDriveSize(0);
     Print("Drive Size: %f\n", size);
-
 }
 
 void SystemArgumentsCallBack(void* sender, MouseButtonArgs args){

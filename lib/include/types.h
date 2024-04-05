@@ -1,6 +1,20 @@
 #ifndef __CACTUSOSLIB__TYPES_H
 #define __CACTUSOSLIB__TYPES_H
 
+#pragma pack(push,1)
+typedef struct _xhci_cap_regs_ {
+	uint8_t cap_caplen_version;
+	uint8_t reserved;
+	uint16_t hci_version;
+	uint32_t cap_hcsparams1;
+	uint32_t cap_hcsparams2;
+	uint32_t cap_hcsparams3;
+	uint32_t cap_hccparams1;
+	uint32_t cap_dboff;
+	uint32_t cap_hccparams2;
+}xhci_cap_regs_t;
+#pragma pack(pop)
+
 namespace LIBHeisenKernel
 {
     #define STATIC_ASSERT(condition) typedef char p__LINE__[ (condition) ? 1 : -1];

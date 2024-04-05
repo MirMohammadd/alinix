@@ -45,4 +45,15 @@ typedef struct _xhci_cap_regs_ {
 	uint32_t cap_hccparams2;
 }xhci_cap_regs_t;
 #pragma pack(pop)
+
+#pragma pack(push,1)
+typedef struct _xhci_ex_cap_ {
+	uint32_t id : 8;
+	uint32_t next : 8;
+	uint32_t controller_bios_semaphore : 1;
+	uint32_t rsvd : 7;
+	uint32_t controller_os_sem : 1;
+	uint32_t rsvd2 : 7;
+}xhci_ext_cap_t;
+#pragma pack(pop)
 #endif

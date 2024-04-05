@@ -16,6 +16,7 @@ namespace LIBHeisenKernel
     typedef long long int               int64_t;
     typedef unsigned long long int      uint64_t;
     typedef unsigned long long          uintptr_t;
+    typedef uint32_t size_t; 
 
     constexpr uint32_t operator"" _KB(unsigned long long no)
     {

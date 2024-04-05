@@ -42,7 +42,11 @@ using namespace LIBHeisenKernel;
 	(((max_esit_lo & 0xFFFF) << 16) | (average_trb_len & 0xFFFF))
 
 
-
+/*
+ * XHCIReset -- reset the xhci controller
+ * @param dev -- pointer to USB device 
+ * structure
+ */
 void XHCIReset(USBDevice *dev){
     dev->op_regs->op_usbsts |= (1 << 1);
 	while ((dev->op_regs->op_usbcmd & (1 << 1)));

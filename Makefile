@@ -40,6 +40,13 @@ KRNLOBJS := $(subst $(KRNLSRCDIR),$(KRNLOBJDIR),$(KRNLOBJS)) #Replace the kernel
 
 
 ####################################
+# Dailog interface config 
+DIALOG := dialog
+
+
+
+####################################
+####################################
 #C++ source files
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.cpp

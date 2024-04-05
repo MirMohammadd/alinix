@@ -34,6 +34,12 @@ typedef struct {
     bool initialised;
     bool is_csz_64;
     list_t *slot_list;
+    xhci_cap_regs_t* caps_reg;
+    xhci_op_regs_t* op_regs;
+    xhci_doorbell_regs_t* db_regs;
+    xhci_runtime_regs_t* rt_regs;
+    xhci_ext_cap_t* ext_cap;
+    xhci_port_regs_t* ports;
 }USBDevice;
 
 #endif

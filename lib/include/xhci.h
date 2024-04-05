@@ -102,5 +102,13 @@ typedef struct _xhci_port_reg_ {
 }xhci_port_regs_t;
 #pragma pack(pop)
 
+typedef struct _xhci_trb_{
+	uint32_t trb_param_1;
+	uint32_t trb_param_2;
+	uint32_t trb_status;
+	uint32_t trb_control;
+}xhci_trb_t;
+#pragma pack(pop)
+
 
 #endif

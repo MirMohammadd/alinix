@@ -8,7 +8,7 @@
 #define true 1
 #define false 0
 
-typedef enum { FALSE=0, TRUE } bool_t;
+typedef enum { false=0, true } bool_t;
 #endif
 
 #if defined(__cplusplus)
@@ -30,6 +30,7 @@ namespace LIBHeisenKernel{
 
 typedef struct {
     bool initialised;
+    bool is_csz_64;
 };
 
 #endif

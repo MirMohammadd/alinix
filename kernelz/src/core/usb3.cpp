@@ -16,6 +16,8 @@
  */
 #include <usb3.h>
 
+using namespace LIBHeisenKernel;
+
 
 /*Some Useful Macros defined for the USB Slot Context */
 #define USB_SLOT_CTX_DWORD0(entries, hub, multi_tt, speed, route_string) \
@@ -39,3 +41,8 @@
 #define USB_ENDPOINT_CTX_DWORD4(max_esit_lo, average_trb_len) \
 	(((max_esit_lo & 0xFFFF) << 16) | (average_trb_len & 0xFFFF))
 
+
+
+void XHCIReset(USBDevice *dev){
+    dev->op_regs->op_usbsts |= (1 << 1);
+}

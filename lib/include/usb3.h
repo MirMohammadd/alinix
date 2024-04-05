@@ -2,6 +2,7 @@
 #define _HEISEN_OS_USB3_HPP__
 
 #include "types.h"
+#include "llist.h"
 
 
 #if !defined(__cplusplus)
@@ -31,7 +32,8 @@ namespace LIBHeisenKernel{
 typedef struct {
     bool initialised;
     bool is_csz_64;
-};
+    list_t *slot_list;
+}USBDevice;
 
 #endif
 

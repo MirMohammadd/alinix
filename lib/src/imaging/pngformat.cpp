@@ -1,11 +1,11 @@
-#include <imaging/pngformat.hpp>
-#include <bitreader.hpp>
-#include <log.hpp>
-#include <string.hpp>
-#include <math.hpp>
-#include <vfs.hpp>
-#include <heap.hpp>
-#include <list.hpp>
+#include <imaging/pngformat.h>
+#include <bitreader.h>
+#include <log.h>
+#include <string.h>
+#include <math.h>
+#include <vfs.h>
+#include <heap.h>
+#include <list.h>
 
 using namespace LIBHeisenKernel;
 using namespace LIBHeisenKernel::Imaging;

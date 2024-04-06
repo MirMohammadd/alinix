@@ -1,4 +1,6 @@
 ENTRY (multiboot_entry)
+OUTPUT_FORMAT(elf32-i386)
+
 
 SECTIONS
 {
@@ -41,6 +43,13 @@ SECTIONS
         *(COMMON)
         *(.bss)
         ebss = .;
+    }
+
+    /* Define sections to fulfill unresolved references */
+    .unresolved :
+    {
+        /* Define symbols to fulfill unresolved references */
+        PROVIDE (_dummy_symbol = 0); /* Replace _dummy_symbol with the actual symbol name */
     }
 
     /* End of the kernel */

@@ -12,7 +12,7 @@
 
 
 using namespace LIBHeisenKernel;
-using namespace LIBHeisenKernel::Imaging;
+// using namespace LIBHeisenKernel::Imaging;
 
 char* path = "B:\\boot.jpg";
 

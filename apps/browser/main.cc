@@ -6,7 +6,7 @@
 #include <gui/widgets/window.hpp>
 #include <gui/directgui.hpp>
 #include <convert.hpp>
-#include <string.hpp>
+#include <string.h>
 #include <log.hpp>
 #include <proc.hpp>
 

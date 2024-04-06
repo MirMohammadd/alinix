@@ -1,5 +1,5 @@
 #include <gui/canvas.hpp>
-#include <string.hpp>
+#include <string.h>
 #include <math.hpp>
 #include <gui/colors.hpp>
 

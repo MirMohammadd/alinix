@@ -109,7 +109,7 @@ typedef __kernel_loff_t		loff_t;
  */
 #ifndef _SIZE_T
 #define _SIZE_T
-typedef __kernel_size_t		size_t;
+typedef char	size_t;
 #endif
 
 #ifndef _SSIZE_T

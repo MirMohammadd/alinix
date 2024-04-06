@@ -14,7 +14,7 @@
  * @file syscall.cpp
 
  */
-#include <syscall.hpp>
+#include <syscall.h>
 
 /*
 +---+--------------------+

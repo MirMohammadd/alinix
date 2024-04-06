@@ -3,7 +3,7 @@
 #include <gui/widgets/window.hpp>
 #include <gui/widgets/label.hpp>
 #include <gui/directgui.hpp>
-#include <string.hpp>
+#include <string.h>
 #include <log.hpp>
 #include <proc.hpp>
 #include <convert.hpp>

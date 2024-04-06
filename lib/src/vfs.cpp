@@ -14,9 +14,9 @@
  * @file vfs.cpp
 
  */
-#include <vfs.hpp>
+#include <vfs.h>
 
-#include <syscall.hpp>
+#include <syscall.h>
 #include <listing.h>
 
 using namespace LIBHeisenKernel;

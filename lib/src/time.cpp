@@ -14,9 +14,9 @@
  * @file time.cpp
 
  */
-#include <time.hpp>
+#include <time.h>
 
-#include <syscall.hpp>
+#include <syscall.h>
 
 using namespace LIBHeisenKernel;
 

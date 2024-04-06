@@ -4,7 +4,7 @@
 #include <convert.hpp>
 #include <time.hpp>
 #include <datetime.hpp>
-#include <string.hpp>
+#include <string.h>
 #include <math.hpp>
 #include <log.hpp>
 #include <proc.hpp>

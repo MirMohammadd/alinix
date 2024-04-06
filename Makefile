@@ -24,12 +24,15 @@
 #######################
 
 INCLUDEDIRS := kernelz/include
+INCLUDEZ = libz/include
 QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../qemuTrace.txt -d cpu_reset #-readconfig qemu-usb-config.cfg -drive if=none,id=stick,file=disk.img -device usb-storage,bus=ehci.0,drive=stick
+ARCHINCLUDE := kernel/include
 
-G++PARAMS := -m32 -g -D HEISENOSKERNEL -I $(INCLUDEDIRS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -std=c++20
-GCCPARAMS := -m32 -g -D HEISENOSKERNEL -I $(INCLUDEDIRS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -ffreestanding -fno-builtin -Wno-unknown-pragmas
+
+G++PARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -I $(ARCHINCLUDE) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
+GCCPARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -I $(ARCHINCLUDE) -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas
 ASPARAMS := --32
-LDPARAMS := -m32 -no-pie
+LDPARAMS := -m elf_i386
 
 KRNLSRCDIR := kernelz/src
 KRNLOBJDIR := kernelz/obj
@@ -40,39 +43,32 @@ KRNLOBJS := $(subst $(KRNLSRCDIR),$(KRNLOBJDIR),$(KRNLOBJS)) #Replace the kernel
 
 
 ####################################
-# Dailog interface config 
-DIALOG := dialog
-
-
-
-####################################
-####################################
 #C++ source files
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.cpp
 	mkdir -p $(@D)
-	g++ $(G++PARAMS) -c -o $@ $<
+	i686-elf-g++ $(G++PARAMS) -c -o $@ $<
 
 ####################################
 #C source files
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.c
 	mkdir -p $(@D)
-	gcc $(GCCPARAMS) -c -o $@ $<
+	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
 
 ####################################
 #GDB Stub
 ####################################
 $(KRNLOBJDIR)/gdb/i386-stub.o: $(KRNLSRCDIR)/gdb/i386-stub.c
 	mkdir -p $(@D)
-	gcc $(GCCPARAMS) -fleading-underscore -c -o $@ $<
+	i686-elf-gcc $(GCCPARAMS) -fleading-underscore -c -o $@ $<
 
 ####################################
 #GAS assembly files
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
 	mkdir -p $(@D)
-	as $(ASPARAMS) -o $@ $<
+	i686-elf-as $(ASPARAMS) -o $@ $<
 
 ####################################
 #NASM assembly files
@@ -84,7 +80,8 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 
 
 CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
-	gcc -fno-pie $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
+	i686-elf-ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
+
 CactusOS.iso: CactusOS.bin
 	cd lib/ && $(MAKE)
 	cd apps/ && $(MAKE)

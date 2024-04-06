@@ -1,9 +1,9 @@
 #include <imaging/image.h>
-#include <log.hpp>
-#include <string.hpp>
-#include <math.hpp>
-#include <vfs.hpp>
-#include <heap.hpp>
+#include <log.h>
+#include <string.h>
+#include <math.h>
+#include <vfs.h>
+#include <heap.h>
 
 #include <imaging/bmpformat.h>
 #include <imaging/jpeg_decoder.h>

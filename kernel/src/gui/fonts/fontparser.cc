@@ -1,6 +1,6 @@
 #include <gui/fonts/fontparser.hpp>
 #include <vfs.hpp>
-#include <string.hpp>
+#include <string.h>
 #include <log.hpp>
 
 

@@ -27,7 +27,7 @@
 #include <log.hpp>
 #include <ipc.hpp>
 #include <math.hpp>
-#include <string.hpp>
+#include <string.h>
 #include <heap.hpp>
 
 using namespace LIBHeisenKernel;

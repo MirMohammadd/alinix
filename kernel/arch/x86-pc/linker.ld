@@ -1,4 +1,6 @@
 ENTRY (multiboot_entry)
+OUTPUT_FORMAT(binary)
+
 
 SECTIONS
 {

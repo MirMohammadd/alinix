@@ -83,7 +83,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 	nasm -f elf32 $< -o $@
 
 CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
-	ld -fPIC -shared $(LDPARAMS)  -T kernelz/linker.ld -o CactusOS.bin $(KRNLOBJS)
+	ld -fPIC $(LDPARAMS)  -T kernelz/linker.ld -o CactusOS.bin $(KRNLOBJS)
 CactusOS.iso: CactusOS.bin
 	cd lib/ && $(MAKE)
 	cd apps/ && $(MAKE)

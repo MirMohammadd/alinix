@@ -48,7 +48,7 @@
 
 #ifndef	_SIZE_T_DEFINED_
 #define	_SIZE_T_DEFINED_
-typedef	__size_t	size_t;
+// typedef	__size_t	size_t;
 #endif
 
 #ifndef	_OFF_T_DEFINED_

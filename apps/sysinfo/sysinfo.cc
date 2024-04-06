@@ -3,7 +3,7 @@
 #include <types.hpp>
 #include <vfs.hpp>
 #include <syscall.hpp>
-#include <string.hpp>
+#include <string.h>
 #include <new.hpp>
 #include <proc.hpp>
 #include <ipc.hpp>

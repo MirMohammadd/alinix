@@ -3,7 +3,7 @@
 #include <gui/gui.hpp>
 #include <log.hpp>
 #include <syscall.hpp>
-#include <string.hpp>
+#include <string.h>
 #include <heap.hpp>
 #include <systeminfo.hpp>
 #include <math.hpp>

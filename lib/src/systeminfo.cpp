@@ -14,13 +14,13 @@
  * @file systeminfo.cpp
 
  */
-#include <systeminfo.hpp>
-#include <syscall.hpp>
-#include <proc.hpp>
-#include <heap.hpp>
-#include <string.hpp>
-#include <types.hpp>
-#include <log.hpp>
+#include <systeminfo.h>
+#include <syscall.h>
+#include <proc.h>
+#include <heap.h>
+#include <string.h>
+#include <types.h>
+#include <log.h>
 
 using namespace LIBHeisenKernel;
 

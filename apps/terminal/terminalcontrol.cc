@@ -1,5 +1,5 @@
 #include "terminalcontrol.h"
-#include <string.hpp>
+#include <string.h>
 #include <proc.hpp>
 #include <gui/widgets/window.hpp>
 

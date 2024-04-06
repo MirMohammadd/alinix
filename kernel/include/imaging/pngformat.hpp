@@ -1,11 +1,11 @@
 #ifndef __CACTUSOSLIB__IMAGING__PNGIMAGE_H
 #define __CACTUSOSLIB__IMAGING__PNGIMAGE_H
 
-#include <imaging/image.hpp>
-#include <bitreader.hpp>
-#include <list.hpp>
-#include <string.hpp>
-#include <vector.hpp>
+#include <imaging/image.h>
+#include <bitreader.h>
+#include <list.h>
+#include <string.h>
+#include <vector.h>
 
 namespace LIBHeisenKernel
 {

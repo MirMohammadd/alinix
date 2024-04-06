@@ -7,7 +7,7 @@
 #include <datetime.hpp>
 #include <time.hpp>
 #include <convert.hpp>
-#include <string.hpp>
+#include <string.h>
 #include <gui/widgets/label.hpp>
 
 using namespace LIBHeisenKernel;

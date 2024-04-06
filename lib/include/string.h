@@ -1,13 +1,13 @@
 #ifndef __CACTUSOSLIB__MEMORYOPERATIONS_H
 #define __CACTUSOSLIB__MEMORYOPERATIONS_H
 
+#include <stddef.h>
 #include <list.h>
-#include "types.h"
-
-using  namespace LIBHeisenKernel;
+#include <types.h>
 
 extern "C"
 {
+
     int memcmp(const void* aptr, const void* bptr, size_t size);
     void* memcpy(void* __restrict__ dstptr, const void* __restrict__ srcptr, size_t size);
     void* memmove(void* dstptr, const void* srcptr, size_t size);

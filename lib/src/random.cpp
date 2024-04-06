@@ -14,7 +14,7 @@
  * @file random.cpp
 
  */
-#include <random.hpp>
+#include <random.h>
 
 using namespace LIBHeisenKernel;
 

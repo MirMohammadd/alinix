@@ -41,6 +41,8 @@ SECTIONS
         *(___x86.get_pc_thunk.ax)
         *(___x86.get_pc_thunk.bx)
         *(__GLOBAL_OFFSET_TABLE_)
+        *(operator new*)
+        *(operator delete*)
     }
 
     /DISCARD/ : { *(.fini_array*) *(.comment) }

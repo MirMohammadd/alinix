@@ -1,13 +1,13 @@
 .macro HandleException num
     HandleException\num:
-        pushl $\num
+        push $\num
         jmp interrupthandler
 .endm
 
 .macro HandleInterruptRequest num
     HandleInterruptRequest\num:
-        pushl $0
-        pushl $\num + 0x20
+        push 0
+        push $\num + 0x20
         jmp interrupthandler
 .endm
 

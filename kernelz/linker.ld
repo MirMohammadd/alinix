@@ -40,4 +40,8 @@ SECTIONS
   /DISCARD/ : { *(.fini_array*) *(.comment) }
 
   _kernel_end = .;
+
+  /DISCARD/ : {
+    *(UNDEFINED)
+  }
 }

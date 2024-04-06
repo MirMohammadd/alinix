@@ -43,6 +43,11 @@ SECTIONS
         *(__GLOBAL_OFFSET_TABLE_)
         *(operator new*)
         *(operator delete*)
+        *(HeisenOs::core::VirtualMemoryManager::virtualToPhysical*)
+        *(HeisenOs::core::VirtualMemoryManager::mapVirtualToPhysical*)
+        *(HeisenOs::core::pageRoundDown*)
+        *(HeisenOs::core::pageRoundUp*)
+        *(HeisenOs::core::Power::Reboot*)
     }
 
     /DISCARD/ : { *(.fini_array*) *(.comment) }

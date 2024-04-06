@@ -1,4 +1,4 @@
-#include <core/idt.h>
+#include <core/idt.hpp>
 
 using namespace HeisenOs;
 using namespace HeisenOs::common;

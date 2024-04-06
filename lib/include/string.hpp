@@ -1,8 +1,10 @@
 #ifndef __CACTUSOSLIB__MEMORYOPERATIONS_H
 #define __CACTUSOSLIB__MEMORYOPERATIONS_H
 
-#include <stddef.h>
 #include <list.h>
+#include "types.h"
+
+using  namespace LIBHeisenKernel;
 
 extern "C"
 {

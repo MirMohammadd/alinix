@@ -15,7 +15,7 @@
 
  */
 #include <usb3.h>
-#include <string.h>
+#include <string.hpp>
 
 using namespace LIBHeisenKernel;
 

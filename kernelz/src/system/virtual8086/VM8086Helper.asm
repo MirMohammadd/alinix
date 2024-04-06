@@ -9,7 +9,7 @@ cpuGetESP:
   add eax, 4
   ret
 
-;VM86 Code
+
 global cpuEnterV86Int
 cpuEnterV86Int:
   push ebp

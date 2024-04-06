@@ -57,4 +57,9 @@ SECTIONS
     /DISCARD/ : { *(.fini_array*) *(.comment) }
 
     _kernel_end = .;
+
+    /* Link against libgcc explicitly */
+    /DISCARD/ : { *(libgcc.a) }
+    /DISCARD/ : { *(libgcc_s.so.1) }
+    /DISCARD/ : { *(libc.a) }
 }

@@ -1,7 +1,7 @@
 #ifndef __LIBHeisenKernel__GUI__EVENTS_H
 #define __LIBHeisenKernel__GUI__EVENTS_H
 
-#include <list.hpp>
+#include <list.h>
 #include <gui/widgets/control.hpp>
 #include <shared.hpp>
 

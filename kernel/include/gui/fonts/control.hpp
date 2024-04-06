@@ -3,7 +3,7 @@
 
 #include <types.hpp>
 #include <gui/rect.hpp>
-#include <list.hpp>
+#include <list.h>
 #include <gui/canvas.hpp>
 #include <gui/events.hpp>
 #include <gui/contextinfo.hpp>

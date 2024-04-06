@@ -33,8 +33,8 @@ QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../q
 ARCHINCLUDE := kernel/include
 
 
-G++PARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -I $(ARCHINCLUDE) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
-GCCPARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -I $(ARCHINCLUDE) -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas
+G++PARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -I $(ARCHINCLUDE) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -lm
+GCCPARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -I $(ARCHINCLUDE) -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas -lm
 ASPARAMS := --32
 LDPARAMS := -m elf_i386
 
@@ -50,6 +50,9 @@ KRNLOBJS := $(subst $(KRNLSRCDIR),$(KRNLOBJDIR),$(KRNLOBJS)) #Replace the kernel
 #C++ source files
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.cpp
+	mkdir -p $(@D)
+	i686-elf-g++ $(G++PARAMS) -c -o $@ $<
+$(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.cc
 	mkdir -p $(@D)
 	i686-elf-g++ $(G++PARAMS) -c -o $@ $<
 
@@ -89,25 +92,25 @@ export VERSION PATCHLEVEL SUBLEVEL KERNELRELEASE KERNELVERSION
 
 
 
-CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
+HeisenOs.bin: kernelz/linker.ld $(KRNLOBJS)
 	i686-elf-ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
 
-CactusOS.iso: CactusOS.bin
+CactusOS.iso: HeisenOs.bin
 	cd lib/ && $(MAKE)
 	cd apps/ && $(MAKE)
 	
-	nm -a CactusOS.bin | sort -d > isofiles/debug.sym
+	nm -a HeisenOs.bin | sort -d > isofiles/debug.sym
 	cp -r isofiles/. iso
 	mkdir iso/boot
 	mkdir iso/boot/grub
-	cp CactusOS.bin iso/boot/CactusOS.bin
+	cp HeisenOs.bin iso/boot/HeisenOs.bin
 	cp grub.cfg iso/boot/grub/grub.cfg
 	grub-mkrescue --output=CactusOS.iso iso
 	rm -rf iso
 
 .PHONY: clean qemu kdbg run filelist serialDBG qemuDBG fastApps
 clean:
-	rm -rf $(KRNLOBJDIR) CactusOS.bin CactusOS.iso
+	rm -rf $(KRNLOBJDIR) HeisenOs.bin CactusOS.iso
 	cd lib/ && $(MAKE) clean
 	cd apps/ && $(MAKE) clean
 	rm -rf isofiles/apps/*.bin
@@ -121,7 +124,7 @@ qemuDBG: CactusOS.iso
 
 qemuGDB: CactusOS.iso
 	qemu-system-i386 -cdrom CactusOS.iso $(QEMUOPTIONS) -serial pty &
-	gdb -ex 'file CactusOS.bin' -ex 'target remote /dev/pts/1' -q
+	gdb -ex 'file HeisenOs.bin' -ex 'target remote /dev/pts/1' -q
 
 run: CactusOS.iso
 	vboxmanage startvm "CactusOS" -E VBOX_GUI_DBG_AUTO_SHOW=true -E VBOX_GUI_DBG_ENABLED=true &
@@ -135,7 +138,7 @@ serialDBG:
 
 kdbg: CactusOS.iso
 	qemu-system-i386 $(QEMUOPTIONS) -cdrom CactusOS.iso -serial stdio -s -S &
-	kdbg -r localhost:1234 CactusOS.bin
+	kdbg -r localhost:1234 HeisenOs.bin
 
 grub-core:
 	grub-mkimage -o isofiles/setup/core.img -O i386-pc -p="(hd0,msdos1)/boot/grub" --config=grubcore.cfg -v configfile biosdisk part_msdos fat normal multiboot echo
@@ -152,11 +155,11 @@ turboApps:
 	cd apps/ && $(MAKE) clean && $(MAKE)
 	rm CactusOS.iso
 
-installUSB: CactusOS.iso CactusOS.bin isofiles/debug.sym isofiles/apps
+installUSB: CactusOS.iso HeisenOs.bin isofiles/debug.sym isofiles/apps
 	rm -rf /media/remco/ISOIMAGE/apps/*.bin
 	cp -r isofiles/apps/* /media/remco/ISOIMAGE/apps/
 	cp isofiles/debug.sym /media/remco/ISOIMAGE/debug.sym
-	cp CactusOS.bin /media/remco/ISOIMAGE/boot/CactusOS.bin
+	cp HeisenOs.bin /media/remco/ISOIMAGE/boot/HeisenOs.bin
 	umount /media/remco/ISOIMAGE
 
 debug: CactusOS.iso

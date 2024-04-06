@@ -22,6 +22,7 @@ stack_top:
 
 .section .data
     .align 0x1000
+.global BootPageDirectory
 BootPageDirectory:
     .long 0x00000083
     

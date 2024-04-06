@@ -25,6 +25,7 @@
 VERSION = 1
 PATCHLEVEL = 4
 SUBLEVEL = 0
+EXTRAVERSION = -rc2
 
 INCLUDEDIRS := kernelz/include
 INCLUDEZ = libz/include
@@ -79,6 +80,12 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 	mkdir -p $(@D)
 	nasm -f elf32 -O0 $< -o $@
+
+####################################
+#State the kernel version
+KERNELVERSION := $(VERSION)$(if $(PATCHLEVEL),.$(PATCHLEVEL)$(if $(SUBLEVEL),.$(SUBLEVEL)))$(EXTRAVERSION)
+export VERSION PATCHLEVEL SUBLEVEL KERNELRELEASE KERNELVERSION
+####################################
 
 
 
@@ -165,4 +172,4 @@ filelist:
 	@echo -$(KRNLOBJS)
 
 version:
-	@echo $(VERSION)
+	@echo $(KERNELVERSION)

@@ -27,8 +27,8 @@ INCLUDEDIRS := kernelz/include
 INCLUDEDIRSLIB := lib/include
 QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../qemuTrace.txt -d cpu_reset #-readconfig qemu-usb-config.cfg -drive if=none,id=stick,file=disk.img -device usb-storage,bus=ehci.0,drive=stick
 
-G++PARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -Wno-write-strings -fpermissive -Wno-unknown-pragmas -std=c++20 -lstdc++ -fPIC   -ffreestanding -nostdinc -O1 -Wall -Wextra -std=gnu99 -nostdlib
-GCCPARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -ffreestanding -fno-builtin -Wno-unknown-pragmas -lstdc++ -fPIC  -ffreestanding -nostdinc -O1 -Wall -Wextra -std=gnu99 -nostdlib
+i686-elf-g++PARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -Wno-write-strings -fpermissive -Wno-unknown-pragmas -std=c++20 -lstdc++ -fPIC   
+GCCPARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -ffreestanding -fno-builtin -Wno-unknown-pragmas -lstdc++ -fPIC 
 ASPARAMS := --32
 LDPARAMS := -no-pie 
 
@@ -52,28 +52,28 @@ DIALOG := dialog
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.cpp
 	mkdir -p $(@D)
-	g++ $(G++PARAMS) -c -o $@ $<
+	i686-elf-g++ $(i686-elf-g++PARAMS) -c -o $@ $<
 
 ####################################
 #C source files
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.c
 	mkdir -p $(@D)
-	gcc $(GCCPARAMS) -c -o $@ $<
+	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
 
 ####################################
 #GDB Stub
 ####################################
 $(KRNLOBJDIR)/gdb/i386-stub.o: $(KRNLSRCDIR)/gdb/i386-stub.c
 	mkdir -p $(@D)
-	gcc $(GCCPARAMS) -fleading-underscore -c -o $@ $<
+	i686-elf-gcc $(GCCPARAMS) -fleading-underscore -c -o $@ $<
 
 ####################################
 #GAS assembly files
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
 	mkdir -p $(@D)
-	as $(ASPARAMS) -o $@ $<
+	i686-elf-as $(ASPARAMS) -o $@ $<
 
 ####################################
 #NASM assembly files
@@ -83,7 +83,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 	nasm -f elf32 $< -o $@
 
 CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
-	g++ -nostdlib $(LDPARAMS) -std=c++20 -Wl,--unresolved-symbols=ignore-all  -T kernelz/linker.ld -o CactusOS.bin $(KRNLOBJS) -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB)
+	i686-elf-ld -nostdlib $(LDPARAMS) -std=c++20 -Wl,--unresolved-symbols=ignore-all  -T kernelz/linker.ld -o CactusOS.bin $(KRNLOBJS) -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB)
 CactusOS.iso: CactusOS.bin
 	cd lib/ && $(MAKE)
 	cd apps/ && $(MAKE)
@@ -122,7 +122,7 @@ run: CactusOS.iso
 	tail -f "CactusOS.log"
 
 serialDBG:
-	gcc -o tools/serialDebugger/a.out tools/serialDebugger/main.c
+	i686-elf-gcc -o tools/serialDebugger/a.out tools/serialDebugger/main.c
 	sudo ./tools/serialDebugger/a.out
 
 kdbg: CactusOS.iso

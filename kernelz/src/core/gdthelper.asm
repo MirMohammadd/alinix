@@ -1,3 +1,4 @@
+section .text
 global gdt_flush
 
 gdt_flush:
@@ -10,6 +11,6 @@ gdt_flush:
    mov fs, ax
    mov gs, ax
    mov ss, ax
-   jmp 0x08:.flush   
+   jmp 0x08, .flush   
 .flush:
    ret

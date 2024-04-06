@@ -49,6 +49,8 @@ SECTIONS
         *(HeisenOs::core::pageRoundUp*)
         *(HeisenOs::core::Power::Reboot*)
         *(UND*)
+        *(HeisenOs::core::pageRoundUp*)
+        *(HeisenOs::core::pageRoundDown*)
     }
 
     /DISCARD/ : { *(.fini_array*) *(.comment) }

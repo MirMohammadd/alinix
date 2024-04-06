@@ -2,17 +2,15 @@
 
 section .text
 
-global _start
-
-_start:
-
 
 global VM86CodeStart
+global Int86
+global diskInfo
+global VM86CodeEnd
+
 VM86CodeStart:
 
-global Int86
 Int86:
-
     push cs
     pop ds
 
@@ -41,9 +39,7 @@ doInt:
 
     int 0xFE
 
-global diskInfo
 diskInfo:
-
     mov dl, al
     mov ax, 0x4800
 
@@ -56,12 +52,10 @@ diskInfo:
     int 0xFE
 
 diskInfoError:
-
     mov [0x7000], 0
 
     int 0xFE
 
-global VM86CodeEnd
 VM86CodeEnd:
 
 section .bss

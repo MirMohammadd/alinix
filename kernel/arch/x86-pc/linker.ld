@@ -43,6 +43,13 @@ SECTIONS
         ebss = .;
     }
 
+    /* Define sections to fulfill unresolved references */
+    .unresolved :
+    {
+        /* Define symbols to fulfill unresolved references */
+        PROVIDE (_dummy_symbol = 0); /* Replace _dummy_symbol with the actual symbol name */
+    }
+
     /* End of the kernel */
     __kernel_end = .;
 }

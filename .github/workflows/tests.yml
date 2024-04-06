@@ -19,7 +19,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y gcc-multilib qemu qemu-system-x86 nasm xorriso grub-common grub-pc-bin mtools make binutils-gold tcc
+        sudo apt-get install -y gcc-multilib qemu qemu-system-x86 nasm xorriso grub-common grub-pc-bin mtools make binutils-gold tcc libgcc
         sudo apt-get install -y gcc-11-i686-linux-gnu g++-11-i686-linux-gnu || true
         sudo apt-get install -y gcc-i686-linux-gnu g++-i686-linux-gnu
 

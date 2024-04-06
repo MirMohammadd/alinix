@@ -40,7 +40,7 @@ SECTIONS
     /DISCARD/ : {
         *(___x86.get_pc_thunk.ax)
         *(___x86.get_pc_thunk.bx)
-        *(__GLOBAL_OFFSET_TABLE_)
+        *(_GLOBAL_OFFSET_TABLE_)
         *(operator new*)
         *(operator delete*)
         *(HeisenOs::core::VirtualMemoryManager::virtualToPhysical*)

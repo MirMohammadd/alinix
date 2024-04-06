@@ -14,6 +14,11 @@ namespace HeisenOs
         typedef long long int               int64_t;
         typedef unsigned long long int      uint64_t;
         typedef unsigned long long          uintptr_t;
+        #if !defined(__cplusplus)
+        #define bool unsigned char
+        #define true 1
+        #define false 0
+        #endif
 
         constexpr uint64_t divide64(uint64_t n, uint32_t base, uint32_t* r = 0)
         {

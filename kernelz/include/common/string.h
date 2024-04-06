@@ -20,6 +20,8 @@ namespace HeisenOs
             static int IndexOf(const char* str, char c, common::uint32_t skip = 0);
             static bool Contains(const char* str, char c);
             static List<char*> Split(const char* str, char d);
+            List<char*> str_Split(const char* str, char d);
+
             static char* Uppercase(char* str);
             static char* Lowercase(char* str);
             static char Uppercase(char c);

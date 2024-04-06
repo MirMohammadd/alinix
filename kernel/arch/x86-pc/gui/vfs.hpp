@@ -2,7 +2,7 @@
 #define __CACTUSOSLIB__VFS_H
 
 #include <types.hpp>
-#include <list.hpp>
+#include <list.h>
 #include <shared.hpp>
 
 namespace LIBHeisenKernel

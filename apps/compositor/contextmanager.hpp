@@ -18,7 +18,7 @@
 #define __CONTEXTMANAGER_H
 
 #include <types.hpp>
-#include <list.hpp>
+#include <list.h>
 #include <gui/contextinfo.hpp>
 
 // Class that manages a list of contexts

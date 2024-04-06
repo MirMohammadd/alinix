@@ -85,7 +85,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 
 
 CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
-	ld -fno-pie -fno-common $(LDPARAMS) -Wl,--unresolved-symbols=ignore-all -T kernelz/linker.ld -o CactusOS.bin $(KRNLOBJS)
+    ld -m elf_i386 -o CactusOS.bin -T kernelz/linker.ld $(KRNLOBJS)
 CactusOS.iso: CactusOS.bin
 	cd lib/ && $(MAKE)
 	cd apps/ && $(MAKE)

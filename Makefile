@@ -1,4 +1,3 @@
-# The makefile for the CactusOS project, this file will get more complicated when the OS is in a later stage of development.
 
 ##########
 # .s files are GAS assembly
@@ -22,6 +21,10 @@
 # sysbus-ohci
 # pci-ohci
 #######################
+
+VERSION = 1
+PATCHLEVEL = 4
+SUBLEVEL = 0
 
 INCLUDEDIRS := kernelz/include
 INCLUDEZ = libz/include
@@ -160,3 +163,6 @@ filelist:
 	@echo -$(KRNLFILES)
 	@echo "Object Files:"
 	@echo -$(KRNLOBJS)
+
+version:
+	@echo $(VERSION)

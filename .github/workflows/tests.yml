@@ -22,6 +22,12 @@ jobs:
         sudo apt-get install -y gcc-multilib qemu qemu-system-x86 nasm xorriso grub-common grub-pc-bin mtools make binutils-gold tcc 
         sudo apt-get install -y gcc-11-i686-linux-gnu g++-11-i686-linux-gnu || true
         sudo apt-get install -y gcc-i686-linux-gnu g++-i686-linux-gnu
+        git clone https://github.com/lordmilko/i686-elf-tools
+        unzip i686-elf-tools-linux.zip -d test
+        cd test
+        ./i686-elf-tools.sh linux
+
+
 
     - name: Try to fix broken packages
       run: sudo apt-get install -f

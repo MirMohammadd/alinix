@@ -1,4 +1,4 @@
-[GLOBAL gdt_flush]    ; Allows the C code to call gdt_flush().
+[GLOBAL gdt_flush]    
 
 gdt_flush:
    mov eax, [esp+4]  

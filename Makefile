@@ -24,13 +24,13 @@
 #######################
 
 INCLUDEDIRS := kernelz/include
-INCLUDEDIRSLIB := lib/include
+INCLUDEZ = lib/include
 QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../qemuTrace.txt -d cpu_reset #-readconfig qemu-usb-config.cfg -drive if=none,id=stick,file=disk.img -device usb-storage,bus=ehci.0,drive=stick
 
-i686-elf-g++PARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -Wno-write-strings -fpermissive -Wno-unknown-pragmas -std=c++20 -lstdc++ -fPIC   
-GCCPARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -ffreestanding -fno-builtin -Wno-unknown-pragmas -lstdc++ -fPIC 
+G++PARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
+GCCPARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas
 ASPARAMS := --32
-LDPARAMS := -no-pie 
+LDPARAMS := -m elf_i386
 
 KRNLSRCDIR := kernelz/src
 KRNLOBJDIR := kernelz/obj
@@ -41,18 +41,11 @@ KRNLOBJS := $(subst $(KRNLSRCDIR),$(KRNLOBJDIR),$(KRNLOBJS)) #Replace the kernel
 
 
 ####################################
-# Dailog interface config 
-DIALOG := dialog
-
-
-
-####################################
-####################################
 #C++ source files
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.cpp
 	mkdir -p $(@D)
-	i686-elf-g++ $(i686-elf-g++PARAMS) -c -o $@ $<
+	i686-elf-g++ $(G++PARAMS) -c -o $@ $<
 
 ####################################
 #C source files
@@ -80,10 +73,13 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 	mkdir -p $(@D)
-	nasm -f elf32 $< -o $@
+	nasm -f elf32 -O0 $< -o $@
+
+
 
 CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
-	i686-elf-ld -nostdlib $(LDPARAMS) -std=c++20 -Wl,--unresolved-symbols=ignore-all  -T kernelz/linker.ld -o CactusOS.bin $(KRNLOBJS) -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB)
+	i686-elf-ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
+
 CactusOS.iso: CactusOS.bin
 	cd lib/ && $(MAKE)
 	cd apps/ && $(MAKE)
@@ -122,7 +118,7 @@ run: CactusOS.iso
 	tail -f "CactusOS.log"
 
 serialDBG:
-	i686-elf-gcc -o tools/serialDebugger/a.out tools/serialDebugger/main.c
+	gcc -o tools/serialDebugger/a.out tools/serialDebugger/main.c
 	sudo ./tools/serialDebugger/a.out
 
 kdbg: CactusOS.iso

@@ -22,6 +22,8 @@ stack_top:
 
 .section .data
     .align 0x1000
+
+#ifndef BootPageDirectory
 .global BootPageDirectory
 BootPageDirectory:
     .long 0x00000083
@@ -35,12 +37,14 @@ BootPageDirectory:
     .rept (1024 - KERNEL_PAGE_NUMBER - 1)
         .long 0
     .endr
+#endif
 
 .section .text
     .align 4
+
+#ifndef _entrypoint
 .global _entrypoint
 .type _entrypoint, @function
-
 _entrypoint:
     mov $(BootPageDirectory - KERNEL_VIRTUAL_BASE), %ecx
     mov %ecx, %cr3
@@ -77,3 +81,4 @@ _stop:
     cli
     hlt
     jmp _stop
+#endif

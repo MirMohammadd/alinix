@@ -51,6 +51,7 @@ SECTIONS
         *(UND*)
         *(HeisenOs::core::pageRoundUp*)
         *(HeisenOs::core::pageRoundDown*)
+        .err "Ignore _GLOBAL_OFFSET_TABLE_"
     }
 
     /DISCARD/ : { *(.fini_array*) *(.comment) }

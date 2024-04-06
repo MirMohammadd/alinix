@@ -98,6 +98,7 @@ HeisenOs.bin: kernelz/linker.ld $(KRNLOBJS)
 CactusOS.iso: HeisenOs.bin
 	cd lib/ && $(MAKE)
 	cd apps/ && $(MAKE)
+	cd drivers/ && $(MAKE)
 	
 	nm -a HeisenOs.bin | sort -d > isofiles/debug.sym
 	cp -r isofiles/. iso

@@ -2,3 +2,4 @@
 *.iso
 *.bin
 *.o
+*.sym

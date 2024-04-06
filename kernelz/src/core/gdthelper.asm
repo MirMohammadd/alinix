@@ -1,4 +1,4 @@
-[GLOBAL gdt_flush]    
+global gdt_flush
 
 gdt_flush:
    mov eax, [esp+4]  

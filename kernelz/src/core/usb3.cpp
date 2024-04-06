@@ -15,6 +15,7 @@
 
  */
 #include <usb3.h>
+#include <string.h>
 
 using namespace LIBHeisenKernel;
 
@@ -51,4 +52,8 @@ void XHCIReset(USBDevice *dev){
     dev->op_regs->op_usbsts |= (1 << 1);
 	while ((dev->op_regs->op_usbcmd & (1 << 1)));
 	while ((dev->op_regs->op_usbsts & (1 << 11)));
+}
+
+void XHCIDeviceContextInit(USBDevice *dev){
+    
 }

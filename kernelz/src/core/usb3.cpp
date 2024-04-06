@@ -15,6 +15,9 @@
 
  */
 #include <usb3.h>
+#include <string.h>
+
+using namespace LIBHeisenKernel;
 
 
 /*Some Useful Macros defined for the USB Slot Context */
@@ -39,3 +42,18 @@
 #define USB_ENDPOINT_CTX_DWORD4(max_esit_lo, average_trb_len) \
 	(((max_esit_lo & 0xFFFF) << 16) | (average_trb_len & 0xFFFF))
 
+
+/*
+ * XHCIReset -- reset the xhci controller
+ * @param dev -- pointer to USB device 
+ * structure
+ */
+void XHCIReset(USBDevice *dev){
+    dev->op_regs->op_usbsts |= (1 << 1);
+	while ((dev->op_regs->op_usbcmd & (1 << 1)));
+	while ((dev->op_regs->op_usbsts & (1 << 11)));
+}
+
+void XHCIDeviceContextInit(USBDevice *dev){
+    
+}

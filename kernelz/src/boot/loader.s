@@ -14,6 +14,7 @@
 .set KERNEL_PAGE_NUMBER, (KERNEL_VIRTUAL_BASE >> 22)
 
 .section .bootstrap_stack, "aw", @nobits
+    .align 16  
 stack_bottom:
     .skip 16384 
 .global stack_top
@@ -34,10 +35,6 @@ BootPageDirectory:
     .rept (1024 - KERNEL_PAGE_NUMBER - 1)
         .long 0
     .endr
-
-.global _kernel_virtual_base
-_kernel_virtual_base:
-    .long KERNEL_VIRTUAL_BASE
 
 .section .text
     .align 4

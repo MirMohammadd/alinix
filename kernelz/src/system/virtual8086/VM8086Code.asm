@@ -2,7 +2,6 @@
 
 section .text
 
-
 global VM86CodeStart
 global Int86
 global diskInfo

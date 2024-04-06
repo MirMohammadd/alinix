@@ -9,8 +9,8 @@ using namespace HeisenOs::system;
 
 void VirtualMemoryManager::ReloadCR3()
 {
-    asm volatile("movl	%cr3,%eax");
-	asm volatile("movl	%eax,%cr3");
+    asm volatile("movq	%cr3,%eax");
+	asm volatile("movq	%eax,%cr3");
 }
 
 

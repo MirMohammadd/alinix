@@ -53,7 +53,6 @@ void XHCIReset(USBDevice *dev){
 	while ((dev->op_regs->op_usbcmd & (1 << 1)));
 	while ((dev->op_regs->op_usbsts & (1 << 11)));
 }
-
 void XHCIDeviceContextInit(USBDevice *dev){
     
 }

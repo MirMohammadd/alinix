@@ -1,14 +1,14 @@
-#include <log.hpp>
-#include <api.hpp>
-#include <types.hpp>
-#include <vfs.hpp>
-#include <syscall.hpp>
+#include <log.h>
+#include <api.h>
+#include <types.h>
+#include <vfs.h>
+#include <syscall.h>
 #include <string.h>
-#include <new.hpp>
-#include <proc.hpp>
-#include <ipc.hpp>
-#include <time.hpp>
-#include <math.hpp>
+#include <new.h>
+#include <proc.h>
+#include <ipc.h>
+#include <time.h>
+#include <math.h>
 
 void PrintDiskInfo()
 {

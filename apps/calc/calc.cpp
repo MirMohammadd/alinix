@@ -1,14 +1,14 @@
-#include <new.hpp>
-#include <gui/gui.hpp>
-#include <gui/widgets/button.hpp>
-#include <gui/widgets/control.hpp>
-#include <gui/widgets/window.hpp>
-#include <gui/widgets/label.hpp>
-#include <gui/directgui.hpp>
-#include <convert.hpp>
+#include <new.h>
+#include <gui/gui.h>
+#include <gui/widgets/button.h>
+#include <gui/widgets/control.h>
+#include <gui/widgets/window.h>
+#include <gui/widgets/label.h>
+#include <gui/directgui.h>
+#include <convert.h>
 #include <string.h>
-#include <log.hpp>
-#include <proc.hpp>
+#include <log.h>
+#include <proc.h>
 
 using namespace LIBHeisenKernel;
 

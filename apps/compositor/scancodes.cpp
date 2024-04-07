@@ -14,8 +14,8 @@
  * @file scancodes.cc
 
  */
-#include <types.hpp>
-#include <shared.hpp>
+#include <types.h>
+#include <shared.h>
 
 using namespace LIBHeisenKernel;
 

@@ -14,21 +14,21 @@
  * @file compositor.cc
 
  */
-#include "compositor.hpp"
-#include "cursor.hpp"
+#include "compositor.h"
+#include "cursor.h"
 
-#include <gui/directgui.hpp>
-#include <gui/gui.hpp>
-#include <gui/colors.hpp>
-#include <imaging/image.hpp>
-#include <systeminfo.hpp>
-#include <proc.hpp>
-#include <gui/contextheap.hpp>
-#include <log.hpp>
-#include <ipc.hpp>
-#include <math.hpp>
+#include <gui/directgui.h>
+#include <gui/gui.h>
+#include <gui/colors.h>
+#include <imaging/image.h>
+#include <systeminfo.h>
+#include <proc.h>
+#include <gui/contextheap.h>
+#include <log.h>
+#include <ipc.h>
+#include <math.h>
 #include <string.h>
-#include <heap.hpp>
+#include <heap.h>
 
 using namespace LIBHeisenKernel;
 using namespace LIBHeisenKernel::Imaging;

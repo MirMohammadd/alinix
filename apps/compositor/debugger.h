@@ -17,7 +17,7 @@
 #ifndef __DEBUGGER_H
 #define __DEBUGGER_H
 
-#include "compositor.hpp"
+#include "compositor.h"
 
 class Compositor;
 

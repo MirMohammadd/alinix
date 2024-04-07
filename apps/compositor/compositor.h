@@ -17,13 +17,13 @@
 #ifndef __COMPISTOR_H
 #define __COMPISTOR_H
 
-#include <types.hpp>
-#include <gui/rect.hpp>
-#include <gui/canvas.hpp>
-#include <ipc.hpp>
-#include <imaging/image.hpp>
-#include "contextmanager.hpp"
-#include "debugger.hpp"
+#include <types.h>
+#include <gui/rect.h>
+#include <gui/canvas.h>
+#include <ipc.h>
+#include <imaging/image.h>
+#include "contextmanager.h"
+#include "debugger.h"
 
 #define COMPOSITOR_DEFAULT_BACKGROUND 0xFFBFFFD0
 

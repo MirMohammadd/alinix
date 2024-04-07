@@ -1,7 +1,7 @@
 #include "terminalcontrol.h"
 #include <string.h>
-#include <proc.hpp>
-#include <gui/widgets/window.hpp>
+#include <proc.h>
+#include <gui/widgets/window.h>
 
 using namespace LIBHeisenKernel;
 

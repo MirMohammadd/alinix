@@ -10,35 +10,29 @@
 #include <log.h>
 #include <proc.h>
 
-
 using namespace LIBHeisenKernel;
-// using namespace LIBHeisenKernel::Imaging;
 
-char* path = "B:\\boot.jpg";
+Window* mainWindow = 0;
 
-Window* welcomeWindow = 0;
-
-void ValueChange(void *s,int v){
-    welcomeWindow->backColor = v * 1000;
+void ValueChanged(void* s, int v)
+{
+    mainWindow->backColor = v * 1000;
 }
 
-
-int main(){
-    Log(Info,"Welcome to the Heisen OS!!!");
+int main(int argc, char** argv)
+{
     GUI::SetDefaultFont();
 
-    welcomeWindow = new Window(600, 600, 300, 300);
-    welcomeWindow->titleString = "Welcome to the Heisen OS!";
+    mainWindow = new Window(600, 600, 300, 300);
+    mainWindow->titleString = "HeisenKernel File Browser";
 
     ScrollBar* scroll = new ScrollBar(Vertical);
     scroll->x = 100;
     scroll->y = 200;
+    scroll->value.onChanged += ValueChanged;
+    mainWindow->AddChild(scroll);
 
-    scroll->value.onChanged += ValueChange;
-    welcomeWindow->AddChild(scroll);
-
-
-    while (GUI::HasItems()){
+    while (GUI::HasItems()) {
         GUI::DrawGUI();
         GUI::ProcessEvents();
         //scroll->value += 1;
@@ -47,5 +41,6 @@ int main(){
             scroll->maxValue += 20;
         }
     }
+
     return 0;
 }

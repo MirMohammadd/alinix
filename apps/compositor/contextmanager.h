@@ -11,15 +11,15 @@
  * furnished to do so, subject to the following conditions:
  *
  * @author Heisenberg
- * @file contextmanager.hpp
+ * @file contextmanager.h
 
  */
 #ifndef __CONTEXTMANAGER_H
 #define __CONTEXTMANAGER_H
 
-#include <types.hpp>
+#include <types.h>
 #include <list.h>
-#include <gui/contextinfo.hpp>
+#include <gui/contextinfo.h>
 
 // Class that manages a list of contexts
 class ContextManager

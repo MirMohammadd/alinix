@@ -43,8 +43,8 @@ QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../q
 ARCHINCLUDE := kernel/include
 
 
-G++PARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -I $(ARCHINCLUDE) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -lm
-GCCPARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -I $(ARCHINCLUDE) -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas -lm
+G++PARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -I $(ARCHINCLUDE) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -lm  -lstdc++
+GCCPARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -I $(ARCHINCLUDE) -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas -lm   -lstdc++
 ASPARAMS := --32
 LDPARAMS := -m elf_i386
 
@@ -187,24 +187,24 @@ filelist:
 
 version:
 	@echo $(KERNELVERSION)
-# dialogconfig:
-# 	dialog --no-shadow --backtitle "Kernel Configuration" --title "Heisen Kernel Configuration" --clear --stdout --checklist "Select features to enable:" 20 60 10 \
-# 	    1 "General setup" on \
-# 	    2 "EHCI" off \
-# 	    3 "UHCI" off \
-# 	    4 "OHCI" off \
-# 	    > .config; \
-# 	if grep -q "1" .config; then \
-# 	    dialog --no-shadow --backtitle "Basic setup" --msgbox "Basic setup Config" 10 40; \
-# 			1 "Compile Heisen Kernel with GCC cross compiler" on \
-# 			> .config; \
-# 	fi || true
+dialogconfig:
+	dialog --no-shadow --backtitle "Kernel Configuration" --title "Heisen Kernel Configuration" --clear --stdout --checklist "Select features to enable:" 20 60 10 \
+	    1 "General setup" on \
+	    2 "EHCI" off \
+	    3 "UHCI" off \
+	    4 "OHCI" off \
+	    > .config; \
+	if grep -q "1" .config; then \
+	    dialog --no-shadow --backtitle "Basic setup" --msgbox "Basic setup Config" 10 40; \
+			1 "Compile Heisen Kernel with GCC cross compiler" on \
+			> .config; \
+	fi || true
 
 
 
-# # Define the target to build the kernel
-# build:
-# 	# Placeholder for actual build commands
-# 	@echo "Building kernel..."
+# Define the target to build the kernel
+build:
+	# Placeholder for actual build commands
+	@echo "Building kernel..."
 
 

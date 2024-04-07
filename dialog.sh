@@ -1,13 +1,13 @@
 #!/bin/bash
 
-
-
 # Display the initial dialog for feature selection
 dialog --no-shadow --backtitle "Kernel Configuration" --title "Heisen Kernel Configuration" --clear --stdout --checklist "Select features to enable:" 20 60 10 \
     1 "General setup" on \
     2 "EHCI" off \
     3 "UHCI" off \
     4 "OHCI" off \
+    5 "64 bit compile" off \
+    6 "32 bit compile" off\
     > .config
 
 # Check if "General setup" is selected
@@ -16,7 +16,7 @@ if grep -q "1" .config; then
     dialog --no-shadow --backtitle "Basic setup" --msgbox "Basic setup Config" 10 40
 
     # Ask user whether to compile Heisen Kernel with GCC cross compiler
-    dialog --no-shadow --backtitle "Basic setup" --title "Compile Heisen Kernel with GCC cross compiler" --clear --stdout --yesno "Do you want to compile Heisen Kernel with GCC cross compiler?" 10 40
+    dialog --no-shadow --backtitle "Basic setup" --title "Compile Heisen Kernel with GCC cross compiler" --clear --stdout --yesno "GCC cross compiler setup" 10 40
 
     # Check the exit status of the previous dialog
     if [ $? -eq 0 ]; then

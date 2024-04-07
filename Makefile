@@ -1,4 +1,4 @@
-
+# Makefile for the HeisenKernel project under the MIT license
 ##########
 # .s files are GAS assembly
 # .asm files are nasm assembly
@@ -43,7 +43,7 @@ QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../q
 ARCHINCLUDE := kernel/include
 
 
-G++PARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -I $(ARCHINCLUDE) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -lm  -lstdc++
+G++PARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -I $(ARCHINCLUDE)  -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -lm  -lstdc++
 GCCPARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -I $(ARCHINCLUDE) -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas -lm   -lstdc++
 ASPARAMS := --32
 LDPARAMS := -m elf_i386

@@ -27,6 +27,16 @@ PATCHLEVEL = 4
 SUBLEVEL = 0
 EXTRAVERSION = -rc2
 
+CONFIG_FILE := .config
+
+ifeq ($(filter undefine,$(.FEATURES)),)
+    ifeq ($(shell expr $(MAKE_VERSION) \>= 3.80), 0)
+        $(error GNU Make >= 3.80 is required. Your Make version is $(MAKE_VERSION))
+    endif
+endif
+
+
+
 INCLUDEDIRS := kernelz/include
 INCLUDEZ = libz/include
 QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../qemuTrace.txt -d cpu_reset #-readconfig qemu-usb-config.cfg -drive if=none,id=stick,file=disk.img -device usb-storage,bus=ehci.0,drive=stick
@@ -177,3 +187,24 @@ filelist:
 
 version:
 	@echo $(KERNELVERSION)
+# dialogconfig:
+# 	dialog --no-shadow --backtitle "Kernel Configuration" --title "Heisen Kernel Configuration" --clear --stdout --checklist "Select features to enable:" 20 60 10 \
+# 	    1 "General setup" on \
+# 	    2 "EHCI" off \
+# 	    3 "UHCI" off \
+# 	    4 "OHCI" off \
+# 	    > .config; \
+# 	if grep -q "1" .config; then \
+# 	    dialog --no-shadow --backtitle "Basic setup" --msgbox "Basic setup Config" 10 40; \
+# 			1 "Compile Heisen Kernel with GCC cross compiler" on \
+# 			> .config; \
+# 	fi || true
+
+
+
+# # Define the target to build the kernel
+# build:
+# 	# Placeholder for actual build commands
+# 	@echo "Building kernel..."
+
+

@@ -14,13 +14,13 @@
  * @file main.cc
 
  */
-#include <new.hpp>
-#include <log.hpp>
-#include <time.hpp>
-#include <proc.hpp>
-#include <gui/directgui.hpp>
+#include <new.h>
+#include <log.h>
+#include <time.h>
+#include <proc.h>
+#include <gui/directgui.h>
 
-#include "compositor.hpp"
+#include "compositor.h"
 
 using namespace LIBHeisenKernel;
 

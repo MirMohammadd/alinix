@@ -1,15 +1,15 @@
-#include <new.hpp>
-#include <gui/gui.hpp>
-#include <gui/directgui.hpp>
-#include <convert.hpp>
-#include <time.hpp>
-#include <datetime.hpp>
+#include <new.h>
+#include <gui/gui.h>
+#include <gui/directgui.h>
+#include <convert.h>
+#include <time.h>
+#include <datetime.h>
 #include <string.h>
-#include <math.hpp>
-#include <log.hpp>
-#include <proc.hpp>
-#include <vfs.hpp>
-#include "item.hpp"
+#include <math.h>
+#include <log.h>
+#include <proc.h>
+#include <vfs.h>
+#include "item.h"
 
 List<DesktopItem*>* items = 0;
 

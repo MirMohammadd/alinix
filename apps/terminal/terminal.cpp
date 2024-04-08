@@ -1,15 +1,15 @@
-#include <new.hpp>
-#include <gui/gui.hpp>
-#include <gui/widgets/window.hpp>
-#include <gui/widgets/label.hpp>
-#include <gui/directgui.hpp>
+#include <new.h>
+#include <gui/gui.h>
+#include <gui/widgets/window.h>
+#include <gui/widgets/label.h>
+#include <gui/directgui.h>
 #include <string.h>
-#include <log.hpp>
-#include <proc.hpp>
-#include <convert.hpp>
-#include <ipc.hpp>
-#include <vfs.hpp>
-#include <time.hpp>
+#include <log.h>
+#include <proc.h>
+#include <convert.h>
+#include <ipc.h>
+#include <vfs.h>
+#include <time.h>
 #include "terminalcontrol.h"
 
 char* workingDir = "B:\\";

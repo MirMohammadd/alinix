@@ -1,7 +1,7 @@
 #ifndef TERMINAL_CONTROL_H
 #define TERMINAL_CONTROL_H
 
-#include <gui/widgets/control.hpp>
+#include <gui/widgets/control.h>
 
 #define TERM_WIDTH 74
 #define TERM_HEIGH 26

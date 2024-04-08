@@ -1,13 +1,13 @@
-#include <new.hpp>
-#include <gui/gui.hpp>
-#include <gui/directgui.hpp>
-#include <convert.hpp>
-#include <time.hpp>
-#include <datetime.hpp>
+#include <new.h>
+#include <gui/gui.h>
+#include <gui/directgui.h>
+#include <convert.h>
+#include <time.h>
+#include <datetime.h>
 #include <string.h>
-#include <math.hpp>
-#include <log.hpp>
-#include <proc.hpp>
+#include <math.h>
+#include <log.h>
+#include <proc.h>
 
 int main(int argc, char** argv)
 {
@@ -16,7 +16,7 @@ int main(int argc, char** argv)
     if(mainScreen == 0)
         return -1;
 
-    mainScreen->sharedContextInfo->supportsTransparency = true;
+    mainScreen->sharedContextInfo->supportsDirtyRects= true;
     mainScreen->sharedContextInfo->background = true;
     mainScreen->sharedContextInfo->supportsDirtyRects = true;
     int prevSec = -1;

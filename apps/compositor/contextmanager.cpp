@@ -14,7 +14,7 @@
  * @file contextmanager.cc
 
  */
-#include "contextmanager.hpp"
+#include "contextmanager.h"
 
 using namespace LIBHeisenKernel;
 

@@ -1,12 +1,12 @@
-#include <new.hpp>
-#include <gui/gui.hpp>
-#include <gui/widgets/window.hpp>
-#include <gui/widgets/button.hpp>
-#include <gui/directgui.hpp>
-#include <proc.hpp>
-#include <syscall.hpp>
-#include <vfs.hpp>
-#include <log.hpp>
+#include <new.h>
+#include <gui/gui.h>
+#include <gui/widgets/window.h>
+#include <gui/widgets/button.h>
+#include <gui/directgui.h>
+#include <proc.h>
+#include <syscall.h>
+#include <vfs.h>
+#include <log.h>
 
 void PoweroffButtonCallback(void* sender, MouseButtonArgs arg);
 void RebootButtonCallback(void* sender, MouseButtonArgs arg);

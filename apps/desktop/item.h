@@ -1,10 +1,10 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include <gui/context.hpp>
-#include <gui/gui.hpp>
-#include <imaging/image.hpp>
-#include <imaging/pngformat.hpp>
+#include <gui/context.h>
+#include <gui/gui.h>
+#include <imaging/image.h>
+#include <imaging/pngformat.h>
 
 using namespace LIBHeisenKernel;
 using namespace LIBHeisenKernel::Imaging;

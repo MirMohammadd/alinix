@@ -1,8 +1,8 @@
 #ifndef PROGRESS_H
 #define PROGRESS_H
 
-#include <types.hpp>
-#include <gui/directgui.hpp>
+#include <types.h>
+#include <gui/directgui.h>
 
 using namespace LIBHeisenKernel;
 

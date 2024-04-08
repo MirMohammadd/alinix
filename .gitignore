@@ -1,5 +1,15 @@
+#Heisen Kernel
+#This software is licensed under MIT License.
+
+
 *.json
+
+####################################
+#ignoring the kernel  image, as it is not needed for this test.
 *.iso
 *.bin
 *.o
 *.sym
+*.config
+*.sym
+*.a

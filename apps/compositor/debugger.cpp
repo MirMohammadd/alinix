@@ -14,10 +14,10 @@
  * @file debugger.cc
 
  */
-#include "debugger.hpp"
-#include <convert.hpp>
-#include <time.hpp>
-#include <gui/gui.hpp>
+#include "debugger.h"
+#include <convert.h>
+#include <time.h>
+#include <gui/gui.h>
 
 using namespace LIBHeisenKernel;
 

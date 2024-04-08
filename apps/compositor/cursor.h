@@ -17,7 +17,7 @@
 #ifndef _CURSOR_H
 #define _CURSOR_H
 
-#include <types.hpp>
+#include <types.h>
 
 #define ALPHA 0
 #define BLACK 1

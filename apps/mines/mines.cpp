@@ -1,14 +1,14 @@
-#include <new.hpp>
-#include <log.hpp>
-#include <gui/widgets/button.hpp>
-#include <gui/widgets/window.hpp>
-#include <gui/directgui.hpp>
-#include <random.hpp>
-#include <datetime.hpp>
-#include <time.hpp>
-#include <convert.hpp>
+#include <new.h>
+#include <log.h>
+#include <gui/widgets/button.h>
+#include <gui/widgets/window.h>
+#include <gui/directgui.h>
+#include <random.h>
+#include <datetime.h>
+#include <time.h>
+#include <convert.h>
 #include <string.h>
-#include <gui/widgets/label.hpp>
+#include <gui/widgets/label.h>
 
 using namespace LIBHeisenKernel;
 

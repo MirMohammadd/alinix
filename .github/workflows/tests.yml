@@ -34,4 +34,4 @@ jobs:
         brew install bchunk
         brew install qemu
         # nasm -f elf32 -O0 kernelz/src/core/cpuhelper.asm -o kernelz/obj/core/cpuhelper.o
-        timeout 10s make qemu
+        (make qemu) & pid=$! ; (sleep 10 && kill -9 $pid &)

@@ -51,6 +51,22 @@ const char* usbserial_get_error_str(int error_code){
         case USBSERIAL_ERROR_RESOURCE_ALLOC_FAILED:
             return  ERROR_MSG_RESOURCE_ALLOC_FAILED;
         
+        case USBSERIAL_ERROR_NO_SUCH_DEVICE:
+            return ERROR_MSG_NO_SUCH_DEVICE;
         
+        case USBSERIAL_ERROR_UNSUPPORTED_DEVICE:
+            return ERROR_MSG_UNSUPPORTED_DEVICE;
+
+        case USBSERIAL_ERROR_UNSUPPORTED_BAUD_RATE:
+		return ERROR_MSG_UNSUPPORTED_BAUD_RATE;
+
+        case USBSERIAL_ERROR_INVALID_PORT_IDX:
+            return ERROR_MSG_INVALID_PORT_IDX;
+
+        case USBSERIAL_ERROR_CTRL_CMD_FAILED:
+            return ERROR_MSG_CTRL_CMD_FAILED;
+        
+        default:
+            return ERROR_MSG_UNKNOWN;
     }
 }

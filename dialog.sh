@@ -1,29 +1,61 @@
 #!/bin/bash
 
-# Display the initial dialog for feature selection
-dialog --no-shadow --backtitle "Kernel Configuration" --title "Heisen Kernel Configuration" --clear --stdout --checklist "Select features to enable:" 20 60 10 \
-    1 "General setup" on \
-    2 "EHCI" off \
-    3 "UHCI" off \
-    4 "OHCI" off \
-    5 "64 bit compile" off \
-    6 "32 bit compile" off\
-    > .config
+# Function to compile the kernel
+compile_kernel() {
+    # Add your kernel compilation commands here
+    echo "$(make qemu >/dev/null 2>&1)"
+}
 
-# Check if "General setup" is selected
-if grep -q "1" .config; then
-    # Display a message box for basic setup configuration
-    dialog --no-shadow --backtitle "Basic setup" --msgbox "Basic setup Config" 10 40
+# Function to clean the work directory
+clean_work() {
+    # Add your work directory cleaning commands here
+    echo "$(make clean >/dev/null 2>&1)"
+}
 
-    # Ask user whether to compile Heisen Kernel with GCC cross compiler
-    dialog --no-shadow --backtitle "Basic setup" --title "Compile Heisen Kernel with GCC cross compiler" --clear --stdout --yesno "GCC cross compiler setup" 10 40
+run_qemu(){
+    echo "$(make qemu >/dev/null 2>&1)"
+}
 
-    # Check the exit status of the previous dialog
-    if [ $? -eq 0 ]; then
-        echo "Heisen Kernel will be compiled with GCC cross compiler."
-        echo "$(make qemu)"
-        # Add your commands to compile the kernel here
-    else
-        echo "Heisen Kernel will not be compiled with GCC cross compiler."
-    fi
+# Main function displaying dialog interface
+main() {
+    while true; do
+        choice=$(dialog --clear \
+                        --backtitle "Kernel Compilation Menu" \
+                        --title "Main Menu" \
+                        --menu "Choose an option:" \
+                        15 50 3 \
+                        1 "Compile the kernel" \
+                        2 "Clean the work directory" \
+                        3 "Run in QEMU" \
+                        4 "Exit" \
+                        2>&1 >/dev/tty)
+
+        case "$choice" in
+            1)
+                compile_kernel
+                ;;
+            2)
+                clean_work
+                ;;
+
+            3)
+                run_qemu
+                ;;
+            4)
+                echo "Exiting..."
+                exit 0
+                ;;
+            *)
+                echo "Invalid option. Please select again."
+                ;;
+        esac
+    done
+}
+
+# Check if dialog is installed
+if ! command -v dialog &> /dev/null; then
+    echo "Dialog is not installed. Please install it to run this script."
+    exit 1
 fi
+
+main

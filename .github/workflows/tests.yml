@@ -27,14 +27,7 @@ jobs:
       run: brew tap nativeos/i686-elf-gcc && brew install i686-elf-gcc
 
 
-    - name: Try to fix broken packages
-      run: sudo apt-get install -f
-
-    - name: Set PATH for i686-elf-gcc and i686-elf-g++
-      run: |
-        export PATH="$PATH:/usr/bin:/usr/local/bin:/path/to/i686-elf-gcc-directory/bin:/path/to/i686-elf-g++-directory/bin" # Replace with the actual paths to i686-elf-gcc and i686-elf-g++ directories
-
     - name: Build project
       run: |
         # nasm -f elf32 -O0 kernelz/src/core/cpuhelper.asm -o kernelz/obj/core/cpuhelper.o
-        make run # Replace 'make' with your build command
+        make qemu

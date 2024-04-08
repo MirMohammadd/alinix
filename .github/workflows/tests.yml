@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
     - name: Checkout repository
@@ -18,15 +18,13 @@ jobs:
 
     - name: Install dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get install -y gcc-multilib qemu qemu-system-x86 nasm xorriso grub-common grub-pc-bin mtools make binutils-gold tcc 
-        sudo apt-get install -y gcc-11-i686-linux-gnu g++-11-i686-linux-gnu || true
-        sudo apt-get install -y gcc-i686-linux-gnu g++-i686-linux-gnu
-        git clone https://github.com/lordmilko/i686-elf-tools
-        unzip i686-elf-tools-linux.zip -d test
-        cd test
-        ./i686-elf-tools.sh linux
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      
+    - name: Install make
+      run: brew install make
 
+    - name: Install i686-elf-gcc
+      run: brew tap nativeos/i686-elf-gcc && brew install i686-elf-gcc
 
 
     - name: Try to fix broken packages

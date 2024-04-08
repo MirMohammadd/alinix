@@ -1,5 +1,4 @@
-# The makefile for the CactusOS project, this file will get more complicated when the OS is in a later stage of development.
-
+# Makefile of HeisenOs project, Linked under the MIT license
 ##########
 # .s files are GAS assembly
 # .asm files are nasm assembly
@@ -22,6 +21,12 @@
 # sysbus-ohci
 # pci-ohci
 #######################
+
+# Check if the make version is exactly 3.80
+ifeq ($(MAKE_VERSION),3.80)
+    $(error This makefile requires GNU Make version 3.80. Your Make version is $(MAKE_VERSION))
+endif
+
 
 INCLUDEDIRS := kernelz/include
 QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768  #-readconfig qemu-usb-config.cfg -drive if=none,id=stick,file=disk.img -device usb-storage,bus=ehci.0,drive=stick

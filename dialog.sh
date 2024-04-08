@@ -1,29 +1,51 @@
 #!/bin/bash
 
 # Display the initial dialog for feature selection
-dialog --no-shadow --backtitle "Kernel Configuration" --title "Heisen Kernel Configuration" --clear --stdout --checklist "Select features to enable:" 20 60 10 \
+options=$(dialog --no-shadow --backtitle "Kernel Configuration" --title "Heisen Kernel Configuration" --clear --stdout --checklist "Select features to enable:" 20 60 10 \
     1 "General setup" on \
     2 "EHCI" off \
     3 "UHCI" off \
     4 "OHCI" off \
     5 "64 bit compile" off \
-    6 "32 bit compile" off\
-    > .config
+    6 "32 bit compile" off \
+    7 "Run QEMU" off \
+    8 "Clean the work (Remove all the object, iso and binary files)" on)
+
+# Check if option 8 ("Clean the work") is selected
+if echo "$options" | grep -q "8"; then
+    echo "Cleaning the files ..."
+    # Add your commands to clean the files here
+    echo "Files cleaned."
+else
+    echo "Option 8 is not selected."
+fi
 
 # Check if "General setup" is selected
-if grep -q "1" .config; then
+if echo "$options" | grep -q "1"; then
+    echo "General setup is selected."
     # Display a message box for basic setup configuration
-    dialog --no-shadow --backtitle "Basic setup" --msgbox "Basic setup Config" 10 40
 
     # Ask user whether to compile Heisen Kernel with GCC cross compiler
-    dialog --no-shadow --backtitle "Basic setup" --title "Compile Heisen Kernel with GCC cross compiler" --clear --stdout --yesno "GCC cross compiler setup" 10 40
+    compile_options=$(dialog --no-shadow --backtitle "Basic setup" --title "Select compilation options" --clear --stdout --checklist "Choose compilation options:" 10 40 2 \
+    "1" "Compile with GCC cross compiler pack (i686-elf-gcc)" on \
+    "2" "Other compilation option" off \
+    "3" "Clean the work (Remove all the object, iso and binary files)" off)
 
     # Check the exit status of the previous dialog
-    if [ $? -eq 0 ]; then
+    if echo "$compile_options" | grep -q "1"; then
         echo "Heisen Kernel will be compiled with GCC cross compiler."
-        echo "$(make qemu)"
         # Add your commands to compile the kernel here
-    else
-        echo "Heisen Kernel will not be compiled with GCC cross compiler."
+        echo "$(make qemu)"
     fi
+    
+    if echo "$compile_options" | grep -q "3"; then
+        echo "$(make clean)"
+        echo "Cleaning the files ..."
+        # Add your commands to clean the files here
+        echo "Files cleaned."
+    else
+        echo "Option 3 is not selected."
+    fi
+else
+    echo "General setup is not selected."
 fi

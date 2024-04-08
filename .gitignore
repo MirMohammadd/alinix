@@ -13,3 +13,9 @@
 *.config
 *.sym
 *.a
+
+####################################
+
+# Lets ignore the dialog interface files 
+*.compilation_options
+*.tmp

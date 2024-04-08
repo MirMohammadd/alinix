@@ -3,13 +3,17 @@
 # Function to compile the kernel
 compile_kernel() {
     # Add your kernel compilation commands here
-    echo "$(make qemu)"
+    echo "$(make qemu >/dev/null 2>&1)"
 }
 
 # Function to clean the work directory
 clean_work() {
     # Add your work directory cleaning commands here
-    echo "$(make clean)"
+    echo "$(make clean >/dev/null 2>&1)"
+}
+
+run_qemu(){
+    echo "$(make qemu >/dev/null 2>&1)"
 }
 
 # Main function displaying dialog interface
@@ -22,7 +26,8 @@ main() {
                         15 50 3 \
                         1 "Compile the kernel" \
                         2 "Clean the work directory" \
-                        3 "Exit" \
+                        3 "Run in QEMU" \
+                        4 "Exit" \
                         2>&1 >/dev/tty)
 
         case "$choice" in
@@ -32,7 +37,11 @@ main() {
             2)
                 clean_work
                 ;;
+
             3)
+                run_qemu
+                ;;
+            4)
                 echo "Exiting..."
                 exit 0
                 ;;

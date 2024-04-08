@@ -1,57 +1,31 @@
-ENTRY (multiboot_entry)
-OUTPUT_FORMAT(elf32-i386)
-
-
+ENTRY(_start)
 SECTIONS
 {
-    /* Einherjar is loaded at 0x00100000.
-	A multi-boot compatible kernel cannot be loaded before the 1MB mark,
-	it must be loaded at or above 1MB. */
-    . = 0x00100000;
+	. = 8M;
+	.text BLOCK(4K) : ALIGN(4K)
+	{
+		*(.text)
+	}
+	.rodata BLOCK(4K) : ALIGN(4K)
+	{
+		start_ctors = .;
+        *(SORT(.ctors*))  /* Note the "SORT" */
+        end_ctors = .;
 
-    .multiboot :
-    {
-        /* The multiboot header must come within the first 8K of
-	our kernel  */
-	*(.multiboot);
+        start_dtors = .;
+        *(SORT(.dtors*))
+        end_dtors = .;
 
-	/* 32 bit aligned as required by the multiboot specs */
-	LONG(0);
-    }
-    . = ALIGN(0x1000);
-    /** Start of the kernel */
-    __kernel_start = .;
-
-    .text ALIGN (0x1000) :
-    {
-        *(.text)
-    }
-
-    .rodata ALIGN (0x1000) :
-    {
-        *(.rodata*)
-    }
-
-    .data ALIGN (0x1000) :
-    {
-        *(.data)
-    }
-
-    .bss :
-    {
-        sbss = .;
-        *(COMMON)
-        *(.bss)
-        ebss = .;
-    }
-
-    /* Define sections to fulfill unresolved references */
-    .unresolved :
-    {
-        /* Define symbols to fulfill unresolved references */
-        PROVIDE (_dummy_symbol = 0); /* Replace _dummy_symbol with the actual symbol name */
-    }
-
-    /* End of the kernel */
-    __kernel_end = .;
-}
+		*(.rodata)
+	}
+	.data BLOCK(4K) : ALIGN(4K)
+	{
+		*(.data)
+	}
+	.bss BLOCK(4K) : ALIGN(4K)
+	{
+		*(COMMON)
+		*(.bss)
+		*(.bootstrap_stack)
+	}
+} 

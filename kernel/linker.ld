@@ -1,30 +1,31 @@
-ENTRY (loader)
+ENTRY(_start)
+SECTIONS
+{
+	. = 8M;
+	.text BLOCK(4K) : ALIGN(4K)
+	{
+		*(.text)
+	}
+	.rodata BLOCK(4K) : ALIGN(4K)
+	{
+		start_ctors = .;
+        *(SORT(.ctors*))  /* Note the "SORT" */
+        end_ctors = .;
 
-SECTIONS {
-    . = 0x100000;
-    
-    kernel_start = .;
-    
-    .mbheader : {
-        *(.mbheader)
-    }
+        start_dtors = .;
+        *(SORT(.dtors*))
+        end_dtors = .;
 
-    .text : {
-        *(.text)
-    }
-
-    .rodata ALIGN (0x1000) : {
-        *(.rodata)
-    }
-
-    .data ALIGN (0x1000) : {
-        *(.data)
-    }
-
-    .bss ALIGN (0x1000) : {
-        *(COMMON)
-        *(.bss)
-    }
-    
-    kernel_end = .;
-}
+		*(.rodata)
+	}
+	.data BLOCK(4K) : ALIGN(4K)
+	{
+		*(.data)
+	}
+	.bss BLOCK(4K) : ALIGN(4K)
+	{
+		*(COMMON)
+		*(.bss)
+		*(.bootstrap_stack)
+	}
+} 

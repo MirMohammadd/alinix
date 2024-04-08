@@ -23,10 +23,13 @@ jobs:
     - name: Install make
       run: brew install make
 
+    - name: Clone i686-elf-gcc repository
+      run: git clone https://github.com/nativeos/homebrew-i686-elf-gcc /usr/local/Homebrew/Library/Taps/nativeos/homebrew-i686-elf-gcc
     - name: Install i686-elf-gcc
       run: brew tap nativeos/i686-elf-gcc && brew install i686-elf-gcc
 
-
+    - name: Install i686-elf-gcc
+      run: brew install i686-elf-gcc
     - name: Build project
       run: |
         # nasm -f elf32 -O0 kernelz/src/core/cpuhelper.asm -o kernelz/obj/core/cpuhelper.o

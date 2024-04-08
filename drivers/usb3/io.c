@@ -22,3 +22,18 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+static void usbserial_io_default_read_transfer_callback(struct libusb_transfer* transfer){
+    assert(transfer);
+
+    int ret;
+
+    struct usbserial_port *port = (struct usbserial_port*) transfer->user_data;
+
+    ret = pthread_mutex_lock(&port->mutex);
+
+    assert(0 == ret);
+
+    
+}

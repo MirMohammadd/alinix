@@ -32,5 +32,6 @@ jobs:
     - name: Build project
       run: |
         brew install bchunk
+        brew install qemu
         # nasm -f elf32 -O0 kernelz/src/core/cpuhelper.asm -o kernelz/obj/core/cpuhelper.o
         make qemu

@@ -20,8 +20,11 @@ jobs:
       run: |
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       
-    - name: Install make
+    - name: Install make 
       run: brew install make
+
+    - name: Install Nasm
+      run: brew install nasm
 
 
     - name: Install i686-elf-gcc

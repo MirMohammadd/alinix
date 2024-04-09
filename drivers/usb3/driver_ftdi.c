@@ -150,3 +150,27 @@ static inline ftdi_ctrl(struct usbserial_port *port,uint16_t req,uint16_t sio,ui
                 0,
             DEFAULT_CONTROL_TIMEOUT_MILLIS);
 }
+
+int ftdi_check_supported_by_vid_pid(uint16_t vid,uint16_t pid){
+    if (FTDI_VENDOR_ID != vid)
+        return NULL;
+
+    switch (pid){
+    case FTDI_PRODUCT_ID_FT232R:
+    case FTDI_PRODUCT_ID_FT232R_FAKE:
+    case FTDI_PRODUCT_ID_FT232RL:
+    case FTDI_PRODUCT_ID_FT2232:
+    case FTDI_PRODUCT_ID_FT4232H:
+    case FTDI_PRODUCT_ID_FT231X:
+    case FTDI_PRODUCT_ID_FT232H:
+    case FTDI_PRODUCT_ID_STK500:
+    case FTDI_PRODUCT_ID_OPENMOKO:
+    case FTDI_PRODUCT_ID_TUMPA:
+    case FTDI_PRODUCT_ID_KTLINK:
+    case FTDI_PRODUCT_ID_JTAGKEY:
+    ////////////////////////////
+        return 1;
+    default:
+        return 0;
+    }
+}

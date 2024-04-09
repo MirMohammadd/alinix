@@ -174,3 +174,24 @@ int ftdi_check_supported_by_vid_pid(uint16_t vid,uint16_t pid){
         return 0;
     }
 }
+
+static const char* ftdi_get_device_name(uint16_t vid,uint16_t pid,uint8_t classes,uint8_t subclasses){
+    assert(FTDI_VENDOR_ID == vid);
+        switch (pid)
+    {
+    case FTDI_PRODUCT_ID_FT232R:
+    case FTDI_PRODUCT_ID_FT232R_FAKE: return FTDI_DEVICE_NAME_FT232R;
+    case FTDI_PRODUCT_ID_FT2232: return FTDI_DEVICE_NAME_FT2232;
+    case FTDI_PRODUCT_ID_FT4232H: return FTDI_DEVICE_NAME_FT4232H;
+    case FTDI_PRODUCT_ID_FT232H: return FTDI_DEVICE_NAME_FT232H;        
+    case FTDI_PRODUCT_ID_FT231X: return FTDI_DEVICE_NAME_FT231X;
+    case FTDI_PRODUCT_ID_FT232RL: return FTDI_DEVICE_NAME_FT232RL;
+    case FTDI_PRODUCT_ID_STK500: return FTDI_DEVICE_NAME_STK500;
+    case FTDI_PRODUCT_ID_OPENMOKO: return FTDI_DEVICE_NAME_OPENMOKO;
+    case FTDI_PRODUCT_ID_TUMPA: return FTDI_DEVICE_NAME_TUMPA;
+    case FTDI_PRODUCT_ID_KTLINK: return FTDI_DEVICE_NAME_KTLINK;
+    case FTDI_PRODUCT_ID_JTAGKEY: return FTDI_DEVICE_NAME_JTAGKEY;
+
+    default: return FTDI_DEVICE_NAME_GENERIC;
+    }
+}

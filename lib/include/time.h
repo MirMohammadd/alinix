@@ -3,6 +3,8 @@
 
 #include <types.h>
 
+#ifdef  __cplusplus
+
 namespace LIBHeisenKernel
 {
     class Time
@@ -18,5 +20,10 @@ namespace LIBHeisenKernel
         static uint64_t Ticks();
     };
 }
+
+#else 
+#include <sys/time.h>
+
+#endif
 
 #endif

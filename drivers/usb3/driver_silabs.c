@@ -21,6 +21,11 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+#include <config.h>
+#include <libusbtypes.h>
+#include <libusbserial.h>
+#include <stddef.h>
+#include <types.h>
 #ifdef __LINUX__
 #include <sys/_endian.h>
 #endif 
@@ -195,32 +200,32 @@ static int silabs_port_set_config(struct usbserial_port *port, const struct usbs
 
     switch (config->parity)
     {
-    case USBSERIAL_PARITY_NONE:  parity_byte = 0; break;
-    case USBSERIAL_PARITY_ODD:   parity_byte = 1; break;
-    case USBSERIAL_PARITY_EVEN:  parity_byte = 2; break;
-    case USBSERIAL_PARITY_MARK:  parity_byte = 3; break;
-    case USBSERIAL_PARITY_SPACE: parity_byte = 4; break;
+    case USB_SERIAL_PARITY_NONE:  parity_byte = 0; break;
+    case USB_PARITY_ODD:   parity_byte = 1; break;
+    case USB_PARITY_EVEN:  parity_byte = 2; break;
+    case USB_PARITY_MARK:  parity_byte = 3; break;
+    case USB_PARITY_SPACE: parity_byte = 4; break;
 
     default: return USBSERIAL_ERROR_INVALID_PARAMETER;
     }
 
     flow_control_byte = 0; /* Hardware flow control not supported (yet) */
 
-    data_bits_byte = (unsigned char) config->data_bits;
+    data_bits_byte = (unsigned char) config->databits;
 
-    switch (config->stop_bits)
+    switch (config->stopbits)
     {
     case USBSERIAL_STOPBITS_1:
         stop_bits_byte = 0;
         break;
     case USBSERIAL_STOPBITS_1_5:
         stop_bits_byte = 1;
-        if (USBSERIAL_DATABITS_5 != config->data_bits)
+        if (USBSERIAL_DATABITS_5 != config->databits)
             return USBSERIAL_ERROR_UNSUPPORTED_OPERATION;
         break;
     case USBSERIAL_STOPBITS_2:
         stop_bits_byte = 1;
-        if (USBSERIAL_DATABITS_5 == config->data_bits)
+        if (USBSERIAL_DATABITS_5 == config->databits)
             return USBSERIAL_ERROR_UNSUPPORTED_OPERATION;
         break;
 

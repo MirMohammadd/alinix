@@ -43,7 +43,7 @@ struct usbserial_config{
 
 /* Returns a nonzero value, if a USB device is supported by one
  * of the libusbserial drivers. */
-int usbserial_is_device_supported(uint16_t vid, uint16_t pid, uint8_t classs, uint8_t subclass);
+int usbserial_is_device_supported(uint16_t vid, uint16_t pid, uint8_t class, uint8_t subclass);
 /* Get a short device name. It is guaranteed to return a valid C
  * string (not NULL), if the device is supported, see
  * usbserial_is_device_supported(). Otherwise, the results are

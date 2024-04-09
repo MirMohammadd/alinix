@@ -58,7 +58,7 @@ static const struct usbserial_driver* find_driver_for_usb_device(uint16_t vid,ui
 
 }
 
-int usbserial_is_device_supported(uint8_t vid,uint16_t pid,uint8_t class,uint8_t subclass){
+int usbserial_is_device_supported(uint16_t vid, uint16_t pid, uint8_t class, uint8_t subclass){
     return !!find_driver_for_usb_device(vid, pid, class, subclass);
 }
 

@@ -21,7 +21,12 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/_endian.h>
+// #include <sys/_endian.h>
+
+#include <config.h>
+
+#include <libusbserial.h>
+
 
 
 /**
@@ -142,7 +147,7 @@ static int cdc_port_set_config(struct usbserial_port *port, const struct usbseri
     unsigned char stop_bits_byte, parity_byte, data_bits_byte;
     uint32_t baud_le = htole32((uint32_t)config->baud);
 
-    switch (config->stop_bits)
+    switch (config->stopbits)
     {
     case USBSERIAL_STOPBITS_1: stop_bits_byte = 0; break;
     case USBSERIAL_STOPBITS_1_5: stop_bits_byte = 1; break;
@@ -153,16 +158,16 @@ static int cdc_port_set_config(struct usbserial_port *port, const struct usbseri
 
     switch (config->parity)
     {
-    case USBSERIAL_PARITY_NONE: parity_byte = 0; break;
-    case USBSERIAL_PARITY_ODD: parity_byte = 1; break;
-    case USBSERIAL_PARITY_EVEN: parity_byte = 2; break;
-    case USBSERIAL_PARITY_MARK: parity_byte = 3; break;
-    case USBSERIAL_PARITY_SPACE: parity_byte = 4; break;
+    case USB_SERIAL_PARITY_NONE: parity_byte = 0; break;
+    case USB_PARITY_ODD: parity_byte = 1; break;
+    case USB_PARITY_EVEN: parity_byte = 2; break;
+    case USB_PARITY_MARK: parity_byte = 3; break;
+    case USB_PARITY_SPACE: parity_byte = 4; break;
 
     default: return USBSERIAL_ERROR_INVALID_PARAMETER;
     }
 
-    data_bits_byte = (unsigned char) config->data_bits;
+    data_bits_byte = (unsigned char) config->databits;
 
     memcpy(data, &baud_le, sizeof(baud_le));
     data[4] = stop_bits_byte;

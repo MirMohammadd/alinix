@@ -214,4 +214,283 @@ static unsigned int ftdi_get_ports_count(uint16_t vid,uint16_t pid){
     }
 }
 
+static int ftdi_port_init(struct usbserial_port *port)
+{
+    struct ftdi_data* pdata;
+    int ret;
+    enum ftdi_device_type device_type;
+    uint16_t control_idx;
+    unsigned int max_packet_size;
+
+    assert(port);
+
+    switch (port->usb_dev_desc.idProduct)
+    {
+    case FTDI_PRODUCT_ID_OPENMOKO:
+    case FTDI_PRODUCT_ID_TUMPA:
+    case FTDI_PRODUCT_ID_KTLINK:
+    case FTDI_PRODUCT_ID_JTAGKEY:
+    case FTDI_PRODUCT_ID_FT2232:
+        device_type = FTDI_DEVICE_TYPE_2232;
+        control_idx = port->port_idx + 1;
+        break;
+    case FTDI_PRODUCT_ID_FT4232H:
+        device_type = FTDI_DEVICE_TYPE_4232H;
+        control_idx = port->port_idx + 1;
+        break;
+
+    default:
+        device_type = FTDI_DEVICE_TYPE_OTHER;
+        if (port->port_idx) 
+            return USBSERIAL_ERROR_INVALID_PORT_IDX;
+        control_idx = 0;
+    }
+
+    switch (port->usb_dev_desc.idProduct)
+    {
+    //case FTDI_PRODUCT_ID_FT232H:    
+    //case FTDI_PRODUCT_ID_FT2232:
+    //case FTDI_PRODUCT_ID_FT4232H: max_packet_size = 512; break;
+    default: max_packet_size = 64; break;
+    }
+
+    ret = libusb_claim_interface(port->usb_dev_hdl, port->port_idx);
+    if (ret) 
+        return ret;
+
+    ret = ftdi_ctrl(port, FTDI_SIO_RESET, 0x00, control_idx);
+    if (ret) 
+        goto relase_if_and_return;
+
+    ret = ftdi_ctrl(port, FTDI_SIO_MODEM_CTRL, FTDI_SET_MODEM_CTRL_DEFAULT1, control_idx);
+    if (ret) 
+        goto relase_if_and_return;
+    
+    pdata = (struct ftdi_data*) malloc(sizeof(struct ftdi_data));
+    if (!pdata)
+    {
+        ret = USBSERIAL_ERROR_RESOURCE_ALLOC_FAILED;
+        goto relase_if_and_return;
+    }
+    pdata->device_type = device_type;
+    pdata->control_idx = control_idx;
+    pdata->max_packet_size = max_packet_size;
+    
+    port->driver_data = pdata;
+
+    port->endp.in = FTDI_READ_ENDPOINT(port->port_idx);
+    port->endp.out = FTDI_WRITE_ENDPOINT(port->port_idx);
+    port->endp.in_if = port->endp.out_if = port->port_idx;
+    
+    return 0;
+
+relase_if_and_return:
+    assert(ret != 0);
+    libusb_release_interface(port->usb_dev_hdl, port->port_idx);
+    return ret;
+}
+static int ftdi_port_deinit(struct usbserial_port *port)
+{
+    assert(port);
+
+    if (!port->driver_data)
+        return USBSERIAL_ERROR_ILLEGAL_STATE;
+    free(port->driver_data);
+    port->driver_data = NULL;
+
+    return libusb_release_interface(port->usb_dev_hdl, port->port_idx);
+}
+
+static int ftdi_port_set_config(struct usbserial_port *port, const struct usbserial_config *config)
+{
+    assert(port);
+    assert(config);
+
+    uint16_t config_value;
+    const struct ftdi_baud_data *baud;
+    int ret;
+
+    struct ftdi_data *pdata = (struct ftdi_data*)port->driver_data;
+    if (!pdata)
+        return USBSERIAL_ERROR_ILLEGAL_STATE;
+
+    baud = ftdi_serial_baud(config->baud);
+    if (!baud)
+        return USBSERIAL_ERROR_UNSUPPORTED_BAUD_RATE;
+
+    config_value = config->data_bits;
+
+    switch (config->stop_bits)
+    {
+    case USBSERIAL_STOPBITS_1:   config_value |= FTDI_STOP_BITS_1_CONFIG_VALUE;   break;
+    case USBSERIAL_STOPBITS_1_5: config_value |= FTDI_STOP_BITS_1_5_CONFIG_VALUE; break;
+    case USBSERIAL_STOPBITS_2:   config_value |= FTDI_STOP_BITS_2_CONFIG_VALUE;   break;
+
+    default: return USBSERIAL_ERROR_INVALID_PARAMETER;
+    }
+
+    switch (config->parity)
+    {
+    case USBSERIAL_PARITY_NONE:  config_value |= FTDI_PARITY_NONE_CONFIG_VALUE; break;
+    case USBSERIAL_PARITY_ODD:   config_value |= FTDI_PARITY_ODD_CONFIG_VALUE;  break;
+    case USBSERIAL_PARITY_EVEN:  config_value |= FTDI_PARITY_EVEN_CONFIG_VALUE; break;
+    case USBSERIAL_PARITY_MARK:  config_value |= FTDI_PARITY_MARK_CONFIG_VALUE; break;
+    case USBSERIAL_PARITY_SPACE: config_value |= FTDI_PARITY_SPACE_CONFIG_VALUE; break;
+
+    default: return USBSERIAL_ERROR_INVALID_PARAMETER;
+    }
+    
+    ret = ftdi_ctrl(port, FTDI_SIO_SET_BAUD_RATE, baud->value, pdata->control_idx);
+    if (ret) 
+        return ret;
+    return ftdi_ctrl(port, FTDI_SIO_SET_CONFIG, config_value, pdata->control_idx);
+}
+
+static int ftdi_start_reader(struct usbserial_port *port)
+{
+    assert(port);
+    assert(port->cb_read);
+
+    return usbserial_io_init_bulk_read_transfer(port);
+}
+
+static int ftdi_stop_reader(struct usbserial_port *port)
+{
+    assert(port);
+
+    return usbserial_io_cancel_bulk_read_transfer(port);
+}
+
+static int ftdi_read_data_copy(void *dest, void *src, size_t src_size, size_t packet)
+{
+    size_t dest_size = 0;
+    size_t pos = FTDI_MODEM_STATUS_BYTES_COUNT;
+    while (pos < src_size)
+    {
+        memcpy(dest+dest_size, src+pos, min(packet, src_size-pos));
+        dest_size += packet;
+        pos += packet+FTDI_MODEM_STATUS_BYTES_COUNT;
+    }
+    return dest_size;
+}
+
+static int ftdi_read(struct usbserial_port *port, void *data, size_t size, int timeout)
+{
+    assert(port);
+    
+    int ret;
+    size_t len, packet;
+    
+    struct ftdi_data *pdata = (struct ftdi_data*) port->driver_data;
+    if (!pdata)
+        return USBSERIAL_ERROR_ILLEGAL_STATE;
+
+    packet = pdata->max_packet_size-FTDI_MODEM_STATUS_BYTES_COUNT;
+    len = size + FTDI_MODEM_STATUS_BYTES_COUNT*(int)(size/packet);
+    if (size%packet)
+        len += FTDI_MODEM_STATUS_BYTES_COUNT;
+
+    void *buffer = malloc(len);
+    if (!buffer)
+        return USBSERIAL_ERROR_RESOURCE_ALLOC_FAILED;
+
+    ret = usbserial_io_bulk_read(port, buffer, len, timeout);
+    if (ret >= 0)
+        ret = ftdi_read_data_copy(data, buffer, ret, packet);
+    
+    free(buffer);
+    return ret;
+}
+
+static int ftdi_write(struct usbserial_port *port, const void *data, size_t size)
+{
+    assert(port);
+
+    return usbserial_io_bulk_write(port, data, size);
+}
+
+static int ftdi_purge(struct usbserial_port *port, int rx, int tx)
+{
+    assert(port);
+    
+    int rx_ret = 0, tx_ret = 0;
+
+    struct ftdi_data *pdata = (struct ftdi_data*) port->driver_data;
+    if (!pdata) 
+        return USBSERIAL_ERROR_ILLEGAL_STATE;
+    
+    if (rx)
+        rx_ret = ftdi_ctrl(port, FTDI_SIO_RESET, FTDI_SIO_RESET_PURGE_RX,
+                pdata->control_idx);
+    if (tx)
+        tx_ret = ftdi_ctrl(port, FTDI_SIO_RESET, FTDI_SIO_RESET_PURGE_TX,
+                pdata->control_idx);
+
+    return rx_ret ? rx_ret : tx_ret;
+}
+
+static int ftdi_set_dtr_rts(struct usbserial_port *port, int dtr, int rts)
+{
+    int ret;
+
+    struct ftdi_data *pdata = (struct ftdi_data*) port->driver_data;
+    if (!pdata) 
+        return USBSERIAL_ERROR_ILLEGAL_STATE;
+
+    ret = ftdi_ctrl(port, FTDI_SIO_MODEM_CTRL,
+            dtr?FTDI_SIO_SET_DTR_HIGH:FTDI_SIO_SET_DTR_LOW,
+            pdata->control_idx);
+    if (ret)
+        return ret;
+    
+    ret = ftdi_ctrl(port, FTDI_SIO_MODEM_CTRL,
+            rts?FTDI_SIO_SET_RTS_HIGH:FTDI_SIO_SET_RTS_LOW,
+            pdata->control_idx);
+    return ret;
+}
+
+static void ftdi_read_data_process(struct usbserial_port *port, void *data, size_t *size)
+{
+    assert(port);
+    assert(data);
+    assert(size);
+
+    int i;
+    char *buffer = (char*)data;
+    struct ftdi_data* pdata = port->driver_data;
+    int skip = FTDI_MODEM_STATUS_BYTES_COUNT;
+
+    for (i = FTDI_MODEM_STATUS_BYTES_COUNT; i < (*size); ++i)
+    {
+        if ((i % pdata->max_packet_size) == 0)
+        {
+            skip += FTDI_MODEM_STATUS_BYTES_COUNT;
+            ++i;
+        } else
+            buffer[i - skip] = buffer[i];
+    }
+
+    *size -= skip;
+}
+
+const struct usbserial_driver driver_ftdi =
+{
+    .check_supported_by_vid_pid = ftdi_check_supported_by_vid_pid,
+    .check_supported_by_class = NULL,
+    .get_device_name = ftdi_get_device_name,
+    .get_ports_count = ftdi_get_ports_count,
+    .port_init = ftdi_port_init,
+    .port_deinit = ftdi_port_deinit,
+    .port_set_config = ftdi_port_set_config,
+    .start_reader = ftdi_start_reader,
+    .stop_reader = ftdi_stop_reader,
+    .read = ftdi_read,
+    .write = ftdi_write,
+    .purge = ftdi_purge,
+    .set_dtr_rts = ftdi_set_dtr_rts,
+    .read_data_process = ftdi_read_data_process,
+};
+
+const struct usbserial_driver *usbserial_driver_ftdi = &driver_ftdi;
+
 #pragma message("Finished compiling: " __FILE__)

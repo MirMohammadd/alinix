@@ -21,6 +21,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+#include <config.h>
 #ifdef __LINUX__
 #include <sys/_endian.h>
 #endif 

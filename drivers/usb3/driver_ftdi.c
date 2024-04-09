@@ -21,6 +21,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <string.h>
+#include <config.h>
 
 #define FTDI_VENDOR_ID                    0x0403
 
@@ -136,4 +137,16 @@ static const struct ftdi_baud_data* ftdi_serial_baud(int baud){
 
     return NULL;
     }
+}
+
+static inline ftdi_ctrl(struct usbserial_port *port,uint16_t req,uint16_t sio,uint16_t control_idx){
+    return libusb_control_transfer(
+                port->usb_dev_hdl,
+                FTDI_DEVICE_OUT_REQTYPE,
+                req,
+                sio,
+                control_idx,
+                NULL,
+                0,
+            DEFAULT_CONTROL_TIMEOUT_MILLIS);
 }

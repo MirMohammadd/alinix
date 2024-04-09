@@ -15,6 +15,8 @@
 
  */
 
+#pragma message("Starting to compile "__FILE__)
+
 #include <io.h>
 #include <driver.h>
 
@@ -195,3 +197,21 @@ static const char* ftdi_get_device_name(uint16_t vid,uint16_t pid,uint8_t classe
     default: return FTDI_DEVICE_NAME_GENERIC;
     }
 }
+
+static unsigned int ftdi_get_ports_count(uint16_t vid,uint16_t pid){
+    assert(FTDI_VENDOR_ID == vid);
+
+    switch (pid)
+    {
+    case FTDI_PRODUCT_ID_OPENMOKO:
+    case FTDI_PRODUCT_ID_TUMPA:
+    case FTDI_PRODUCT_ID_KTLINK:
+    case FTDI_PRODUCT_ID_JTAGKEY:
+    case FTDI_PRODUCT_ID_FT2232: return 2;
+    case FTDI_PRODUCT_ID_FT4232H: return 4;
+
+    default: return 1;
+    }
+}
+
+#pragma message("Finished compiling: " __FILE__)

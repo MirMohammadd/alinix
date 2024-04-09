@@ -39,7 +39,7 @@
 typedef __int64_t	__blkcnt_t;	/* blocks allocated for file */
 typedef __int32_t	__blksize_t;	/* optimal blocksize for I/O */
 #ifndef  __clock_t_defined
-typedef	__int64_t	__clock_t;	/* ticks in CLOCKS_PER_SEC */
+// typedef	__int64_t	__clock_t;	/* ticks in CLOCKS_PER_SEC */
 #endif
 typedef	__int32_t	__clockid_t;	/* CLOCK_* identifiers */
 typedef	unsigned long	__cpuid_t;	/* CPU id */
@@ -62,7 +62,7 @@ typedef	__uint8_t	__sa_family_t;	/* sockaddr address family type */
 typedef	__int32_t	__segsz_t;	/* segment size */
 typedef	__uint32_t	__socklen_t;	/* length type for network syscalls */
 typedef	long		__suseconds_t;	/* microseconds (signed) */
-typedef	__int64_t	__time_t;	/* epoch time */
+// typedef	__int64_t	__time_t;	/* epoch time */
 typedef	__int32_t	__timer_t;	/* POSIX timer identifiers */
 typedef	__uint32_t	__uid_t;	/* user id */
 typedef	__uint32_t	__useconds_t;	/* microseconds */

@@ -84,6 +84,6 @@
 #endif
 #define __STRICT_ALIGNMENT
 #include <sys/types.h>
-#include <sys/endian.h>
+// #include <sys/endian.h>
 
 #endif  /* !_ARM_ENDIAN_H_ */

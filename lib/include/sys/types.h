@@ -44,7 +44,7 @@
 
 #include <sys/cdefs.h>
 #if __BSD_VISIBLE
-#include <sys/endian.h>
+// #include <sys/endian.h>
 #else
 #include <sys/_endian.h>
 #endif

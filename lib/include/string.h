@@ -7,7 +7,7 @@
 #endif
 
 #ifndef size_t_defined
-typedef unsigned int size_t; // Define size_t if it's not already defined
+// typedef unsigned int size_t; // Define size_t if it's not already defined
 #endif
 
 #if !defined(_SIZE_T) && !defined(_SIZE_T_DEFINED)

@@ -40,9 +40,17 @@ class Debugger(unittest.TestCase,AttribClass):
     
     def testCompilerMake(self):
         try:
-            subprocess.check_output(self.runNormalMake,shell=True)
+            cmd = subprocess.run(self.runNormalMake,shell=True)
+            self.assertEqual(cmd.returncode, 0)
         except subprocess.CalledProcessError as exc:
-            sys.exit("[ERROR] Got error while running testing makefile command %s"%(str(exc)))
+            sys.exit("[ERROR] Got error while running testing makefile command %s"%(str(getSafeExcStr(exc))))
+        except AssertionError:
+            excStr = getSafeExcStr(exc)
+
+            if any(command for command in ERRORS in excStr):
+                print("Make sure that you have the Make tools installed on your system")
+                sys.exit("[ERROR] Got error while running testing makefile command %s"%(str(getSafeExcStr(exc))))
+
         except:
             pass
 

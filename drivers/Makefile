@@ -13,7 +13,7 @@ GCCPARAMS := -m32 $(DEBUG) -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) -I $(LIBDRIVEINCLU
 LDPARAMS := -m elf_i386
 
 USB_DIR := usb3
-APPOUT := ../isofiles/apps
+APPOUT := ../isofiles/drivers
 
 SRCFILES := $(shell find $(USB_DIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) #Find all the files in usb3 that end with .cpp/.s/.asm/.c
 OBJFILES := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(SRCFILES))))) #Replace the .cpp/.s/.asm/.c extension with .o

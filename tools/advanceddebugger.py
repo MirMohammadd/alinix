@@ -3,11 +3,19 @@ import copy
 import datetime
 import argparse
 import subprocess
+import sys
 
 
 COMMANDS = {
     "Build" : "make run",
-    "vm": "make qemu"
+    "vm": "make qemu",
+    "MakeNFound":"No targets specified and no makefile found"
+}
+
+
+ERRORS = {
+    "NotFound":"command not found",
+    
 }
 
 
@@ -18,10 +26,25 @@ class MakeFileCompilerException(Exception):
     pass
 ########################################################
 
+class AttribClass(object):
+    def __init__(self):
+        self.runNormalMake = "make"
+        self.runVmMake = "make qemu"
+        self.runMakeRun = "make run"
 
-class Debugger(unittest.TestCase):
-    def testCompilerMake(self):
+
+class Debugger(unittest.TestCase,AttribClass):
+    def __init__(self):
         pass
+    
+    
+    def testCompilerMake(self):
+        try:
+            subprocess.check_output(self.runNormalMake,shell=True)
+        except subprocess.CalledProcessError as exc:
+            sys.exit("[ERROR] Got error while running testing makefile command %s"%(str(exc)))
+        except:
+            pass
 
 def parse_arguments(debug=False):
     parser = argparse.ArgumentParser(description='Advanced Debugger')
@@ -30,3 +53,11 @@ def parse_arguments(debug=False):
     return parser.parse_args(
         
     )
+
+def getSafeExcStr(ex):
+    retVal = None
+    if getattr(ex,"message",None):
+        retVal = ex.message
+    elif getattr(ex,"__str__",None):
+        retVal = ex.__str__()
+    return retVal

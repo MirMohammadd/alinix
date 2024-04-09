@@ -101,3 +101,27 @@ struct fdti_data{
     uint16_t control_idx;
     size_t max_packet_size;
 };
+
+struct fdti_baud_data{
+    int baud;
+    uint16_t value;
+};
+
+// Baud rates values
+static const struct ftdi_baud_data baud_lookup_table [] = 
+{
+    { 300,     0x2710 },
+    { 600,     0x1388 },
+    { 1200,    0x09c4 },
+    { 2400,    0x04e2 },
+    { 4800,    0x0271 },
+    { 9600,    0x4138 },
+    { 19200,   0x809c },
+    { 38400,   0xc04e },
+    { 57600,   0x0034 },
+    { 115200,  0x001a },
+    { 230400,  0x000d },
+    { 460800,  0x4006 },
+    { 921600,  0x8003 },
+    { 0,       0x0000 }
+};

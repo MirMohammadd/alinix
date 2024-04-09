@@ -102,7 +102,7 @@ struct fdti_data{
     size_t max_packet_size;
 };
 
-struct fdti_baud_data{
+struct ftdi_baud_data{
     int baud;
     uint16_t value;
 };
@@ -125,3 +125,15 @@ static const struct ftdi_baud_data baud_lookup_table [] =
     { 921600,  0x8003 },
     { 0,       0x0000 }
 };
+
+
+static const struct ftdi_baud_data* ftdi_serial_baud(int baud){
+    const struct ftdi_baud_data *map = baud_lookup_table;
+
+    while (map->baud){
+        if (map->baud == baud) return map;
+        map++;
+
+    return NULL;
+    }
+}

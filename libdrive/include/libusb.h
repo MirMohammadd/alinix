@@ -24,7 +24,9 @@
   
  #ifndef LIBUSB_H
  #define LIBUSB_H
-  
+ #ifndef NULL
+ #define  NULL ((void*)0)
+ #endif
  #if defined(_MSC_VER)
  #pragma warning(push)
  /* Disable: warning C4200: nonstandard extension used : zero-sized array in struct/union */

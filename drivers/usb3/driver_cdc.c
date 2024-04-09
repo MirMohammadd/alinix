@@ -23,6 +23,8 @@
 #include <string.h>
 #include <sys/_endian.h>
 
+#include <config.h>
+
 
 /**
  * @brief Let's define some useful macros for the  CDC driver.

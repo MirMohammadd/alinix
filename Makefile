@@ -22,6 +22,12 @@
 # pci-ohci
 #######################
 
+
+VERSION = 1
+PATCHLEVEL = 4
+SUBLEVEL = 4
+
+
 # Check if the make version is exactly 3.80
 ifeq ($(MAKE_VERSION),3.80)
     $(error This makefile requires GNU Make version 3.80. Your Make version is $(MAKE_VERSION))
@@ -105,6 +111,8 @@ clean:
 	cd apps/ && $(MAKE) clean
 	rm -rf isofiles/apps/*.bin
 	rm -rf isofiles/apps/*.sym
+	rm -rf drivers/apps/*.bin
+	rm -rf drivers/apps/*.sym
 
 qemu: HeisenOs.iso
 	qemu-system-i386 -cdrom HeisenOs01.iso -serial stdio $(QEMUOPTIONS)
@@ -163,3 +171,6 @@ filelist:
 	@echo -$(KRNLFILES)
 	@echo "Object Files:"
 	@echo -$(KRNLOBJS)
+
+version:
+	@echo "Version: $(VERSION).$(PATCHLEVEL).$(SUBLEVEL)"

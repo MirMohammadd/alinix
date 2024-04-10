@@ -12,8 +12,8 @@ G++PARAMS := -m32 $(DEBUG) -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) -I $(LIBDRIVEINCLU
 GCCPARAMS := -m32 $(DEBUG) -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) -I $(LIBDRIVEINCLUDE) -I ../kernel/include -Wall -I ../lib/include -I ../libdrive/include -fno-omit-frame-pointer -nostdlib -fno-builtin -fleading-underscore -Wno-unknown-pragmas
 LDPARAMS := -m elf_i386
 
-USB_DIR := usb3
-APPOUT := ../isofiles/drivers
+USB_DIR := $(shell find * -type d)
+APPOUT := ../isofiles/apps
 
 SRCFILES := $(shell find $(USB_DIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) #Find all the files in usb3 that end with .cpp/.s/.asm/.c
 OBJFILES := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(SRCFILES))))) #Replace the .cpp/.s/.asm/.c extension with .o

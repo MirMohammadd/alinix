@@ -22,6 +22,12 @@
 # pci-ohci
 #######################
 
+
+VERSION = 1
+PATCHLEVEL = 4
+SUBLEVEL = 4
+
+
 # Check if the make version is exactly 3.80
 ifeq ($(MAKE_VERSION),3.80)
     $(error This makefile requires GNU Make version 3.80. Your Make version is $(MAKE_VERSION))
@@ -163,3 +169,6 @@ filelist:
 	@echo -$(KRNLFILES)
 	@echo "Object Files:"
 	@echo -$(KRNLOBJS)
+
+version:
+	@echo "Version: $(VERSION).$(PATCHLEVEL).$(SUBLEVEL)"

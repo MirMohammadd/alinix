@@ -3,10 +3,16 @@
 
 #include <system/tasking/lock.h>
 
+/**
+ * @brief A simple doubly linked list implementation.
+*/
+
 namespace HeisenOs
 {
     namespace common
     {
+        // ----------------------------------------------------------------
+        // Just rely on the listnode struct and the template defined.
         template <typename T>
         struct ListNode
         {

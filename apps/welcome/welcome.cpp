@@ -58,13 +58,13 @@ int main(){
     // helpMoreOptions->MouseClick += HelpMoreOptionsCallback;
 }
 
-void exitButtonCallback(void *sender,MouseButtonArgs args){
+static void exitButtonCallback(void *sender,MouseButtonArgs args){
     /**
      * @brief This should be the sys exit call after user click on the close button
     */
     DoSyscall(SYSCALL_EXIT);
 }
 
-void rebootSystemAndSayGoodBye(void *sender,MouseButtonArgs args){
+static void rebootSystemAndSayGoodBye(void *sender,MouseButtonArgs args){
     DoSyscall(SYSCALL_REBOOT);
 }

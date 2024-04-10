@@ -12,6 +12,8 @@ namespace HeisenOs
         class Print
         {
         public:
+        // -------------------------------------------------------------
+        // static functions for printing to the boot console
             static void printfHex(uint8_t key);
             static void printfHex16(uint16_t key);
             static void printfHex32(uint32_t key);
@@ -19,6 +21,7 @@ namespace HeisenOs
             static void printbits(uint16_t key);
             static void printbits(uint32_t key);
             static void printbits(uint64_t key);
+        // -------------------------------------------------------------
         };
     }
 }

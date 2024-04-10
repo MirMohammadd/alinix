@@ -1,10 +1,16 @@
 #ifndef CACTUSOS__COMMON__TYPES_H
 #define CACTUSOS__COMMON__TYPES_H
 
+/**
+ * @brief Common types for HeisenOs
+*/
+
 namespace HeisenOs
 {
     namespace common
     {
+    //------------------------------------------------------------------------
+    // Basic types defined here
         typedef char                        int8_t;
         typedef unsigned char               uint8_t;
         typedef short                       int16_t;
@@ -66,6 +72,7 @@ namespace HeisenOs
     {
         return no * (1024_MB);
     }
+    // -----------------------------------------------------------------------
 }
 
 #endif

@@ -30,6 +30,8 @@ static const char multi_line_string[] =
 static void helpButtonCallback(void *sender,MouseButtonArgs args);
 static void exitButtonCallback(void *sender,MouseButtonArgs args);
 
+
+
 int main(){
     GUI::SetDefaultFont();
 
@@ -45,4 +47,11 @@ int main(){
     helpMoreOptions->x = 1;
     helpMoreOptions->y = 2;
     // helpMoreOptions->MouseClick += HelpMoreOptionsCallback;
+}
+
+void exitButtonCallback(void *sender,MouseButtonArgs args){
+    /**
+     * @brief This should be the sys exit call after user click on the close button
+    */
+    DoSyscall(SYSCALL_EXIT);
 }

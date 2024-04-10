@@ -22,6 +22,14 @@ static const char multi_line_string[] =
 "\n"
 "\n";
 
+/**
+ * @brief Static functions that will be implemented on the help GUI menu
+ * @todo call SYSCALL_EXIT (important! otherwise you'll have a memory leak)
+*/
+
+static void helpButtonCallback(void *sender,MouseButtonArgs args);
+static void exitButtonCallback(void *sender,MouseButtonArgs args);
+
 int main(){
     GUI::SetDefaultFont();
 

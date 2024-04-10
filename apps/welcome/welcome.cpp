@@ -48,7 +48,7 @@ int main(){
     helpMoreOptions->height = 47;
     helpMoreOptions->x = 1;
     helpMoreOptions->y = 2;
-
+    // Implement shutdown and reboot button here.
     Button* shutdownAndReboot = new Button("Reboot and shutdown (recommended)");
     shutdownAndReboot->width = 300 - 2;
     shutdownAndReboot->height = 49;

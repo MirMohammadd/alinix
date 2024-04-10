@@ -111,6 +111,8 @@ clean:
 	cd apps/ && $(MAKE) clean
 	rm -rf isofiles/apps/*.bin
 	rm -rf isofiles/apps/*.sym
+	rm -rf drivers/apps/*.bin
+	rm -rf drivers/apps/*.sym
 
 qemu: HeisenOs.iso
 	qemu-system-i386 -cdrom HeisenOs01.iso -serial stdio $(QEMUOPTIONS)

@@ -5,6 +5,10 @@
 #include <common/list.h>
 #include <common/memoryoperations.h>
 
+/**
+ * @brief String operations functions.
+*/
+
 namespace HeisenOs
 {
     namespace common
@@ -14,12 +18,17 @@ namespace HeisenOs
         class String
         {
         public:
+        // -------------------------------------------------------------
+        // static functions for string operations
             static int strlen(const char* str);
             static bool strcmp(const char* strA, const char* strB);
             static bool strncmp(const char* s1, const char* s2, int n);
             static int IndexOf(const char* str, char c, common::uint32_t skip = 0);
             static bool Contains(const char* str, char c);
             static List<char*> Split(const char* str, char d);
+            /**
+             * @bug Not working well with C (due to the templates)
+            */
             List<char*> str_Split(const char* str, char d);
 
             static char* Uppercase(char* str);
@@ -27,7 +36,8 @@ namespace HeisenOs
             static char Uppercase(char c);
             static char Lowercase(char c);
             static char* strcpy(char *s1, const char *s2);
-            static char* strncpy(char *s1, const char *s2, unsigned int n);
+            static char* strncpy(char *s1, const char *s2, unsigned int n);\
+        // -------------------------------------------------------------
         };
     }
 }

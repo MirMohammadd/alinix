@@ -32,7 +32,7 @@ static const char multi_line_string[] =
 static void helpButtonCallback(void *sender,MouseButtonArgs args);
 static void exitButtonCallback(void *sender,MouseButtonArgs args);
 static void rebootSystemAndSayGoodBye(void *sender,MouseButtonArgs args);
-
+static void moreTipsHelpMenu(void *sender,MouseButtonArgs args);
 
 int main(){
     GUI::SetDefaultFont();
@@ -62,6 +62,13 @@ int main(){
     exit->x = 1;
     exit->y = 100;
     exit->MouseClick += exitButtonCallback;
+
+    Button* moreOptions = new Button("More Options");
+    moreOptions->width = 150 - 2;
+    moreOptions->height = 47;
+    moreOptions->x = 1;
+    moreOptions->y = 150;
+    moreOptions->MouseClick += moreTipsHelpMenu;
     // helpMoreOptions->MouseClick += HelpMoreOptionsCallback;
 }
 
@@ -77,4 +84,12 @@ static void rebootSystemAndSayGoodBye(void *sender,MouseButtonArgs args){
      * @brief This should be the sys reboot call after user click on the close button
     */
     DoSyscall(SYSCALL_REBOOT);
+}
+
+
+static void moreTipsHelpMenu(void *sender,MouseButtonArgs args){
+    /**
+     * @brief This should be the sys reboot call after user click on the close button
+    */
+    DoSyscall(SYSCALL_EXIT);
 }

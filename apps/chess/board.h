@@ -5,6 +5,9 @@
 #include "piece.h"
 #include "square.h"
 
+using namespace LIBHeisenKernel::Chess::engine;
+using namespace LIBHeisenKernel::engine;
+
 
 namespace LIBHeisenKernel{
     namespace engine{
@@ -36,6 +39,12 @@ namespace LIBHeisenKernel{
         const int FlagsBlackQueenCastle = 1 << 3;
 
         const int StackSize = 4096;
+
+        /**
+         * @brief Some useful macros
+        */
+
+        #define KING_POS(board,colour) ((board)->piece[colour][0])
         
 
     };

@@ -100,5 +100,16 @@ namespace LIBHeisenKernel{
             return true;
         }
 
+        const char* option_get(const char var[]){
+            option_t * opt;
+
+            ASSERT(var!=NULL);
+
+            opt = option_find(var);
+            if (opt == NULL) return NULL;
+
+            return opt->val;
+        }
+
     };
 };

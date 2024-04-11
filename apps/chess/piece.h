@@ -99,6 +99,13 @@ namespace LIBHeisenKernel
         extern const inc_t QueenInc[8+1];
         extern const inc_t KingInc[8+1];
 
+        /**
+         * @brief External variables defined here
+        */
+
+        extern int PieceTo12[PieceNb];
+        extern int PieceOrder[PieceNb];
+
     };
 }
 

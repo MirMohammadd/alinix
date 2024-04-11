@@ -55,6 +55,13 @@ int main(){
     shutdownAndReboot->y = 50;
     shutdownAndReboot->x = 1;
     shutdownAndReboot->MouseClick += rebootSystemAndSayGoodBye;
+
+    Button* exit = new Button("Exit");
+    exit->width = 150 - 2;
+    exit->height = 47;
+    exit->x = 1;
+    exit->y = 100;
+    exit->MouseClick += exitButtonCallback;
     // helpMoreOptions->MouseClick += HelpMoreOptionsCallback;
 }
 
@@ -66,5 +73,8 @@ static void exitButtonCallback(void *sender,MouseButtonArgs args){
 }
 
 static void rebootSystemAndSayGoodBye(void *sender,MouseButtonArgs args){
+    /**
+     * @brief This should be the sys reboot call after user click on the close button
+    */
     DoSyscall(SYSCALL_REBOOT);
 }

@@ -59,7 +59,29 @@ namespace LIBHeisenKernel{
         /**
          * @brief Some useful macros are defined here 
         */
-        
+        #define SQUARE_IS_OK(square)        ((((square)-0x44)&~0x77)==0)
+
+        #define SQUARE_MAKE(file,rank)      (((rank)<<4)|(file))
+
+        #define SQUARE_FILE(square)         ((square)&0xF)
+        #define SQUARE_RANK(square)         ((square)>>4)
+
+        #define SQUARE_FROM_64(square)      (SquareFrom64[square])
+        #define SQUARE_TO_64(square)        (SquareTo64[square])
+
+        #define SQUARE_IS_PROMOTE(square)   (SquareIsPromote[square])
+        #define SQUARE_EP_DUAL(square)      ((square)^16)
+
+        #define SQUARE_COLOUR(square)       (((square)^((square)>>4))&1)
+
+        #define SQUARE_FILE_MIRROR(square)  ((square)^0x0F)
+        #define SQUARE_RANK_MIRROR(square)  ((square)^0xF0)
+
+        #define FILE_OPP(file)              ((file)^0xF)
+        #define RANK_OPP(rank)              ((rank)^0xF)
+
+        #define PAWN_RANK(square,colour)    (SQUARE_RANK(square)^RankMask[colour])
+        #define PAWN_PROMOTE(square,colour) (PromoteRank[colour]|((square)&0xF))
     };
 };
 

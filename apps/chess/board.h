@@ -86,6 +86,28 @@ namespace LIBHeisenKernel{
 
         uint64_t stack[StackSize];
     };
+
+    /**
+     * @brief Useful functions
+    */
+
+    extern bool board_is_ok         (const board_t * board);
+
+    extern void board_clear         (board_t * board);
+    extern void board_copy          (board_t * dst, const board_t * src);
+
+    extern void board_init_list     (board_t * board);
+
+    extern bool board_is_legal      (const board_t * board);
+    extern bool board_is_check      (const board_t * board);
+    extern bool board_is_mate       (const board_t * board);
+    extern bool board_is_stalemate  (board_t * board);
+
+    extern bool board_is_repetition (const board_t * board);
+
+    extern int  board_material      (const board_t * board);
+    extern int  board_opening       (const board_t * board);
+    extern int  board_endgame       (const board_t * board);
 };
 
 

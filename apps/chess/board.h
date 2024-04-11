@@ -48,6 +48,23 @@ namespace LIBHeisenKernel{
         
 
     };
+
+    /**
+     * @brief Useful types defined here
+    */
+
+    struct board_t{
+        int square[squareNb];
+        int pos[squareNb];
+
+        sq_t piece[ColorNb][32];
+        int piece_size[ColorNb];
+
+        sq_t pawn[ColourNb][16]; // Just define 9
+        int pawn_size[ColourNb];
+
+        
+    };
 };
 
 

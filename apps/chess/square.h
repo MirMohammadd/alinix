@@ -3,6 +3,7 @@
 
 #include "colour.h"
 
+using namespace engine;
 namespace LIBHeisenKernel{
     namespace engine{
         /**
@@ -82,6 +83,39 @@ namespace LIBHeisenKernel{
 
         #define PAWN_RANK(square,colour)    (SQUARE_RANK(square)^RankMask[colour])
         #define PAWN_PROMOTE(square,colour) (PromoteRank[colour]|((square)&0xF))
+
+        /**
+         * @brief Some useful types
+        */
+
+        typedef int sq_t;
+
+        /**
+         * @brief Useful constants
+        */
+
+        extern const int SquareForm64[64];
+        extern const int RankMask[ColourNb];
+        extern const int PromoteRank[ColourNb];
+
+        /**
+         * @brief useful variables and functions
+        */
+        extern int SquareTo64[SquareNb];
+        extern bool SquareIsPromote[SquareNb];
+
+        // functions
+
+        extern void square_init        ();
+
+        extern int  file_from_char     (int c);
+        extern int  rank_from_char     (int c);
+
+        extern int  file_to_char       (int file);
+        extern int  rank_to_char       (int rank);
+
+        extern bool square_to_string   (int square, char string[], int size);
+        extern int  square_from_string (const char string[]);
     };
 };
 

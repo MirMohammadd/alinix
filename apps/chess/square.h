@@ -30,6 +30,17 @@ namespace LIBHeisenKernel{
         const int FileH = 0x0B;
 
         const int RankNone = 0;
+
+        const int Rank1 = 0x4;
+        
+        const int Rank2 = 0x5;
+        const int Rank3 = 0x6;
+        const int Rank4 = 0x7;
+        const int Rank5 = 0x8;
+        const int Rank6 = 0x9;
+        const int Rank7 = 0xA;
+        const int Rank8 = 0xB;
+
     };
 };
 

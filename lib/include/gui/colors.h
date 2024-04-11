@@ -5,6 +5,28 @@
 
 namespace LIBHeisenKernel
 {
+
+    /**
+     * @brief Colors implemented for the chess game 
+     * 
+    */
+
+    namespace Chess{
+
+        namespace engine{
+        // Constants
+        const int ColorNone = -1;
+
+        const int White = 0;
+        const int Black = 1;
+
+        const int ColorNb = 2;
+
+        const int WhiteFlag = 1 << White;
+        const int BlackFlag = 1 << Black;
+    
+        };
+    };
     // Union describing a ARGB color in the following format:
     // 0xAARRGGBB
     typedef union Color4Tag

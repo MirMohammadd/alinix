@@ -1,0 +1,7 @@
+#ifndef _HEISEN_KERNEL_BOARD_H
+#define _HEISEN_KERNEL_BOARD_H
+
+
+
+
+#endif // _HEISEN_KERNEL_BOARD_H

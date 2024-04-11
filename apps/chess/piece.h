@@ -106,6 +106,27 @@ namespace LIBHeisenKernel
         extern int PieceTo12[PieceNb];
         extern int PieceOrder[PieceNb];
 
+        extern const inc_t * PieceInc[PieceNb];
+
+        /**
+         * @brief Functions defined here
+        */
+        
+        extern void piece_init();
+
+        #ifdef __cplusplus
+        extern bool is_ok();
+        #else 
+
+        extern int is_ok();
+        
+        #endif // __cplusplus
+
+        extern int  piece_from_12   (int piece_12);
+
+        extern int  piece_to_char   (int piece);
+        extern int  piece_from_char (int c);
+
     };
 }
 

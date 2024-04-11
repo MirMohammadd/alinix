@@ -27,6 +27,10 @@ void TextGUI::ClearScreen(char color)
 }
 void TextGUI::StatusBar(char* text, int percentage)
 {
+    /**
+     * @param text: Text to display
+     * @param percentage: Percentage of progress completed [0-100]
+    */
     for(int x = 0; x < VGA_WIDTH; x++)
         SetPixel(x, VGA_HEIGHT - 1, TEXT_COLOR, ' ', VGA_COLOR_LIGHT_GREY);
     

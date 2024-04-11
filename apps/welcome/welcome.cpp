@@ -10,6 +10,8 @@
 #include <string.h>
 #include <gui/widgets/label.h>
 
+#include "welcome.h"
+
 using namespace LIBHeisenKernel;
 
 const int fieldWidth = 10;
@@ -29,10 +31,6 @@ static const char multi_line_string[] =
  * @todo call SYSCALL_EXIT (important! otherwise you'll have a memory leak)
 */
 
-static void helpButtonCallback(void *sender,MouseButtonArgs args);
-static void exitButtonCallback(void *sender,MouseButtonArgs args);
-static void rebootSystemAndSayGoodBye(void *sender,MouseButtonArgs args);
-static void moreTipsHelpMenu(void *sender,MouseButtonArgs args);
 
 int main(){
     GUI::SetDefaultFont();

@@ -1,5 +1,6 @@
 #include "option.hpp"
 #include "protocol.h"
+#include <assert.h>
 #include <types.h>
 
 
@@ -72,6 +73,31 @@ namespace LIBHeisenKernel{
             for (opt = &Option[0];opt->var;opt++){
                 option_set(opt->var, opt->init);
             }
+        }
+
+        void option_list(){
+            option_t *opt;
+
+            for (opt = &Option[0];opt->val != NULL;opt++){
+                if (opt->declare){
+         if (opt->extra != NULL && *opt->extra != '\0') {
+            send("option name %s type %s default %s %s",opt->var,opt->type,opt->val,opt->extra);
+         } else {
+            send("option name %s type %s default %s",opt->var,opt->type,opt->val);
+                }
+            }
+        }
+
+        bool option_set(const char var[],const char val[]){
+            option_t * opt;
+            assert(var!= NULL);
+            assert(val!= NULL);
+            opt = option_find(var);
+            if (opt == NULL){
+                return false;
+            }
+            opt->val = val;
+            return true;
         }
 
     };

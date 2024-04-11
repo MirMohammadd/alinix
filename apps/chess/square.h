@@ -9,8 +9,12 @@ namespace LIBHeisenKernel{
          * @brief Constants are defined here
         */
 
-        const int FieldNb = 16;
+        const int FileNb = 16;
         const int RandNb = 16;
+
+        const int squareNb = FileNb*RandNb;
+
+        const unsigned int FileInc = 1;
     };
 };
 

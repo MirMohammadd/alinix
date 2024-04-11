@@ -15,6 +15,8 @@ namespace LIBHeisenKernel{
         const int squareNb = FileNb*RandNb;
 
         const unsigned int FileInc = 1;
+
+        const unsigned int RankInc = 16;
     };
 };
 

@@ -1,6 +1,7 @@
 #include "colour.h"
 #include "square.h"
 #include <types.h>
+#include <assert.h>
 
 namespace LIBHeisenKernel
 {
@@ -35,10 +36,16 @@ namespace LIBHeisenKernel
             }
             for (sq = 0; sq < SquareNb; sq++) {
         SquareIsPromote[sq] = SQUARE_IS_OK(sq) && (SQUARE_RANK(sq) == Rank1 || SQUARE_RANK(sq) == Rank8);
-        }
+        }}
+        int file_from_char(int c) {
 
+        assert(c>='a'&&c<='h');
+
+        return FileA + (c - 'a');
+        }
 
     }
 
-    
+
+
 }

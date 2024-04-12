@@ -1,0 +1,34 @@
+From ccbaaf17f45b5fb5408d81cded123467d1ac5e19 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 8 Apr 2024 13:45:45 -0400
+Subject: [PATCH 424/493] Update the README file
+
+---
+ README.md | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/README.md b/README.md
+index e6b749e..c327c25 100644
+--- a/README.md
++++ b/README.md
+@@ -3,13 +3,13 @@
+ 
+ # Heisen Kernel: Unraveling the Power of Possibilities!
+ # HeisenKernel
+-BadBlueKernel is a sophisticated operating system kernel designed to embody the spirit of innovation and reliability in the tech industry. With a focus on efficiency and performance, this kernel represents a fusion of cutting-edge technology and meticulous design principles.
++HeisenKernel is a sophisticated operating system kernel designed to embody the spirit of innovation and reliability in the tech industry. With a focus on efficiency and performance, this kernel represents a fusion of cutting-edge technology and meticulous design principles.
+ 
+ 
+ # Compilation  and Execution Environment Setup guide:
+-1- make sure you have  gcc, g++, make and i686-elf-gcc compiler pack installed.
+-2- run "make qemu" in this directory to build the kernel and run it in the virtual machine, you also get the related ISO file.
+-3- Enjoy and donate!!!!
++1. make sure you have  gcc, g++, make and i686-elf-gcc compiler pack installed.
++2. run "make qemu" in this directory to build the kernel and run it in the virtual machine, you also get the related ISO file.
++3. Enjoy and donate!!!!
+ 
+ 
+ # IMPORTANT
+-- 
+2.43.0
+

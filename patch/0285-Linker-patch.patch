@@ -1,0 +1,90 @@
+From fb87acaee19db616e56dd25536d0fa0d697a651c Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 21:29:13 -0400
+Subject: [PATCH 285/493] Linker patch
+
+---
+ kernelz/linker.ld | 60 +++++++++++++++++++++++------------------------
+ 1 file changed, 30 insertions(+), 30 deletions(-)
+
+diff --git a/kernelz/linker.ld b/kernelz/linker.ld
+index 52f5d21..272fe57 100644
+--- a/kernelz/linker.ld
++++ b/kernelz/linker.ld
+@@ -5,43 +5,43 @@ ENTRY(_entrypoint)
+ 
+ SECTIONS
+ {
+-  . = 0xC0100000;
++    . = 0xC0100000;
+ 
+-  _kernel_base = .;
++    _kernel_base = .;
+ 
+-	.text ALIGN(4K) : AT(ADDR(.text)-0xC0000000)
+-	{
+-		*(.multiboot)
+-		*(.text*)
+-  }
++    .text ALIGN(4K) : AT(ADDR(.text)-0xC0000000)
++    {
++        *(.multiboot)
++        *(.text*)
++    }
+ 
+-  .rodata ALIGN (4K) : AT(ADDR(.rodata)-0xC0000000)
+-	{
+-		*(.rodata)
+-  }
++    .rodata ALIGN (4K) : AT(ADDR(.rodata)-0xC0000000)
++    {
++        *(.rodata)
++    }
+ 
+-  .bss ALIGN(4K) : AT(ADDR(.bss)-0xC0000000)
+-  {
+-    *(.COMMON)
+-    *(.bss)
+-    *(.bootstrap_stack)
+-  }
++    .bss ALIGN(4K) : AT(ADDR(.bss)-0xC0000000)
++    {
++        *(.COMMON)
++        *(.bss)
++        *(.bootstrap_stack)
++    }
+ 
+-  .data ALIGN(4K) : AT(ADDR(.data)-0xC0000000)
+-  {
+-    start_ctors = .;
+-    KEEP(*( .init_array ));
+-    KEEP(*(SORT_BY_INIT_PRIORITY( .init_array.* )));
+-    end_ctors = .;
++    .data ALIGN(4K) : AT(ADDR(.data)-0xC0000000)
++    {
++        start_ctors = .;
++        KEEP(*( .init_array ));
++        KEEP(*(SORT_BY_INIT_PRIORITY( .init_array.* )));
++        end_ctors = .;
+ 
+-    *(.data*)
+-  }
++        *(.data*)
++    }
+ 
+-  /DISCARD/ : { *(.fini_array*) *(.comment) }
++    /DISCARD/ : { *(.fini_array*) *(.comment) }
+ 
+-  _kernel_end = .;
++    _kernel_end = .;
+ 
+-  /DISCARD/ : {
+-    *(UNDEFINED)
+-  }
++    /DISCARD/ : {
++        *(UNDEFINED)
++    }
+ }
+-- 
+2.43.0
+

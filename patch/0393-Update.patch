@@ -1,0 +1,108 @@
+From 01154770262bc04ed533b7a944d0f6d8740d82ce Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sat, 6 Apr 2024 22:25:17 -0400
+Subject: [PATCH 393/493] Update
+
+---
+ Makefile  | 42 +++++++++++++++++++++---------------------
+ dialog.sh | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 50 insertions(+), 21 deletions(-)
+ create mode 100755 dialog.sh
+
+diff --git a/Makefile b/Makefile
+index 51a45f1..2dd321e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -43,8 +43,8 @@ QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../q
+ ARCHINCLUDE := kernel/include
+ 
+ 
+-G++PARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -I $(ARCHINCLUDE) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -lm
+-GCCPARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -I $(ARCHINCLUDE) -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas -lm
++G++PARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -I $(ARCHINCLUDE) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -lm  -lstdc++
++GCCPARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -I $(ARCHINCLUDE) -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas -lm   -lstdc++
+ ASPARAMS := --32
+ LDPARAMS := -m elf_i386
+ 
+@@ -187,24 +187,24 @@ filelist:
+ 
+ version:
+ 	@echo $(KERNELVERSION)
+-# dialogconfig:
+-# 	dialog --no-shadow --backtitle "Kernel Configuration" --title "Heisen Kernel Configuration" --clear --stdout --checklist "Select features to enable:" 20 60 10 \
+-# 	    1 "General setup" on \
+-# 	    2 "EHCI" off \
+-# 	    3 "UHCI" off \
+-# 	    4 "OHCI" off \
+-# 	    > .config; \
+-# 	if grep -q "1" .config; then \
+-# 	    dialog --no-shadow --backtitle "Basic setup" --msgbox "Basic setup Config" 10 40; \
+-# 			1 "Compile Heisen Kernel with GCC cross compiler" on \
+-# 			> .config; \
+-# 	fi || true
+-
+-
+-
+-# # Define the target to build the kernel
+-# build:
+-# 	# Placeholder for actual build commands
+-# 	@echo "Building kernel..."
++dialogconfig:
++	dialog --no-shadow --backtitle "Kernel Configuration" --title "Heisen Kernel Configuration" --clear --stdout --checklist "Select features to enable:" 20 60 10 \
++	    1 "General setup" on \
++	    2 "EHCI" off \
++	    3 "UHCI" off \
++	    4 "OHCI" off \
++	    > .config; \
++	if grep -q "1" .config; then \
++	    dialog --no-shadow --backtitle "Basic setup" --msgbox "Basic setup Config" 10 40; \
++			1 "Compile Heisen Kernel with GCC cross compiler" on \
++			> .config; \
++	fi || true
++
++
++
++# Define the target to build the kernel
++build:
++	# Placeholder for actual build commands
++	@echo "Building kernel..."
+ 
+ 
+diff --git a/dialog.sh b/dialog.sh
+new file mode 100755
+index 0000000..c2e321d
+--- /dev/null
++++ b/dialog.sh
+@@ -0,0 +1,29 @@
++#!/bin/bash
++
++
++
++# Display the initial dialog for feature selection
++dialog --no-shadow --backtitle "Kernel Configuration" --title "Heisen Kernel Configuration" --clear --stdout --checklist "Select features to enable:" 20 60 10 \
++    1 "General setup" on \
++    2 "EHCI" off \
++    3 "UHCI" off \
++    4 "OHCI" off \
++    > .config
++
++# Check if "General setup" is selected
++if grep -q "1" .config; then
++    # Display a message box for basic setup configuration
++    dialog --no-shadow --backtitle "Basic setup" --msgbox "Basic setup Config" 10 40
++
++    # Ask user whether to compile Heisen Kernel with GCC cross compiler
++    dialog --no-shadow --backtitle "Basic setup" --title "Compile Heisen Kernel with GCC cross compiler" --clear --stdout --yesno "Do you want to compile Heisen Kernel with GCC cross compiler?" 10 40
++
++    # Check the exit status of the previous dialog
++    if [ $? -eq 0 ]; then
++        echo "Heisen Kernel will be compiled with GCC cross compiler."
++        echo "$(make qemu)"
++        # Add your commands to compile the kernel here
++    else
++        echo "Heisen Kernel will not be compiled with GCC cross compiler."
++    fi
++fi
+-- 
+2.43.0
+

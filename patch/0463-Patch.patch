@@ -1,0 +1,66 @@
+From 09b6eaec49789db9d962c307f05dc3f4b9af2448 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 15:56:09 -0400
+Subject: [PATCH 463/493] Patch
+
+---
+ apps/welcome/welcome.cpp |  6 ++----
+ apps/welcome/welcome.h   | 21 +++++++++++++++++++++
+ 2 files changed, 23 insertions(+), 4 deletions(-)
+ create mode 100644 apps/welcome/welcome.h
+
+diff --git a/apps/welcome/welcome.cpp b/apps/welcome/welcome.cpp
+index aa179d0..826364c 100644
+--- a/apps/welcome/welcome.cpp
++++ b/apps/welcome/welcome.cpp
+@@ -10,6 +10,8 @@
+ #include <string.h>
+ #include <gui/widgets/label.h>
+ 
++#include "welcome.h"
++
+ using namespace LIBHeisenKernel;
+ 
+ const int fieldWidth = 10;
+@@ -29,10 +31,6 @@ static const char multi_line_string[] =
+  * @todo call SYSCALL_EXIT (important! otherwise you'll have a memory leak)
+ */
+ 
+-static void helpButtonCallback(void *sender,MouseButtonArgs args);
+-static void exitButtonCallback(void *sender,MouseButtonArgs args);
+-static void rebootSystemAndSayGoodBye(void *sender,MouseButtonArgs args);
+-static void moreTipsHelpMenu(void *sender,MouseButtonArgs args);
+ 
+ int main(){
+     GUI::SetDefaultFont();
+diff --git a/apps/welcome/welcome.h b/apps/welcome/welcome.h
+new file mode 100644
+index 0000000..0cd1611
+--- /dev/null
++++ b/apps/welcome/welcome.h
+@@ -0,0 +1,21 @@
++#ifndef _HEISEN_KERNEL_APPS_WELCOME_H
++#define _HEISEN_KERNEL_APPS_WELCOME_H
++
++#include <new.h>
++#include <log.h>
++#include <gui/widgets/button.h>
++#include <gui/widgets/window.h>
++#include <gui/directgui.h>
++#include <random.h>
++#include <datetime.h>
++#include <time.h>
++#include <convert.h>
++#include <string.h>
++#include <gui/widgets/label.h>
++
++static void helpButtonCallback(void *sender,MouseButtonArgs args);
++static void exitButtonCallback(void *sender,MouseButtonArgs args);
++static void rebootSystemAndSayGoodBye(void *sender,MouseButtonArgs args);
++static void moreTipsHelpMenu(void *sender,MouseButtonArgs args);
++
++#endif // _HEISEN_KERNEL_APPS_WELCOME_H
+\ No newline at end of file
+-- 
+2.43.0
+

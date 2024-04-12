@@ -1,0 +1,52 @@
+From c1c0eb928eec8aac822fda39d5e52daca4248ace Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 8 Apr 2024 15:43:29 -0400
+Subject: [PATCH 429/493] Another patch for the kernel debugger
+
+---
+ tools/advanceddebugger.py | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
+ create mode 100644 tools/advanceddebugger.py
+
+diff --git a/tools/advanceddebugger.py b/tools/advanceddebugger.py
+new file mode 100644
+index 0000000..673a239
+--- /dev/null
++++ b/tools/advanceddebugger.py
+@@ -0,0 +1,32 @@
++import unittest
++import copy
++import datetime
++import argparse
++import subprocess
++
++
++COMMANDS = {
++    "Build" : "make run",
++    "vm": "make qemu"
++}
++
++
++########################################################
++#Defining exception classes
++
++class MakeFileCompilerException(Exception):
++    pass
++########################################################
++
++
++class Debugger(unittest.TestCase):
++    def testCompilerMake(self):
++        pass
++
++def parse_arguments(debug=False):
++    parser = argparse.ArgumentParser(description='Advanced Debugger')
++    parser.add_argument("--level",type=int,default=1,required=False,help="Debug level, range should be 1 to 6 (default: 1)")
++    parser.add_argument('-d', '--debug', action='store_true', help='Enable debug output')
++    return parser.parse_args(
++        
++    )
+\ No newline at end of file
+-- 
+2.43.0
+

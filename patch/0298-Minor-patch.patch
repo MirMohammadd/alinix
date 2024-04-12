@@ -1,0 +1,68 @@
+From f5cf5ef5b8b80de431b9c2b3a548bf179b74af69 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 22:04:35 -0400
+Subject: [PATCH 298/493] Minor patch
+
+---
+ kernelz/src/core/idt.cpp | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/kernelz/src/core/idt.cpp b/kernelz/src/core/idt.cpp
+index 9e202ca..1e1fed4 100644
+--- a/kernelz/src/core/idt.cpp
++++ b/kernelz/src/core/idt.cpp
+@@ -1,4 +1,4 @@
+-#include <core/idt.hpp>
++#include <core/idt.h>
+ 
+ using namespace HeisenOs;
+ using namespace HeisenOs::common;
+@@ -12,7 +12,7 @@ IDTEntry idtEntries[IDT_ENTRY_SIZE];
+ IDTPointer idtPointer;
+ 
+ 
+-void SetDescriptor(uint32_t number, void (*handler)(), int accesLevel)
++void InterruptDescriptorTable::SetDescriptor(uint32_t number, void (*handler)(), int accesLevel)
+ {
+     uint32_t callerBase = (uint32_t)handler;
+ 
+@@ -23,7 +23,7 @@ void SetDescriptor(uint32_t number, void (*handler)(), int accesLevel)
+     idtEntries[number].selector = 0x8;
+ }
+ 
+-void Install()
++void InterruptDescriptorTable::Install()
+ {
+     idtPointer.size = sizeof(IDTEntry) * IDT_ENTRY_SIZE - 1;
+     idtPointer.base = (uint32_t)&idtEntries[0];
+@@ -96,7 +96,7 @@ void Install()
+         
+ 
+ //Gets called for every interrupt from assembly code
+-uint32_t HandleInterrupt(CPUState* state)
++uint32_t InterruptDescriptorTable::HandleInterrupt(CPUState* state)
+ {
+     uint8_t interrupt = state->InterruptNumber;
+     if(interrupt == 0xD && (state->EFLAGS & (1 << 17)))
+@@ -126,15 +126,15 @@ uint32_t HandleInterrupt(CPUState* state)
+     return (uint32_t)state;
+ }
+ 
+-void EnableInterrupts()
++void InterruptDescriptorTable::EnableInterrupts()
+ {
+     asm volatile ("sti");
+ }
+-void DisableInterrupts()
++void InterruptDescriptorTable::DisableInterrupts()
+ {
+     asm volatile ("cli");
+ }
+-bool AreEnabled()
++bool InterruptDescriptorTable::AreEnabled()
+ {
+     unsigned long flags;
+     asm volatile ( "pushf\n\t"
+-- 
+2.43.0
+

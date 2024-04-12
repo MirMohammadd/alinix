@@ -1,0 +1,26 @@
+From 02aae62f2376f55ef8ea4048cc7bd38eae635c50 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 23:53:02 -0400
+Subject: [PATCH 318/493] Minor patch
+
+---
+ kernelz/linker.ld | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/kernelz/linker.ld b/kernelz/linker.ld
+index 37b9d5e..7da645c 100644
+--- a/kernelz/linker.ld
++++ b/kernelz/linker.ld
+@@ -57,4 +57,9 @@ SECTIONS
+     /DISCARD/ : { *(.fini_array*) *(.comment) }
+ 
+     _kernel_end = .;
++
++    /* Link against libgcc explicitly */
++    /DISCARD/ : { *(libgcc.a) }
++    /DISCARD/ : { *(libgcc_s.so.1) }
++    /DISCARD/ : { *(libc.a) }
+ }
+-- 
+2.43.0
+

@@ -1,0 +1,24 @@
+From a4888c458200632b0f50d2d23ce34d206f52c71a Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 15:27:22 -0400
+Subject: [PATCH 054/493] Minor update
+
+---
+ .github/workflows/test.yml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index 4a52d78..dce3582 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -4,6 +4,7 @@ on:
+   push:
+     branches:
+       - Caps  # Adjust branch name as needed
++      - main
+ 
+ jobs:
+   build:
+-- 
+2.43.0
+

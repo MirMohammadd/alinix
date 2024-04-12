@@ -1,0 +1,3037 @@
+From c9a433a1e37c82b2075881838f93796c7dd6b70c Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 15:38:02 -0400
+Subject: [PATCH 058/493] Patch
+
+---
+ kernel/arch/x86-pc/include/common/types.hpp   |  66 ++++++
+ kernel/arch/x86-pc/include/convert.hpp        |  21 ++
+ kernel/arch/x86-pc/include/gui/canvas.hpp     |  47 ++++
+ kernel/arch/x86-pc/include/gui/colors.hpp     |  46 ++++
+ kernel/arch/x86-pc/include/gui/context.hpp    |  94 ++++++++
+ .../arch/x86-pc/include/gui/contextheap.hpp   |  23 ++
+ .../arch/x86-pc/include/gui/contextinfo.hpp   | 113 ++++++++++
+ kernel/arch/x86-pc/include/gui/directgui.hpp  |  35 +++
+ kernel/arch/x86-pc/include/gui/events.hpp     | 187 ++++++++++++++++
+ .../arch/x86-pc/include/gui/fonts/control.hpp | 153 +++++++++++++
+ .../arch/x86-pc/include/gui/fonts/events.hpp  | 187 ++++++++++++++++
+ kernel/arch/x86-pc/include/gui/fonts/font.hpp |  21 ++
+ .../x86-pc/include/gui/fonts/fontparser.hpp   |  27 +++
+ kernel/arch/x86-pc/include/gui/gui.hpp        | 117 ++++++++++
+ kernel/arch/x86-pc/include/gui/property.hpp   |  80 +++++++
+ kernel/arch/x86-pc/include/gui/rect.hpp       |  81 +++++++
+ .../x86-pc/include/gui/widgets/button.hpp     |  55 +++++
+ .../x86-pc/include/gui/widgets/control.hpp    | 187 ++++++++++++++++
+ .../arch/x86-pc/include/gui/widgets/label.hpp |  25 +++
+ .../x86-pc/include/gui/widgets/scrollbar.hpp  |  67 ++++++
+ .../x86-pc/include/gui/widgets/window.hpp     |  93 ++++++++
+ kernel/arch/x86-pc/include/heap.hpp           |  47 ++++
+ kernel/arch/x86-pc/include/ipc.hpp            |  50 +++++
+ kernel/arch/x86-pc/include/list.hpp           | 206 ++++++++++++++++++
+ kernel/arch/x86-pc/include/log.hpp            |  23 ++
+ kernel/arch/x86-pc/include/math.hpp           |  53 +++++
+ kernel/arch/x86-pc/include/new.hpp            |  48 ++++
+ kernel/arch/x86-pc/include/proc.hpp           | 101 +++++++++
+ kernel/arch/x86-pc/include/shared.hpp         | 104 +++++++++
+ kernel/arch/x86-pc/include/string.hpp         |  27 +++
+ kernel/arch/x86-pc/include/syscall.hpp        | 115 ++++++++++
+ kernel/arch/x86-pc/include/systeminfo.hpp     |  85 ++++++++
+ kernel/arch/x86-pc/include/time.hpp           |  15 ++
+ kernel/arch/x86-pc/include/types.hpp          |  32 +++
+ kernel/arch/x86-pc/include/vector.hpp         |  22 ++
+ kernel/arch/x86-pc/include/vfs.hpp            |  35 +++
+ kernel/arch/x86-pc/startup.c                  |   2 +-
+ 37 files changed, 2689 insertions(+), 1 deletion(-)
+ create mode 100644 kernel/arch/x86-pc/include/common/types.hpp
+ create mode 100644 kernel/arch/x86-pc/include/convert.hpp
+ create mode 100644 kernel/arch/x86-pc/include/gui/canvas.hpp
+ create mode 100644 kernel/arch/x86-pc/include/gui/colors.hpp
+ create mode 100644 kernel/arch/x86-pc/include/gui/context.hpp
+ create mode 100644 kernel/arch/x86-pc/include/gui/contextheap.hpp
+ create mode 100644 kernel/arch/x86-pc/include/gui/contextinfo.hpp
+ create mode 100644 kernel/arch/x86-pc/include/gui/directgui.hpp
+ create mode 100644 kernel/arch/x86-pc/include/gui/events.hpp
+ create mode 100644 kernel/arch/x86-pc/include/gui/fonts/control.hpp
+ create mode 100644 kernel/arch/x86-pc/include/gui/fonts/events.hpp
+ create mode 100644 kernel/arch/x86-pc/include/gui/fonts/font.hpp
+ create mode 100644 kernel/arch/x86-pc/include/gui/fonts/fontparser.hpp
+ create mode 100644 kernel/arch/x86-pc/include/gui/gui.hpp
+ create mode 100644 kernel/arch/x86-pc/include/gui/property.hpp
+ create mode 100644 kernel/arch/x86-pc/include/gui/rect.hpp
+ create mode 100644 kernel/arch/x86-pc/include/gui/widgets/button.hpp
+ create mode 100644 kernel/arch/x86-pc/include/gui/widgets/control.hpp
+ create mode 100644 kernel/arch/x86-pc/include/gui/widgets/label.hpp
+ create mode 100644 kernel/arch/x86-pc/include/gui/widgets/scrollbar.hpp
+ create mode 100644 kernel/arch/x86-pc/include/gui/widgets/window.hpp
+ create mode 100644 kernel/arch/x86-pc/include/heap.hpp
+ create mode 100644 kernel/arch/x86-pc/include/ipc.hpp
+ create mode 100644 kernel/arch/x86-pc/include/list.hpp
+ create mode 100644 kernel/arch/x86-pc/include/log.hpp
+ create mode 100644 kernel/arch/x86-pc/include/math.hpp
+ create mode 100644 kernel/arch/x86-pc/include/new.hpp
+ create mode 100644 kernel/arch/x86-pc/include/proc.hpp
+ create mode 100644 kernel/arch/x86-pc/include/shared.hpp
+ create mode 100644 kernel/arch/x86-pc/include/string.hpp
+ create mode 100644 kernel/arch/x86-pc/include/syscall.hpp
+ create mode 100644 kernel/arch/x86-pc/include/systeminfo.hpp
+ create mode 100644 kernel/arch/x86-pc/include/time.hpp
+ create mode 100644 kernel/arch/x86-pc/include/types.hpp
+ create mode 100644 kernel/arch/x86-pc/include/vector.hpp
+ create mode 100644 kernel/arch/x86-pc/include/vfs.hpp
+
+diff --git a/kernel/arch/x86-pc/include/common/types.hpp b/kernel/arch/x86-pc/include/common/types.hpp
+new file mode 100644
+index 0000000..6f181a6
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/common/types.hpp
+@@ -0,0 +1,66 @@
++#ifndef HEISEN__COMMON__TYPES_H
++#define HEISEN__COMMON__TYPES_H
++
++namespace LIBHeisenKernel
++{
++    namespace common
++    {
++        typedef char                        int8_t;
++        typedef unsigned char               uint8_t;
++        typedef short                       int16_t;
++        typedef unsigned short              uint16_t;
++        typedef int                         int32_t;
++        typedef unsigned int                uint32_t;
++        typedef long long int               int64_t;
++        typedef unsigned long long int      uint64_t;
++        typedef unsigned long long          uintptr_t;
++
++        constexpr uint64_t divide64(uint64_t n, uint32_t base, uint32_t* r = 0)
++        {
++            uint64_t rem = n;
++            uint64_t b = base;
++            uint64_t res = 0, d = 1;
++            uint32_t high = rem >> 32;
++
++            /* Reduce the thing a bit first */
++            if (high >= base) {
++                    high /= base;
++                    res = (uint64_t) high << 32;
++                    rem -= (uint64_t) (high*base) << 32;
++            }
++
++            while ((int64_t)b > 0 && b < rem) {
++                    b = b+b;
++                    d = d+d;
++            }
++
++            do {
++                    if (rem >= b) {
++                            rem -= b;
++                            res += d;
++                    }
++                    b >>= 1;
++                    d >>= 1;
++            } while (d);
++
++            if(r)
++                *r = rem;
++            
++            return res;
++        }
++    }
++    constexpr common::uint32_t operator"" _KB(unsigned long long no)
++    {
++        return no * 1024;
++    }
++    constexpr common::uint32_t operator"" _MB(unsigned long long no)
++    {
++        return no * (1024_KB);
++    }
++    constexpr common::uint32_t operator"" _GB(unsigned long long no)
++    {
++        return no * (1024_MB);
++    }
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/convert.hpp b/kernel/arch/x86-pc/include/convert.hpp
+new file mode 100644
+index 0000000..060e87c
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/convert.hpp
+@@ -0,0 +1,21 @@
++#ifndef __LIBCACTUSOS__CONVERT_H
++#define __LIBCACTUSOS__CONVERT_H
++
++#include <types.hpp>
++
++namespace LIBHeisenKernel
++{
++    class Convert
++    {
++    public:
++        static char* IntToString(int i);
++
++        static char* IntToHexString(uint8_t w);
++        static char* IntToHexString(uint16_t w);
++        static char* IntToHexString(uint32_t w);
++
++        static int StringToInt(char* string);
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/gui/canvas.hpp b/kernel/arch/x86-pc/include/gui/canvas.hpp
+new file mode 100644
+index 0000000..4ff2fc9
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/gui/canvas.hpp
+@@ -0,0 +1,47 @@
++#ifndef _HEISEN_KERNEL_CANVAS_HPP
++#define _HEISEN_KERNEL_CANVAS_HPP
++
++// LIBHeisenKernel
++
++#include <gui/fonts/font.hpp>
++#include <types.hpp>
++
++
++
++namespace LIBHeisenKernel
++{
++    class Canvas
++    {
++    private:
++        void DrawCircleHelper(int x, int y, int radius, uint32_t corner, uint32_t color);
++        void FillCircleHelper(int x, int y, int radius, uint32_t corner, int delta, uint32_t color);
++    public:
++        void* bufferPointer;
++        int Width;
++        int Height;
++
++        Canvas(void* buffer, int w, int h);
++
++        void SetPixel(int x, int y, uint32_t color);
++        uint32_t GetPixel(int x, int y);
++
++        void Clear();
++        void Clear(uint32_t color);
++        void DrawHorizontalLine(uint32_t color, int dx, int x1, int y1);
++        void DrawVerticalLine(uint32_t color, int dx, int x1, int y1);
++        void DrawLine(uint32_t color, int x1, int y1, int x2, int y2);
++        void DrawDiagonalLine(uint32_t color, int dx, int dy, int x1, int y1);
++        void DrawRect(uint32_t color, int x, int y, int width, int height);
++        void DrawRoundedRect(uint32_t color, int x, int y, int width, int height, int radius);
++        void DrawFillRoundedRect(uint32_t color, int x, int y, int width, int height, int radius);
++        void DrawFillRect(uint32_t color, int x_start, int y_start, int width, int height);
++        void DrawCircle(uint32_t color, int x_center, int y_center, int radius);
++        void DrawFillCircle(uint32_t color, int x_center, int y_center, int radius);
++        void DrawEllipse(uint32_t color, int x_center, int y_center, int x_radius, int y_radius);
++
++        void DrawString(Font* font, char* string, int x, int y, uint32_t color);
++    };
++}
++
++
++#endif // _HEISEN_KERNEL_CANVAS_HPP
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/gui/colors.hpp b/kernel/arch/x86-pc/include/gui/colors.hpp
+new file mode 100644
+index 0000000..e9415ea
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/gui/colors.hpp
+@@ -0,0 +1,46 @@
++#ifndef _HEISEN_KERNEL_COLORS_HPP
++#define _HEISEN_KERNEL_COLORS_HPP
++
++#include <types.hpp>
++
++namespace LIBHeisenKernel
++{
++    // Union describing a ARGB color in the following format:
++    // 0xAARRGGBB
++    typedef union Color4Tag
++    {
++        uint32_t c;
++        struct ColorComponents
++        {
++            uint8_t b;
++            uint8_t g;
++            uint8_t r;
++            uint8_t a;
++        } argb;
++    } Color4;
++  
++    class Colors
++    {
++    public:
++        static const uint32_t Black = 0xFF000000;
++        static const uint32_t White = 0xFFFFFFFF;
++        static const uint32_t Red   = 0xFFFF0000;
++        static const uint32_t Green = 0xFF00FF00;
++        static const uint32_t Blue  = 0xFF0000FF;
++        static const uint32_t Transparent = 0x00000000;
++    public:
++        /**
++         * Blend to colors using alpha blending
++         * Color1 is background
++         * Color2 is foreground
++        */
++        static const uint32_t AlphaBlend(uint32_t color1, uint32_t color2);
++        
++        /**
++         * Convert a ARGB color to 0xAARRGGBB format
++        */
++        static const uint32_t FromARGB(uint8_t a, uint8_t r, uint8_t g, uint8_t b);
++    };
++}
++
++#endif // _HEISEN_KERNEL_COLORS_HPP
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/gui/context.hpp b/kernel/arch/x86-pc/include/gui/context.hpp
+new file mode 100644
+index 0000000..76ab69f
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/gui/context.hpp
+@@ -0,0 +1,94 @@
++#ifndef __LIBCACTUSOS__GUI__CONTEXT_H
++#define __LIBCACTUSOS__GUI__CONTEXT_H
++
++#include <types.hpp>
++#include <gui/rect.hpp>
++#include <gui/contextinfo.hpp>
++#include <gui/widgets/control.hpp>
++#include <shared.hpp>
++
++namespace LIBHeisenKernel
++{   
++    /**
++     * Represents a region of framebuffer shared between client and server
++    */
++    class Context : public EventObject
++    { 
++    public:
++        /**
++         * Which control is contained in this context.
++        */
++        Control* Window;
++
++        /**
++         * With this canvas you can directly draw to this context
++        */
++        Canvas* canvas;
++
++        /**
++         * A struct that is shared with the compositor that describes the physical dimensions of this context
++        */
++        ContextInfo* sharedContextInfo;
++
++        /**
++         * Create a new context by a framebuffer and dimensions
++        */
++        Context(uint32_t framebufferAddr, int width = 0, int height = 0);
++
++        /**
++         * Draw all the gui components to this context
++        */
++        void DrawGUI();
++
++        /**
++         * Move this context to a new position.
++        */
++        void MoveToPosition(int newX, int newY);
++
++        /**
++         * Remove this context from the screen and free all the used memory 
++        */
++        void CloseContext();
++
++        /**
++         * Function to draw a peice of text aligned within a boundry
++        */
++        static void DrawStringAligned(Canvas* target, Font* font, char* string, uint32_t color, Rectangle bounds, Alignment align, int xoff = 0, int yoff = 0);
++
++    /*///////////////
++    // Events called by GUI class
++    *////////////////
++    friend class GUI;
++    protected:
++        /**
++         * Called when mouse is down on context
++        */
++        void OnMouseDown(int x_abs, int y_abs, uint8_t button);
++        /**
++         * Called when mouse is up on context
++        */
++        void OnMouseUp(int x_abs, int y_abs, uint8_t button);
++        /**
++         * Called when mouse moves above context or enters/leaves context
++        */
++        void OnMouseMove(int prevX_abs, int prevY_abs, int newX_abs, int newY_abs);
++        /**
++         * Called when a key is held down and this is the active context.
++        */
++        void OnKeyDown(uint8_t key, KEYPACKET_FLAGS modifiers);
++        /**
++         * Called when a key is held up and this is the active context.
++        */
++        void OnKeyUp(uint8_t key, KEYPACKET_FLAGS modifiers);
++        /**
++         * Called when contex is resized
++        */
++        void OnResize(Rectangle old);
++        /**
++         * Called when scroll wheel is used on context
++        */
++        void OnScroll(int32_t deltaZ, int x_abs, int y_abs);
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/gui/contextheap.hpp b/kernel/arch/x86-pc/include/gui/contextheap.hpp
+new file mode 100644
+index 0000000..22f2c49
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/gui/contextheap.hpp
+@@ -0,0 +1,23 @@
++#ifndef __LIBCACTUSOS__GUI__CONTEXTHEAP_H
++#define __LIBCACTUSOS__GUI__CONTEXTHEAP_H
++
++#include <types.hpp>
++
++namespace LIBHeisenKernel
++{
++    //Class that provides functions for allocating memory space for contexts.
++    //Note: Memory region is not allocated, just a block that is reserved after allocating.
++    class ContextHeap
++    {
++    public:
++        static void Init();
++        //Allocate a area of memory, blocks is in units per 4096 bytes
++        static uint32_t AllocateArea(uint32_t blocks);
++        //Free area of memory
++        static void FreeArea(uint32_t address, uint32_t blocks);
++        //Get amount of memory used as factor [0-1]
++        static double MemoryUsage();
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/gui/contextinfo.hpp b/kernel/arch/x86-pc/include/gui/contextinfo.hpp
+new file mode 100644
+index 0000000..9779200
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/gui/contextinfo.hpp
+@@ -0,0 +1,113 @@
++#ifndef CONTEXTINFO_H
++#define CONTEXTINFO_H
++
++#include <types.hpp>
++#include <proc.hpp>
++#include <gui/rect.hpp>
++
++// We reserve 1 page for the context info structure for alignment reasons
++// The struct itself is not actually this big though
++#define CONTEXT_INFO_SIZE 4_KB
++
++// Maximum of dirty rects per frame per contextinfo struct
++#define CONTEXT_INFO_MAX_DIRTY 200
++
++// Directions a context can be resized in
++enum Direction
++{
++    None = (0<<0),
++    Top = (1<<0),
++    Right = (1<<1),
++    Bottom = (1<<2),
++    Left = (1<<3)
++};
++
++inline Direction operator|(Direction a, Direction b)
++{
++    return static_cast<Direction>(static_cast<int>(a) | static_cast<int>(b));
++}
++
++struct ContextInfo
++{
++    // To which memory address is the framebuffer mapped on the server side (ContextInfo is placed just before this address)
++    LIBHeisenKernel::uint32_t virtAddrServer;
++    // To which memory address is the framebuffer mapped on the client side (ContextInfo is placed just before this address)
++    LIBHeisenKernel::uint32_t virtAddrClient;
++
++    // How many bytes does this context use? This includes the memory used by this struct
++    LIBHeisenKernel::uint32_t bytes;
++    // The width of this context
++    LIBHeisenKernel::uint32_t width;
++    // The height of this context
++    LIBHeisenKernel::uint32_t height;
++    // The position on the horizontal axis
++    LIBHeisenKernel::int32_t x;
++    // The position on the vertical axis
++    LIBHeisenKernel::int32_t y;
++
++    // The PID of the process that created this context
++    int clientID;
++
++    // Does this context support transparency? If so it will be drawn using an alternative method.
++    // Warning: If set to true the drawing will be slower.
++    bool supportsTransparency;
++
++    // Can this context be moved to the front using a mouse click in it? (this will be done automatically when set to false)
++    bool background;
++
++    // Each context gets it own unique id, this way the compositor can find the right context for each message. For example when a keypress occurs.
++    int id;
++
++    // Does this context support the dirty rectangle technique?
++    bool supportsDirtyRects;
++
++    // Spinlock for modifying dirty rectangles
++    bool dirtyLockFlag;
++
++    // Number of dirty rectangles in the array below
++    LIBHeisenKernel::uint16_t numDirtyRects;
++
++    // Array of dirty rectangles specific to this context
++    struct
++    {
++        // The width of this rectangle
++        int width;
++        // The height of this rectangle
++        int height;
++        // The x coördinate of this rectangle
++        int x;
++        // The y coördinate of this rectangle
++        int y;
++    } dirtyRects[CONTEXT_INFO_MAX_DIRTY];
++
++    // Mark an area as dirty so that the compositor draws it
++    void AddDirtyArea(int x, int y, int width, int height)
++    {
++        // Wait until no one else is also doing this
++        while(dirtyLockFlag) Process::Yield();
++
++        if(this->numDirtyRects >= CONTEXT_INFO_MAX_DIRTY)
++            return; // Skip this one since the array is full :(
++
++        // Now we take control
++        dirtyLockFlag = true;
++
++        // Add dirty rectangle
++        this->dirtyRects[this->numDirtyRects].x = x;
++        this->dirtyRects[this->numDirtyRects].y = y;
++        this->dirtyRects[this->numDirtyRects].width = width;
++        this->dirtyRects[this->numDirtyRects].height = height;
++        this->numDirtyRects += 1;
++
++        // Release lock
++        dirtyLockFlag = false;
++    }
++
++    // Mark an area as dirty so that the compositor draws it
++    void AddDirtyArea(Rectangle* rect) { this->AddDirtyArea(rect->x, rect->y, rect->width, rect->height); }
++};
++
++// Check if the structure doesn't cross page boundary
++STATIC_ASSERT(sizeof(ContextInfo) < CONTEXT_INFO_SIZE);
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/gui/directgui.hpp b/kernel/arch/x86-pc/include/gui/directgui.hpp
+new file mode 100644
+index 0000000..d5cd07c
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/gui/directgui.hpp
+@@ -0,0 +1,35 @@
++#ifndef __CACTUSOSLIB__GUI__DIRECTGUI_H
++#define __CACTUSOSLIB__GUI__DIRECTGUI_H
++
++#include <types.hpp>
++#include <gui/canvas.hpp>
++
++namespace LIBHeisenKernel
++{
++    class DirectGUI
++    {
++    public:
++        static bool RequestFramebuffer();
++        static Canvas* GetCanvas();
++
++        static void SetPixel(int x, int y, uint32_t color);
++        static uint32_t GetPixel(int x, int y);
++
++        static void Clear();
++        static void Clear(uint32_t color);
++        static void DrawHorizontalLine(uint32_t color, int dx, int x1, int y1);
++        static void DrawVerticalLine(uint32_t color, int dx, int x1, int y1);
++        static void DrawLine(uint32_t color, int x1, int y1, int x2, int y2);
++        static void DrawDiagonalLine(uint32_t color, int dx, int dy, int x1, int y1);
++        static void DrawRect(uint32_t color, int x, int y, int width, int height);
++        static void DrawFillRect(uint32_t color, int x_start, int y_start, int width, int height);
++        static void DrawCircle(uint32_t color, int x_center, int y_center, int radius);
++        static void DrawFillCircle(uint32_t color, int x_center, int y_center, int radius);
++        static void DrawEllipse(uint32_t color, int x_center, int y_center, int x_radius, int y_radius);
++
++        static void DrawChar(char character, int x, int y, uint32_t color);
++        static void DrawString(char* string, int x, int y, uint32_t color);
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/gui/events.hpp b/kernel/arch/x86-pc/include/gui/events.hpp
+new file mode 100644
+index 0000000..cc1a0ff
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/gui/events.hpp
+@@ -0,0 +1,187 @@
++#ifndef __LIBHeisenKernel__GUI__EVENTS_H
++#define __LIBHeisenKernel__GUI__EVENTS_H
++
++#include <list.hpp>
++#include <gui/widgets/control.hpp>
++#include <shared.hpp>
++
++namespace LIBHeisenKernel
++{
++    // A class that defines a callback function 
++    template<typename ArgumentType>
++    class IEventCallback
++    {
++    public:
++        virtual void Invoke(void*, ArgumentType) {}
++    };
++
++    // A callback that is a class method
++    template<typename T, typename ArgumentType>
++    class MethodCallback : public IEventCallback<ArgumentType>
++    {
++    private:
++        T* instance;
++        void (T::*function)(void* s, ArgumentType arg);
++    public:
++        // Create a new callback based on a member function
++        MethodCallback(T* instance, void (T::*function)(void* s, ArgumentType arg))
++        : instance(instance), function(function) 
++        {}
++
++        virtual void Invoke(void* s, ArgumentType arg) override
++        {
++            (instance->*function)(s, arg); 
++        }
++    };
++
++    // A callback that is a static function
++    template<typename ArgumentType>
++    class StaticFunctionCallback : public IEventCallback<ArgumentType>
++    {
++    private:
++        void (*func_)(void*, ArgumentType);
++    
++    public:
++        StaticFunctionCallback(void (*func)(void*, ArgumentType))
++        : func_(func)
++        {}
++        
++        virtual void Invoke(void* s, ArgumentType a)
++        {
++            return (*func_)(s, a);
++        }
++    };
++
++    // A class that manages a list of multipile callback for a specific event
++    template<typename ArgumentType>
++    class EventHandlerList
++    {
++    private:
++	    List<IEventCallback<ArgumentType>*> Callbacks;
++    public:
++        EventHandlerList() {}
++        ~EventHandlerList() {}
++
++        void AddHandler(IEventCallback<ArgumentType>* action)
++        {
++            Callbacks.push_back(action);
++        }
++	    void RemoveHandler(IEventCallback<ArgumentType>* action)
++        {
++            Callbacks.Remove(action);
++            delete action;
++        }
++	    void Invoke(void* sender, ArgumentType arg)
++        {
++            for (IEventCallback<ArgumentType>* action : Callbacks)
++                action->Invoke(sender, arg);
++        }
++
++        void operator+= (IEventCallback<ArgumentType>* action)
++        {
++            AddHandler(action);
++        }
++        void operator+= (void (*func)(void*, ArgumentType))
++        {
++            AddHandler(new StaticFunctionCallback<ArgumentType>(func));
++        }
++        void operator-= (IEventCallback<ArgumentType>* action)
++        {
++            RemoveHandler(action);
++        }
++    };
++
++    ////////////////////
++    // Argument macro implementations
++    ////////////////////
++    #define CREATE_ARGUMENT_CLASS0(name) \
++        class name \
++        { \
++        public: \
++            name() {} \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS1(name, t1, var1) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            name(t1 var1) \
++            { \
++                this->var1 = var1; \
++            } \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS2(name, t1, var1, t2, var2) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            t2 var2; \
++            name(t1 var1, t2 var2) \
++            { \
++                this->var1 = var1; \
++                this->var2 = var2; \
++            } \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS3(name, t1, var1, t2, var2, t3, var3) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            t2 var2; \
++            t3 var3; \
++            name(t1 var1, t2 var2, t3 var3) \
++            { \
++                this->var1 = var1; \
++                this->var2 = var2; \
++                this->var3 = var3; \
++            } \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS4(name, t1, var1, t2, var2, t3, var3, t4, var4) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            t2 var2; \
++            t3 var3; \
++            t4 var4; \
++            name(t1 var1, t2 var2, t3 var3, t4 var4) \
++            { \
++                this->var1 = var1; \
++                this->var2 = var2; \
++                this->var3 = var3; \
++                this->var4 = var4; \
++            } \
++        }; \
++
++    ///////////
++    // Argument classes for keypress or mouse events, more will be added later
++    ///////////
++    CREATE_ARGUMENT_CLASS4(MouseMoveArgs, int, prevX, int, prevY, int, newX, int, newY)
++    CREATE_ARGUMENT_CLASS3(MouseButtonArgs, int, x, int, y, int, button)
++    CREATE_ARGUMENT_CLASS2(KeypressArgs, uint8_t, key, KEYPACKET_FLAGS, modifiers)
++    CREATE_ARGUMENT_CLASS3(MouseScrollArgs, int, delta, int, x, int, y);
++
++    /**
++     * An object that hosts multiple gui events
++     */
++    class EventObject
++    {
++    public:
++        EventHandlerList<MouseButtonArgs> MouseDown;
++        EventHandlerList<MouseButtonArgs> MouseUp;
++        EventHandlerList<MouseButtonArgs> MouseClick;
++        EventHandlerList<KeypressArgs> KeyDown;
++        EventHandlerList<KeypressArgs> KeyUp;
++        EventHandlerList<MouseScrollArgs> MouseScroll;
++
++        EventObject()
++        : MouseDown(), MouseUp(), MouseClick(), KeyDown(), KeyUp(), MouseScroll()
++        {        }
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/gui/fonts/control.hpp b/kernel/arch/x86-pc/include/gui/fonts/control.hpp
+new file mode 100644
+index 0000000..29e4535
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/gui/fonts/control.hpp
+@@ -0,0 +1,153 @@
++#ifndef __HEISENLIB__GUI__CONTROL_H
++#define __HEISENLIB__GUI__CONTROL_H
++
++#include <types.hpp>
++#include <gui/rect.hpp>
++#include <list.hpp>
++#include <gui/canvas.hpp>
++#include <gui/events.hpp>
++#include <gui/contextinfo.hpp>
++#include <gui/property.hpp>
++#include <gui/fonts/font.hpp>
++#include <gui/colors.hpp>
++
++namespace LIBHeisenKernel
++{
++    // Defines the alignment of a specific entry
++    // This is for the x and the y direction
++    struct Alignment
++    {
++        // Possible options for the alignment on the x-axis
++        enum class Horizontal
++        {
++            Left,
++            Center,
++            Right
++        };
++
++        // Possible options for the alignment on the y-axis
++        enum class Vertical
++        {
++            Top,
++            Center,
++            Bottom
++        };
++
++        Horizontal x; // X-Axis
++        Vertical y; // Y-Axis
++    };
++
++    // Possible style options for corners of controls
++    enum CornerStyle
++    {
++        Sharp,
++        Rounded
++    };
++
++    /**
++     * A class describing a gui object with possible children
++    */
++    class Control : public EventObject, public Rectangle
++    {
++    public:
++        // All controls that are present on this control.
++        List<Control*> childs;
++
++        // Which control currently is focused?
++        Control* focusedChild = 0;
++
++        // If we are a child of some control this will point to our parent.
++        Control* parent = 0;
++
++        // Does this control needs to be painted again?
++        bool needsRepaint = false;
++        
++        // Public properties for this control
++        GUIProperty<uint32_t>       backColor       = GUIProperty<uint32_t>(this, 0xFF919191);
++        GUIProperty<uint32_t>       borderColor     = GUIProperty<uint32_t>(this, 0xFF333333);
++        GUIProperty<Font*>          font            = GUIProperty<Font*>(this, 0);
++        GUIProperty<Alignment>      textAlignment   = GUIProperty<Alignment>(this, { Alignment::Horizontal::Left, Alignment::Vertical::Top });
++        GUIProperty<uint32_t>       textColor       = GUIProperty<uint32_t>(this, Colors::Black);
++        GUIProperty<CornerStyle>    cornerStyle     = GUIProperty<CornerStyle>(this, CornerStyle::Sharp);
++        GUIProperty<uint16_t>       cornerRadius    = GUIProperty<uint16_t>(this, 5);
++
++        // Anchor of this control
++        Direction anchor = Direction::None;
++    public:
++        /**
++         * Create new control with a given width, height, x and y position
++        */
++        Control(int w, int h, int x = 0, int y = 0);
++        /**
++         * Destructor
++        */
++        virtual ~Control();
++
++        /**
++         * Draw this control to a canvas
++         * 
++         * x_abs/y_abs: the coördinate of this control in absolute related to the canvas
++        */
++        virtual void DrawTo(Canvas* context, int x_abs, int y_abs);
++
++        // Add a control to the childs of this control, this will also set the parent property of the child to us.
++        virtual void AddChild(Control* child, bool focus = true);
++
++        // Remove a child from this control, does not delete the child!
++        virtual void RemoveChild(Control* child);
++
++        // Is this control focused?
++        virtual bool Focused();
++
++        // Force this control to be drawn aggain
++        virtual void ForcePaint();
++
++        // Return the visual portion of this control in aspect with the parent
++        virtual Rectangle GetParentsBounds(int xOffset, int yOffset);
++
++    /*/////////
++    // Events called by parent or context
++    *//////////
++    friend class Window;
++    friend class Context;
++    protected:
++        /**
++         * Called when mouse is down on control
++        */
++        virtual void OnMouseDown(int x_abs, int y_abs, uint8_t button);
++        /**
++         * Called when mouse is up on control
++        */
++        virtual void OnMouseUp(int x_abs, int y_abs, uint8_t button);
++        /**
++         * Called when mouse is moved on control
++        */
++        virtual void OnMouseMove(int prevX_abs, int prevY_abs, int newX_abs, int newY_abs);
++        /**
++         * Called when mouse enters control
++        */
++        virtual void OnMouseEnter(int prevX_abs, int prevY_abs, int newX_abs, int newY_abs);
++        /**
++         * Called when mouse leaves control
++        */
++        virtual void OnMouseLeave(int prevX_abs, int prevY_abs, int newX_abs, int newY_abs);
++        /**
++         * Called when key is held down
++        */
++        virtual void OnKeyDown(uint8_t key, KEYPACKET_FLAGS modifiers);
++        /**
++         * Called when key is held up
++        */
++        virtual void OnKeyUp(uint8_t key, KEYPACKET_FLAGS modifiers);
++        /**
++         * Called when control is resized
++        */
++        virtual void OnResize(Rectangle old);
++        /**
++         * Called when there is a scroll event on control
++        */
++        virtual void OnScroll(int32_t deltaZ, int x_abs, int y_abs);
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/gui/fonts/events.hpp b/kernel/arch/x86-pc/include/gui/fonts/events.hpp
+new file mode 100644
+index 0000000..6e626d4
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/gui/fonts/events.hpp
+@@ -0,0 +1,187 @@
++#ifndef __LIBCACTUSOS__GUI__EVENTS_H
++#define __LIBCACTUSOS__GUI__EVENTS_H
++
++#include <list.hpp>
++#include <gui/widgets/control.hpp>
++#include <shared.hpp>
++
++namespace LIBHeisenKernel
++{
++    // A class that defines a callback function 
++    template<typename ArgumentType>
++    class IEventCallback
++    {
++    public:
++        virtual void Invoke(void*, ArgumentType) {}
++    };
++
++    // A callback that is a class method
++    template<typename T, typename ArgumentType>
++    class MethodCallback : public IEventCallback<ArgumentType>
++    {
++    private:
++        T* instance;
++        void (T::*function)(void* s, ArgumentType arg);
++    public:
++        // Create a new callback based on a member function
++        MethodCallback(T* instance, void (T::*function)(void* s, ArgumentType arg))
++        : instance(instance), function(function) 
++        {}
++
++        virtual void Invoke(void* s, ArgumentType arg) override
++        {
++            (instance->*function)(s, arg); 
++        }
++    };
++
++    // A callback that is a static function
++    template<typename ArgumentType>
++    class StaticFunctionCallback : public IEventCallback<ArgumentType>
++    {
++    private:
++        void (*func_)(void*, ArgumentType);
++    
++    public:
++        StaticFunctionCallback(void (*func)(void*, ArgumentType))
++        : func_(func)
++        {}
++        
++        virtual void Invoke(void* s, ArgumentType a)
++        {
++            return (*func_)(s, a);
++        }
++    };
++
++    // A class that manages a list of multipile callback for a specific event
++    template<typename ArgumentType>
++    class EventHandlerList
++    {
++    private:
++	    List<IEventCallback<ArgumentType>*> Callbacks;
++    public:
++        EventHandlerList() {}
++        ~EventHandlerList() {}
++
++        void AddHandler(IEventCallback<ArgumentType>* action)
++        {
++            Callbacks.push_back(action);
++        }
++	    void RemoveHandler(IEventCallback<ArgumentType>* action)
++        {
++            Callbacks.Remove(action);
++            delete action;
++        }
++	    void Invoke(void* sender, ArgumentType arg)
++        {
++            for (IEventCallback<ArgumentType>* action : Callbacks)
++                action->Invoke(sender, arg);
++        }
++
++        void operator+= (IEventCallback<ArgumentType>* action)
++        {
++            AddHandler(action);
++        }
++        void operator+= (void (*func)(void*, ArgumentType))
++        {
++            AddHandler(new StaticFunctionCallback<ArgumentType>(func));
++        }
++        void operator-= (IEventCallback<ArgumentType>* action)
++        {
++            RemoveHandler(action);
++        }
++    };
++
++    ////////////////////
++    // Argument macro implementations
++    ////////////////////
++    #define CREATE_ARGUMENT_CLASS0(name) \
++        class name \
++        { \
++        public: \
++            name() {} \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS1(name, t1, var1) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            name(t1 var1) \
++            { \
++                this->var1 = var1; \
++            } \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS2(name, t1, var1, t2, var2) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            t2 var2; \
++            name(t1 var1, t2 var2) \
++            { \
++                this->var1 = var1; \
++                this->var2 = var2; \
++            } \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS3(name, t1, var1, t2, var2, t3, var3) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            t2 var2; \
++            t3 var3; \
++            name(t1 var1, t2 var2, t3 var3) \
++            { \
++                this->var1 = var1; \
++                this->var2 = var2; \
++                this->var3 = var3; \
++            } \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS4(name, t1, var1, t2, var2, t3, var3, t4, var4) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            t2 var2; \
++            t3 var3; \
++            t4 var4; \
++            name(t1 var1, t2 var2, t3 var3, t4 var4) \
++            { \
++                this->var1 = var1; \
++                this->var2 = var2; \
++                this->var3 = var3; \
++                this->var4 = var4; \
++            } \
++        }; \
++
++    ///////////
++    // Argument classes for keypress or mouse events, more will be added later
++    ///////////
++    CREATE_ARGUMENT_CLASS4(MouseMoveArgs, int, prevX, int, prevY, int, newX, int, newY)
++    CREATE_ARGUMENT_CLASS3(MouseButtonArgs, int, x, int, y, int, button)
++    CREATE_ARGUMENT_CLASS2(KeypressArgs, uint8_t, key, KEYPACKET_FLAGS, modifiers)
++    CREATE_ARGUMENT_CLASS3(MouseScrollArgs, int, delta, int, x, int, y);
++
++    /**
++     * An object that hosts multiple gui events
++     */
++    class EventObject
++    {
++    public:
++        EventHandlerList<MouseButtonArgs> MouseDown;
++        EventHandlerList<MouseButtonArgs> MouseUp;
++        EventHandlerList<MouseButtonArgs> MouseClick;
++        EventHandlerList<KeypressArgs> KeyDown;
++        EventHandlerList<KeypressArgs> KeyUp;
++        EventHandlerList<MouseScrollArgs> MouseScroll;
++
++        EventObject()
++        : MouseDown(), MouseUp(), MouseClick(), KeyDown(), KeyUp(), MouseScroll()
++        {        }
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/gui/fonts/font.hpp b/kernel/arch/x86-pc/include/gui/fonts/font.hpp
+new file mode 100644
+index 0000000..fbd5fc0
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/gui/fonts/font.hpp
+@@ -0,0 +1,21 @@
++#ifndef _HEISEN_KERNEL_FONT_HPP
++#define _HEISEN_KERNEL_FONT_HPP
++
++#include <types.hpp>
++
++//LIBHeisenKernel 
++
++namespace LIBHeisenKernel
++{
++    struct Font
++    {
++        uint8_t* data           = 0; // Raw font data including header
++        char* name              = 0; // Name of this font, stored inside data buffer
++        int size                = 0; // Size of this font in points
++        uint32_t* offsetTable   = 0; // Offsets for each character data sorted by character
++
++        void BoundingBox(char* str, int* retW, int* retH);
++    };
++}
++
++#endif // _HEISEN_KERNEL_FONT_HPP
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/gui/fonts/fontparser.hpp b/kernel/arch/x86-pc/include/gui/fonts/fontparser.hpp
+new file mode 100644
+index 0000000..daab1f5
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/gui/fonts/fontparser.hpp
+@@ -0,0 +1,27 @@
++#ifndef __LIBCACTUSOS__GUI__FONTS__FONTPARSER_H
++#define __LIBCACTUSOS__GUI__FONTS__FONTPARSER_H
++
++#include <types.hpp>
++#include <gui/fonts/font.hpp>
++
++namespace LIBHeisenKernel
++{
++    // Header of a CactusOS Font File (CFF)
++    struct CFFHeader
++    {
++        uint32_t Magic;                     // Magic number containing 0xCFF
++        uint8_t  Version;                   // Version of this font file, propably 1
++        uint16_t FontSize;                  // Size of font in dots
++        uint32_t FontNameOffset;            // Offset in file data where font name is stored
++
++        uint32_t CharacterOffsets[127-32];  // Table which contains offsets to the data for each character
++    } __attribute__((packed));
++
++    class FontParser
++    {
++    public:
++        static Font* FromFile(char* filename);
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/gui/gui.hpp b/kernel/arch/x86-pc/include/gui/gui.hpp
+new file mode 100644
+index 0000000..53faf77
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/gui/gui.hpp
+@@ -0,0 +1,117 @@
++#ifndef __LIBCACTUSOS__GUI__GUI_H
++#define __LIBCACTUSOS__GUI__GUI_H
++
++#include <gui/widgets/control.hpp>
++#include <gui/widgets/window.hpp>
++#include <gui/context.hpp>
++
++namespace LIBHeisenKernel
++{
++    // Event definitions
++    enum GUIEvents
++    {
++        MouseDown,
++        MouseUp,
++        MouseMove,
++        Keypress,
++        MouseScroll,
++    };
++    
++    // Communication to the compositor definitions
++    enum GUICommunction
++    {
++        REQUEST_CONTEXT,
++        REQUEST_CLOSE,
++        CONTEXT_MOVED
++    };
++
++    // Buttons present on a regular mouse
++    enum MouseButtons
++    {
++        Left,
++        Middle,
++        Right
++    };
++
++    class Window;
++    class GUI
++    {
++    private:
++        static Context* FindTargetContext(int m_x, int m_y);
++    public:
++        // Current Width of video mode
++        static int Width;
++
++        // Current Height of video mode
++        static int Height;
++    public:
++        /**
++         * The PID used by the compositor process
++        */
++        static int compositorPID;
++
++        /**
++         * The list of all contexts in this application
++        */
++        static List<Context*>* contextList;
++        
++        /**
++         * System default font
++        */
++        static Font* defaultFont;
++
++        /**
++         * Initialize the gui for this process
++        */
++        static void Initialize();
++
++        /**
++         * Initialize the text rendering by loading the default font file from disk
++        */
++        static void SetDefaultFont(const char* filename = "B:\\fonts\\Ubuntu15.cff");
++        
++        /**
++         * Remove all gui elements created by this process
++        */
++        static void CleanUp();
++        
++        /**
++         * Process all the possible gui events
++        */
++        static void ProcessEvents();
++
++        /**
++         * Draw all the contexts to the screen
++        */
++        static void DrawGUI();
++
++        /**
++         * Create a thread for the gui
++        */
++        static void MakeAsync();
++
++        /**
++         * Is the current number of contexts larger than 0? 
++        */
++        static bool HasItems();
++
++        /**
++         * Request a context buffer for the application to draw to, this buffer is shared between the process and the compositor
++         * This buffer can be used for a gui but also for raw drawing to the screen
++         * 
++         * returns a pointer to the context struct
++         * @param width The width of the context
++         * @param height The height of the context
++         * @param x The position on horizontal axis
++         * @param y The position on vertical axis
++        */
++        static Context* RequestContext(int width, int height, int x, int y);
++
++        /**
++         * Find the window associated with the control
++        */
++        static Window* GetControlWindow(Control* control);
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/gui/property.hpp b/kernel/arch/x86-pc/include/gui/property.hpp
+new file mode 100644
+index 0000000..12fe725
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/gui/property.hpp
+@@ -0,0 +1,80 @@
++#ifndef _HEISEN_PROPERTY_HPP 
++#define _HEISEN_PROPERTY_HPP
++
++
++#include <types.hpp>
++
++// LIBHeisenKernel
++
++namespace LIBHeisenKernel
++{
++    class Control;
++
++    template <typename>
++    class EventHandlerList;
++
++    // Function to force a control to update its GUI
++    // We need this because if we place it in the template we get a lot of warnings
++    // This a nice way to fix it
++    void UpdateGUIPropertyTargetGUI(Control* target);
++
++    // Property that is used to declare a gui specific variable
++    // When this property changes the gui needs to be repainted
++    template <typename T>
++    class GUIProperty
++    {
++    friend class Control;
++    protected:
++        // Value of this property
++        T value;
++
++        // Which control is the owner of this property
++        Control* parent = 0;
++    public:
++        // Called when value of this property is changed
++        // Make sure this does not create an infinite loop!
++        EventHandlerList<T> onChanged;
++    public:
++        // Create new property with default value and pointer to parent control
++        GUIProperty(Control* p, T def) { this->parent = p; this->value = def; }
++
++        // Deconstructor
++        ~GUIProperty() { }
++
++        
++        // Assignment operator
++        GUIProperty& operator=(T newVal)
++        {
++            this->value = newVal;
++            this->onChanged.Invoke(this, this->value);
++            UpdateGUIPropertyTargetGUI(this->parent);
++            return *this;
++        }
++
++        // Increase operator
++        GUIProperty& operator+=(T newVal)
++        {
++            this->value += newVal;
++            this->onChanged.Invoke(this, this->value);
++            UpdateGUIPropertyTargetGUI(this->parent);
++            return *this;
++        }
++
++        // Decrease operator
++        GUIProperty& operator-=(T newVal)
++        {
++            this->value -= newVal;
++            this->onChanged.Invoke(this, this->value);
++            UpdateGUIPropertyTargetGUI(this->parent);
++            return *this;
++        }
++
++        // Get operator, used for value feedback
++        operator T() const
++        {
++            return this->value;
++        }
++    };        
++}
++
++#endif // _HEISEN_PROPERTY_HPP
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/gui/rect.hpp b/kernel/arch/x86-pc/include/gui/rect.hpp
+new file mode 100644
+index 0000000..15b4978
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/gui/rect.hpp
+@@ -0,0 +1,81 @@
++#ifndef _HEISEN_KERNEL_RECT_H
++#define _HEISEN_KERNEL_RECT_H
++//. LIBHeisenKernel
++
++#include <types.hpp>
++#include <list.hpp>
++
++namespace LIBHeisenKernel
++{
++    /**
++     * A class that describes a rectangular shape
++    */
++    class Rectangle
++    {
++    public:
++        /**
++         * The width of this rectangle
++        */
++        int width;
++        /**
++         * The height of this rectangle
++        */
++        int height;
++        /**
++         * The x coördinate of this rectangle
++        */
++        int x;
++        /**
++         * The y coördinate of this rectangle
++        */
++        int y;
++
++        /**
++         * Create a new instance of the Rectangle Class
++        */
++        Rectangle(int w, int h, int x = 0, int y = 0);
++        
++        /**
++         * Create a new instance of the Rectangle Class
++        */
++        Rectangle();
++
++        /**
++         * Get the area of this rectangle
++         * Basically just width * height
++         */
++        int Area();
++
++        /**
++         * Get the intersection rectangle between this one and the target 
++         * Results holds the intersected rect
++         * Returns true for a intersection
++        */
++        bool Intersect(Rectangle other, Rectangle* result);
++
++        /**
++         * Does this rect contain the given point?
++        */
++        bool Contains(int x, int y);
++
++        /**
++         * Explode this rect into a list of contiguous rects
++        */
++        List<Rectangle>* Split(Rectangle cuttingRect, List<Rectangle>* output = 0);
++
++        /**
++         * Insert this rectangle into the clip list, splitting all existing rectangles against it to prevent overlap 
++        */
++        void PushToClipList(List<Rectangle>* targetList);
++
++        bool operator==(const Rectangle& right)
++        {
++            return (this->width == right.width && this->height == right.height && this->x == right.x && this->y == right.y);
++        }
++
++        // Return a rectangle of size 0, like Rectangle(0, 0, 0, 0)
++        static Rectangle Zero();
++    };
++}
++
++#endif // _HEISEN_KERNEL_RECT_H
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/gui/widgets/button.hpp b/kernel/arch/x86-pc/include/gui/widgets/button.hpp
+new file mode 100644
+index 0000000..03efe4c
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/gui/widgets/button.hpp
+@@ -0,0 +1,55 @@
++#ifndef __LIBCACTUSOS__GUI__BUTTON_H
++#define __LIBCACTUSOS__GUI__BUTTON_H
++
++#include <gui/widgets/control.hpp>
++#include <gui/gui.hpp>
++
++namespace LIBHeisenKernel
++{
++    /**
++     * A GUI button
++    */
++    class Button : public Control
++    {
++    public:
++        /**
++         * The text of this label
++        */
++        GUIProperty<char*> label = GUIProperty<char*>(this, 0);
++
++        /**
++         * Create a new button with a peice of text
++        */
++        Button(char* text = 0);
++
++        /**
++         * Draw this button
++        */
++        void DrawTo(Canvas* context, int x_abs, int y_abs) override;
++
++    /*/////////
++    // Events
++    *//////////
++    friend class Window;
++    friend class Context;
++    protected:
++        /**
++         * Called when mouse is down on control
++        */
++        void OnMouseDown(int x_abs, int y_abs, uint8_t button) override;
++        /**
++         * Called when mouse is up on control
++        */
++        void OnMouseUp(int x_abs, int y_abs, uint8_t button) override;
++        /**
++         * Called when mouse enters control
++        */
++        void OnMouseEnter(int prevX_abs, int prevY_abs, int newX_abs, int newY_abs) override;
++        /**
++         * Called when mouse leaves control
++        */
++        void OnMouseLeave(int prevX_abs, int prevY_abs, int newX_abs, int newY_abs) override;
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/gui/widgets/control.hpp b/kernel/arch/x86-pc/include/gui/widgets/control.hpp
+new file mode 100644
+index 0000000..cc1a0ff
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/gui/widgets/control.hpp
+@@ -0,0 +1,187 @@
++#ifndef __LIBHeisenKernel__GUI__EVENTS_H
++#define __LIBHeisenKernel__GUI__EVENTS_H
++
++#include <list.hpp>
++#include <gui/widgets/control.hpp>
++#include <shared.hpp>
++
++namespace LIBHeisenKernel
++{
++    // A class that defines a callback function 
++    template<typename ArgumentType>
++    class IEventCallback
++    {
++    public:
++        virtual void Invoke(void*, ArgumentType) {}
++    };
++
++    // A callback that is a class method
++    template<typename T, typename ArgumentType>
++    class MethodCallback : public IEventCallback<ArgumentType>
++    {
++    private:
++        T* instance;
++        void (T::*function)(void* s, ArgumentType arg);
++    public:
++        // Create a new callback based on a member function
++        MethodCallback(T* instance, void (T::*function)(void* s, ArgumentType arg))
++        : instance(instance), function(function) 
++        {}
++
++        virtual void Invoke(void* s, ArgumentType arg) override
++        {
++            (instance->*function)(s, arg); 
++        }
++    };
++
++    // A callback that is a static function
++    template<typename ArgumentType>
++    class StaticFunctionCallback : public IEventCallback<ArgumentType>
++    {
++    private:
++        void (*func_)(void*, ArgumentType);
++    
++    public:
++        StaticFunctionCallback(void (*func)(void*, ArgumentType))
++        : func_(func)
++        {}
++        
++        virtual void Invoke(void* s, ArgumentType a)
++        {
++            return (*func_)(s, a);
++        }
++    };
++
++    // A class that manages a list of multipile callback for a specific event
++    template<typename ArgumentType>
++    class EventHandlerList
++    {
++    private:
++	    List<IEventCallback<ArgumentType>*> Callbacks;
++    public:
++        EventHandlerList() {}
++        ~EventHandlerList() {}
++
++        void AddHandler(IEventCallback<ArgumentType>* action)
++        {
++            Callbacks.push_back(action);
++        }
++	    void RemoveHandler(IEventCallback<ArgumentType>* action)
++        {
++            Callbacks.Remove(action);
++            delete action;
++        }
++	    void Invoke(void* sender, ArgumentType arg)
++        {
++            for (IEventCallback<ArgumentType>* action : Callbacks)
++                action->Invoke(sender, arg);
++        }
++
++        void operator+= (IEventCallback<ArgumentType>* action)
++        {
++            AddHandler(action);
++        }
++        void operator+= (void (*func)(void*, ArgumentType))
++        {
++            AddHandler(new StaticFunctionCallback<ArgumentType>(func));
++        }
++        void operator-= (IEventCallback<ArgumentType>* action)
++        {
++            RemoveHandler(action);
++        }
++    };
++
++    ////////////////////
++    // Argument macro implementations
++    ////////////////////
++    #define CREATE_ARGUMENT_CLASS0(name) \
++        class name \
++        { \
++        public: \
++            name() {} \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS1(name, t1, var1) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            name(t1 var1) \
++            { \
++                this->var1 = var1; \
++            } \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS2(name, t1, var1, t2, var2) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            t2 var2; \
++            name(t1 var1, t2 var2) \
++            { \
++                this->var1 = var1; \
++                this->var2 = var2; \
++            } \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS3(name, t1, var1, t2, var2, t3, var3) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            t2 var2; \
++            t3 var3; \
++            name(t1 var1, t2 var2, t3 var3) \
++            { \
++                this->var1 = var1; \
++                this->var2 = var2; \
++                this->var3 = var3; \
++            } \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS4(name, t1, var1, t2, var2, t3, var3, t4, var4) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            t2 var2; \
++            t3 var3; \
++            t4 var4; \
++            name(t1 var1, t2 var2, t3 var3, t4 var4) \
++            { \
++                this->var1 = var1; \
++                this->var2 = var2; \
++                this->var3 = var3; \
++                this->var4 = var4; \
++            } \
++        }; \
++
++    ///////////
++    // Argument classes for keypress or mouse events, more will be added later
++    ///////////
++    CREATE_ARGUMENT_CLASS4(MouseMoveArgs, int, prevX, int, prevY, int, newX, int, newY)
++    CREATE_ARGUMENT_CLASS3(MouseButtonArgs, int, x, int, y, int, button)
++    CREATE_ARGUMENT_CLASS2(KeypressArgs, uint8_t, key, KEYPACKET_FLAGS, modifiers)
++    CREATE_ARGUMENT_CLASS3(MouseScrollArgs, int, delta, int, x, int, y);
++
++    /**
++     * An object that hosts multiple gui events
++     */
++    class EventObject
++    {
++    public:
++        EventHandlerList<MouseButtonArgs> MouseDown;
++        EventHandlerList<MouseButtonArgs> MouseUp;
++        EventHandlerList<MouseButtonArgs> MouseClick;
++        EventHandlerList<KeypressArgs> KeyDown;
++        EventHandlerList<KeypressArgs> KeyUp;
++        EventHandlerList<MouseScrollArgs> MouseScroll;
++
++        EventObject()
++        : MouseDown(), MouseUp(), MouseClick(), KeyDown(), KeyUp(), MouseScroll()
++        {        }
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/gui/widgets/label.hpp b/kernel/arch/x86-pc/include/gui/widgets/label.hpp
+new file mode 100644
+index 0000000..bcc83a7
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/gui/widgets/label.hpp
+@@ -0,0 +1,25 @@
++#ifndef __LIBCACTUSOS__GUI__LABEL_H
++#define __LIBCACTUSOS__GUI__LABEL_H
++
++#include <gui/widgets/control.hpp>
++
++namespace LIBHeisenKernel
++{
++    class Label : public Control
++    {
++    public:
++        GUIProperty<char*> text = GUIProperty<char*>(this, 0);
++
++        /**
++         * Create a new label with a peice of text
++        */
++        Label(char* text = 0);
++
++        /**
++         * Draw this label
++        */
++        void DrawTo(Canvas* context, int x_abs, int y_abs) override;
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/gui/widgets/scrollbar.hpp b/kernel/arch/x86-pc/include/gui/widgets/scrollbar.hpp
+new file mode 100644
+index 0000000..dbfd6df
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/gui/widgets/scrollbar.hpp
+@@ -0,0 +1,67 @@
++#ifndef __LIBHeisenKernel__GUI__SCROLLBAR_H
++#define __LIBHeisenKernel__GUI__SCROLLBAR_H
++
++#include <gui/widgets/control.hpp>
++#include <gui/property.hpp>
++#include <gui/events.hpp>
++#include <gui/colors.hpp>
++
++namespace LIBHeisenKernel
++{
++    // Different type of scrollbars
++    enum ScrollBarType
++    {
++        Horizontal,
++        Vertical
++    };
++
++    #define SCROLLBAR_DEFAULT_WIDTH  100
++    #define SCROLLBAR_DEFAULT_HEIGHT 20
++
++    // Represents an item where the user can drag a square to scroll something for example
++    // Childs are not drawn for logic reasons
++    class ScrollBar : public Control
++    {
++    public:
++        // Type of this scrollbar
++        GUIProperty<ScrollBarType> type = GUIProperty<ScrollBarType>(this, Vertical);
++        
++        // Minumum value, can be < 0
++        GUIProperty<int> minValue = GUIProperty<int>(this, 0);
++        
++        // Maximum value
++        GUIProperty<int> maxValue = GUIProperty<int>(this, 100);
++        
++        // Current value, usually changed by cursor
++        GUIProperty<int> value = GUIProperty<int>(this, 0);
++        
++        // Size of field where user can drag with the mouse in pixels
++        GUIProperty<int> dragSize = GUIProperty<int>(this, 20);
++
++        // Color of dragbar
++        GUIProperty<uint32_t> dragColor = GUIProperty<uint32_t>(this, 0xFF444444);
++
++        // The impact of the scrollbar on the value parameter
++        GUIProperty<double> scrollFactor = GUIProperty<double>(this, 2.0);
++    public:
++        // Create new scrollbar of some type
++        ScrollBar(ScrollBarType type, int min = 0, int max = 100, int dragSize = 20);
++
++        // Draw this scrollbar
++        void DrawTo(Canvas* context, int x_abs, int y_abs) override;
++
++        // Called when user scrolls mouse
++        void OnScroll(int32_t deltaZ, int x_abs, int y_abs) override;
++
++        // Called when mouse is down on this control
++        void OnMouseDown(int x_abs, int y_abs, uint8_t button) override;
++
++        // Called when mouse is up this control
++        void OnMouseUp(int x_abs, int y_abs, uint8_t button) override;
++
++        // Called when mouse is moved this control
++        void OnMouseMove(int prevX_abs, int prevY_abs, int newX_abs, int newY_abs) override;
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/gui/widgets/window.hpp b/kernel/arch/x86-pc/include/gui/widgets/window.hpp
+new file mode 100644
+index 0000000..cb4c96e
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/gui/widgets/window.hpp
+@@ -0,0 +1,93 @@
++#ifndef __LIBCACTUSOS__WINDOW_H
++#define __LIBCACTUSOS__WINDOW_H
++
++#include <gui/widgets/control.hpp>
++#include <gui/widgets/button.hpp>
++#include <gui/context.hpp>
++#include <gui/property.hpp>
++
++namespace LIBHeisenKernel
++{
++    class Button;
++    
++    class Window : public Control
++    {
++    public:
++        GUIProperty<uint32_t> titleBarColor = GUIProperty<uint32_t>(this, 0xFF1E9AFF);
++        GUIProperty<uint16_t> titleBarHeight = GUIProperty<uint16_t>(this, 30);
++    private:
++        // Is the mouse down on the title bar?
++        GUIProperty<bool> titleBarMouseDown = GUIProperty<bool>(this, false);
++
++        // Remember where the mouse was held down for a smooth window drag
++        int mouseDownX = 0;
++        int mouseDownY = 0;
++
++        // Window Control Buttons
++        Button* closeButton = 0;
++
++        // Create the close button for this window
++        void CreateButtons();
++    public:
++        GUIProperty<char*> titleString = GUIProperty<char*>(this, 0);
++
++        /**
++         * In which context are we located?
++        */
++        Context* contextBase = 0;
++
++        /**
++         * Create a new window with a context as base
++        */
++        Window(Context* base);
++
++        /**
++         * Create a new window that request a context for itself to use
++        */
++        Window(int width, int height, int x, int y);
++        
++        /**
++         * Close this window, this can cause the application to exit
++        */
++        void Close(void* sender, MouseButtonArgs arg);
++        /**
++         * Close this window, this can cause the application to exit
++        */
++        void Close();
++
++        /**
++         * Draw this window to a canvas
++         * 
++         * x_abs/y_abs: the coördinate of this window in absolute related to the canvas
++        */
++        void DrawTo(Canvas* context, int x_abs, int y_abs) override;
++    friend class Context;
++    protected:
++        /**
++         * Called when mouse is down on window
++        */
++        void OnMouseDown(int x_abs, int y_abs, uint8_t button) override;
++        /**
++         * Called when mouse is up on window
++        */
++        void OnMouseUp(int x_abs, int y_abs, uint8_t button) override;
++        /**
++         * Called when mouse is moved on window
++        */
++        void OnMouseMove(int prevX_abs, int prevY_abs, int newX_abs, int newY_abs) override;
++        /**
++         * Called when Window is resized
++        */
++        void OnResize(Rectangle old) override;
++        /**
++         * Called when key is held down
++        */
++        void OnKeyDown(uint8_t key, KEYPACKET_FLAGS modifiers) override;
++        /**
++         * Called when there is a scroll event on window
++        */
++        void OnScroll(int32_t deltaZ, int x_abs, int y_abs) override;
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/heap.hpp b/kernel/arch/x86-pc/include/heap.hpp
+new file mode 100644
+index 0000000..789dfdf
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/heap.hpp
+@@ -0,0 +1,47 @@
++#ifndef __CACTUSOSLIB__HEAP_H
++#define __CACTUSOSLIB__HEAP_H
++
++#include <types.hpp>
++
++namespace LIBHeisenKernel
++{
++    #ifndef align_up
++    #define align_up(num, align) \
++        (((num) + ((align) - 1)) & ~((align) - 1))
++    #endif
++
++    uint32_t pageRoundUp(uint32_t address);
++    uint32_t pageRoundDown(uint32_t address);
++
++    #define HEAP_INCREASE_SIZE 10_MB
++
++    struct MemoryHeader
++    {
++        MemoryHeader* next;
++        MemoryHeader* prev;
++        bool allocated;
++        uint32_t size;
++    } __attribute__((packed));
++
++    class UserHeap
++    {
++    private:
++        static uint32_t startAddress;
++        static uint32_t endAddress;
++        static uint32_t maxAddress;
++
++        static MemoryHeader* firstHeader;
++
++    public:
++        static void Initialize();
++        static void PrintMemoryLayout();
++
++        static void* Malloc(uint32_t size);
++        static void Free(void* ptr);
++
++        static void* alignedMalloc(uint32_t size, uint32_t align);
++        static void allignedFree(void* ptr);
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/ipc.hpp b/kernel/arch/x86-pc/include/ipc.hpp
+new file mode 100644
+index 0000000..880f582
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/ipc.hpp
+@@ -0,0 +1,50 @@
++#ifndef __LIBCACTUSOS__IPC_H
++#define __LIBCACTUSOS__IPC_H
++
++namespace LIBHeisenKernel
++{
++    enum IPCMessageType : int
++    {
++        None = 0,
++        GUIRequest = 1,
++        GUIEvent = 2
++    };
++
++    struct IPCMessage
++    {
++        int source; // Who has sended this message?
++        int dest;   // Who is it for
++        
++        int type; // What type of message is it?
++
++        // Arguments
++        unsigned int arg1;
++        unsigned int arg2;
++        unsigned int arg3;
++        unsigned int arg4;
++        unsigned int arg5;
++        unsigned int arg6;
++    };
++
++    /**
++     * Send a message to a other process
++    */
++    int IPCSend(int dest, int type = IPCMessageType::None, unsigned int arg1 = 0, unsigned int arg2 = 0, unsigned int arg3 = 0, unsigned int arg4 = 0, unsigned int arg5 = 0, unsigned int arg6 = 0);
++    /**
++     * Send a message to a other process
++    */
++    int IPCSend(IPCMessage message);
++
++    /**
++     * How many messages are ready for receiving?
++    */
++    int IPCAvailable();
++
++    /**
++     * Receive a single IPCMessage, blocks if none availible
++     * FromID: Only receive a message from specified process
++    */
++    IPCMessage ICPReceive(int fromID = -1, int* errOut = 0, int type = -1);
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/list.hpp b/kernel/arch/x86-pc/include/list.hpp
+new file mode 100644
+index 0000000..0d66973
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/list.hpp
+@@ -0,0 +1,206 @@
++#ifndef __HEISEN__COMMON__LIST_H
++#define __HEISEN__COMMON__LIST_H
++
++
++namespace LIBHeisenKernel
++{
++    template <typename T>
++    struct ListNode
++    {
++        ListNode(const T &e) : data(e), next(0), prev(0)
++        {}
++        T data;
++        ListNode<T>* next;
++        ListNode<T>* prev;
++    };
++    template <typename T>
++    class List
++    {
++    public:
++        List() : head_(0), tail_(0), size_(0)
++        {   }
++        ~List()
++        { this->Clear(); /*Remove all the items from the list*/ }
++        int size() { return size_; }
++        void push_back(const T &e);
++        void push_front(const T &e);
++        void Clear();
++        T GetAt(int index);
++        T operator[](int index);
++        void Remove(int index);
++        void Remove(const T &e);
++
++        void operator+=(const T &e);
++        void operator-=(const T &e);
++    private:
++        ListNode<T>* head_;
++        ListNode<T>* tail_;
++        int size_;
++        ListNode<T>* insertInternal(const T &e, ListNode<T>* pos);
++        void removeInternal(ListNode<T> *pos);
++    //Iterators
++    public:
++        class iterator
++        {
++        public:
++            iterator(ListNode<T> *p=0) : pos_(p) { }
++            
++            T &operator*()
++            { return pos_->data; }
++
++            T *operator->()
++            { return &(pos_->data); }
++
++            bool operator!=(const iterator &rhs)
++            { return this->pos_ != rhs.pos_; }
++
++            iterator operator++()
++            { pos_ = pos_->next; return *this; }
++
++            iterator operator--()
++            { pos_ = pos_->prev; return *this; }
++
++        private:
++            ListNode<T> *pos_;
++        };
++        iterator begin()
++        {
++            return iterator(head_);
++        }
++        iterator end()
++        {
++            return iterator(0);
++        }
++    };
++}
++
++using namespace LIBHeisenKernel;
++
++/////////////
++// Implementations
++////////////
++template <typename T>
++ListNode<T>* List<T>::insertInternal(const T &e, ListNode<T>* pos)
++{
++    ListNode<T> *n = new ListNode<T>(e);
++    size_++;
++    // no operation below this should throw
++    // as state of the list has changed and memory allocated
++    n->next = pos;
++    if(pos)
++    {
++        n->prev = pos->prev;
++        pos->prev = n;
++    }
++    else
++    {
++        // pos is null that is at the very end of the list
++        n->prev = tail_;
++        tail_ = n;
++    }
++    if(n->prev)
++    {
++        n->prev->next = n;
++    }
++    else
++    {
++        // at the very begining of the list
++        head_ = n;
++    }
++    return n;
++}
++template <typename T>
++void List<T>::push_back(const T &e)
++{
++    // inserts before the position, 
++    // 0 is the end() iterator
++    // hence insert at the end
++    insertInternal(e, 0);
++}
++template <typename T>
++void List<T>::push_front(const T &e)
++{
++    // insert before the head
++    insertInternal(e, head_);
++}
++
++template <typename T>
++void List<T>::removeInternal(ListNode<T> *pos)
++{
++	if(pos)
++	{
++		if(pos->prev)
++			pos->prev->next = pos->next;
++		if(pos->next)
++			pos->next->prev = pos->prev;
++		if(pos == head_)
++			head_ = pos->next;
++		if(pos == tail_)
++			tail_ = pos->prev;
++		delete pos;
++		size_--;
++	}
++}
++
++template <typename T>
++void List<T>::Remove(int index)
++{
++    ListNode<T>* cur = head_;
++    for(int i = 0; i < index; ++i)
++        cur = cur->next;
++    removeInternal(cur);
++}
++
++template <typename T>
++void List<T>::Remove(const T &e)
++{
++    for(int i = 0; i < size_; i++)
++        if(GetAt(i) == e)
++            Remove(i);
++}
++
++template <typename T>
++void List<T>::Clear()
++{
++    ListNode<T>* current( head_ );
++
++    while(current)
++    {
++        ListNode<T>* next( current->next );
++        delete current;
++        current = next;
++    }
++    size_ = 0; //Reset the size to 0
++    head_ = 0;
++    tail_ = 0;
++}
++
++template <typename T>
++T List<T>::GetAt(int index)
++{
++    ListNode<T>* cur = head_;
++    for(int i = 0; i < index; ++i)
++        cur = cur->next;
++    return cur->data;
++}
++
++template <typename T>
++T List<T>::operator[](int index)
++{
++    return GetAt(index);
++}
++
++template <typename T>
++void List<T>::operator+=(const T &e)
++{
++    push_back(e);
++}
++
++template <typename T>
++void List<T>::operator-=(const T &e)
++{
++    Remove(e);
++}
++
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/log.hpp b/kernel/arch/x86-pc/include/log.hpp
+new file mode 100644
+index 0000000..28b870b
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/log.hpp
+@@ -0,0 +1,23 @@
++#ifndef __CACTUSOSLIB__LOG_H
++#define __CACTUSOSLIB__LOG_H
++
++namespace LIBHeisenKernel
++{
++    enum LogLevel
++    {
++        Info,
++        Warning,
++        Error
++    };
++
++    /**
++     * Send a log message to the system 
++    */
++    void Log(LogLevel level, char* msg);
++    /**
++     * Print a message to the standard output stream 
++    */
++    void Print(const char* __restrict__ format, ...);
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/math.hpp b/kernel/arch/x86-pc/include/math.hpp
+new file mode 100644
+index 0000000..c46ad34
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/math.hpp
+@@ -0,0 +1,53 @@
++#ifndef __HEISEN__MATH_H
++#define __HEISEN__MATH_H
++
++#include <types.hpp>
++
++namespace LIBHeisenKernel
++{
++    #define MATH_PI 3.14159265358979323846
++
++    struct MXCSR_StatusRegister
++    {
++        uint8_t InvalidOperationFlag : 1;
++        uint8_t DenormalFlag : 1;
++        uint8_t DevideByZeroFlag : 1;
++        uint8_t OverflowFlag : 1;
++        uint8_t UnderflowFlag : 1;
++        uint8_t PrecisionFlag : 1;
++        uint8_t DemormalsAreZeros : 1;
++        uint8_t InvalidOperationMask : 1;
++        uint8_t DenormalOperationMask : 1;
++        uint8_t DevideByZeroMask : 1;
++        uint8_t OverflowMask : 1;
++        uint8_t UnderflowMask : 1;
++        uint8_t PrecisionMask : 1;
++        uint8_t RoundingControl : 2;
++        uint8_t FlushToZero : 1;
++        uint16_t Reserved;
++    } __attribute__((packed));
++
++    class Math
++    {
++    public:
++        static void EnableFPU();
++
++        static long Abs(long v);
++        static double fAbs(double x);
++        static long Sign(long v);
++        static double sin(double x);
++        static double cos(double x);
++
++        static long Max (long a, long b);
++        static long Min (long a, long b);
++        static long Constrain(long x, long a, long b);
++        static long Map(long x, long in_min, long in_max, long out_min, long out_max);
++
++        static float fMod(float a, float b);
++        static double floor(double x);
++        static double sqrt(double n);
++
++        static double Round(double n, uint32_t digits);
++    };
++}
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/new.hpp b/kernel/arch/x86-pc/include/new.hpp
+new file mode 100644
+index 0000000..3eb7bab
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/new.hpp
+@@ -0,0 +1,48 @@
++#ifndef __LIBCACTUSOS__NEW_H
++#define __LIBCACTUSOS__NEW_H
++
++#include <stddef.h>
++#include <heap.hpp>
++
++using namespace LIBHeisenKernel;
++ 
++void *operator new(size_t size)
++{
++    return UserHeap::Malloc(size);
++}
++ 
++void *operator new[](size_t size)
++{
++    return UserHeap::Malloc(size);
++}
++
++void* operator new(size_t size, void* ptr)
++{
++    return ptr;
++}
++
++void* operator new[](size_t size, void* ptr)
++{
++    return ptr;
++}
++ 
++void operator delete(void *p)
++{
++    UserHeap::Free(p);
++}
++ 
++void operator delete[](void *p)
++{
++    UserHeap::Free(p);
++}
++
++void operator delete(void* ptr, size_t size)
++{
++    UserHeap::Free(ptr);
++}
++void operator delete[](void* ptr, size_t size)
++{
++    UserHeap::Free(ptr);
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/proc.hpp b/kernel/arch/x86-pc/include/proc.hpp
+new file mode 100644
+index 0000000..b833f82
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/proc.hpp
+@@ -0,0 +1,101 @@
++#ifndef _HEISEN_KERNEL_PROC__HPP   
++#define _HEISEN_KERNEL_PROC__HPP
++
++#include <syscall.hpp>
++#include <types.hpp>
++#include <systeminfo.hpp>
++#include <list.hpp>
++#include <shared.hpp>
++
++
++namespace LIBHeisenKernel
++{
++    #define DECLARE_LOCK(name) volatile int name ## Locked
++    #define LOCK(name) \
++	    while (name ## Locked == 1) asm("pause"); \
++	    __sync_synchronize();
++    #define UNLOCK(name) \
++	    __sync_synchronize(); \
++	    name ## Locked = 0;
++
++    class Process
++    {
++    private:
++        /**
++         * How many threads does this application have?
++        */
++        static int numThreads;
++    public:
++        /**
++         * The PID of this process
++        */
++        static int ID;
++        /**
++         * A pointer to a buffer shared with the kernel that contains some systeminfo
++        */
++        static SharedSystemInfo* systemInfo;
++        /**
++         * Start a new process and return its PID, if block is set to true the process will not be started automaticly.
++        */
++        static int Run(const char* path, bool block = false);
++        /**
++         * Create a block of shared memory
++        */
++        static bool CreateSharedMemory(int proc2ID, uint32_t virtStart, uint32_t len);
++        /**
++         * Create a block of shared memory
++        */
++        static bool CreateSharedMemory(int proc2ID, uint32_t virtStart1, uint32_t virtStart2, uint32_t len);
++        /**
++         * Remove a block of shared memory 
++        */
++        static bool DeleteSharedMemory(int proc2ID, uint32_t virtStart, uint32_t len);
++        /**
++         * Remove a block of shared memory
++        */
++        static bool DeleteSharedMemory(int proc2ID, uint32_t virtStart1, uint32_t virtStart2, uint32_t len);
++        /**
++         * Create a new thread for this application
++        */
++        static void CreateThread(void (*entryPoint)(), bool switchTo = false);
++        /**
++         * Force a task switch
++        */
++        static void Yield();
++        /**
++         * Write a byte to this processes standard output stream 
++        */
++        static void WriteStdOut(char byte);
++        /**
++         * Write bytes to this processes standard output stream 
++        */
++        static void WriteStdOut(char* bytes, int length);
++        /**
++         * Read a byte from this processes standard input stream
++        */
++        static char ReadStdIn();
++        /**
++         * How many bytes can be read from the stdin stream? 
++        */
++        static int StdInAvailable();
++        /**
++         * Redirect one process output to another process input 
++        */
++        static void BindSTDIO(int fromID, int toID);
++        /**
++         * Returns if a process with given pid is present and running.
++        */
++        static bool Active(int pid);
++        /**
++         * Unblock a thread of a process
++        */
++        static void Unblock(int procPID, int thread = 0);
++        /**
++         * Dissable or enable kernel scheduler
++        */
++        static void SetScheduler(bool active);
++    };
++}
++
++
++#endif // _HEISEN_KERNEL_PROC_HPP
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/shared.hpp b/kernel/arch/x86-pc/include/shared.hpp
+new file mode 100644
+index 0000000..edac6c9
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/shared.hpp
+@@ -0,0 +1,104 @@
++#ifndef _HEISEN_SHARED_HPP
++#define _HEISEN_SHARED_HPP
++
++#include <types.hpp>
++
++namespace LIBHeisenKernel
++{
++    #define VFS_NAME_LENGTH 255
++
++    // Holds data about a specific process, data is readonly
++    struct ProcessInfo
++    {
++        // PID of process
++        int id;
++        // Which syscall interface does this process use?
++        int syscallID;
++        // The amount of threads of this process
++        int threads;
++        // Virtual memory used by heap
++        unsigned int heapMemory;
++        // Is this a ring 3 process?
++        bool isUserspace;
++        // Is process currently blocked (main thread only)
++        bool blocked;
++        // Filename of process excecutable
++        char fileName[32];
++    };
++
++    // Info about a item represent on the disk
++    struct VFSEntry
++    {
++        uint32_t size;  // Size of the entry in bytes
++        bool isDir;     // Is this item a directory or not?
++        struct
++        {
++            uint8_t sec;
++            uint8_t min;
++            uint8_t hour;
++        } creationTime; // Time file was created
++        struct
++        {
++            uint8_t day;
++            uint8_t month;
++            uint16_t year;
++        } creationDate; // Date time was created
++        char name[VFS_NAME_LENGTH]; // Name of the file 
++        // TODO: Is there a better way for buffering this?
++    };
++
++    #define KEYPACKET_START 0xFF
++    enum KEYPACKET_FLAGS {
++        NoFlags = 0,
++        Pressed = (1<<0),
++        CapsLock = (1<<1),
++        NumLock = (1<<2),
++        LeftShift = (1<<3),
++        RightShift = (1<<4),
++        LeftControl = (1<<5),
++        RightControl = (1<<6),
++        Alt = (1<<7)
++    };
++
++    inline KEYPACKET_FLAGS operator|(KEYPACKET_FLAGS a, KEYPACKET_FLAGS b)
++    {
++        return static_cast<KEYPACKET_FLAGS>(static_cast<int>(a) | static_cast<int>(b));
++    }
++
++    // Keys not present in ascii table but used by CactusOS and applications
++    enum SpecialKeys : uint8_t {
++        EscapeKey = 27,
++
++        // Start of custom
++        CapsLockKey = 128,
++        NumLockKey,
++        LeftShiftKey,
++        RightShiftKey,
++        LeftControlKey,
++        RightControlKey,
++        AltKey,
++
++        F1Key,
++        F2Key,
++        F3Key,
++        F4Key,
++        F5Key,
++        F6Key,
++        F7Key,
++        F8Key,
++        F9Key,
++        F10Key,
++        F11Key,
++        F12Key
++    };
++
++    // Packet containing info on Keypress event
++    struct KeypressPacket
++    {
++        uint8_t startByte; //Start of packet
++        uint8_t keyCode; //keycode in integer format
++        KEYPACKET_FLAGS flags; //Button state flags
++    } __attribute__((packed));
++}
++
++#endif // _HEISEN_SHARED_HPP
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/string.hpp b/kernel/arch/x86-pc/include/string.hpp
+new file mode 100644
+index 0000000..017f1dd
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/string.hpp
+@@ -0,0 +1,27 @@
++#ifndef _HEISEN_STRING_KERNEL_HPP
++#define _HEISEN_STRING_KERNEL_HPP
++
++#include <stddef.h>
++#include "list.hpp"
++
++extern "C"
++{
++    int memcmp(const void* aptr, const void* bptr, size_t size);
++    void* memcpy(void* __restrict__ dstptr, const void* __restrict__ srcptr, size_t size);
++    void* memmove(void* dstptr, const void* srcptr, size_t size);
++    void* memset(void* bufptr, int value, size_t size);
++    size_t strlen(const char* str);
++    int strcmp(const char *s1, const char *s2);
++   
++    int str_IndexOf(const char* str, char c, int skip = 0);
++    bool str_Contains(const char* str, char c);
++    List<char*> str_Split(const char* str, char d);
++    char* str_Uppercase(char* str);
++    char* str_Lowercase(char* str);
++    char* str_Add(char* str, char c);
++    char* str_Combine(char* part1, char* part2);
++
++    bool isvalid(unsigned char key);
++}
++
++#endif // _HEISEN_STRING_KERNEL_HPP
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/syscall.hpp b/kernel/arch/x86-pc/include/syscall.hpp
+new file mode 100644
+index 0000000..41250d1
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/syscall.hpp
+@@ -0,0 +1,115 @@
++#ifndef _HEISEN_KERNEL_SYSCALL_HPP 
++#define _HEISEN_KERNEL_SYSCALL_HPP
++
++// LIBHeisenKernel
++
++namespace LIBHeisenKernel
++{
++    #define SYSCALL_RET_SUCCES 1
++    #define SYSCALL_RET_ERROR 0
++    #define PROC_ARG_LEN_MAX 100
++
++    enum Systemcalls {
++        SYSCALL_EXIT = 0, // Tells kernel that procces is done and can be removed
++
++        /////////////
++        // Logging
++        /////////////
++    
++        SYSCALL_LOG,
++        SYSCALL_PRINT,
++
++        /////////////
++        // VFS
++        /////////////
++
++        SYSCALL_FILE_EXISTS,
++        SYSCALL_DIR_EXISTS,
++        SYSCALL_GET_FILESIZE,
++        SYSCALL_READ_FILE,
++        SYSCALL_WRITE_FILE,
++        SYSCALL_CREATE_FILE,
++        SYSCALL_CREATE_DIRECTORY,
++        SYSCALL_EJECT_DISK,
++
++        //////////////
++        // GUI
++        //////////////
++        
++        SYSCALL_GUI_GETLFB,
++        SYSCALL_GET_SCREEN_PROPERTIES,
++
++        //////////////
++        // Memory
++        //////////////
++
++        SYSCALL_GET_HEAP_START,
++        SYSCALL_GET_HEAP_END,
++        SYSCALL_SET_HEAP_SIZE,
++        SYSCALL_CREATE_SHARED_MEM,
++        SYSCALL_REMOVE_SHARED_MEM,
++        SYSCALL_MAP_SYSINFO,
++
++        //////////////
++        // Scheduler
++        //////////////
++
++        SYSCALL_RUN_PROC,
++        SYSCALL_SLEEP_MS,
++        SYSCALL_START_THREAD,
++        SYSCALL_YIELD,
++        SYSCALL_PROC_EXIST,
++        SYSCALL_UNBLOCK,
++        SYSCALL_SET_SCHEDULER,
++        SYSCALL_GET_ARGUMENTS,
++
++        //////////////
++        // IPC
++        //////////////
++
++        SYSCALL_IPC_SEND,
++        SYSCALL_IPC_RECEIVE,
++        SYSCALL_IPC_AVAILABLE,
++
++        //////////////
++        // Clock
++        //////////////
++
++        SYSCALL_GET_TICKS,
++        SYSCALL_GET_DATETIME,
++
++        //////////////
++        // Power
++        //////////////
++
++        SYSCALL_SHUTDOWN,
++        SYSCALL_REBOOT,
++
++        //////////////
++        // STDIO
++        //////////////
++
++        SYSCALL_READ_STDIO,
++        SYSCALL_WRITE_STDIO,
++        SYSCALL_REDIRECT_STDIO,
++        SYSCALL_STDIO_AVAILABLE,
++
++        //////////////
++        // Listings
++        //////////////
++
++        SYSCALL_BEGIN_LISTING,
++        SYSCALL_LISTING_ENTRY,
++        SYSCALL_END_LISTING,
++        SYSCALL_GET_SYSINFO_VALUE,
++
++        //////////////
++        // Other
++        //////////////
++        SYSCALL_SET_CACTUSOS_LIB = 0xFFFF,
++    };
++
++    int DoSyscall(unsigned int intNum, unsigned int arg1 = 0, unsigned int arg2 = 0, unsigned int arg3 = 0, unsigned int arg4 = 0, unsigned int arg5 = 0);
++}
++
++#endif // _HEISEN_KERNEL_SYSCALL_HPP
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/systeminfo.hpp b/kernel/arch/x86-pc/include/systeminfo.hpp
+new file mode 100644
+index 0000000..5938364
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/systeminfo.hpp
+@@ -0,0 +1,85 @@
++#ifndef __HEISEN__SYSTEMINFO_H
++#define __HEISEN__SYSTEMINFO_H
++
++#ifdef OSKERNEL
++#include <common/types.hpp>
++#else
++#include <types.hpp>
++#endif
++
++namespace LIBHeisenKernel
++{
++    #define SYSTEM_INFO_ADDR 0xBFFEE000
++
++    enum SIPropertyIdentifier
++    {
++        String,
++        Index
++    };
++
++    class SIPropertyProvider
++    {
++    public:
++        char* id = 0;
++        int index = 0;
++        SIPropertyIdentifier type = String;
++
++        SIPropertyProvider* parent = 0;
++    public:
++        SIPropertyProvider(char* property);
++        SIPropertyProvider(int index);
++
++        // Collection functions
++
++        // Get Count of items present in this collection
++        int size();
++
++        // Get specific property of collection
++        SIPropertyProvider operator[](const int index);
++        SIPropertyProvider operator[](const char* element);
++
++        template<typename T>
++        T receiveValue(const bool getsize) const;
++
++        template<typename T>
++        T receiveBuffer() const;
++
++        // We are a property ourself
++        operator int() const;       // Receive this property as integer
++        operator bool() const;      // Receive this property as boolean
++        operator double() const;    // Receive this property as double
++        operator char*() const;     // Receive this property as string
++        operator uint64_t() const;  // Receive this property as unsigned long
++        operator uint32_t() const;  // Receive this property as unsigned int
++        operator uint16_t() const;  // Receive this property as unsigned word
++        operator uint8_t() const;  // Receive this property as unsigned char
++    } __attribute__((packed));
++
++    // A class for managing all information known about the current system
++    // With this a application can monitor the system
++    class SystemInfo
++    {
++    public:
++        // All properties of the current system
++        // Things like connected disks and usbdevices
++        static SIPropertyProvider Properties;
++
++        // Request System info to be mapped into address space
++        // Addres is SYSTEM_INFO_ADDR which is 2 pages below user-stack
++        static bool RequestSystemInfo();
++    };
++
++    // This struct can be shared between the kernel and userspace processes
++    struct SharedSystemInfo
++    {
++        unsigned int MouseX;
++        unsigned int MouseY;
++        signed int   MouseZ;
++
++        bool MouseLeftButton;
++        bool MouseRightButton;
++        bool MouseMiddleButton;
++    } __attribute__((packed));
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/time.hpp b/kernel/arch/x86-pc/include/time.hpp
+new file mode 100644
+index 0000000..d415cbc
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/time.hpp
+@@ -0,0 +1,15 @@
++#ifndef _HEISEN_KERNEL_LIB_TIME_H
++#define _HEISEN_KERNEL_LIB_TIME_H
++
++#include "types.hpp"
++
++namespace LIBHeisenKernel{
++    class Time{
++        public:
++            static void sleep(uint32_t ms);
++
++            static uint64_t Ticks();
++    };
++};
++
++#endif // _HEISEN_KERNEL_LIB_TIME_H
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/types.hpp b/kernel/arch/x86-pc/include/types.hpp
+new file mode 100644
+index 0000000..5df1ec7
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/types.hpp
+@@ -0,0 +1,32 @@
++#ifndef _HEISEN_KERNEL_INCLUDE_KERNEL_H
++#define _HEISEN_KERNEL_INCLUDE_KERNEL_H
++
++namespace LIBHeisenKernel
++{
++    #define STATIC_ASSERT(condition) typedef char p__LINE__[ (condition) ? 1 : -1];
++
++    typedef char                        int8_t;
++    typedef unsigned char               uint8_t;
++    typedef short                       int16_t;
++    typedef unsigned short              uint16_t;
++    typedef int                         int32_t;
++    typedef unsigned int                uint32_t;
++    typedef long long int               int64_t;
++    typedef unsigned long long int      uint64_t;
++    typedef unsigned long long          uintptr_t;
++
++    constexpr uint32_t operator"" _KB(unsigned long long no)
++    {
++        return no * 1024;
++    }
++    constexpr uint32_t operator"" _MB(unsigned long long no)
++    {
++        return no * (1024_KB);
++    }
++    constexpr uint32_t operator"" _GB(unsigned long long no)
++    {
++        return no * (1024_MB);
++    }
++}
++
++#endif // _HEISEN_KERNEL_INCLUDE_KERNEL_H
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/vector.hpp b/kernel/arch/x86-pc/include/vector.hpp
+new file mode 100644
+index 0000000..31335d2
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/vector.hpp
+@@ -0,0 +1,22 @@
++#ifndef _HEISEN_KERNEL_HPP
++#define _HEISEN_KERNEL_HPP
++
++
++#include "types.hpp"
++
++namespace LIBHeisenKernel{
++    template<typename T>
++    class Vector{
++        private:
++            uint32_t size = 0;
++            uint32_t capacity = 0;
++            T* buffer = 0;
++
++            void reserve(int capacity){
++                T* newBuf = new T[capacity];
++                 
++            }
++    };
++};
++
++#endif // _HEISEN_KERNEL_HPP
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/include/vfs.hpp b/kernel/arch/x86-pc/include/vfs.hpp
+new file mode 100644
+index 0000000..49cfa65
+--- /dev/null
++++ b/kernel/arch/x86-pc/include/vfs.hpp
+@@ -0,0 +1,35 @@
++#ifndef __CACTUSOSLIB__VFS_H
++#define __CACTUSOSLIB__VFS_H
++
++#include <types.hpp>
++#include <list.hpp>
++#include <shared.hpp>
++
++namespace LIBHeisenKernel
++{
++    // Read file contents into buffer
++    int ReadFile(char* filename, uint8_t* buffer, uint32_t offset = 0, uint32_t len = -1);
++    // Write buffer to file, file will be created when create equals true
++    int WriteFile(char* filename, uint8_t* buffer, uint32_t len, bool create = true);
++
++    // Check if file exist
++    bool FileExists(char* filename);
++    // Check if directory exist
++    bool DirectoryExists(char* filename);
++
++    // Create a file at the filepath
++    int CreateFile(char* path);
++    // Create a new directory
++    int CreateDirectory(char* path);
++
++    // Get size of specified file in bytes
++    uint32_t GetFileSize(char* filename);
++
++    // Get list of files/directories in specified path
++    List<VFSEntry> DirectoryListing(char* path);
++
++    // Request to eject a specific disk (only works for CD's at the moment, TODO: usb as well?)
++    bool EjectDisk(char* path);
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.c
+index 85d1b6d..21fb708 100644
+--- a/kernel/arch/x86-pc/startup.c
++++ b/kernel/arch/x86-pc/startup.c
+@@ -21,7 +21,7 @@
+ #include <io/console.h>
+ #include <colorforth/colorforth.h>
+ #include <arch/x86-pc/io/video.h>
+-#include "../../kernel/include/gui/widgets/button.hpp"
++#include <button.hpp>
+ 
+ 
+ /**
+-- 
+2.43.0
+

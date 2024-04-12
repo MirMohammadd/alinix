@@ -1,0 +1,31 @@
+From 9f03bb896b0cf20f1c078332cc5e878fd86ad4a0 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 22:23:00 -0400
+Subject: [PATCH 301/493] Patch
+
+---
+ kernelz/src/boot/loader.s | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/kernelz/src/boot/loader.s b/kernelz/src/boot/loader.s
+index 757ab7d..86214c4 100644
+--- a/kernelz/src/boot/loader.s
++++ b/kernelz/src/boot/loader.s
+@@ -22,7 +22,6 @@ stack_top:
+ 
+ .section .data
+     .align 0x1000
+-.global BootPageDirectory
+ BootPageDirectory:
+     .long 0x00000083
+     
+@@ -76,4 +75,4 @@ _entrypoint:
+ _stop:
+     cli
+     hlt
+-    jmp _stop
++    jmp _stop
+\ No newline at end of file
+-- 
+2.43.0
+

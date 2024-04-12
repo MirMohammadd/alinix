@@ -1,0 +1,25 @@
+From 7328fef8703f95c30a3926ab325df93056ffea68 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 9 Apr 2024 22:09:28 -0400
+Subject: [PATCH 446/493] Patch
+
+---
+ Makefile | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Makefile b/Makefile
+index e55e3a8..58c7055 100644
+--- a/Makefile
++++ b/Makefile
+@@ -111,6 +111,8 @@ clean:
+ 	cd apps/ && $(MAKE) clean
+ 	rm -rf isofiles/apps/*.bin
+ 	rm -rf isofiles/apps/*.sym
++	rm -rf drivers/apps/*.bin
++	rm -rf drivers/apps/*.sym
+ 
+ qemu: HeisenOs.iso
+ 	qemu-system-i386 -cdrom HeisenOs01.iso -serial stdio $(QEMUOPTIONS)
+-- 
+2.43.0
+

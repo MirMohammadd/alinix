@@ -1,0 +1,25 @@
+From ee08d16f3c74fa41e0a04bc37e6fc27695779f4f Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 21:18:17 -0400
+Subject: [PATCH 232/493] Patch
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index c582ef3..639ef35 100644
+--- a/Makefile
++++ b/Makefile
+@@ -30,7 +30,7 @@ QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../q
+ G++PARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
+ GCCPARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas
+ ASPARAMS := --32
+-LDPARAMS := -m elf_i386
++LDPARAMS := -m elf-i386
+ 
+ KRNLSRCDIR := kernelz/src
+ KRNLOBJDIR := kernelz/obj
+-- 
+2.43.0
+

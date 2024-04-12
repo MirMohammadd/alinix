@@ -1,0 +1,23 @@
+From ec8b23debfc68acc7e4075e2a0668fbc3cc0be12 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 7 Apr 2024 21:45:11 -0400
+Subject: [PATCH 411/493] Update
+
+---
+ .github/workflows/tests.yml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
+index 412ef9c..c6e21f9 100644
+--- a/.github/workflows/tests.yml
++++ b/.github/workflows/tests.yml
+@@ -32,5 +32,6 @@ jobs:
+     - name: Build project
+       run: |
+         brew install bchunk
++        brew install qemu
+         # nasm -f elf32 -O0 kernelz/src/core/cpuhelper.asm -o kernelz/obj/core/cpuhelper.o
+         make qemu
+-- 
+2.43.0
+

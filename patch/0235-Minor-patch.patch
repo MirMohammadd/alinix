@@ -1,0 +1,38 @@
+From f22cee5f9b620dfaf1543866569f0bd249126990 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 21:36:36 -0400
+Subject: [PATCH 235/493] Minor patch
+
+---
+ kernelz/include/system/memory/new.h | 1 +
+ lib/include/new.h                   | 2 ++
+ 2 files changed, 3 insertions(+)
+
+diff --git a/kernelz/include/system/memory/new.h b/kernelz/include/system/memory/new.h
+index c2647f6..348bc02 100644
+--- a/kernelz/include/system/memory/new.h
++++ b/kernelz/include/system/memory/new.h
+@@ -3,6 +3,7 @@
+ 
+ #include <stddef.h>
+ #include <system/memory/heap.h>
++#include <cstdlib>
+ 
+ using namespace HeisenOs::system;
+  
+diff --git a/lib/include/new.h b/lib/include/new.h
+index e2a3f03..27652db 100644
+--- a/lib/include/new.h
++++ b/lib/include/new.h
+@@ -3,6 +3,8 @@
+ 
+ #include <stddef.h>
+ #include <heap.h>
++#include <cstdlib>
++
+ 
+ using namespace LIBHeisenKernel;
+  
+-- 
+2.43.0
+

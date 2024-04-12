@@ -1,0 +1,87 @@
+From 882e2f368999d8b31ae114d75a6b561b3613da81 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 18:32:53 -0400
+Subject: [PATCH 265/493] Updated the xhci data structure
+
+---
+ lib/include/usb3.h |  6 ++++++
+ lib/include/xhci.h | 47 ++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 53 insertions(+)
+
+diff --git a/lib/include/usb3.h b/lib/include/usb3.h
+index c6578cf..3e0016d 100644
+--- a/lib/include/usb3.h
++++ b/lib/include/usb3.h
+@@ -34,6 +34,12 @@ typedef struct {
+     bool initialised;
+     bool is_csz_64;
+     list_t *slot_list;
++    xhci_cap_regs_t* caps_reg;
++    xhci_op_regs_t* op_regs;
++    xhci_doorbell_regs_t* db_regs;
++    xhci_runtime_regs_t* rt_regs;
++    xhci_ext_cap_t* ext_cap;
++    xhci_port_regs_t* ports;
+ }USBDevice;
+ 
+ #endif
+diff --git a/lib/include/xhci.h b/lib/include/xhci.h
+index a8f995d..0a0fb08 100644
+--- a/lib/include/xhci.h
++++ b/lib/include/xhci.h
+@@ -56,4 +56,51 @@ typedef struct _xhci_ex_cap_ {
+ 	uint32_t rsvd2 : 7;
+ }xhci_ext_cap_t;
+ #pragma pack(pop)
++
++typedef struct _xhci_op_regs_ {
++	uint32_t op_usbcmd;
++	uint32_t op_usbsts;
++	uint32_t op_pagesize;
++	uint32_t op_pad1[2];
++	uint32_t op_dnctrl;
++	uint64_t op_crcr;
++	uint32_t op_pad2[4];
++	uint32_t op_dcbaap_lo;
++	uint32_t op_dcbaap_hi;
++	uint32_t op_config;
++}xhci_op_regs_t;
++#pragma pack(pop)
++
++#pragma pack(push,1)
++typedef struct _xhci_intr_reg_ {
++	unsigned intr_man;
++	unsigned intr_mod;
++	unsigned evtRngSegTabSz;
++	unsigned res;
++	unsigned evtRngSegBaseLo;
++	unsigned evtRngSegBaseHi;
++	unsigned evtRngDeqPtrLo;
++	unsigned evtRngDeqPtrHi;
++}xhci_interrupter_reg_t;
++#pragma pack(pop)
++
++#pragma pack(push,1)
++typedef struct _xhci_runtime_regs_ {
++	unsigned micro_frame_index;
++	char res[28];
++	xhci_interrupter_reg_t intr_reg[];
++}xhci_runtime_regs_t;
++#pragma pack(pop)
++
++
++#pragma pack(push,1)
++typedef struct _xhci_port_reg_ {
++	uint32_t port_sc;
++	uint32_t port_pmsc;
++	uint32_t port_link_info;
++	uint32_t port_hardware_LMP_ctl;
++}xhci_port_regs_t;
++#pragma pack(pop)
++
++
+ #endif
+\ No newline at end of file
+-- 
+2.43.0
+

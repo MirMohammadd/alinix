@@ -1,0 +1,119 @@
+From a3889e0d8bca623a1e75674a1aee6f484591be13 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 17:31:45 -0400
+Subject: [PATCH 067/493] Update for the makefile of the kernel GUI
+
+---
+ kernel/arch/x86-pc/Makefile                  | 17 ++++++++
+ kernel/arch/x86-pc/main.cc                   | 46 ++++++++++++++++++++
+ kernel/arch/x86-pc/{startup.cc => startup.c} | 10 -----
+ 3 files changed, 63 insertions(+), 10 deletions(-)
+ create mode 100644 kernel/arch/x86-pc/Makefile
+ create mode 100644 kernel/arch/x86-pc/main.cc
+ rename kernel/arch/x86-pc/{startup.cc => startup.c} (93%)
+
+diff --git a/kernel/arch/x86-pc/Makefile b/kernel/arch/x86-pc/Makefile
+new file mode 100644
+index 0000000..3584f73
+--- /dev/null
++++ b/kernel/arch/x86-pc/Makefile
+@@ -0,0 +1,17 @@
++OBJS	= main.o
++SOURCE	= main.cc
++HEADER	= 
++OUT	= 
++CC	 = g++
++FLAGS	 = -g -c -Wall
++LFLAGS	 = 
++
++all: $(OBJS)
++	$(CC) -g $(OBJS) -o $(OUT) $(LFLAGS)
++
++main.o: main.cc
++	$(CC) $(FLAGS) main.cc -lcppunit
++
++
++clean:
++	rm -f $(OBJS) $(OUT)
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/main.cc b/kernel/arch/x86-pc/main.cc
+new file mode 100644
+index 0000000..ab5f96b
+--- /dev/null
++++ b/kernel/arch/x86-pc/main.cc
+@@ -0,0 +1,46 @@
++#include <new.hpp>
++#include <gui/gui.hpp>
++#include <gui/widgets/button.hpp>
++#include <gui/widgets/control.hpp>
++#include <gui/widgets/scrollbar.hpp>
++#include <gui/widgets/window.hpp>
++#include <gui/directgui.hpp>
++#include <convert.hpp>
++#include <string.hpp>
++#include <log.hpp>
++#include <proc.hpp>
++
++using namespace LIBHeisenKernel;
++
++Window* mainWindow = 0;
++
++void ValueChanged(void* s, int v)
++{
++    mainWindow->backColor = v * 1000;
++}
++
++int main(int argc, char** argv)
++{
++    GUI::SetDefaultFont();
++
++    mainWindow = new Window(600, 600, 300, 300);
++    mainWindow->titleString = "CactusOS File Browser";
++
++    ScrollBar* scroll = new ScrollBar(Vertical);
++    scroll->x = 100;
++    scroll->y = 200;
++    scroll->value.onChanged += ValueChanged;
++    mainWindow->AddChild(scroll);
++
++    while (GUI::HasItems()) {
++        GUI::DrawGUI();
++        GUI::ProcessEvents();
++        //scroll->value += 1;
++        if(scroll->value >= scroll->maxValue) {
++            scroll->value = 0;
++            scroll->maxValue += 20;
++        }
++    }
++
++    return 0;
++}
+\ No newline at end of file
+diff --git a/kernel/arch/x86-pc/startup.cc b/kernel/arch/x86-pc/startup.c
+similarity index 93%
+rename from kernel/arch/x86-pc/startup.cc
+rename to kernel/arch/x86-pc/startup.c
+index e0b0620..c58f001 100644
+--- a/kernel/arch/x86-pc/startup.cc
++++ b/kernel/arch/x86-pc/startup.c
+@@ -22,17 +22,7 @@
+ #include <colorforth/colorforth.h>
+ #include <arch/x86-pc/io/video.h>
+ 
+-#ifdef __cplusplus
+-extern "C" {
+-#endif
+ 
+-// Include the C++ header file here
+-    #include <arch/x86-pc/gui/shared.hpp>
+-
+-
+-#ifdef __cplusplus
+-}
+-#endif
+ 
+ 
+ /**
+-- 
+2.43.0
+

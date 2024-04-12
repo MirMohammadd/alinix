@@ -1,0 +1,67 @@
+From 2242c05cb5e7c9ccee1ac190ce5ce2b2589c8338 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 20:04:15 -0400
+Subject: [PATCH 491/493] Minor patch
+
+---
+ apps/chess/piece.cpp | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
+
+diff --git a/apps/chess/piece.cpp b/apps/chess/piece.cpp
+index 2cfe2e5..1ae719d 100644
+--- a/apps/chess/piece.cpp
++++ b/apps/chess/piece.cpp
+@@ -17,5 +17,49 @@ namespace LIBHeisenKernel
+             WhiteQueen256,  BlackQueen256,
+             WhiteKing256,   BlackKing256,
+         };
++        static const char PieceString[12+1] = "PpNnBbRrQqKk";
++
++        const inc_t PawnMoveInc[ColourNb] = {
++        +16, -16,
++        };
++
++        const inc_t KnightInc[8+1] = {
++        -33, -31, -18, -14, +14, +18, +31, +33, 0
++        };
++
++        const inc_t BishopInc[4+1] = {
++        -17, -15, +15, +17, 0
++        };
++
++        const inc_t RookInc[4+1] = {
++        -16, -1, +1, +16, 0
++        };
++
++        const inc_t QueenInc[8+1] = {
++        -17, -16, -15, -1, +1, +15, +16, +17, 0
++        };
++
++        const inc_t KingInc[8+1] = {
++        -17, -16, -15, -1, +1, +15, +16, +17, 0
++        };
++
++        /**
++         * @brief Variables defined here
++        */
++        int PieceTo12[PieceNb];
++        int PieceOrder[PieceNb];
++
++        const inc_t * PieceInc[PieceNb];
++
++
++        void piece_init(){
++            int piece,piece12;
++
++            for (piece = 0;piece < PieceNb;piece++)PieceTo12[piece12] = -1;
++            for (piece12 = 0; piece12 < 12; piece12++) {
++                PieceTo12[PieceFrom12[piece12]] = piece12;
++            }
++        }
++
+     };
+ };
+\ No newline at end of file
+-- 
+2.43.0
+

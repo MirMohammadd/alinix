@@ -1,0 +1,23 @@
+From fa492b52925816877b525a2d0fff7793f9510c0e Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sat, 6 Apr 2024 14:00:21 -0400
+Subject: [PATCH 380/493] Patch
+
+---
+ kernel/arch/x86-pc/linker.ld | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/kernel/arch/x86-pc/linker.ld b/kernel/arch/x86-pc/linker.ld
+index aeb32e2..c4eb61b 100644
+--- a/kernel/arch/x86-pc/linker.ld
++++ b/kernel/arch/x86-pc/linker.ld
+@@ -1,4 +1,6 @@
+ ENTRY (multiboot_entry)
++OUTPUT_FORMAT(binary)
++
+ 
+ SECTIONS
+ {
+-- 
+2.43.0
+

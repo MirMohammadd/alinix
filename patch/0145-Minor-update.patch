@@ -1,0 +1,49 @@
+From c131eca3f91953b22763d4a63442c5565323645a Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 21:32:04 -0400
+Subject: [PATCH 145/493] Minor update
+
+---
+ Makefile | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 385fe9e..3d2e720 100644
+--- a/Makefile
++++ b/Makefile
+@@ -44,28 +44,28 @@ KRNLOBJS := $(subst $(KRNLSRCDIR),$(KRNLOBJDIR),$(KRNLOBJS)) #Replace the kernel
+ ####################################
+ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.cpp
+ 	mkdir -p $(@D)
+-	i686-elf-gcc $(G++PARAMS) -c -o $@ $<
++	gcc $(G++PARAMS) -c -o $@ $<
+ 
+ ####################################
+ #C source files
+ ####################################
+ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.c
+ 	mkdir -p $(@D)
+-	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
++	gcc $(GCCPARAMS) -c -o $@ $<
+ 
+ ####################################
+ #GDB Stub
+ ####################################
+ $(KRNLOBJDIR)/gdb/i386-stub.o: $(KRNLSRCDIR)/gdb/i386-stub.c
+ 	mkdir -p $(@D)
+-	i686-elf-gcc $(GCCPARAMS) -fleading-underscore -c -o $@ $<
++	gcc $(GCCPARAMS) -fleading-underscore -c -o $@ $<
+ 
+ ####################################
+ #GAS assembly files
+ ####################################
+ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
+ 	mkdir -p $(@D)
+-	i686-elf-as $(ASPARAMS) -o $@ $<
++	nasm $(ASPARAMS) -o $@ $<
+ 
+ ####################################
+ #NASM assembly files
+-- 
+2.43.0
+

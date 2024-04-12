@@ -1,0 +1,22 @@
+From e296a029431cae3b44571db1c66b40ce1e55278f Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 8 Apr 2024 13:25:33 -0400
+Subject: [PATCH 420/493] Patch
+
+---
+ .github/workflows/tests.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
+index 88f4bb0..6bef0ab 100644
+--- a/.github/workflows/tests.yml
++++ b/.github/workflows/tests.yml
+@@ -34,4 +34,4 @@ jobs:
+         brew install bchunk
+         brew install qemu
+         # nasm -f elf32 -O0 kernelz/src/core/cpuhelper.asm -o kernelz/obj/core/cpuhelper.o
+-        (make qemu) & pid=$! ; (sleep 10 && kill -9 $pid &)
++        (make qemu) & pid=$! ; (sleep 30 && kill -9 $pid &)
+-- 
+2.43.0
+

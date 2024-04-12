@@ -1,0 +1,24 @@
+From 6c356276490c84b2acef902382121eed259685e1 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 21:26:17 -0400
+Subject: [PATCH 141/493] CI/CD
+
+---
+ .github/workflows/tests.yml | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
+index a6ff2c9..9817d01 100644
+--- a/.github/workflows/tests.yml
++++ b/.github/workflows/tests.yml
+@@ -31,4 +31,6 @@ jobs:
+         export PATH="$PATH:/usr/bin:/usr/local/bin:/path/to/i686-elf-gcc-directory/bin:/path/to/i686-elf-g++-directory/bin" # Replace with the actual paths to i686-elf-gcc and i686-elf-g++ directories
+ 
+     - name: Build project
+-      run: make run # Replace 'make build' with your build command
++      run: |
++        nasm -f elf32 -O0 kernelz/src/core/cpuhelper.asm -o kernelz/obj/core/cpuhelper.o
++        make # Replace 'make' with your build command
+-- 
+2.43.0
+

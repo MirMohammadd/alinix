@@ -1,24 +1,646 @@
-From 3ffdec3e0e2be2f2447420c8f332b6ddc3c39fa1 Mon Sep 17 00:00:00 2001
+From 19c804af0942f0a4eaac86f8959b63a1abc16dd9 Mon Sep 17 00:00:00 2001
 From: Heisenberg <alimirmohammad.1386@gmail.com>
-Date: Sun, 31 Mar 2024 21:53:58 -0400
-Subject: [PATCH 39/50] Patch
+Date: Mon, 1 Apr 2024 14:12:40 -0400
+Subject: [PATCH 039/493] Patch
 
 ---
- kernel/arch/x86-pc/startup.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/include/gui/context.hpp        |  94 ++++++++++++
+ kernel/include/gui/fonts/control.hpp  |   2 +-
+ kernel/include/gui/gui.hpp            | 117 +++++++++++++++
+ kernel/include/gui/widgets/button.hpp |  55 +++++++
+ kernel/include/gui/widgets/window.hpp |  93 ++++++++++++
+ kernel/src/gui/widgets/controll.cc    | 204 ++++++++++++++++++++++++++
+ kernel/src/gui/widgets/scrollbar.cc   |   3 +-
+ 7 files changed, 566 insertions(+), 2 deletions(-)
+ create mode 100644 kernel/include/gui/context.hpp
+ create mode 100644 kernel/include/gui/gui.hpp
+ create mode 100644 kernel/include/gui/widgets/button.hpp
+ create mode 100644 kernel/include/gui/widgets/window.hpp
+ create mode 100644 kernel/src/gui/widgets/controll.cc
 
-diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.c
-index 22b7f8d..e1e2ba3 100644
---- a/kernel/arch/x86-pc/startup.c
-+++ b/kernel/arch/x86-pc/startup.c
-@@ -22,6 +22,7 @@
- #include <colorforth/colorforth.h>
- #include <arch/x86-pc/io/video.h>
+diff --git a/kernel/include/gui/context.hpp b/kernel/include/gui/context.hpp
+new file mode 100644
+index 0000000..76ab69f
+--- /dev/null
++++ b/kernel/include/gui/context.hpp
+@@ -0,0 +1,94 @@
++#ifndef __LIBCACTUSOS__GUI__CONTEXT_H
++#define __LIBCACTUSOS__GUI__CONTEXT_H
++
++#include <types.hpp>
++#include <gui/rect.hpp>
++#include <gui/contextinfo.hpp>
++#include <gui/widgets/control.hpp>
++#include <shared.hpp>
++
++namespace LIBHeisenKernel
++{   
++    /**
++     * Represents a region of framebuffer shared between client and server
++    */
++    class Context : public EventObject
++    { 
++    public:
++        /**
++         * Which control is contained in this context.
++        */
++        Control* Window;
++
++        /**
++         * With this canvas you can directly draw to this context
++        */
++        Canvas* canvas;
++
++        /**
++         * A struct that is shared with the compositor that describes the physical dimensions of this context
++        */
++        ContextInfo* sharedContextInfo;
++
++        /**
++         * Create a new context by a framebuffer and dimensions
++        */
++        Context(uint32_t framebufferAddr, int width = 0, int height = 0);
++
++        /**
++         * Draw all the gui components to this context
++        */
++        void DrawGUI();
++
++        /**
++         * Move this context to a new position.
++        */
++        void MoveToPosition(int newX, int newY);
++
++        /**
++         * Remove this context from the screen and free all the used memory 
++        */
++        void CloseContext();
++
++        /**
++         * Function to draw a peice of text aligned within a boundry
++        */
++        static void DrawStringAligned(Canvas* target, Font* font, char* string, uint32_t color, Rectangle bounds, Alignment align, int xoff = 0, int yoff = 0);
++
++    /*///////////////
++    // Events called by GUI class
++    *////////////////
++    friend class GUI;
++    protected:
++        /**
++         * Called when mouse is down on context
++        */
++        void OnMouseDown(int x_abs, int y_abs, uint8_t button);
++        /**
++         * Called when mouse is up on context
++        */
++        void OnMouseUp(int x_abs, int y_abs, uint8_t button);
++        /**
++         * Called when mouse moves above context or enters/leaves context
++        */
++        void OnMouseMove(int prevX_abs, int prevY_abs, int newX_abs, int newY_abs);
++        /**
++         * Called when a key is held down and this is the active context.
++        */
++        void OnKeyDown(uint8_t key, KEYPACKET_FLAGS modifiers);
++        /**
++         * Called when a key is held up and this is the active context.
++        */
++        void OnKeyUp(uint8_t key, KEYPACKET_FLAGS modifiers);
++        /**
++         * Called when contex is resized
++        */
++        void OnResize(Rectangle old);
++        /**
++         * Called when scroll wheel is used on context
++        */
++        void OnScroll(int32_t deltaZ, int x_abs, int y_abs);
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/include/gui/fonts/control.hpp b/kernel/include/gui/fonts/control.hpp
+index 8a9fd5b..29e4535 100644
+--- a/kernel/include/gui/fonts/control.hpp
++++ b/kernel/include/gui/fonts/control.hpp
+@@ -11,7 +11,7 @@
+ #include <gui/fonts/font.hpp>
+ #include <gui/colors.hpp>
  
-+void _kcolor(char color);
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     // Defines the alignment of a specific entry
+     // This is for the x and the y direction
+diff --git a/kernel/include/gui/gui.hpp b/kernel/include/gui/gui.hpp
+new file mode 100644
+index 0000000..53faf77
+--- /dev/null
++++ b/kernel/include/gui/gui.hpp
+@@ -0,0 +1,117 @@
++#ifndef __LIBCACTUSOS__GUI__GUI_H
++#define __LIBCACTUSOS__GUI__GUI_H
++
++#include <gui/widgets/control.hpp>
++#include <gui/widgets/window.hpp>
++#include <gui/context.hpp>
++
++namespace LIBHeisenKernel
++{
++    // Event definitions
++    enum GUIEvents
++    {
++        MouseDown,
++        MouseUp,
++        MouseMove,
++        Keypress,
++        MouseScroll,
++    };
++    
++    // Communication to the compositor definitions
++    enum GUICommunction
++    {
++        REQUEST_CONTEXT,
++        REQUEST_CLOSE,
++        CONTEXT_MOVED
++    };
++
++    // Buttons present on a regular mouse
++    enum MouseButtons
++    {
++        Left,
++        Middle,
++        Right
++    };
++
++    class Window;
++    class GUI
++    {
++    private:
++        static Context* FindTargetContext(int m_x, int m_y);
++    public:
++        // Current Width of video mode
++        static int Width;
++
++        // Current Height of video mode
++        static int Height;
++    public:
++        /**
++         * The PID used by the compositor process
++        */
++        static int compositorPID;
++
++        /**
++         * The list of all contexts in this application
++        */
++        static List<Context*>* contextList;
++        
++        /**
++         * System default font
++        */
++        static Font* defaultFont;
++
++        /**
++         * Initialize the gui for this process
++        */
++        static void Initialize();
++
++        /**
++         * Initialize the text rendering by loading the default font file from disk
++        */
++        static void SetDefaultFont(const char* filename = "B:\\fonts\\Ubuntu15.cff");
++        
++        /**
++         * Remove all gui elements created by this process
++        */
++        static void CleanUp();
++        
++        /**
++         * Process all the possible gui events
++        */
++        static void ProcessEvents();
++
++        /**
++         * Draw all the contexts to the screen
++        */
++        static void DrawGUI();
++
++        /**
++         * Create a thread for the gui
++        */
++        static void MakeAsync();
++
++        /**
++         * Is the current number of contexts larger than 0? 
++        */
++        static bool HasItems();
++
++        /**
++         * Request a context buffer for the application to draw to, this buffer is shared between the process and the compositor
++         * This buffer can be used for a gui but also for raw drawing to the screen
++         * 
++         * returns a pointer to the context struct
++         * @param width The width of the context
++         * @param height The height of the context
++         * @param x The position on horizontal axis
++         * @param y The position on vertical axis
++        */
++        static Context* RequestContext(int width, int height, int x, int y);
++
++        /**
++         * Find the window associated with the control
++        */
++        static Window* GetControlWindow(Control* control);
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/include/gui/widgets/button.hpp b/kernel/include/gui/widgets/button.hpp
+new file mode 100644
+index 0000000..03efe4c
+--- /dev/null
++++ b/kernel/include/gui/widgets/button.hpp
+@@ -0,0 +1,55 @@
++#ifndef __LIBCACTUSOS__GUI__BUTTON_H
++#define __LIBCACTUSOS__GUI__BUTTON_H
++
++#include <gui/widgets/control.hpp>
++#include <gui/gui.hpp>
++
++namespace LIBHeisenKernel
++{
++    /**
++     * A GUI button
++    */
++    class Button : public Control
++    {
++    public:
++        /**
++         * The text of this label
++        */
++        GUIProperty<char*> label = GUIProperty<char*>(this, 0);
++
++        /**
++         * Create a new button with a peice of text
++        */
++        Button(char* text = 0);
++
++        /**
++         * Draw this button
++        */
++        void DrawTo(Canvas* context, int x_abs, int y_abs) override;
++
++    /*/////////
++    // Events
++    *//////////
++    friend class Window;
++    friend class Context;
++    protected:
++        /**
++         * Called when mouse is down on control
++        */
++        void OnMouseDown(int x_abs, int y_abs, uint8_t button) override;
++        /**
++         * Called when mouse is up on control
++        */
++        void OnMouseUp(int x_abs, int y_abs, uint8_t button) override;
++        /**
++         * Called when mouse enters control
++        */
++        void OnMouseEnter(int prevX_abs, int prevY_abs, int newX_abs, int newY_abs) override;
++        /**
++         * Called when mouse leaves control
++        */
++        void OnMouseLeave(int prevX_abs, int prevY_abs, int newX_abs, int newY_abs) override;
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/include/gui/widgets/window.hpp b/kernel/include/gui/widgets/window.hpp
+new file mode 100644
+index 0000000..cb4c96e
+--- /dev/null
++++ b/kernel/include/gui/widgets/window.hpp
+@@ -0,0 +1,93 @@
++#ifndef __LIBCACTUSOS__WINDOW_H
++#define __LIBCACTUSOS__WINDOW_H
++
++#include <gui/widgets/control.hpp>
++#include <gui/widgets/button.hpp>
++#include <gui/context.hpp>
++#include <gui/property.hpp>
++
++namespace LIBHeisenKernel
++{
++    class Button;
++    
++    class Window : public Control
++    {
++    public:
++        GUIProperty<uint32_t> titleBarColor = GUIProperty<uint32_t>(this, 0xFF1E9AFF);
++        GUIProperty<uint16_t> titleBarHeight = GUIProperty<uint16_t>(this, 30);
++    private:
++        // Is the mouse down on the title bar?
++        GUIProperty<bool> titleBarMouseDown = GUIProperty<bool>(this, false);
++
++        // Remember where the mouse was held down for a smooth window drag
++        int mouseDownX = 0;
++        int mouseDownY = 0;
++
++        // Window Control Buttons
++        Button* closeButton = 0;
++
++        // Create the close button for this window
++        void CreateButtons();
++    public:
++        GUIProperty<char*> titleString = GUIProperty<char*>(this, 0);
++
++        /**
++         * In which context are we located?
++        */
++        Context* contextBase = 0;
++
++        /**
++         * Create a new window with a context as base
++        */
++        Window(Context* base);
++
++        /**
++         * Create a new window that request a context for itself to use
++        */
++        Window(int width, int height, int x, int y);
++        
++        /**
++         * Close this window, this can cause the application to exit
++        */
++        void Close(void* sender, MouseButtonArgs arg);
++        /**
++         * Close this window, this can cause the application to exit
++        */
++        void Close();
++
++        /**
++         * Draw this window to a canvas
++         * 
++         * x_abs/y_abs: the coördinate of this window in absolute related to the canvas
++        */
++        void DrawTo(Canvas* context, int x_abs, int y_abs) override;
++    friend class Context;
++    protected:
++        /**
++         * Called when mouse is down on window
++        */
++        void OnMouseDown(int x_abs, int y_abs, uint8_t button) override;
++        /**
++         * Called when mouse is up on window
++        */
++        void OnMouseUp(int x_abs, int y_abs, uint8_t button) override;
++        /**
++         * Called when mouse is moved on window
++        */
++        void OnMouseMove(int prevX_abs, int prevY_abs, int newX_abs, int newY_abs) override;
++        /**
++         * Called when Window is resized
++        */
++        void OnResize(Rectangle old) override;
++        /**
++         * Called when key is held down
++        */
++        void OnKeyDown(uint8_t key, KEYPACKET_FLAGS modifiers) override;
++        /**
++         * Called when there is a scroll event on window
++        */
++        void OnScroll(int32_t deltaZ, int x_abs, int y_abs) override;
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/src/gui/widgets/controll.cc b/kernel/src/gui/widgets/controll.cc
+new file mode 100644
+index 0000000..6a4ed06
+--- /dev/null
++++ b/kernel/src/gui/widgets/controll.cc
+@@ -0,0 +1,204 @@
++#include <gui/widgets/control.hpp>
++#include <gui/gui.hpp>
++#include <log.hpp>
++
++using namespace LIBHeisenKernel;
++
++Control::Control(int w, int h, int x, int y)
++: EventObject(), Rectangle(w, h, x, y)
++{
++    this->childs.Clear();
++    this->focusedChild = 0;
++    this->parent = 0;
++    this->anchor = Direction::Top | Direction::Left;
++    this->font = GUI::defaultFont;
++}
++
++Control::~Control()
++{
++    for(Control* c : this->childs)
++        delete c;
++    
++    this->childs.Clear();
++}
++
++void Control::DrawTo(Canvas* context, int x_abs, int y_abs)
++{
++    Rectangle visual = Control::GetParentsBounds(x_abs, y_abs);
++    if(this->cornerStyle == CornerStyle::Rounded) {
++        context->DrawFillRoundedRect(this->backColor, visual.x, visual.y, visual.width, visual.height, this->cornerRadius);
++        context->DrawRoundedRect(this->borderColor, visual.x, visual.y, visual.width, visual.height, this->cornerRadius);
++    }
++    else if(this->cornerStyle == CornerStyle::Sharp) {
++        context->DrawFillRect(this->backColor, visual.x, visual.y, visual.width, visual.height);
++        context->DrawRect(this->borderColor, visual.x, visual.y, visual.width, visual.height);
++    }
++
++    for(Control* c : this->childs)
++        c->DrawTo(context, x_abs + c->x, y_abs + c->y);
++}
++
++void Control::AddChild(Control* child, bool focus)
++{
++    this->childs += child;
++    if(focus)
++        this->focusedChild = child;
++    
++    child->parent = this;
++}
++
++void Control::RemoveChild(Control* child)
++{
++    this->childs -= child;
++    if(this->focusedChild == child && this->childs.size() > 0)
++        this->focusedChild = this->childs[this->childs.size() - 1]; //Last entry in child list
++    
++    child->parent = 0;
++}
++
++bool Control::Focused()
++{
++    return (this->parent != 0 && this->parent->focusedChild == this);
++}
++
++Rectangle Control::GetParentsBounds(int xOffset, int yOffset)
++{
++    if(this->parent == 0)
++        return Rectangle::Zero();
++    
++    Rectangle result;
++    Rectangle source = *this;
++    source.x = xOffset;
++    source.y = yOffset;
++
++    // Get the dimensions of the parent window/control
++    Rectangle parentRect = *this->parent;
++    parentRect.x = 0;
++    parentRect.y = 0;
++    
++    // Check if the parent is a window, if so we need to take in account the title bar
++    // TODO: Make title bar a control itself??
++    if(this->parent == GUI::GetControlWindow(this)) {
++        parentRect.y += ((Window*)this->parent)->titleBarHeight;
++        parentRect.height -= ((Window*)this->parent)->titleBarHeight + 1;
++    }
++    
++    // Calculate intersection
++    if(parentRect.Intersect(source, &result))
++        return result;
++    
++    return Rectangle::Zero();
++}
++
++void Control::OnMouseDown(int x_abs, int y_abs, uint8_t button)
++{
++    this->MouseDown.Invoke(this, MouseButtonArgs(x_abs, y_abs, button));
++
++    // Send event to children
++    for(Control* c : this->childs) {
++        if(c->Contains(x_abs, y_abs)) {
++            this->focusedChild = c;
++            
++            c->OnMouseDown(x_abs - c->x, y_abs - c->y, button);
++        }
++    }
++}
++void Control::OnMouseUp(int x_abs, int y_abs, uint8_t button)
++{
++    this->MouseUp.Invoke(this, MouseButtonArgs(x_abs, y_abs, button));
++    this->MouseClick.Invoke(this, MouseButtonArgs(x_abs, y_abs, button));
++
++    // Send event to children
++    for(Control* c : this->childs) {
++        if(c->Contains(x_abs, y_abs)) {
++            c->OnMouseUp(x_abs - c->x, y_abs - c->y, button);
++        }
++    }
++}
++
++void Control::OnMouseMove(int prevX_abs, int prevY_abs, int newX_abs, int newY_abs)
++{
++    for(Control* c : this->childs) {
++        bool inNewArea = c->Contains(newX_abs, newY_abs);
++        bool inOldArea = c->Contains(prevX_abs, prevY_abs);
++
++        if(inNewArea || inOldArea)
++            c->OnMouseMove(prevX_abs - c->x, prevY_abs - c->y, newX_abs - c->x, newY_abs - c->y);
++
++        if(inNewArea && !inOldArea)
++            c->OnMouseEnter(prevX_abs - c->x, prevY_abs - c->y, newX_abs - c->x, newY_abs - c->y);
++        
++        if(!inNewArea && inOldArea)
++            c->OnMouseLeave(prevX_abs - c->x, prevY_abs - c->y, newX_abs - c->x, newY_abs - c->y);
++    }
++}
++
++void Control::OnMouseEnter(int prevX_abs, int prevY_abs, int newX_abs, int newY_abs)
++{ }
++
++void Control::OnMouseLeave(int prevX_abs, int prevY_abs, int newX_abs, int newY_abs)
++{ }
++
++void Control::OnKeyDown(uint8_t key, KEYPACKET_FLAGS modifiers)
++{
++    this->KeyDown.Invoke(this, KeypressArgs(key, modifiers));
++
++    if(this->focusedChild != 0)
++        this->focusedChild->OnKeyDown(key, modifiers);
++}
++void Control::OnKeyUp(uint8_t key, KEYPACKET_FLAGS modifiers)
++{
++    this->KeyUp.Invoke(this, KeypressArgs(key, modifiers));
++
++    if(this->focusedChild != 0)
++        this->focusedChild->OnKeyUp(key, modifiers);
++}
++
++void Control::OnResize(Rectangle old)
++{
++    int dWidth = this->width - old.width;
++    int dHeight = this->height - old.height;
++
++    // Loop through childs and update their position
++    for(Control* child : this->childs) {
++        bool resized = false;
++        Rectangle oldSize(child->width, child->height, child->x, child->y);
++        if(child->anchor & Top) {
++            if(child->anchor & Bottom) {
++                child->height += dHeight;
++                resized = true;
++            }
++        }
++        if(child->anchor & Right) {
++            if(child->anchor & Left) {
++                child->width += dWidth;
++                resized = true;
++            }
++            else { 
++                child->x += dWidth;
++            }
++        }
++        if(child->anchor & Bottom && !(child->anchor & Top)) {
++            child->y += dHeight;
++        }
++        
++        if(resized)
++            child->OnResize(oldSize);
++
++    }    
++}
++void Control::ForcePaint()
++{    
++    Control* win = GUI::GetControlWindow(this);
++    if(win)
++        win->needsRepaint = true;
++}
++void Control::OnScroll(int32_t deltaZ, int x_abs, int y_abs)
++{
++    this->MouseScroll.Invoke(this, MouseScrollArgs(deltaZ, x_abs, y_abs));
++
++    // Send event to children if they are in bounds
++    for(Control* c : this->childs)
++        if(c->Contains(x_abs, y_abs))
++            c->OnScroll(deltaZ, x_abs - c->x, y_abs - c->y);
++}
+\ No newline at end of file
+diff --git a/kernel/src/gui/widgets/scrollbar.cc b/kernel/src/gui/widgets/scrollbar.cc
+index 979484c..c82b8c8 100644
+--- a/kernel/src/gui/widgets/scrollbar.cc
++++ b/kernel/src/gui/widgets/scrollbar.cc
+@@ -44,4 +44,5 @@ void ScrollBar::OnMouseUp(int x_abs, int y_abs, uint8_t button)
+ void ScrollBar::OnMouseMove(int prevX_abs, int prevY_abs, int newX_abs, int newY_abs)
+ {
  
- /**
-  * The kernel entry point. All starts from here!
+-}
+\ No newline at end of file
++}
++
 -- 
 2.43.0
 

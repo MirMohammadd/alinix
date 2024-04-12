@@ -1,0 +1,21 @@
+From 1d4ac47fc8dcc6a6d5836645f9f43e49734ee351 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 22:12:58 -0400
+Subject: [PATCH 159/493] Patch
+
+---
+ README.md | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/README.md b/README.md
+index 5b1b09c..a517e1d 100644
+--- a/README.md
++++ b/README.md
+@@ -11,3 +11,4 @@ BadBlueKernel is a sophisticated operating system kernel designed to embody the
+ 
+ # IMPORTANT
+ Note: this project has been using part of fudge kernel at https://github.com/jezze/fudge/blob/master/lib/hash/crc.c and other kernels at https://wiki.osdev.org/Projects and all rights will be reserved
++
+-- 
+2.43.0
+

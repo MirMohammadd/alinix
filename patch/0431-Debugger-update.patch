@@ -1,0 +1,36 @@
+From d7401fa6641a339f52686271c940e92ab488e85d Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 8 Apr 2024 20:22:17 -0400
+Subject: [PATCH 431/493] Debugger update
+
+---
+ tools/advanceddebugger.py | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/tools/advanceddebugger.py b/tools/advanceddebugger.py
+index 02d6de3..62b290e 100644
+--- a/tools/advanceddebugger.py
++++ b/tools/advanceddebugger.py
+@@ -40,9 +40,17 @@ class Debugger(unittest.TestCase,AttribClass):
+     
+     def testCompilerMake(self):
+         try:
+-            subprocess.check_output(self.runNormalMake,shell=True)
++            cmd = subprocess.run(self.runNormalMake,shell=True)
++            self.assertEqual(cmd.returncode, 0)
+         except subprocess.CalledProcessError as exc:
+-            sys.exit("[ERROR] Got error while running testing makefile command %s"%(str(exc)))
++            sys.exit("[ERROR] Got error while running testing makefile command %s"%(str(getSafeExcStr(exc))))
++        except AssertionError:
++            excStr = getSafeExcStr(exc)
++
++            if any(command for command in ERRORS in excStr):
++                print("Make sure that you have the Make tools installed on your system")
++                sys.exit("[ERROR] Got error while running testing makefile command %s"%(str(getSafeExcStr(exc))))
++
+         except:
+             pass
+ 
+-- 
+2.43.0
+

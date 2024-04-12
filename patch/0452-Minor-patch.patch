@@ -1,0 +1,47 @@
+From 4fc5ccde9ac5e2916a7bf11fa8ae1b6473d0d55f Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 10 Apr 2024 17:13:12 -0400
+Subject: [PATCH 452/493] Minor patch
+
+---
+ apps/welcome/welcome.cpp | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
+ create mode 100644 apps/welcome/welcome.cpp
+
+diff --git a/apps/welcome/welcome.cpp b/apps/welcome/welcome.cpp
+new file mode 100644
+index 0000000..97e101a
+--- /dev/null
++++ b/apps/welcome/welcome.cpp
+@@ -0,0 +1,27 @@
++#include <new.h>
++#include <log.h>
++#include <gui/widgets/button.h>
++#include <gui/widgets/window.h>
++#include <gui/directgui.h>
++#include <random.h>
++#include <datetime.h>
++#include <time.h>
++#include <convert.h>
++#include <string.h>
++#include <gui/widgets/label.h>
++
++using namespace LIBHeisenKernel;
++
++const int fieldWidth = 10;
++const int fieldHeight = 10;
++const int numOfMines = 16;
++
++int main(){
++    GUI::SetDefaultFont();
++
++    Window* mainWindow = new Window(600, 400, GUI::Width/2 - 300, GUI::Width/2 - 200);
++    mainWindow->titleString = "Welcome to HeisenOs!";
++
++    Control* control = new Control(600, 400, 0, 0);
++    control->backColor = 0xFFBBBBBB;
++}
+\ No newline at end of file
+-- 
+2.43.0
+

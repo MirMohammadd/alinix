@@ -1,0 +1,64 @@
+From c4360a928816a109ab3243d91d260d40f2b3050c Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 18:07:10 -0400
+Subject: [PATCH 476/493] Minor update
+
+---
+ apps/chess/square.h | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
+
+diff --git a/apps/chess/square.h b/apps/chess/square.h
+index 735b244..1683fc2 100644
+--- a/apps/chess/square.h
++++ b/apps/chess/square.h
+@@ -3,6 +3,7 @@
+ 
+ #include "colour.h"
+ 
++using namespace engine;
+ namespace LIBHeisenKernel{
+     namespace engine{
+         /**
+@@ -82,6 +83,39 @@ namespace LIBHeisenKernel{
+ 
+         #define PAWN_RANK(square,colour)    (SQUARE_RANK(square)^RankMask[colour])
+         #define PAWN_PROMOTE(square,colour) (PromoteRank[colour]|((square)&0xF))
++
++        /**
++         * @brief Some useful types
++        */
++
++        typedef int sq_t;
++
++        /**
++         * @brief Useful constants
++        */
++
++        extern const int SquareForm64[64];
++        extern const int RankMask[ColourNb];
++        extern const int PromoteRank[ColourNb];
++
++        /**
++         * @brief useful variables and functions
++        */
++        extern int SquareTo64[SquareNb];
++        extern bool SquareIsPromote[SquareNb];
++
++        // functions
++
++        extern void square_init        ();
++
++        extern int  file_from_char     (int c);
++        extern int  rank_from_char     (int c);
++
++        extern int  file_to_char       (int file);
++        extern int  rank_to_char       (int rank);
++
++        extern bool square_to_string   (int square, char string[], int size);
++        extern int  square_from_string (const char string[]);
+     };
+ };
+ 
+-- 
+2.43.0
+

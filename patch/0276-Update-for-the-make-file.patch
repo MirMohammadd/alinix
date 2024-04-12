@@ -1,0 +1,42 @@
+From 71b0876befd92ef644de791ec975ff14ef6a113d Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 21:03:23 -0400
+Subject: [PATCH 276/493] Update for the make file
+
+---
+ Makefile                     | 5 +++--
+ lib/src/drivers/usb/ehci.cpp | 1 -
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 4d9c0fe..1bc1168 100644
+--- a/Makefile
++++ b/Makefile
+@@ -24,10 +24,11 @@
+ #######################
+ 
+ INCLUDEDIRS := kernelz/include
++INCLUDEDIRSLIB := lib/include
+ QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../qemuTrace.txt -d cpu_reset #-readconfig qemu-usb-config.cfg -drive if=none,id=stick,file=disk.img -device usb-storage,bus=ehci.0,drive=stick
+ 
+-G++PARAMS := -m32 -g -D HEISENOSKERNEL -I $(INCLUDEDIRS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -std=c++20
+-GCCPARAMS := -m32 -g -D HEISENOSKERNEL -I $(INCLUDEDIRS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -ffreestanding -fno-builtin -Wno-unknown-pragmas
++G++PARAMS := -m32 -g -D HEISENOSKERNEL -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -std=c++20
++GCCPARAMS := -m32 -g -D HEISENOSKERNEL -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -ffreestanding -fno-builtin -Wno-unknown-pragmas
+ ASPARAMS := --32
+ LDPARAMS := -m32 -no-pie
+ 
+diff --git a/lib/src/drivers/usb/ehci.cpp b/lib/src/drivers/usb/ehci.cpp
+index 45f0e3f..583cea7 100644
+--- a/lib/src/drivers/usb/ehci.cpp
++++ b/lib/src/drivers/usb/ehci.cpp
+@@ -4,5 +4,4 @@
+ using namespace LIBHeisenKernel;
+ 
+ void initalize_ehci_controller(byte_t controller_number){
+-    dword_t 
+ }
+\ No newline at end of file
+-- 
+2.43.0
+

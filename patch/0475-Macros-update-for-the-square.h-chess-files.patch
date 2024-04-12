@@ -1,0 +1,47 @@
+From 998f2ee9ccf6c630d6298c75424a6f9795cd0fd6 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 18:03:14 -0400
+Subject: [PATCH 475/493] Macros update for the square.h chess files
+
+---
+ apps/chess/square.h | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
+
+diff --git a/apps/chess/square.h b/apps/chess/square.h
+index 9a43eb8..735b244 100644
+--- a/apps/chess/square.h
++++ b/apps/chess/square.h
+@@ -59,7 +59,29 @@ namespace LIBHeisenKernel{
+         /**
+          * @brief Some useful macros are defined here 
+         */
+-        
++        #define SQUARE_IS_OK(square)        ((((square)-0x44)&~0x77)==0)
++
++        #define SQUARE_MAKE(file,rank)      (((rank)<<4)|(file))
++
++        #define SQUARE_FILE(square)         ((square)&0xF)
++        #define SQUARE_RANK(square)         ((square)>>4)
++
++        #define SQUARE_FROM_64(square)      (SquareFrom64[square])
++        #define SQUARE_TO_64(square)        (SquareTo64[square])
++
++        #define SQUARE_IS_PROMOTE(square)   (SquareIsPromote[square])
++        #define SQUARE_EP_DUAL(square)      ((square)^16)
++
++        #define SQUARE_COLOUR(square)       (((square)^((square)>>4))&1)
++
++        #define SQUARE_FILE_MIRROR(square)  ((square)^0x0F)
++        #define SQUARE_RANK_MIRROR(square)  ((square)^0xF0)
++
++        #define FILE_OPP(file)              ((file)^0xF)
++        #define RANK_OPP(rank)              ((rank)^0xF)
++
++        #define PAWN_RANK(square,colour)    (SQUARE_RANK(square)^RankMask[colour])
++        #define PAWN_PROMOTE(square,colour) (PromoteRank[colour]|((square)&0xF))
+     };
+ };
+ 
+-- 
+2.43.0
+

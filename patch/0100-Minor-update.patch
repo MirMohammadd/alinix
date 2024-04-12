@@ -1,0 +1,878 @@
+From ba4041d4df7bd4e9cecf53d09c7a56027ac7bbb2 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 22:42:40 -0400
+Subject: [PATCH 100/493] Minor update
+
+---
+ kernel/arch/x86-pc/main.cc          | 2 +-
+ lib/include/api.h                   | 2 +-
+ lib/include/bitreader.h             | 2 +-
+ lib/include/convert.h               | 2 +-
+ lib/include/datetime.h              | 2 +-
+ lib/include/gui/canvas.h            | 2 +-
+ lib/include/gui/colors.h            | 2 +-
+ lib/include/gui/context.h           | 2 +-
+ lib/include/gui/contextheap.h       | 2 +-
+ lib/include/gui/directgui.h         | 2 +-
+ lib/include/gui/events.h            | 2 +-
+ lib/include/gui/fonts/font.h        | 2 +-
+ lib/include/gui/fonts/fontparser.h  | 2 +-
+ lib/include/gui/gui.h               | 2 +-
+ lib/include/gui/property.h          | 2 +-
+ lib/include/gui/rect.h              | 2 +-
+ lib/include/gui/widgets/button.h    | 2 +-
+ lib/include/gui/widgets/control.h   | 5 +++--
+ lib/include/gui/widgets/label.h     | 2 +-
+ lib/include/gui/widgets/listview.h  | 2 +-
+ lib/include/gui/widgets/scrollbar.h | 2 +-
+ lib/include/gui/widgets/scrollbox.h | 2 +-
+ lib/include/gui/widgets/slider.h    | 2 +-
+ lib/include/gui/widgets/window.h    | 2 +-
+ lib/include/heap.h                  | 2 +-
+ lib/include/imaging/bmpformat.h     | 2 +-
+ lib/include/imaging/image.h         | 2 +-
+ lib/include/imaging/pngformat.h     | 2 +-
+ lib/include/ipc.h                   | 2 +-
+ lib/include/list.h                  | 4 ++--
+ lib/include/listing.h               | 2 +-
+ lib/include/log.h                   | 2 +-
+ lib/include/math.h                  | 2 +-
+ lib/include/new.h                   | 6 +++---
+ lib/include/proc.h                  | 2 +-
+ lib/include/random.h                | 2 +-
+ lib/include/shared.h                | 2 +-
+ lib/include/syscall.h               | 2 +-
+ lib/include/systeminfo.h            | 2 +-
+ lib/include/time.h                  | 2 +-
+ lib/include/types.h                 | 2 +-
+ lib/include/vector.h                | 2 +-
+ lib/include/vfs.h                   | 2 +-
+ lib/src/gui/canvas.cpp              | 2 +-
+ lib/src/gui/colors.cpp              | 2 +-
+ lib/src/gui/context.cpp             | 2 +-
+ lib/src/gui/contextheap.cpp         | 2 +-
+ lib/src/gui/directgui.cpp           | 2 +-
+ lib/src/gui/fonts/font.cpp          | 2 +-
+ lib/src/gui/fonts/fontparser.cpp    | 2 +-
+ lib/src/gui/gui.cpp                 | 2 +-
+ lib/src/gui/property.cpp            | 4 ++--
+ lib/src/gui/rect.cpp                | 2 +-
+ lib/src/gui/widgets/button.cpp      | 2 +-
+ lib/src/gui/widgets/control.cpp     | 2 +-
+ lib/src/gui/widgets/label.cpp       | 2 +-
+ lib/src/gui/widgets/scrollbar.cpp   | 2 +-
+ lib/src/gui/widgets/slider.cpp      | 2 +-
+ lib/src/gui/widgets/window.cpp      | 2 +-
+ lib/src/log.cpp                     | 4 ++--
+ 60 files changed, 67 insertions(+), 66 deletions(-)
+
+diff --git a/kernel/arch/x86-pc/main.cc b/kernel/arch/x86-pc/main.cc
+index 1c62a85..ab5f96b 100644
+--- a/kernel/arch/x86-pc/main.cc
++++ b/kernel/arch/x86-pc/main.cc
+@@ -10,7 +10,7 @@
+ #include <log.hpp>
+ #include <proc.hpp>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ Window* mainWindow = 0;
+ 
+diff --git a/lib/include/api.h b/lib/include/api.h
+index 41f43a8..03e7490 100644
+--- a/lib/include/api.h
++++ b/lib/include/api.h
+@@ -3,7 +3,7 @@
+ 
+ #include <types.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     class API
+     {
+diff --git a/lib/include/bitreader.h b/lib/include/bitreader.h
+index 5ee100d..625cf3b 100644
+--- a/lib/include/bitreader.h
++++ b/lib/include/bitreader.h
+@@ -3,7 +3,7 @@
+ 
+ #include <types.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     // Used to read specific bits of a datastream
+     class BitReader
+diff --git a/lib/include/convert.h b/lib/include/convert.h
+index a0d6026..bfd6fbe 100644
+--- a/lib/include/convert.h
++++ b/lib/include/convert.h
+@@ -3,7 +3,7 @@
+ 
+ #include <types.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     class Convert
+     {
+diff --git a/lib/include/datetime.h b/lib/include/datetime.h
+index d3c3323..a296375 100644
+--- a/lib/include/datetime.h
++++ b/lib/include/datetime.h
+@@ -1,7 +1,7 @@
+ #ifndef __LIBCACTUSOS__DATETIME_H
+ #define __LIBCACTUSOS__DATETIME_H
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     class DateTime
+     {
+diff --git a/lib/include/gui/canvas.h b/lib/include/gui/canvas.h
+index 19c59d7..c902e41 100644
+--- a/lib/include/gui/canvas.h
++++ b/lib/include/gui/canvas.h
+@@ -4,7 +4,7 @@
+ #include <types.h>
+ #include <gui/fonts/font.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     class Canvas
+     {
+diff --git a/lib/include/gui/colors.h b/lib/include/gui/colors.h
+index 16123c7..6fc7ade 100644
+--- a/lib/include/gui/colors.h
++++ b/lib/include/gui/colors.h
+@@ -3,7 +3,7 @@
+ 
+ #include <types.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     // Union describing a ARGB color in the following format:
+     // 0xAARRGGBB
+diff --git a/lib/include/gui/context.h b/lib/include/gui/context.h
+index 4b860ca..538f6da 100644
+--- a/lib/include/gui/context.h
++++ b/lib/include/gui/context.h
+@@ -7,7 +7,7 @@
+ #include <gui/widgets/control.h>
+ #include <shared.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {   
+     /**
+      * Represents a region of framebuffer shared between client and server
+diff --git a/lib/include/gui/contextheap.h b/lib/include/gui/contextheap.h
+index fb81045..5308a9c 100644
+--- a/lib/include/gui/contextheap.h
++++ b/lib/include/gui/contextheap.h
+@@ -3,7 +3,7 @@
+ 
+ #include <types.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     //Class that provides functions for allocating memory space for contexts.
+     //Note: Memory region is not allocated, just a block that is reserved after allocating.
+diff --git a/lib/include/gui/directgui.h b/lib/include/gui/directgui.h
+index e5238ee..41c3c7f 100644
+--- a/lib/include/gui/directgui.h
++++ b/lib/include/gui/directgui.h
+@@ -4,7 +4,7 @@
+ #include <types.h>
+ #include <gui/canvas.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     class DirectGUI
+     {
+diff --git a/lib/include/gui/events.h b/lib/include/gui/events.h
+index 99003a1..9dd97b2 100644
+--- a/lib/include/gui/events.h
++++ b/lib/include/gui/events.h
+@@ -5,7 +5,7 @@
+ #include <gui/widgets/control.h>
+ #include <shared.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     // A class that defines a callback function 
+     template<typename ArgumentType>
+diff --git a/lib/include/gui/fonts/font.h b/lib/include/gui/fonts/font.h
+index 561eb30..baf9354 100644
+--- a/lib/include/gui/fonts/font.h
++++ b/lib/include/gui/fonts/font.h
+@@ -3,7 +3,7 @@
+ 
+ #include <types.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     struct Font
+     {
+diff --git a/lib/include/gui/fonts/fontparser.h b/lib/include/gui/fonts/fontparser.h
+index f157434..3fa7c7f 100644
+--- a/lib/include/gui/fonts/fontparser.h
++++ b/lib/include/gui/fonts/fontparser.h
+@@ -4,7 +4,7 @@
+ #include <types.h>
+ #include <gui/fonts/font.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     // Header of a CactusOS Font File (CFF)
+     struct CFFHeader
+diff --git a/lib/include/gui/gui.h b/lib/include/gui/gui.h
+index 8cb42f9..b7e7ab0 100644
+--- a/lib/include/gui/gui.h
++++ b/lib/include/gui/gui.h
+@@ -5,7 +5,7 @@
+ #include <gui/widgets/window.h>
+ #include <gui/context.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     // Event definitions
+     enum GUIEvents
+diff --git a/lib/include/gui/property.h b/lib/include/gui/property.h
+index eab6c79..153752d 100644
+--- a/lib/include/gui/property.h
++++ b/lib/include/gui/property.h
+@@ -3,7 +3,7 @@
+ 
+ #include <types.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     class Control;
+ 
+diff --git a/lib/include/gui/rect.h b/lib/include/gui/rect.h
+index 5661f23..4ad79f2 100644
+--- a/lib/include/gui/rect.h
++++ b/lib/include/gui/rect.h
+@@ -4,7 +4,7 @@
+ #include <types.h>
+ #include <list.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     /**
+      * A class that describes a rectangular shape
+diff --git a/lib/include/gui/widgets/button.h b/lib/include/gui/widgets/button.h
+index c95910e..9115a26 100644
+--- a/lib/include/gui/widgets/button.h
++++ b/lib/include/gui/widgets/button.h
+@@ -4,7 +4,7 @@
+ #include <gui/widgets/control.h>
+ #include <gui/gui.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     /**
+      * A GUI button
+diff --git a/lib/include/gui/widgets/control.h b/lib/include/gui/widgets/control.h
+index 8bf1555..09cd805 100644
+--- a/lib/include/gui/widgets/control.h
++++ b/lib/include/gui/widgets/control.h
+@@ -10,8 +10,9 @@
+ #include <gui/property.h>
+ #include <gui/fonts/font.h>
+ #include <gui/colors.h>
+-
+-namespace LIBCactusOS
++// LIBHeisenKernel
++// LIBCactusOS_
++namespace LIBHeisenKernel
+ {
+     // Defines the alignment of a specific entry
+     // This is for the x and the y direction
+diff --git a/lib/include/gui/widgets/label.h b/lib/include/gui/widgets/label.h
+index fada0df..008eda0 100644
+--- a/lib/include/gui/widgets/label.h
++++ b/lib/include/gui/widgets/label.h
+@@ -3,7 +3,7 @@
+ 
+ #include <gui/widgets/control.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     class Label : public Control
+     {
+diff --git a/lib/include/gui/widgets/listview.h b/lib/include/gui/widgets/listview.h
+index 8e0a3a2..36376ce 100644
+--- a/lib/include/gui/widgets/listview.h
++++ b/lib/include/gui/widgets/listview.h
+@@ -5,7 +5,7 @@
+ #include <imaging/image.h>
+ #include <gui/gui.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     class ListViewItem
+     {
+diff --git a/lib/include/gui/widgets/scrollbar.h b/lib/include/gui/widgets/scrollbar.h
+index a2083e4..b63265f 100644
+--- a/lib/include/gui/widgets/scrollbar.h
++++ b/lib/include/gui/widgets/scrollbar.h
+@@ -6,7 +6,7 @@
+ #include <gui/events.h>
+ #include <gui/colors.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     // Different type of scrollbars
+     enum ScrollBarType
+diff --git a/lib/include/gui/widgets/scrollbox.h b/lib/include/gui/widgets/scrollbox.h
+index ca47672..bc90dbd 100644
+--- a/lib/include/gui/widgets/scrollbox.h
++++ b/lib/include/gui/widgets/scrollbox.h
+@@ -4,7 +4,7 @@
+ #include <gui/widgets/control.h>
+ #include <gui/widgets/scrollbar.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     class ScrollBox : public Control
+     {
+diff --git a/lib/include/gui/widgets/slider.h b/lib/include/gui/widgets/slider.h
+index 33491bc..2297e44 100644
+--- a/lib/include/gui/widgets/slider.h
++++ b/lib/include/gui/widgets/slider.h
+@@ -6,7 +6,7 @@
+ #include <gui/events.h>
+ #include <gui/colors.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     class Slider : public Control
+     {
+diff --git a/lib/include/gui/widgets/window.h b/lib/include/gui/widgets/window.h
+index 1468676..9aec6e3 100644
+--- a/lib/include/gui/widgets/window.h
++++ b/lib/include/gui/widgets/window.h
+@@ -6,7 +6,7 @@
+ #include <gui/context.h>
+ #include <gui/property.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     class Button;
+     
+diff --git a/lib/include/heap.h b/lib/include/heap.h
+index 003c426..6a33ee0 100644
+--- a/lib/include/heap.h
++++ b/lib/include/heap.h
+@@ -3,7 +3,7 @@
+ 
+ #include <types.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     #ifndef align_up
+     #define align_up(num, align) \
+diff --git a/lib/include/imaging/bmpformat.h b/lib/include/imaging/bmpformat.h
+index 8e7d31d..90df25a 100644
+--- a/lib/include/imaging/bmpformat.h
++++ b/lib/include/imaging/bmpformat.h
+@@ -3,7 +3,7 @@
+ 
+ #include <imaging/image.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     namespace Imaging
+     {
+diff --git a/lib/include/imaging/image.h b/lib/include/imaging/image.h
+index 5357579..a72ea47 100644
+--- a/lib/include/imaging/image.h
++++ b/lib/include/imaging/image.h
+@@ -4,7 +4,7 @@
+ #include <types.h>
+ #include <gui/canvas.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     namespace Imaging
+     {
+diff --git a/lib/include/imaging/pngformat.h b/lib/include/imaging/pngformat.h
+index bb7ded0..f5bc07b 100644
+--- a/lib/include/imaging/pngformat.h
++++ b/lib/include/imaging/pngformat.h
+@@ -7,7 +7,7 @@
+ #include <string.h>
+ #include <vector.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     namespace Imaging
+     {
+diff --git a/lib/include/ipc.h b/lib/include/ipc.h
+index 92af850..880f582 100644
+--- a/lib/include/ipc.h
++++ b/lib/include/ipc.h
+@@ -1,7 +1,7 @@
+ #ifndef __LIBCACTUSOS__IPC_H
+ #define __LIBCACTUSOS__IPC_H
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     enum IPCMessageType : int
+     {
+diff --git a/lib/include/list.h b/lib/include/list.h
+index c826f41..5c8e223 100644
+--- a/lib/include/list.h
++++ b/lib/include/list.h
+@@ -1,7 +1,7 @@
+ #ifndef __CACTUSOS__COMMON__LIST_H
+ #define __CACTUSOS__COMMON__LIST_H
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     template <typename T>
+     struct ListNode
+@@ -73,7 +73,7 @@ namespace LIBCactusOS
+     };
+ }
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ /////////////
+ // Implementations
+diff --git a/lib/include/listing.h b/lib/include/listing.h
+index 19fb9f9..678c1b7 100644
+--- a/lib/include/listing.h
++++ b/lib/include/listing.h
+@@ -1,7 +1,7 @@
+ #ifndef __LIBCACTUSOS__LISTING_H
+ #define __LIBCACTUSOS__LISTING_H
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     #define DIRECTORY_LISTING 0
+     #define DISK_LISTING 1
+diff --git a/lib/include/log.h b/lib/include/log.h
+index fb0f74a..28b870b 100644
+--- a/lib/include/log.h
++++ b/lib/include/log.h
+@@ -1,7 +1,7 @@
+ #ifndef __CACTUSOSLIB__LOG_H
+ #define __CACTUSOSLIB__LOG_H
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     enum LogLevel
+     {
+diff --git a/lib/include/math.h b/lib/include/math.h
+index c6b5f0c..970dad0 100644
+--- a/lib/include/math.h
++++ b/lib/include/math.h
+@@ -3,7 +3,7 @@
+ 
+ #include <types.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     #define MATH_PI 3.14159265358979323846
+ 
+diff --git a/lib/include/new.h b/lib/include/new.h
+index c98799e..e2a3f03 100644
+--- a/lib/include/new.h
++++ b/lib/include/new.h
+@@ -1,10 +1,10 @@
+-#ifndef __LIBCACTUSOS__NEW_H
+-#define __LIBCACTUSOS__NEW_H
++#ifndef __LIBHeisenKernel__NEW_H
++#define __LIBHeisenKernel__NEW_H
+ 
+ #include <stddef.h>
+ #include <heap.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+  
+ void *operator new(size_t size)
+ {
+diff --git a/lib/include/proc.h b/lib/include/proc.h
+index e7e8833..03674f8 100644
+--- a/lib/include/proc.h
++++ b/lib/include/proc.h
+@@ -7,7 +7,7 @@
+ #include <list.h>
+ #include <shared.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     #define DECLARE_LOCK(name) volatile int name ## Locked
+     #define LOCK(name) \
+diff --git a/lib/include/random.h b/lib/include/random.h
+index 0ca8ebf..0479027 100644
+--- a/lib/include/random.h
++++ b/lib/include/random.h
+@@ -3,7 +3,7 @@
+ 
+ #include <types.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     class Random
+     {
+diff --git a/lib/include/shared.h b/lib/include/shared.h
+index 9886937..f33da6a 100644
+--- a/lib/include/shared.h
++++ b/lib/include/shared.h
+@@ -5,7 +5,7 @@
+ // Data structures shared between userspace and kernel
+ /////////////////
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     #define VFS_NAME_LENGTH 255
+ 
+diff --git a/lib/include/syscall.h b/lib/include/syscall.h
+index 94a4b75..9b0711e 100644
+--- a/lib/include/syscall.h
++++ b/lib/include/syscall.h
+@@ -1,7 +1,7 @@
+ #ifndef __CACTUSOSLIB__SYSCALL_H
+ #define __CACTUSOSLIB__SYSCALL_H
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     #define SYSCALL_RET_SUCCES 1
+     #define SYSCALL_RET_ERROR 0
+diff --git a/lib/include/systeminfo.h b/lib/include/systeminfo.h
+index 1fc9ab9..cf628ea 100644
+--- a/lib/include/systeminfo.h
++++ b/lib/include/systeminfo.h
+@@ -7,7 +7,7 @@
+ #include <types.h>
+ #endif
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     #define SYSTEM_INFO_ADDR 0xBFFEE000
+ 
+diff --git a/lib/include/time.h b/lib/include/time.h
+index 13c7170..1f34e99 100644
+--- a/lib/include/time.h
++++ b/lib/include/time.h
+@@ -3,7 +3,7 @@
+ 
+ #include <types.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     class Time
+     {
+diff --git a/lib/include/types.h b/lib/include/types.h
+index 35fe156..5ba472f 100644
+--- a/lib/include/types.h
++++ b/lib/include/types.h
+@@ -1,7 +1,7 @@
+ #ifndef __CACTUSOSLIB__TYPES_H
+ #define __CACTUSOSLIB__TYPES_H
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     #define STATIC_ASSERT(condition) typedef char p__LINE__[ (condition) ? 1 : -1];
+ 
+diff --git a/lib/include/vector.h b/lib/include/vector.h
+index 0cac931..ce3f41c 100644
+--- a/lib/include/vector.h
++++ b/lib/include/vector.h
+@@ -3,7 +3,7 @@
+ 
+ #include <types.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     template<typename T>
+     class Vector
+diff --git a/lib/include/vfs.h b/lib/include/vfs.h
+index d0abdc9..f55e42b 100644
+--- a/lib/include/vfs.h
++++ b/lib/include/vfs.h
+@@ -5,7 +5,7 @@
+ #include <list.h>
+ #include <shared.h>
+ 
+-namespace LIBCactusOS
++namespace LIBHeisenKernel
+ {
+     // Read file contents into buffer
+     int ReadFile(char* filename, uint8_t* buffer, uint32_t offset = 0, uint32_t len = -1);
+diff --git a/lib/src/gui/canvas.cpp b/lib/src/gui/canvas.cpp
+index 5afe4fe..a057c73 100644
+--- a/lib/src/gui/canvas.cpp
++++ b/lib/src/gui/canvas.cpp
+@@ -3,7 +3,7 @@
+ #include <math.h>
+ #include <gui/colors.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ Canvas::Canvas(void* buffer, int w, int h)
+ {
+diff --git a/lib/src/gui/colors.cpp b/lib/src/gui/colors.cpp
+index af85957..0ecad88 100644
+--- a/lib/src/gui/colors.cpp
++++ b/lib/src/gui/colors.cpp
+@@ -1,6 +1,6 @@
+ #include <gui/colors.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ static const int AMASK = 0xFF000000;
+ static const int RBMASK = 0x00FF00FF;
+diff --git a/lib/src/gui/context.cpp b/lib/src/gui/context.cpp
+index ceab0ee..5e2a03a 100644
+--- a/lib/src/gui/context.cpp
++++ b/lib/src/gui/context.cpp
+@@ -6,7 +6,7 @@
+ #include <gui/contextheap.h>
+ #include <heap.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ Context::Context(uint32_t framebufferAddr, int width, int height)
+ {
+diff --git a/lib/src/gui/contextheap.cpp b/lib/src/gui/contextheap.cpp
+index 6a0f2ca..1bce74a 100644
+--- a/lib/src/gui/contextheap.cpp
++++ b/lib/src/gui/contextheap.cpp
+@@ -3,7 +3,7 @@
+ #include <string.h>
+ #include <proc.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ #define ENTRIES_PER_BYTE 8
+ #define ARRAY_ENTRY_SIZE 4
+diff --git a/lib/src/gui/directgui.cpp b/lib/src/gui/directgui.cpp
+index 9293bf1..df29450 100644
+--- a/lib/src/gui/directgui.cpp
++++ b/lib/src/gui/directgui.cpp
+@@ -8,7 +8,7 @@
+ #include <systeminfo.h>
+ #include <math.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ Canvas* base = 0;
+ 
+diff --git a/lib/src/gui/fonts/font.cpp b/lib/src/gui/fonts/font.cpp
+index aa63fb7..44d57bd 100644
+--- a/lib/src/gui/fonts/font.cpp
++++ b/lib/src/gui/fonts/font.cpp
+@@ -1,6 +1,6 @@
+ #include <gui/fonts/font.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ void Font::BoundingBox(char* string, int* retW, int* retH)
+ {
+diff --git a/lib/src/gui/fonts/fontparser.cpp b/lib/src/gui/fonts/fontparser.cpp
+index f4e967f..9297622 100644
+--- a/lib/src/gui/fonts/fontparser.cpp
++++ b/lib/src/gui/fonts/fontparser.cpp
+@@ -4,7 +4,7 @@
+ #include <log.h>
+ 
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ Font* FontParser::FromFile(char* filename)
+ {
+diff --git a/lib/src/gui/gui.cpp b/lib/src/gui/gui.cpp
+index 3688913..cbc1c91 100644
+--- a/lib/src/gui/gui.cpp
++++ b/lib/src/gui/gui.cpp
+@@ -11,7 +11,7 @@
+ #include <gui/widgets/window.h>
+ #include <gui/fonts/fontparser.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ int GUI::Width = 0;
+ int GUI::Height = 0;
+diff --git a/lib/src/gui/property.cpp b/lib/src/gui/property.cpp
+index 9d047e4..774224f 100644
+--- a/lib/src/gui/property.cpp
++++ b/lib/src/gui/property.cpp
+@@ -1,9 +1,9 @@
+ #include <gui/property.h>
+ #include <gui/widgets/control.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+-void LIBCactusOS::UpdateGUIPropertyTargetGUI(Control* target)
++void LIBHeisenKernel::UpdateGUIPropertyTargetGUI(Control* target)
+ {
+     if(target) target->ForcePaint();
+ }
+\ No newline at end of file
+diff --git a/lib/src/gui/rect.cpp b/lib/src/gui/rect.cpp
+index add6686..40334a8 100644
+--- a/lib/src/gui/rect.cpp
++++ b/lib/src/gui/rect.cpp
+@@ -3,7 +3,7 @@
+ #include <log.h>
+ #include <heap.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ Rectangle::Rectangle(int w, int h, int x_p, int y_p)
+ {
+diff --git a/lib/src/gui/widgets/button.cpp b/lib/src/gui/widgets/button.cpp
+index a14ecb0..d9a6494 100644
+--- a/lib/src/gui/widgets/button.cpp
++++ b/lib/src/gui/widgets/button.cpp
+@@ -1,7 +1,7 @@
+ #include <gui/widgets/button.h>
+ #include <log.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ Button::Button(char* text)
+ : Control(80, 40)
+diff --git a/lib/src/gui/widgets/control.cpp b/lib/src/gui/widgets/control.cpp
+index 53a8ad1..2622fa4 100644
+--- a/lib/src/gui/widgets/control.cpp
++++ b/lib/src/gui/widgets/control.cpp
+@@ -2,7 +2,7 @@
+ #include <gui/gui.h>
+ #include <log.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ Control::Control(int w, int h, int x, int y)
+ : EventObject(), Rectangle(w, h, x, y)
+diff --git a/lib/src/gui/widgets/label.cpp b/lib/src/gui/widgets/label.cpp
+index ddce42f..a0ba5bb 100644
+--- a/lib/src/gui/widgets/label.cpp
++++ b/lib/src/gui/widgets/label.cpp
+@@ -1,6 +1,6 @@
+ #include <gui/widgets/label.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ Label::Label(char* text)
+ : Control(80, 20)
+diff --git a/lib/src/gui/widgets/scrollbar.cpp b/lib/src/gui/widgets/scrollbar.cpp
+index ebb774b..878dcf9 100644
+--- a/lib/src/gui/widgets/scrollbar.cpp
++++ b/lib/src/gui/widgets/scrollbar.cpp
+@@ -1,7 +1,7 @@
+ #include <gui/widgets/scrollbar.h>
+ #include <math.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ ScrollBar::ScrollBar(ScrollBarType type, int min, int max, int dragSize)
+ : Control(type == Horizontal ? SCROLLBAR_DEFAULT_WIDTH : SCROLLBAR_DEFAULT_HEIGHT, type == Vertical ? SCROLLBAR_DEFAULT_WIDTH : SCROLLBAR_DEFAULT_HEIGHT)
+diff --git a/lib/src/gui/widgets/slider.cpp b/lib/src/gui/widgets/slider.cpp
+index e6014ad..d8f8077 100644
+--- a/lib/src/gui/widgets/slider.cpp
++++ b/lib/src/gui/widgets/slider.cpp
+@@ -3,7 +3,7 @@
+ #include <log.h>
+ #include <math.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ Slider::Slider(int min, int max, int current)
+ : Control(200, 15)
+diff --git a/lib/src/gui/widgets/window.cpp b/lib/src/gui/widgets/window.cpp
+index e4ac304..336a528 100644
+--- a/lib/src/gui/widgets/window.cpp
++++ b/lib/src/gui/widgets/window.cpp
+@@ -3,7 +3,7 @@
+ #include <log.h>
+ #include <gui/colors.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ Window::Window(Context* base)
+ : Control(base->sharedContextInfo->width, base->sharedContextInfo->height, base->sharedContextInfo->x, base->sharedContextInfo->y)
+diff --git a/lib/src/log.cpp b/lib/src/log.cpp
+index afadb90..15c8340 100644
+--- a/lib/src/log.cpp
++++ b/lib/src/log.cpp
+@@ -22,7 +22,7 @@
+ #include <convert.h>
+ #include <proc.h>
+ 
+-using namespace LIBHeisenKernel;
++// using namespace LIBHeisenKernel;
+ 
+ void LIBHeisenKernel::Log(LogLevel level, char* msg)
+ {
+@@ -50,7 +50,7 @@ void LIBHeisenKernel::Print(const char* __restrict__ format, ...)
+ 			format += amount;
+ 			continue;
+ 		}
+- 
++ LIBCactusOS
+ 		const char* format_begun_at = format++;
+  
+ 		if (*format == 'c') {
+-- 
+2.43.0
+

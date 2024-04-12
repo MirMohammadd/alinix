@@ -1,0 +1,85 @@
+From 59ae0dbd3930a3f4685e2c8e06ca8deba01b2c6a Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 16:51:57 -0400
+Subject: [PATCH 464/493] Chess game Patch
+
+---
+ apps/chess/board.h       |  7 +++++++
+ apps/chess/chess.cpp     | 15 +++++++++++++++
+ lib/include/gui/colors.h | 22 ++++++++++++++++++++++
+ 3 files changed, 44 insertions(+)
+ create mode 100644 apps/chess/board.h
+ create mode 100644 apps/chess/chess.cpp
+
+diff --git a/apps/chess/board.h b/apps/chess/board.h
+new file mode 100644
+index 0000000..2f55a8b
+--- /dev/null
++++ b/apps/chess/board.h
+@@ -0,0 +1,7 @@
++#ifndef _HEISEN_KERNEL_BOARD_H
++#define _HEISEN_KERNEL_BOARD_H
++
++
++
++
++#endif // _HEISEN_KERNEL_BOARD_H
+\ No newline at end of file
+diff --git a/apps/chess/chess.cpp b/apps/chess/chess.cpp
+new file mode 100644
+index 0000000..251cc8c
+--- /dev/null
++++ b/apps/chess/chess.cpp
+@@ -0,0 +1,15 @@
++#include <new.h>
++#include <log.h>
++#include <gui/widgets/button.h>
++#include <gui/widgets/window.h>
++#include <gui/directgui.h>
++#include <random.h>
++#include <datetime.h>
++#include <time.h>
++#include <convert.h>
++#include <string.h>
++#include <gui/widgets/label.h>
++#include <gui/colors.h>
++
++
++using namespace LIBHeisenKernel;
+\ No newline at end of file
+diff --git a/lib/include/gui/colors.h b/lib/include/gui/colors.h
+index 6fc7ade..8a8a6d3 100644
+--- a/lib/include/gui/colors.h
++++ b/lib/include/gui/colors.h
+@@ -5,6 +5,28 @@
+ 
+ namespace LIBHeisenKernel
+ {
++
++    /**
++     * @brief Colors implemented for the chess game 
++     * 
++    */
++
++    namespace Chess{
++
++        namespace engine{
++        // Constants
++        const int ColorNone = -1;
++
++        const int White = 0;
++        const int Black = 1;
++
++        const int ColorNb = 2;
++
++        const int WhiteFlag = 1 << White;
++        const int BlackFlag = 1 << Black;
++    
++        };
++    };
+     // Union describing a ARGB color in the following format:
+     // 0xAARRGGBB
+     typedef union Color4Tag
+-- 
+2.43.0
+

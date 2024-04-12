@@ -1,0 +1,607 @@
+From 59ffcd2b41956150a6cfa7e7286abf2fe5850d18 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 13:39:51 -0400
+Subject: [PATCH 034/493] Added some main header files
+
+---
+ kernel/gui/screen.c           |   3 +
+ kernel/include/gui/colors.hpp |  46 ++++++++
+ kernel/include/list.hpp       | 206 ++++++++++++++++++++++++++++++++++
+ kernel/include/string.hpp     |  27 +++++
+ kernel/include/time.hpp       |  15 +++
+ kernel/include/types.hpp      |  33 ++++++
+ kernel/include/vector.hpp     |  22 ++++
+ kernel/src/string.cc          | 167 +++++++++++++++++++++++++++
+ 8 files changed, 519 insertions(+)
+ create mode 100644 kernel/include/gui/colors.hpp
+ create mode 100644 kernel/include/list.hpp
+ create mode 100644 kernel/include/string.hpp
+ create mode 100644 kernel/include/time.hpp
+ create mode 100644 kernel/include/types.hpp
+ create mode 100644 kernel/include/vector.hpp
+ create mode 100644 kernel/src/string.cc
+
+diff --git a/kernel/gui/screen.c b/kernel/gui/screen.c
+index 01de8f8..b09c966 100644
+--- a/kernel/gui/screen.c
++++ b/kernel/gui/screen.c
+@@ -1,4 +1,6 @@
+ #include <stdint.h>
++
++
+ void WriteCharacter(unsigned char c, unsigned char forecolour, unsigned char backcolour, int x, int y){
+     uint16_t attrib = (backcolour << 4) | (forecolour & 0x0F);
+     volatile uint16_t * where;
+@@ -8,3 +10,4 @@ void WriteCharacter(unsigned char c, unsigned char forecolour, unsigned char bac
+ 
+ }
+ 
++
+diff --git a/kernel/include/gui/colors.hpp b/kernel/include/gui/colors.hpp
+new file mode 100644
+index 0000000..e9415ea
+--- /dev/null
++++ b/kernel/include/gui/colors.hpp
+@@ -0,0 +1,46 @@
++#ifndef _HEISEN_KERNEL_COLORS_HPP
++#define _HEISEN_KERNEL_COLORS_HPP
++
++#include <types.hpp>
++
++namespace LIBHeisenKernel
++{
++    // Union describing a ARGB color in the following format:
++    // 0xAARRGGBB
++    typedef union Color4Tag
++    {
++        uint32_t c;
++        struct ColorComponents
++        {
++            uint8_t b;
++            uint8_t g;
++            uint8_t r;
++            uint8_t a;
++        } argb;
++    } Color4;
++  
++    class Colors
++    {
++    public:
++        static const uint32_t Black = 0xFF000000;
++        static const uint32_t White = 0xFFFFFFFF;
++        static const uint32_t Red   = 0xFFFF0000;
++        static const uint32_t Green = 0xFF00FF00;
++        static const uint32_t Blue  = 0xFF0000FF;
++        static const uint32_t Transparent = 0x00000000;
++    public:
++        /**
++         * Blend to colors using alpha blending
++         * Color1 is background
++         * Color2 is foreground
++        */
++        static const uint32_t AlphaBlend(uint32_t color1, uint32_t color2);
++        
++        /**
++         * Convert a ARGB color to 0xAARRGGBB format
++        */
++        static const uint32_t FromARGB(uint8_t a, uint8_t r, uint8_t g, uint8_t b);
++    };
++}
++
++#endif // _HEISEN_KERNEL_COLORS_HPP
+\ No newline at end of file
+diff --git a/kernel/include/list.hpp b/kernel/include/list.hpp
+new file mode 100644
+index 0000000..0d66973
+--- /dev/null
++++ b/kernel/include/list.hpp
+@@ -0,0 +1,206 @@
++#ifndef __HEISEN__COMMON__LIST_H
++#define __HEISEN__COMMON__LIST_H
++
++
++namespace LIBHeisenKernel
++{
++    template <typename T>
++    struct ListNode
++    {
++        ListNode(const T &e) : data(e), next(0), prev(0)
++        {}
++        T data;
++        ListNode<T>* next;
++        ListNode<T>* prev;
++    };
++    template <typename T>
++    class List
++    {
++    public:
++        List() : head_(0), tail_(0), size_(0)
++        {   }
++        ~List()
++        { this->Clear(); /*Remove all the items from the list*/ }
++        int size() { return size_; }
++        void push_back(const T &e);
++        void push_front(const T &e);
++        void Clear();
++        T GetAt(int index);
++        T operator[](int index);
++        void Remove(int index);
++        void Remove(const T &e);
++
++        void operator+=(const T &e);
++        void operator-=(const T &e);
++    private:
++        ListNode<T>* head_;
++        ListNode<T>* tail_;
++        int size_;
++        ListNode<T>* insertInternal(const T &e, ListNode<T>* pos);
++        void removeInternal(ListNode<T> *pos);
++    //Iterators
++    public:
++        class iterator
++        {
++        public:
++            iterator(ListNode<T> *p=0) : pos_(p) { }
++            
++            T &operator*()
++            { return pos_->data; }
++
++            T *operator->()
++            { return &(pos_->data); }
++
++            bool operator!=(const iterator &rhs)
++            { return this->pos_ != rhs.pos_; }
++
++            iterator operator++()
++            { pos_ = pos_->next; return *this; }
++
++            iterator operator--()
++            { pos_ = pos_->prev; return *this; }
++
++        private:
++            ListNode<T> *pos_;
++        };
++        iterator begin()
++        {
++            return iterator(head_);
++        }
++        iterator end()
++        {
++            return iterator(0);
++        }
++    };
++}
++
++using namespace LIBHeisenKernel;
++
++/////////////
++// Implementations
++////////////
++template <typename T>
++ListNode<T>* List<T>::insertInternal(const T &e, ListNode<T>* pos)
++{
++    ListNode<T> *n = new ListNode<T>(e);
++    size_++;
++    // no operation below this should throw
++    // as state of the list has changed and memory allocated
++    n->next = pos;
++    if(pos)
++    {
++        n->prev = pos->prev;
++        pos->prev = n;
++    }
++    else
++    {
++        // pos is null that is at the very end of the list
++        n->prev = tail_;
++        tail_ = n;
++    }
++    if(n->prev)
++    {
++        n->prev->next = n;
++    }
++    else
++    {
++        // at the very begining of the list
++        head_ = n;
++    }
++    return n;
++}
++template <typename T>
++void List<T>::push_back(const T &e)
++{
++    // inserts before the position, 
++    // 0 is the end() iterator
++    // hence insert at the end
++    insertInternal(e, 0);
++}
++template <typename T>
++void List<T>::push_front(const T &e)
++{
++    // insert before the head
++    insertInternal(e, head_);
++}
++
++template <typename T>
++void List<T>::removeInternal(ListNode<T> *pos)
++{
++	if(pos)
++	{
++		if(pos->prev)
++			pos->prev->next = pos->next;
++		if(pos->next)
++			pos->next->prev = pos->prev;
++		if(pos == head_)
++			head_ = pos->next;
++		if(pos == tail_)
++			tail_ = pos->prev;
++		delete pos;
++		size_--;
++	}
++}
++
++template <typename T>
++void List<T>::Remove(int index)
++{
++    ListNode<T>* cur = head_;
++    for(int i = 0; i < index; ++i)
++        cur = cur->next;
++    removeInternal(cur);
++}
++
++template <typename T>
++void List<T>::Remove(const T &e)
++{
++    for(int i = 0; i < size_; i++)
++        if(GetAt(i) == e)
++            Remove(i);
++}
++
++template <typename T>
++void List<T>::Clear()
++{
++    ListNode<T>* current( head_ );
++
++    while(current)
++    {
++        ListNode<T>* next( current->next );
++        delete current;
++        current = next;
++    }
++    size_ = 0; //Reset the size to 0
++    head_ = 0;
++    tail_ = 0;
++}
++
++template <typename T>
++T List<T>::GetAt(int index)
++{
++    ListNode<T>* cur = head_;
++    for(int i = 0; i < index; ++i)
++        cur = cur->next;
++    return cur->data;
++}
++
++template <typename T>
++T List<T>::operator[](int index)
++{
++    return GetAt(index);
++}
++
++template <typename T>
++void List<T>::operator+=(const T &e)
++{
++    push_back(e);
++}
++
++template <typename T>
++void List<T>::operator-=(const T &e)
++{
++    Remove(e);
++}
++
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/include/string.hpp b/kernel/include/string.hpp
+new file mode 100644
+index 0000000..017f1dd
+--- /dev/null
++++ b/kernel/include/string.hpp
+@@ -0,0 +1,27 @@
++#ifndef _HEISEN_STRING_KERNEL_HPP
++#define _HEISEN_STRING_KERNEL_HPP
++
++#include <stddef.h>
++#include "list.hpp"
++
++extern "C"
++{
++    int memcmp(const void* aptr, const void* bptr, size_t size);
++    void* memcpy(void* __restrict__ dstptr, const void* __restrict__ srcptr, size_t size);
++    void* memmove(void* dstptr, const void* srcptr, size_t size);
++    void* memset(void* bufptr, int value, size_t size);
++    size_t strlen(const char* str);
++    int strcmp(const char *s1, const char *s2);
++   
++    int str_IndexOf(const char* str, char c, int skip = 0);
++    bool str_Contains(const char* str, char c);
++    List<char*> str_Split(const char* str, char d);
++    char* str_Uppercase(char* str);
++    char* str_Lowercase(char* str);
++    char* str_Add(char* str, char c);
++    char* str_Combine(char* part1, char* part2);
++
++    bool isvalid(unsigned char key);
++}
++
++#endif // _HEISEN_STRING_KERNEL_HPP
+\ No newline at end of file
+diff --git a/kernel/include/time.hpp b/kernel/include/time.hpp
+new file mode 100644
+index 0000000..d415cbc
+--- /dev/null
++++ b/kernel/include/time.hpp
+@@ -0,0 +1,15 @@
++#ifndef _HEISEN_KERNEL_LIB_TIME_H
++#define _HEISEN_KERNEL_LIB_TIME_H
++
++#include "types.hpp"
++
++namespace LIBHeisenKernel{
++    class Time{
++        public:
++            static void sleep(uint32_t ms);
++
++            static uint64_t Ticks();
++    };
++};
++
++#endif // _HEISEN_KERNEL_LIB_TIME_H
+\ No newline at end of file
+diff --git a/kernel/include/types.hpp b/kernel/include/types.hpp
+new file mode 100644
+index 0000000..15d2247
+--- /dev/null
++++ b/kernel/include/types.hpp
+@@ -0,0 +1,33 @@
++#ifndef _HEISEN_KERNEL_INCLUDE_KERNEL_H
++#define _HEISEN_KERNEL_INCLUDE_KERNEL_H
++
++
++namespace LIBHeisenKernel
++{
++    #define STATIC_ASSERT(condition) typedef char p__LINE__[ (condition) ? 1 : -1];
++
++    typedef char                        int8_t;
++    typedef unsigned char               uint8_t;
++    typedef short                       int16_t;
++    typedef unsigned short              uint16_t;
++    typedef int                         int32_t;
++    typedef unsigned int                uint32_t;
++    typedef long long int               int64_t;
++    typedef unsigned long long int      uint64_t;
++    typedef unsigned long long          uintptr_t;
++
++    constexpr uint32_t operator"" _KB(unsigned long long no)
++    {
++        return no * 1024;
++    }
++    constexpr uint32_t operator"" _MB(unsigned long long no)
++    {
++        return no * (1024_KB);
++    }
++    constexpr uint32_t operator"" _GB(unsigned long long no)
++    {
++        return no * (1024_MB);
++    }
++}
++
++#endif // _HEISEN_KERNEL_INCLUDE_KERNEL_H
+\ No newline at end of file
+diff --git a/kernel/include/vector.hpp b/kernel/include/vector.hpp
+new file mode 100644
+index 0000000..31335d2
+--- /dev/null
++++ b/kernel/include/vector.hpp
+@@ -0,0 +1,22 @@
++#ifndef _HEISEN_KERNEL_HPP
++#define _HEISEN_KERNEL_HPP
++
++
++#include "types.hpp"
++
++namespace LIBHeisenKernel{
++    template<typename T>
++    class Vector{
++        private:
++            uint32_t size = 0;
++            uint32_t capacity = 0;
++            T* buffer = 0;
++
++            void reserve(int capacity){
++                T* newBuf = new T[capacity];
++                 
++            }
++    };
++};
++
++#endif // _HEISEN_KERNEL_HPP
+\ No newline at end of file
+diff --git a/kernel/src/string.cc b/kernel/src/string.cc
+new file mode 100644
+index 0000000..c03f8aa
+--- /dev/null
++++ b/kernel/src/string.cc
+@@ -0,0 +1,167 @@
++#include <string.hpp>
++
++
++void* memmove(void* dstptr, const void* srcptr, size_t size) {
++	unsigned char* dst = (unsigned char*) dstptr;
++	const unsigned char* src = (const unsigned char*) srcptr;
++	if (dst < src) {
++		for (size_t i = 0; i < size; i++)
++			dst[i] = src[i];
++	} else {
++		for (size_t i = size; i != 0; i--)
++			dst[i-1] = src[i-1];
++	}
++	return dstptr;
++}
++
++size_t strlen(const char* str) {
++	size_t len = 0;
++	while (str[len])
++		len++;
++	return len;
++}
++
++int memcmp(const void* aptr, const void* bptr, size_t size) {
++	const unsigned char* a = (const unsigned char*) aptr;
++	const unsigned char* b = (const unsigned char*) bptr;
++	for (size_t i = 0; i < size; i++) {
++		if (a[i] < b[i])
++			return -1;
++		else if (b[i] < a[i])
++			return 1;
++	}
++	return 0;
++}
++
++void* memset(void* bufptr, int value, size_t size) {
++	unsigned char* buf = (unsigned char*) bufptr;
++	for (size_t i = 0; i < size; i++)
++		buf[i] = (unsigned char) value;
++	return bufptr;
++}
++
++void* memcpy(void* __restrict__ dstptr, const void* __restrict__ srcptr, size_t size) {
++	unsigned char* dst = (unsigned char*) dstptr;
++	const unsigned char* src = (const unsigned char*) srcptr;
++	for (size_t i = 0; i < size; i++)
++		dst[i] = src[i];
++	return dstptr;
++}
++
++int strcmp(const char *s1, const char *s2)
++{
++    while ((*s1 == *s2) && *s1) { ++s1; ++s2; }
++    return (((int) (unsigned char) *s1) - ((int) (unsigned char) *s2) == 0) ? 1 : 0;
++}
++
++int str_IndexOf(const char* str, char c, int skip)
++{
++    int hits = 0;
++    int i = 0;
++    while(str[i])
++    {
++        if(str[i] == c && hits++ == skip)
++            return i;
++        i++;
++    }
++    return -1;
++}
++
++bool str_Contains(const char* str, char c)
++{
++    int i = 0;
++	while (str[i])
++    {
++        if(str[i] == c)
++            return true;
++		i++;
++    }
++    return false;
++}
++
++char* str_Uppercase(char* str)
++{ 
++    int len = strlen(str);
++    int i = 0;
++	while (i < len)
++	{
++		if ((short)str[i] >= 97 && (short)str[i] <= 122)
++			str[i] -= 32;
++		i++;
++	}
++    return str;
++}
++char* str_Lowercase(char* str)
++{
++    int len = strlen(str);
++    int i = 0;
++	while (i < len)
++	{
++		if ((short)str[i] >= 65 && (short)str[i] <= 90)
++			str[i] += 32;
++		i++;
++	}
++    return str;
++}
++List<char*> str_Split(const char* str, char d)
++{
++    List<char*> Result;
++
++    int amountOfDelims = 0;
++    while(str_IndexOf(str, d, amountOfDelims) != -1)
++        amountOfDelims++;
++    
++    if(amountOfDelims == 0)
++        return Result;
++    
++    int* delimOffsets = new int[amountOfDelims];
++    for(int i = 0; i < amountOfDelims; i++)
++        delimOffsets[i] = str_IndexOf(str, d, i);
++
++    for(int i = 0; i < amountOfDelims; i++)
++    {
++        int len = i >= 1 ? (delimOffsets[i] - delimOffsets[i - 1] - 1) : delimOffsets[i];
++
++        char* partStr = new char[len + 1];
++        memcpy(partStr, str + (i >= 1 ? delimOffsets[i - 1] + 1 : 0), len);
++        partStr[len] = '\0';
++
++        Result.push_back(partStr);
++    }
++
++    //Don't forget to add the remaining part of the string
++    int stringRemainder = strlen(str) - delimOffsets[amountOfDelims - 1];
++    char* lastStr = new char[stringRemainder];
++    memcpy(lastStr, str + delimOffsets[amountOfDelims - 1] + 1, stringRemainder);
++    lastStr[stringRemainder] = '\0';
++
++    Result.push_back(lastStr);
++
++    return Result;
++}
++char* str_Add(char* str, char c)
++{
++	int oldLen = strlen(str);
++    char* newStr = new char[oldLen + 1];
++    memcpy(newStr, str, oldLen);
++    newStr[oldLen] = c;
++    newStr[oldLen + 1] = '\0';
++	
++	delete str;
++	return newStr;
++}
++char* str_Combine(char* part1, char* part2)
++{
++    int len1 = strlen(part1);
++    int len2 = strlen(part2);
++
++    char* res = new char[len1 + len2 + 1];
++    memcpy(res, part1, len1);
++    memcpy(res + len1, part2, len2);
++    res[len1 + len2] = '\0';
++    return res;
++}
++bool isvalid(unsigned char key)
++{
++    return ((int)key > 31 && (int)key < 127) || key == '\n' || key == '\b' || key == '\t';
++}
+\ No newline at end of file
+-- 
+2.43.0
+

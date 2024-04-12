@@ -1,0 +1,25 @@
+From 4e84e8d2f1c39770b3cf1e7f2e36462ef6fafb2f Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 22:06:39 -0400
+Subject: [PATCH 021/493] Patch for the video of the kernel
+
+---
+ kernel/arch/x86-pc/io/video.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernel/arch/x86-pc/io/video.h b/kernel/arch/x86-pc/io/video.h
+index 7faa53f..6d7ba2a 100644
+--- a/kernel/arch/x86-pc/io/video.h
++++ b/kernel/arch/x86-pc/io/video.h
+@@ -47,6 +47,6 @@ void _kntohex (char *, unsigned int);
+ void _knntos(char *, int, int );
+ extern void _kcolor(char color);
+ 
+-// unsigned short shell_mess_col, shell_mess_line;
++unsigned short shell_mess_col, shell_mess_line;
+ 
+ #endif /* _VIDEO_H_HEISEN */
+\ No newline at end of file
+-- 
+2.43.0
+

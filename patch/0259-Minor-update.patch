@@ -1,0 +1,105 @@
+From 5a672e6b6856725a7abb4866641ae0542beba99f Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 18:06:35 -0400
+Subject: [PATCH 259/493] Minor update
+
+---
+ lib/include/drivers/usb3.hpp | 13 +++++++++++++
+ lib/include/types.h          | 14 ++++++++++++++
+ lib/include/usb3.h           | 37 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 64 insertions(+)
+ create mode 100644 lib/include/drivers/usb3.hpp
+ create mode 100644 lib/include/usb3.h
+
+diff --git a/lib/include/drivers/usb3.hpp b/lib/include/drivers/usb3.hpp
+new file mode 100644
+index 0000000..db9f94c
+--- /dev/null
++++ b/lib/include/drivers/usb3.hpp
+@@ -0,0 +1,13 @@
++#ifndef _HEISEN_OS_USB3_HPP__
++#define _HEISEN_OS_USB3_HPP__
++
++#include "types.h"
++
++#pragma pack(push,1)
++typedef struct _usb_dev{
++
++}_usb_dev_t;
++#pragma pack(pop)
++
++
++#endif // _HEISEN_OS_USB3_HPP__
+\ No newline at end of file
+diff --git a/lib/include/types.h b/lib/include/types.h
+index 5ba472f..581b6dd 100644
+--- a/lib/include/types.h
++++ b/lib/include/types.h
+@@ -1,6 +1,20 @@
+ #ifndef __CACTUSOSLIB__TYPES_H
+ #define __CACTUSOSLIB__TYPES_H
+ 
++#pragma pack(push,1)
++typedef struct _xhci_cap_regs_ {
++	uint8_t cap_caplen_version;
++	uint8_t reserved;
++	uint16_t hci_version;
++	uint32_t cap_hcsparams1;
++	uint32_t cap_hcsparams2;
++	uint32_t cap_hcsparams3;
++	uint32_t cap_hccparams1;
++	uint32_t cap_dboff;
++	uint32_t cap_hccparams2;
++}xhci_cap_regs_t;
++#pragma pack(pop)
++
+ namespace LIBHeisenKernel
+ {
+     #define STATIC_ASSERT(condition) typedef char p__LINE__[ (condition) ? 1 : -1];
+diff --git a/lib/include/usb3.h b/lib/include/usb3.h
+new file mode 100644
+index 0000000..c5df380
+--- /dev/null
++++ b/lib/include/usb3.h
+@@ -0,0 +1,37 @@
++#ifndef _HEISEN_OS_USB3_HPP__
++#define _HEISEN_OS_USB3_HPP__
++
++#include "types.h"
++
++
++#if !defined(__cplusplus)
++#define true 1
++#define false 0
++
++typedef enum { FALSE=0, TRUE } bool_t;
++#endif
++
++#if defined(__cplusplus)
++
++namespace LIBHeisenKernel{
++    class USB3{
++        public:
++            USB3();
++            ~USB3();
++        
++        public :
++            void Init();
++            void Detect();
++         
++    };
++};
++
++#else 
++
++typedef struct {
++    bool initialised;
++};
++
++#endif
++
++#endif // _HEISEN_OS_USB3_HPP__
+\ No newline at end of file
+-- 
+2.43.0
+

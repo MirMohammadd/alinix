@@ -1,0 +1,45 @@
+From 3c5b41407cacfcb080aa81c38bb37f2219452d68 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 9 Apr 2024 22:32:59 -0400
+Subject: [PATCH 447/493] Added more documents
+
+---
+ kernelz/include/common/convert.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/kernelz/include/common/convert.h b/kernelz/include/common/convert.h
+index 5b6c4df..904306d 100644
+--- a/kernelz/include/common/convert.h
++++ b/kernelz/include/common/convert.h
+@@ -4,13 +4,20 @@
+ #include <common/types.h>
+ #include <common/memoryoperations.h>
+ 
++
++
+ namespace HeisenOs
+ {
+     namespace common
+     {
++        /**
++         * @brief A set of static functions that will convert the data types from one representation to another.
++        */
+         class Convert
+         {
+         public:
++        // -------------------------------------------------------------
++            // A set of static functions that will convert the data types from one representation to another.
+             static char* IntToString(int i);
+             static char* IntToString32(uint32_t i);
+ 
+@@ -20,6 +27,7 @@ namespace HeisenOs
+ 
+             static int StringToInt(char* string);
+             static uint32_t HexToInt(char* string);
++        // -------------------------------------------------------------
+         };
+     }
+ }
+-- 
+2.43.0
+

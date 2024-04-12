@@ -1,0 +1,747 @@
+From 27075945eee882d3292b7a23f226899ce12c8602 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 7 Apr 2024 17:15:43 -0400
+Subject: [PATCH 400/493] Patch
+
+---
+ Makefile                                      |   6 +--
+ apps/browser/{main.cc => main.cpp}            |  20 +++----
+ apps/calc/{calc.cc => calc.cpp}               |  20 +++----
+ apps/clock/{clock.cc => clock.cpp}            |  20 +++----
+ .../{compositor.cc => compositor.cpp}         |  28 +++++-----
+ .../{compositor.hpp => compositor.h}          |  14 ++---
+ .../{contextmanager.cc => contextmanager.cpp} |   2 +-
+ .../{contextmanager.hpp => contextmanager.h}  |   6 +--
+ apps/compositor/{cursor.hpp => cursor.h}      |   2 +-
+ apps/compositor/{debugger.cc => debugger.cpp} |   8 +--
+ apps/compositor/{debugger.hpp => debugger.h}  |   2 +-
+ apps/compositor/{main.cc => main.cpp}         |  12 ++---
+ .../{scancodes.cc => scancodes.cpp}           |   4 +-
+ apps/desktop/{desktop.cc => desktop.cpp}      |  22 ++++----
+ apps/desktop/{item.hpp => item.h}             |   8 +--
+ apps/init/{init.cc => init.cpp}               |  26 ++++-----
+ apps/init/progress.h                          |   4 +-
+ apps/mines/{mines.cc => mines.cpp}            |  20 +++----
+ apps/powermanager/{main.cc => main.cpp}       |  18 +++----
+ apps/sysinfo/{sysinfo.cc => sysinfo.cpp}      |  20 +++----
+ apps/terminal/{terminal.cc => terminal.cpp}   |  22 ++++----
+ ...terminalcontrol.cc => terminalcontrol.cpp} |   4 +-
+ apps/terminal/terminalcontrol.h               |   2 +-
+ apps/welcome/welcome.cpp                      |  51 ------------------
+ isofiles/apps/welcome.sym                     |   0
+ lib/libcactusos.a                             | Bin 1326072 -> 1326072 bytes
+ 26 files changed, 145 insertions(+), 196 deletions(-)
+ rename apps/browser/{main.cc => main.cpp} (73%)
+ rename apps/calc/{calc.cc => calc.cpp} (93%)
+ rename apps/clock/{clock.cc => clock.cpp} (90%)
+ rename apps/compositor/{compositor.cc => compositor.cpp} (98%)
+ rename apps/compositor/{compositor.hpp => compositor.h} (95%)
+ rename apps/compositor/{contextmanager.cc => contextmanager.cpp} (98%)
+ rename apps/compositor/{contextmanager.hpp => contextmanager.h} (93%)
+ rename apps/compositor/{cursor.hpp => cursor.h} (98%)
+ rename apps/compositor/{debugger.cc => debugger.cpp} (97%)
+ rename apps/compositor/{debugger.hpp => debugger.h} (97%)
+ rename apps/compositor/{main.cc => main.cpp} (93%)
+ rename apps/compositor/{scancodes.cc => scancodes.cpp} (98%)
+ rename apps/desktop/{desktop.cc => desktop.cpp} (92%)
+ rename apps/desktop/{item.hpp => item.h} (92%)
+ rename apps/init/{init.cc => init.cpp} (83%)
+ rename apps/mines/{mines.cc => mines.cpp} (96%)
+ rename apps/powermanager/{main.cc => main.cpp} (89%)
+ rename apps/sysinfo/{sysinfo.cc => sysinfo.cpp} (97%)
+ rename apps/terminal/{terminal.cc => terminal.cpp} (95%)
+ rename apps/terminal/{terminalcontrol.cc => terminalcontrol.cpp} (98%)
+ delete mode 100644 apps/welcome/welcome.cpp
+ delete mode 100644 isofiles/apps/welcome.sym
+
+diff --git a/Makefile b/Makefile
+index a76b771..c9ddd93 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,4 +1,4 @@
+-# Makefile for the HeisenKernel project under the MIT license
++# Makefile for the HeisenKernel project under the MIT 
+ ##########
+ # .s files are GAS assembly
+ # .asm files are nasm assembly
+@@ -43,8 +43,8 @@ QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../q
+ ARCHINCLUDE := kernel/include
+ 
+ 
+-G++PARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -I $(ARCHINCLUDE)  -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -lm  -lstdc++
+-GCCPARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -I $(ARCHINCLUDE) -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas -lm   -lstdc++
++G++PARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -I $(ARCHINCLUDE)  -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas 
++GCCPARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I $(INCLUDEZ) -I $(ARCHINCLUDE) -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas
+ ASPARAMS := --32
+ LDPARAMS := -m elf_i386
+ 
+diff --git a/apps/browser/main.cc b/apps/browser/main.cpp
+similarity index 73%
+rename from apps/browser/main.cc
+rename to apps/browser/main.cpp
+index 5e0093b..aee14bb 100644
+--- a/apps/browser/main.cc
++++ b/apps/browser/main.cpp
+@@ -1,14 +1,14 @@
+-#include <new.hpp>
+-#include <gui/gui.hpp>
+-#include <gui/widgets/button.hpp>
+-#include <gui/widgets/control.hpp>
+-#include <gui/widgets/scrollbar.hpp>
+-#include <gui/widgets/window.hpp>
+-#include <gui/directgui.hpp>
+-#include <convert.hpp>
++#include <new.h>
++#include <gui/gui.h>
++#include <gui/widgets/button.h>
++#include <gui/widgets/control.h>
++#include <gui/widgets/scrollbar.h>
++#include <gui/widgets/window.h>
++#include <gui/directgui.h>
++#include <convert.h>
+ #include <string.h>
+-#include <log.hpp>
+-#include <proc.hpp>
++#include <log.h>
++#include <proc.h>
+ 
+ using namespace LIBHeisenKernel;
+ 
+diff --git a/apps/calc/calc.cc b/apps/calc/calc.cpp
+similarity index 93%
+rename from apps/calc/calc.cc
+rename to apps/calc/calc.cpp
+index ac97e91..4d6f311 100644
+--- a/apps/calc/calc.cc
++++ b/apps/calc/calc.cpp
+@@ -1,14 +1,14 @@
+-#include <new.hpp>
+-#include <gui/gui.hpp>
+-#include <gui/widgets/button.hpp>
+-#include <gui/widgets/control.hpp>
+-#include <gui/widgets/window.hpp>
+-#include <gui/widgets/label.hpp>
+-#include <gui/directgui.hpp>
+-#include <convert.hpp>
++#include <new.h>
++#include <gui/gui.h>
++#include <gui/widgets/button.h>
++#include <gui/widgets/control.h>
++#include <gui/widgets/window.h>
++#include <gui/widgets/label.h>
++#include <gui/directgui.h>
++#include <convert.h>
+ #include <string.h>
+-#include <log.hpp>
+-#include <proc.hpp>
++#include <log.h>
++#include <proc.h>
+ 
+ using namespace LIBHeisenKernel;
+ 
+diff --git a/apps/clock/clock.cc b/apps/clock/clock.cpp
+similarity index 90%
+rename from apps/clock/clock.cc
+rename to apps/clock/clock.cpp
+index c7ff8be..b4e1cc9 100644
+--- a/apps/clock/clock.cc
++++ b/apps/clock/clock.cpp
+@@ -1,13 +1,13 @@
+-#include <new.hpp>
+-#include <gui/gui.hpp>
+-#include <gui/directgui.hpp>
+-#include <convert.hpp>
+-#include <time.hpp>
+-#include <datetime.hpp>
++#include <new.h>
++#include <gui/gui.h>
++#include <gui/directgui.h>
++#include <convert.h>
++#include <time.h>
++#include <datetime.h>
+ #include <string.h>
+-#include <math.hpp>
+-#include <log.hpp>
+-#include <proc.hpp>
++#include <math.h>
++#include <log.h>
++#include <proc.h>
+ 
+ int main(int argc, char** argv)
+ {
+@@ -16,7 +16,7 @@ int main(int argc, char** argv)
+     if(mainScreen == 0)
+         return -1;
+ 
+-    mainScreen->sharedContextInfo->supportsTransparency = true;
++    mainScreen->sharedContextInfo->supportsDirtyRects= true;
+     mainScreen->sharedContextInfo->background = true;
+     mainScreen->sharedContextInfo->supportsDirtyRects = true;
+     int prevSec = -1;
+diff --git a/apps/compositor/compositor.cc b/apps/compositor/compositor.cpp
+similarity index 98%
+rename from apps/compositor/compositor.cc
+rename to apps/compositor/compositor.cpp
+index e905fcd..bed87d7 100644
+--- a/apps/compositor/compositor.cc
++++ b/apps/compositor/compositor.cpp
+@@ -14,21 +14,21 @@
+  * @file compositor.cc
+ 
+  */
+-#include "compositor.hpp"
+-#include "cursor.hpp"
+-
+-#include <gui/directgui.hpp>
+-#include <gui/gui.hpp>
+-#include <gui/colors.hpp>
+-#include <imaging/image.hpp>
+-#include <systeminfo.hpp>
+-#include <proc.hpp>
+-#include <gui/contextheap.hpp>
+-#include <log.hpp>
+-#include <ipc.hpp>
+-#include <math.hpp>
++#include "compositor.h"
++#include "cursor.h"
++
++#include <gui/directgui.h>
++#include <gui/gui.h>
++#include <gui/colors.h>
++#include <imaging/image.h>
++#include <systeminfo.h>
++#include <proc.h>
++#include <gui/contextheap.h>
++#include <log.h>
++#include <ipc.h>
++#include <math.h>
+ #include <string.h>
+-#include <heap.hpp>
++#include <heap.h>
+ 
+ using namespace LIBHeisenKernel;
+ using namespace LIBHeisenKernel::Imaging;
+diff --git a/apps/compositor/compositor.hpp b/apps/compositor/compositor.h
+similarity index 95%
+rename from apps/compositor/compositor.hpp
+rename to apps/compositor/compositor.h
+index 2ad95f3..83da3bb 100644
+--- a/apps/compositor/compositor.hpp
++++ b/apps/compositor/compositor.h
+@@ -17,13 +17,13 @@
+ #ifndef __COMPISTOR_H
+ #define __COMPISTOR_H
+ 
+-#include <types.hpp>
+-#include <gui/rect.hpp>
+-#include <gui/canvas.hpp>
+-#include <ipc.hpp>
+-#include <imaging/image.hpp>
+-#include "contextmanager.hpp"
+-#include "debugger.hpp"
++#include <types.h>
++#include <gui/rect.h>
++#include <gui/canvas.h>
++#include <ipc.h>
++#include <imaging/image.h>
++#include "contextmanager.h"
++#include "debugger.h"
+ 
+ #define COMPOSITOR_DEFAULT_BACKGROUND 0xFFBFFFD0
+ 
+diff --git a/apps/compositor/contextmanager.cc b/apps/compositor/contextmanager.cpp
+similarity index 98%
+rename from apps/compositor/contextmanager.cc
+rename to apps/compositor/contextmanager.cpp
+index 9f10bee..4e44a12 100644
+--- a/apps/compositor/contextmanager.cc
++++ b/apps/compositor/contextmanager.cpp
+@@ -14,7 +14,7 @@
+  * @file contextmanager.cc
+ 
+  */
+-#include "contextmanager.hpp"
++#include "contextmanager.h"
+ 
+ using namespace LIBHeisenKernel;
+ 
+diff --git a/apps/compositor/contextmanager.hpp b/apps/compositor/contextmanager.h
+similarity index 93%
+rename from apps/compositor/contextmanager.hpp
+rename to apps/compositor/contextmanager.h
+index cf0388b..77c7818 100644
+--- a/apps/compositor/contextmanager.hpp
++++ b/apps/compositor/contextmanager.h
+@@ -11,15 +11,15 @@
+  * furnished to do so, subject to the following conditions:
+  *
+  * @author Heisenberg
+- * @file contextmanager.hpp
++ * @file contextmanager.h
+ 
+  */
+ #ifndef __CONTEXTMANAGER_H
+ #define __CONTEXTMANAGER_H
+ 
+-#include <types.hpp>
++#include <types.h>
+ #include <list.h>
+-#include <gui/contextinfo.hpp>
++#include <gui/contextinfo.h>
+ 
+ // Class that manages a list of contexts
+ class ContextManager
+diff --git a/apps/compositor/cursor.hpp b/apps/compositor/cursor.h
+similarity index 98%
+rename from apps/compositor/cursor.hpp
+rename to apps/compositor/cursor.h
+index 90fed4e..cfdd48c 100644
+--- a/apps/compositor/cursor.hpp
++++ b/apps/compositor/cursor.h
+@@ -17,7 +17,7 @@
+ #ifndef _CURSOR_H
+ #define _CURSOR_H
+ 
+-#include <types.hpp>
++#include <types.h>
+ 
+ #define ALPHA 0
+ #define BLACK 1
+diff --git a/apps/compositor/debugger.cc b/apps/compositor/debugger.cpp
+similarity index 97%
+rename from apps/compositor/debugger.cc
+rename to apps/compositor/debugger.cpp
+index 4c310c5..c850412 100644
+--- a/apps/compositor/debugger.cc
++++ b/apps/compositor/debugger.cpp
+@@ -14,10 +14,10 @@
+  * @file debugger.cc
+ 
+  */
+-#include "debugger.hpp"
+-#include <convert.hpp>
+-#include <time.hpp>
+-#include <gui/gui.hpp>
++#include "debugger.h"
++#include <convert.h>
++#include <time.h>
++#include <gui/gui.h>
+ 
+ using namespace LIBHeisenKernel;
+ 
+diff --git a/apps/compositor/debugger.hpp b/apps/compositor/debugger.h
+similarity index 97%
+rename from apps/compositor/debugger.hpp
+rename to apps/compositor/debugger.h
+index 8a27004..3aef1d6 100644
+--- a/apps/compositor/debugger.hpp
++++ b/apps/compositor/debugger.h
+@@ -17,7 +17,7 @@
+ #ifndef __DEBUGGER_H
+ #define __DEBUGGER_H
+ 
+-#include "compositor.hpp"
++#include "compositor.h"
+ 
+ class Compositor;
+ 
+diff --git a/apps/compositor/main.cc b/apps/compositor/main.cpp
+similarity index 93%
+rename from apps/compositor/main.cc
+rename to apps/compositor/main.cpp
+index 08adc52..3161ffa 100644
+--- a/apps/compositor/main.cc
++++ b/apps/compositor/main.cpp
+@@ -14,13 +14,13 @@
+  * @file main.cc
+ 
+  */
+-#include <new.hpp>
+-#include <log.hpp>
+-#include <time.hpp>
+-#include <proc.hpp>
+-#include <gui/directgui.hpp>
++#include <new.h>
++#include <log.h>
++#include <time.h>
++#include <proc.h>
++#include <gui/directgui.h>
+ 
+-#include "compositor.hpp"
++#include "compositor.h"
+ 
+ using namespace LIBHeisenKernel;
+ 
+diff --git a/apps/compositor/scancodes.cc b/apps/compositor/scancodes.cpp
+similarity index 98%
+rename from apps/compositor/scancodes.cc
+rename to apps/compositor/scancodes.cpp
+index 2f9e5c9..d8d403f 100644
+--- a/apps/compositor/scancodes.cc
++++ b/apps/compositor/scancodes.cpp
+@@ -14,8 +14,8 @@
+  * @file scancodes.cc
+ 
+  */
+-#include <types.hpp>
+-#include <shared.hpp>
++#include <types.h>
++#include <shared.h>
+ 
+ using namespace LIBHeisenKernel;
+ 
+diff --git a/apps/desktop/desktop.cc b/apps/desktop/desktop.cpp
+similarity index 92%
+rename from apps/desktop/desktop.cc
+rename to apps/desktop/desktop.cpp
+index f43c95d..501063f 100644
+--- a/apps/desktop/desktop.cc
++++ b/apps/desktop/desktop.cpp
+@@ -1,15 +1,15 @@
+-#include <new.hpp>
+-#include <gui/gui.hpp>
+-#include <gui/directgui.hpp>
+-#include <convert.hpp>
+-#include <time.hpp>
+-#include <datetime.hpp>
++#include <new.h>
++#include <gui/gui.h>
++#include <gui/directgui.h>
++#include <convert.h>
++#include <time.h>
++#include <datetime.h>
+ #include <string.h>
+-#include <math.hpp>
+-#include <log.hpp>
+-#include <proc.hpp>
+-#include <vfs.hpp>
+-#include "item.hpp"
++#include <math.h>
++#include <log.h>
++#include <proc.h>
++#include <vfs.h>
++#include "item.h"
+ 
+ List<DesktopItem*>* items = 0;
+ 
+diff --git a/apps/desktop/item.hpp b/apps/desktop/item.h
+similarity index 92%
+rename from apps/desktop/item.hpp
+rename to apps/desktop/item.h
+index dfb04f7..10ad77b 100644
+--- a/apps/desktop/item.hpp
++++ b/apps/desktop/item.h
+@@ -1,10 +1,10 @@
+ #ifndef ITEM_H
+ #define ITEM_H
+ 
+-#include <gui/context.hpp>
+-#include <gui/gui.hpp>
+-#include <imaging/image.hpp>
+-#include <imaging/pngformat.hpp>
++#include <gui/context.h>
++#include <gui/gui.h>
++#include <imaging/image.h>
++#include <imaging/pngformat.h>
+ 
+ using namespace LIBHeisenKernel;
+ using namespace LIBHeisenKernel::Imaging;
+diff --git a/apps/init/init.cc b/apps/init/init.cpp
+similarity index 83%
+rename from apps/init/init.cc
+rename to apps/init/init.cpp
+index ca9e10d..ccf0cc2 100644
+--- a/apps/init/init.cc
++++ b/apps/init/init.cpp
+@@ -1,17 +1,17 @@
+-#include <log.hpp>
+-#include <api.hpp>
+-#include <types.hpp>
+-#include <vfs.hpp>
+-#include <syscall.hpp>
+-#include <gui/directgui.hpp>
++#include <log.h>
++#include <api.h>
++#include <types.h>
++#include <vfs.h>
++#include <syscall.h>
++#include <gui/directgui.h>
+ #include <string.h>
+-#include <new.hpp>
+-#include <proc.hpp>
+-#include <ipc.hpp>
+-#include <time.hpp>
+-#include <math.hpp>
+-#include <gui/gui.hpp>
+-#include <imaging/image.hpp>
++#include <new.h>
++#include <proc.h>
++#include <ipc.h>
++#include <time.h>
++#include <math.h>
++#include <gui/gui.h>
++#include <imaging/image.h>
+ #include "progress.h"
+ 
+ using namespace LIBHeisenKernel;
+diff --git a/apps/init/progress.h b/apps/init/progress.h
+index 3adca01..0721767 100644
+--- a/apps/init/progress.h
++++ b/apps/init/progress.h
+@@ -1,8 +1,8 @@
+ #ifndef PROGRESS_H
+ #define PROGRESS_H
+ 
+-#include <types.hpp>
+-#include <gui/directgui.hpp>
++#include <types.h>
++#include <gui/directgui.h>
+ 
+ using namespace LIBHeisenKernel;
+ 
+diff --git a/apps/mines/mines.cc b/apps/mines/mines.cpp
+similarity index 96%
+rename from apps/mines/mines.cc
+rename to apps/mines/mines.cpp
+index af811e5..2ec76dc 100644
+--- a/apps/mines/mines.cc
++++ b/apps/mines/mines.cpp
+@@ -1,14 +1,14 @@
+-#include <new.hpp>
+-#include <log.hpp>
+-#include <gui/widgets/button.hpp>
+-#include <gui/widgets/window.hpp>
+-#include <gui/directgui.hpp>
+-#include <random.hpp>
+-#include <datetime.hpp>
+-#include <time.hpp>
+-#include <convert.hpp>
++#include <new.h>
++#include <log.h>
++#include <gui/widgets/button.h>
++#include <gui/widgets/window.h>
++#include <gui/directgui.h>
++#include <random.h>
++#include <datetime.h>
++#include <time.h>
++#include <convert.h>
+ #include <string.h>
+-#include <gui/widgets/label.hpp>
++#include <gui/widgets/label.h>
+ 
+ using namespace LIBHeisenKernel;
+ 
+diff --git a/apps/powermanager/main.cc b/apps/powermanager/main.cpp
+similarity index 89%
+rename from apps/powermanager/main.cc
+rename to apps/powermanager/main.cpp
+index 2575f0b..36f7280 100644
+--- a/apps/powermanager/main.cc
++++ b/apps/powermanager/main.cpp
+@@ -1,12 +1,12 @@
+-#include <new.hpp>
+-#include <gui/gui.hpp>
+-#include <gui/widgets/window.hpp>
+-#include <gui/widgets/button.hpp>
+-#include <gui/directgui.hpp>
+-#include <proc.hpp>
+-#include <syscall.hpp>
+-#include <vfs.hpp>
+-#include <log.hpp>
++#include <new.h>
++#include <gui/gui.h>
++#include <gui/widgets/window.h>
++#include <gui/widgets/button.h>
++#include <gui/directgui.h>
++#include <proc.h>
++#include <syscall.h>
++#include <vfs.h>
++#include <log.h>
+ 
+ void PoweroffButtonCallback(void* sender, MouseButtonArgs arg);
+ void RebootButtonCallback(void* sender, MouseButtonArgs arg);
+diff --git a/apps/sysinfo/sysinfo.cc b/apps/sysinfo/sysinfo.cpp
+similarity index 97%
+rename from apps/sysinfo/sysinfo.cc
+rename to apps/sysinfo/sysinfo.cpp
+index b09e7d9..9372a85 100644
+--- a/apps/sysinfo/sysinfo.cc
++++ b/apps/sysinfo/sysinfo.cpp
+@@ -1,14 +1,14 @@
+-#include <log.hpp>
+-#include <api.hpp>
+-#include <types.hpp>
+-#include <vfs.hpp>
+-#include <syscall.hpp>
++#include <log.h>
++#include <api.h>
++#include <types.h>
++#include <vfs.h>
++#include <syscall.h>
+ #include <string.h>
+-#include <new.hpp>
+-#include <proc.hpp>
+-#include <ipc.hpp>
+-#include <time.hpp>
+-#include <math.hpp>
++#include <new.h>
++#include <proc.h>
++#include <ipc.h>
++#include <time.h>
++#include <math.h>
+ 
+ void PrintDiskInfo()
+ {
+diff --git a/apps/terminal/terminal.cc b/apps/terminal/terminal.cpp
+similarity index 95%
+rename from apps/terminal/terminal.cc
+rename to apps/terminal/terminal.cpp
+index 1e883b1..f27d619 100644
+--- a/apps/terminal/terminal.cc
++++ b/apps/terminal/terminal.cpp
+@@ -1,15 +1,15 @@
+-#include <new.hpp>
+-#include <gui/gui.hpp>
+-#include <gui/widgets/window.hpp>
+-#include <gui/widgets/label.hpp>
+-#include <gui/directgui.hpp>
++#include <new.h>
++#include <gui/gui.h>
++#include <gui/widgets/window.h>
++#include <gui/widgets/label.h>
++#include <gui/directgui.h>
+ #include <string.h>
+-#include <log.hpp>
+-#include <proc.hpp>
+-#include <convert.hpp>
+-#include <ipc.hpp>
+-#include <vfs.hpp>
+-#include <time.hpp>
++#include <log.h>
++#include <proc.h>
++#include <convert.h>
++#include <ipc.h>
++#include <vfs.h>
++#include <time.h>
+ #include "terminalcontrol.h"
+ 
+ char* workingDir = "B:\\";
+diff --git a/apps/terminal/terminalcontrol.cc b/apps/terminal/terminalcontrol.cpp
+similarity index 98%
+rename from apps/terminal/terminalcontrol.cc
+rename to apps/terminal/terminalcontrol.cpp
+index 12fa875..541d934 100644
+--- a/apps/terminal/terminalcontrol.cc
++++ b/apps/terminal/terminalcontrol.cpp
+@@ -1,7 +1,7 @@
+ #include "terminalcontrol.h"
+ #include <string.h>
+-#include <proc.hpp>
+-#include <gui/widgets/window.hpp>
++#include <proc.h>
++#include <gui/widgets/window.h>
+ 
+ using namespace LIBHeisenKernel;
+ 
+diff --git a/apps/terminal/terminalcontrol.h b/apps/terminal/terminalcontrol.h
+index 71daaa8..20fc79f 100644
+--- a/apps/terminal/terminalcontrol.h
++++ b/apps/terminal/terminalcontrol.h
+@@ -1,7 +1,7 @@
+ #ifndef TERMINAL_CONTROL_H
+ #define TERMINAL_CONTROL_H
+ 
+-#include <gui/widgets/control.hpp>
++#include <gui/widgets/control.h>
+ 
+ #define TERM_WIDTH 74
+ #define TERM_HEIGH 26
+diff --git a/apps/welcome/welcome.cpp b/apps/welcome/welcome.cpp
+deleted file mode 100644
+index 0b543d0..0000000
+--- a/apps/welcome/welcome.cpp
++++ /dev/null
+@@ -1,51 +0,0 @@
+-#include <new.h>
+-#include <gui/gui.h>
+-#include <gui/widgets/button.h>
+-#include <gui/widgets/control.h>
+-#include <gui/widgets/scrollbar.h>
+-#include <gui/widgets/window.h>
+-#include <gui/directgui.h>
+-#include <convert.h>
+-#include <string.h>
+-#include <log.h>
+-#include <proc.h>
+-
+-
+-using namespace LIBHeisenKernel;
+-// using namespace LIBHeisenKernel::Imaging;
+-
+-char* path = "B:\\boot.jpg";
+-
+-Window* welcomeWindow = 0;
+-
+-void ValueChange(void *s,int v){
+-    welcomeWindow->backColor = v * 1000;
+-}
+-
+-
+-int main(){
+-    Log(Info,"Welcome to the Heisen OS!!!");
+-    GUI::SetDefaultFont();
+-
+-    welcomeWindow = new Window(600, 600, 300, 300);
+-    welcomeWindow->titleString = "Welcome to the Heisen OS!";
+-
+-    ScrollBar* scroll = new ScrollBar(Vertical);
+-    scroll->x = 100;
+-    scroll->y = 200;
+-
+-    scroll->value.onChanged += ValueChange;
+-    welcomeWindow->AddChild(scroll);
+-
+-
+-    while (GUI::HasItems()){
+-        GUI::DrawGUI();
+-        GUI::ProcessEvents();
+-        //scroll->value += 1;
+-        if(scroll->value >= scroll->maxValue) {
+-            scroll->value = 0;
+-            scroll->maxValue += 20;
+-        }
+-    }
+-    return 0;
+-}
+\ No newline at end of file
+diff --git a/isofiles/apps/welcome.sym b/isofiles/apps/welcome.sym
+deleted file mode 100644
+index e69de29..0000000
+diff --git a/lib/libcactusos.a b/lib/libcactusos.a
+index 00366c9b96d6678bb729ab85714d4e1b9d6a473c..24a42036b242ebe6d89edc90ddef12992a16e418 100644
+GIT binary patch
+delta 707
+zcmezIJ>bXpfC(~erbZ^F#s(Xe;v88)Orz-s`8dTl&vCpWjm+<fl@NyVH)@KAZ$40P
+z!Wx;sWX%F*WPZYiB`AD_EvWnl+fOJWt3Prx#1x6Y-GrZU2OpBa^aab<S+?`YF*<M|
+ziEhu(U|hqGB+zbP!MNSPg6T~X*k4AL)9*cI6K}Vi%>=~EK+FQftlKSTvuTS$RZL!Y
+zQ(}A52DUI`sK9ohmS^z@S@G=;o!R#rAq(s+V?VAB6#(0?ec>|p_EeYwdORFy-%+GD
+zGIMfs!%XN~BfkA6AE&nhOv%1dZt?Ao`kc<s!6L>6(}5xq+ZTy(&AJB@0Xj-zd(>C1
+zs066U<i0gx+b@K2mk7X=$ni6ZZ%<6)4(Er8YzG=+Cx)cHU80A3yF?Gq3z#7gi{#$&
+zB*82K8QVVRH1GB~r}<Kvk&KquF6Ym`X%ft|bvMP^-#+Bu{`R3jG{mpQ2HX8^3I_d!
+z=>diO_Py7HuBX66!2aB5Ev(OkWXkrxw!-B)FeP9=Ow1Dg-;Gcrv3=b);eU__Fg5`D
+K`-G;5fe--nwdi92
+
+delta 691
+zcmezIJ>bXpfC(~eCMG5pW)>Tj;v6AN)5(2n#5T`yydsUv?}?QVhVj?k6yJQX;J7uE
+zzqxPCHfER{NN>W1B`AD_Ey#TF%@4O9SA^+ZcQeZr%HA%=&v=dx%9(!eF`M{yPB}(r
+zE|>^VT6}w^2IFdeh=>`;q3s41jN1(?nBF8o1;HBIEoU<UF*6Xe05R)!%h_z&qA+di
+zZc1!#+Q1fO3=uHj4z%l8Jd`sT=)3I?o!R#rAq(s+V?VAB6@WNx;WGC2RG0yJJRE7?
+zQKUCAb8>UTOz2x9zWpX2r?&!3$-Yu<@$HWKoX*dYL?pH^662b64<-V1l*IO^uUt_H
+z2xG*yUkK$c5r8QHhe%=?cQ`ae%(nv#wi82A-!9R^y<MV*=LO7==|B|{+vVQ!B;8{L
+z$Ncn<vW(*Gb58SapL3cor5P$1sKF?)UDls}^CV<dZyxe*fAdfv<~x$$_LQ4~Hh&QU
+zlH2!P6S|gy5D?$K!CKgW30dHet#E}7Q~+$##4O?e-AF2yulXiyjKtr5LQ}**2mq#n
+B<kSEF
+
+-- 
+2.43.0
+

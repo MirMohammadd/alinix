@@ -1,0 +1,25 @@
+From c967795f37ed1773b3b5ad933ab88ae511b49bf1 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sat, 6 Apr 2024 13:00:36 -0400
+Subject: [PATCH 355/493] Update
+
+---
+ kernelz/src/core/gdthelper.asm | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/kernelz/src/core/gdthelper.asm b/kernelz/src/core/gdthelper.asm
+index 2f29751..ea1a84c 100644
+--- a/kernelz/src/core/gdthelper.asm
++++ b/kernelz/src/core/gdthelper.asm
+@@ -11,6 +11,6 @@ gdt_flush:
+    mov fs, ax
+    mov gs, ax
+    mov ss, ax
+-   jmp .flush         
++   jmp 0x08, .flush   
+ .flush:
+-   ; ret             
++   ret
+-- 
+2.43.0
+

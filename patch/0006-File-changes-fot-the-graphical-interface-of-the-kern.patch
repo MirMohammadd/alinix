@@ -1,0 +1,28 @@
+From e70122c33401811d238535d312744d49d1112fb6 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 16:37:59 -0400
+Subject: [PATCH 006/493] File changes fot the graphical interface of the
+ kernel
+
+---
+ kernel/gui/graphics.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/kernel/gui/graphics.c b/kernel/gui/graphics.c
+index 1e10e93..54aeda8 100644
+--- a/kernel/gui/graphics.c
++++ b/kernel/gui/graphics.c
+@@ -6,8 +6,8 @@
+  * of the NCSA / University of Illinois License - see LICENSE.md
+  * Copyright (C) 2012-2021 K. Lange
+  */
+-#include <stdint.h>
+-#include <string.h>
++#include "stdint.h" /* For uint32_t, etc. */
++// #include <string.h>
+ #include <stdio.h>
+ #include <math.h>
+ #include <fcntl.h>
+-- 
+2.43.0
+

@@ -1,0 +1,27 @@
+From 4c01bffca18dcb9b52bf1c83c98f6bdf51749a8d Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 18:39:16 -0400
+Subject: [PATCH 111/493] CI/CD update
+
+---
+ .github/workflows/test.yml | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index 199a5b0..0a93499 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -19,6 +19,10 @@ jobs:
+           sudo apt-get update
+           sudo apt-get install -y build-essential git wget bzip2 xz-utils unzip help2man libtool-bin nasm python2 python3 python-pip grub-common xorriso mtools  build-essential build-essential gcc-multilib g++-multilib build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo  
+           python2 -m pip install -r kernel/requirements.txt
++          git clone https://github.com/lordmilko/i686-elf-tools
++          cd i686-elf-tools
++          ./i686-elf-tools.sh linux
++          cd ..
+ 
+ 
+ 
+-- 
+2.43.0
+

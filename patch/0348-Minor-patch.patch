@@ -1,0 +1,61 @@
+From 9ff86cef5f6ab7b0d0c0160aeacf59931d2187e6 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sat, 6 Apr 2024 12:52:37 -0400
+Subject: [PATCH 348/493] Minor patch
+
+---
+ kernelz/src/system/virtual8086/VM8086Code.asm | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
+
+diff --git a/kernelz/src/system/virtual8086/VM8086Code.asm b/kernelz/src/system/virtual8086/VM8086Code.asm
+index 156f14d..3dff955 100644
+--- a/kernelz/src/system/virtual8086/VM8086Code.asm
++++ b/kernelz/src/system/virtual8086/VM8086Code.asm
+@@ -2,17 +2,15 @@
+ 
+ section .text
+ 
+-global _start
+-
+-_start:
+-
+ 
+ global VM86CodeStart
++global Int86
++global diskInfo
++global VM86CodeEnd
++
+ VM86CodeStart:
+ 
+-global Int86
+ Int86:
+-
+     push cs
+     pop ds
+ 
+@@ -41,9 +39,7 @@ doInt:
+ 
+     int 0xFE
+ 
+-global diskInfo
+ diskInfo:
+-
+     mov dl, al
+     mov ax, 0x4800
+ 
+@@ -56,12 +52,10 @@ diskInfo:
+     int 0xFE
+ 
+ diskInfoError:
+-
+     mov [0x7000], 0
+ 
+     int 0xFE
+ 
+-global VM86CodeEnd
+ VM86CodeEnd:
+ 
+ section .bss
+-- 
+2.43.0
+

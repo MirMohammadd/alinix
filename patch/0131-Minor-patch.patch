@@ -1,0 +1,22 @@
+From cf087d01a962f608c8a94ba43a42dd67d20035db Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 21:09:53 -0400
+Subject: [PATCH 131/493] Minor patch
+
+---
+ .github/workflows/tests.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
+index 82b09ad..dba11df 100644
+--- a/.github/workflows/tests.yml
++++ b/.github/workflows/tests.yml
+@@ -22,4 +22,4 @@ jobs:
+         sudo apt-get install -y gcc-multilib qemu qemu-system-x86 nasm xorriso grub-common grub-pc-bin mtools make gcc-i686-linux-gnu binutils-i686-linux-gnu
+ 
+     - name: Build project
+-      run: make build # Replace 'make build' with your build command
++      run: make  # Replace 'make build' with your build command
+-- 
+2.43.0
+

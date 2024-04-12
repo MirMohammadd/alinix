@@ -1,0 +1,25 @@
+From b5cdf6a04fc9c988f30c9efc6fa1ffe6ed68e0c9 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 20:23:07 -0400
+Subject: [PATCH 211/493] Minor update
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 98753c4..90c8742 100644
+--- a/Makefile
++++ b/Makefile
+@@ -11,7 +11,7 @@ KRNLSRCDIR := kernelz/obj
+ KRNLOBJDIR := kernelz/obj
+ 
+ KRNLFILES := $(shell find $(KRNLSRCDIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) #Find all the files that end with .cpp/.s/.asm/.c
+-KRNLOBJS := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(KRNLFILES)))) #Replace the .cpp/.s/.asm/.c extension with .o
++KRNLOBJS := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(KRNLFILES)))) #Replace the .cpp/.s/.asm/.c extension with .o)
+ KRNLOBJS := $(subst $(KRNLSRCDIR),$(KRNLOBJDIR),$(KRNLOBJS)) #Replace the kernelz/src part with kernelz/obj
+ 
+ ####################################
+-- 
+2.43.0
+

@@ -1,0 +1,122 @@
+From 554bcebc84be178c49e07ad8e69be1fa3d64105f Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 18:40:50 -0400
+Subject: [PATCH 266/493] USB DS updates
+
+---
+ lib/include/spinlock.h   | 14 ++++++++++++++
+ lib/include/spinlock.hpp | 14 ++++++++++++++
+ lib/include/types.h      |  1 +
+ lib/include/usb3.h       | 20 ++++++++++++++++++++
+ lib/include/xhci.h       |  8 ++++++++
+ 5 files changed, 57 insertions(+)
+ create mode 100644 lib/include/spinlock.h
+ create mode 100644 lib/include/spinlock.hpp
+
+diff --git a/lib/include/spinlock.h b/lib/include/spinlock.h
+new file mode 100644
+index 0000000..a5c1c02
+--- /dev/null
++++ b/lib/include/spinlock.h
+@@ -0,0 +1,14 @@
++#ifndef _HEISEN_KERNEL_SPINLOCK__H
++#define _HEISEN_KERNEL_SPINLOCK__H
++
++#include "types.h"
++
++using namespace LIBHeisenKernel;
++
++#pragma pack(push,1)
++typedef struct _spinlock_ {
++	size_t value;
++}Spinlock;
++#pragma pack(pop)
++
++#endif 
+\ No newline at end of file
+diff --git a/lib/include/spinlock.hpp b/lib/include/spinlock.hpp
+new file mode 100644
+index 0000000..9741296
+--- /dev/null
++++ b/lib/include/spinlock.hpp
+@@ -0,0 +1,14 @@
++#ifndef _HEISEN_KERNEL_SPINLOCK__HPP
++#define _HEISEN_KERNEL_SPINLOCK__HPP
++
++#include "types.h"
++
++using namespace LIBHeisenKernel;
++
++#pragma pack(push,1)
++typedef struct _spinlock_ {
++	size_t value;
++}Spinlock;
++#pragma pack(pop)
++
++#endif 
+\ No newline at end of file
+diff --git a/lib/include/types.h b/lib/include/types.h
+index e32f2b3..559bb55 100644
+--- a/lib/include/types.h
++++ b/lib/include/types.h
+@@ -16,6 +16,7 @@ namespace LIBHeisenKernel
+     typedef long long int               int64_t;
+     typedef unsigned long long int      uint64_t;
+     typedef unsigned long long          uintptr_t;
++    typedef uint32_t size_t; 
+ 
+     constexpr uint32_t operator"" _KB(unsigned long long no)
+     {
+diff --git a/lib/include/usb3.h b/lib/include/usb3.h
+index 3e0016d..70bb229 100644
+--- a/lib/include/usb3.h
++++ b/lib/include/usb3.h
+@@ -40,6 +40,26 @@ typedef struct {
+     xhci_runtime_regs_t* rt_regs;
+     xhci_ext_cap_t* ext_cap;
+     xhci_port_regs_t* ports;
++    uint32_t num_slots;
++    uint32_t num_ports;
++    uint16_t max_intrs;
++    uint8_t irq;
++    uint64_t* dev_ctx_base_array;
++    xhci_trb_t* cmd_ring;
++    uint64_t cmd_ring_phys;
++    unsigned cmd_ring_index;
++    unsigned cmd_ring_max;
++    unsigned cmd_ring_cycle;
++    uint64_t* event_ring_segment;
++    uint64_t* event_ring_seg_phys;
++    unsigned evnt_ring_index;
++	unsigned evnt_ring_cycle;
++	unsigned evnt_ring_max;
++	int poll_event_for_trb;
++	bool event_available;
++	int poll_return_trb_type;
++	int trb_event_index;
++    Spinlock *usb_lock;
+ }USBDevice;
+ 
+ #endif
+diff --git a/lib/include/xhci.h b/lib/include/xhci.h
+index 0a0fb08..50516e1 100644
+--- a/lib/include/xhci.h
++++ b/lib/include/xhci.h
+@@ -102,5 +102,13 @@ typedef struct _xhci_port_reg_ {
+ }xhci_port_regs_t;
+ #pragma pack(pop)
+ 
++typedef struct _xhci_trb_{
++	uint32_t trb_param_1;
++	uint32_t trb_param_2;
++	uint32_t trb_status;
++	uint32_t trb_control;
++}xhci_trb_t;
++#pragma pack(pop)
++
+ 
+ #endif
+\ No newline at end of file
+-- 
+2.43.0
+

@@ -1,0 +1,25 @@
+From b22c75c0073dd95aa0257da0690af7ccd7aeae7b Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sat, 6 Apr 2024 13:31:03 -0400
+Subject: [PATCH 369/493] PAtch
+
+---
+ kernelz/linker.ld | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernelz/linker.ld b/kernelz/linker.ld
+index 5ecde90..eb4cdd2 100644
+--- a/kernelz/linker.ld
++++ b/kernelz/linker.ld
+@@ -40,7 +40,7 @@ SECTIONS
+     /DISCARD/ : {
+         *(___x86.get_pc_thunk.ax)
+         *(___x86.get_pc_thunk.bx)
+-        *(__GLOBAL_OFFSET_TABLE_)
++        *(_GLOBAL_OFFSET_TABLE_)
+         *(operator new*)
+         *(operator delete*)
+         *(HeisenOs::core::VirtualMemoryManager::virtualToPhysical*)
+-- 
+2.43.0
+

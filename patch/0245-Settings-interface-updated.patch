@@ -1,0 +1,38 @@
+From b208161116d4815d721a2049560c9de3de905ad9 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 4 Apr 2024 17:23:47 -0400
+Subject: [PATCH 245/493] Settings interface updated
+
+---
+ apps/settings/settings.cpp | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+ create mode 100644 apps/settings/settings.cpp
+
+diff --git a/apps/settings/settings.cpp b/apps/settings/settings.cpp
+new file mode 100644
+index 0000000..093763f
+--- /dev/null
++++ b/apps/settings/settings.cpp
+@@ -0,0 +1,18 @@
++#include <gui/context.h>
++#include <gui/widgets/button.h>
++#include <gui/widgets/label.h>
++#include <gui/directgui.h>
++
++
++using namespace LIBHeisenKernel;
++
++
++int main(){
++    GUI::SetDefaultFont();
++    Context* mainScreen = GUI::RequestContext(160, 160, GUI::Width-160, 0);
++    if(mainScreen == 0)
++        return -1;
++
++    DirectGUI::DrawString("Settings",3,14,0xFF000000);
++    
++}
+\ No newline at end of file
+-- 
+2.43.0
+

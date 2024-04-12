@@ -1,0 +1,24 @@
+From 535e75d5595e01eca8d4d1ccd0b3162f761fef41 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 17:37:35 -0400
+Subject: [PATCH 015/493] Patch
+
+---
+ kernel/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/kernel/Makefile b/kernel/Makefile
+index 376d27f..ed8b991 100644
+--- a/kernel/Makefile
++++ b/kernel/Makefile
+@@ -35,6 +35,7 @@ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
+ 	colorforth/editor.o                     \
+ 	colorforth/compiler.o                   \
+ 	arch/x86-pc/startup.o                   \
++	yutani/yutani.o                        \
+ 
+ KERNEL          = $(BUILD_PATH)/roentgenium.elf
+ MULTIBOOT_IMAGE	= $(BUILD_PATH)/heisen.iso
+-- 
+2.43.0
+

@@ -1,0 +1,40 @@
+From f5ffbc175dc8f59cea487fb154a0bd2b47d4cd99 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 18:22:53 -0400
+Subject: [PATCH 480/493] Minor update
+
+---
+ apps/chess/board.h | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/apps/chess/board.h b/apps/chess/board.h
+index e03a9d0..941f1da 100644
+--- a/apps/chess/board.h
++++ b/apps/chess/board.h
+@@ -47,6 +47,23 @@ namespace LIBHeisenKernel{
+         #define KING_POS(board,colour) ((board)->piece[colour][0])
+         
+ 
++    };
++
++    /**
++     * @brief Useful types defined here
++    */
++
++    struct board_t{
++        int square[squareNb];
++        int pos[squareNb];
++
++        sq_t piece[ColorNb][32];
++        int piece_size[ColorNb];
++
++        sq_t pawn[ColourNb][16]; // Just define 9
++        int pawn_size[ColourNb];
++
++        
+     };
+ };
+ 
+-- 
+2.43.0
+

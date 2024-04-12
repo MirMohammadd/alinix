@@ -1,0 +1,38 @@
+From bfbec7b64b9a0e1f921bb5ef60c0ef6c1f61fb5f Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 22:43:39 -0400
+Subject: [PATCH 101/493] Minor patch
+
+---
+ lib/src/log.cpp     | 1 -
+ lib/src/syscall.cpp | 2 +-
+ 2 files changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/lib/src/log.cpp b/lib/src/log.cpp
+index 15c8340..c69a9d7 100644
+--- a/lib/src/log.cpp
++++ b/lib/src/log.cpp
+@@ -50,7 +50,6 @@ void LIBHeisenKernel::Print(const char* __restrict__ format, ...)
+ 			format += amount;
+ 			continue;
+ 		}
+- LIBCactusOS
+ 		const char* format_begun_at = format++;
+  
+ 		if (*format == 'c') {
+diff --git a/lib/src/syscall.cpp b/lib/src/syscall.cpp
+index 7741092..58ed855 100644
+--- a/lib/src/syscall.cpp
++++ b/lib/src/syscall.cpp
+@@ -29,7 +29,7 @@
+ +---+--------------------+
+ */
+ 
+-int LIBCactusOS::DoSyscall(unsigned int intNum, unsigned int arg1, unsigned int arg2, unsigned int arg3, unsigned int arg4, unsigned int arg5)
++int LIBHeisenKernel::DoSyscall(unsigned int intNum, unsigned int arg1, unsigned int arg2, unsigned int arg3, unsigned int arg4, unsigned int arg5)
+ {
+     int a;
+     asm volatile("int $0x80" : "=a" (a) : "0" (intNum), "b" ((int)arg1), "c" ((int)arg2), "d" ((int)arg3), "S" ((int)arg4), "D" ((int)arg5));
+-- 
+2.43.0
+

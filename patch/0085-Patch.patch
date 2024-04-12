@@ -1,0 +1,45 @@
+From a58b79c50474348750d81f5a003585590f892ebd Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 18:30:36 -0400
+Subject: [PATCH 085/493] Patch
+
+---
+ .github/workflows/test.yml | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index f8b3d23..1e42167 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -19,13 +19,13 @@ jobs:
+           sudo apt-get update
+           sudo apt-get install -y build-essential git wget bzip2 xz-utils unzip help2man libtool-bin nasm python2 python3 python-pip grub-common xorriso mtools  build-essential build-essential gcc-multilib g++-multilib build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo
+           python2 -m pip install -r kernel/requirements.txt
+-          wget https://ftp.gnu.org/gnu/gcc/gcc-11.2.0/gcc-11.2.0.tar.gz
+-          tar -xzf gcc-11.2.0.tar.gz
+-          cd gcc-11.2.0
+-          ./configure --target=i686-elf --prefix="$HOME/opt/cross" --disable-nls --enable-languages=c,c++ --without-headers
+-          make
+-          sudo make install
+-          i686-elf-gcc --version
++          # wget https://ftp.gnu.org/gnu/gcc/gcc-11.2.0/gcc-11.2.0.tar.gz
++          # tar -xzf gcc-11.2.0.tar.gz
++          # cd gcc-11.2.0
++          # ./configure --target=i686-elf --prefix="$HOME/opt/cross" --disable-nls --enable-languages=c,c++ --without-headers
++          # make
++          # sudo make install
++          # i686-elf-gcc --version
+ 
+ 
+           
+@@ -33,5 +33,6 @@ jobs:
+         run: |
+           cd kernel
+           make
+-          cd arch/x86-pc
++          cd ..
++          cd apps 
+           make
+-- 
+2.43.0
+

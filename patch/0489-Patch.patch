@@ -1,0 +1,34 @@
+From 3777aacf1f4baec0e9c845d33e7228b9cf383b67 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 19:55:30 -0400
+Subject: [PATCH 489/493] Patch
+
+---
+ apps/chess/option.cpp | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/apps/chess/option.cpp b/apps/chess/option.cpp
+index 45a04e5..810da12 100644
+--- a/apps/chess/option.cpp
++++ b/apps/chess/option.cpp
+@@ -100,5 +100,16 @@ namespace LIBHeisenKernel{
+             return true;
+         }
+ 
++        const char* option_get(const char var[]){
++            option_t * opt;
++
++            ASSERT(var!=NULL);
++
++            opt = option_find(var);
++            if (opt == NULL) return NULL;
++
++            return opt->val;
++        }
++
+     };
+ };
+\ No newline at end of file
+-- 
+2.43.0
+

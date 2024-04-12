@@ -1,0 +1,32 @@
+From 3006b4eed45e41470445a8e53d4a7092305debb8 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 7 Apr 2024 21:34:03 -0400
+Subject: [PATCH 406/493] Patch
+
+---
+ .github/workflows/tests.yml | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
+
+diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
+index d6282be..ebe7eaf 100644
+--- a/.github/workflows/tests.yml
++++ b/.github/workflows/tests.yml
+@@ -27,14 +27,7 @@ jobs:
+       run: brew tap nativeos/i686-elf-gcc && brew install i686-elf-gcc
+ 
+ 
+-    - name: Try to fix broken packages
+-      run: sudo apt-get install -f
+-
+-    - name: Set PATH for i686-elf-gcc and i686-elf-g++
+-      run: |
+-        export PATH="$PATH:/usr/bin:/usr/local/bin:/path/to/i686-elf-gcc-directory/bin:/path/to/i686-elf-g++-directory/bin" # Replace with the actual paths to i686-elf-gcc and i686-elf-g++ directories
+-
+     - name: Build project
+       run: |
+         # nasm -f elf32 -O0 kernelz/src/core/cpuhelper.asm -o kernelz/obj/core/cpuhelper.o
+-        make run # Replace 'make' with your build command
++        make qemu
+-- 
+2.43.0
+

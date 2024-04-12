@@ -1,0 +1,62 @@
+From 41268d53f68cbc1c28022116c2ac42af57e66321 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 10 Apr 2024 17:37:45 -0400
+Subject: [PATCH 456/493] Update
+
+---
+ apps/welcome/welcome.cpp | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
+
+diff --git a/apps/welcome/welcome.cpp b/apps/welcome/welcome.cpp
+index 9aee2f5..1b10e60 100644
+--- a/apps/welcome/welcome.cpp
++++ b/apps/welcome/welcome.cpp
+@@ -19,9 +19,11 @@ const int numOfMines = 16;
+ 
+ static const char multi_line_string[] = 
+ "Heisen Os , licensed under MIT license, written by Heisenberg and intended to provide utility for personal use\n"
+-"\n"
++"\nIt is recommended to reboot your system after installing Os."
+ "\n";
+ 
++
++
+ /**
+  * @brief Static functions that will be implemented on the help GUI menu
+  * @todo call SYSCALL_EXIT (important! otherwise you'll have a memory leak)
+@@ -29,7 +31,7 @@ static const char multi_line_string[] =
+ 
+ static void helpButtonCallback(void *sender,MouseButtonArgs args);
+ static void exitButtonCallback(void *sender,MouseButtonArgs args);
+-
++static void rebootSystemAndSayGoodBye(void *sender,MouseButtonArgs args);
+ 
+ 
+ int main(){
+@@ -46,6 +48,13 @@ int main(){
+     helpMoreOptions->height = 47;
+     helpMoreOptions->x = 1;
+     helpMoreOptions->y = 2;
++
++    Button* shutdownAndReboot = new Button("Reboot and shutdown (recommended)");
++    shutdownAndReboot->width = 300 - 2;
++    shutdownAndReboot->height = 49;
++    shutdownAndReboot->y = 50;
++    shutdownAndReboot->x = 1;
++    shutdownAndReboot->MouseClick += rebootSystemAndSayGoodBye;
+     // helpMoreOptions->MouseClick += HelpMoreOptionsCallback;
+ }
+ 
+@@ -54,4 +63,8 @@ void exitButtonCallback(void *sender,MouseButtonArgs args){
+      * @brief This should be the sys exit call after user click on the close button
+     */
+     DoSyscall(SYSCALL_EXIT);
++}
++
++void rebootSystemAndSayGoodBye(void *sender,MouseButtonArgs args){
++    DoSyscall(SYSCALL_REBOOT);
+ }
+\ No newline at end of file
+-- 
+2.43.0
+

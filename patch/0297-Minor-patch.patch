@@ -1,0 +1,62 @@
+From 476ebc82262eb47323b5babfad7c1259b1754a44 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 22:01:45 -0400
+Subject: [PATCH 297/493] Minor patch
+
+---
+ kernelz/src/core/idt.cpp | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/kernelz/src/core/idt.cpp b/kernelz/src/core/idt.cpp
+index e714ea2..9e202ca 100644
+--- a/kernelz/src/core/idt.cpp
++++ b/kernelz/src/core/idt.cpp
+@@ -12,7 +12,7 @@ IDTEntry idtEntries[IDT_ENTRY_SIZE];
+ IDTPointer idtPointer;
+ 
+ 
+-void InterruptDescriptorTable::SetDescriptor(uint32_t number, void (*handler)(), int accesLevel)
++void SetDescriptor(uint32_t number, void (*handler)(), int accesLevel)
+ {
+     uint32_t callerBase = (uint32_t)handler;
+ 
+@@ -23,7 +23,7 @@ void InterruptDescriptorTable::SetDescriptor(uint32_t number, void (*handler)(),
+     idtEntries[number].selector = 0x8;
+ }
+ 
+-void InterruptDescriptorTable::Install()
++void Install()
+ {
+     idtPointer.size = sizeof(IDTEntry) * IDT_ENTRY_SIZE - 1;
+     idtPointer.base = (uint32_t)&idtEntries[0];
+@@ -96,7 +96,7 @@ void InterruptDescriptorTable::Install()
+         
+ 
+ //Gets called for every interrupt from assembly code
+-uint32_t InterruptDescriptorTable::HandleInterrupt(CPUState* state)
++uint32_t HandleInterrupt(CPUState* state)
+ {
+     uint8_t interrupt = state->InterruptNumber;
+     if(interrupt == 0xD && (state->EFLAGS & (1 << 17)))
+@@ -126,15 +126,15 @@ uint32_t InterruptDescriptorTable::HandleInterrupt(CPUState* state)
+     return (uint32_t)state;
+ }
+ 
+-void InterruptDescriptorTable::EnableInterrupts()
++void EnableInterrupts()
+ {
+     asm volatile ("sti");
+ }
+-void InterruptDescriptorTable::DisableInterrupts()
++void DisableInterrupts()
+ {
+     asm volatile ("cli");
+ }
+-bool InterruptDescriptorTable::AreEnabled()
++bool AreEnabled()
+ {
+     unsigned long flags;
+     asm volatile ( "pushf\n\t"
+-- 
+2.43.0
+

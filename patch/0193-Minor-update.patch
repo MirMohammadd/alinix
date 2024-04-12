@@ -1,0 +1,25 @@
+From 8a6158a2569d8a4abfa54c915d4b8d8058f54c89 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 17:50:58 -0400
+Subject: [PATCH 193/493] Minor update
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index b04235c..c7b2258 100644
+--- a/Makefile
++++ b/Makefile
+@@ -71,7 +71,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
+ ####################################
+ #NASM assembly files
+ ####################################
+-$(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
++$/(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
+ 	mkdir -p $(@D)
+ 	nasm -f elf32 -O0 $< -o $@ 2>/dev/null || true
+ 
+-- 
+2.43.0
+

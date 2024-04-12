@@ -1,0 +1,25 @@
+From 6ad137287093db4df01cf0640591b91ee9c38696 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 23:55:01 -0400
+Subject: [PATCH 320/493] Minor patch
+
+---
+ .github/workflows/tests.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
+index 2ec0dcf..25a8251 100644
+--- a/.github/workflows/tests.yml
++++ b/.github/workflows/tests.yml
+@@ -19,7 +19,7 @@ jobs:
+     - name: Install dependencies
+       run: |
+         sudo apt-get update
+-        sudo apt-get install -y gcc-multilib qemu qemu-system-x86 nasm xorriso grub-common grub-pc-bin mtools make binutils-gold tcc libgcc
++        sudo apt-get install -y gcc-multilib qemu qemu-system-x86 nasm xorriso grub-common grub-pc-bin mtools make binutils-gold tcc 
+         sudo apt-get install -y gcc-11-i686-linux-gnu g++-11-i686-linux-gnu || true
+         sudo apt-get install -y gcc-i686-linux-gnu g++-i686-linux-gnu
+ 
+-- 
+2.43.0
+

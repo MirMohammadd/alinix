@@ -1,0 +1,66 @@
+From 2eb72e0805c6c990488a343744c70f76378653ad Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 15:02:08 -0400
+Subject: [PATCH 049/493] Update
+
+---
+ kernel/include/{new.h => new.hpp} |  0
+ kernel/src/main.cc                | 38 ++++++++++++++++++++++++++++++-
+ 2 files changed, 37 insertions(+), 1 deletion(-)
+ rename kernel/include/{new.h => new.hpp} (100%)
+
+diff --git a/kernel/include/new.h b/kernel/include/new.hpp
+similarity index 100%
+rename from kernel/include/new.h
+rename to kernel/include/new.hpp
+diff --git a/kernel/src/main.cc b/kernel/src/main.cc
+index 610f60d..d6657c7 100644
+--- a/kernel/src/main.cc
++++ b/kernel/src/main.cc
+@@ -8,4 +8,40 @@
+ #include <convert.hpp>
+ #include <string.hpp>
+ #include <log.hpp>
+-#include <proc.hpp>
+\ No newline at end of file
++#include <proc.hpp>
++
++
++using namespace LIBHeisenKernel;
++
++Window* mainWindow = 0;
++
++void ValueChanged(void* s, int v)
++{
++    mainWindow->backColor = v * 1000;
++}
++
++int main(int argc, char** argv)
++{
++    GUI::SetDefaultFont();
++
++    mainWindow = new Window(600, 600, 300, 300);
++    mainWindow->titleString = "CactusOS File Browser";
++
++    ScrollBar* scroll = new ScrollBar(Vertical);
++    scroll->x = 100;
++    scroll->y = 200;
++    scroll->value.onChanged += ValueChanged;
++    mainWindow->AddChild(scroll);
++
++    while (GUI::HasItems()) {
++        GUI::DrawGUI();
++        GUI::ProcessEvents();
++        //scroll->value += 1;
++        if(scroll->value >= scroll->maxValue) {
++            scroll->value = 0;
++            scroll->maxValue += 20;
++        }
++    }
++
++    return 0;
++}
+\ No newline at end of file
+-- 
+2.43.0
+

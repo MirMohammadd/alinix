@@ -1,0 +1,634 @@
+From 8d14018a7173db3b675a1e33481ac595a6bc252d Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 18:36:47 -0400
+Subject: [PATCH 086/493] Minor update
+
+---
+ apps/init/init.cc                |  58 +++++++
+ apps/init/progress.h             |  45 +++++
+ apps/mines/mines.cc              | 281 +++++++++++++++++++++++++++++++
+ apps/powermanager/main.cc        |  68 ++++++++
+ kernel/include/datetime.hpp      |  29 ++++
+ kernel/include/imaging/image.hpp |  62 +++++++
+ kernel/include/random.hpp        |  17 ++
+ 7 files changed, 560 insertions(+)
+ create mode 100644 apps/init/init.cc
+ create mode 100644 apps/init/progress.h
+ create mode 100644 apps/mines/mines.cc
+ create mode 100644 apps/powermanager/main.cc
+ create mode 100644 kernel/include/datetime.hpp
+ create mode 100644 kernel/include/imaging/image.hpp
+ create mode 100644 kernel/include/random.hpp
+
+diff --git a/apps/init/init.cc b/apps/init/init.cc
+new file mode 100644
+index 0000000..061adc2
+--- /dev/null
++++ b/apps/init/init.cc
+@@ -0,0 +1,58 @@
++#include <log.hpp>
++#include <api.hpp>
++#include <types.hpp>
++#include <vfs.hpp>
++#include <syscall.hpp>
++#include <gui/directgui.hpp>
++#include <string.hpp>
++#include <new.hpp>
++#include <proc.hpp>
++#include <ipc.hpp>
++#include <time.hpp>
++#include <math.hpp>
++#include <gui/gui.hpp>
++#include <imaging/image.hpp>
++#include "progress.h"
++
++using namespace LIBHeisenKernel;
++using namespace LIBHeisenKernel::Imaging;
++
++char* path = "B:\\boot.jpg";
++
++int main(int argc, char** argv)
++{
++    Log(Info, "Init process started!");
++
++    if (DirectGUI::RequestFramebuffer() != SYSCALL_RET_SUCCES)
++        return -1;
++
++    DirectGUI::Clear(0xFFFFFFFF);
++
++    int x_p = GUI::Width/2 - 100;
++    int y_p = GUI::Width/2 - 200;
++
++    ProgressBar* bar = new ProgressBar(x_p, y_p + 250, 200, 10);
++    bar->SetValue(0);
++
++    Log(Info, "Loading Boot Logo");
++    Image* logo = Image::CreateFromFile(path);
++    if(logo)
++        logo->DrawTo(DirectGUI::GetCanvas(), GUI::Width / 2 - logo->GetWidth()/2, GUI::Height / 2 - logo->GetHeight()/2);
++
++    bar->SetValue(70);
++
++    Print("Launched Compositor pid: %d\n", Process::Run("B:\\apps\\compositor.bin"));
++
++    // Prevent that one of the other launch processes gets the PID of 3
++    // There can be (a very small) chance that the desktop will get launched before the compositor if there is a weird task switch
++    while (Process::Active(GUI::compositorPID) == false)
++        Time::Sleep(100);
++    
++    Print("Launched Desktop pid: %d\n", Process::Run("B:\\apps\\desktop.bin"));
++    Print("Launched Clock pid: %d\n", Process::Run("B:\\apps\\clock.bin"));
++    //Print("Launched Sysinfo pid: %d\n", Process::Run("B:\\apps\\powermanager.bin"));
++
++    bar->SetValue(100); 
++
++    return 0;
++}
+\ No newline at end of file
+diff --git a/apps/init/progress.h b/apps/init/progress.h
+new file mode 100644
+index 0000000..3adca01
+--- /dev/null
++++ b/apps/init/progress.h
+@@ -0,0 +1,45 @@
++#ifndef PROGRESS_H
++#define PROGRESS_H
++
++#include <types.hpp>
++#include <gui/directgui.hpp>
++
++using namespace LIBHeisenKernel;
++
++class ProgressBar
++{
++private:
++    int x = 0;
++    int y = 0;
++    int w = 0;
++    int h = 0;
++
++    uint32_t background = 0xFFFFFFFF;
++    uint32_t foreground = 0xFF00FF00;
++    uint32_t borderColor = 0xFF000000;
++public:
++    ProgressBar(int x_p, int y_p, int width, int height);
++
++    void SetValue(int v);
++};
++
++ProgressBar::ProgressBar(int x_p, int y_p, int width, int height)
++{
++    this->x = x_p;
++    this->y = y_p;
++    this->w = width;
++    this->h = height;
++}
++
++void ProgressBar::SetValue(int v)
++{
++    DirectGUI::DrawFillRect(background, x, y, w + 1, h);
++    DirectGUI::DrawRect(borderColor, x, y, w, h);
++    if(v == 0)
++        return;
++
++    double fraction = (v/100.0);
++    DirectGUI::DrawFillRect(foreground, x + 1, y + 1, (fraction * (double)w), h - 1);
++}
++
++#endif
+\ No newline at end of file
+diff --git a/apps/mines/mines.cc b/apps/mines/mines.cc
+new file mode 100644
+index 0000000..06f2911
+--- /dev/null
++++ b/apps/mines/mines.cc
+@@ -0,0 +1,281 @@
++#include <new.hpp>
++#include <log.hpp>
++#include <gui/widgets/button.hpp>
++#include <gui/widgets/window.hpp>
++#include <gui/directgui.hpp>
++#include <random.hpp>
++#include <datetime.hpp>
++#include <time.hpp>
++#include <convert.hpp>
++#include <string.hpp>
++#include <gui/widgets/label.hpp>
++
++using namespace LIBHeisenKernel;
++
++#define BLOCK_W 30
++#define BLOCK_H 30
++#define ENTRY(x,y) (y*fieldWidth+x)
++
++class Block : public Button
++{
++public:
++    bool open;
++    bool mine;
++    bool flaged;
++
++    int fx;
++    int fy;
++
++    Block() : Button() {
++        open = false;
++        mine = false;
++        flaged = false;
++
++        this->width = BLOCK_W;
++        this->height = BLOCK_H;
++    }
++
++    void Opened()
++    {
++        this->backColor = 0xFFDDDDDD;
++    }
++
++    void Flagged(bool flag)
++    {
++        this->backColor = flag ? 0xFF88FFAA : 0xFF190A39;
++    }
++};
++
++const int fieldWidth = 10;
++const int fieldHeight = 10;
++const int numOfMines = 16;
++
++enum GameStatusOptions
++{
++    Bussy,
++    Won,
++    Lose
++};
++
++GameStatusOptions gameStatus = Bussy;
++
++Block** BlockList;
++bool firstClick = true;
++
++bool IsMine(int x, int y)
++{
++    if(x >= 0 && x < fieldWidth && y >= 0 && y < fieldHeight)
++        return BlockList[ENTRY(x,y)]->mine;
++    
++    return false;
++}
++
++Block* GetBlock(int x, int y)
++{
++    if(x >= 0 && x < fieldWidth && y >= 0 && y < fieldHeight)
++        return BlockList[ENTRY(x,y)];
++    
++    return 0;
++}
++
++void ToggleFlag(Block* block)
++{
++    block->flaged = !block->flaged;
++    if(block->flaged)
++        block->label = "F";
++    else
++        block->label = "";
++    
++    block->Flagged(block->flaged);
++}
++
++int CountMinesAround(Block* src)
++{
++    int result = 0;
++
++    if(IsMine(src->fx - 1, src->fy + 1))
++        result++;
++    if(IsMine(src->fx, src->fy + 1))
++        result++;
++    if(IsMine(src->fx + 1, src->fy + 1))
++        result++;
++
++    if(IsMine(src->fx - 1, src->fy))
++        result++;
++    if(IsMine(src->fx + 1, src->fy))
++        result++;
++
++    if(IsMine(src->fx - 1, src->fy - 1))
++        result++;
++    if(IsMine(src->fx, src->fy - 1))
++        result++;
++    if(IsMine(src->fx + 1, src->fy - 1))
++        result++;
++
++    return result; 
++}
++
++bool IsBlockAround(Block* middleBlock, Block* checkWith)
++{
++    int x = middleBlock->fx;
++    int y = middleBlock->fy;
++
++    if(GetBlock(x - 1, y + 1) == checkWith)
++        return true;
++    if(GetBlock(x, y + 1) == checkWith)
++        return true;
++    if(GetBlock(x + 1, y + 1) == checkWith)
++        return true;
++
++    if(GetBlock(x - 1, y) == checkWith)
++        return true;
++    if(GetBlock(x + 1, y) == checkWith)
++        return true;
++
++    if(GetBlock(x - 1, y - 1) == checkWith)
++        return true;
++    if(GetBlock(x, y - 1) == checkWith)
++        return true;
++    if(GetBlock(x + 1, y - 1) == checkWith)
++        return true;
++    
++    return false;
++}
++
++void Open(Block* block)
++{
++    if(block != 0 && block->open == false)
++    {
++        block->open = true;
++        block->Opened();
++        if(block->mine)
++            gameStatus = Lose;
++        else
++        {
++            int minesAround = CountMinesAround(block);
++            if(minesAround == 0) {
++                Open(GetBlock(block->fx - 1, block->fy + 1));
++                Open(GetBlock(block->fx, block->fy + 1));
++                Open(GetBlock(block->fx + 1, block->fy + 1));
++
++                Open(GetBlock(block->fx - 1, block->fy));
++                Open(GetBlock(block->fx + 1, block->fy));
++
++                Open(GetBlock(block->fx - 1, block->fy - 1));
++                Open(GetBlock(block->fx, block->fy - 1));
++                Open(GetBlock(block->fx + 1, block->fy - 1));
++            }
++            else
++            {
++                block->label = new char[2];
++                block->label[0] = Convert::IntToString(minesAround)[0];
++                block->label[1] = '\0';
++            }
++        }
++    }
++}
++
++void HandleFirstClick(Block* srcBlock)
++{
++    Random::SetSeed(DateTime::Current().Seconds * (uint32_t)Time::Ticks());
++
++    int mineCount = 0;
++    while(mineCount < numOfMines)
++    {
++        int rx = Random::Next(0, fieldWidth-1);
++        int ry = Random::Next(0, fieldHeight-1);
++
++        Block* target = GetBlock(rx, ry);
++        if(target != srcBlock && target->mine == false && !IsBlockAround(srcBlock, target))
++        {
++            target->mine = true;
++            //target->label = "M";
++            mineCount++;
++        }
++    }
++}
++
++void BlockClickHandler(void* sender, MouseButtonArgs args)
++{
++    Block* block = (Block*)sender;
++    if(block->open)
++        block->Opened();
++    else
++        block->Flagged(block->flaged);
++    
++    if(firstClick && args.button == MouseButtons::Left) {
++        HandleFirstClick(block);
++        firstClick = false;
++        Open(block);
++    }
++    else if(firstClick == false)
++    {
++        if(args.button == MouseButtons::Left)
++        {
++            Open(block);
++
++            int openBlocks = 0;
++            for(int i = 0; i < fieldWidth*fieldHeight; i++)
++                if(BlockList[i]->open)
++                    openBlocks++;
++            
++            if(openBlocks == ((fieldWidth*fieldHeight) - numOfMines))
++                gameStatus = Won;
++        }
++        else if(args.button == MouseButtons::Right && block->open == false)
++            ToggleFlag(block);
++    }
++}
++
++int main(int argc, char** argv)
++{
++    GUI::SetDefaultFont();
++
++    Print("Starting New Mines Game...\n");
++    BlockList = new Block*[fieldWidth*fieldHeight];
++    firstClick = true;
++    gameStatus = Bussy;
++    
++    Window* mainWindow = new Window(300, 330, GUI::Width/2 - 150, GUI::Width/2 - 165);
++    mainWindow->titleString = "CactusOS Mines Game";
++    
++    for(int placeY = 0; placeY < fieldHeight; placeY++)
++        for(int placeX = 0; placeX < fieldWidth; placeX++)
++        {
++            Block* block = new Block();
++            block->x = placeX * BLOCK_W;
++            block->y = placeY * BLOCK_H;
++
++            block->fx = placeX;
++            block->fy = placeY;
++            
++            block->MouseClick += BlockClickHandler;
++            BlockList[ENTRY(placeX,placeY)] = block;
++            mainWindow->AddChild(block);
++        }
++
++    while(GUI::HasItems() && gameStatus == Bussy)
++    {
++        GUI::DrawGUI();
++        GUI::ProcessEvents();
++    }
++
++    if(gameStatus == Bussy)
++        return 0;
++    
++    mainWindow->Close();
++
++    Window* resultWindow = new Window(200, 100, GUI::Width/2 - 100, GUI::Width/2 - 50);
++    resultWindow->titleString = "Game Finished!";
++
++    Label* label = new Label(gameStatus == Won ? (char*)"You completed the game!" : (char*)"You have lost!");
++    resultWindow->AddChild(label);
++
++    while(GUI::HasItems())
++    {
++        GUI::DrawGUI();
++        GUI::ProcessEvents();
++    }
++    
++    return 0;
++}
+\ No newline at end of file
+diff --git a/apps/powermanager/main.cc b/apps/powermanager/main.cc
+new file mode 100644
+index 0000000..2575f0b
+--- /dev/null
++++ b/apps/powermanager/main.cc
+@@ -0,0 +1,68 @@
++#include <new.hpp>
++#include <gui/gui.hpp>
++#include <gui/widgets/window.hpp>
++#include <gui/widgets/button.hpp>
++#include <gui/directgui.hpp>
++#include <proc.hpp>
++#include <syscall.hpp>
++#include <vfs.hpp>
++#include <log.hpp>
++
++void PoweroffButtonCallback(void* sender, MouseButtonArgs arg);
++void RebootButtonCallback(void* sender, MouseButtonArgs arg);
++void PoweroffAndEjectButtonCallback(void* sender, MouseButtonArgs arg);
++
++int main(int argc, char** argv)
++{
++    GUI::SetDefaultFont();
++    
++    Window* mainWindow = new Window(300, 100 + 30, GUI::Width/2 - 150, GUI::Height/2 - 65);
++    mainWindow->titleString = "Power Options";
++    mainWindow->backColor = 0xFF150534;
++
++    Button* shutdownButton = new Button("Poweroff");
++    shutdownButton->width = 150 - 2;
++    shutdownButton->height = 47;
++    shutdownButton->x = 1;
++    shutdownButton->y = 2;
++    shutdownButton->MouseClick += PoweroffButtonCallback;
++
++    Button* rebootButton = new Button("Reboot");
++    rebootButton->width = 150 - 2;
++    rebootButton->height = 47;
++    rebootButton->x = 150 + 1;
++    rebootButton->y = 2;
++    rebootButton->MouseClick += RebootButtonCallback;
++
++    Button* shutdownAndEjectButton = new Button("Eject CD+Shutdown");
++    shutdownAndEjectButton->width = 300 - 2;
++    shutdownAndEjectButton->height = 49;
++    shutdownAndEjectButton->y = 50;
++    shutdownAndEjectButton->x = 1;
++    shutdownAndEjectButton->MouseClick += PoweroffAndEjectButtonCallback;
++
++    mainWindow->AddChild(shutdownButton);
++    mainWindow->AddChild(shutdownAndEjectButton);
++    mainWindow->AddChild(rebootButton);
++    
++    while(GUI::HasItems()) {
++        GUI::DrawGUI();
++        GUI::ProcessEvents();
++    }
++
++    return 0;
++}
++ 
++void PoweroffButtonCallback(void* sender, MouseButtonArgs arg)
++{
++    DoSyscall(SYSCALL_SHUTDOWN);
++}
++void RebootButtonCallback(void* sender, MouseButtonArgs arg)
++{
++    DoSyscall(SYSCALL_REBOOT);
++}
++void PoweroffAndEjectButtonCallback(void* sender, MouseButtonArgs arg)
++{
++    Print("EjectDisk returned %d\n", (int)EjectDisk("B:\\"));
++    DoSyscall(SYSCALL_SHUTDOWN);
++}
+\ No newline at end of file
+diff --git a/kernel/include/datetime.hpp b/kernel/include/datetime.hpp
+new file mode 100644
+index 0000000..a296375
+--- /dev/null
++++ b/kernel/include/datetime.hpp
+@@ -0,0 +1,29 @@
++#ifndef __LIBCACTUSOS__DATETIME_H
++#define __LIBCACTUSOS__DATETIME_H
++
++namespace LIBHeisenKernel
++{
++    class DateTime
++    {
++    public:
++        signed char Day = -1;
++        signed char Month = -1;
++        int Year = -1;
++
++        signed char Seconds = -1;
++        signed char Minutes = -1;
++        signed char Hours = -1;
++
++        /**
++         * Get the current date and time of this system
++        */
++        static DateTime Current();
++
++        /**
++         * Convert DateTime into a readable string
++        */
++        char* ToString();
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/include/imaging/image.hpp b/kernel/include/imaging/image.hpp
+new file mode 100644
+index 0000000..fb2ac24
+--- /dev/null
++++ b/kernel/include/imaging/image.hpp
+@@ -0,0 +1,62 @@
++#ifndef __CACTUSOSLIB__IMAGING_IMAGE_H
++#define __CACTUSOSLIB__IMAGING_IMAGE_H
++
++#include <types.hpp>
++#include <gui/canvas.hpp>
++
++namespace LIBHeisenKernel
++{
++    namespace Imaging
++    {
++        // Enable alpha for bilinear image scaling or not?
++        #define BILINEAR_ALPHA 1
++
++        enum ResizeMethod
++        {
++            NearestNeighbor,
++            Bilinear
++        };
++
++        class Image
++        {
++        private:
++            int width = 0;
++            int height = 0;
++            Canvas* canvas = 0;
++
++            uint32_t* buffer = 0;
++        public:
++            // Create new image using a width and height
++            Image(const int width, const int height);
++            // Destructor
++            ~Image();
++
++            // Generate a canvas for this image and return it
++            // It will only get generated once for each image and will get destroyed automatically
++            Canvas* GetCanvas();
++
++            // Get width of image
++            int GetWidth();
++
++            // Get height of image
++            int GetHeight();
++
++            // Receive pointer to raw buffer
++            uint32_t* GetBufferPtr();
++
++            // Draw this image directly to a canvas
++            void DrawTo(Canvas* target, int x = 0, int y = 0);
++
++            // Create image from a file present on disk
++            static Image* CreateFromFile(const char* filepath, const char* ext = 0);
++
++            // Resize source image and return result
++            static Image* Resize(Image* source, int newWidth, int newHeight, ResizeMethod method = NearestNeighbor);
++        private:
++            static Image* ResizeNearestNeighbor(Image* source, int newWidth, int newHeight);
++            static Image* ResizeBilinear(Image* source, int newWidth, int newHeight);
++        };
++    }
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/include/random.hpp b/kernel/include/random.hpp
+new file mode 100644
+index 0000000..8daaafc
+--- /dev/null
++++ b/kernel/include/random.hpp
+@@ -0,0 +1,17 @@
++#ifndef LIBCACTUSOS__RANDOM_H
++#define LIBCACTUSOS__RANDOM_H
++
++#include <types.hpp>
++
++namespace LIBHeisenKernel
++{
++    class Random
++    {
++    public:
++        static int Next(uint32_t max = 32767);
++        static int Next(uint32_t min, uint32_t max);             
++        static void SetSeed(uint32_t seed);
++    };
++}
++
++#endif
+\ No newline at end of file
+-- 
+2.43.0
+

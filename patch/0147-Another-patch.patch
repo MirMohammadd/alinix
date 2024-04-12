@@ -1,0 +1,25 @@
+From dbbe8fbb776e7fe28ec308433e56771636c92d19 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 21:34:52 -0400
+Subject: [PATCH 147/493] Another patch
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 1bb089c..47d3ee1 100644
+--- a/Makefile
++++ b/Makefile
+@@ -44,7 +44,7 @@ KRNLOBJS := $(subst $(KRNLSRCDIR),$(KRNLOBJDIR),$(KRNLOBJS)) #Replace the kernel
+ ####################################
+ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.cpp
+ 	mkdir -p $(@D)
+-	gcc $(G++PARAMS) -I. $(find /usr/include -type d -printf '-I%s\n') $(find . -type d -printf '-I%s\n') -c -o $@ $<
++	g++ $(G++PARAMS) -I. $(find /usr/include -type d -printf '-I%s\n') $(find . -type d -printf '-I%s\n') -c -o $@ $<
+ 
+ ####################################
+ #C source files
+-- 
+2.43.0
+

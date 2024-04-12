@@ -1,0 +1,298 @@
+From 634b97e729f498412543c86aeb8d03bb64664eff Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 18:51:39 -0400
+Subject: [PATCH 089/493] Patch
+
+---
+ apps/browser/main.cc |  46 ++++++++++++++
+ apps/calc/calc.cc    | 144 +++++++++++++++++++++++++++++++++++++++++++
+ apps/clock/clock.cc  |  70 +++++++++++++++++++++
+ 3 files changed, 260 insertions(+)
+ create mode 100644 apps/browser/main.cc
+ create mode 100644 apps/calc/calc.cc
+ create mode 100644 apps/clock/clock.cc
+
+diff --git a/apps/browser/main.cc b/apps/browser/main.cc
+new file mode 100644
+index 0000000..ab5f96b
+--- /dev/null
++++ b/apps/browser/main.cc
+@@ -0,0 +1,46 @@
++#include <new.hpp>
++#include <gui/gui.hpp>
++#include <gui/widgets/button.hpp>
++#include <gui/widgets/control.hpp>
++#include <gui/widgets/scrollbar.hpp>
++#include <gui/widgets/window.hpp>
++#include <gui/directgui.hpp>
++#include <convert.hpp>
++#include <string.hpp>
++#include <log.hpp>
++#include <proc.hpp>
++
++using namespace LIBHeisenKernel;
++
++Window* mainWindow = 0;
++
++void ValueChanged(void* s, int v)
++{
++    mainWindow->backColor = v * 1000;
++}
++
++int main(int argc, char** argv)
++{
++    GUI::SetDefaultFont();
++
++    mainWindow = new Window(600, 600, 300, 300);
++    mainWindow->titleString = "CactusOS File Browser";
++
++    ScrollBar* scroll = new ScrollBar(Vertical);
++    scroll->x = 100;
++    scroll->y = 200;
++    scroll->value.onChanged += ValueChanged;
++    mainWindow->AddChild(scroll);
++
++    while (GUI::HasItems()) {
++        GUI::DrawGUI();
++        GUI::ProcessEvents();
++        //scroll->value += 1;
++        if(scroll->value >= scroll->maxValue) {
++            scroll->value = 0;
++            scroll->maxValue += 20;
++        }
++    }
++
++    return 0;
++}
+\ No newline at end of file
+diff --git a/apps/calc/calc.cc b/apps/calc/calc.cc
+new file mode 100644
+index 0000000..5815ee2
+--- /dev/null
++++ b/apps/calc/calc.cc
+@@ -0,0 +1,144 @@
++#include <new.hpp>
++#include <gui/gui.hpp>
++#include <gui/widgets/button.hpp>
++#include <gui/widgets/control.hpp>
++#include <gui/widgets/window.hpp>
++#include <gui/widgets/label.hpp>
++#include <gui/directgui.hpp>
++#include <convert.hpp>
++#include <string.hpp>
++#include <log.hpp>
++#include <proc.hpp>
++
++using namespace LIBHeisenKernel;
++
++void ButtonClickHandler(void* sender, MouseButtonArgs arg);
++void CalculateButtonHandler(void* sender, MouseButtonArgs arg);
++void NewClickHandler(void* sender, MouseButtonArgs arg)
++{
++    Process::Run("B:\\apps\\calc.bin");
++}
++
++Label* textLabel = 0;
++bool calculated = true;
++int main(int argc, char** argv)
++{
++    Print("Starting Calculator\n");
++    GUI::SetDefaultFont();
++
++    Window* window1 = new Window(140, 260, GUI::Width/2 - 140/2, GUI::Width/2 - 260/2);
++    window1->titleString = "Calculator";
++
++    Control* labelBox = new Control(130, 30, 5, 5);
++    labelBox->backColor = 0xFFBBBBBB;
++    window1->AddChild(labelBox);
++
++    char* label = new char[2];
++    label[0] = '0'; label[1] = '\0';
++    textLabel = new Label(label);
++    labelBox->AddChild(textLabel);
++
++    int i = 0;
++    for(int y = 0; y < 4; y++)
++        for(int x = 0; x < 3 && i < 10; x++) {
++            char* str = new char[2];
++            str[0] = Convert::IntToString(i++)[0];
++            str[1] = 0;
++
++            Button* but = new Button(str);
++            but->width = but->height = 30;
++            but->x = 5 + x*(150/3);
++            but->y = 37 + y*(120/3);
++            but->MouseClick += ButtonClickHandler;
++            window1->AddChild(but);
++        }
++
++    Button* plusButton = new Button("+");
++    plusButton->width = plusButton->height = 30;
++    plusButton->x = 55;
++    plusButton->y = 157;
++    plusButton->MouseClick += ButtonClickHandler;
++    window1->AddChild(plusButton);
++
++    Button* minButton = new Button("-");
++    minButton->width = minButton->height = 30;
++    minButton->x = 105;
++    minButton->y = 157;
++    minButton->MouseClick += ButtonClickHandler;
++    window1->AddChild(minButton);
++
++    Button* calcButton = new Button("Calculate");
++    calcButton->width = 80;
++    calcButton->height = 30;
++    calcButton->x = 5;
++    calcButton->y = 190;
++    calcButton->MouseClick += CalculateButtonHandler;
++    window1->AddChild(calcButton);
++
++    Button* newButton = new Button("New");
++    newButton->width = 45;
++    newButton->height = 30;
++    newButton->x = 90;
++    newButton->y = 190;
++    newButton->MouseClick += NewClickHandler;
++    window1->AddChild(newButton);
++
++    while (GUI::HasItems()) {
++        GUI::DrawGUI();
++        GUI::ProcessEvents();
++    }
++
++    return 0;
++}
++
++void ButtonClickHandler(void* sender, MouseButtonArgs arg)
++{
++    if(calculated) { //Reset text
++        delete textLabel->text; //Free previous text buffer
++        textLabel->text = "";
++        calculated = false;
++    }
++
++    int newStrLen = strlen(textLabel->text) + 1;
++    char* newStr = new char[newStrLen];
++    memcpy(newStr, textLabel->text, newStrLen-1);
++    newStr[newStrLen-1] = ((Button*)sender)->label[0];
++    textLabel->text = newStr;
++}
++
++void CalculateButtonHandler(void* sender, MouseButtonArgs arg)
++{
++    char* str = textLabel->text;
++
++    bool plus = str_Contains(str, '+');
++    bool min = str_Contains(str, '-');
++
++    if((!plus && !min) || (plus && min)) {
++        textLabel->text = "";
++        return;
++    }
++
++    int index = str_IndexOf(str, plus ? '+' : '-');
++    str[index] = '\0';
++
++    char* part1 = str;
++    char* part2 = str + index + 1;
++
++    Print("Par1: %s Part2: %s\n", part1, part2);
++
++    int int1 = Convert::StringToInt(part1);
++    int int2 = Convert::StringToInt(part2);
++
++    Print("Int1 %d %s Int2 %d\n", int1, plus ? "+" : "-", int2);
++    
++    int result = plus ? (int1 + int2) : (int1 - int2);
++    
++    char* resultStr = Convert::IntToString(result);
++    int resultLen = strlen(resultStr);
++    char* realStr = new char[resultLen + 1];
++    memcpy(realStr, resultStr, resultLen);
++    realStr[resultLen] = '\0';
++
++    textLabel->text = realStr;
++    calculated = true;
++}
+\ No newline at end of file
+diff --git a/apps/clock/clock.cc b/apps/clock/clock.cc
+new file mode 100644
+index 0000000..92c8c3a
+--- /dev/null
++++ b/apps/clock/clock.cc
+@@ -0,0 +1,70 @@
++#include <new.hpp>
++#include <gui/gui.hpp>
++#include <gui/directgui.hpp>
++#include <convert.hpp>
++#include <time.hpp>
++#include <datetime.hpp>
++#include <string.hpp>
++#include <math.hpp>
++#include <log.hpp>
++#include <proc.hpp>
++
++int main(int argc, char** argv)
++{
++    GUI::SetDefaultFont();
++    Context* mainScreen = GUI::RequestContext(160, 160, GUI::Width-160, 0);
++    if(mainScreen == 0)
++        return -1;
++
++    mainScreen->sharedContextInfo->supportsTransparency = true;
++    mainScreen->sharedContextInfo->background = true;
++    mainScreen->sharedContextInfo->supportsDirtyRects = true;
++    int prevSec = -1;
++    while(1) {
++        DateTime currentTime = DateTime::Current();
++        if(currentTime.Seconds == prevSec)
++            Time::Sleep(500);
++
++        mainScreen->canvas->Clear(0x00395772);
++        mainScreen->canvas->DrawFillCircle(0xFFDDDDDD, 160/2, 160/2 - 15, 60);
++        mainScreen->canvas->DrawCircle(0xFF000000, 160/2, 160/2 - 15, 61);
++        mainScreen->canvas->DrawString(GUI::defaultFont, currentTime.ToString(), 15, 140, 0xFF5200FF);
++
++        double angleInDegrees, x, y = 0;
++
++        // Seconds
++        angleInDegrees = 360.0 * ((double)currentTime.Seconds/60.0) - 90.0;
++        x = (double)(55 * Math::cos(angleInDegrees * MATH_PI / 180.0)) + 160/2;
++        y = (double)(55 * Math::sin(angleInDegrees * MATH_PI / 180.0)) + 160/2 - 15;
++        mainScreen->canvas->DrawLine(0xFF0000FF, 160/2, 160/2 - 15, x, y);
++
++        // Minutes
++        angleInDegrees = 360.0 * ((double)currentTime.Minutes/60.0) - 90.0;
++        x = (double)(45 * Math::cos(angleInDegrees * MATH_PI / 180.0)) + 160/2;
++        y = (double)(45 * Math::sin(angleInDegrees * MATH_PI / 180.0)) + 160/2 - 15;
++        mainScreen->canvas->DrawLine(0xFF00FF00, 160/2, 160/2 - 15, x, y);
++
++        // Hours
++        angleInDegrees = 360.0 * ((double)(currentTime.Hours%12)/12.0) - 90.0;
++        x = (double)(30 * Math::cos(angleInDegrees * MATH_PI / 180.0)) + 160/2;
++        y = (double)(30 * Math::sin(angleInDegrees * MATH_PI / 180.0)) + 160/2 - 15;
++        mainScreen->canvas->DrawLine(0xFFFF0000, 160/2, 160/2 - 15, x, y);
++
++        // Numbers
++        for(int i = 1; i <= 12; i++)
++        {
++            angleInDegrees = 360.0 * ((double)i/12.0) - 90.0;
++            x = (double)(50 * Math::cos(angleInDegrees * MATH_PI / 180.0)) + 160/2;
++            y = (double)(50 * Math::sin(angleInDegrees * MATH_PI / 180.0)) + 160/2 - 15;
++
++            mainScreen->canvas->DrawString(GUI::defaultFont, Convert::IntToString(i), i < 10 ? x - 3 : x - 7, y - 8, 0xFF0000FF);
++        }
++
++        // Force paint
++        mainScreen->sharedContextInfo->AddDirtyArea(0, 0, 160, 160);
++
++        prevSec = currentTime.Seconds;
++    }
++
++    return 0;
++}
+\ No newline at end of file
+-- 
+2.43.0
+

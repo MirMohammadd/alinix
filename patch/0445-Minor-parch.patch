@@ -1,0 +1,56 @@
+From 06e50fd1ce2c6d97a827ce7fe34279c62423bb62 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 9 Apr 2024 22:06:12 -0400
+Subject: [PATCH 445/493] Minor parch
+
+---
+ Makefile         | 11 ++++++++++-
+ drivers/Makefile |  4 ++--
+ 2 files changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index d3e2c15..e55e3a8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -22,6 +22,12 @@
+ # pci-ohci
+ #######################
+ 
++
++VERSION = 1
++PATCHLEVEL = 4
++SUBLEVEL = 4
++
++
+ # Check if the make version is exactly 3.80
+ ifeq ($(MAKE_VERSION),3.80)
+     $(error This makefile requires GNU Make version 3.80. Your Make version is $(MAKE_VERSION))
+@@ -162,4 +168,7 @@ filelist:
+ 	@echo "Source Files:"
+ 	@echo -$(KRNLFILES)
+ 	@echo "Object Files:"
+-	@echo -$(KRNLOBJS)
+\ No newline at end of file
++	@echo -$(KRNLOBJS)
++
++version:
++	@echo "Version: $(VERSION).$(PATCHLEVEL).$(SUBLEVEL)"
+\ No newline at end of file
+diff --git a/drivers/Makefile b/drivers/Makefile
+index 4ee5d9c..de75209 100644
+--- a/drivers/Makefile
++++ b/drivers/Makefile
+@@ -12,8 +12,8 @@ G++PARAMS := -m32 $(DEBUG) -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) -I $(LIBDRIVEINCLU
+ GCCPARAMS := -m32 $(DEBUG) -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) -I $(LIBDRIVEINCLUDE) -I ../kernel/include -Wall -I ../lib/include -I ../libdrive/include -fno-omit-frame-pointer -nostdlib -fno-builtin -fleading-underscore -Wno-unknown-pragmas
+ LDPARAMS := -m elf_i386
+ 
+-USB_DIR := usb3
+-APPOUT := ../isofiles/drivers
++USB_DIR := $(shell find * -type d)
++APPOUT := ../isofiles/apps
+ 
+ SRCFILES := $(shell find $(USB_DIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) #Find all the files in usb3 that end with .cpp/.s/.asm/.c
+ OBJFILES := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(SRCFILES))))) #Replace the .cpp/.s/.asm/.c extension with .o
+-- 
+2.43.0
+

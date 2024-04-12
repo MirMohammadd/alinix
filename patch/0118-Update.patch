@@ -1,0 +1,25 @@
+From d7f4717e6354aa64db4137a412997fb5399e3546 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 19:59:02 -0400
+Subject: [PATCH 118/493] Update
+
+---
+ .github/workflows/test.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index edf02c9..8ab60c1 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -28,7 +28,7 @@ jobs:
+           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+           brew install git wget bzip2 xz unzip nasm python@3 xorriso mtools gcc@11
+           python3 -m pip install -r kernel/requirements.txt
+-          brew tap nativeos/i686-elf-toolchain
++          # brew tap nativeos/i686-elf-toolchain
+           brew install i686-elf-binutils i686-elf-gcc i686-elf-newlib
+ 
+ 
+-- 
+2.43.0
+

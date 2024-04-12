@@ -1,0 +1,25 @@
+From e86eee67cd253bd1ed50e39f0dfd10a87a968b8a Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 21:48:02 -0400
+Subject: [PATCH 291/493] Minor patch
+
+---
+ kernelz/linker.ld | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/kernelz/linker.ld b/kernelz/linker.ld
+index fc97b6e..5c9f8f0 100644
+--- a/kernelz/linker.ld
++++ b/kernelz/linker.ld
+@@ -49,6 +49,8 @@ SECTIONS
+         *(HeisenOs::core::pageRoundUp*)
+         *(HeisenOs::core::Power::Reboot*)
+         *(UND*)
++        *(HeisenOs::core::pageRoundUp*)
++        *(HeisenOs::core::pageRoundDown*)
+     }
+ 
+     /DISCARD/ : { *(.fini_array*) *(.comment) }
+-- 
+2.43.0
+

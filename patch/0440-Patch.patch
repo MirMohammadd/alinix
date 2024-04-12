@@ -1,0 +1,42 @@
+From a89e1e0ec1fd14c2deb344d6609bc371ea9cf508 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 9 Apr 2024 18:47:28 -0400
+Subject: [PATCH 440/493] Patch
+
+---
+ drivers/usb3/driver_ftdi.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/drivers/usb3/driver_ftdi.c b/drivers/usb3/driver_ftdi.c
+index 08cd94e..b94492b 100644
+--- a/drivers/usb3/driver_ftdi.c
++++ b/drivers/usb3/driver_ftdi.c
+@@ -21,6 +21,7 @@
+ #include <assert.h>
+ #include <stdlib.h>
+ #include <string.h>
++#include <config.h>
+ 
+ #define FTDI_VENDOR_ID                    0x0403
+ 
+@@ -136,4 +137,16 @@ static const struct ftdi_baud_data* ftdi_serial_baud(int baud){
+ 
+     return NULL;
+     }
++}
++
++static inline ftdi_ctrl(struct usbserial_port *port,uint16_t req,uint16_t sio,uint16_t control_idx){
++    return libusb_control_transfer(
++                port->usb_dev_hdl,
++                FTDI_DEVICE_OUT_REQTYPE,
++                req,
++                sio,
++                control_idx,
++                NULL,
++                0,
++            DEFAULT_CONTROL_TIMEOUT_MILLIS);
+ }
+\ No newline at end of file
+-- 
+2.43.0
+

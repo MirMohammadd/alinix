@@ -1,0 +1,25 @@
+From 44c57bb30f280b63de6c1715e3198d8827453023 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 16:09:14 -0400
+Subject: [PATCH 002/493] Ci/CD changed
+
+---
+ .github/workflows/test.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index f44793f..aa843f1 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -3,7 +3,7 @@ name: HiesenKernel
+ on:
+   push:
+     branches:
+-      - main  # Adjust branch name as needed
++      - Log  # Adjust branch name as needed
+ 
+ jobs:
+   build:
+-- 
+2.43.0
+

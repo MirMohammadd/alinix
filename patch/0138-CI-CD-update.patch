@@ -1,0 +1,42 @@
+From c70d0874f029768c8df08ff32e48e0942632b647 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 21:22:20 -0400
+Subject: [PATCH 138/493] CI/CD update
+
+---
+ .github/workflows/tests.yml | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
+index 1bade1e..78ceb2b 100644
+--- a/.github/workflows/tests.yml
++++ b/.github/workflows/tests.yml
+@@ -1,4 +1,4 @@
+-name: CI/CD with i686-elf-gcc
++name: CI/CD with i686-elf-gcc and i686-elf-g++
+ 
+ on:
+   push:
+@@ -20,14 +20,15 @@ jobs:
+       run: |
+         sudo apt-get update
+         sudo apt-get install -y gcc-multilib qemu qemu-system-x86 nasm xorriso grub-common grub-pc-bin mtools make
+-        sudo apt-get install -y gcc-11-i686-linux-gnu || true
+-        sudo apt-get install -y gcc-i686-linux-gnu
++        sudo apt-get install -y gcc-11-i686-linux-gnu g++-11-i686-linux-gnu || true
++        sudo apt-get install -y gcc-i686-linux-gnu g++-i686-linux-gnu
+ 
+     - name: Try to fix broken packages
+       run: sudo apt-get install -f
+ 
+-    - name: Set PATH for i686-elf-gcc
+-      run: export PATH="$PATH:/path/to/i686-elf-gcc-directory" # Replace with the actual path to i686-elf-gcc directory
++    - name: Set PATH for i686-elf-gcc and i686-elf-g++
++      run: |
++        export PATH="$PATH:/path/to/i686-elf-gcc-directory/bin:/path/to/i686-elf-g++-directory/bin" # Replace with the actual paths to i686-elf-gcc and i686-elf-g++ directories
+ 
+     - name: Build project
+       run: make run # Replace 'make build' with your build command
+-- 
+2.43.0
+

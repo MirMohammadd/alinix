@@ -1,0 +1,36 @@
+From 314f96ff902aaaf2c014b15727bbb7adbdc44d8c Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 17:59:20 -0400
+Subject: [PATCH 472/493] Another patch
+
+---
+ apps/chess/square.h | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/apps/chess/square.h b/apps/chess/square.h
+index 7115d4d..a7e790e 100644
+--- a/apps/chess/square.h
++++ b/apps/chess/square.h
+@@ -17,6 +17,19 @@ namespace LIBHeisenKernel{
+         const unsigned int FileInc = 1;
+ 
+         const unsigned int RankInc = 16;
++
++        const int FileNone = 0;
++
++        const int FileA = 0x4;
++        const int FileB = 0x5;
++        const int FileC = 0x06;
++        const int FileD = 0x07;
++        const int FileE = 0x08;
++        const int FileF = 0x09;
++        const int FileG = 0x0A;
++        const int FileH = 0x0B;
++
++        const int RankNone = 0;
+     };
+ };
+ 
+-- 
+2.43.0
+

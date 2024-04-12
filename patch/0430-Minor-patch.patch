@@ -1,0 +1,80 @@
+From bb190b3e282f4e61d7973980570f16cb8b3c8375 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 8 Apr 2024 20:10:43 -0400
+Subject: [PATCH 430/493] Minor patch
+
+---
+ tools/advanceddebugger.py | 39 +++++++++++++++++++++++++++++++++++----
+ 1 file changed, 35 insertions(+), 4 deletions(-)
+
+diff --git a/tools/advanceddebugger.py b/tools/advanceddebugger.py
+index 673a239..02d6de3 100644
+--- a/tools/advanceddebugger.py
++++ b/tools/advanceddebugger.py
+@@ -3,11 +3,19 @@ import copy
+ import datetime
+ import argparse
+ import subprocess
++import sys
+ 
+ 
+ COMMANDS = {
+     "Build" : "make run",
+-    "vm": "make qemu"
++    "vm": "make qemu",
++    "MakeNFound":"No targets specified and no makefile found"
++}
++
++
++ERRORS = {
++    "NotFound":"command not found",
++    
+ }
+ 
+ 
+@@ -18,10 +26,25 @@ class MakeFileCompilerException(Exception):
+     pass
+ ########################################################
+ 
++class AttribClass(object):
++    def __init__(self):
++        self.runNormalMake = "make"
++        self.runVmMake = "make qemu"
++        self.runMakeRun = "make run"
+ 
+-class Debugger(unittest.TestCase):
+-    def testCompilerMake(self):
++
++class Debugger(unittest.TestCase,AttribClass):
++    def __init__(self):
+         pass
++    
++    
++    def testCompilerMake(self):
++        try:
++            subprocess.check_output(self.runNormalMake,shell=True)
++        except subprocess.CalledProcessError as exc:
++            sys.exit("[ERROR] Got error while running testing makefile command %s"%(str(exc)))
++        except:
++            pass
+ 
+ def parse_arguments(debug=False):
+     parser = argparse.ArgumentParser(description='Advanced Debugger')
+@@ -29,4 +52,12 @@ def parse_arguments(debug=False):
+     parser.add_argument('-d', '--debug', action='store_true', help='Enable debug output')
+     return parser.parse_args(
+         
+-    )
+\ No newline at end of file
++    )
++
++def getSafeExcStr(ex):
++    retVal = None
++    if getattr(ex,"message",None):
++        retVal = ex.message
++    elif getattr(ex,"__str__",None):
++        retVal = ex.__str__()
++    return retVal
+-- 
+2.43.0
+

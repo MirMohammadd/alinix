@@ -1,0 +1,25 @@
+From cb29983515c1a1a283067fcd8785d2efa7004a2e Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 20:00:05 -0400
+Subject: [PATCH 204/493] Update
+
+---
+ kernelz/src/bin/bootloader.s | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/kernelz/src/bin/bootloader.s b/kernelz/src/bin/bootloader.s
+index 8a844de..d0f199c 100644
+--- a/kernelz/src/bin/bootloader.s
++++ b/kernelz/src/bin/bootloader.s
+@@ -88,4 +88,5 @@ _entrypoint:
+ _stop:
+     cli
+     hlt
+-    jmp _stop
+\ No newline at end of file
++    jmp _stop
++    
+\ No newline at end of file
+-- 
+2.43.0
+

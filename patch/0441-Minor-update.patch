@@ -1,0 +1,46 @@
+From 1ad7c47bd455d8c653bea77a4c1ec064a0902a73 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 9 Apr 2024 18:49:20 -0400
+Subject: [PATCH 441/493] Minor update
+
+---
+ drivers/usb3/driver_ftdi.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+
+diff --git a/drivers/usb3/driver_ftdi.c b/drivers/usb3/driver_ftdi.c
+index b94492b..7ee778c 100644
+--- a/drivers/usb3/driver_ftdi.c
++++ b/drivers/usb3/driver_ftdi.c
+@@ -149,4 +149,28 @@ static inline ftdi_ctrl(struct usbserial_port *port,uint16_t req,uint16_t sio,ui
+                 NULL,
+                 0,
+             DEFAULT_CONTROL_TIMEOUT_MILLIS);
++}
++
++int ftdi_check_supported_by_vid_pid(uint16_t vid,uint16_t pid){
++    if (FTDI_VENDOR_ID != vid)
++        return NULL;
++
++    switch (pid){
++    case FTDI_PRODUCT_ID_FT232R:
++    case FTDI_PRODUCT_ID_FT232R_FAKE:
++    case FTDI_PRODUCT_ID_FT232RL:
++    case FTDI_PRODUCT_ID_FT2232:
++    case FTDI_PRODUCT_ID_FT4232H:
++    case FTDI_PRODUCT_ID_FT231X:
++    case FTDI_PRODUCT_ID_FT232H:
++    case FTDI_PRODUCT_ID_STK500:
++    case FTDI_PRODUCT_ID_OPENMOKO:
++    case FTDI_PRODUCT_ID_TUMPA:
++    case FTDI_PRODUCT_ID_KTLINK:
++    case FTDI_PRODUCT_ID_JTAGKEY:
++    ////////////////////////////
++        return 1;
++    default:
++        return 0;
++    }
+ }
+\ No newline at end of file
+-- 
+2.43.0
+

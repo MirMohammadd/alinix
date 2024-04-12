@@ -1,0 +1,147 @@
+From cf120cf7944c0aab4e803995ceeaae4dbe4a518b Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 19:59:33 -0400
+Subject: [PATCH 203/493] Minor patch for the kernel asm files
+
+---
+ Makefile                     | 10 ++++
+ kernelz/src/bin/bootloader.s | 91 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 101 insertions(+)
+ create mode 100644 kernelz/src/bin/bootloader.s
+
+diff --git a/Makefile b/Makefile
+index 5dce65b..6075a49 100644
+--- a/Makefile
++++ b/Makefile
+@@ -25,6 +25,8 @@
+ 
+ INCLUDEDIRS := kernelz/include
+ QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../qemuTrace.txt -d cpu_reset #-readconfig qemu-usb-config.cfg -drive if=none,id=stick,file=disk.img -device usb-storage,bus=ehci.0,drive=stick
++LOADERFILE = kernelz/src
++
+ 
+ 
+ G++PARAMS := -m32 -g -D CACTUSOSKERNELz -I $(INCLUDEDIRS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
+@@ -72,6 +74,12 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
+ ####################################
+ #NASM assembly files
+ ####################################
++$/(KRNLOBJDIR)/%.o: $(LOADERFILE)/%.s
++	mkdir -p $(@D)
++	nasm -f elf32 $< -o $@
++
++	
++
+ $/(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
+ 	mkdir -p $(@D)
+ 	nasm -f elf32 -O0 $< -o $@ 2>/dev/null || true
+@@ -81,6 +89,8 @@ $/(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
+ 
+ 
+ 
++
++
+ CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
+ 	gcc $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
+ 
+diff --git a/kernelz/src/bin/bootloader.s b/kernelz/src/bin/bootloader.s
+new file mode 100644
+index 0000000..8a844de
+--- /dev/null
++++ b/kernelz/src/bin/bootloader.s
+@@ -0,0 +1,91 @@
++.set ALIGN,    1<<0             ; align loaded modules on page boundaries
++.set MEMINFO,  1<<1             ; provide memory map
++.set FLAGS,    ALIGN | MEMINFO  ; this is the Multiboot 'flag' field
++.set MAGIC,    0x1BADB002       ; 'magic number' lets bootloader find the header
++.set CHECKSUM, -(MAGIC + FLAGS) ; checksum of above, to prove we are multiboot
++
++.section .multiboot
++	.align 4
++	.long MAGIC
++	.long FLAGS
++	.long CHECKSUM
++
++.set KERNEL_VIRTUAL_BASE, 0xC0000000
++.set KERNEL_PAGE_NUMBER, (KERNEL_VIRTUAL_BASE >> 22)
++
++.section .bootstrap_stack, "aw", @nobits
++stack_bottom:
++.skip 16384 ; 16 KiB
++.global stack_top
++stack_top:
++
++.section .data
++.align 0x1000
++.global BootPageDirectory
++BootPageDirectory:
++	; identity map the first 4 MB
++	.long 0x00000083
++	
++	; pages before kernel
++	.rept (KERNEL_PAGE_NUMBER - 1)
++	.long 0
++	.endr
++	
++	; this page contains the kernel
++	.long 0x00000083
++
++	; pages after kernel
++	.rept (1024 - KERNEL_PAGE_NUMBER - 1)
++	.long 0
++	.endr
++
++.global _kernel_virtual_base
++_kernel_virtual_base:
++	.long KERNEL_VIRTUAL_BASE
++
++.section .text
++.align 4
++.global _entrypoint
++.type _entrypoint, @function
++
++_entrypoint:
++	mov $(BootPageDirectory - KERNEL_VIRTUAL_BASE), %ecx
++	mov %ecx, %cr3
++
++	; enable 4 mb pages
++	mov %cr4, %ecx
++	or $0x00000010, %ecx
++	mov %ecx, %cr4
++
++	; enable paging
++	mov %cr0, %ecx
++	or $0x80000001, %ecx
++	mov %ecx, %cr0
++
++	; jump to higher half code
++	lea 4f, %ecx
++	jmp *%ecx
++
++4:
++	; Unmap the identity-mapped pages
++	movl $0, BootPageDirectory
++	invlpg 0
++
++	movl $stack_top, %esp
++	; Mark end of call stack for unwinding
++	movl $0, %ebp
++
++	add $KERNEL_VIRTUAL_BASE, %ebx
++
++    call callConstructors
++
++	push $_kernel_base
++	push $_kernel_end
++    push %eax
++    push %ebx
++    call kernelMain
++
++_stop:
++    cli
++    hlt
++    jmp _stop
+\ No newline at end of file
+-- 
+2.43.0
+

@@ -1,0 +1,23 @@
+From 68538c95e5c78ed2f9f22cd88d8af5ba89099b2d Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 23:43:01 -0400
+Subject: [PATCH 314/493] Minor patch
+
+---
+ kernelz/linker.ld | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernelz/linker.ld b/kernelz/linker.ld
+index a51fe95..00e57a0 100644
+--- a/kernelz/linker.ld
++++ b/kernelz/linker.ld
+@@ -1,5 +1,5 @@
+ OUTPUT_FORMAT(binary)
+-OUTPUT_ARCH(i386)
++OUTPUT_ARCH(i386:x86-64)  
+ 
+ ENTRY(_entrypoint)
+ 
+-- 
+2.43.0
+

@@ -1,0 +1,55 @@
+From e48e31cd482e1b3a841b85c03d74b1e4706c1802 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 22:32:13 -0400
+Subject: [PATCH 168/493] Patch
+
+---
+ kernelz/src/core/idthelper.s | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/kernelz/src/core/idthelper.s b/kernelz/src/core/idthelper.s
+index 907b535..18037af 100644
+--- a/kernelz/src/core/idthelper.s
++++ b/kernelz/src/core/idthelper.s
+@@ -18,6 +18,7 @@ HandleInterruptRequest\num:
+     jmp interrupthandler
+ .endm
+ 
++HandleExceptionNoError:
+ HandleExceptionNoError 0x00
+ HandleExceptionNoError 0x01
+ HandleExceptionNoError 0x02
+@@ -26,6 +27,7 @@ HandleExceptionNoError 0x04
+ HandleExceptionNoError 0x05
+ HandleExceptionNoError 0x06
+ HandleExceptionNoError 0x07
++HandleExceptionWithError:
+ HandleExceptionWithError 0x08
+ HandleExceptionNoError 0x09
+ HandleExceptionWithError 0x0A
+@@ -33,12 +35,14 @@ HandleExceptionWithError 0x0B
+ HandleExceptionWithError 0x0C
+ HandleExceptionWithError 0x0D
+ HandleExceptionWithError 0x0E
++HandleExceptionNoError:
+ HandleExceptionNoError 0x0F
+ HandleExceptionNoError 0x10
+ HandleExceptionNoError 0x11
+ HandleExceptionNoError 0x12
+ HandleExceptionNoError 0x13
+ 
++HandleInterruptRequest:
+ HandleInterruptRequest 0x00
+ HandleInterruptRequest 0x01
+ HandleInterruptRequest 0x02
+@@ -94,6 +98,6 @@ interrupthandler:
+     sti ; Restart Interrupts
+     iret
+ 
+-.global IgnoreInterrupt
++.globl IgnoreInterrupt
+ IgnoreInterrupt:
+     iret
+-- 
+2.43.0
+

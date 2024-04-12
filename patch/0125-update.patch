@@ -1,0 +1,25 @@
+From e64829ff3e6dde640523acb8f33dffe3b282fecf Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 20:59:47 -0400
+Subject: [PATCH 125/493] update
+
+---
+ .github/workflows/test.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index 37e01f2..96c1291 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -8,7 +8,7 @@ on:
+ 
+ jobs:
+   build:
+-    runs-on: arch-latest  # Specify the operating system you're using
++    runs-on: Ubuntu-latest  # Specify the operating system you're using
+ 
+     steps:
+       - name: Checkout Repository
+-- 
+2.43.0
+

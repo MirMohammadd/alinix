@@ -1,0 +1,25 @@
+From 8b37ec4376d903c29c12b81e389745939540895e Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 21:14:31 -0400
+Subject: [PATCH 230/493] CI/CD update
+
+---
+ .github/workflows/tests.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
+index 9e407ec..675ab50 100644
+--- a/.github/workflows/tests.yml
++++ b/.github/workflows/tests.yml
+@@ -19,7 +19,7 @@ jobs:
+     - name: Install dependencies
+       run: |
+         sudo apt-get update
+-        sudo apt-get install -y gcc-multilib qemu qemu-system-x86 nasm xorriso grub-common grub-pc-bin mtools make binutils-gold
++        sudo apt-get install -y gcc-multilib qemu qemu-system-x86 nasm xorriso grub-common grub-pc-bin mtools make binutils-gold tcc
+         sudo apt-get install -y gcc-11-i686-linux-gnu g++-11-i686-linux-gnu || true
+         sudo apt-get install -y gcc-i686-linux-gnu g++-i686-linux-gnu
+ 
+-- 
+2.43.0
+

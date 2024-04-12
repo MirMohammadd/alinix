@@ -1,0 +1,29 @@
+From 9ea73c1227faff1be87c575901d0f5a56c723b9a Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 17:35:35 -0400
+Subject: [PATCH 069/493] Patch
+
+---
+ kernel/arch/x86-pc/main.cc | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/kernel/arch/x86-pc/main.cc b/kernel/arch/x86-pc/main.cc
+index ab5f96b..f9bc16f 100644
+--- a/kernel/arch/x86-pc/main.cc
++++ b/kernel/arch/x86-pc/main.cc
+@@ -1,6 +1,9 @@
+-#include <new.hpp>
+-#include <gui/gui.hpp>
+-#include <gui/widgets/button.hpp>
++#include <arch/x86-pc/gui/new.hpp>
++#include <arch/x86-pc/gui/gui/gui.hpp>
++
++
++#include <arch/x86-pc/gui/gui/widgets/button.hpp>
++
+ #include <gui/widgets/control.hpp>
+ #include <gui/widgets/scrollbar.hpp>
+ #include <gui/widgets/window.hpp>
+-- 
+2.43.0
+

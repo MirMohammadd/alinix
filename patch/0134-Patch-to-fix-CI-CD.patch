@@ -1,0 +1,25 @@
+From f3b48fb6fdb185cecf896f9c6fc3d641dd567f95 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 21:14:10 -0400
+Subject: [PATCH 134/493] Patch to fix CI/CD
+
+---
+ .github/workflows/tests.yml | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
+index ac6d67d..a6a7f43 100644
+--- a/.github/workflows/tests.yml
++++ b/.github/workflows/tests.yml
+@@ -26,5 +26,8 @@ jobs:
+     - name: Try to fix broken packages
+       run: sudo apt-get install -f
+ 
++    - name: Set PATH for i686-elf-gcc
++      run: export PATH="$PATH:/path/to/i686-elf-gcc-directory" # Replace with the actual path to i686-elf-gcc directory
++
+     - name: Build project
+       run: make  # Replace 'make build' with your build command
+-- 
+2.43.0
+

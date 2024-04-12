@@ -1,0 +1,29 @@
+From 8187e5881b220342afdbbc430f805054b888dd0a Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sat, 6 Apr 2024 14:10:58 -0400
+Subject: [PATCH 384/493] Update
+
+---
+ .github/workflows/tests.yml | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
+index 25a8251..5c47450 100644
+--- a/.github/workflows/tests.yml
++++ b/.github/workflows/tests.yml
+@@ -22,6 +22,12 @@ jobs:
+         sudo apt-get install -y gcc-multilib qemu qemu-system-x86 nasm xorriso grub-common grub-pc-bin mtools make binutils-gold tcc 
+         sudo apt-get install -y gcc-11-i686-linux-gnu g++-11-i686-linux-gnu || true
+         sudo apt-get install -y gcc-i686-linux-gnu g++-i686-linux-gnu
++        git clone https://github.com/lordmilko/i686-elf-tools
++        unzip i686-elf-tools-linux.zip -d test
++        cd test
++        ./i686-elf-tools.sh linux
++
++
+ 
+     - name: Try to fix broken packages
+       run: sudo apt-get install -f
+-- 
+2.43.0
+

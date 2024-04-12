@@ -1,0 +1,25 @@
+From 3f8f38105506cb9703bc61b83270d07c72621e3f Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 19:42:49 -0400
+Subject: [PATCH 115/493] Patch
+
+---
+ .github/workflows/test.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index e2f49cb..d4f933e 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -26,7 +26,7 @@ jobs:
+           # chmod +x ./i686-elf-tools.sh
+           # ./i686-elf-tools.sh
+           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+-          brew install git wget bzip2 xz unzip nasm python@2 python@3 xorriso mtools gcc@11 bison flex gmp mpfr texinfo
++          brew install git wget bzip2 xz unzip nasm python@3 xorriso mtools gcc@11 bison flex gmp mpfr texinfo
+           python2 -m pip install -r kernel/requirements.txt
+           brew tap nativeos/i686-elf-toolchain
+           brew install i686-elf-binutils i686-elf-gcc i686-elf-newlib
+-- 
+2.43.0
+

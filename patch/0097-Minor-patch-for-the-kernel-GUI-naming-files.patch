@@ -1,0 +1,406 @@
+From 47aadaff0342261c6e6f42fa5855340d40d56866 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 19:53:26 -0400
+Subject: [PATCH 097/493] Minor patch for the kernel GUI naming files
+
+---
+ lib/src/api.cpp               |  2 +-
+ lib/src/convert.cpp           |  2 +-
+ lib/src/datetime.cpp          |  2 +-
+ lib/src/heap.cpp              |  6 +++---
+ lib/src/imaging/bmpformat.cpp |  4 ++--
+ lib/src/imaging/image.cpp     | 14 +++++++-------
+ lib/src/imaging/pngformat.cpp | 21 +++++++++++----------
+ lib/src/ipc.cpp               | 10 +++++-----
+ lib/src/log.cpp               |  6 +++---
+ lib/src/main.cpp              |  2 +-
+ lib/src/math.cpp              |  2 +-
+ lib/src/proc.cpp              |  2 +-
+ lib/src/random.cpp            |  4 ++--
+ lib/src/string.cpp            |  2 +-
+ lib/src/syscall.cpp           |  2 +-
+ lib/src/systeminfo.cpp        | 18 +++++++++---------
+ lib/src/time.cpp              |  6 +++---
+ lib/src/vfs.cpp               | 24 ++++++++++++------------
+ 18 files changed, 65 insertions(+), 64 deletions(-)
+
+diff --git a/lib/src/api.cpp b/lib/src/api.cpp
+index f8846d9..d3d195b 100644
+--- a/lib/src/api.cpp
++++ b/lib/src/api.cpp
+@@ -4,7 +4,7 @@
+ #include <log.h>
+ #include <proc.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ void API::Initialize()
+ {
+diff --git a/lib/src/convert.cpp b/lib/src/convert.cpp
+index 163426b..742a36e 100644
+--- a/lib/src/convert.cpp
++++ b/lib/src/convert.cpp
+@@ -1,7 +1,7 @@
+ #include <convert.h>
+ #include <string.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ int IsSpace(char c)
+ {
+diff --git a/lib/src/datetime.cpp b/lib/src/datetime.cpp
+index 920eee6..c27a09a 100644
+--- a/lib/src/datetime.cpp
++++ b/lib/src/datetime.cpp
+@@ -5,7 +5,7 @@
+ #include <string.h>
+ #include <log.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ DateTime DateTime::Current()
+ {
+diff --git a/lib/src/heap.cpp b/lib/src/heap.cpp
+index 66b0e8a..23be254 100644
+--- a/lib/src/heap.cpp
++++ b/lib/src/heap.cpp
+@@ -2,14 +2,14 @@
+ #include <syscall.h>
+ #include <log.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ uint32_t UserHeap::startAddress = 0;
+ uint32_t UserHeap::endAddress = 0;
+ uint32_t UserHeap::maxAddress = 3_GB - 1_MB; //1 MB Below the kernel
+ MemoryHeader* UserHeap::firstHeader = 0;
+ 
+-uint32_t LIBCactusOS::pageRoundUp(uint32_t address)
++uint32_t LIBHeisenKernel::pageRoundUp(uint32_t address)
+ {
+     if((address & 0xFFFFF000) != address)
+     {
+@@ -18,7 +18,7 @@ uint32_t LIBCactusOS::pageRoundUp(uint32_t address)
+     }
+     return address;
+ }
+-uint32_t LIBCactusOS::pageRoundDown(uint32_t address)
++uint32_t LIBHeisenKernel::pageRoundDown(uint32_t address)
+ {
+     return address & 0xFFFFF000;
+ }
+diff --git a/lib/src/imaging/bmpformat.cpp b/lib/src/imaging/bmpformat.cpp
+index 2be699d..64088e1 100644
+--- a/lib/src/imaging/bmpformat.cpp
++++ b/lib/src/imaging/bmpformat.cpp
+@@ -4,8 +4,8 @@
+ #include <math.h>
+ #include <vfs.h>
+ 
+-using namespace LIBCactusOS;
+-using namespace LIBCactusOS::Imaging;
++using namespace LIBHeisenKernel;
++using namespace LIBHeisenKernel::Imaging;
+ 
+ Image* Imaging::ConvertBMP(const char* filepath)
+ {
+diff --git a/lib/src/imaging/image.cpp b/lib/src/imaging/image.cpp
+index ec4f9a9..6ef149d 100644
+--- a/lib/src/imaging/image.cpp
++++ b/lib/src/imaging/image.cpp
+@@ -1,16 +1,16 @@
+ #include <imaging/image.h>
+-#include <log.h>
+-#include <string.h>
+-#include <math.h>
+-#include <vfs.h>
+-#include <heap.h>
++#include <log.hpp>
++#include <string.hpp>
++#include <math.hpp>
++#include <vfs.hpp>
++#include <heap.hpp>
+ 
+ #include <imaging/bmpformat.h>
+ #include <imaging/jpeg_decoder.h>
+ #include <imaging/pngformat.h>
+ 
+-using namespace LIBCactusOS;
+-using namespace LIBCactusOS::Imaging;
++using namespace LIBHeisenKernel;
++using namespace LIBHeisenKernel::Imaging;
+ 
+ Image::Image(const int width, const int height)
+ {
+diff --git a/lib/src/imaging/pngformat.cpp b/lib/src/imaging/pngformat.cpp
+index 493ab21..2cb8665 100644
+--- a/lib/src/imaging/pngformat.cpp
++++ b/lib/src/imaging/pngformat.cpp
+@@ -1,13 +1,14 @@
+-#include <imaging/pngformat.h>
+-#include <bitreader.h>
+-#include <log.h>
+-#include <string.h>
+-#include <math.h>
+-#include <vfs.h>
+-#include <heap.h>
+-
+-using namespace LIBCactusOS;
+-using namespace LIBCactusOS::Imaging;
++#include <imaging/pngformat.hpp>
++#include <bitreader.hpp>
++#include <log.hpp>
++#include <string.hpp>
++#include <math.hpp>
++#include <vfs.hpp>
++#include <heap.hpp>
++#include <list.hpp>
++
++using namespace LIBHeisenKernel;
++using namespace LIBHeisenKernel::Imaging;
+ 
+ #define BYTES_PER_PIXEL 4
+ 
+diff --git a/lib/src/ipc.cpp b/lib/src/ipc.cpp
+index a05ad55..a441043 100644
+--- a/lib/src/ipc.cpp
++++ b/lib/src/ipc.cpp
+@@ -2,9 +2,9 @@
+ #include <proc.h>
+ #include <string.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+-int LIBCactusOS::IPCSend(int dest, int type, unsigned int arg1, unsigned int arg2, unsigned int arg3, unsigned int arg4, unsigned int arg5, unsigned int arg6)
++int LIBHeisenKernel::IPCSend(int dest, int type, unsigned int arg1, unsigned int arg2, unsigned int arg3, unsigned int arg4, unsigned int arg5, unsigned int arg6)
+ {
+     //Create IPCMessage
+     IPCMessage message;
+@@ -23,17 +23,17 @@ int LIBCactusOS::IPCSend(int dest, int type, unsigned int arg1, unsigned int arg
+     return IPCSend(message);
+ }
+ 
+-int LIBCactusOS::IPCSend(IPCMessage message)
++int LIBHeisenKernel::IPCSend(IPCMessage message)
+ {
+     return DoSyscall(SYSCALL_IPC_SEND, (uint32_t)&message);
+ }
+ 
+-int LIBCactusOS::IPCAvailable()
++int LIBHeisenKernel::IPCAvailable()
+ {
+     return DoSyscall(SYSCALL_IPC_AVAILABLE);
+ }
+ 
+-IPCMessage LIBCactusOS::ICPReceive(int fromID, int* errOut, int type)
++IPCMessage LIBHeisenKernel::ICPReceive(int fromID, int* errOut, int type)
+ {
+     IPCMessage result;
+     DoSyscall(SYSCALL_IPC_RECEIVE, (uint32_t)&result, fromID, (uint32_t)errOut, type);
+diff --git a/lib/src/log.cpp b/lib/src/log.cpp
+index d252384..0ccb510 100644
+--- a/lib/src/log.cpp
++++ b/lib/src/log.cpp
+@@ -6,9 +6,9 @@
+ #include <convert.h>
+ #include <proc.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+-void LIBCactusOS::Log(LogLevel level, char* msg)
++void LIBHeisenKernel::Log(LogLevel level, char* msg)
+ {
+     DoSyscall(SYSCALL_LOG, level, (int)msg);
+ }
+@@ -18,7 +18,7 @@ void printLen(const char* data, uint32_t length)
+     Process::WriteStdOut((char*)data, (int)length);
+ }
+ 
+-void LIBCactusOS::Print(const char* __restrict__ format, ...)
++void LIBHeisenKernel::Print(const char* __restrict__ format, ...)
+ {
+     va_list parameters;
+ 	va_start(parameters, format);
+diff --git a/lib/src/main.cpp b/lib/src/main.cpp
+index 4eadac9..71b006b 100644
+--- a/lib/src/main.cpp
++++ b/lib/src/main.cpp
+@@ -6,7 +6,7 @@
+ #include <math.h>
+ #include <string.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ // External pointer to main function, will be linked later by the compiler
+ // This is the part of the program where the user has control, this is more in the background
+diff --git a/lib/src/math.cpp b/lib/src/math.cpp
+index 17b76bc..14fe855 100644
+--- a/lib/src/math.cpp
++++ b/lib/src/math.cpp
+@@ -2,7 +2,7 @@
+ #include <types.h>
+ #include <log.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ uint32_t getMXCSR (void)
+ {
+diff --git a/lib/src/proc.cpp b/lib/src/proc.cpp
+index e5de252..7769eab 100644
+--- a/lib/src/proc.cpp
++++ b/lib/src/proc.cpp
+@@ -1,7 +1,7 @@
+ #include <proc.h>
+ #include <listing.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ int Process::ID = -1;
+ int Process::numThreads = 1;
+diff --git a/lib/src/random.cpp b/lib/src/random.cpp
+index 2733b67..c007962 100644
+--- a/lib/src/random.cpp
++++ b/lib/src/random.cpp
+@@ -1,6 +1,6 @@
+-#include <random.h>
++#include <random.hpp>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ uint32_t next = 12;
+ 
+diff --git a/lib/src/string.cpp b/lib/src/string.cpp
+index 4b210b2..8b77fc9 100644
+--- a/lib/src/string.cpp
++++ b/lib/src/string.cpp
+@@ -1,4 +1,4 @@
+-#include <string.h>
++#include <string.hpp>
+ 
+ void* memmove(void* dstptr, const void* srcptr, size_t size) {
+ 	unsigned char* dst = (unsigned char*) dstptr;
+diff --git a/lib/src/syscall.cpp b/lib/src/syscall.cpp
+index 83a6e11..0316727 100644
+--- a/lib/src/syscall.cpp
++++ b/lib/src/syscall.cpp
+@@ -1,4 +1,4 @@
+-#include <syscall.h>
++#include <syscall.hpp>
+ 
+ /*
+ +---+--------------------+
+diff --git a/lib/src/systeminfo.cpp b/lib/src/systeminfo.cpp
+index 15e59a1..98df774 100644
+--- a/lib/src/systeminfo.cpp
++++ b/lib/src/systeminfo.cpp
+@@ -1,12 +1,12 @@
+-#include <systeminfo.h>
+-#include <syscall.h>
+-#include <proc.h>
+-#include <heap.h>
+-#include <string.h>
+-#include <types.h>
+-#include <log.h>
+-
+-using namespace LIBCactusOS;
++#include <systeminfo.hpp>
++#include <syscall.hpp>
++#include <proc.hpp>
++#include <heap.hpp>
++#include <string.hpp>
++#include <types.hpp>
++#include <log.hpp>
++
++using namespace LIBHeisenKernel;
+ 
+ SIPropertyProvider SystemInfo::Properties = SIPropertyProvider("properties");
+ 
+diff --git a/lib/src/time.cpp b/lib/src/time.cpp
+index cdf3b0d..b05509d 100644
+--- a/lib/src/time.cpp
++++ b/lib/src/time.cpp
+@@ -1,8 +1,8 @@
+-#include <time.h>
++#include <time.hpp>
+ 
+-#include <syscall.h>
++#include <syscall.hpp>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ void Time::Sleep(uint32_t ms)
+ {
+diff --git a/lib/src/vfs.cpp b/lib/src/vfs.cpp
+index 20f87b6..1b9823b 100644
+--- a/lib/src/vfs.cpp
++++ b/lib/src/vfs.cpp
+@@ -1,43 +1,43 @@
+-#include <vfs.h>
++#include <vfs.hpp>
+ 
+-#include <syscall.h>
++#include <syscall.hpp>
+ #include <listing.h>
+ 
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+-bool LIBCactusOS::FileExists(char* path)
++bool LIBHeisenKernel::FileExists(char* path)
+ {
+     return (bool)DoSyscall(SYSCALL_FILE_EXISTS, (uint32_t)path);
+ }
+-uint32_t LIBCactusOS::GetFileSize(char* path)
++uint32_t LIBHeisenKernel::GetFileSize(char* path)
+ {
+     return (uint32_t)DoSyscall(SYSCALL_GET_FILESIZE, (uint32_t)path);
+ }
+-int LIBCactusOS::ReadFile(char* path, uint8_t* buffer, uint32_t offset, uint32_t len)
++int LIBHeisenKernel::ReadFile(char* path, uint8_t* buffer, uint32_t offset, uint32_t len)
+ {
+     return (int)DoSyscall(SYSCALL_READ_FILE, (uint32_t)path, (uint32_t)buffer, offset, len);
+ }
+-int LIBCactusOS::WriteFile(char* path, uint8_t* buffer, uint32_t len, bool create)
++int LIBHeisenKernel::WriteFile(char* path, uint8_t* buffer, uint32_t len, bool create)
+ {
+     return (int)DoSyscall(SYSCALL_WRITE_FILE, (uint32_t)path, (uint32_t)buffer, len, (uint32_t)create);
+ }
+-int LIBCactusOS::CreateFile(char* path)
++int LIBHeisenKernel::CreateFile(char* path)
+ {
+     return (int)DoSyscall(SYSCALL_CREATE_FILE, (uint32_t)path);
+ }
+-int LIBCactusOS::CreateDirectory(char* path)
++int LIBHeisenKernel::CreateDirectory(char* path)
+ {
+     return (int)DoSyscall(SYSCALL_CREATE_DIRECTORY, (uint32_t)path);
+ }
+-bool LIBCactusOS::DirectoryExists(char* path)
++bool LIBHeisenKernel::DirectoryExists(char* path)
+ {
+     return (bool)DoSyscall(SYSCALL_DIR_EXISTS, (uint32_t)path);
+ }
+-bool LIBCactusOS::EjectDisk(char* path)
++bool LIBHeisenKernel::EjectDisk(char* path)
+ {
+     return (bool)DoSyscall(SYSCALL_EJECT_DISK, (uint32_t)path);
+ }
+-List<VFSEntry> LIBCactusOS::DirectoryListing(char* path)
++List<VFSEntry> LIBHeisenKernel::DirectoryListing(char* path)
+ {
+     List<VFSEntry> result;
+ 
+-- 
+2.43.0
+

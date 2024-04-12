@@ -1,0 +1,30 @@
+From 5439c12dbbe2626992f13f2e1717c833f4d68a9a Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 17:39:48 -0400
+Subject: [PATCH 467/493] Patch
+
+---
+ apps/chess/piece.h | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/apps/chess/piece.h b/apps/chess/piece.h
+index 7ffcf68..9451cd7 100644
+--- a/apps/chess/piece.h
++++ b/apps/chess/piece.h
+@@ -99,6 +99,13 @@ namespace LIBHeisenKernel
+         extern const inc_t QueenInc[8+1];
+         extern const inc_t KingInc[8+1];
+ 
++        /**
++         * @brief External variables defined here
++        */
++
++        extern int PieceTo12[PieceNb];
++        extern int PieceOrder[PieceNb];
++
+     };
+ }
+ 
+-- 
+2.43.0
+

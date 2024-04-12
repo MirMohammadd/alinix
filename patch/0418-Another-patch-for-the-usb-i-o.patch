@@ -1,0 +1,39 @@
+From 03acc9cba1eb8c4eb3f8cce666579c93bffaf8da Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 8 Apr 2024 13:22:13 -0400
+Subject: [PATCH 418/493] Another patch for the usb i/o
+
+---
+ drivers/usb3/io.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/usb3/io.c b/drivers/usb3/io.c
+index 96e3bda..f600257 100644
+--- a/drivers/usb3/io.c
++++ b/drivers/usb3/io.c
+@@ -21,4 +21,19 @@
+ 
+ #include <assert.h>
+ #include <stdio.h>
+-#include <stdlib.h>
+\ No newline at end of file
++#include <stdlib.h>
++#include <string.h>
++
++static void usbserial_io_default_read_transfer_callback(struct libusb_transfer* transfer){
++    assert(transfer);
++
++    int ret;
++
++    struct usbserial_port *port = (struct usbserial_port*) transfer->user_data;
++
++    ret = pthread_mutex_lock(&port->mutex);
++
++    assert(0 == ret);
++
++    
++}
+\ No newline at end of file
+-- 
+2.43.0
+

@@ -1,0 +1,34 @@
+From 16b00f68595bc56158391770f1f1ab30385b33bb Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 18:14:38 -0400
+Subject: [PATCH 262/493] Update for the usb3
+
+---
+ lib/include/usb3.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/lib/include/usb3.h b/lib/include/usb3.h
+index 9523fc1..51bfb55 100644
+--- a/lib/include/usb3.h
++++ b/lib/include/usb3.h
+@@ -2,6 +2,7 @@
+ #define _HEISEN_OS_USB3_HPP__
+ 
+ #include "types.h"
++#include "llist.h"
+ 
+ 
+ #if !defined(__cplusplus)
+@@ -31,7 +32,8 @@ namespace LIBHeisenKernel{
+ typedef struct {
+     bool initialised;
+     bool is_csz_64;
+-};
++    list_t *slot_list;
++}USBDevice;
+ 
+ #endif
+ 
+-- 
+2.43.0
+

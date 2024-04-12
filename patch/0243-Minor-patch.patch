@@ -1,0 +1,25 @@
+From 9d407d79f5079ed662708b2635d18fbea3de93a0 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 22:14:46 -0400
+Subject: [PATCH 243/493] Minor patch
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 1acb5b7..8635a75 100644
+--- a/Makefile
++++ b/Makefile
+@@ -29,7 +29,7 @@ QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../q
+ G++PARAMS := -m32 -g -D HEISENOSKERNEL -I $(INCLUDEDIRS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -std=c++20
+ GCCPARAMS := -m32 -g -D HEISENOSKERNEL -I $(INCLUDEDIRS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -ffreestanding -fno-builtin -Wno-unknown-pragmas
+ ASPARAMS := --32
+-LDPARAMS := -m elf_i386
++LDPARAMS := -m32 -no-pie
+ 
+ KRNLSRCDIR := kernelz/src
+ KRNLOBJDIR := kernelz/obj
+-- 
+2.43.0
+

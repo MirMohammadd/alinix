@@ -1,0 +1,38 @@
+From 58b02e3c505c39b2e8377ce8168c4109f8c98958 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 17:22:53 -0400
+Subject: [PATCH 066/493] Update
+
+---
+ kernel/arch/x86-pc/{startup.c => startup.cc} | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+ rename kernel/arch/x86-pc/{startup.c => startup.cc} (93%)
+
+diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.cc
+similarity index 93%
+rename from kernel/arch/x86-pc/startup.c
+rename to kernel/arch/x86-pc/startup.cc
+index 3b8821f..e0b0620 100644
+--- a/kernel/arch/x86-pc/startup.c
++++ b/kernel/arch/x86-pc/startup.cc
+@@ -22,6 +22,17 @@
+ #include <colorforth/colorforth.h>
+ #include <arch/x86-pc/io/video.h>
+ 
++#ifdef __cplusplus
++extern "C" {
++#endif
++
++// Include the C++ header file here
++    #include <arch/x86-pc/gui/shared.hpp>
++
++
++#ifdef __cplusplus
++}
++#endif
+ 
+ 
+ /**
+-- 
+2.43.0
+

@@ -1,0 +1,71 @@
+From ba8524f98a5d10e2b398d9e37eb9686ff6b36f71 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 22:22:35 -0400
+Subject: [PATCH 164/493] Patch
+
+---
+ kernelz/src/core/idthelper.s | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/kernelz/src/core/idthelper.s b/kernelz/src/core/idthelper.s
+index ca49df6..21e6869 100644
+--- a/kernelz/src/core/idthelper.s
++++ b/kernelz/src/core/idthelper.s
+@@ -8,7 +8,7 @@ HandleException\num\():
+ .macro HandleExceptionNoError num
+ .global HandleException\num\()
+ HandleException\num\():
+-    pushl $0 # Add empty error code
++    pushl $0 ; Add empty error code
+     pushl $\num
+     jmp interrupthandler
+ .endm
+@@ -65,16 +65,16 @@ HandleInterruptRequest 0xDD
+ HandleInterruptRequest 0x60
+ 
+ interrupthandler:    
+-	cli # Stop Interrupts
++	cli ; Stop Interrupts
+ 	
+-    # Save Registers
++    ; Save Registers
+     pusha
+ 	pushl %ds
+ 	pushl %es
+ 	pushl %fs
+ 	pushl %gs
+ 
+-    # load the kernel data segment descriptor
++    ; load the kernel data segment descriptor
+ 	mov $0x10, %ax
+ 	mov %ax, %ds
+ 	mov %ax, %es
+@@ -82,21 +82,21 @@ interrupthandler:
+ 	mov %ax, %gs
+ 
+ 	pushl %esp
+-	# Call the kernel IRQ handler
++	; Call the kernel IRQ handler
+ 	call _ZN8CactusOS4core24InterruptDescriptorTable15HandleInterruptEPNS0_8CPUStateE
+ 	mov %eax, %esp
+ 
+-    # Restore Registers
++    ; Restore Registers
+ 	popl %gs
+ 	popl %fs
+ 	popl %es
+ 	popl %ds
+ 	popa
+ 
+-    # Clean up
++    ; Clean up
+ 	add $8, %esp
+ 
+-	sti # Restart Interrupts
++	sti ; Restart Interrupts
+     iret
+ 
+ .global IgnoreInterrupt
+-- 
+2.43.0
+

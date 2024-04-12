@@ -1,0 +1,5901 @@
+From 8a9a0bd9ebf3250c6267a630a1120328cc5aee8d Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 22:58:26 -0400
+Subject: [PATCH 026/493] Added patch files
+
+---
+ patch/0001-Ci-CD-changed.patch                |   25 +
+ patch/0002-Minor-update.patch                 |   23 +
+ patch/0003-Minor-update.patch                 |   69 +
+ patch/0004-Minor.patch                        |   39 +
+ ...-the-graphical-interface-of-the-kern.patch |   27 +
+ patch/0006-Minor-update.patch                 |  459 ++++
+ patch/0007-Minor-updates.patch                |   51 +
+ patch/0008-Minor-update.patch                 |   43 +
+ patch/0009-Updated-the-kernel-main.patch      |   27 +
+ patch/0010-Minor-update.patch                 |   36 +
+ patch/0011-Minor-patch.patch                  |   31 +
+ patch/0012-Update-for-the-kernel-GUI.patch    | 2225 +++++++++++++++++
+ patch/0013-Minor-update.patch                 |   95 +
+ patch/0014-Patch.patch                        |   24 +
+ patch/0015-Updated-the-patch.patch            |   35 +
+ patch/0016-Minor-update.patch                 |   40 +
+ patch/0017-Patch.patch                        |   62 +
+ patch/0018-Patch.patch                        |   56 +
+ patch/0019-Minor-update.patch                 |   63 +
+ patch/0020-Patch-minor.patch                  |   25 +
+ patch/0021-Minor-update.patch                 |   85 +
+ patch/0022-Added-GUI-files.patch              |  676 +++++
+ patch/0023-Patch.patch                        |   25 +
+ patch/0024-Update-for-the-kernel.patch        |  114 +
+ patch/0025-Minor-patch.patch                  |   90 +
+ patch/0026-Minor-update-for-commands.patch    |   43 +
+ patch/0027-Patch.patch                        |   43 +
+ patch/0028-Patch.patch                        |   24 +
+ patch/0029-Patch-for-make-file.patch          |   32 +
+ patch/0030-Minor-update-for-patch.patch       |   83 +
+ patch/0031-Patch.patch                        |   21 +
+ patch/0032-Patch.patch                        |  225 ++
+ patch/0033-Patch.patch                        |   40 +
+ patch/0034-Patch.patch                        |   27 +
+ patch/0035-Minor-patch.patch                  |   30 +
+ patch/0036-Patch.patch                        |   25 +
+ patch/0037-Patch.patch                        |   24 +
+ patch/0038-Patch.patch                        |   26 +
+ patch/0039-Patch.patch                        |   24 +
+ patch/0040-Patch.patch                        |   38 +
+ patch/0041-Patch.patch                        |   25 +
+ patch/0042-Patch.patch                        |   25 +
+ patch/0043-Patch.patch                        |   25 +
+ patch/0044-Patch.patch                        |   24 +
+ patch/0045-Patch-minor.patch                  |   38 +
+ ...46-Patch-for-the-video-of-the-kernel.patch |   25 +
+ patch/0047-minor-patch.patch                  |   37 +
+ ...48-Conflict-resolved-for-the-merging.patch |   25 +
+ patch/0049-Minor-patch.patch                  |   91 +
+ patch/0050-Patch.patch                        |   25 +
+ 50 files changed, 5490 insertions(+)
+ create mode 100644 patch/0001-Ci-CD-changed.patch
+ create mode 100644 patch/0002-Minor-update.patch
+ create mode 100644 patch/0003-Minor-update.patch
+ create mode 100644 patch/0004-Minor.patch
+ create mode 100644 patch/0005-File-changes-fot-the-graphical-interface-of-the-kern.patch
+ create mode 100644 patch/0006-Minor-update.patch
+ create mode 100644 patch/0007-Minor-updates.patch
+ create mode 100644 patch/0008-Minor-update.patch
+ create mode 100644 patch/0009-Updated-the-kernel-main.patch
+ create mode 100644 patch/0010-Minor-update.patch
+ create mode 100644 patch/0011-Minor-patch.patch
+ create mode 100644 patch/0012-Update-for-the-kernel-GUI.patch
+ create mode 100644 patch/0013-Minor-update.patch
+ create mode 100644 patch/0014-Patch.patch
+ create mode 100644 patch/0015-Updated-the-patch.patch
+ create mode 100644 patch/0016-Minor-update.patch
+ create mode 100644 patch/0017-Patch.patch
+ create mode 100644 patch/0018-Patch.patch
+ create mode 100644 patch/0019-Minor-update.patch
+ create mode 100644 patch/0020-Patch-minor.patch
+ create mode 100644 patch/0021-Minor-update.patch
+ create mode 100644 patch/0022-Added-GUI-files.patch
+ create mode 100644 patch/0023-Patch.patch
+ create mode 100644 patch/0024-Update-for-the-kernel.patch
+ create mode 100644 patch/0025-Minor-patch.patch
+ create mode 100644 patch/0026-Minor-update-for-commands.patch
+ create mode 100644 patch/0027-Patch.patch
+ create mode 100644 patch/0028-Patch.patch
+ create mode 100644 patch/0029-Patch-for-make-file.patch
+ create mode 100644 patch/0030-Minor-update-for-patch.patch
+ create mode 100644 patch/0031-Patch.patch
+ create mode 100644 patch/0032-Patch.patch
+ create mode 100644 patch/0033-Patch.patch
+ create mode 100644 patch/0034-Patch.patch
+ create mode 100644 patch/0035-Minor-patch.patch
+ create mode 100644 patch/0036-Patch.patch
+ create mode 100644 patch/0037-Patch.patch
+ create mode 100644 patch/0038-Patch.patch
+ create mode 100644 patch/0039-Patch.patch
+ create mode 100644 patch/0040-Patch.patch
+ create mode 100644 patch/0041-Patch.patch
+ create mode 100644 patch/0042-Patch.patch
+ create mode 100644 patch/0043-Patch.patch
+ create mode 100644 patch/0044-Patch.patch
+ create mode 100644 patch/0045-Patch-minor.patch
+ create mode 100644 patch/0046-Patch-for-the-video-of-the-kernel.patch
+ create mode 100644 patch/0047-minor-patch.patch
+ create mode 100644 patch/0048-Conflict-resolved-for-the-merging.patch
+ create mode 100644 patch/0049-Minor-patch.patch
+ create mode 100644 patch/0050-Patch.patch
+
+diff --git a/patch/0001-Ci-CD-changed.patch b/patch/0001-Ci-CD-changed.patch
+new file mode 100644
+index 0000000..bc2f6d3
+--- /dev/null
++++ b/patch/0001-Ci-CD-changed.patch
+@@ -0,0 +1,25 @@
++From 44c57bb30f280b63de6c1715e3198d8827453023 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 16:09:14 -0400
++Subject: [PATCH 01/50] Ci/CD changed
++
++---
++ .github/workflows/test.yml | 2 +-
++ 1 file changed, 1 insertion(+), 1 deletion(-)
++
++diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
++index f44793f..aa843f1 100644
++--- a/.github/workflows/test.yml
+++++ b/.github/workflows/test.yml
++@@ -3,7 +3,7 @@ name: HiesenKernel
++ on:
++   push:
++     branches:
++-      - main  # Adjust branch name as needed
+++      - Log  # Adjust branch name as needed
++ 
++ jobs:
++   build:
++-- 
++2.43.0
++
+diff --git a/patch/0002-Minor-update.patch b/patch/0002-Minor-update.patch
+new file mode 100644
+index 0000000..ecd25bd
+--- /dev/null
++++ b/patch/0002-Minor-update.patch
+@@ -0,0 +1,23 @@
++From c490b722b8b8d3494aac8ed35dc0b76abb9c5d90 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 16:11:27 -0400
++Subject: [PATCH 02/50] Minor update
++
++---
++ include/stdint.h | 3 +++
++ 1 file changed, 3 insertions(+)
++ create mode 100644 include/stdint.h
++
++diff --git a/include/stdint.h b/include/stdint.h
++new file mode 100644
++index 0000000..0285381
++--- /dev/null
+++++ b/include/stdint.h
++@@ -0,0 +1,3 @@
+++#pragma once
+++
+++#include <stdint.h>
++\ No newline at end of file
++-- 
++2.43.0
++
+diff --git a/patch/0003-Minor-update.patch b/patch/0003-Minor-update.patch
+new file mode 100644
+index 0000000..f96a764
+--- /dev/null
++++ b/patch/0003-Minor-update.patch
+@@ -0,0 +1,69 @@
++From 815ee4ea3a2e0cd9463e3c1db2939a2eb0050c54 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 16:13:09 -0400
++Subject: [PATCH 03/50] Minor update
++
++---
++ kernel/gui/graphics.c |  2 +-
++ kernel/gui/stdint.h   | 35 +++++++++++++++++++++++++++++++++++
++ 2 files changed, 36 insertions(+), 1 deletion(-)
++ create mode 100644 kernel/gui/stdint.h
++
++diff --git a/kernel/gui/graphics.c b/kernel/gui/graphics.c
++index 1e10e93..00ecca5 100644
++--- a/kernel/gui/graphics.c
+++++ b/kernel/gui/graphics.c
++@@ -6,7 +6,7 @@
++  * of the NCSA / University of Illinois License - see LICENSE.md
++  * Copyright (C) 2012-2021 K. Lange
++  */
++-#include <stdint.h>
+++#include "stdint.h"
++ #include <string.h>
++ #include <stdio.h>
++ #include <math.h>
++diff --git a/kernel/gui/stdint.h b/kernel/gui/stdint.h
++new file mode 100644
++index 0000000..9f71881
++--- /dev/null
+++++ b/kernel/gui/stdint.h
++@@ -0,0 +1,35 @@
+++#ifndef _STDINT_H_
+++#define _STDINT_H_
+++
+++#define S(x) #x
+++#define S_(x) S(x)
+++#define S__LINE__ S_(__LINE__)
+++
+++#define LE_ENDIAN 1
+++#define GE_ENDIAN 2
+++
+++typedef unsigned char uint8_t;
+++typedef unsigned short uint16_t;
+++typedef unsigned int uint32_t;
+++typedef unsigned long int uint64_t;
+++
+++typedef signed char int8_t;
+++typedef signed short int16_t;
+++typedef signed int int32_t;
+++typedef signed long int int64_t;
+++
+++typedef long int off_t;
+++typedef unsigned long int size_t;
+++
+++typedef long int intptr_t;
+++typedef unsigned long int uintptr_t;
+++
+++typedef int bool;
+++
+++#define true 1
+++#define false 0
+++
+++#define CUR_ENDIAN LE_ENDIAN
+++#define TLS __attribute__((address_space(256)))
+++
+++#endif
++\ No newline at end of file
++-- 
++2.43.0
++
+diff --git a/patch/0004-Minor.patch b/patch/0004-Minor.patch
+new file mode 100644
+index 0000000..b745c7c
+--- /dev/null
++++ b/patch/0004-Minor.patch
+@@ -0,0 +1,39 @@
++From df49ffe140eaaeb25ecf603959f6fc96544a03af Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 16:14:53 -0400
++Subject: [PATCH 04/50] Minor
++
++---
++ .github/workflows/test.yml | 2 +-
++ kernel/gui/graphics.c      | 2 +-
++ 2 files changed, 2 insertions(+), 2 deletions(-)
++
++diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
++index aa843f1..ae00431 100644
++--- a/.github/workflows/test.yml
+++++ b/.github/workflows/test.yml
++@@ -16,7 +16,7 @@ jobs:
++       - name: Install Dependencies
++         run: |
++           sudo apt-get update
++-          sudo apt-get install -y build-essential git wget bzip2 xz-utils unzip help2man libtool-bin nasm python2 python3 python-pip grub-common xorriso mtools
+++          sudo apt-get install -y build-essential git wget bzip2 xz-utils unzip help2man libtool-bin nasm python2 python3 python-pip grub-common xorriso mtools  build-essential
++           python2 -m pip install -r kernel/requirements.txt
++           
++       - name: Run Make Command
++diff --git a/kernel/gui/graphics.c b/kernel/gui/graphics.c
++index 00ecca5..1e10e93 100644
++--- a/kernel/gui/graphics.c
+++++ b/kernel/gui/graphics.c
++@@ -6,7 +6,7 @@
++  * of the NCSA / University of Illinois License - see LICENSE.md
++  * Copyright (C) 2012-2021 K. Lange
++  */
++-#include "stdint.h"
+++#include <stdint.h>
++ #include <string.h>
++ #include <stdio.h>
++ #include <math.h>
++-- 
++2.43.0
++
+diff --git a/patch/0005-File-changes-fot-the-graphical-interface-of-the-kern.patch b/patch/0005-File-changes-fot-the-graphical-interface-of-the-kern.patch
+new file mode 100644
+index 0000000..5b14644
+--- /dev/null
++++ b/patch/0005-File-changes-fot-the-graphical-interface-of-the-kern.patch
+@@ -0,0 +1,27 @@
++From e70122c33401811d238535d312744d49d1112fb6 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 16:37:59 -0400
++Subject: [PATCH 05/50] File changes fot the graphical interface of the kernel
++
++---
++ kernel/gui/graphics.c | 4 ++--
++ 1 file changed, 2 insertions(+), 2 deletions(-)
++
++diff --git a/kernel/gui/graphics.c b/kernel/gui/graphics.c
++index 1e10e93..54aeda8 100644
++--- a/kernel/gui/graphics.c
+++++ b/kernel/gui/graphics.c
++@@ -6,8 +6,8 @@
++  * of the NCSA / University of Illinois License - see LICENSE.md
++  * Copyright (C) 2012-2021 K. Lange
++  */
++-#include <stdint.h>
++-#include <string.h>
+++#include "stdint.h" /* For uint32_t, etc. */
+++// #include <string.h>
++ #include <stdio.h>
++ #include <math.h>
++ #include <fcntl.h>
++-- 
++2.43.0
++
+diff --git a/patch/0006-Minor-update.patch b/patch/0006-Minor-update.patch
+new file mode 100644
+index 0000000..16bb4ba
+--- /dev/null
++++ b/patch/0006-Minor-update.patch
+@@ -0,0 +1,459 @@
++From cc14aae927ecf75fd61766116e2961d025cb9e06 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 16:45:21 -0400
++Subject: [PATCH 06/50] Minor update
++
++---
++ include/stdio.h | 439 ++++++++++++++++++++++++++++++++++++++++++++++++
++ 1 file changed, 439 insertions(+)
++ create mode 100644 include/stdio.h
++
++diff --git a/include/stdio.h b/include/stdio.h
++new file mode 100644
++index 0000000..e8b8947
++--- /dev/null
+++++ b/include/stdio.h
++@@ -0,0 +1,439 @@
+++/*	$OpenBSD: stdio.h,v 1.55 2022/01/05 20:57:27 millert Exp $	*/
+++/*	$NetBSD: stdio.h,v 1.18 1996/04/25 18:29:21 jtc Exp $	*/
+++
+++/*-
+++ * Copyright (c) 1990 The Regents of the University of California.
+++ * All rights reserved.
+++ *
+++ * This code is derived from software contributed to Berkeley by
+++ * Chris Torek.
+++ *
+++ * Redistribution and use in source and binary forms, with or without
+++ * modification, are permitted provided that the following conditions
+++ * are met:
+++ * 1. Redistributions of source code must retain the above copyright
+++ *    notice, this list of conditions and the following disclaimer.
+++ * 2. Redistributions in binary form must reproduce the above copyright
+++ *    notice, this list of conditions and the following disclaimer in the
+++ *    documentation and/or other materials provided with the distribution.
+++ * 3. Neither the name of the University nor the names of its contributors
+++ *    may be used to endorse or promote products derived from this software
+++ *    without specific prior written permission.
+++ *
+++ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+++ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+++ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+++ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+++ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+++ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+++ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+++ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+++ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+++ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+++ * SUCH DAMAGE.
+++ *
+++ *	@(#)stdio.h	5.17 (Berkeley) 6/3/91
+++ */
+++
+++#ifndef	_STDIO_H_
+++#define	_STDIO_H_
+++
+++#include <sys/cdefs.h>
+++#include <sys/_null.h>
+++#include <sys/_types.h>
+++
+++#if __BSD_VISIBLE || __POSIX_VISIBLE || __XPG_VISIBLE
+++#include <sys/types.h>	/* XXX should be removed */
+++#endif
+++
+++#ifndef	_SIZE_T_DEFINED_
+++#define	_SIZE_T_DEFINED_
+++typedef	__size_t	size_t;
+++#endif
+++
+++#ifndef	_OFF_T_DEFINED_
+++#define	_OFF_T_DEFINED_
+++typedef	__off_t	off_t;
+++#endif
+++
+++#define	_FSTDIO			/* Define for new stdio with functions. */
+++
+++typedef off_t fpos_t;		/* stdio file position type */
+++
+++/*
+++ * NB: to fit things in six character monocase externals, the stdio
+++ * code uses the prefix `__s' for stdio objects, typically followed
+++ * by a three-character attempt at a mnemonic.
+++ */
+++
+++/* stdio buffers */
+++struct __sbuf {
+++	unsigned char *_base;
+++	int	_size;
+++};
+++
+++/*
+++ * stdio state variables.
+++ *
+++ * The following always hold:
+++ *
+++ *	if (_flags&(__SLBF|__SWR)) == (__SLBF|__SWR),
+++ *		_lbfsize is -_bf._size, else _lbfsize is 0
+++ *	if _flags&__SRD, _w is 0
+++ *	if _flags&__SWR, _r is 0
+++ *
+++ * This ensures that the getc and putc macros (or inline functions) never
+++ * try to write or read from a file that is in `read' or `write' mode.
+++ * (Moreover, they can, and do, automatically switch from read mode to
+++ * write mode, and back, on "r+" and "w+" files.)
+++ *
+++ * _lbfsize is used only to make the inline line-buffered output stream
+++ * code as compact as possible.
+++ *
+++ * _ub, _up, and _ur are used when ungetc() pushes back more characters
+++ * than fit in the current _bf, or when ungetc() pushes back a character
+++ * that does not match the previous one in _bf.  When this happens,
+++ * _ub._base becomes non-nil (i.e., a stream has ungetc() data iff
+++ * _ub._base!=NULL) and _up and _ur save the current values of _p and _r.
+++ */
+++typedef	struct __sFILE {
+++	unsigned char *_p;	/* current position in (some) buffer */
+++	int	_r;		/* read space left for getc() */
+++	int	_w;		/* write space left for putc() */
+++	short	_flags;		/* flags, below; this FILE is free if 0 */
+++	short	_file;		/* fileno, if Unix descriptor, else -1 */
+++	struct	__sbuf _bf;	/* the buffer (at least 1 byte, if !NULL) */
+++	int	_lbfsize;	/* 0 or -_bf._size, for inline putc */
+++
+++	/* operations */
+++	void	*_cookie;	/* cookie passed to io functions */
+++	int	(*_close)(void *);
+++	int	(*_read)(void *, char *, int);
+++	fpos_t	(*_seek)(void *, fpos_t, int);
+++	int	(*_write)(void *, const char *, int);
+++
+++	/* extension data, to avoid further ABI breakage */
+++	struct	__sbuf _ext;
+++	/* data for long sequences of ungetc() */
+++	unsigned char *_up;	/* saved _p when _p is doing ungetc data */
+++	int	_ur;		/* saved _r when _r is counting ungetc data */
+++
+++	/* tricks to meet minimum requirements even when malloc() fails */
+++	unsigned char _ubuf[3];	/* guarantee an ungetc() buffer */
+++	unsigned char _nbuf[1];	/* guarantee a getc() buffer */
+++
+++	/* separate buffer for fgetln() when line crosses buffer boundary */
+++	struct	__sbuf _lb;	/* buffer for fgetln() */
+++
+++	/* Unix stdio files get aligned to block boundaries on fseek() */
+++	int	_blksize;	/* stat.st_blksize (may be != _bf._size) */
+++	fpos_t	_offset;	/* current lseek offset */
+++} FILE;
+++
+++__BEGIN_DECLS
+++extern FILE __sF[];
+++__END_DECLS
+++
+++#define	__SLBF	0x0001		/* line buffered */
+++#define	__SNBF	0x0002		/* unbuffered */
+++#define	__SRD	0x0004		/* OK to read */
+++#define	__SWR	0x0008		/* OK to write */
+++	/* RD and WR are never simultaneously asserted */
+++#define	__SRW	0x0010		/* open for reading & writing */
+++#define	__SEOF	0x0020		/* found EOF */
+++#define	__SERR	0x0040		/* found error */
+++#define	__SMBF	0x0080		/* _buf is from malloc */
+++#define	__SAPP	0x0100		/* fdopen()ed in append mode */
+++#define	__SSTR	0x0200		/* this is an sprintf/snprintf string */
+++#define	__SOPT	0x0400		/* do fseek() optimisation */
+++#define	__SNPT	0x0800		/* do not do fseek() optimisation */
+++#define	__SOFF	0x1000		/* set iff _offset is in fact correct */
+++#define	__SMOD	0x2000		/* true => fgetln modified _p text */
+++#define	__SALC	0x4000		/* allocate string space dynamically */
+++#define __SIGN	0x8000		/* ignore this file in _fwalk */
+++
+++/*
+++ * The following three definitions are for ANSI C, which took them
+++ * from System V, which brilliantly took internal interface macros and
+++ * made them official arguments to setvbuf(), without renaming them.
+++ * Hence, these ugly _IOxxx names are *supposed* to appear in user code.
+++ *
+++ * Although numbered as their counterparts above, the implementation
+++ * does not rely on this.
+++ */
+++#define	_IOFBF	0		/* setvbuf should set fully buffered */
+++#define	_IOLBF	1		/* setvbuf should set line buffered */
+++#define	_IONBF	2		/* setvbuf should set unbuffered */
+++
+++#define	BUFSIZ	1024		/* size of buffer used by setbuf */
+++
+++#define	EOF	(-1)
+++
+++/*
+++ * FOPEN_MAX is a minimum maximum, and should be the number of descriptors
+++ * that the kernel can provide without allocation of a resource that can
+++ * fail without the process sleeping.  Do not use this for anything.
+++ */
+++#define	FOPEN_MAX	20	/* must be <= OPEN_MAX <sys/syslimits.h> */
+++#define	FILENAME_MAX	1024	/* must be <= PATH_MAX <sys/syslimits.h> */
+++
+++/* System V/ANSI C; this is the wrong way to do this, do *not* use these. */
+++#if __BSD_VISIBLE || __XPG_VISIBLE
+++#define	P_tmpdir	"/tmp/"
+++#endif
+++#define	L_tmpnam	1024	/* XXX must be == PATH_MAX */
+++#define	TMP_MAX		0x7fffffff	/* more, but don't overflow int */
+++
+++#ifndef SEEK_SET
+++#define	SEEK_SET	0	/* set file offset to offset */
+++#endif
+++#ifndef SEEK_CUR
+++#define	SEEK_CUR	1	/* set file offset to current plus offset */
+++#endif
+++#ifndef SEEK_END
+++#define	SEEK_END	2	/* set file offset to EOF plus offset */
+++#endif
+++
+++#define	stdin	(&__sF[0])
+++#define	stdout	(&__sF[1])
+++#define	stderr	(&__sF[2])
+++
+++/*
+++ * Functions defined in ANSI C standard.
+++ */
+++__BEGIN_DECLS
+++void	 clearerr(FILE *);
+++#if __POSIX_VISIBLE >= 200809
+++int	 dprintf(int, const char * __restrict, ...)
+++		__attribute__((__format__ (printf, 2, 3)))
+++		__attribute__((__nonnull__ (2)));
+++#endif
+++int	 fclose(FILE *);
+++int	 feof(FILE *);
+++int	 ferror(FILE *);
+++int	 fflush(FILE *);
+++int	 fgetc(FILE *);
+++int	 fgetpos(FILE *, fpos_t *);
+++char	*fgets(char *, int, FILE *)
+++		__attribute__((__bounded__ (__string__,1,2)));
+++FILE	*fopen(const char *, const char *);
+++int	 fprintf(FILE *, const char *, ...);
+++int	 fputc(int, FILE *);
+++int	 fputs(const char *, FILE *);
+++size_t	 fread(void *, size_t, size_t, FILE *)
+++		__attribute__((__bounded__ (__size__,1,3,2)));
+++FILE	*freopen(const char *, const char *, FILE *);
+++int	 fscanf(FILE *, const char *, ...);
+++int	 fseek(FILE *, long, int);
+++int	 fseeko(FILE *, off_t, int);
+++int	 fsetpos(FILE *, const fpos_t *);
+++long	 ftell(FILE *);
+++off_t	 ftello(FILE *);
+++size_t	 fwrite(const void *, size_t, size_t, FILE *)
+++		__attribute__((__bounded__ (__size__,1,3,2)));
+++int	 getc(FILE *);
+++int	 getchar(void);
+++#if __POSIX_VISIBLE >= 200809
+++ssize_t	 getdelim(char ** __restrict, size_t * __restrict, int,
+++	    FILE * __restrict);
+++ssize_t	 getline(char ** __restrict, size_t * __restrict,
+++	    FILE * __restrict);
+++#endif
+++#if __BSD_VISIBLE && !defined(__SYS_ERRLIST)
+++#define __SYS_ERRLIST
+++
+++extern int sys_nerr;			/* perror(3) external variables */
+++extern char *sys_errlist[];
+++#endif
+++void	 perror(const char *);
+++int	 printf(const char *, ...);
+++int	 putc(int, FILE *);
+++int	 putchar(int);
+++int	 puts(const char *);
+++int	 remove(const char *);
+++int	 rename(const char *, const char *);
+++#if __POSIX_VISIBLE >= 200809
+++int	 renameat(int, const char *, int, const char *);
+++#endif
+++void	 rewind(FILE *);
+++int	 scanf(const char *, ...);
+++void	 setbuf(FILE *, char *);
+++int	 setvbuf(FILE *, char *, int, size_t);
+++int	 sprintf(char *, const char *, ...);
+++int	 sscanf(const char *, const char *, ...);
+++FILE	*tmpfile(void);
+++char	*tmpnam(char *);
+++int	 ungetc(int, FILE *);
+++int	 vfprintf(FILE *, const char *, __va_list);
+++int	 vprintf(const char *, __va_list);
+++int	 vsprintf(char *, const char *, __va_list);
+++#if __POSIX_VISIBLE >= 200809
+++int	 vdprintf(int, const char * __restrict, __va_list)
+++		__attribute__((__format__ (printf, 2, 0)))
+++		__attribute__((__nonnull__ (2)));
+++#endif
+++
+++#if __ISO_C_VISIBLE >= 1999 || __XPG_VISIBLE >= 500 || __BSD_VISIBLE
+++int	 snprintf(char *, size_t, const char *, ...)
+++		__attribute__((__format__ (printf, 3, 4)))
+++		__attribute__((__nonnull__ (3)))
+++		__attribute__((__bounded__ (__string__,1,2)));
+++int	 vsnprintf(char *, size_t, const char *, __va_list)
+++		__attribute__((__format__ (printf, 3, 0)))
+++		__attribute__((__nonnull__ (3)))
+++		__attribute__((__bounded__(__string__,1,2)));
+++#endif /* __ISO_C_VISIBLE >= 1999 || __XPG_VISIBLE >= 500 || __BSD_VISIBLE */
+++
+++#if __ISO_C_VISIBLE >= 1999 || __BSD_VISIBLE
+++int	 vfscanf(FILE *, const char *, __va_list)
+++		__attribute__((__format__ (scanf, 2, 0)))
+++		__attribute__((__nonnull__ (2)));
+++int	 vscanf(const char *, __va_list)
+++		__attribute__((__format__ (scanf, 1, 0)))
+++		__attribute__((__nonnull__ (1)));
+++int	 vsscanf(const char *, const char *, __va_list)
+++		__attribute__((__format__ (scanf, 2, 0)))
+++		__attribute__((__nonnull__ (2)));
+++#endif /* __ISO_C_VISIBLE >= 1999 || __BSD_VISIBLE */
+++
+++__END_DECLS
+++
+++
+++/*
+++ * Functions defined in POSIX 1003.1.
+++ */
+++#if __BSD_VISIBLE || __POSIX_VISIBLE || __XPG_VISIBLE
+++#define	L_ctermid	1024	/* size for ctermid(); PATH_MAX */
+++
+++__BEGIN_DECLS
+++char	*ctermid(char *);
+++FILE	*fdopen(int, const char *);
+++int	 fileno(FILE *);
+++
+++#if __POSIX_VISIBLE >= 199209
+++int	 pclose(FILE *);
+++FILE	*popen(const char *, const char *);
+++#endif
+++
+++#if __POSIX_VISIBLE >= 199506
+++void	 flockfile(FILE *);
+++int	 ftrylockfile(FILE *);
+++void	 funlockfile(FILE *);
+++
+++/*
+++ * These are normally used through macros as defined below, but POSIX
+++ * requires functions as well.
+++ */
+++int	 getc_unlocked(FILE *);
+++int	 getchar_unlocked(void);
+++int	 putc_unlocked(int, FILE *);
+++int	 putchar_unlocked(int);
+++#endif /* __POSIX_VISIBLE >= 199506 */
+++
+++#if __POSIX_VISIBLE >= 200809
+++FILE	*fmemopen(void *, size_t, const char *);
+++FILE	*open_memstream(char **, size_t *);
+++#endif /* __POSIX_VISIBLE >= 200809 */
+++
+++#if __XPG_VISIBLE
+++char	*tempnam(const char *, const char *);
+++#endif
+++__END_DECLS
+++
+++#endif /* __BSD_VISIBLE || __POSIX_VISIBLE || __XPG_VISIBLE */
+++
+++/*
+++ * Routines that are purely local.
+++ */
+++#if __BSD_VISIBLE
+++__BEGIN_DECLS
+++int	 asprintf(char **, const char *, ...)
+++		__attribute__((__format__ (printf, 2, 3)))
+++		__attribute__((__nonnull__ (2)));
+++char	*fgetln(FILE *, size_t *);
+++int	 fpurge(FILE *);
+++int	 getw(FILE *);
+++int	 putw(int, FILE *);
+++void	 setbuffer(FILE *, char *, int);
+++int	 setlinebuf(FILE *);
+++int	 vasprintf(char **, const char *, __va_list)
+++		__attribute__((__format__ (printf, 2, 0)))
+++		__attribute__((__nonnull__ (2)));
+++__END_DECLS
+++
+++/*
+++ * Stdio function-access interface.
+++ */
+++__BEGIN_DECLS
+++FILE	*funopen(const void *,
+++		int (*)(void *, char *, int),
+++		int (*)(void *, const char *, int),
+++		off_t (*)(void *, off_t, int),
+++		int (*)(void *));
+++__END_DECLS
+++#define	fropen(cookie, fn) funopen(cookie, fn, 0, 0, 0)
+++#define	fwopen(cookie, fn) funopen(cookie, 0, fn, 0, 0)
+++#endif /* __BSD_VISIBLE */
+++
+++/*
+++ * Functions internal to the implementation.
+++ */
+++__BEGIN_DECLS
+++int	__srget(FILE *);
+++int	__swbuf(int, FILE *);
+++__END_DECLS
+++
+++/*
+++ * The __sfoo macros are here so that we can 
+++ * define function versions in the C library.
+++ */
+++#define	__sgetc(p) (--(p)->_r < 0 ? __srget(p) : (int)(*(p)->_p++))
+++static __inline int __sputc(int _c, FILE *_p) {
+++	if (--_p->_w >= 0 || (_p->_w >= _p->_lbfsize && (char)_c != '\n'))
+++		return (*_p->_p++ = _c);
+++	else
+++		return (__swbuf(_c, _p));
+++}
+++
+++#define	__sfeof(p)	(((p)->_flags & __SEOF) != 0)
+++#define	__sferror(p)	(((p)->_flags & __SERR) != 0)
+++#define	__sclearerr(p)	((void)((p)->_flags &= ~(__SERR|__SEOF)))
+++#define	__sfileno(p)	((p)->_file)
+++
+++extern int __isthreaded;
+++
+++#define feof(p)		(!__isthreaded ? __sfeof(p) : (feof)(p))
+++#define ferror(p)	(!__isthreaded ? __sferror(p) : (ferror)(p))
+++#define clearerr(p)	(!__isthreaded ? __sclearerr(p) : (clearerr)(p))
+++
+++#if __POSIX_VISIBLE
+++#define fileno(p)	(!__isthreaded ? __sfileno(p) : (fileno)(p))
+++#endif
+++
+++#define getc(fp)	(!__isthreaded ? __sgetc(fp) : (getc)(fp))
+++
+++#if __BSD_VISIBLE
+++/*
+++ * The macro implementations of putc and putc_unlocked are not
+++ * fully POSIX compliant; they do not set errno on failure
+++ */
+++#define putc(x, fp)	(!__isthreaded ? __sputc(x, fp) : (putc)(x, fp))
+++#endif /* __BSD_VISIBLE */
+++
+++#if __POSIX_VISIBLE >= 199506
+++#define	getc_unlocked(fp)	__sgetc(fp)
+++/*
+++ * The macro implementations of putc and putc_unlocked are not
+++ * fully POSIX compliant; they do not set errno on failure
+++ */
+++#if __BSD_VISIBLE
+++#define putc_unlocked(x, fp)	__sputc(x, fp)
+++#endif /* __BSD_VISIBLE */
+++#endif /* __POSIX_VISIBLE >= 199506 */
+++
+++#define	getchar()	getc(stdin)
+++#define	putchar(x)	putc(x, stdout)
+++#define getchar_unlocked()	getc_unlocked(stdin)
+++#define putchar_unlocked(c)	putc_unlocked(c, stdout)
+++
+++#endif /* _STDIO_H_ */
++\ No newline at end of file
++-- 
++2.43.0
++
+diff --git a/patch/0007-Minor-updates.patch b/patch/0007-Minor-updates.patch
+new file mode 100644
+index 0000000..33a3c56
+--- /dev/null
++++ b/patch/0007-Minor-updates.patch
+@@ -0,0 +1,51 @@
++From 158ece80473b5573526ace03abd12b9b36f73a65 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 16:51:32 -0400
++Subject: [PATCH 07/50] Minor updates
++
++---
++ kernel/Makefile       | 1 -
++ kernel/gui/Makefile   | 2 +-
++ kernel/gui/graphics.c | 4 ++--
++ 3 files changed, 3 insertions(+), 4 deletions(-)
++
++diff --git a/kernel/Makefile b/kernel/Makefile
++index a41cb2e..376d27f 100644
++--- a/kernel/Makefile
+++++ b/kernel/Makefile
++@@ -35,7 +35,6 @@ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
++ 	colorforth/editor.o                     \
++ 	colorforth/compiler.o                   \
++ 	arch/x86-pc/startup.o                   \
++-	gui/graphics.o
++ 
++ KERNEL          = $(BUILD_PATH)/roentgenium.elf
++ MULTIBOOT_IMAGE	= $(BUILD_PATH)/heisen.iso
++diff --git a/kernel/gui/Makefile b/kernel/gui/Makefile
++index 20e4d14..e8499ac 100644
++--- a/kernel/gui/Makefile
+++++ b/kernel/gui/Makefile
++@@ -1,2 +1,2 @@
++ all:
++-	$(CC) $(CFLAGS) window.c
++\ No newline at end of file
+++	$(CC) $(CFLAGS) window.c graphics.c
++\ No newline at end of file
++diff --git a/kernel/gui/graphics.c b/kernel/gui/graphics.c
++index 54aeda8..1e10e93 100644
++--- a/kernel/gui/graphics.c
+++++ b/kernel/gui/graphics.c
++@@ -6,8 +6,8 @@
++  * of the NCSA / University of Illinois License - see LICENSE.md
++  * Copyright (C) 2012-2021 K. Lange
++  */
++-#include "stdint.h" /* For uint32_t, etc. */
++-// #include <string.h>
+++#include <stdint.h>
+++#include <string.h>
++ #include <stdio.h>
++ #include <math.h>
++ #include <fcntl.h>
++-- 
++2.43.0
++
+diff --git a/patch/0008-Minor-update.patch b/patch/0008-Minor-update.patch
+new file mode 100644
+index 0000000..3cc0bc4
+--- /dev/null
++++ b/patch/0008-Minor-update.patch
+@@ -0,0 +1,43 @@
++From 4972cf72cf5428a9efe740e982ebc89fa4a023ac Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 17:00:40 -0400
++Subject: [PATCH 08/50] Minor update
++
++---
++ kernel/gui/calculator.h | 10 ++++++++++
++ kernel/main.c           |  1 +
++ 2 files changed, 11 insertions(+)
++ create mode 100644 kernel/gui/calculator.h
++
++diff --git a/kernel/gui/calculator.h b/kernel/gui/calculator.h
++new file mode 100644
++index 0000000..a7850cb
++--- /dev/null
+++++ b/kernel/gui/calculator.h
++@@ -0,0 +1,10 @@
+++#ifndef _HEISEN_CALCULATOR_H
+++#define _HEISEN_CALCULATOR_H
+++
+++double sqrt(double x);
+++double tan(double x);
+++double cos(double x);
+++double sin(double x);
+++double div(double x, double y);
+++
+++#endif // _HEISEN_CALCULATOR_H
++\ No newline at end of file
++diff --git a/kernel/main.c b/kernel/main.c
++index 0967d90..5ae2e06 100644
++--- a/kernel/main.c
+++++ b/kernel/main.c
++@@ -8,6 +8,7 @@
++ #include <drivers/mouse.h>
++ #include <drivers/video.h>
++ #include <proc/sched.h>
+++#include "graphics.h"
++ int kmain(multiboot_info_t *info) {
++     
++     video_init(25, 80);
++-- 
++2.43.0
++
+diff --git a/patch/0009-Updated-the-kernel-main.patch b/patch/0009-Updated-the-kernel-main.patch
+new file mode 100644
+index 0000000..b5d47ff
+--- /dev/null
++++ b/patch/0009-Updated-the-kernel-main.patch
+@@ -0,0 +1,27 @@
++From 9da1c3fd8225315234c5e516f6418f8c1ebd4375 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 17:02:36 -0400
++Subject: [PATCH 09/50] Updated the kernel main
++
++---
++ kernel/main.c | 3 +++
++ 1 file changed, 3 insertions(+)
++
++diff --git a/kernel/main.c b/kernel/main.c
++index 5ae2e06..03ed5ba 100644
++--- a/kernel/main.c
+++++ b/kernel/main.c
++@@ -36,6 +36,9 @@ int kmain(multiboot_info_t *info) {
++     
++     while(1)
++         halt();
+++        double m[2][3];
+++
+++		gfx_matrix_identity(m);
++     
++     return 0;
++ }
++\ No newline at end of file
++-- 
++2.43.0
++
+diff --git a/patch/0010-Minor-update.patch b/patch/0010-Minor-update.patch
+new file mode 100644
+index 0000000..c7842d8
+--- /dev/null
++++ b/patch/0010-Minor-update.patch
+@@ -0,0 +1,36 @@
++From 0e759bd736004abb5b22ad323056b0c4b529d08c Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 17:08:39 -0400
++Subject: [PATCH 10/50] Minor update
++
++---
++ kernel/main.c | 5 ++---
++ 1 file changed, 2 insertions(+), 3 deletions(-)
++
++diff --git a/kernel/main.c b/kernel/main.c
++index 03ed5ba..2872936 100644
++--- a/kernel/main.c
+++++ b/kernel/main.c
++@@ -9,6 +9,7 @@
++ #include <drivers/video.h>
++ #include <proc/sched.h>
++ #include "graphics.h"
+++#include "terminal.h"
++ int kmain(multiboot_info_t *info) {
++     
++     video_init(25, 80);
++@@ -36,9 +37,7 @@ int kmain(multiboot_info_t *info) {
++     
++     while(1)
++         halt();
++-        double m[2][3];
++-
++-		gfx_matrix_identity(m);
+++        terminal_writeline("Hello World");
++     
++     return 0;
++ }
++\ No newline at end of file
++-- 
++2.43.0
++
+diff --git a/patch/0011-Minor-patch.patch b/patch/0011-Minor-patch.patch
+new file mode 100644
+index 0000000..d66fec4
+--- /dev/null
++++ b/patch/0011-Minor-patch.patch
+@@ -0,0 +1,31 @@
++From a34a577d89d306ec9cb06b6379b83f91b1412b0c Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 17:11:41 -0400
++Subject: [PATCH 11/50] Minor patch
++
++---
++ kernel/main.c | 4 +++-
++ 1 file changed, 3 insertions(+), 1 deletion(-)
++
++diff --git a/kernel/main.c b/kernel/main.c
++index 2872936..45c0635 100644
++--- a/kernel/main.c
+++++ b/kernel/main.c
++@@ -34,10 +34,12 @@ int kmain(multiboot_info_t *info) {
++     ata_init();
++     
++     sched_init();
+++
+++    terminal_writeline("Hello World");
+++
++     
++     while(1)
++         halt();
++-        terminal_writeline("Hello World");
++     
++     return 0;
++ }
++\ No newline at end of file
++-- 
++2.43.0
++
+diff --git a/patch/0012-Update-for-the-kernel-GUI.patch b/patch/0012-Update-for-the-kernel-GUI.patch
+new file mode 100644
+index 0000000..17902ad
+--- /dev/null
++++ b/patch/0012-Update-for-the-kernel-GUI.patch
+@@ -0,0 +1,2225 @@
++From 209ec31576ba2105089da301c61455a4478a3e70 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 17:35:02 -0400
++Subject: [PATCH 12/50] Update for the kernel GUI
++
++---
++ include/mouse.h             |   25 +
++ include/pex.h               |   33 +
++ kernel/hashmap.h            |   53 ++
++ kernel/kbd.h                |  143 +++++
++ kernel/list.h               |   55 ++
++ kernel/main.c               |    1 -
++ kernel/yutani/decorations.h |   85 +++
++ kernel/yutani/yutani.c      | 1170 +++++++++++++++++++++++++++++++++++
++ kernel/yutani/yutani.h      |  573 +++++++++++++++++
++ 9 files changed, 2137 insertions(+), 1 deletion(-)
++ create mode 100644 include/mouse.h
++ create mode 100644 include/pex.h
++ create mode 100644 kernel/hashmap.h
++ create mode 100644 kernel/kbd.h
++ create mode 100644 kernel/list.h
++ create mode 100644 kernel/yutani/decorations.h
++ create mode 100644 kernel/yutani/yutani.c
++ create mode 100644 kernel/yutani/yutani.h
++
++diff --git a/include/mouse.h b/include/mouse.h
++new file mode 100644
++index 0000000..72daab6
++--- /dev/null
+++++ b/include/mouse.h
++@@ -0,0 +1,25 @@
+++#pragma once
+++
+++#include <_cheader.h>
+++
+++_Begin_C_Header
+++
+++typedef enum {
+++	LEFT_CLICK   = 0x01,
+++	RIGHT_CLICK  = 0x02,
+++	MIDDLE_CLICK = 0x04,
+++
+++	MOUSE_SCROLL_UP = 0x10,
+++	MOUSE_SCROLL_DOWN = 0x20,
+++} mouse_click_t;
+++
+++typedef struct {
+++	uint32_t magic;
+++	int32_t x_difference;
+++	int32_t y_difference;
+++	mouse_click_t buttons;
+++} mouse_device_packet_t;
+++
+++#define MOUSE_MAGIC 0xFEED1234
+++
+++_End_C_Header
++diff --git a/include/pex.h b/include/pex.h
++new file mode 100644
++index 0000000..13bbf01
++--- /dev/null
+++++ b/include/pex.h
++@@ -0,0 +1,33 @@
+++#pragma once
+++
+++#include <_cheader.h>
+++#include <stdint.h>
+++#include <stdio.h>
+++
+++_Begin_C_Header
+++
+++typedef struct pex_packet {
+++	uintptr_t source;
+++	size_t      size;
+++	uint8_t     data[];
+++} pex_packet_t;
+++#define MAX_PACKET_SIZE 1024
+++#define PACKET_SIZE (sizeof(pex_packet_t) + MAX_PACKET_SIZE)
+++
+++typedef struct pex_header {
+++	uintptr_t target;
+++	uint8_t data[];
+++} pex_header_t;
+++
+++extern size_t pex_send(FILE * sock, uintptr_t rcpt, size_t size, char * blob);
+++extern size_t pex_broadcast(FILE * sock, size_t size, char * blob);
+++extern size_t pex_listen(FILE * sock, pex_packet_t * packet);
+++
+++extern size_t pex_reply(FILE * sock, size_t size, char * blob);
+++extern size_t pex_recv(FILE * sock, char * blob);
+++extern size_t pex_query(FILE * sock);
+++
+++extern FILE * pex_bind(char * target);
+++extern FILE * pex_connect(char * target);
+++
+++_End_C_Header
++diff --git a/kernel/hashmap.h b/kernel/hashmap.h
++new file mode 100644
++index 0000000..8d71983
++--- /dev/null
+++++ b/kernel/hashmap.h
++@@ -0,0 +1,53 @@
+++#pragma once
+++
+++#include <_cheader.h>
+++
+++#ifdef _KERNEL_
+++#	include <kernel/system.h>
+++#else
+++#	include <string.h>
+++#	include <stddef.h>
+++#	include <stdlib.h>
+++#endif
+++
+++#include "list.h"
+++
+++_Begin_C_Header
+++
+++typedef unsigned int (*hashmap_hash_t) (const void * key);
+++typedef int (*hashmap_comp_t) (const void * a, const void * b);
+++typedef void (*hashmap_free_t) (void *);
+++typedef void * (*hashmap_dupe_t) (const void *);
+++
+++typedef struct hashmap_entry {
+++	char * key;
+++	void * value;
+++	struct hashmap_entry * next;
+++} hashmap_entry_t;
+++
+++typedef struct hashmap {
+++	hashmap_hash_t hash_func;
+++	hashmap_comp_t hash_comp;
+++	hashmap_dupe_t hash_key_dup;
+++	hashmap_free_t hash_key_free;
+++	hashmap_free_t hash_val_free;
+++	size_t         size;
+++	hashmap_entry_t ** entries;
+++} hashmap_t;
+++
+++extern hashmap_t * hashmap_create(int size);
+++extern hashmap_t * hashmap_create_int(int size);
+++extern void * hashmap_set(hashmap_t * map, const void * key, void * value);
+++extern void * hashmap_get(hashmap_t * map, const void * key);
+++extern void * hashmap_remove(hashmap_t * map, const void * key);
+++extern int hashmap_has(hashmap_t * map, const void * key);
+++extern list_t * hashmap_keys(hashmap_t * map);
+++extern list_t * hashmap_values(hashmap_t * map);
+++extern void hashmap_free(hashmap_t * map);
+++
+++extern unsigned int hashmap_string_hash(const void * key);
+++extern int hashmap_string_comp(const void * a, const void * b);
+++extern void * hashmap_string_dupe(const void * key);
+++extern int hashmap_is_empty(hashmap_t * map);
+++
+++_End_C_Header
++diff --git a/kernel/kbd.h b/kernel/kbd.h
++new file mode 100644
++index 0000000..41e8a55
++--- /dev/null
+++++ b/kernel/kbd.h
++@@ -0,0 +1,143 @@
+++#pragma once
+++
+++#include <_cheader.h>
+++
+++_Begin_C_Header
+++
+++#define KEY_NONE        0
+++#define KEY_BACKSPACE   8
+++#define KEY_CTRL_A      1
+++#define KEY_CTRL_B      2
+++#define KEY_CTRL_C      3
+++#define KEY_CTRL_D      4
+++#define KEY_CTRL_E      5
+++#define KEY_CTRL_F      6
+++#define KEY_CTRL_G      7
+++#define KEY_CTRL_H      8
+++#define KEY_CTRL_I      9
+++#define KEY_CTRL_J      10
+++#define KEY_CTRL_K      11
+++#define KEY_CTRL_L      12
+++#define KEY_CTRL_M      13
+++#define KEY_CTRL_N      14
+++#define KEY_CTRL_O      15
+++#define KEY_CTRL_P      16
+++#define KEY_CTRL_Q      17
+++#define KEY_CTRL_R      18
+++#define KEY_CTRL_S      19
+++#define KEY_CTRL_T      20
+++#define KEY_CTRL_U      21
+++#define KEY_CTRL_V      22
+++#define KEY_CTRL_W      23
+++#define KEY_CTRL_X      24
+++#define KEY_CTRL_Y      25
+++#define KEY_CTRL_Z      26
+++#define KEY_ESCAPE      27
+++#define KEY_NORMAL_MAX  256
+++#define KEY_ARROW_UP    257
+++#define KEY_ARROW_DOWN  258
+++#define KEY_ARROW_RIGHT 259
+++#define KEY_ARROW_LEFT  260
+++
+++#define KEY_LEFT_CTRL   1001
+++#define KEY_LEFT_SHIFT  1002
+++#define KEY_LEFT_ALT    1003
+++#define KEY_LEFT_SUPER  1004
+++
+++#define KEY_RIGHT_CTRL  1011
+++#define KEY_RIGHT_SHIFT 1012
+++#define KEY_RIGHT_ALT   1013
+++#define KEY_RIGHT_SUPER 1014
+++
+++#define KEY_F1          2001
+++#define KEY_F2          2002
+++#define KEY_F3          2003
+++#define KEY_F4          2004
+++#define KEY_F5          2005
+++#define KEY_F6          2006
+++#define KEY_F7          2007
+++#define KEY_F8          2008
+++#define KEY_F9          2009
+++#define KEY_F10         2010
+++#define KEY_F11         2011
+++#define KEY_F12         2012
+++
+++#define KEY_PAGE_DOWN   2013
+++#define KEY_PAGE_UP     2014
+++
+++#define KEY_HOME        2015
+++#define KEY_END         2016
+++#define KEY_DEL         2017
+++#define KEY_INSERT      2018
+++#define KEY_PAUSE       2019
+++#define KEY_SCROLL_LOCK 2020
+++#define KEY_PRINT_SCREEN 2021
+++#define KEY_APP         2022
+++
+++#define KEY_NUM_0       2500
+++#define KEY_NUM_1       2501
+++#define KEY_NUM_2       2502
+++#define KEY_NUM_3       2503
+++#define KEY_NUM_4       2504
+++#define KEY_NUM_5       2505
+++#define KEY_NUM_6       2506
+++#define KEY_NUM_7       2507
+++#define KEY_NUM_8       2508
+++#define KEY_NUM_9       2509
+++#define KEY_NUM_DOT     2510
+++#define KEY_NUM_DIV     2511
+++#define KEY_NUM_STAR    2512
+++#define KEY_NUM_MINUS   2513
+++#define KEY_NUM_PLUS    2514
+++#define KEY_NUM_ENTER   2515
+++
+++#define KEY_MOD_LEFT_CTRL   0x01
+++#define KEY_MOD_LEFT_SHIFT  0x02
+++#define KEY_MOD_LEFT_ALT    0x04
+++#define KEY_MOD_LEFT_SUPER  0x08
+++
+++#define KEY_MOD_RIGHT_CTRL  0x10
+++#define KEY_MOD_RIGHT_SHIFT 0x20
+++#define KEY_MOD_RIGHT_ALT   0x40
+++#define KEY_MOD_RIGHT_SUPER 0x80
+++
+++#define KEY_ACTION_DOWN     0x01
+++#define KEY_ACTION_UP       0x02
+++
+++typedef unsigned int  kbd_key_t;
+++typedef unsigned int  kbd_mod_t;
+++typedef unsigned char kbd_act_t;
+++
+++typedef struct {
+++	kbd_key_t keycode;
+++	kbd_mod_t modifiers;
+++	kbd_act_t action;
+++
+++	unsigned char key; /* Key as a raw code, ready for reading, or \0 if it's not a good down strike / was a modifier change / etc/. */
+++} key_event_t;
+++
+++typedef struct {
+++	int kbd_state;
+++	int kbd_s_state;
+++
+++	int k_ctrl;
+++	int k_shift;
+++	int k_alt;
+++	int k_super;
+++
+++	int kl_ctrl;
+++	int kl_shift;
+++	int kl_alt;
+++	int kl_super;
+++
+++	int kr_ctrl;
+++	int kr_shift;
+++	int kr_alt;
+++	int kr_super;
+++
+++	int kbd_esc_buf;
+++} key_event_state_t;
+++
+++extern int kbd_scancode(key_event_state_t * state, unsigned char c, key_event_t * event);
+++
+++_End_C_Header
++diff --git a/kernel/list.h b/kernel/list.h
++new file mode 100644
++index 0000000..5850da7
++--- /dev/null
+++++ b/kernel/list.h
++@@ -0,0 +1,55 @@
+++#pragma once
+++
+++#include <_cheader.h>
+++
+++#ifdef _KERNEL_
+++#	include <kernel/types.h>
+++#else
+++#	include <stdint.h>
+++#	include <stddef.h>
+++#	include <assert.h>
+++#endif
+++
+++_Begin_C_Header
+++
+++typedef struct node {
+++	struct node * next;
+++	struct node * prev;
+++	void * value;
+++	void * owner;
+++} __attribute__((packed)) node_t;
+++
+++typedef struct {
+++	node_t * head;
+++	node_t * tail;
+++	size_t length;
+++} __attribute__((packed)) list_t;
+++
+++extern void list_destroy(list_t * list);
+++extern void list_free(list_t * list);
+++extern void list_append(list_t * list, node_t * item);
+++extern node_t * list_insert(list_t * list, void * item);
+++extern list_t * list_create(void);
+++extern node_t * list_find(list_t * list, void * value);
+++extern int list_index_of(list_t * list, void * value);
+++extern void list_remove(list_t * list, size_t index);
+++extern void list_delete(list_t * list, node_t * node);
+++extern node_t * list_pop(list_t * list);
+++extern node_t * list_dequeue(list_t * list);
+++extern list_t * list_copy(list_t * original);
+++extern void list_merge(list_t * target, list_t * source);
+++extern void * list_index(list_t * list, int index);
+++
+++extern void list_append_after(list_t * list, node_t * before, node_t * node);
+++extern node_t * list_insert_after(list_t * list, node_t * before, void * item);
+++
+++extern void list_append_before(list_t * list, node_t * after, node_t * node);
+++extern node_t * list_insert_before(list_t * list, node_t * after, void * item);
+++
+++/* Known to conflict with some popular third-party libraries. */
+++#ifndef TOARU_LIST_NO_FOREACH
+++#  define foreach(i, list) for (node_t * i = (list)->head; i != NULL; i = i->next)
+++#  define foreachr(i, list) for (node_t * i = (list)->tail; i != NULL; i = i->prev)
+++#endif
+++
+++_End_C_Header
++diff --git a/kernel/main.c b/kernel/main.c
++index 45c0635..27e4a18 100644
++--- a/kernel/main.c
+++++ b/kernel/main.c
++@@ -35,7 +35,6 @@ int kmain(multiboot_info_t *info) {
++     
++     sched_init();
++ 
++-    terminal_writeline("Hello World");
++ 
++     
++     while(1)
++diff --git a/kernel/yutani/decorations.h b/kernel/yutani/decorations.h
++new file mode 100644
++index 0000000..c8c31d5
++--- /dev/null
+++++ b/kernel/yutani/decorations.h
++@@ -0,0 +1,85 @@
+++/**
+++ * @brief Client-side Window Decoration library
+++ *
+++ * @copyright
+++ * This file is part of ToaruOS and is released under the terms
+++ * of the NCSA / University of Illinois License - see LICENSE.md
+++ * Copyright (C) 2012-2018 K. Lange
+++ */
+++#pragma once
+++
+++#include <_cheader.h>
+++#include <graphics.h>
+++#include <yutani.h>
+++
+++_Begin_C_Header
+++
+++/*
+++ * Render decorations to a window. A buffer pointer is
+++ * provided so that you may render in double-buffered mode.
+++ *
+++ * Run me at least once for each window, and any time you may need to
+++ * redraw them.
+++ */
+++extern void render_decorations(yutani_window_t * window, gfx_context_t * ctx, char * title);
+++
+++/** DEPRECATED */
+++extern void render_decorations_inactive(yutani_window_t * window, gfx_context_t * ctx, char * title);
+++
+++/**
+++ * Decoration boundaries
+++ */
+++struct decor_bounds {
+++	int top_height;
+++	int bottom_height;
+++	int left_width;
+++	int right_width;
+++
+++	/* Convenience */
+++	int width;
+++	int height;
+++};
+++
+++/*
+++ * Used by decoration libraries to set callbacks
+++ */
+++extern void (*decor_render_decorations)(yutani_window_t *, gfx_context_t *, char *, int);
+++extern int  (*decor_check_button_press)(yutani_window_t *, int x, int y);
+++extern int  (*decor_get_bounds)(yutani_window_t *, struct decor_bounds *);
+++extern int decor_hover_button;
+++extern yutani_window_t * decor_hover_window;
+++
+++/*
+++ * Run me once to set things up
+++ */
+++extern void init_decorations();
+++
+++extern int decor_handle_event(yutani_t * yctx, yutani_msg_t * m);
+++
+++/* Callbacks for handle_event */
+++extern void decor_set_close_callback(void (*callback)(yutani_window_t *));
+++extern void decor_set_resize_callback(void (*callback)(yutani_window_t *));
+++extern void decor_set_maximize_callback(void (*callback)(yutani_window_t *));
+++extern yutani_window_t * decor_show_default_menu(yutani_window_t * window, int y, int x);
+++
+++/* Responses from handle_event */
+++#define DECOR_OTHER     1 /* Clicked on title bar but otherwise unimportant */
+++#define DECOR_CLOSE     2 /* Clicked on close button */
+++#define DECOR_RESIZE    3 /* Resize button */
+++#define DECOR_MAXIMIZE  4
+++#define DECOR_RIGHT     5
+++#define DECOR_MINIMIZE  6
+++#define DECOR_REDRAW    7
+++
+++#define DECOR_ACTIVE   0
+++#define DECOR_INACTIVE 1
+++
+++#define DECOR_FLAG_DECORATED   (1 << 0)
+++#define DECOR_FLAG_NO_MAXIMIZE (1 << 1)
+++#define DECOR_FLAG_TILED       (0xF << 2)
+++#define DECOR_FLAG_TILE_LEFT   (0x1 << 2)
+++#define DECOR_FLAG_TILE_RIGHT  (0x2 << 2)
+++#define DECOR_FLAG_TILE_UP     (0x4 << 2)
+++#define DECOR_FLAG_TILE_DOWN   (0x8 << 2)
+++
+++_End_C_Header
++diff --git a/kernel/yutani/yutani.c b/kernel/yutani/yutani.c
++new file mode 100644
++index 0000000..bd8f46b
++--- /dev/null
+++++ b/kernel/yutani/yutani.c
++@@ -0,0 +1,1170 @@
+++/**
+++ * @brief Yutani Client Library
+++ *
+++ * Client library for the compositing window system.
+++ *
+++ * @copyright
+++ * This file is part of ToaruOS and is released under the terms
+++ * of the NCSA / University of Illinois License - see LICENSE.md
+++ * Copyright (C) 2014-2018 K. Lange
+++ */
+++#include <string.h>
+++#include <stdlib.h>
+++#include <sys/shm.h>
+++
+++#include <pex.h>
+++#include <graphics.h>
+++#include <kbd.h>
+++#include <hashmap.h>
+++#include <list.h>
+++#include <yutani.h>
+++#include <yutani-internal.h>
+++#include <mouse.h>
+++
+++/* We need the flags but don't want the library dep (maybe the flags should be here?) */
+++#include "decorations.h"
+++
+++/**
+++ * yutani_wait_for
+++ *
+++ * Wait for a particular kind of message, queuing other types
+++ * of messages for processing later.
+++ */
+++yutani_msg_t * yutani_wait_for(yutani_t * y, uint32_t type) {
+++	do {
+++		yutani_msg_t * out;
+++		size_t size;
+++		{
+++			char tmp[MAX_PACKET_SIZE];
+++			size = pex_recv(y->sock, tmp);
+++			out = malloc(size);
+++			memcpy(out, tmp, size);
+++		}
+++
+++		if (out->type == type) {
+++			return out;
+++		} else {
+++			list_insert(y->queued, out);
+++		}
+++	} while (1); /* XXX: (!y->abort) */
+++}
+++
+++/**
+++ * yutani_query
+++ *
+++ * Check if there is an available message, either in the
+++ * internal queue or directly from the server interface.
+++ */
+++size_t yutani_query(yutani_t * y) {
+++	if (y->queued->length > 0) return 1;
+++	return pex_query(y->sock);
+++}
+++
+++/**
+++ * _handle_internal
+++ *
+++ * Some messages are processed internally. They are still
+++ * available to the client application, but some work will
+++ * be done before they are handed off.
+++ *
+++ * WELCOME: Update the display_width and display_height for the connection.
+++ * WINDOW_MOVE: Update the window location.
+++ */
+++static void _handle_internal(yutani_t * y, yutani_msg_t * out) {
+++	switch (out->type) {
+++		case YUTANI_MSG_WELCOME:
+++			{
+++				struct yutani_msg_welcome * mw = (void *)out->data;
+++				y->display_width = mw->display_width;
+++				y->display_height = mw->display_height;
+++			}
+++			break;
+++		case YUTANI_MSG_WINDOW_MOVE:
+++			{
+++				struct yutani_msg_window_move * wm = (void *)out->data;
+++				yutani_window_t * win = hashmap_get(y->windows, (void *)(uintptr_t)wm->wid);
+++				if (win) {
+++					win->x = wm->x;
+++					win->y = wm->y;
+++				}
+++			}
+++			break;
+++		case YUTANI_MSG_RESIZE_OFFER:
+++			{
+++				struct yutani_msg_window_resize * wr = (void *)out->data;
+++				yutani_window_t * win = hashmap_get(y->windows, (void *)(uintptr_t)wr->wid);
+++				if (win) {
+++					win->decorator_flags &= ~(DECOR_FLAG_TILED);
+++					win->decorator_flags |= (wr->flags & YUTANI_RESIZE_TILED) << 2;
+++				}
+++			}
+++		default:
+++			break;
+++	}
+++}
+++
+++/**
+++ * yutani_poll
+++ *
+++ * Wait for a message to be available, processing it if
+++ * it has internal processing requirements.
+++ */
+++yutani_msg_t * yutani_poll(yutani_t * y) {
+++	yutani_msg_t * out;
+++
+++	if (y->queued->length > 0) {
+++		node_t * node = list_dequeue(y->queued);
+++		out = (yutani_msg_t *)node->value;
+++		free(node);
+++		_handle_internal(y, out);
+++		return out;
+++	}
+++
+++	ssize_t size;
+++	{
+++		char tmp[MAX_PACKET_SIZE];
+++		size = pex_recv(y->sock, tmp);
+++		if (size <= 0) return NULL;
+++		out = malloc(size);
+++		memcpy(out, tmp, size);
+++	}
+++
+++	_handle_internal(y, out);
+++
+++	return out;
+++}
+++
+++/**
+++ * yutani_poll_async
+++ *
+++ * Get the next available message, if there is one, otherwise
+++ * return immediately. Generally should be called in a loop
+++ * after an initial call to yutani_poll in case processing
+++ * caused additional messages to be queued.
+++ */
+++yutani_msg_t * yutani_poll_async(yutani_t * y) {
+++	if (yutani_query(y) > 0) {
+++		return yutani_poll(y);
+++	}
+++	return NULL;
+++}
+++
+++void yutani_msg_buildx_hello(yutani_msg_t * msg) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_HELLO;
+++	msg->size  = sizeof(struct yutani_message);
+++}
+++
+++
+++void yutani_msg_buildx_flip(yutani_msg_t * msg, yutani_wid_t wid) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_FLIP;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_flip);
+++
+++	struct yutani_msg_flip * mw = (void *)msg->data;
+++
+++	mw->wid = wid;
+++}
+++
+++
+++void yutani_msg_buildx_welcome(yutani_msg_t * msg, uint32_t width, uint32_t height) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_WELCOME;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_welcome);
+++
+++	struct yutani_msg_welcome * mw = (void *)msg->data;
+++
+++	mw->display_width = width;
+++	mw->display_height = height;
+++}
+++
+++
+++void yutani_msg_buildx_window_new(yutani_msg_t * msg, uint32_t width, uint32_t height) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_WINDOW_NEW;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_new);
+++
+++	struct yutani_msg_window_new * mw = (void *)msg->data;
+++
+++	mw->width = width;
+++	mw->height = height;
+++}
+++
+++
+++void yutani_msg_buildx_window_new_flags(yutani_msg_t * msg, uint32_t width, uint32_t height, uint32_t flags) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_WINDOW_NEW_FLAGS;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_new_flags);
+++
+++	struct yutani_msg_window_new_flags * mw = (void *)msg->data;
+++
+++	mw->width = width;
+++	mw->height = height;
+++	mw->flags = flags;
+++}
+++
+++
+++void yutani_msg_buildx_window_init(yutani_msg_t * msg, yutani_wid_t wid, uint32_t width, uint32_t height, uint32_t bufid) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_WINDOW_INIT;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_init);
+++
+++	struct yutani_msg_window_init * mw = (void *)msg->data;
+++
+++	mw->wid = wid;
+++	mw->width = width;
+++	mw->height = height;
+++	mw->bufid = bufid;
+++}
+++
+++
+++void yutani_msg_buildx_window_close(yutani_msg_t * msg, yutani_wid_t wid) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_WINDOW_CLOSE;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_close);
+++
+++	struct yutani_msg_window_close * mw = (void *)msg->data;
+++
+++	mw->wid = wid;
+++}
+++
+++
+++void yutani_msg_buildx_key_event(yutani_msg_t * msg, yutani_wid_t wid, key_event_t * event, key_event_state_t * state) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_KEY_EVENT;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_key_event);
+++
+++	struct yutani_msg_key_event * mw = (void *)msg->data;
+++
+++	mw->wid = wid;
+++	memcpy(&mw->event, event, sizeof(key_event_t));
+++	memcpy(&mw->state, state, sizeof(key_event_state_t));
+++}
+++
+++
+++void yutani_msg_buildx_mouse_event(yutani_msg_t * msg, yutani_wid_t wid, mouse_device_packet_t * event, int32_t type) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_MOUSE_EVENT;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_mouse_event);
+++
+++	struct yutani_msg_mouse_event * mw = (void *)msg->data;
+++
+++	mw->wid = wid;
+++	memcpy(&mw->event, event, sizeof(mouse_device_packet_t));
+++	mw->type = type;
+++}
+++
+++
+++void yutani_msg_buildx_window_move(yutani_msg_t * msg, yutani_wid_t wid, int32_t x, int32_t y) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_WINDOW_MOVE;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_move);
+++
+++	struct yutani_msg_window_move * mw = (void *)msg->data;
+++
+++	mw->wid = wid;
+++	mw->x = x;
+++	mw->y = y;
+++}
+++
+++void yutani_msg_buildx_window_move_relative(yutani_msg_t * msg, yutani_wid_t wid, yutani_wid_t wid2, int32_t x, int32_t y) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_WINDOW_MOVE_RELATIVE;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_move_relative);
+++
+++	struct yutani_msg_window_move_relative * mw = (void *)msg->data;
+++
+++	mw->wid_to_move = wid;
+++	mw->wid_base = wid2;
+++	mw->x = x;
+++	mw->y = y;
+++}
+++
+++void yutani_msg_buildx_window_stack(yutani_msg_t * msg, yutani_wid_t wid, int z) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_WINDOW_STACK;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_stack);
+++
+++	struct yutani_msg_window_stack * mw = (void *)msg->data;
+++
+++	mw->wid = wid;
+++	mw->z = z;
+++}
+++
+++
+++void yutani_msg_buildx_window_focus_change(yutani_msg_t * msg, yutani_wid_t wid, int focused) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_WINDOW_FOCUS_CHANGE;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_focus_change);
+++
+++	struct yutani_msg_window_focus_change * mw = (void *)msg->data;
+++
+++	mw->wid = wid;
+++	mw->focused = focused;
+++}
+++
+++
+++void yutani_msg_buildx_window_mouse_event(yutani_msg_t * msg, yutani_wid_t wid, int32_t new_x, int32_t new_y, int32_t old_x, int32_t old_y, uint8_t buttons, uint8_t command, uint8_t modifiers) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_WINDOW_MOUSE_EVENT;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_mouse_event);
+++
+++	struct yutani_msg_window_mouse_event * mw = (void *)msg->data;
+++
+++	mw->wid = wid;
+++	mw->new_x = new_x;
+++	mw->new_y = new_y;
+++	mw->old_x = old_x;
+++	mw->old_y = old_y;
+++	mw->buttons = buttons;
+++	mw->command = command;
+++	mw->modifiers = modifiers;
+++}
+++
+++
+++void yutani_msg_buildx_flip_region(yutani_msg_t * msg, yutani_wid_t wid, int32_t x, int32_t y, int32_t width, int32_t height) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_FLIP_REGION;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_flip_region);
+++
+++	struct yutani_msg_flip_region * mw = (void *)msg->data;
+++
+++	mw->wid = wid;
+++	mw->x = x;
+++	mw->y = y;
+++	mw->width = width;
+++	mw->height = height;
+++}
+++
+++
+++void yutani_msg_buildx_window_resize(yutani_msg_t * msg, uint32_t type, yutani_wid_t wid, uint32_t width, uint32_t height, uint32_t bufid, uint32_t flags) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = type;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_resize);
+++
+++	struct yutani_msg_window_resize * mw = (void *)msg->data;
+++
+++	mw->wid = wid;
+++	mw->width = width;
+++	mw->height = height;
+++	mw->bufid = bufid;
+++	mw->flags = flags;
+++}
+++
+++
+++void yutani_msg_buildx_window_advertise(yutani_msg_t * msg, yutani_wid_t wid, uint32_t flags, uint32_t icon, uint32_t bufid, uint32_t width, uint32_t height, size_t length, char * data) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_WINDOW_ADVERTISE;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_advertise) + length;
+++
+++	struct yutani_msg_window_advertise * mw = (void *)msg->data;
+++
+++	mw->wid = wid;
+++	mw->flags = flags;
+++	mw->size = length;
+++	mw->icon = icon;
+++	mw->bufid = bufid;
+++	mw->width = width;
+++	mw->height = height;
+++	if (data) {
+++		memcpy(mw->strings, data, mw->size);
+++	}
+++}
+++
+++
+++void yutani_msg_buildx_subscribe(yutani_msg_t * msg) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_SUBSCRIBE;
+++	msg->size  = sizeof(struct yutani_message);
+++}
+++
+++
+++void yutani_msg_buildx_unsubscribe(yutani_msg_t * msg) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_UNSUBSCRIBE;
+++	msg->size  = sizeof(struct yutani_message);
+++}
+++
+++
+++void yutani_msg_buildx_query_windows(yutani_msg_t * msg) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_QUERY_WINDOWS;
+++	msg->size  = sizeof(struct yutani_message);
+++}
+++
+++
+++void yutani_msg_buildx_notify(yutani_msg_t * msg) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_NOTIFY;
+++	msg->size  = sizeof(struct yutani_message);
+++}
+++
+++
+++void yutani_msg_buildx_session_end(yutani_msg_t * msg) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_SESSION_END;
+++	msg->size  = sizeof(struct yutani_message);
+++}
+++
+++
+++void yutani_msg_buildx_window_focus(yutani_msg_t * msg, yutani_wid_t wid) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_WINDOW_FOCUS;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_focus);
+++
+++	struct yutani_msg_window_focus * mw = (void *)msg->data;
+++
+++	mw->wid = wid;
+++}
+++
+++
+++void yutani_msg_buildx_key_bind(yutani_msg_t * msg, kbd_key_t key, kbd_mod_t mod, int response) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_KEY_BIND;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_key_bind);
+++
+++	struct yutani_msg_key_bind * mw = (void *)msg->data;
+++
+++	mw->key = key;
+++	mw->modifiers = mod;
+++	mw->response = response;
+++}
+++
+++
+++void yutani_msg_buildx_window_drag_start(yutani_msg_t * msg, yutani_wid_t wid) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_WINDOW_DRAG_START;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_drag_start);
+++
+++	struct yutani_msg_window_drag_start * mw = (void *)msg->data;
+++
+++	mw->wid = wid;
+++}
+++
+++
+++void yutani_msg_buildx_window_update_shape(yutani_msg_t * msg, yutani_wid_t wid, int set_shape) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_WINDOW_UPDATE_SHAPE;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_update_shape);
+++
+++	struct yutani_msg_window_update_shape * mw = (void *)msg->data;
+++
+++	mw->wid = wid;
+++	mw->set_shape = set_shape;
+++}
+++
+++
+++void yutani_msg_buildx_window_warp_mouse(yutani_msg_t * msg, yutani_wid_t wid, int32_t x, int32_t y) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_WINDOW_WARP_MOUSE;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_warp_mouse);
+++
+++	struct yutani_msg_window_warp_mouse * mw = (void *)msg->data;
+++
+++	mw->wid = wid;
+++	mw->x = x;
+++	mw->y = y;
+++}
+++
+++
+++void yutani_msg_buildx_window_show_mouse(yutani_msg_t * msg, yutani_wid_t wid, int32_t show_mouse) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_WINDOW_SHOW_MOUSE;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_show_mouse);
+++
+++	struct yutani_msg_window_show_mouse * mw = (void *)msg->data;
+++
+++	mw->wid = wid;
+++	mw->show_mouse = show_mouse;
+++}
+++
+++
+++void yutani_msg_buildx_window_resize_start(yutani_msg_t * msg, yutani_wid_t wid, yutani_scale_direction_t direction) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_WINDOW_RESIZE_START;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_resize_start);
+++
+++	struct yutani_msg_window_resize_start * mw = (void *)msg->data;
+++
+++	mw->wid = wid;
+++	mw->direction = direction;
+++}
+++
+++
+++void yutani_msg_buildx_special_request(yutani_msg_t * msg, yutani_wid_t wid, uint32_t request) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_SPECIAL_REQUEST;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_special_request);
+++
+++	struct yutani_msg_special_request * sr = (void *)msg->data;
+++
+++	sr->wid   = wid;
+++	sr->request = request;
+++}
+++
+++void yutani_msg_buildx_clipboard(yutani_msg_t * msg, char * content) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_CLIPBOARD;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_clipboard) + strlen(content);
+++
+++	struct yutani_msg_clipboard * cl = (void *)msg->data;
+++
+++	cl->size = strlen(content);
+++	memcpy(cl->content, content, strlen(content));
+++}
+++
+++void yutani_msg_buildx_window_panel_size(yutani_msg_t * msg, yutani_wid_t wid, int32_t x, int32_t y, int32_t w, int32_t h) {
+++	msg->magic = YUTANI_MSG__MAGIC;
+++	msg->type  = YUTANI_MSG_WINDOW_PANEL_SIZE;
+++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_panel_size);
+++
+++	struct yutani_msg_window_panel_size * ps = (void *)msg->data;
+++	ps->wid = wid;
+++	ps->x = x;
+++	ps->y = y;
+++	ps->w = w;
+++	ps->h = h;
+++}
+++
+++int yutani_msg_send(yutani_t * y, yutani_msg_t * msg) {
+++	return pex_reply(y->sock, msg->size, (char *)msg);
+++}
+++
+++yutani_t * yutani_context_create(FILE * socket) {
+++	yutani_t * out = malloc(sizeof(yutani_t));
+++
+++	out->sock = socket;
+++	out->display_width  = 0;
+++	out->display_height = 0;
+++	out->windows = hashmap_create_int(10);
+++	out->queued = list_create();
+++	return out;
+++}
+++
+++/**
+++ * yutani_init
+++ *
+++ * Connect to the compositor.
+++ *
+++ * Connects and handles the initial welcome message.
+++ */
+++yutani_t * yutani_init(void) {
+++	char * server_name = getenv("DISPLAY");
+++	if (!server_name) {
+++		server_name = "compositor";
+++	}
+++	FILE * c = pex_connect(server_name);
+++
+++	if (!c) {
+++		return NULL; /* Connection failed. */
+++	}
+++
+++	yutani_t * y = yutani_context_create(c);
+++	yutani_msg_buildx_hello_alloc(m);
+++	yutani_msg_buildx_hello(m);
+++	yutani_msg_send(y, m);
+++
+++	yutani_msg_t * mm = yutani_wait_for(y, YUTANI_MSG_WELCOME);
+++	struct yutani_msg_welcome * mw = (void *)&mm->data;
+++	y->display_width = mw->display_width;
+++	y->display_height = mw->display_height;
+++	y->server_ident = server_name;
+++	free(mm);
+++
+++	return y;
+++}
+++
+++/**
+++ * yutani_window_create_flags
+++ *
+++ * Create a window with certain pre-specified properties.
+++ */
+++yutani_window_t * yutani_window_create_flags(yutani_t * y, int width, int height, uint32_t flags) {
+++	yutani_window_t * win = malloc(sizeof(yutani_window_t));
+++
+++	yutani_msg_buildx_window_new_flags_alloc(m);
+++	yutani_msg_buildx_window_new_flags(m, width, height, flags);
+++	yutani_msg_send(y, m);
+++
+++	yutani_msg_t * mm = yutani_wait_for(y, YUTANI_MSG_WINDOW_INIT);
+++	struct yutani_msg_window_init * mw = (void *)&mm->data;
+++
+++	win->width = mw->width;
+++	win->height = mw->height;
+++	win->bufid = mw->bufid;
+++	win->wid = mw->wid;
+++	win->focused = 0;
+++	win->decorator_flags = 0;
+++	win->x = 0;
+++	win->y = 0;
+++	win->user_data = NULL;
+++	win->ctx = y;
+++	win->mouse_state = -1;
+++	free(mm);
+++
+++	hashmap_set(y->windows, (void*)(uintptr_t)win->wid, win);
+++
+++	char key[1024];
+++	YUTANI_SHMKEY(y->server_ident, key, 1024, win);
+++
+++	size_t size = (width * height * 4);
+++	win->buffer = shm_obtain(key, &size);
+++	return win;
+++
+++}
+++
+++/**
+++ * yutani_window_create
+++ *
+++ * Create a basic window.
+++ */
+++yutani_window_t * yutani_window_create(yutani_t * y, int width, int height) {
+++	return yutani_window_create_flags(y,width,height,0);
+++}
+++
+++/**
+++ * yutani_flip
+++ *
+++ * Ask the server to redraw the window.
+++ */
+++void yutani_flip(yutani_t * y, yutani_window_t * win) {
+++	yutani_msg_buildx_flip_alloc(m);
+++	yutani_msg_buildx_flip(m, win->wid);
+++	yutani_msg_send(y, m);
+++}
+++
+++/**
+++ * yutani_flip_region
+++ *
+++ * Ask the server to redraw a region relative the window.
+++ */
+++void yutani_flip_region(yutani_t * yctx, yutani_window_t * win, int32_t x, int32_t y, int32_t width, int32_t height) {
+++	yutani_msg_buildx_flip_region_alloc(m);
+++	yutani_msg_buildx_flip_region(m, win->wid, x, y, width, height);
+++	yutani_msg_send(yctx, m);
+++}
+++
+++/**
+++ * yutani_close
+++ *
+++ * Close a window. A closed window should not be used again,
+++ * and its associated buffers will be freed.
+++ */
+++void yutani_close(yutani_t * y, yutani_window_t * win) {
+++	yutani_msg_buildx_window_close_alloc(m);
+++	yutani_msg_buildx_window_close(m, win->wid);
+++	yutani_msg_send(y, m);
+++
+++	/* Now destroy our end of the window */
+++	{
+++		char key[1024];
+++		YUTANI_SHMKEY_EXP(y->server_ident, key, 1024, win->bufid);
+++		shm_release(key);
+++	}
+++
+++	hashmap_remove(y->windows, (void*)(uintptr_t)win->wid);
+++	free(win);
+++}
+++
+++/**
+++ * yutani_window_move
+++ *
+++ * Request a window be moved to new a location on screen.
+++ */
+++void yutani_window_move(yutani_t * yctx, yutani_window_t * window, int x, int y) {
+++	yutani_msg_buildx_window_move_alloc(m);
+++	yutani_msg_buildx_window_move(m, window->wid, x, y);
+++	yutani_msg_send(yctx, m);
+++}
+++
+++/**
+++ * yutani_window_move_relative
+++ *
+++ * Move a window to a location based on the local coordinate space of a base window.
+++ */
+++void yutani_window_move_relative(yutani_t * yctx, yutani_window_t * window, yutani_window_t * base, int x, int y) {
+++	yutani_msg_buildx_window_move_relative_alloc(m);
+++	yutani_msg_buildx_window_move_relative(m, window->wid, base->wid, x, y);
+++	yutani_msg_send(yctx, m);
+++}
+++
+++/**
+++ * yutani_set_stack
+++ *
+++ * Set the stacking order of the window.
+++ */
+++void yutani_set_stack(yutani_t * yctx, yutani_window_t * window, int z) {
+++	yutani_msg_buildx_window_stack_alloc(m);
+++	yutani_msg_buildx_window_stack(m, window->wid, z);
+++	yutani_msg_send(yctx, m);
+++}
+++
+++/**
+++ * yutani_window_resize
+++ *
+++ * Request that the server resize a window.
+++ */
+++void yutani_window_resize(yutani_t * yctx, yutani_window_t * window, uint32_t width, uint32_t height) {
+++	yutani_msg_buildx_window_resize_alloc(m);
+++	yutani_msg_buildx_window_resize(m, YUTANI_MSG_RESIZE_REQUEST, window->wid, width, height, 0, 0);
+++	yutani_msg_send(yctx, m);
+++}
+++
+++/**
+++ * yutani_window_resize_offer
+++ *
+++ * In a response to a server resize message, offer an alternative size.
+++ * Allows the client to reject a user-provided resize request due to
+++ * size constraints or other reasons.
+++ */
+++void yutani_window_resize_offer(yutani_t * yctx, yutani_window_t * window, uint32_t width, uint32_t height) {
+++	yutani_msg_buildx_window_resize_alloc(m);
+++	yutani_msg_buildx_window_resize(m, YUTANI_MSG_RESIZE_OFFER, window->wid, width, height, 0, 0);
+++	yutani_msg_send(yctx, m);
+++}
+++
+++/**
+++ * yutani_window_resize_accept
+++ *
+++ * Accept the server's resize request, initialize new buffers
+++ * and all the client to draw into the new buffers.
+++ */
+++void yutani_window_resize_accept(yutani_t * yctx, yutani_window_t * window, uint32_t width, uint32_t height) {
+++	yutani_msg_buildx_window_resize_alloc(m);
+++	yutani_msg_buildx_window_resize(m, YUTANI_MSG_RESIZE_ACCEPT, window->wid, width, height, 0, 0);
+++	yutani_msg_send(yctx, m);
+++
+++	/* Now wait for the new bufid */
+++	yutani_msg_t * mm = yutani_wait_for(yctx, YUTANI_MSG_RESIZE_BUFID);
+++	struct yutani_msg_window_resize * wr = (void*)mm->data;
+++
+++	if (window->wid != wr->wid) {
+++		/* I am not sure what to do here. */
+++		return;
+++	}
+++
+++	/* Update the window */
+++	window->width = wr->width;
+++	window->height = wr->height;
+++	window->oldbufid = window->bufid;
+++	window->bufid = wr->bufid;
+++	free(mm);
+++
+++	/* Allocate the buffer */
+++	{
+++		char key[1024];
+++		YUTANI_SHMKEY(yctx->server_ident, key, 1024, window);
+++
+++		size_t size = (window->width * window->height * 4);
+++		window->buffer = shm_obtain(key, &size);
+++	}
+++}
+++
+++/**
+++ * yutani_window_resize_done
+++ *
+++ * The client has finished drawing into the new buffers after
+++ * accepting a resize request and the server should now
+++ * discard the old buffer and switch to the new one.
+++ */
+++void yutani_window_resize_done(yutani_t * yctx, yutani_window_t * window) {
+++	/* Destroy the old buffer */
+++	{
+++		char key[1024];
+++		YUTANI_SHMKEY_EXP(yctx->server_ident, key, 1024, window->oldbufid);
+++		shm_release(key);
+++	}
+++
+++	yutani_msg_buildx_window_resize_alloc(m);
+++	yutani_msg_buildx_window_resize(m, YUTANI_MSG_RESIZE_DONE, window->wid, window->width, window->height, window->bufid, 0);
+++	yutani_msg_send(yctx, m);
+++}
+++
+++/**
+++ * yutani_window_advertise
+++ *
+++ * Provide a title for a window to have it show up
+++ * in the panel window list.
+++ */
+++void yutani_window_advertise(yutani_t * yctx, yutani_window_t * window, char * name) {
+++
+++	uint32_t flags = 0; /* currently, no client flags */
+++	uint32_t length = 0;
+++	uint32_t icon = 0;
+++	char * strings;
+++
+++	if (!name) {
+++		length = 1;
+++		strings = " ";
+++	} else {
+++		length = strlen(name) + 1;
+++		strings = name;
+++		icon = strlen(name);
+++	}
+++
+++	yutani_msg_buildx_window_advertise_alloc(m, length);
+++	yutani_msg_buildx_window_advertise(m, window->wid, flags, icon, 0, 0, 0, length, strings);
+++	yutani_msg_send(yctx, m);
+++}
+++
+++/**
+++ * yutani_window_advertise_icon
+++ *
+++ * Provide a title and an icon for the panel to show.
+++ *
+++ * Note that three additional fields are available in the advertisement
+++ * messages which are not yet used. This is to allow for future expansion.
+++ */
+++void yutani_window_advertise_icon(yutani_t * yctx, yutani_window_t * window, char * name, char * icon) {
+++
+++	uint32_t flags = 0; /* currently no client flags */
+++	uint32_t iconx = 0;
+++	uint32_t length = strlen(name) + strlen(icon) + 2;
+++	char * strings = malloc(length);
+++
+++	if (name) {
+++		memcpy(&strings[0], name, strlen(name)+1);
+++		iconx = strlen(name);
+++	}
+++	if (icon) {
+++		memcpy(&strings[strlen(name)+1], icon, strlen(icon)+1);
+++		iconx = strlen(name)+1;
+++	}
+++
+++	yutani_msg_buildx_window_advertise_alloc(m, length);
+++	yutani_msg_buildx_window_advertise(m, window->wid, flags, iconx, 0, 0, 0, length, strings);
+++	yutani_msg_send(yctx, m);
+++	free(strings);
+++}
+++
+++/**
+++ * yutani_subscribe_windows
+++ *
+++ * Subscribe to messages about new window advertisements.
+++ * Basically, if you're a panel, you want to do this, so
+++ * you can know when windows move around or change focus.
+++ */
+++void yutani_subscribe_windows(yutani_t * y) {
+++	yutani_msg_buildx_subscribe_alloc(m);
+++	yutani_msg_buildx_subscribe(m);
+++	yutani_msg_send(y, m);
+++}
+++
+++/**
+++ * yutani_unsubscribe_windows
+++ *
+++ * If you no longer wish to receive window change messages,
+++ * you can unsubscribe your client from them.
+++ */
+++void yutani_unsubscribe_windows(yutani_t * y) {
+++	yutani_msg_buildx_unsubscribe_alloc(m);
+++	yutani_msg_buildx_unsubscribe(m);
+++	yutani_msg_send(y, m);
+++}
+++
+++/**
+++ * yutani_query_windows
+++ *
+++ * When notified of changes, call this to request
+++ * the new information.
+++ */
+++void yutani_query_windows(yutani_t * y) {
+++	yutani_msg_buildx_query_windows_alloc(m);
+++	yutani_msg_buildx_query_windows(m);
+++	yutani_msg_send(y, m);
+++}
+++
+++/**
+++ * yutani_session_end
+++ *
+++ * For use by session managers, tell the compositor
+++ * that the session has ended and it should inform
+++ * other clients of this so they can exit.
+++ */
+++void yutani_session_end(yutani_t * y) {
+++	yutani_msg_buildx_session_end_alloc(m);
+++	yutani_msg_buildx_session_end(m);
+++	yutani_msg_send(y, m);
+++}
+++
+++/**
+++ * yutani_focus_window
+++ *
+++ * Change focus to the given window. Mostly used by
+++ * panels and other window management things, but if you
+++ * have a multi-window application, such as one with a
+++ * model dialog, and you want to force focus away from one
+++ * window and onto another, you can use this.
+++ */
+++void yutani_focus_window(yutani_t * yctx, yutani_wid_t wid) {
+++	yutani_msg_buildx_window_focus_alloc(m);
+++	yutani_msg_buildx_window_focus(m, wid);
+++	yutani_msg_send(yctx, m);
+++}
+++
+++/**
+++ * yutani_key_bind
+++ *
+++ * Request a key combination always be sent to this client.
+++ * You can request for the combination to be sent only to
+++ * this client (steal binding) or to also go to other clients
+++ * (spy binding), the latter of which is useful for catching
+++ * changes to modifier keys.
+++ */
+++void yutani_key_bind(yutani_t * yctx, kbd_key_t key, kbd_mod_t mod, int response) {
+++	yutani_msg_buildx_key_bind_alloc(m);
+++	yutani_msg_buildx_key_bind(m, key,mod,response);
+++	yutani_msg_send(yctx, m);
+++}
+++
+++/**
+++ * yutani_window_drag_start
+++ *
+++ * Begin a mouse-driven window movement action.
+++ * Typically used by decorators to start moving the window
+++ * when the user clicks and drags on the title bar.
+++ */
+++void yutani_window_drag_start(yutani_t * yctx, yutani_window_t * window) {
+++	yutani_msg_buildx_window_drag_start_alloc(m);
+++	yutani_msg_buildx_window_drag_start(m, window->wid);
+++	yutani_msg_send(yctx, m);
+++}
+++
+++/**
+++ * yutani_window_drag_start_wid
+++ *
+++ * Same as above, but takes a wid (of a presumably-foreign window)
+++ * instead of a window pointer; used by the panel to initiate
+++ * window movement through a drop-down menu for other clients.
+++ */
+++void yutani_window_drag_start_wid(yutani_t * yctx, yutani_wid_t wid) {
+++	yutani_msg_buildx_window_drag_start_alloc(m);
+++	yutani_msg_buildx_window_drag_start(m, wid);
+++	yutani_msg_send(yctx, m);
+++}
+++
+++/**
+++ * yutani_window_update_shape
+++ *
+++ * Change the window shaping threshold.
+++ * Allows partially-transparent windows to control whether they
+++ * should still receive mouse events in their transparent regions.
+++ */
+++void yutani_window_update_shape(yutani_t * yctx, yutani_window_t * window, int set_shape) {
+++	yutani_msg_buildx_window_update_shape_alloc(m);
+++	yutani_msg_buildx_window_update_shape(m, window->wid, set_shape);
+++	yutani_msg_send(yctx, m);
+++}
+++
+++/**
+++ * yutani_window_warp_mouse
+++ *
+++ * Move the mouse to a locate relative to the window.
+++ * Only works with relative mouse cursor.
+++ * Useful for games.
+++ *
+++ * TODO: We still need a way to lock the cursor to a particular window.
+++ *       Even in games where warping happens quickly, we can still
+++ *       end up with the cursor outside of the window when a click happens.
+++ */
+++void yutani_window_warp_mouse(yutani_t * yctx, yutani_window_t * window, int32_t x, int32_t y) {
+++	yutani_msg_buildx_window_warp_mouse_alloc(m);
+++	yutani_msg_buildx_window_warp_mouse(m, window->wid, x, y);
+++	yutani_msg_send(yctx, m);
+++}
+++
+++/**
+++ * yutani_window_show_mouse
+++ *
+++ * Set the cursor type. Used to change to risize and drag indicators.
+++ * Could be used to show a text insertion bar, or a link-clicking hand,
+++ * but those cursors need to be added in the server.
+++ *
+++ * TODO: We should add a way to use client-provided cursor textures.
+++ */
+++void yutani_window_show_mouse(yutani_t * yctx, yutani_window_t * window, int32_t show_mouse) {
+++	if (window->mouse_state != show_mouse) {
+++		window->mouse_state = show_mouse;
+++		yutani_msg_buildx_window_show_mouse_alloc(m);
+++		yutani_msg_buildx_window_show_mouse(m, window->wid, show_mouse);
+++		yutani_msg_send(yctx, m);
+++	}
+++}
+++
+++/**
+++ * yutani_window_resize_start
+++ *
+++ * Start a mouse-driven window resize action.
+++ * Used by decorators.
+++ */
+++void yutani_window_resize_start(yutani_t * yctx, yutani_window_t * window, yutani_scale_direction_t direction) {
+++	yutani_msg_buildx_window_resize_start_alloc(m);
+++	yutani_msg_buildx_window_resize_start(m, window->wid, direction);
+++	yutani_msg_send(yctx, m);
+++}
+++
+++/**
+++ * yutani_special_request
+++ *
+++ * Send one of the special request messages that aren't
+++ * important enough to get their own message types.
+++ *
+++ * (MAXIMIZE, PLEASE_CLOSE, CLIPBOARD)
+++ *
+++ * Note that, especially in the CLIPBOARD case, the
+++ * window does not to be set.
+++ */
+++void yutani_special_request(yutani_t * yctx, yutani_window_t * window, uint32_t request) {
+++	/* wid isn't necessary; if window is null, set to 0 */
+++	yutani_msg_buildx_special_request_alloc(m);
+++	yutani_msg_buildx_special_request(m, window ? window->wid : 0, request);
+++	yutani_msg_send(yctx, m);
+++}
+++
+++/**
+++ * yutani_special_request_wid
+++ *
+++ * Same as above, but takes a wid instead of a window pointer,
+++ * for use with foreign windows.
+++ */
+++void yutani_special_request_wid(yutani_t * yctx, yutani_wid_t wid, uint32_t request) {
+++	/* For working with other applications' windows */
+++	yutani_msg_buildx_special_request_alloc(m);
+++	yutani_msg_buildx_special_request(m, wid, request);
+++	yutani_msg_send(yctx, m);
+++}
+++
+++/**
+++ * yutani_set_clipboard
+++ *
+++ * Set the clipboard content.
+++ *
+++ * If the clipboard content is too large for a message,
+++ * it will be stored in a file and a special clipboard string
+++ * will be set to indicate the real contents are
+++ * in the file.
+++ *
+++ * To get the clipboard contents, send a CLIPBOARD special
+++ * request and wait for the CLIPBOARD response message.
+++ */
+++void yutani_set_clipboard(yutani_t * yctx, char * content) {
+++	/* Set clipboard contents */
+++	int len = strlen(content);
+++	if (len > 511) {
+++		char tmp_file[100];
+++		sprintf(tmp_file, "/tmp/.clipboard.%s", yctx->server_ident);
+++		FILE * tmp = fopen(tmp_file, "w+");
+++		fwrite(content, len, 1, tmp);
+++		fclose(tmp);
+++
+++		char tmp_data[100];
+++		sprintf(tmp_data, "\002 %d", len);
+++		yutani_msg_buildx_clipboard_alloc(m, strlen(tmp_data));
+++		yutani_msg_buildx_clipboard(m, tmp_data);
+++		yutani_msg_send(yctx, m);
+++	} else {
+++		yutani_msg_buildx_clipboard_alloc(m, len);
+++		yutani_msg_buildx_clipboard(m, content);
+++		yutani_msg_send(yctx, m);
+++	}
+++}
+++
+++void yutani_window_panel_size(yutani_t * yctx, yutani_wid_t wid, int32_t x, int32_t y, int32_t w, int32_t h) {
+++	yutani_msg_buildx_window_panel_size_alloc(m);
+++	yutani_msg_buildx_window_panel_size(m,wid,x,y,w,h);
+++	yutani_msg_send(yctx, m);
+++}
+++
+++/**
+++ * yutani_open_clipboard
+++ *
+++ * Open the clipboard contents file.
+++ */
+++FILE * yutani_open_clipboard(yutani_t * yctx) {
+++	char tmp_file[100];
+++	sprintf(tmp_file, "/tmp/.clipboard.%s", yctx->server_ident);
+++	return fopen(tmp_file, "r");
+++}
+++
+++/**
+++ * init_graphics_yutani
+++ *
+++ * Create a graphical context around a Yutani window.
+++ */
+++gfx_context_t * init_graphics_yutani(yutani_window_t * window) {
+++	gfx_context_t * out = malloc(sizeof(gfx_context_t));
+++	out->width  = window->width;
+++	out->height = window->height;
+++	out->stride = window->width * sizeof(uint32_t);
+++	out->depth  = 32;
+++	out->size   = GFX_H(out) * GFX_W(out) * GFX_B(out);
+++	out->buffer = window->buffer;
+++	out->backbuffer = out->buffer;
+++	out->clips  = NULL;
+++	return out;
+++}
+++
+++/**
+++ * init_graphics_yutani_double_buffer
+++ *
+++ * Create a graphics context around a Yutani window
+++ * with a separate backing store for double-buffering.
+++ */
+++gfx_context_t *  init_graphics_yutani_double_buffer(yutani_window_t * window) {
+++	gfx_context_t * out = init_graphics_yutani(window);
+++	out->backbuffer = malloc(GFX_B(out) * GFX_W(out) * GFX_H(out));
+++	return out;
+++}
+++
+++/**
+++ * reinit_graphics_yutani
+++ *
+++ * Reinitialize a graphics context, such as when
+++ * the window size changes.
+++ */
+++void reinit_graphics_yutani(gfx_context_t * out, yutani_window_t * window) {
+++	out->width  = window->width;
+++	out->height = window->height;
+++	out->stride = window->width * 4;
+++	out->depth  = 32;
+++	out->size   = GFX_H(out) * GFX_W(out) * GFX_B(out);
+++
+++	if (out->clips && out->clips_size != out->height) {
+++		free(out->clips);
+++		out->clips = NULL;
+++		out->clips_size = 0;
+++	}
+++
+++	if (out->buffer == out->backbuffer) {
+++		out->buffer = window->buffer;
+++		out->backbuffer = out->buffer;
+++	} else {
+++		out->buffer = window->buffer;
+++		out->backbuffer = realloc(out->backbuffer, GFX_B(out) * GFX_W(out) * GFX_H(out));
+++	}
+++}
+++
+++/**
+++ * release_graphics_yutani
+++ *
+++ * Release a graphics context.
+++ * XXX: This seems to work generically for any graphics context?
+++ */
+++void release_graphics_yutani(gfx_context_t * gfx) {
+++	if (gfx->backbuffer != gfx->buffer) {
+++		free(gfx->backbuffer);
+++	}
+++	free(gfx);
+++}
+++
+++void yutani_internal_refocus(yutani_t * yctx, yutani_window_t * window) {
+++	/* Check if a refocus is already in our queue to be processed */
+++	foreach(node, yctx->queued) {
+++		yutani_msg_t * out = (yutani_msg_t *)node->value;
+++		if (out->type == YUTANI_MSG_WINDOW_FOCUS_CHANGE) return;
+++	}
+++	/* Otherwise, produce an artificial one matching the reported focus state of the window */
+++	yutani_msg_t * msg = malloc(sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_focus_change));
+++	yutani_msg_buildx_window_focus_change(msg, window->wid, window->focused);
+++	list_insert(yctx->queued, msg);
+++}
++diff --git a/kernel/yutani/yutani.h b/kernel/yutani/yutani.h
++new file mode 100644
++index 0000000..b07731b
++--- /dev/null
+++++ b/kernel/yutani/yutani.h
++@@ -0,0 +1,573 @@
+++/**
+++ * @brief Yutani Client Library
+++ *
+++ * Client library for the compositing window system.
+++ *
+++ * @copyright
+++ * This file is part of ToaruOS and is released under the terms
+++ * of the NCSA / University of Illinois License - see LICENSE.md
+++ * Copyright (C) 2014-2021 K. Lange
+++ */
+++#pragma once
+++
+++#include <_cheader.h>
+++#include <stdio.h>
+++#include <stdint.h>
+++#include <stdbool.h>
+++
+++#include <hashmap.h>
+++#include <graphics.h>
+++#include <kbd.h>
+++#include <mouse.h>
+++#include <list.h>
+++
+++_Begin_C_Header
+++
+++typedef unsigned int yutani_wid_t;
+++
+++/*
+++ * Server connection context.
+++ */
+++typedef struct yutani_context {
+++	FILE * sock;
+++
+++	/* server display size */
+++	size_t display_width;
+++	size_t display_height;
+++
+++	/* Hash of window IDs to window objects */
+++	hashmap_t * windows;
+++
+++	/* queued events */
+++	list_t * queued;
+++
+++	/* server identifier string */
+++	char * server_ident;
+++} yutani_t;
+++
+++typedef struct yutani_window {
+++	/* Server window identifier, unique to each window */
+++	yutani_wid_t wid;
+++
+++	/* Window size */
+++	uint32_t width;
+++	uint32_t height;
+++
+++	/* Window backing buffer */
+++	char * buffer;
+++	/*
+++	 * Because the buffer can change during resizing,
+++	 * buffers are indexed to ensure we are using
+++	 * the one the server expects.
+++	 */
+++	uint32_t bufid;
+++
+++	/* Window focused flag */
+++	uint8_t focused;
+++
+++	/* Old buffer ID */
+++	uint32_t oldbufid;
+++
+++	/* Generic pointer for client use */
+++	void * user_data;
+++
+++	/* Window position in the server; automatically updated */
+++	int32_t x;
+++	int32_t y;
+++
+++	/* Flags for the decorator library to use */
+++	uint32_t decorator_flags;
+++
+++	/* Server context that owns this window */
+++	yutani_t * ctx;
+++
+++	int32_t mouse_state;
+++} yutani_window_t;
+++
+++typedef struct yutani_message {
+++	uint32_t magic;
+++	uint32_t type;
+++	uint32_t size;
+++	char data[];
+++} yutani_msg_t;
+++
+++struct yutani_msg_welcome {
+++	uint32_t display_width;
+++	uint32_t display_height;
+++};
+++
+++struct yutani_msg_flip {
+++	yutani_wid_t wid;
+++};
+++
+++struct yutani_msg_window_close {
+++	yutani_wid_t wid;
+++};
+++
+++struct yutani_msg_window_new {
+++	uint32_t width;
+++	uint32_t height;
+++};
+++
+++struct yutani_msg_window_new_flags {
+++	uint32_t width;
+++	uint32_t height;
+++	uint32_t flags;
+++};
+++
+++struct yutani_msg_window_init {
+++	yutani_wid_t wid;
+++	uint32_t width;
+++	uint32_t height;
+++	uint32_t bufid;
+++};
+++
+++struct yutani_msg_window_move {
+++	yutani_wid_t wid;
+++	int32_t x;
+++	int32_t y;
+++};
+++
+++struct yutani_msg_window_move_relative {
+++	yutani_wid_t wid_to_move;
+++	yutani_wid_t wid_base;
+++	int32_t x;
+++	int32_t y;
+++};
+++
+++struct yutani_msg_key_event {
+++	yutani_wid_t wid;
+++	key_event_t event;
+++	key_event_state_t state;
+++};
+++
+++struct yutani_msg_window_stack {
+++	yutani_wid_t wid;
+++	int z;
+++};
+++
+++struct yutani_msg_window_focus_change {
+++	yutani_wid_t wid;
+++	int focused;
+++};
+++
+++struct yutani_msg_window_mouse_event {
+++	yutani_wid_t wid;
+++	int32_t new_x;
+++	int32_t new_y;
+++	int32_t old_x;
+++	int32_t old_y;
+++	uint8_t buttons;
+++	uint8_t command;
+++	uint8_t modifiers;
+++};
+++
+++struct yutani_msg_mouse_event {
+++	yutani_wid_t wid;
+++	mouse_device_packet_t event;
+++	int32_t type;
+++};
+++
+++struct yutani_msg_flip_region {
+++	yutani_wid_t wid;
+++	int32_t x;
+++	int32_t y;
+++	int32_t width;
+++	int32_t height;
+++};
+++
+++struct yutani_msg_window_resize {
+++	yutani_wid_t wid;
+++	uint32_t width;
+++	uint32_t height;
+++	uint32_t bufid;
+++	uint32_t flags;
+++};
+++
+++struct yutani_msg_window_advertise {
+++	yutani_wid_t wid;
+++	uint32_t flags; /* Types, focused, etc. */
+++	uint32_t icon;  /* Icon offset in strings[] */
+++	uint32_t bufid;
+++	uint32_t width;
+++	uint32_t height;
+++	uint32_t size;
+++	char strings[];
+++};
+++
+++struct yutani_msg_window_focus {
+++	yutani_wid_t wid;
+++};
+++
+++struct yutani_msg_key_bind {
+++	kbd_key_t key;
+++	kbd_mod_t modifiers;
+++	int response;
+++};
+++
+++struct yutani_msg_window_drag_start {
+++	yutani_wid_t wid;
+++};
+++
+++struct yutani_msg_window_update_shape {
+++	yutani_wid_t wid;
+++	int set_shape;
+++};
+++
+++struct yutani_msg_window_warp_mouse {
+++	yutani_wid_t wid;
+++	int32_t x;
+++	int32_t y;
+++};
+++
+++struct yutani_msg_window_show_mouse {
+++	yutani_wid_t wid;
+++	int32_t show_mouse;
+++};
+++
+++typedef enum {
+++	SCALE_AUTO,
+++
+++	SCALE_UP,
+++	SCALE_DOWN,
+++	SCALE_LEFT,
+++	SCALE_RIGHT,
+++
+++	SCALE_UP_LEFT,
+++	SCALE_UP_RIGHT,
+++	SCALE_DOWN_LEFT,
+++	SCALE_DOWN_RIGHT,
+++
+++	SCALE_NONE,
+++} yutani_scale_direction_t;
+++
+++struct yutani_msg_window_resize_start {
+++	yutani_wid_t wid;
+++	yutani_scale_direction_t direction;
+++};
+++
+++struct yutani_msg_special_request {
+++	yutani_wid_t wid;
+++	uint32_t request;
+++};
+++
+++struct yutani_msg_clipboard {
+++	uint32_t size;
+++	char content[];
+++};
+++
+++struct yutani_msg_window_panel_size {
+++	yutani_wid_t wid;
+++	int32_t x;
+++	int32_t y;
+++	int32_t w;
+++	int32_t h;
+++};
+++
+++/* Magic value */
+++#define YUTANI_MSG__MAGIC 0xABAD1DEA
+++
+++/* Client messages */
+++#define YUTANI_MSG_HELLO               0x00000001
+++#define YUTANI_MSG_WINDOW_NEW          0x00000002
+++#define YUTANI_MSG_FLIP                0x00000003
+++#define YUTANI_MSG_KEY_EVENT           0x00000004
+++#define YUTANI_MSG_MOUSE_EVENT         0x00000005
+++#define YUTANI_MSG_WINDOW_MOVE         0x00000006
+++#define YUTANI_MSG_WINDOW_CLOSE        0x00000007
+++#define YUTANI_MSG_WINDOW_SHOW         0x00000008
+++#define YUTANI_MSG_WINDOW_HIDE         0x00000009
+++#define YUTANI_MSG_WINDOW_STACK        0x0000000A
+++#define YUTANI_MSG_WINDOW_FOCUS_CHANGE 0x0000000B
+++#define YUTANI_MSG_WINDOW_MOUSE_EVENT  0x0000000C
+++#define YUTANI_MSG_FLIP_REGION         0x0000000D
+++#define YUTANI_MSG_WINDOW_NEW_FLAGS    0x0000000E
+++
+++#define YUTANI_MSG_RESIZE_REQUEST      0x00000010
+++#define YUTANI_MSG_RESIZE_OFFER        0x00000011
+++#define YUTANI_MSG_RESIZE_ACCEPT       0x00000012
+++#define YUTANI_MSG_RESIZE_BUFID        0x00000013
+++#define YUTANI_MSG_RESIZE_DONE         0x00000014
+++
+++#define YUTANI_MSG_WINDOW_MOVE_RELATIVE 0x00000015
+++
+++/* Some session management / de stuff */
+++#define YUTANI_MSG_WINDOW_ADVERTISE    0x00000020
+++#define YUTANI_MSG_SUBSCRIBE           0x00000021
+++#define YUTANI_MSG_UNSUBSCRIBE         0x00000022
+++#define YUTANI_MSG_NOTIFY              0x00000023
+++#define YUTANI_MSG_QUERY_WINDOWS       0x00000024
+++#define YUTANI_MSG_WINDOW_FOCUS        0x00000025
+++#define YUTANI_MSG_WINDOW_DRAG_START   0x00000026
+++#define YUTANI_MSG_WINDOW_WARP_MOUSE   0x00000027
+++#define YUTANI_MSG_WINDOW_SHOW_MOUSE   0x00000028
+++#define YUTANI_MSG_WINDOW_RESIZE_START 0x00000029
+++#define YUTANI_MSG_WINDOW_PANEL_SIZE   0x0000002a
+++
+++#define YUTANI_MSG_SESSION_END         0x00000030
+++
+++#define YUTANI_MSG_KEY_BIND            0x00000040
+++
+++#define YUTANI_MSG_WINDOW_UPDATE_SHAPE 0x00000050
+++
+++#define YUTANI_MSG_CLIPBOARD           0x00000060
+++
+++#define YUTANI_MSG_GOODBYE             0x000000F0
+++
+++/* Special request (eg. one-off single-shot requests like "please maximize me" */
+++#define YUTANI_MSG_SPECIAL_REQUEST     0x00000100
+++
+++/* Server responses */
+++#define YUTANI_MSG_WELCOME             0x00010001
+++#define YUTANI_MSG_WINDOW_INIT         0x00010002
+++
+++/*
+++ * YUTANI_ZORDER
+++ *
+++ * Specifies which stack set a window should appear in.
+++ */
+++#define YUTANI_ZORDER_MAX     0xFFFF
+++#define YUTANI_ZORDER_TOP     0xFFFF
+++#define YUTANI_ZORDER_MENU    0xFFFE
+++#define YUTANI_ZORDER_OVERLAY 0xFFED
+++#define YUTANI_ZORDER_BOTTOM  0x0000
+++
+++/*
+++ * YUTANI_MOUSE_BUTTON
+++ *
+++ * Button specifiers. Multiple specifiers may be set.
+++ */
+++#define YUTANI_MOUSE_BUTTON_LEFT   0x01
+++#define YUTANI_MOUSE_BUTTON_RIGHT  0x02
+++#define YUTANI_MOUSE_BUTTON_MIDDLE 0x04
+++#define YUTANI_MOUSE_SCROLL_UP     0x10
+++#define YUTANI_MOUSE_SCROLL_DOWN   0x20
+++
+++/*
+++ * YUTANI_MOUSE_STATE
+++ *
+++ * The mouse has for effective states internally:
+++ *
+++ * NORMAL: The mouse is performing normally.
+++ * MOVING: The mouse is engaged in moving a window.
+++ * DRAGGING: The mouse is down and sending drag events.
+++ * RESIZING: The mouse is engaged in resizing a window.
+++ */
+++#define YUTANI_MOUSE_STATE_NORMAL     0
+++#define YUTANI_MOUSE_STATE_MOVING     1
+++#define YUTANI_MOUSE_STATE_DRAGGING   2
+++#define YUTANI_MOUSE_STATE_RESIZING   3
+++#define YUTANI_MOUSE_STATE_ROTATING   4
+++
+++/*
+++ * YUTANI_MOUSE_EVENT
+++ *
+++ * Mouse events have different types.
+++ *
+++ * Most of these should be self-explanatory.
+++ *
+++ * CLICK: A down-up click has occured.
+++ * DRAG: The mouse is down and moving.
+++ * RAISE: A mouse button was released.
+++ * DOWN: A mouse button has been pressed.
+++ * MOVE: The mouse has moved without a mouse button pressed.
+++ * LEAVE: The mouse has left the given window.
+++ * ENTER: The mouse has entered the given window.
+++ */
+++#define YUTANI_MOUSE_EVENT_CLICK 0
+++#define YUTANI_MOUSE_EVENT_DRAG  1
+++#define YUTANI_MOUSE_EVENT_RAISE 2
+++#define YUTANI_MOUSE_EVENT_DOWN  3
+++#define YUTANI_MOUSE_EVENT_MOVE  4
+++#define YUTANI_MOUSE_EVENT_LEAVE 5
+++#define YUTANI_MOUSE_EVENT_ENTER 6
+++
+++/*
+++ * YUTANI_MOUSE_EVENT_TYPE
+++ *
+++ * (For mouse drivers)
+++ *
+++ * RELATIVE: Mouse positions are relative to the previous reported location.
+++ * ABSOLUTE: Mouse positions are in absolute coordinates.
+++ */
+++#define YUTANI_MOUSE_EVENT_TYPE_RELATIVE 0
+++#define YUTANI_MOUSE_EVENT_TYPE_ABSOLUTE 1
+++
+++/*
+++ * YUTANI_KEY_MODIFIER
+++ *
+++ * These are sent with mouse events. The LEFT and RIGHT
+++ * version are specific to those keys. The non-LEFT/RIGHT
+++ * versions are masks that can match either key.
+++ *
+++ * Must match with the <kbd.h> definitions.
+++ */
+++#define YUTANI_KEY_MODIFIER_LEFT_CTRL    0x01
+++#define YUTANI_KEY_MODIFIER_LEFT_SHIFT   0x02
+++#define YUTANI_KEY_MODIFIER_LEFT_ALT     0x04
+++#define YUTANI_KEY_MODIFIER_LEFT_SUPER   0x08
+++#define YUTANI_KEY_MODIFIER_RIGHT_CTRL   0x10
+++#define YUTANI_KEY_MODIFIER_RIGHT_SHIFT  0x20
+++#define YUTANI_KEY_MODIFIER_RIGHT_ALT    0x40
+++#define YUTANI_KEY_MODIFIER_RIGHT_SUPER  0x80
+++#define YUTANI_KEY_MODIFIER_CTRL         0x11
+++#define YUTANI_KEY_MODIFIER_SHIFT        0x22
+++#define YUTANI_KEY_MODIFIER_ALT          0x44
+++#define YUTANI_KEY_MODIFIER_SUPER        0x88
+++
+++/*
+++ * YUTANI_BIND
+++ *
+++ * Used to control keyboard binding modes.
+++ *
+++ * PASSTHROUGH: The key event will continue to the window that would have normally received.
+++ * STEAL: The key event will not be passed to the next window and is stolen by the bound window.
+++ */
+++#define YUTANI_BIND_PASSTHROUGH 0
+++#define YUTANI_BIND_STEAL       1
+++
+++/*
+++ * YUTANI_SHAPE_THRESHOLD
+++ *
+++ * Used with yutani_window_update_shape to set the alpha threshold for window shaping.
+++ * All windows are shaped based on their transparency (alpha channel). The default
+++ * mode is NONE - meaning the alpha channel is ignored.
+++ *
+++ * NONE:  The window is always clickable, regardless of alpha transparency.
+++ * CLEAR: Only completely clear (alpha = 0) regions will pass through.
+++ * HALF:  Threshold of 50% - alpha values below 127 will pass through. Good for most cases.
+++ * ANY:   Any amount of alpha transparency will pass through - only fully opaque regions are kept.
+++ * PASSTHROUGH: All clicks pass through. Useful for tooltips / overlays.
+++ */
+++#define YUTANI_SHAPE_THRESHOLD_NONE        0
+++#define YUTANI_SHAPE_THRESHOLD_CLEAR       1
+++#define YUTANI_SHAPE_THRESHOLD_HALF        127
+++#define YUTANI_SHAPE_THRESHOLD_ANY         255
+++#define YUTANI_SHAPE_THRESHOLD_PASSTHROUGH 256
+++
+++/*
+++ * YUTANI_CURSOR_TYPE
+++ *
+++ * Used with SHOW_MOUSE to set the cursor type for this window.
+++ * Note that modifications made to the cursor will only display
+++ * while it the current window is active and that cursor settings
+++ * are per-window, not per-application.
+++ *
+++ * HIDE:              Disable the mouse cursor. Useful for games.
+++ * NORMAL:            The normal arrow cursor.
+++ * DRAG:              A 4-directional arrow.
+++ * RESIZE_VERTICAL:   An up-down arrow / resize indicator.
+++ * RESIZE_HORIZONTAL: A left-right arrow / resize indicator.
+++ * RESIZE_UP_DOWN:    A diagonal ＼-shaped arrow.
+++ * RESIZE_DOWN_UP:    A diagonal ／-shaped arrow.
+++ *
+++ * RESET: If the cursor was previously hidden, hide it again.
+++ *        Otherwise, show the normal cursor. Allows for decorator
+++ *        to set resize cursors without having to know if a window
+++ *        had set the default mode to HIDE.
+++ */
+++#define YUTANI_CURSOR_TYPE_RESET            -1
+++#define YUTANI_CURSOR_TYPE_HIDE              0
+++#define YUTANI_CURSOR_TYPE_NORMAL            1
+++#define YUTANI_CURSOR_TYPE_DRAG              2
+++#define YUTANI_CURSOR_TYPE_RESIZE_VERTICAL   3
+++#define YUTANI_CURSOR_TYPE_RESIZE_HORIZONTAL 4
+++#define YUTANI_CURSOR_TYPE_RESIZE_UP_DOWN    5
+++#define YUTANI_CURSOR_TYPE_RESIZE_DOWN_UP    6
+++#define YUTANI_CURSOR_TYPE_POINT             7
+++#define YUTANI_CURSOR_TYPE_IBEAM             8
+++
+++/*
+++ * YUTANI_WINDOW_FLAG
+++ *
+++ * Flags for new windows describing how the window
+++ * should be created.
+++ */
+++#define YUTANI_WINDOW_FLAG_NO_STEAL_FOCUS   (1 << 0)
+++#define YUTANI_WINDOW_FLAG_DISALLOW_DRAG    (1 << 1)
+++#define YUTANI_WINDOW_FLAG_DISALLOW_RESIZE  (1 << 2)
+++#define YUTANI_WINDOW_FLAG_ALT_ANIMATION    (1 << 3)
+++#define YUTANI_WINDOW_FLAG_DIALOG_ANIMATION (1 << 4)
+++#define YUTANI_WINDOW_FLAG_NO_ANIMATION     (1 << 5)
+++#define YUTANI_WINDOW_FLAG_BLUR_BEHIND      (1 << 8)
+++
+++/* YUTANI_SPECIAL_REQUEST
+++ *
+++ * Special one-off single-shot request messages.
+++ */
+++#define YUTANI_SPECIAL_REQUEST_MAXIMIZE     1
+++#define YUTANI_SPECIAL_REQUEST_PLEASE_CLOSE 2
+++#define YUTANI_SPECIAL_REQUEST_MINIMIZE     3
+++
+++#define YUTANI_SPECIAL_REQUEST_CLIPBOARD    10
+++
+++#define YUTANI_SPECIAL_REQUEST_RELOAD       20
+++
+++/*
+++ * YUTANI_RESIZE
+++ *
+++ * Flags provided in resize offers describing the window state.
+++ */
+++#define YUTANI_RESIZE_NORMAL 0x00000000
+++#define YUTANI_RESIZE_TILED  0x0000000f
+++
+++#define YUTANI_RESIZE_TILE_LEFT  0x00000001
+++#define YUTANI_RESIZE_TILE_RIGHT 0x00000002
+++#define YUTANI_RESIZE_TILE_UP    0x00000004
+++#define YUTANI_RESIZE_TILE_DOWN  0x00000008
+++
+++typedef struct {
+++	int x;
+++	int y;
+++	unsigned int width;
+++	unsigned int height;
+++} yutani_damage_rect_t;
+++
+++extern yutani_msg_t * yutani_wait_for(yutani_t * y, uint32_t type);
+++extern yutani_msg_t * yutani_poll(yutani_t * y);
+++extern yutani_msg_t * yutani_poll_async(yutani_t * y);
+++extern size_t yutani_query(yutani_t * y);
+++
+++extern int yutani_msg_send(yutani_t * y, yutani_msg_t * msg);
+++extern yutani_t * yutani_context_create(FILE * socket);
+++extern yutani_t * yutani_init(void);
+++extern yutani_window_t * yutani_window_create(yutani_t * y, int width, int height);
+++extern yutani_window_t * yutani_window_create_flags(yutani_t * y, int width, int height, uint32_t flags);
+++extern void yutani_flip(yutani_t * y, yutani_window_t * win);
+++extern void yutani_window_move(yutani_t * yctx, yutani_window_t * window, int x, int y);
+++extern void yutani_window_move_relative(yutani_t * yctx, yutani_window_t * window, yutani_window_t * base, int x, int y);
+++extern void yutani_close(yutani_t * y, yutani_window_t * win);
+++extern void yutani_set_stack(yutani_t *, yutani_window_t *, int);
+++extern void yutani_flip_region(yutani_t *, yutani_window_t * win, int32_t x, int32_t y, int32_t width, int32_t height);
+++extern void yutani_window_resize(yutani_t * yctx, yutani_window_t * window, uint32_t width, uint32_t height);
+++extern void yutani_window_resize_offer(yutani_t * yctx, yutani_window_t * window, uint32_t width, uint32_t height);
+++extern void yutani_window_resize_accept(yutani_t * yctx, yutani_window_t * window, uint32_t width, uint32_t height);
+++extern void yutani_window_resize_done(yutani_t * yctx, yutani_window_t * window);
+++extern void yutani_window_advertise(yutani_t * yctx, yutani_window_t * window, char * name);
+++extern void yutani_window_advertise_icon(yutani_t * yctx, yutani_window_t * window, char * name, char * icon);
+++extern void yutani_window_panel_size(yutani_t * yctx, yutani_wid_t wid, int32_t x, int32_t y, int32_t w, int32_t h);
+++extern void yutani_subscribe_windows(yutani_t * y); 
+++extern void yutani_unsubscribe_windows(yutani_t * y);
+++extern void yutani_query_windows(yutani_t * y);
+++extern void yutani_session_end(yutani_t * y);
+++extern void yutani_focus_window(yutani_t * y, yutani_wid_t wid);
+++extern void yutani_key_bind(yutani_t * yctx, kbd_key_t key, kbd_mod_t mod, int response);
+++extern void yutani_window_drag_start(yutani_t * yctx, yutani_window_t * window);
+++extern void yutani_window_drag_start_wid(yutani_t * yctx, yutani_wid_t wid);
+++extern void yutani_window_update_shape(yutani_t * yctx, yutani_window_t * window, int set_shape);
+++extern void yutani_window_warp_mouse(yutani_t * yctx, yutani_window_t * window, int32_t x, int32_t y);
+++extern void yutani_window_show_mouse(yutani_t * yctx, yutani_window_t * window, int32_t show_mouse);
+++extern void yutani_window_resize_start(yutani_t * yctx, yutani_window_t * window, yutani_scale_direction_t direction);
+++extern void yutani_special_request(yutani_t * yctx, yutani_window_t * window, uint32_t request);
+++extern void yutani_special_request_wid(yutani_t * yctx, yutani_wid_t wid, uint32_t request);
+++extern void yutani_set_clipboard(yutani_t * yctx, char * content);
+++extern FILE * yutani_open_clipboard(yutani_t * yctx);
+++
+++extern gfx_context_t * init_graphics_yutani(yutani_window_t * window);
+++extern gfx_context_t *  init_graphics_yutani_double_buffer(yutani_window_t * window);
+++extern void reinit_graphics_yutani(gfx_context_t * out, yutani_window_t * window);
+++extern void release_graphics_yutani(gfx_context_t * gfx);
+++extern void yutani_internal_refocus(yutani_t * yctx, yutani_window_t * window);
+++
+++_End_C_Header
+++
++-- 
++2.43.0
++
+diff --git a/patch/0013-Minor-update.patch b/patch/0013-Minor-update.patch
+new file mode 100644
+index 0000000..9f988ee
+--- /dev/null
++++ b/patch/0013-Minor-update.patch
+@@ -0,0 +1,95 @@
++From 179c2efb9f1b4c8e0bcee15da1eccfd3b5967464 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 17:36:14 -0400
++Subject: [PATCH 13/50] Minor update
++
++---
++ kernel/yutani/yutani-internal.h | 76 +++++++++++++++++++++++++++++++++
++ 1 file changed, 76 insertions(+)
++ create mode 100644 kernel/yutani/yutani-internal.h
++
++diff --git a/kernel/yutani/yutani-internal.h b/kernel/yutani/yutani-internal.h
++new file mode 100644
++index 0000000..b815d6c
++--- /dev/null
+++++ b/kernel/yutani/yutani-internal.h
++@@ -0,0 +1,76 @@
+++#pragma once
+++
+++#include <_cheader.h>
+++#include "yutani.h"
+++_Begin_C_Header
+++
+++#define YUTANI_SHMKEY(server_ident,buf,sz,win) sprintf(buf, "sys.%s.%d", server_ident, win->bufid);
+++#define YUTANI_SHMKEY_EXP(server_ident,buf,sz,bufid) sprintf(buf, "sys.%s.%d", server_ident, bufid);
+++
+++#define yutani_msg_buildx_hello_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_flip_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_flip)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_welcome_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_welcome)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_window_new_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_new)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_window_new_flags_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_new_flags)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_window_init_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_init)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_window_close_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_close)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_key_event_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_key_event)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_mouse_event_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_mouse_event)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_window_move_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_move)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_window_move_relative_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_move_relative)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_window_stack_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_stack)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_window_focus_change_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_focus_change)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_window_mouse_event_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_mouse_event)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_flip_region_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_flip_region)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_window_resize_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_resize)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_window_advertise_alloc(out, length) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_advertise) + length]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_subscribe_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_unsubscribe_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_query_windows_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_notify_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_session_end_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_window_focus_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_focus)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_key_bind_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_key_bind)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_window_drag_start_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_drag_start)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_window_update_shape_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_update_shape)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_window_warp_mouse_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_warp_mouse)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_window_show_mouse_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_show_mouse)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_window_resize_start_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_resize_start)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_special_request_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_special_request)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_clipboard_alloc(out, length) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_clipboard)+length]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++#define yutani_msg_buildx_window_panel_size_alloc(out) char _yutani_tmp_ ## LINE [sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_panel_size)]; yutani_msg_t * out = (void *)&_yutani_tmp_ ## LINE;
+++
+++extern void yutani_msg_buildx_hello(yutani_msg_t * msg);
+++extern void yutani_msg_buildx_flip(yutani_msg_t * msg, yutani_wid_t wid);
+++extern void yutani_msg_buildx_welcome(yutani_msg_t * msg, uint32_t width, uint32_t height);
+++extern void yutani_msg_buildx_window_new(yutani_msg_t * msg, uint32_t width, uint32_t height);
+++extern void yutani_msg_buildx_window_new_flags(yutani_msg_t * msg, uint32_t width, uint32_t height, uint32_t flags);
+++extern void yutani_msg_buildx_window_init(yutani_msg_t * msg, yutani_wid_t wid, uint32_t width, uint32_t height, uint32_t bufid);
+++extern void yutani_msg_buildx_window_close(yutani_msg_t * msg, yutani_wid_t wid);
+++extern void yutani_msg_buildx_key_event(yutani_msg_t * msg, yutani_wid_t wid, key_event_t * event, key_event_state_t * state);
+++extern void yutani_msg_buildx_mouse_event(yutani_msg_t * msg, yutani_wid_t wid, mouse_device_packet_t * event, int32_t type);
+++extern void yutani_msg_buildx_window_move(yutani_msg_t * msg, yutani_wid_t wid, int32_t x, int32_t y);
+++extern void yutani_msg_buildx_window_move_relative(yutani_msg_t * msg, yutani_wid_t wid, yutani_wid_t wid2, int32_t x, int32_t y);
+++extern void yutani_msg_buildx_window_stack(yutani_msg_t * msg, yutani_wid_t wid, int z);
+++extern void yutani_msg_buildx_window_focus_change(yutani_msg_t * msg, yutani_wid_t wid, int focused);
+++extern void yutani_msg_buildx_window_mouse_event(yutani_msg_t * msg, yutani_wid_t wid, int32_t new_x, int32_t new_y, int32_t old_x, int32_t old_y, uint8_t buttons, uint8_t command, uint8_t modifiers);
+++extern void yutani_msg_buildx_flip_region(yutani_msg_t * msg, yutani_wid_t wid, int32_t x, int32_t y, int32_t width, int32_t height);
+++extern void yutani_msg_buildx_window_resize(yutani_msg_t * msg, uint32_t type, yutani_wid_t wid, uint32_t width, uint32_t height, uint32_t bufid, uint32_t flags);
+++extern void yutani_msg_buildx_window_advertise(yutani_msg_t * msg, yutani_wid_t wid, uint32_t flags, uint32_t icon, uint32_t bufid, uint32_t width, uint32_t height, size_t length, char * data);
+++extern void yutani_msg_buildx_subscribe(yutani_msg_t * msg);
+++extern void yutani_msg_buildx_unsubscribe(yutani_msg_t * msg);
+++extern void yutani_msg_buildx_query_windows(yutani_msg_t * msg);
+++extern void yutani_msg_buildx_notify(yutani_msg_t * msg);
+++extern void yutani_msg_buildx_session_end(yutani_msg_t * msg);
+++extern void yutani_msg_buildx_window_focus(yutani_msg_t * msg, yutani_wid_t wid);
+++extern void yutani_msg_buildx_key_bind(yutani_msg_t * msg, kbd_key_t key, kbd_mod_t mod, int response);
+++extern void yutani_msg_buildx_window_drag_start(yutani_msg_t * msg, yutani_wid_t wid);
+++extern void yutani_msg_buildx_window_update_shape(yutani_msg_t * msg, yutani_wid_t wid, int set_shape);
+++extern void yutani_msg_buildx_window_warp_mouse(yutani_msg_t * msg, yutani_wid_t wid, int32_t x, int32_t y);
+++extern void yutani_msg_buildx_window_show_mouse(yutani_msg_t * msg, yutani_wid_t wid, int32_t show_mouse);
+++extern void yutani_msg_buildx_window_resize_start(yutani_msg_t * msg, yutani_wid_t wid, yutani_scale_direction_t direction);
+++extern void yutani_msg_buildx_special_request(yutani_msg_t * msg, yutani_wid_t wid, uint32_t request);
+++extern void yutani_msg_buildx_clipboard(yutani_msg_t * msg, char * content);
+++extern void yutani_msg_buildx_window_panel_size(yutani_msg_t * msg, yutani_wid_t wid, int32_t x, int32_t y, int32_t w, int32_t h);
+++
+++_End_C_Header
++-- 
++2.43.0
++
+diff --git a/patch/0014-Patch.patch b/patch/0014-Patch.patch
+new file mode 100644
+index 0000000..2d2a2e1
+--- /dev/null
++++ b/patch/0014-Patch.patch
+@@ -0,0 +1,24 @@
++From 535e75d5595e01eca8d4d1ccd0b3162f761fef41 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 17:37:35 -0400
++Subject: [PATCH 14/50] Patch
++
++---
++ kernel/Makefile | 1 +
++ 1 file changed, 1 insertion(+)
++
++diff --git a/kernel/Makefile b/kernel/Makefile
++index 376d27f..ed8b991 100644
++--- a/kernel/Makefile
+++++ b/kernel/Makefile
++@@ -35,6 +35,7 @@ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
++ 	colorforth/editor.o                     \
++ 	colorforth/compiler.o                   \
++ 	arch/x86-pc/startup.o                   \
+++	yutani/yutani.o                        \
++ 
++ KERNEL          = $(BUILD_PATH)/roentgenium.elf
++ MULTIBOOT_IMAGE	= $(BUILD_PATH)/heisen.iso
++-- 
++2.43.0
++
+diff --git a/patch/0015-Updated-the-patch.patch b/patch/0015-Updated-the-patch.patch
+new file mode 100644
+index 0000000..c7af439
+--- /dev/null
++++ b/patch/0015-Updated-the-patch.patch
+@@ -0,0 +1,35 @@
++From 9792e2821290a66baf58838ae21a4f5a0021fbbf Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 17:40:00 -0400
++Subject: [PATCH 15/50] Updated the patch
++
++---
++ kernel/Makefile        | 1 -
++ kernel/yutani/Makefile | 2 ++
++ 2 files changed, 2 insertions(+), 1 deletion(-)
++ create mode 100644 kernel/yutani/Makefile
++
++diff --git a/kernel/Makefile b/kernel/Makefile
++index ed8b991..376d27f 100644
++--- a/kernel/Makefile
+++++ b/kernel/Makefile
++@@ -35,7 +35,6 @@ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
++ 	colorforth/editor.o                     \
++ 	colorforth/compiler.o                   \
++ 	arch/x86-pc/startup.o                   \
++-	yutani/yutani.o                        \
++ 
++ KERNEL          = $(BUILD_PATH)/roentgenium.elf
++ MULTIBOOT_IMAGE	= $(BUILD_PATH)/heisen.iso
++diff --git a/kernel/yutani/Makefile b/kernel/yutani/Makefile
++new file mode 100644
++index 0000000..b4609df
++--- /dev/null
+++++ b/kernel/yutani/Makefile
++@@ -0,0 +1,2 @@
+++all:
+++	$(CC) $(CFLAGS) yutani.o
++\ No newline at end of file
++-- 
++2.43.0
++
+diff --git a/patch/0016-Minor-update.patch b/patch/0016-Minor-update.patch
+new file mode 100644
+index 0000000..a30fd2d
+--- /dev/null
++++ b/patch/0016-Minor-update.patch
+@@ -0,0 +1,40 @@
++From 72d8e5a37df5bbaf46f31e7e656264c8067381b3 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 17:43:51 -0400
++Subject: [PATCH 16/50] Minor update
++
++---
++ kernel/main.c | 10 ++++++++++
++ 1 file changed, 10 insertions(+)
++
++diff --git a/kernel/main.c b/kernel/main.c
++index 27e4a18..98ba2f8 100644
++--- a/kernel/main.c
+++++ b/kernel/main.c
++@@ -10,6 +10,13 @@
++ #include <proc/sched.h>
++ #include "graphics.h"
++ #include "terminal.h"
+++#include "yutani.h"
+++
+++static yutani_t * yctx;
+++static yutani_window_t * window = NULL;
+++static char * title_str;
+++
+++
++ int kmain(multiboot_info_t *info) {
++     
++     video_init(25, 80);
++@@ -36,6 +43,9 @@ int kmain(multiboot_info_t *info) {
++     sched_init();
++ 
++ 
+++	yutani_window_advertise_icon(yctx, window, title_str, "star");
+++
+++
++     
++     while(1)
++         halt();
++-- 
++2.43.0
++
+diff --git a/patch/0017-Patch.patch b/patch/0017-Patch.patch
+new file mode 100644
+index 0000000..bf89f9e
+--- /dev/null
++++ b/patch/0017-Patch.patch
+@@ -0,0 +1,62 @@
++From d042a8376d70e2f65ef65cff6f5aee99ebce4105 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 19:13:09 -0400
++Subject: [PATCH 17/50] Patch
++
++---
++ kernel/arch/x86-pc/startup.c | 29 +++++++++++++++++++++++++++++
++ 1 file changed, 29 insertions(+)
++
++diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.c
++index c987229..bd47bb0 100644
++--- a/kernel/arch/x86-pc/startup.c
+++++ b/kernel/arch/x86-pc/startup.c
++@@ -22,6 +22,32 @@
++ #include <colorforth/colorforth.h>
++ 
++ 
+++
+++#define VGA_TEXT_BUFFER_ADDR 0xB8000
+++#define VGA_WIDTH 80
+++#define VGA_HEIGHT 25
+++#define VGA_ATTRIBUTE_BYTE 0x0F // White text on black background
+++
+++void print_string(const char *str) {
+++    uint16_t *vga_buffer = (uint16_t*)VGA_TEXT_BUFFER_ADDR;
+++    int offset = 0;
+++    
+++    // Loop through the string and print each character
+++    while (*str != '\0') {
+++        if (*str == '\n') {
+++            // Move to the next line
+++            offset += VGA_WIDTH - offset % VGA_WIDTH;
+++        } else {
+++            // Write the character and attribute byte to the VGA buffer
+++            vga_buffer[offset] = (uint16_t)(*str) | (uint16_t)(VGA_ATTRIBUTE_BYTE << 8);
+++            ++offset;
+++        }
+++        // Move to the next character in the string
+++        ++str;
+++    }
+++}
+++
+++
++ /**
++  * The kernel entry point. All starts from here!
++  */
++@@ -78,9 +104,12 @@ void roentgenium_main(uint32_t magic, uint32_t address)
++     // Enable interrupts
++     asm volatile("sti");
++ 
+++    print_string("Hello world");
+++
++     // Console
++     console_setup(&cons, vga_display_character);
++ 
+++
++     // colorForth
++     colorforth_initialize();
++ 
++-- 
++2.43.0
++
+diff --git a/patch/0018-Patch.patch b/patch/0018-Patch.patch
+new file mode 100644
+index 0000000..e7eda14
+--- /dev/null
++++ b/patch/0018-Patch.patch
+@@ -0,0 +1,56 @@
++From cf7617d63ba570a0b3e1b6141cb957120ef1120f Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 19:16:44 -0400
++Subject: [PATCH 18/50] Patch
++
++---
++ kernel/arch/x86-pc/startup.c | 22 ++++++++++++++++++++--
++ 1 file changed, 20 insertions(+), 2 deletions(-)
++
++diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.c
++index bd47bb0..08e1a60 100644
++--- a/kernel/arch/x86-pc/startup.c
+++++ b/kernel/arch/x86-pc/startup.c
++@@ -35,19 +35,37 @@ void print_string(const char *str) {
++     // Loop through the string and print each character
++     while (*str != '\0') {
++         if (*str == '\n') {
++-            // Move to the next line
+++            // Move to the beginning of the next line
++             offset += VGA_WIDTH - offset % VGA_WIDTH;
++         } else {
++             // Write the character and attribute byte to the VGA buffer
++             vga_buffer[offset] = (uint16_t)(*str) | (uint16_t)(VGA_ATTRIBUTE_BYTE << 8);
++             ++offset;
++         }
+++
++         // Move to the next character in the string
++         ++str;
+++
+++        // Check if we reached the end of the screen, if so, scroll
+++        if (offset >= VGA_WIDTH * VGA_HEIGHT) {
+++            // Copy each row to the row above it
+++            for (int i = 0; i < VGA_HEIGHT - 1; ++i) {
+++                for (int j = 0; j < VGA_WIDTH; ++j) {
+++                    vga_buffer[i * VGA_WIDTH + j] = vga_buffer[(i + 1) * VGA_WIDTH + j];
+++                }
+++            }
+++
+++            // Clear the last row
+++            for (int i = 0; i < VGA_WIDTH; ++i) {
+++                vga_buffer[(VGA_HEIGHT - 1) * VGA_WIDTH + i] = (uint16_t)(' ') | (uint16_t)(VGA_ATTRIBUTE_BYTE << 8);
+++            }
+++
+++            // Reset the offset to the beginning of the last row
+++            offset = (VGA_HEIGHT - 1) * VGA_WIDTH;
+++        }
++     }
++ }
++ 
++-
++ /**
++  * The kernel entry point. All starts from here!
++  */
++-- 
++2.43.0
++
+diff --git a/patch/0019-Minor-update.patch b/patch/0019-Minor-update.patch
+new file mode 100644
+index 0000000..6631bfa
+--- /dev/null
++++ b/patch/0019-Minor-update.patch
+@@ -0,0 +1,63 @@
++From 8b9a9df902c908a8ab48f090ab5ad4942e3c518a Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 19:22:53 -0400
++Subject: [PATCH 19/50] Minor update
++
++---
++ kernel/arch/x86-pc/io/keyboard.h |  1 +
++ kernel/arch/x86-pc/io/vga.c      | 16 ++++++++++++++++
++ kernel/arch/x86-pc/startup.c     |  1 -
++ 3 files changed, 17 insertions(+), 1 deletion(-)
++
++diff --git a/kernel/arch/x86-pc/io/keyboard.h b/kernel/arch/x86-pc/io/keyboard.h
++index 4123a15..984279a 100644
++--- a/kernel/arch/x86-pc/io/keyboard.h
+++++ b/kernel/arch/x86-pc/io/keyboard.h
++@@ -84,4 +84,5 @@ void keyboard_setup(struct console *term);
++ 
++ char keyboard_get_keymap(uchar_t i);
++ 
+++
++ #endif // _KEYBOARD_H_
++diff --git a/kernel/arch/x86-pc/io/vga.c b/kernel/arch/x86-pc/io/vga.c
++index 12045fb..fbb648d 100644
++--- a/kernel/arch/x86-pc/io/vga.c
+++++ b/kernel/arch/x86-pc/io/vga.c
++@@ -158,6 +158,22 @@ void vga_display_character(uchar_t character)
++ 			else
++ 				symbol.position_x += 4;
++ 			break;
+++		
+++		case KEY_F7:
+++			*video = "Welcome to the Heisen Kernel!";
+++			*(video+1) = symbol.attributes;
+++
+++		if (symbol.position_x > VGA_COLUMNS_MAX_INDEX)
+++			{
+++				symbol.position_x = 0;
+++				symbol.position_y++;
+++			}
+++
+++			if (symbol.position_y > VGA_LINES_MAX_INDEX)
+++				vga_scroll_up(symbol.position_y - VGA_LINES_MAX_INDEX);
+++	
+++
+++
++ 
++ 		default: /* Other characters */
++ 			*video     = character;
++diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.c
++index 08e1a60..ffcbf49 100644
++--- a/kernel/arch/x86-pc/startup.c
+++++ b/kernel/arch/x86-pc/startup.c
++@@ -122,7 +122,6 @@ void roentgenium_main(uint32_t magic, uint32_t address)
++     // Enable interrupts
++     asm volatile("sti");
++ 
++-    print_string("Hello world");
++ 
++     // Console
++     console_setup(&cons, vga_display_character);
++-- 
++2.43.0
++
+diff --git a/patch/0020-Patch-minor.patch b/patch/0020-Patch-minor.patch
+new file mode 100644
+index 0000000..a0e9457
+--- /dev/null
++++ b/patch/0020-Patch-minor.patch
+@@ -0,0 +1,25 @@
++From dc8b27cc335bafc1f7c2ded96f9bd13a677dc176 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 19:24:15 -0400
++Subject: [PATCH 20/50] Patch minor
++
++---
++ kernel/arch/x86-pc/io/vga.c | 2 +-
++ 1 file changed, 1 insertion(+), 1 deletion(-)
++
++diff --git a/kernel/arch/x86-pc/io/vga.c b/kernel/arch/x86-pc/io/vga.c
++index fbb648d..b6f923e 100644
++--- a/kernel/arch/x86-pc/io/vga.c
+++++ b/kernel/arch/x86-pc/io/vga.c
++@@ -159,7 +159,7 @@ void vga_display_character(uchar_t character)
++ 				symbol.position_x += 4;
++ 			break;
++ 		
++-		case KEY_F7:
+++		case KEY_ESCAPE:
++ 			*video = "Welcome to the Heisen Kernel!";
++ 			*(video+1) = symbol.attributes;
++ 
++-- 
++2.43.0
++
+diff --git a/patch/0021-Minor-update.patch b/patch/0021-Minor-update.patch
+new file mode 100644
+index 0000000..3bd468a
+--- /dev/null
++++ b/patch/0021-Minor-update.patch
+@@ -0,0 +1,85 @@
++From 797d19e828686ebf7edf1623dfd6e06fc4860b46 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 20:09:52 -0400
++Subject: [PATCH 21/50] Minor update
++
++---
++ kernel/arch/x86-pc/startup.c | 50 +++++-------------------------------
++ 1 file changed, 6 insertions(+), 44 deletions(-)
++
++diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.c
++index ffcbf49..7b10ea5 100644
++--- a/kernel/arch/x86-pc/startup.c
+++++ b/kernel/arch/x86-pc/startup.c
++@@ -22,55 +22,12 @@
++ #include <colorforth/colorforth.h>
++ 
++ 
++-
++-#define VGA_TEXT_BUFFER_ADDR 0xB8000
++-#define VGA_WIDTH 80
++-#define VGA_HEIGHT 25
++-#define VGA_ATTRIBUTE_BYTE 0x0F // White text on black background
++-
++-void print_string(const char *str) {
++-    uint16_t *vga_buffer = (uint16_t*)VGA_TEXT_BUFFER_ADDR;
++-    int offset = 0;
++-    
++-    // Loop through the string and print each character
++-    while (*str != '\0') {
++-        if (*str == '\n') {
++-            // Move to the beginning of the next line
++-            offset += VGA_WIDTH - offset % VGA_WIDTH;
++-        } else {
++-            // Write the character and attribute byte to the VGA buffer
++-            vga_buffer[offset] = (uint16_t)(*str) | (uint16_t)(VGA_ATTRIBUTE_BYTE << 8);
++-            ++offset;
++-        }
++-
++-        // Move to the next character in the string
++-        ++str;
++-
++-        // Check if we reached the end of the screen, if so, scroll
++-        if (offset >= VGA_WIDTH * VGA_HEIGHT) {
++-            // Copy each row to the row above it
++-            for (int i = 0; i < VGA_HEIGHT - 1; ++i) {
++-                for (int j = 0; j < VGA_WIDTH; ++j) {
++-                    vga_buffer[i * VGA_WIDTH + j] = vga_buffer[(i + 1) * VGA_WIDTH + j];
++-                }
++-            }
++-
++-            // Clear the last row
++-            for (int i = 0; i < VGA_WIDTH; ++i) {
++-                vga_buffer[(VGA_HEIGHT - 1) * VGA_WIDTH + i] = (uint16_t)(' ') | (uint16_t)(VGA_ATTRIBUTE_BYTE << 8);
++-            }
++-
++-            // Reset the offset to the beginning of the last row
++-            offset = (VGA_HEIGHT - 1) * VGA_WIDTH;
++-        }
++-    }
++-}
++-
++ /**
++  * The kernel entry point. All starts from here!
++  */
++ void roentgenium_main(uint32_t magic, uint32_t address)
++ {
+++    char buff[] = "Hello Kernel!!!";
++     uint16_t retval;
++     multiboot_info_t *mbi;
++     mbi = (multiboot_info_t *)address;
++@@ -126,6 +83,11 @@ void roentgenium_main(uint32_t magic, uint32_t address)
++     // Console
++     console_setup(&cons, vga_display_character);
++ 
+++    uint16_t buffer_len = sizeof(buff) - 1; // -1 to exclude the null terminator
+++
+++    // Call console_write to write the buff to the console
+++    console_write(&cons, buff, buffer_len);
+++
++ 
++     // colorForth
++     colorforth_initialize();
++-- 
++2.43.0
++
+diff --git a/patch/0022-Added-GUI-files.patch b/patch/0022-Added-GUI-files.patch
+new file mode 100644
+index 0000000..2fb059c
+--- /dev/null
++++ b/patch/0022-Added-GUI-files.patch
+@@ -0,0 +1,676 @@
++From e301d8ca6fc350dd7db5769651800a379120a69e Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 21:06:04 -0400
++Subject: [PATCH 22/50] Added GUI files
++
++---
++ include/io/video.h           |  50 ++++
++ kernel/arch/x86-pc/startup.c |   1 -
++ kernel/io/video.c            | 447 +++++++++++++++++++++++++++++++++++
++ kernel/terminal/commands.c   |  19 ++
++ kernel/terminal/commands.h   |   7 +
++ kernel/terminal/logo.txt     |   6 +
++ kernel/terminal/shell.c      |  24 ++
++ kernel/terminal/shell.h      |  36 +++
++ 8 files changed, 589 insertions(+), 1 deletion(-)
++ create mode 100644 include/io/video.h
++ create mode 100644 kernel/io/video.c
++ create mode 100644 kernel/terminal/commands.c
++ create mode 100644 kernel/terminal/commands.h
++ create mode 100644 kernel/terminal/logo.txt
++ create mode 100644 kernel/terminal/shell.c
++ create mode 100644 kernel/terminal/shell.h
++
++diff --git a/include/io/video.h b/include/io/video.h
++new file mode 100644
++index 0000000..e8f2d91
++--- /dev/null
+++++ b/include/io/video.h
++@@ -0,0 +1,50 @@
+++#ifndef _HEISEN_VIDEO_H
+++#define _HEISEN_VIDEO
+++
+++#define _SCR_W 80
+++#define _SCR_H 25
+++
+++#define BLACK 0
+++#define BLUE 1
+++#define GREEN 2
+++#define CYAN 3
+++#define RED 4
+++#define MAGENTA 5
+++#define BROWN 6
+++#define GREY 7
+++#define DARK_GREY 8
+++#define BRIGHT_BLUE 9
+++#define BRIGHT_GREEN 10
+++#define BRIGHT_CYAN 11
+++#define BRIGHT_RED 12
+++#define BRIGHT_MAGENTA 13
+++#define YELLOW 14
+++#define WHITE 15
+++
+++
+++#define OK_POS 70
+++
+++void _kntos(char*, unsigned int, int);
+++void _kputc(char);
+++void _kcolor(char);
+++void _kputs(char *);
+++void _kbackspace();
+++void _kesetcursor(unsigned int, unsigned int);
+++void _kgoto(int, int);
+++void _ksetcursauto();
+++void _kshiftAll();
+++void _ktab();
+++void _kclear();
+++void _knewline();
+++void _kminline();
+++void _kprintOK();
+++int _kgetline();
+++int _kgetcolumn();
+++void _krotate_buffer();
+++void _kscrollup();
+++void _kscrolldown();
+++void _kntohex (char *, unsigned int);
+++void _knntos(char *, int, int );
+++unsigned short shell_mess_col, shell_mess_line;
+++
+++#endif // 
++\ No newline at end of file
++diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.c
++index 7b10ea5..a9cb466 100644
++--- a/kernel/arch/x86-pc/startup.c
+++++ b/kernel/arch/x86-pc/startup.c
++@@ -86,7 +86,6 @@ void roentgenium_main(uint32_t magic, uint32_t address)
++     uint16_t buffer_len = sizeof(buff) - 1; // -1 to exclude the null terminator
++ 
++     // Call console_write to write the buff to the console
++-    console_write(&cons, buff, buffer_len);
++ 
++ 
++     // colorForth
++diff --git a/kernel/io/video.c b/kernel/io/video.c
++new file mode 100644
++index 0000000..0bc1339
++--- /dev/null
+++++ b/kernel/io/video.c
++@@ -0,0 +1,447 @@
+++#include <io/video.h>
+++#include <stddef.h>
+++#include <string.h>
+++
+++char *VIDEO_MEM = (char*) 0xb8000,
+++     *VIDEO_PTR = (char*) 0xb8000,
+++    VIDEO_CLR = 0x7;
+++
+++// Scrolling buffer 
+++char upbuffer[_SCR_H][_SCR_W*2];
+++char downbuffer[_SCR_H][_SCR_W*2];
+++int is_scrolled=0;
+++int is_shifted_once=0;
+++unsigned int last_tab=0;
+++int last_x=0, last_y=0;
+++
+++
+++char *VIDEO_MEM = (char*) 0xb8000,
+++     *VIDEO_PTR = (char*) 0xb8000,
+++    VIDEO_CLR = 0x7;
+++
+++// Scrolling buffer 
+++char upbuffer[_SCR_H][_SCR_W*2];
+++char downbuffer[_SCR_H][_SCR_W*2];
+++int is_scrolled=0;
+++int is_shifted_once=0;
+++unsigned int last_tab=0;
+++int last_x=0, last_y=0;
+++
+++void _kputc(char c)
+++{
+++    /* Print a character on the screen*/
+++  if (last_x && last_y) _kscrolldown ();
+++  if(c=='\n')
+++      _knewline();
+++    else if(c=='\033') {
+++      asm("nop");
+++    } else if (c=='\t')
+++      _ktab();
+++    else if(c=='\b')
+++      _kbackspace();
+++    else if (c=='\r')
+++      _kminline();
+++    else {
+++  *VIDEO_PTR++ = c;
+++  *VIDEO_PTR++ = VIDEO_CLR;
+++    }
+++  _kshiftAll();
+++  _ksetcursauto();            
+++/*
+++  while(c != 0) {
+++	if ( c=='\n' )
+++		_knewline();
+++	else if ( c=='\t' )
+++		_ktab();
+++	//else if(c=='\033')
+++	//	_kcolor(++c);	NON STAMPA CORRETTAMENTE I COLORI
+++	else if( c=='\b' )
+++		_kbackspace();
+++	else if ( c=='\r' )
+++		_kminline();
+++	c++;
+++  }
+++*/
+++}
+++
+++void _kputs(char *s)
+++{
+++  while(*s!=0) {
+++    if(*s=='\n')
+++      _knewline();
+++    else if(*s=='\033') {
+++      _kcolor(*++s);
+++    } else if (*s=='\t')
+++      _ktab();
+++    else if(*s=='\b')
+++      _kbackspace();
+++    else if (*s=='\r')
+++      _kminline();
+++    else
+++      _kputc(*s);
+++    s++;
+++  }
+++}
+++
+++/*
+++ * Change text colour
+++ */
+++void _kcolor(char color)
+++{
+++  VIDEO_CLR = color;
+++}
+++
+++/*
+++ * Pression of the backspace key
+++ */
+++void _kbackspace()
+++{
+++    if (last_tab) {
+++      unsigned int i;
+++      for (i = 0; i < 7; i++) {
+++        VIDEO_PTR -= 2;
+++        *VIDEO_PTR = 0x20;
+++      }
+++      last_tab--;
+++    }
+++    else if (shell_mess_line != _kgetline () || shell_mess_col < _kgetcolumn ()) {
+++      VIDEO_PTR -= 2;
+++      *VIDEO_PTR = 0x20; // delete the character
+++    }
+++}
+++
+++/*
+++ * Pression of the TAB key
+++ */
+++void _ktab()
+++{
+++  VIDEO_PTR = VIDEO_PTR+(7*2);
+++}
+++
+++/*
+++ * Move the cursor at the position x, y on the screen
+++ */
+++void _kgoto(int x, int y)
+++{
+++  VIDEO_PTR = VIDEO_MEM + ((y * _SCR_W * 2) + (x * 2));
+++  _ksetcursauto();
+++}
+++
+++/*
+++ * Needed to clear the screen
+++ */
+++void _kclear()
+++{
+++  int line, row;
+++  line = 0;
+++  row = 0;
+++  VIDEO_PTR = VIDEO_MEM;
+++
+++  while(row < _SCR_H){
+++    while(line < _SCR_W){
+++      *VIDEO_PTR++ = ' ';
+++      *VIDEO_PTR++ = 0x7;	
+++      line++;
+++    }
+++    line=0;
+++    row++;		
+++  }	
+++  
+++  VIDEO_PTR = VIDEO_MEM;
+++}
+++
+++/*
+++ * Move to the following line (the effect of \n character)
+++ */
+++void _knewline()
+++{	
+++    VIDEO_PTR = VIDEO_MEM + ((((VIDEO_PTR - VIDEO_MEM) / (_SCR_W * 2)) + 1) * (_SCR_W * 2));
+++    _kshiftAll();
+++    _ksetcursauto();
+++}
+++
+++/*
+++ * Move to the up line (the effect of \n character)
+++ */
+++void _kminline()
+++{	
+++    VIDEO_PTR = VIDEO_MEM + ((((VIDEO_PTR - VIDEO_MEM) / (_SCR_W * 2)) - 1) * (_SCR_W * 2));
+++    _knewline();
+++    _kshiftAll();
+++    _ksetcursauto();
+++}
+++/*
+++ * Move the cursor to the correct position
+++ */
+++void _ksetcursor(unsigned int x, unsigned int y)
+++{
+++   asm(
+++       "movl  %0, %%eax   \n"
+++       "movl  %1, %%ebx   \n"
+++       "movl  $0x50, %%ecx   \n"
+++       "mul   %%ecx         \n"
+++       "addl  %%ebx, %%eax   \n"
+++       "movw  $0x03d4, %%dx  \n"
+++       "pushl %%eax         \n"
+++       "movb  $0x0f, %%al    \n"
+++       "out   %%al, %%dx     \n"
+++       "popl  %%eax         \n"
+++       "movw  $0x03d5, %%dx  \n"
+++       "out   %%al, %%dx     \n"
+++       "shr   $0x08,%%eax      \n"
+++       "pushl %%eax         \n"
+++       "movw  $0x03d4, %%dx  \n"
+++       "movb  $0x0e, %%al    \n"
+++       "out   %%al, %%dx     \n"
+++       "pop   %%eax         \n"
+++       "movw  $0x03d5, %%dx  \n"
+++       "out   %%al, %%dx     \n"
+++      :
+++      : "g" (x), "g" (y)
+++      );
+++}
+++
+++/*
+++ * When something is written in another position, update the cursor
+++ */
+++void _ksetcursauto()
+++{
+++   _ksetcursor( ((VIDEO_PTR - VIDEO_MEM) / 2) / _SCR_W,
+++                ((VIDEO_PTR - VIDEO_MEM) / 2) % _SCR_W );
+++}
+++
+++/*
+++ * Print [OK] at the current row and column 60
+++ */
+++void _kprintOK() {
+++    _kgoto(60, _kgetline());
+++    _kputs("\033\001 [\033\012OK\033\001]\033\007\n");
+++    _kcolor(WHITE);
+++}
+++
+++/*
+++ * Get the current column number
+++ */
+++int _kgetcolumn()
+++{
+++  unsigned int column;
+++  column = VIDEO_PTR - VIDEO_MEM;
+++  column = (column % (_SCR_W*2));
+++  return column/2;
+++}
+++
+++/*
+++ * Get the current row number
+++ */
+++int _kgetline()
+++{
+++  unsigned int linea;
+++  linea = VIDEO_PTR - VIDEO_MEM;
+++  linea = (linea / (_SCR_W*2));
+++  return linea;
+++}
+++
+++/*
+++ * Convert a number into an hexadecimal string
+++ */
+++void _kntohex (char *buffer, unsigned int decnum)
+++{
+++  int shift=0;
+++  unsigned int tempnum = decnum;
+++
+++  while (tempnum>=16) {
+++    tempnum >>= 4;
+++    shift++;
+++  }
+++
+++  for (; shift>=0; shift--) {
+++    tempnum = decnum;
+++    tempnum >>= (4*shift);
+++    tempnum &= 0xF;
+++
+++    if (tempnum<10)
+++      *buffer++ = '0'+tempnum;
+++    else
+++      *buffer++ = 'A'+tempnum-10;
+++  }
+++  *buffer = '\0';
+++}
+++
+++
+++void _knntos(char *buffer, int num, int base){
+++	int mod;
+++  //int numval;
+++  char *p, *pbase;
+++
+++  p = pbase = buffer;
+++    
+++	if(num<0) {		
+++		num=(~num)+1;
+++		*p++='-';
+++		pbase++;
+++	}
+++    while(num > 0)
+++    {
+++      mod = num % base;
+++      *p++ = mod + '0';
+++      num = num / base;
+++    }
+++
+++    *p-- = 0;
+++    while(p > pbase)
+++    {
+++      char tmp;
+++      tmp = *p;
+++      *p = *pbase;
+++      *pbase = tmp;
+++    
+++      p--; pbase++;
+++    }
+++}
+++/** @author Lisa
+++  * @version 1.0
+++  * @param  buffer (char*) La stringa che contiene il numero
+++  * @param  num Il numero da convertire (intero)
+++  * @param  base la base numerica in cui convertire (per ora 0, 16,10)
+++  *
+++  * Move the number "num" into a string
+++  */
+++void _kntos(char *buffer, unsigned int num, int base)
+++{
+++  int mod;
+++  //int numval;
+++  char *p, *pbase;
+++
+++  p = pbase = buffer;
+++
+++  if (base==16)
+++     _kntohex (buffer, num);
+++  else {
+++    if (num == 0)
+++      *p++ = '0';
+++	else if(num<0) {		
+++		num=(~num)+1;
+++		*p++='-';
+++		pbase++;
+++	}
+++    while(num > 0)
+++    {
+++      mod = num % base;
+++      *p++ = mod + '0';
+++      num = num / base;
+++    }
+++
+++    *p-- = 0;
+++    while(p > pbase)
+++    {
+++      char tmp;
+++      tmp = *p;
+++      *p = *pbase;
+++      *pbase = tmp;
+++    
+++      p--; pbase++;
+++    }
+++  }
+++}
+++
+++/***************************************
+++ *                                     *
+++ * Functions regarding video scrolling *
+++ *                                     *
+++ **************************************/
+++
+++
+++/*
+++ * First the simplest one: when the cursor reaches the last position of the
+++ * screen, the whole screen is shifted up by one line
+++ */
+++void _kshiftAll (void)
+++{
+++  char *i;
+++  int index;
+++
+++  if (VIDEO_PTR >= VIDEO_MEM + ((_SCR_H) * _SCR_W * 2)) {
+++
+++    /*
+++     * we save the line to be lost in a buffer
+++     * this will be useful for scrolling
+++     */
+++    _krotate_buffer();
+++    for (index=0; index < _SCR_W*2; index++)
+++      upbuffer[_SCR_H-1][index] = *(VIDEO_MEM + index);
+++
+++    for (i=VIDEO_MEM ; i<= (VIDEO_MEM + ((_SCR_H) * _SCR_W * 2) + (_SCR_W * 2));i++)
+++      *i = i[_SCR_W * 2];
+++    VIDEO_PTR = VIDEO_MEM + ((((VIDEO_PTR - VIDEO_MEM) / (_SCR_W * 2)) - 1) * (_SCR_W * 2));
+++    is_shifted_once=1;
+++  }
+++}
+++
+++/*
+++ * The scrolling buffer is updated to contain the screen up the current one
+++ * The oldest line is lost to make space for the new one
+++ */
+++void _krotate_buffer()
+++{
+++  int y=1;
+++  int x=0;
+++
+++  for (y=1; y<_SCR_H; y++) {
+++    for (x=0; x<_SCR_W*2; x++)
+++      upbuffer[y-1][x] = upbuffer[y][x];
+++  }
+++}
+++
+++
+++/*
+++ * Called by the pression of the PAGEUP key
+++ * The screen up the current one is printed and the current one is saved in
+++ * downbuffer for being restored in future
+++ */
+++void _kscrollup ()
+++{
+++  int y=0, x=0;
+++  char *ptr = VIDEO_MEM;
+++
+++  if (is_scrolled==1 || is_shifted_once==0)
+++      return;
+++
+++  for (; y<_SCR_H;y++) {
+++    for (x=0; x<_SCR_W*2; x++) {
+++      downbuffer[y][x] = *ptr;
+++      *ptr++ = upbuffer[y][x];
+++    }
+++  }
+++  is_scrolled=1;
+++  last_x = _kgetcolumn ();
+++  last_y = _kgetline ();
+++  _kgoto (_SCR_W, _SCR_H);
+++}
+++
+++/*
+++ * Called by the pression of the PAGEDOWN key
+++ * The content of downbuffer (that is, the screen present when you pressed
+++ * PAGEUP) is printed again
+++ */
+++void _kscrolldown ()
+++{
+++  int y=0, x=0;
+++  char *ptr = VIDEO_MEM;
+++
+++  /*
+++   * If PAGEUP hasn't been pressed, it's useless to go down, there is nothing
+++   */
+++  if (is_scrolled==0)
+++    return;
+++
+++  for (y=0; y<_SCR_H;y++) {
+++    for (x=0; x<_SCR_W*2; x++)
+++      *ptr++ = downbuffer[y][x];
+++  }
+++  is_scrolled=0;
+++  _kgoto (last_x, last_y);
+++  last_x=0;
+++  last_y=0;
+++}
+++
+++/* EOF */
++\ No newline at end of file
++diff --git a/kernel/terminal/commands.c b/kernel/terminal/commands.c
++new file mode 100644
++index 0000000..94a5d06
++--- /dev/null
+++++ b/kernel/terminal/commands.c
++@@ -0,0 +1,19 @@
+++#include <io/video.h>
+++
+++#include "commands.h"
+++
+++void alogo(){
+++    _kcolor(BRIGHT_GREEN);
+++    printf("            _                                            _ \n");
+++    printf("  /\\  /\\___(_)___  ___ _ __     /\\ /\\___ _ __ _ __   ___| |\n");
+++    printf(" / /_/ / _ \\ / __|/ _ \\ '_ \\   / //_// _ \\ '__| '_ \\ / _ \\ |\n");
+++    printf("/ __  /  __/ \\__ \\  __/ | | | / __ \\  __/ |  | | | |  __/ |\n");
+++    printf("\\/ /_/ \\___|_|___/\\___|_| |_| \\/  \\/\\___|_|  |_| |_|\\___|_|");
+++    _kcolor(WHITE);
+++
+++}
+++
+++
+++void help(){
+++
+++}
++\ No newline at end of file
++diff --git a/kernel/terminal/commands.h b/kernel/terminal/commands.h
++new file mode 100644
++index 0000000..367aca9
++--- /dev/null
+++++ b/kernel/terminal/commands.h
++@@ -0,0 +1,7 @@
+++#ifndef _HEISEN_COMMANDS_H
+++#define _HEISEN_COMMANDS_H
+++
+++extern void alogo();
+++extern void whoami();
+++
+++#endif 
++\ No newline at end of file
++diff --git a/kernel/terminal/logo.txt b/kernel/terminal/logo.txt
++new file mode 100644
++index 0000000..a10e756
++--- /dev/null
+++++ b/kernel/terminal/logo.txt
++@@ -0,0 +1,6 @@
+++            _                                            _ 
+++  /\  /\___(_)___  ___ _ __     /\ /\___ _ __ _ __   ___| |
+++ / /_/ / _ \ / __|/ _ \ '_ \   / //_/ _ \ '__| '_ \ / _ \ |
+++/ __  /  __/ \__ \  __/ | | | / __ \  __/ |  | | | |  __/ |
+++\/ /_/ \___|_|___/\___|_| |_| \/  \/\___|_|  |_| |_|\___|_|
+++                                                          
++\ No newline at end of file
++diff --git a/kernel/terminal/shell.c b/kernel/terminal/shell.c
++new file mode 100644
++index 0000000..b95894c
++--- /dev/null
+++++ b/kernel/terminal/shell.c
++@@ -0,0 +1,24 @@
+++#include <io/video.h>
+++
+++struct cmd shell_cmd[NUM_COM] = {
+++ { "aalogo",   aalogo,    "  -Show an ascii art logo" },
+++ { "clear",    _kclear,   "   Clear the screen" },
+++ { "poweroff", poweroff,  "Turn off the machine" },
+++ { "uname",    uname_cmd, "   Print kernel version, try uname --help for more info" },
+++ { "credits",  credits,   " Show DreamOS credits" },
+++ { "sleep",    sleep_cmd, "   Pause DreamOS for a particular number of seconds" },
+++ { "cpuid",    cpuid, 	  "   Show cpu identification informations" },
+++ { "date",     date, 	  "    Show date and time" },
+++ { "echo",     echo, 	  "    Print some lines of text" },
+++ { "help",     help,	  "    See the 'help' list to learn the DreamOS commands now available" },
+++ { "answer",   answer,    "  42" },
+++ { "drv_load", drv_load,  "Tool to load and kill drivers" },
+++ { "ls",       ls,        "      Tool for listing dir - not complete-" },
+++ { "cd",       cd,        "      Change dir - not complete-" },
+++ { "whoami",   whoami,    "  Show the current user name" },
+++ { "tester",   tester,    "  Try some functions, 'tester --help' for more info'" },
+++ { "pwd",      pwd,       "     Print current working directory" },
+++ { "more",     more,      "    Read content of a file" },
+++ { "newfile",  newfile,	  "	Create a new file"},
+++ { "ps", 	   ps,		  "	Show task list"},
+++};
++\ No newline at end of file
++diff --git a/kernel/terminal/shell.h b/kernel/terminal/shell.h
++new file mode 100644
++index 0000000..f29110d
++--- /dev/null
+++++ b/kernel/terminal/shell.h
++@@ -0,0 +1,36 @@
+++#ifndef _HEISEN_TERMINAL_SHELL_H
+++#define  _HEISEN_TERMINAL_SHELL_H
+++
+++
+++#define USER_LEN 22
+++#define CMD_LEN 256
+++#define DESC_LEN 256
+++#define CURPATH_LEN 256
+++#define NUM_COM 22
+++#define DEF_COM 18
+++#define HST_LEN 10
+++
+++
+++struct user_env{
+++    char username[CMD_LEN];
+++    char cur_path[CURPATH_LEN];
+++	unsigned int uid;
+++	unsigned int gid;
+++};
+++
+++struct cmd {
+++	char cmdname[CMD_LEN];
+++	void (*h_func)(void);
+++	char cmddesc[DESC_LEN];
+++};
+++
+++extern struct cmd shell_cmd[NUM_COM];
+++typedef struct user_env userenv_t;
+++extern userenv_t current_user;
+++void shell_init();
+++int shell(void *);
+++void history (char *);
+++void history_start(void);
+++void _getCommand(char *);
+++
+++#endif 
++\ No newline at end of file
++-- 
++2.43.0
++
+diff --git a/patch/0023-Patch.patch b/patch/0023-Patch.patch
+new file mode 100644
+index 0000000..82a4833
+--- /dev/null
++++ b/patch/0023-Patch.patch
+@@ -0,0 +1,25 @@
++From eb9dc10f68d5b71e6865d1dcdaa54dd39ff837f5 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 21:07:06 -0400
++Subject: [PATCH 23/50] Patch
++
++---
++ .github/workflows/test.yml | 2 +-
++ 1 file changed, 1 insertion(+), 1 deletion(-)
++
++diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
++index f44793f..3643d07 100644
++--- a/.github/workflows/test.yml
+++++ b/.github/workflows/test.yml
++@@ -3,7 +3,7 @@ name: HiesenKernel
++ on:
++   push:
++     branches:
++-      - main  # Adjust branch name as needed
+++      - GUI  # Adjust branch name as needed
++ 
++ jobs:
++   build:
++-- 
++2.43.0
++
+diff --git a/patch/0024-Update-for-the-kernel.patch b/patch/0024-Update-for-the-kernel.patch
+new file mode 100644
+index 0000000..5b3ed3a
+--- /dev/null
++++ b/patch/0024-Update-for-the-kernel.patch
+@@ -0,0 +1,114 @@
++From 1517ad55e50bf82013501540226942314f72bb5e Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 21:15:31 -0400
++Subject: [PATCH 24/50] Update for the kernel
++
++---
++ kernel/lib/stdio.c         | 18 ++++++++++++++++
++ kernel/lib/stdio.h         |  6 ++++++
++ kernel/terminal/commands.c | 43 ++++++++++++++++++++++++++++++++++++++
++ 3 files changed, 67 insertions(+)
++ create mode 100644 kernel/lib/stdio.c
++ create mode 100644 kernel/lib/stdio.h
++
++diff --git a/kernel/lib/stdio.c b/kernel/lib/stdio.c
++new file mode 100644
++index 0000000..de8393e
++--- /dev/null
+++++ b/kernel/lib/stdio.c
++@@ -0,0 +1,18 @@
+++#include <libc/stdarg.h>
+++
+++
+++int printf (const char *format, ...)
+++{
+++    va_list ap;
+++    int len=0;
+++    	
+++    /* Start variabile argument's list */
+++    va_start (ap, format);
+++	char buffer[1024];
+++
+++	len = vsprintf(buffer, format, ap);
+++	_kputs(buffer);
+++    va_end (ap); // end of arguments
+++
+++    return len;
+++}
++\ No newline at end of file
++diff --git a/kernel/lib/stdio.h b/kernel/lib/stdio.h
++new file mode 100644
++index 0000000..1794b1c
++--- /dev/null
+++++ b/kernel/lib/stdio.h
++@@ -0,0 +1,6 @@
+++#ifndef _HEISEN_KERNEL_STDIO_H
+++#define _HEISEN_KERNEL_STDIO_H
+++
+++extern int printf(const char *format, ...);
+++
+++#endif 
++\ No newline at end of file
++diff --git a/kernel/terminal/commands.c b/kernel/terminal/commands.c
++index 94a5d06..a5dd61f 100644
++--- a/kernel/terminal/commands.c
+++++ b/kernel/terminal/commands.c
++@@ -1,6 +1,12 @@
++ #include <io/video.h>
+++#include <lib/stdio.h>
+++#include <fcntl.h>
++ 
++ #include "commands.h"
+++#include "shell.h"
+++
+++int argc;
+++char **argv;
++ 
++ void alogo(){
++     _kcolor(BRIGHT_GREEN);
++@@ -16,4 +22,41 @@ void alogo(){
++ 
++ void help(){
++ 
+++}
+++
+++void pwd(){
+++    printf("%s\n",current_user.cur_path);
+++}
+++
+++
+++void newfile(){
+++	if(argc!=2){
+++		printf("Bad usage. Try newfile --help for more informations\n");
+++	}
+++	else {
+++		if(strcmp(argv[1], "--help")==0) {
+++			printf("newfile FILENAME - Make a new file, and prompt for it's content\n");
+++		}
+++		else {
+++			int fd;			
+++			fd = open(argv[1], O_RDONLY);
+++			if(fd>=0) printf("-ERROR: %s File already exist\n", argv[1]);
+++			else {
+++				char text[256];
+++				printf("Filename: %s\n", argv[1]);
+++				close(fd);
+++				fd = open(argv[1], O_RDWR|O_CREAT|O_APPEND);		
+++				if(fd>=0){ 
+++					printf("Type your text here, actually only one line available!!\n");
+++					scanf("%s", text);
+++					write(fd,text, strlen(text));
+++					if(close(fd)==-1) printf("something went wrong\n");
+++				}
+++			}
+++		}
+++	}
+++}
+++
+++void whoami(){
+++    printf("%s\n", current_user.username);
++ }
++\ No newline at end of file
++-- 
++2.43.0
++
+diff --git a/patch/0025-Minor-patch.patch b/patch/0025-Minor-patch.patch
+new file mode 100644
+index 0000000..14b6f92
+--- /dev/null
++++ b/patch/0025-Minor-patch.patch
+@@ -0,0 +1,90 @@
++From 596c8c9cf95524610782c8d942cb2d65360562a5 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 21:17:26 -0400
++Subject: [PATCH 25/50] Minor patch
++
++---
++ kernel/terminal/commands.c | 62 +++++++++++++++++++++++++++++++++++++-
++ 1 file changed, 61 insertions(+), 1 deletion(-)
++
++diff --git a/kernel/terminal/commands.c b/kernel/terminal/commands.c
++index a5dd61f..ef4c41d 100644
++--- a/kernel/terminal/commands.c
+++++ b/kernel/terminal/commands.c
++@@ -5,6 +5,9 @@
++ #include "commands.h"
++ #include "shell.h"
++ 
+++#include <stddef.h>
+++#include <dirent.h>
+++
++ int argc;
++ char **argv;
++ 
++@@ -59,4 +62,61 @@ void newfile(){
++ 
++ void whoami(){
++     printf("%s\n", current_user.username);
++-}
++\ No newline at end of file
+++}
+++
+++void cd( ){
+++	//char *relpath;		
+++	char abspath[CURPATH_LEN];
+++	DIR *dirp=NULL;	
+++	if(argc != 2) {
+++		printf("Bad usage. Try 'ls -l' and then 'cd dir'.\n");
+++		return;
+++	} else {
+++		int i=0;
+++		//int rel_size = 0;		
+++		memset(abspath, '\0', CURPATH_LEN);				
+++		if(argv[1][0] == '/') {
+++			i = get_mountpoint_id(argv[1]);		
+++			strcpy(abspath, argv[1]);
+++			//printf("abspath: %s\n", abspath);
+++			dirp=opendir(argv[1]);
+++		}
+++		else if(!strncmp(argv[1], "..", 2)) {
+++			printf(".. option %s\n", argv[1]);
+++			return;
+++		}
+++		else if(argv[1][0]=='.') {
+++			//printf(". option\n");			
+++			if(strlen(argv[1]) == 1) return;
+++			else printf("str_len: %d\n", strlen(argv[1]));
+++		}		
+++		else {			
+++			int abs_size = 0;			
+++			abs_size = strlen(current_user.cur_path);
+++			strcpy(abspath, current_user.cur_path);
+++			if(abspath[abs_size-1] == '/')
+++				strncat(abspath, argv[1], strlen(argv[1]));
+++			else {
+++				strncat(abspath, "/", strlen(argv[1]));
+++				strncat(abspath, argv[1], strlen(argv[1]));
+++			}	
+++			dirp=opendir(abspath);			
+++		}		
+++		if(dirp!=NULL){			
+++			closedir(dirp);
+++		}		
+++		//rel_size = strlen(argv[1]) - strlen(mountpoint_list[i].mountpoint);
+++		if(i == -1) {			
+++			printf("cd: %s: No such file or directory\n", argv[1]);
+++			return;
+++		}
+++		else {
+++			strcpy(current_user.cur_path, abspath);
+++		}
+++		/*if(rel_size >0){
+++			relpath = get_rel_path(i, argv[1]);
+++			free(relpath);
+++		}*/
+++	}
+++}
+++
++-- 
++2.43.0
++
+diff --git a/patch/0026-Minor-update-for-commands.patch b/patch/0026-Minor-update-for-commands.patch
+new file mode 100644
+index 0000000..ffb1307
+--- /dev/null
++++ b/patch/0026-Minor-update-for-commands.patch
+@@ -0,0 +1,43 @@
++From 86c66965d42ffaafee472951dd757dee0078e564 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 21:20:17 -0400
++Subject: [PATCH 26/50] Minor update for commands
++
++---
++ kernel/terminal/commands.c | 22 ++++++++++++++++++++++
++ 1 file changed, 22 insertions(+)
++
++diff --git a/kernel/terminal/commands.c b/kernel/terminal/commands.c
++index ef4c41d..1572f56 100644
++--- a/kernel/terminal/commands.c
+++++ b/kernel/terminal/commands.c
++@@ -120,3 +120,25 @@ void cd( ){
++ 	}
++ }
++ 
+++void more(){
+++	if(argc==1) 
+++		printf("Usage:\n\t more filename\nfor read a file\n");
+++	else {
+++		if(argc<3) {
+++			int i;
+++			char buf;
+++			//printf("File to open: %s\n", argv[1]);
+++			i = open(argv[1], O_RDONLY, 42);
+++			if(i>-1) {
+++				int j=0;		
+++				while(read(i, &buf, 1)!= (int) NULL) {
+++					putchar(buf);			
+++					j++;
+++				}	
+++				putchar('\n');			
+++				close(i);
+++			}		
+++		}
+++		else printf("too many arguments\n");
+++	}
+++}
++\ No newline at end of file
++-- 
++2.43.0
++
+diff --git a/patch/0027-Patch.patch b/patch/0027-Patch.patch
+new file mode 100644
+index 0000000..0147642
+--- /dev/null
++++ b/patch/0027-Patch.patch
+@@ -0,0 +1,43 @@
++From f3c49c2a2a1cfbc3c50863ce6f7cb99eb53d5f61 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 21:26:39 -0400
++Subject: [PATCH 27/50] Patch
++
++---
++ kernel/arch/x86-pc/startup.c | 6 ++----
++ 1 file changed, 2 insertions(+), 4 deletions(-)
++
++diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.c
++index a9cb466..f1c4ffb 100644
++--- a/kernel/arch/x86-pc/startup.c
+++++ b/kernel/arch/x86-pc/startup.c
++@@ -20,6 +20,7 @@
++ #include <threading/scheduler.h>
++ #include <io/console.h>
++ #include <colorforth/colorforth.h>
+++#include <io/video.h>
++ 
++ 
++ /**
++@@ -27,7 +28,7 @@
++  */
++ void roentgenium_main(uint32_t magic, uint32_t address)
++ {
++-    char buff[] = "Hello Kernel!!!";
+++    _kcolor(WHITE);
++     uint16_t retval;
++     multiboot_info_t *mbi;
++     mbi = (multiboot_info_t *)address;
++@@ -83,9 +84,6 @@ void roentgenium_main(uint32_t magic, uint32_t address)
++     // Console
++     console_setup(&cons, vga_display_character);
++ 
++-    uint16_t buffer_len = sizeof(buff) - 1; // -1 to exclude the null terminator
++-
++-    // Call console_write to write the buff to the console
++ 
++ 
++     // colorForth
++-- 
++2.43.0
++
+diff --git a/patch/0028-Patch.patch b/patch/0028-Patch.patch
+new file mode 100644
+index 0000000..adb3b50
+--- /dev/null
++++ b/patch/0028-Patch.patch
+@@ -0,0 +1,24 @@
++From d1dcb862579e922a9767278ba6f9c919fa615a8f Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 21:28:57 -0400
++Subject: [PATCH 28/50] Patch
++
++---
++ kernel/Makefile | 1 +
++ 1 file changed, 1 insertion(+)
++
++diff --git a/kernel/Makefile b/kernel/Makefile
++index 376d27f..dd80f3d 100644
++--- a/kernel/Makefile
+++++ b/kernel/Makefile
++@@ -35,6 +35,7 @@ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
++ 	colorforth/editor.o                     \
++ 	colorforth/compiler.o                   \
++ 	arch/x86-pc/startup.o                   \
+++	io/video.o
++ 
++ KERNEL          = $(BUILD_PATH)/roentgenium.elf
++ MULTIBOOT_IMAGE	= $(BUILD_PATH)/heisen.iso
++-- 
++2.43.0
++
+diff --git a/patch/0029-Patch-for-make-file.patch b/patch/0029-Patch-for-make-file.patch
+new file mode 100644
+index 0000000..413501e
+--- /dev/null
++++ b/patch/0029-Patch-for-make-file.patch
+@@ -0,0 +1,32 @@
++From 512bff5421d664712630dd54933726c7c5ba4782 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 21:30:19 -0400
++Subject: [PATCH 29/50] Patch for make file
++
++---
++ kernel/Makefile | 2 +-
++ 1 file changed, 1 insertion(+), 1 deletion(-)
++
++diff --git a/kernel/Makefile b/kernel/Makefile
++index dd80f3d..3244769 100644
++--- a/kernel/Makefile
+++++ b/kernel/Makefile
++@@ -14,6 +14,7 @@ INITRD_PATH     = arch/x86-pc/bootstrap/iso
++ 
++ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
++ 	arch/x86-pc/io/vga.o                    \
+++	io/video.o								\
++ 	arch/x86/mmu/gdt.o                      \
++ 	arch/x86/interrupts/idt.o               \
++ 	arch/x86/interrupts/isr-stubs.o         \
++@@ -35,7 +36,6 @@ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
++ 	colorforth/editor.o                     \
++ 	colorforth/compiler.o                   \
++ 	arch/x86-pc/startup.o                   \
++-	io/video.o
++ 
++ KERNEL          = $(BUILD_PATH)/roentgenium.elf
++ MULTIBOOT_IMAGE	= $(BUILD_PATH)/heisen.iso
++-- 
++2.43.0
++
+diff --git a/patch/0030-Minor-update-for-patch.patch b/patch/0030-Minor-update-for-patch.patch
+new file mode 100644
+index 0000000..26b8795
+--- /dev/null
++++ b/patch/0030-Minor-update-for-patch.patch
+@@ -0,0 +1,83 @@
++From c7e4e1c2b951b6e43979b71c08c5ab74bc76fde1 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 21:33:58 -0400
++Subject: [PATCH 30/50] Minor update for patch
++
++---
++ kernel/arch/x86-pc/io/video.h | 50 +++++++++++++++++++++++++++++++++++
++ kernel/io/video.c             |  1 +
++ 2 files changed, 51 insertions(+)
++ create mode 100644 kernel/arch/x86-pc/io/video.h
++
++diff --git a/kernel/arch/x86-pc/io/video.h b/kernel/arch/x86-pc/io/video.h
++new file mode 100644
++index 0000000..ff981d0
++--- /dev/null
+++++ b/kernel/arch/x86-pc/io/video.h
++@@ -0,0 +1,50 @@
+++#ifndef _VIDEO_H_HEISEN
+++#define _VIDEO_H_HEISEN
+++
+++#define _SCR_W 80
+++#define _SCR_H 25
+++
+++#define BLACK 0
+++#define BLUE 1
+++#define GREEN 2
+++#define CYAN 3
+++#define RED 4
+++#define MAGENTA 5
+++#define BROWN 6
+++#define GREY 7
+++#define DARK_GREY 8
+++#define BRIGHT_BLUE 9
+++#define BRIGHT_GREEN 10
+++#define BRIGHT_CYAN 11
+++#define BRIGHT_RED 12
+++#define BRIGHT_MAGENTA 13
+++#define YELLOW 14
+++#define WHITE 15
+++
+++
+++#define OK_POS 70
+++
+++void _kntos(char*, unsigned int, int);
+++void _kputc(char);
+++void _kcolor(char);
+++void _kputs(char *);
+++void _kbackspace();
+++void _kesetcursor(unsigned int, unsigned int);
+++void _kgoto(int, int);
+++void _ksetcursauto();
+++void _kshiftAll();
+++void _ktab();
+++void _kclear();
+++void _knewline();
+++void _kminline();
+++void _kprintOK();
+++int _kgetline();
+++int _kgetcolumn();
+++void _krotate_buffer();
+++void _kscrollup();
+++void _kscrolldown();
+++void _kntohex (char *, unsigned int);
+++void _knntos(char *, int, int );
+++unsigned short shell_mess_col, shell_mess_line;
+++
+++#endif /* _VIDEO_H_HEISEN */
++\ No newline at end of file
++diff --git a/kernel/io/video.c b/kernel/io/video.c
++index 0bc1339..7411551 100644
++--- a/kernel/io/video.c
+++++ b/kernel/io/video.c
++@@ -1,6 +1,7 @@
++ #include <io/video.h>
++ #include <stddef.h>
++ #include <string.h>
+++#include <arch/x86-pc/io/video.h>
++ 
++ char *VIDEO_MEM = (char*) 0xb8000,
++      *VIDEO_PTR = (char*) 0xb8000,
++-- 
++2.43.0
++
+diff --git a/patch/0031-Patch.patch b/patch/0031-Patch.patch
+new file mode 100644
+index 0000000..71bca14
+--- /dev/null
++++ b/patch/0031-Patch.patch
+@@ -0,0 +1,21 @@
++From d96e3934a7d4cc380a653791a8017ed94241beb7 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 21:34:51 -0400
++Subject: [PATCH 31/50] Patch
++
++---
++ kernel/io/video.c | 1 -
++ 1 file changed, 1 deletion(-)
++
++diff --git a/kernel/io/video.c b/kernel/io/video.c
++index 7411551..b5513c1 100644
++--- a/kernel/io/video.c
+++++ b/kernel/io/video.c
++@@ -1,4 +1,3 @@
++-#include <io/video.h>
++ #include <stddef.h>
++ #include <string.h>
++ #include <arch/x86-pc/io/video.h>
++-- 
++2.43.0
++
+diff --git a/patch/0032-Patch.patch b/patch/0032-Patch.patch
+new file mode 100644
+index 0000000..c955f34
+--- /dev/null
++++ b/patch/0032-Patch.patch
+@@ -0,0 +1,225 @@
++From 6f2f986a453341141541b01b48bc91c06e4b19b0 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 21:42:07 -0400
++Subject: [PATCH 32/50] Patch
++
++---
++ kernel/arch/x86-pc/lib/ctype.h  | 18 ++++++++++
++ kernel/arch/x86-pc/lib/stdarg.h | 20 +++++++++++
++ kernel/arch/x86-pc/lib/stddef.h | 29 ++++++++++++++++
++ kernel/arch/x86-pc/lib/stdio.h  | 25 ++++++++++++++
++ kernel/arch/x86-pc/lib/string.h | 61 +++++++++++++++++++++++++++++++++
++ kernel/io/video.c               |  6 ++--
++ 6 files changed, 157 insertions(+), 2 deletions(-)
++ create mode 100644 kernel/arch/x86-pc/lib/ctype.h
++ create mode 100644 kernel/arch/x86-pc/lib/stdarg.h
++ create mode 100644 kernel/arch/x86-pc/lib/stddef.h
++ create mode 100644 kernel/arch/x86-pc/lib/stdio.h
++ create mode 100644 kernel/arch/x86-pc/lib/string.h
++
++diff --git a/kernel/arch/x86-pc/lib/ctype.h b/kernel/arch/x86-pc/lib/ctype.h
++new file mode 100644
++index 0000000..5c7d432
++--- /dev/null
+++++ b/kernel/arch/x86-pc/lib/ctype.h
++@@ -0,0 +1,18 @@
+++#ifndef __CTYPE_H
+++#define __CTYPE_H
+++
+++#define OFFSET 32 /* Distance from a uppercase character to the correspondent lowercase in ASCII */
+++
+++int isdigit(int c);
+++int isalpha(int c);
+++int isalnum(int c);
+++int isxdigit(int c);
+++int islower(int c);
+++int isupper(int c);
+++int tolower(int c);
+++int toupper(int c);
+++int isspace(int c);
+++int iscntrl(int c);
+++int ispunct(int c);
+++
+++#endif
++\ No newline at end of file
++diff --git a/kernel/arch/x86-pc/lib/stdarg.h b/kernel/arch/x86-pc/lib/stdarg.h
++new file mode 100644
++index 0000000..1530876
++--- /dev/null
+++++ b/kernel/arch/x86-pc/lib/stdarg.h
++@@ -0,0 +1,20 @@
+++#ifndef LIBCSTDARGH
+++#define	LIBCSTDARGH
+++
+++typedef char *va_list;
+++
+++#define	STACKITEM	int
+++
+++#define	VA_SIZE(TYPE)					\
+++	((sizeof(TYPE) + sizeof(STACKITEM) - 1)	\
+++		& ~(sizeof(STACKITEM) - 1))
+++
+++#define	va_start(AP, LASTARG)	\
+++	(AP=((va_list)&(LASTARG) + VA_SIZE(LASTARG)))
+++
+++#define va_end(AP)
+++
+++#define va_arg(AP, TYPE)	\
+++	(AP += VA_SIZE(TYPE), *((TYPE *)(AP - VA_SIZE(TYPE))))
+++
+++#endif
++\ No newline at end of file
++diff --git a/kernel/arch/x86-pc/lib/stddef.h b/kernel/arch/x86-pc/lib/stddef.h
++new file mode 100644
++index 0000000..92bbba9
++--- /dev/null
+++++ b/kernel/arch/x86-pc/lib/stddef.h
++@@ -0,0 +1,29 @@
+++#ifndef __STDDEF__H
+++#define __STDDEF__H
+++
+++#ifndef NULL
+++#define NULL ((void*)0)
+++#endif
+++
+++#ifndef EOF
+++#define EOF (-1)
+++#endif
+++
+++#define BUFSIZ 512
+++
+++#define KERNEL_SIZE 0x200
+++
+++#ifndef TRUE 
+++#define TRUE 1
+++#endif
+++
+++#ifndef FALSE
+++#define FALSE 0 
+++#endif
+++
+++typedef unsigned int size_t;
+++typedef unsigned long long qword;
+++typedef unsigned short int ushort;
+++typedef unsigned char byte;
+++
+++#endif
++\ No newline at end of file
++diff --git a/kernel/arch/x86-pc/lib/stdio.h b/kernel/arch/x86-pc/lib/stdio.h
++new file mode 100644
++index 0000000..eab2d99
++--- /dev/null
+++++ b/kernel/arch/x86-pc/lib/stdio.h
++@@ -0,0 +1,25 @@
+++
+++
+++#ifndef _STDIO_H
+++#define _STDIO_H
+++
+++#include <stdarg.h>
+++
+++#define MAX_DIGITS_IN_INTEGER 11
+++
+++#ifndef EOF
+++#define EOF (-1)
+++#endif
+++
+++void putchar (char ch);
+++int atoi (const char *);
+++int printf (const char *, ...);
+++int puts (char *s);
+++int scanf (const char *, ...);
+++char *gets (char *);
+++int getchar (void);
+++
+++int vsprintf(char *buf, const char *fmt, va_list args);
+++int sprintf(char *buf, const char *fmt, ...);
+++
+++#endif
++\ No newline at end of file
++diff --git a/kernel/arch/x86-pc/lib/string.h b/kernel/arch/x86-pc/lib/string.h
++new file mode 100644
++index 0000000..7a8317c
++--- /dev/null
+++++ b/kernel/arch/x86-pc/lib/string.h
++@@ -0,0 +1,61 @@
+++
+++#ifndef STRING_H
+++#define STRING_H
+++
+++#include <stddef.h>
+++#include <sys/types.h>
+++
+++char *strncpy(char *dest, const char *source, size_t n);
+++int strncmp(const char *s1, const char *s2, size_t n);
+++int stricmp(const char *s1, const char *s2);
+++int strnicmp(const char *s1, const char *s2, size_t n);
+++char *strchr(const char *s, int ch);
+++char *strrchr(const char *s, int ch);
+++char *strstr(const char *s1, const char *s2);
+++size_t strspn(const char *string, const char *control);
+++size_t strcspn(const char *string, const char *control);
+++char *strpbrk(const char *string, const char *control);
+++
+++int strcasecmp(const char *s1, const char *s2);
+++int strncasecmp(const char *s1, const char *s2, size_t n);
+++
+++int strcoll(const char *s1, const char *s2);
+++
+++char *strdup(const char *s);
+++
+++char *strlwr(char *s);
+++char *strupr(char *s);
+++
+++char *strncat(char *s1, const char *s2, size_t n);
+++char *strnset(char *s, int c, size_t n);
+++char *strset(char *s, int c);
+++char *strrev(char *s);
+++char *strtok(char *string, const char *control);
+++char *strtok_r(char *string, const char *control, char **lasts);
+++
+++char *strerror(int errnum);
+++char *strsignal(int signum);
+++
+++void *memmove(void *dst, const void *src, size_t n);
+++void *memchr(const void *buf, int ch, size_t n);
+++
+++void *memccpy(void *dst, const void *src, int c, size_t n);
+++int memicmp(const void *buf1, const void *buf2, size_t n);
+++
+++// Intrinsic functions
+++
+++void *memcpy(void *, const void *, size_t);
+++int memcmp(const void *, const void *, size_t);
+++void *memset(void *, int, size_t);
+++
+++char *strcpy(char *, const char *);
+++char *strcat(char *, const char *);
+++int strcmp(const char *, const char *);
+++size_t strlen(const char *);
+++
+++// Written by shainer
+++
+++char *strtok (char *, const char *);
+++int _kstrncmp (const char *, const char *, int);
+++
+++#endif
++\ No newline at end of file
++diff --git a/kernel/io/video.c b/kernel/io/video.c
++index b5513c1..d8fbb4e 100644
++--- a/kernel/io/video.c
+++++ b/kernel/io/video.c
++@@ -1,6 +1,8 @@
++-#include <stddef.h>
++-#include <string.h>
+++#include <arch/x86-pc/lib/stdio.h>
+++#include <arch/x86-pc/lib/string.h>
++ #include <arch/x86-pc/io/video.h>
+++#include <arch/x86-pc/lib/stdarg.h>
+++#include <arch/x86-pc/lib/stddef.h>
++ 
++ char *VIDEO_MEM = (char*) 0xb8000,
++      *VIDEO_PTR = (char*) 0xb8000,
++-- 
++2.43.0
++
+diff --git a/patch/0033-Patch.patch b/patch/0033-Patch.patch
+new file mode 100644
+index 0000000..9fd9175
+--- /dev/null
++++ b/patch/0033-Patch.patch
+@@ -0,0 +1,40 @@
++From ab98c1f8cbdac778cf2a2d915abb3d1e9ca861a1 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 21:44:32 -0400
++Subject: [PATCH 33/50] Patch
++
++---
++ kernel/arch/x86-pc/lib/stdio.h  | 2 +-
++ kernel/arch/x86-pc/lib/string.h | 3 +--
++ 2 files changed, 2 insertions(+), 3 deletions(-)
++
++diff --git a/kernel/arch/x86-pc/lib/stdio.h b/kernel/arch/x86-pc/lib/stdio.h
++index eab2d99..603c8d6 100644
++--- a/kernel/arch/x86-pc/lib/stdio.h
+++++ b/kernel/arch/x86-pc/lib/stdio.h
++@@ -3,7 +3,7 @@
++ #ifndef _STDIO_H
++ #define _STDIO_H
++ 
++-#include <stdarg.h>
+++#include "stdarg.h"
++ 
++ #define MAX_DIGITS_IN_INTEGER 11
++ 
++diff --git a/kernel/arch/x86-pc/lib/string.h b/kernel/arch/x86-pc/lib/string.h
++index 7a8317c..34f2c32 100644
++--- a/kernel/arch/x86-pc/lib/string.h
+++++ b/kernel/arch/x86-pc/lib/string.h
++@@ -2,8 +2,7 @@
++ #ifndef STRING_H
++ #define STRING_H
++ 
++-#include <stddef.h>
++-#include <sys/types.h>
+++#include "stddef.h"
++ 
++ char *strncpy(char *dest, const char *source, size_t n);
++ int strncmp(const char *s1, const char *s2, size_t n);
++-- 
++2.43.0
++
+diff --git a/patch/0034-Patch.patch b/patch/0034-Patch.patch
+new file mode 100644
+index 0000000..10c2882
+--- /dev/null
++++ b/patch/0034-Patch.patch
+@@ -0,0 +1,27 @@
++From 879851a59ee15771a0515ea098d0335104446a88 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 21:47:19 -0400
++Subject: [PATCH 34/50] Patch
++
++---
++ kernel/io/video.c | 4 +---
++ 1 file changed, 1 insertion(+), 3 deletions(-)
++
++diff --git a/kernel/io/video.c b/kernel/io/video.c
++index d8fbb4e..f38bec3 100644
++--- a/kernel/io/video.c
+++++ b/kernel/io/video.c
++@@ -4,9 +4,7 @@
++ #include <arch/x86-pc/lib/stdarg.h>
++ #include <arch/x86-pc/lib/stddef.h>
++ 
++-char *VIDEO_MEM = (char*) 0xb8000,
++-     *VIDEO_PTR = (char*) 0xb8000,
++-    VIDEO_CLR = 0x7;
+++
++ 
++ // Scrolling buffer 
++ char upbuffer[_SCR_H][_SCR_W*2];
++-- 
++2.43.0
++
+diff --git a/patch/0035-Minor-patch.patch b/patch/0035-Minor-patch.patch
+new file mode 100644
+index 0000000..60c0e4c
+--- /dev/null
++++ b/patch/0035-Minor-patch.patch
+@@ -0,0 +1,30 @@
++From df072dba0bfc8b1db8960670b9dc29818bc402a8 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 21:48:24 -0400
++Subject: [PATCH 35/50] Minor patch
++
++---
++ kernel/io/video.c | 7 -------
++ 1 file changed, 7 deletions(-)
++
++diff --git a/kernel/io/video.c b/kernel/io/video.c
++index f38bec3..44cb755 100644
++--- a/kernel/io/video.c
+++++ b/kernel/io/video.c
++@@ -6,13 +6,6 @@
++ 
++ 
++ 
++-// Scrolling buffer 
++-char upbuffer[_SCR_H][_SCR_W*2];
++-char downbuffer[_SCR_H][_SCR_W*2];
++-int is_scrolled=0;
++-int is_shifted_once=0;
++-unsigned int last_tab=0;
++-int last_x=0, last_y=0;
++ 
++ 
++ char *VIDEO_MEM = (char*) 0xb8000,
++-- 
++2.43.0
++
+diff --git a/patch/0036-Patch.patch b/patch/0036-Patch.patch
+new file mode 100644
+index 0000000..08340ce
+--- /dev/null
++++ b/patch/0036-Patch.patch
+@@ -0,0 +1,25 @@
++From 5b212b3d9606f4e74dd24bf3d32b0da57deb9804 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 21:49:42 -0400
++Subject: [PATCH 36/50] Patch
++
++---
++ kernel/arch/x86-pc/startup.c | 2 +-
++ 1 file changed, 1 insertion(+), 1 deletion(-)
++
++diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.c
++index f1c4ffb..22b7f8d 100644
++--- a/kernel/arch/x86-pc/startup.c
+++++ b/kernel/arch/x86-pc/startup.c
++@@ -20,7 +20,7 @@
++ #include <threading/scheduler.h>
++ #include <io/console.h>
++ #include <colorforth/colorforth.h>
++-#include <io/video.h>
+++#include <arch/x86-pc/io/video.h>
++ 
++ 
++ /**
++-- 
++2.43.0
++
+diff --git a/patch/0037-Patch.patch b/patch/0037-Patch.patch
+new file mode 100644
+index 0000000..7b9b793
+--- /dev/null
++++ b/patch/0037-Patch.patch
+@@ -0,0 +1,24 @@
++From e6da8891180caa858a2588c12db11b23bd920bfd Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 21:50:55 -0400
++Subject: [PATCH 37/50] Patch
++
++---
++ kernel/Makefile | 1 -
++ 1 file changed, 1 deletion(-)
++
++diff --git a/kernel/Makefile b/kernel/Makefile
++index 3244769..376d27f 100644
++--- a/kernel/Makefile
+++++ b/kernel/Makefile
++@@ -14,7 +14,6 @@ INITRD_PATH     = arch/x86-pc/bootstrap/iso
++ 
++ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
++ 	arch/x86-pc/io/vga.o                    \
++-	io/video.o								\
++ 	arch/x86/mmu/gdt.o                      \
++ 	arch/x86/interrupts/idt.o               \
++ 	arch/x86/interrupts/isr-stubs.o         \
++-- 
++2.43.0
++
+diff --git a/patch/0038-Patch.patch b/patch/0038-Patch.patch
+new file mode 100644
+index 0000000..aeb7eb7
+--- /dev/null
++++ b/patch/0038-Patch.patch
+@@ -0,0 +1,26 @@
++From 7ba2d1db69db66b41b3fb125cc97d1b7c17e664a Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 21:52:35 -0400
++Subject: [PATCH 38/50] Patch
++
++---
++ kernel/arch/x86-pc/io/video.h | 2 ++
++ 1 file changed, 2 insertions(+)
++
++diff --git a/kernel/arch/x86-pc/io/video.h b/kernel/arch/x86-pc/io/video.h
++index ff981d0..2bd34d2 100644
++--- a/kernel/arch/x86-pc/io/video.h
+++++ b/kernel/arch/x86-pc/io/video.h
++@@ -45,6 +45,8 @@ void _kscrollup();
++ void _kscrolldown();
++ void _kntohex (char *, unsigned int);
++ void _knntos(char *, int, int );
+++void _kcolor(char color);
+++
++ unsigned short shell_mess_col, shell_mess_line;
++ 
++ #endif /* _VIDEO_H_HEISEN */
++\ No newline at end of file
++-- 
++2.43.0
++
+diff --git a/patch/0039-Patch.patch b/patch/0039-Patch.patch
+new file mode 100644
+index 0000000..26b12df
+--- /dev/null
++++ b/patch/0039-Patch.patch
+@@ -0,0 +1,24 @@
++From 3ffdec3e0e2be2f2447420c8f332b6ddc3c39fa1 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 21:53:58 -0400
++Subject: [PATCH 39/50] Patch
++
++---
++ kernel/arch/x86-pc/startup.c | 1 +
++ 1 file changed, 1 insertion(+)
++
++diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.c
++index 22b7f8d..e1e2ba3 100644
++--- a/kernel/arch/x86-pc/startup.c
+++++ b/kernel/arch/x86-pc/startup.c
++@@ -22,6 +22,7 @@
++ #include <colorforth/colorforth.h>
++ #include <arch/x86-pc/io/video.h>
++ 
+++void _kcolor(char color);
++ 
++ /**
++  * The kernel entry point. All starts from here!
++-- 
++2.43.0
++
+diff --git a/patch/0040-Patch.patch b/patch/0040-Patch.patch
+new file mode 100644
+index 0000000..06fe02e
+--- /dev/null
++++ b/patch/0040-Patch.patch
+@@ -0,0 +1,38 @@
++From 85793c209431e4092fdc585cca41c2c2f9cecd86 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 21:56:23 -0400
++Subject: [PATCH 40/50] Patch
++
++---
++ kernel/arch/x86-pc/io/video.h | 2 +-
++ kernel/arch/x86-pc/startup.c  | 1 -
++ 2 files changed, 1 insertion(+), 2 deletions(-)
++
++diff --git a/kernel/arch/x86-pc/io/video.h b/kernel/arch/x86-pc/io/video.h
++index 2bd34d2..6d7ba2a 100644
++--- a/kernel/arch/x86-pc/io/video.h
+++++ b/kernel/arch/x86-pc/io/video.h
++@@ -45,7 +45,7 @@ void _kscrollup();
++ void _kscrolldown();
++ void _kntohex (char *, unsigned int);
++ void _knntos(char *, int, int );
++-void _kcolor(char color);
+++extern void _kcolor(char color);
++ 
++ unsigned short shell_mess_col, shell_mess_line;
++ 
++diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.c
++index e1e2ba3..22b7f8d 100644
++--- a/kernel/arch/x86-pc/startup.c
+++++ b/kernel/arch/x86-pc/startup.c
++@@ -22,7 +22,6 @@
++ #include <colorforth/colorforth.h>
++ #include <arch/x86-pc/io/video.h>
++ 
++-void _kcolor(char color);
++ 
++ /**
++  * The kernel entry point. All starts from here!
++-- 
++2.43.0
++
+diff --git a/patch/0041-Patch.patch b/patch/0041-Patch.patch
+new file mode 100644
+index 0000000..070477f
+--- /dev/null
++++ b/patch/0041-Patch.patch
+@@ -0,0 +1,25 @@
++From d153efaee3d4e3d0e41dfa44051a1ee347b6c469 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 21:58:01 -0400
++Subject: [PATCH 41/50] Patch
++
++---
++ kernel/Makefile | 2 ++
++ 1 file changed, 2 insertions(+)
++
++diff --git a/kernel/Makefile b/kernel/Makefile
++index 376d27f..d065f55 100644
++--- a/kernel/Makefile
+++++ b/kernel/Makefile
++@@ -35,6 +35,8 @@ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
++ 	colorforth/editor.o                     \
++ 	colorforth/compiler.o                   \
++ 	arch/x86-pc/startup.o                   \
+++	io/video.o								\
+++
++ 
++ KERNEL          = $(BUILD_PATH)/roentgenium.elf
++ MULTIBOOT_IMAGE	= $(BUILD_PATH)/heisen.iso
++-- 
++2.43.0
++
+diff --git a/patch/0042-Patch.patch b/patch/0042-Patch.patch
+new file mode 100644
+index 0000000..e8e4b24
+--- /dev/null
++++ b/patch/0042-Patch.patch
+@@ -0,0 +1,25 @@
++From c79caf1500b531b08b538030ea71f23d0dd63c19 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 21:59:20 -0400
++Subject: [PATCH 42/50] Patch
++
++---
++ include/io/video.h | 2 +-
++ 1 file changed, 1 insertion(+), 1 deletion(-)
++
++diff --git a/include/io/video.h b/include/io/video.h
++index e8f2d91..b840dd6 100644
++--- a/include/io/video.h
+++++ b/include/io/video.h
++@@ -45,6 +45,6 @@ void _kscrollup();
++ void _kscrolldown();
++ void _kntohex (char *, unsigned int);
++ void _knntos(char *, int, int );
++-unsigned short shell_mess_col, shell_mess_line;
+++// unsigned short shell_mess_col, shell_mess_line;
++ 
++ #endif // 
++\ No newline at end of file
++-- 
++2.43.0
++
+diff --git a/patch/0043-Patch.patch b/patch/0043-Patch.patch
+new file mode 100644
+index 0000000..3acddac
+--- /dev/null
++++ b/patch/0043-Patch.patch
+@@ -0,0 +1,25 @@
++From 1746b741f7cfd1b2098b3e30e13594d4b2b5b1fd Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 22:00:02 -0400
++Subject: [PATCH 43/50] Patch
++
++---
++ src/include/io/video.h | 2 +-
++ 1 file changed, 1 insertion(+), 1 deletion(-)
++
++diff --git a/src/include/io/video.h b/src/include/io/video.h
++index fe1c643..11a9b41 100644
++--- a/src/include/io/video.h
+++++ b/src/include/io/video.h
++@@ -45,6 +45,6 @@ void _kscrollup();
++ void _kscrolldown();
++ void _kntohex (char *, unsigned int);
++ void _knntos(char *, int, int );
++-unsigned short shell_mess_col, shell_mess_line;
+++// unsigned short shell_mess_col, shell_mess_line;
++ 
++ #endif /* _VIDEO_H */
++\ No newline at end of file
++-- 
++2.43.0
++
+diff --git a/patch/0044-Patch.patch b/patch/0044-Patch.patch
+new file mode 100644
+index 0000000..839e5c1
+--- /dev/null
++++ b/patch/0044-Patch.patch
+@@ -0,0 +1,24 @@
++From f6e5006a69429343d52d435a5c7629024727e51f Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 22:01:56 -0400
++Subject: [PATCH 44/50] Patch
++
++---
++ kernel/Makefile | 1 -
++ 1 file changed, 1 deletion(-)
++
++diff --git a/kernel/Makefile b/kernel/Makefile
++index d065f55..f121eef 100644
++--- a/kernel/Makefile
+++++ b/kernel/Makefile
++@@ -35,7 +35,6 @@ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
++ 	colorforth/editor.o                     \
++ 	colorforth/compiler.o                   \
++ 	arch/x86-pc/startup.o                   \
++-	io/video.o								\
++ 
++ 
++ KERNEL          = $(BUILD_PATH)/roentgenium.elf
++-- 
++2.43.0
++
+diff --git a/patch/0045-Patch-minor.patch b/patch/0045-Patch-minor.patch
+new file mode 100644
+index 0000000..aef765c
+--- /dev/null
++++ b/patch/0045-Patch-minor.patch
+@@ -0,0 +1,38 @@
++From d829e6175b3a18d48451e2583da11f0ab69af1dd Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 22:04:32 -0400
++Subject: [PATCH 45/50] Patch minor
++
++---
++ kernel/Makefile               | 1 +
++ kernel/arch/x86-pc/io/video.h | 2 +-
++ 2 files changed, 2 insertions(+), 1 deletion(-)
++
++diff --git a/kernel/Makefile b/kernel/Makefile
++index f121eef..d065f55 100644
++--- a/kernel/Makefile
+++++ b/kernel/Makefile
++@@ -35,6 +35,7 @@ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
++ 	colorforth/editor.o                     \
++ 	colorforth/compiler.o                   \
++ 	arch/x86-pc/startup.o                   \
+++	io/video.o								\
++ 
++ 
++ KERNEL          = $(BUILD_PATH)/roentgenium.elf
++diff --git a/kernel/arch/x86-pc/io/video.h b/kernel/arch/x86-pc/io/video.h
++index 6d7ba2a..7faa53f 100644
++--- a/kernel/arch/x86-pc/io/video.h
+++++ b/kernel/arch/x86-pc/io/video.h
++@@ -47,6 +47,6 @@ void _kntohex (char *, unsigned int);
++ void _knntos(char *, int, int );
++ extern void _kcolor(char color);
++ 
++-unsigned short shell_mess_col, shell_mess_line;
+++// unsigned short shell_mess_col, shell_mess_line;
++ 
++ #endif /* _VIDEO_H_HEISEN */
++\ No newline at end of file
++-- 
++2.43.0
++
+diff --git a/patch/0046-Patch-for-the-video-of-the-kernel.patch b/patch/0046-Patch-for-the-video-of-the-kernel.patch
+new file mode 100644
+index 0000000..77da5a6
+--- /dev/null
++++ b/patch/0046-Patch-for-the-video-of-the-kernel.patch
+@@ -0,0 +1,25 @@
++From 4e84e8d2f1c39770b3cf1e7f2e36462ef6fafb2f Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 22:06:39 -0400
++Subject: [PATCH 46/50] Patch for the video of the kernel
++
++---
++ kernel/arch/x86-pc/io/video.h | 2 +-
++ 1 file changed, 1 insertion(+), 1 deletion(-)
++
++diff --git a/kernel/arch/x86-pc/io/video.h b/kernel/arch/x86-pc/io/video.h
++index 7faa53f..6d7ba2a 100644
++--- a/kernel/arch/x86-pc/io/video.h
+++++ b/kernel/arch/x86-pc/io/video.h
++@@ -47,6 +47,6 @@ void _kntohex (char *, unsigned int);
++ void _knntos(char *, int, int );
++ extern void _kcolor(char color);
++ 
++-// unsigned short shell_mess_col, shell_mess_line;
+++unsigned short shell_mess_col, shell_mess_line;
++ 
++ #endif /* _VIDEO_H_HEISEN */
++\ No newline at end of file
++-- 
++2.43.0
++
+diff --git a/patch/0047-minor-patch.patch b/patch/0047-minor-patch.patch
+new file mode 100644
+index 0000000..22a41bf
+--- /dev/null
++++ b/patch/0047-minor-patch.patch
+@@ -0,0 +1,37 @@
++From 9694925ef3995edf5a2f63bf2b031de31e7ddad2 Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 22:08:28 -0400
++Subject: [PATCH 47/50] minor patch
++
++---
++ kernel/arch/x86-pc/io/video.h | 1 -
++ kernel/io/video.c             | 1 +
++ 2 files changed, 1 insertion(+), 1 deletion(-)
++
++diff --git a/kernel/arch/x86-pc/io/video.h b/kernel/arch/x86-pc/io/video.h
++index 6d7ba2a..08ff427 100644
++--- a/kernel/arch/x86-pc/io/video.h
+++++ b/kernel/arch/x86-pc/io/video.h
++@@ -47,6 +47,5 @@ void _kntohex (char *, unsigned int);
++ void _knntos(char *, int, int );
++ extern void _kcolor(char color);
++ 
++-unsigned short shell_mess_col, shell_mess_line;
++ 
++ #endif /* _VIDEO_H_HEISEN */
++\ No newline at end of file
++diff --git a/kernel/io/video.c b/kernel/io/video.c
++index 44cb755..96eaea2 100644
++--- a/kernel/io/video.c
+++++ b/kernel/io/video.c
++@@ -4,6 +4,7 @@
++ #include <arch/x86-pc/lib/stdarg.h>
++ #include <arch/x86-pc/lib/stddef.h>
++ 
+++unsigned short shell_mess_col, shell_mess_line;
++ 
++ 
++ 
++-- 
++2.43.0
++
+diff --git a/patch/0048-Conflict-resolved-for-the-merging.patch b/patch/0048-Conflict-resolved-for-the-merging.patch
+new file mode 100644
+index 0000000..d7df209
+--- /dev/null
++++ b/patch/0048-Conflict-resolved-for-the-merging.patch
+@@ -0,0 +1,25 @@
++From 3e58ce39a157c1660ec8e57a6e99911d5192d4ea Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 22:10:19 -0400
++Subject: [PATCH 48/50] Conflict resolved for the merging
++
++---
++ .github/workflows/test.yml | 2 +-
++ 1 file changed, 1 insertion(+), 1 deletion(-)
++
++diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
++index 3643d07..f44793f 100644
++--- a/.github/workflows/test.yml
+++++ b/.github/workflows/test.yml
++@@ -3,7 +3,7 @@ name: HiesenKernel
++ on:
++   push:
++     branches:
++-      - GUI  # Adjust branch name as needed
+++      - main  # Adjust branch name as needed
++ 
++ jobs:
++   build:
++-- 
++2.43.0
++
+diff --git a/patch/0049-Minor-patch.patch b/patch/0049-Minor-patch.patch
+new file mode 100644
+index 0000000..0bfb7df
+--- /dev/null
++++ b/patch/0049-Minor-patch.patch
+@@ -0,0 +1,91 @@
++From 17a3e2f4f486794486b16591a74f5ed828f0ba1f Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 22:54:19 -0400
++Subject: [PATCH 49/50] Minor patch
++
++---
++ kernel/arch/x86-pc/io/keyboard.c | 56 ++++++++++++++++++++++++++++++++
++ kernel/arch/x86-pc/io/keyboard.h |  3 ++
++ 2 files changed, 59 insertions(+)
++
++diff --git a/kernel/arch/x86-pc/io/keyboard.c b/kernel/arch/x86-pc/io/keyboard.c
++index b535b7d..9e36159 100644
++--- a/kernel/arch/x86-pc/io/keyboard.c
+++++ b/kernel/arch/x86-pc/io/keyboard.c
++@@ -152,3 +152,59 @@ void keyboard_setup(struct console *term)
++ 	terminal = term;
++ 	x86_irq_set_routine(IRQ_KEYBOARD, keyboard_interrupt_handler);
++ }
+++
+++char keyboard_special_caps_keys(char key){
+++	switch (key){
+++			case 'a':
+++				return "A";
+++			case 'b':
+++				return "B";
+++			case 'c':
+++				return "C";
+++			case 'd':
+++				return "D";
+++			case 'e':
+++				return "E";
+++			case 'f':
+++				return "F";
+++			case 'g':
+++				return "G";
+++			case 'h':
+++				return "H";
+++			case 'i':
+++				return "I";
+++			case 'j':
+++				return "J";
+++			case  'k':
+++				return "K";
+++			case 'l':
+++				return  "L";
+++			case 'm':
+++				return  "M";
+++			case  'n':
+++				return   "N";
+++			case 'o':
+++				return   "O";
+++			case 'p':
+++				return "P";
+++			case 'q':
+++				return "Q";
+++			case  'r':
+++				return "R";
+++			case  's':
+++				return "S";
+++			case  't':
+++				return  "T";
+++			case  'u':
+++				return  "U";
+++			case 'v':
+++				return "V";
+++			case  'w':
+++				return "W";
+++			case  'x' : return "X";
+++
+++			case 'y': return  "Y";
+++
+++			case 'z':return "Z";
+++		}
+++	}
++diff --git a/kernel/arch/x86-pc/io/keyboard.h b/kernel/arch/x86-pc/io/keyboard.h
++index 984279a..1599e55 100644
++--- a/kernel/arch/x86-pc/io/keyboard.h
+++++ b/kernel/arch/x86-pc/io/keyboard.h
++@@ -69,6 +69,9 @@
++ #define KEY_PAGE_UP	0x49
++ #define KEY_PAGE_DOWN	0x51
++ 
+++#define CAPS_LOCK 0x3A
+++
+++
++ #define BACKSPACE 14
++ #define ESCAPE 1
++ #define PAGEUP 73
++-- 
++2.43.0
++
+diff --git a/patch/0050-Patch.patch b/patch/0050-Patch.patch
+new file mode 100644
+index 0000000..0b2048c
+--- /dev/null
++++ b/patch/0050-Patch.patch
+@@ -0,0 +1,25 @@
++From 19d749ae5252809275bdfc96f0bbcc8be2f0029e Mon Sep 17 00:00:00 2001
++From: Heisenberg <alimirmohammad.1386@gmail.com>
++Date: Sun, 31 Mar 2024 22:56:08 -0400
++Subject: [PATCH 50/50] Patch
++
++---
++ .github/workflows/test.yml | 2 +-
++ 1 file changed, 1 insertion(+), 1 deletion(-)
++
++diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
++index ae00431..fd0cb37 100644
++--- a/.github/workflows/test.yml
+++++ b/.github/workflows/test.yml
++@@ -3,7 +3,7 @@ name: HiesenKernel
++ on:
++   push:
++     branches:
++-      - Log  # Adjust branch name as needed
+++      - main  # Adjust branch name as needed
++ 
++ jobs:
++   build:
++-- 
++2.43.0
++
+-- 
+2.43.0
+

@@ -1,0 +1,31 @@
+From 8235bd3f2568dad1235c129983c5a849f2c803fc Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 22:42:20 -0400
+Subject: [PATCH 173/493] Patch
+
+---
+ Makefile | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 7f065d0..681cc1e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -63,9 +63,11 @@ $(KRNLOBJDIR)/gdb/i386-stub.o: $(KRNLSRCDIR)/gdb/i386-stub.c
+ ####################################
+ #GAS assembly files
+ ####################################
+-# $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
+-# 	mkdir -p $(@D)
+-# 	nasm $(ASPARAMS) -f elf32 $< -o $@
++$(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
++	mkdir -p $(@D)
++	nasm  -f elf32 $< -o $@
++
++# $(ASPARAMS)
+ 
+ ####################################
+ #NASM assembly files
+-- 
+2.43.0
+

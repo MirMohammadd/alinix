@@ -1,0 +1,25 @@
+From 953e7d7658a529b04e6e66b32a15621f2cf07dbf Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 20:37:08 -0400
+Subject: [PATCH 124/493] Minor update for the kernel
+
+---
+ .github/workflows/test.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index fce69dc..37e01f2 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -8,7 +8,7 @@ on:
+ 
+ jobs:
+   build:
+-    runs-on: archlinux:latest     # Specify the operating system you're using
++    runs-on: arch-latest  # Specify the operating system you're using
+ 
+     steps:
+       - name: Checkout Repository
+-- 
+2.43.0
+

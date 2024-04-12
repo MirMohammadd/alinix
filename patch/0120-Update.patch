@@ -1,0 +1,27 @@
+From 19a250d7f2e060edc8fcd9204324bad646ff01fe Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 20:18:26 -0400
+Subject: [PATCH 120/493] Update
+
+---
+ .github/workflows/test.yml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index 7e248ac..d2f3bde 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -26,8 +26,8 @@ jobs:
+           # chmod +x ./i686-elf-tools.sh
+           # ./i686-elf-tools.sh
+           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+-          brew install git wget bzip2 xz unzip nasm python@3 xorriso mtools gcc@11
+-          python3 -m pip install -r kernel/requirements.txt
++          # brew install git wget bzip2 xz unzip nasm python@3 xorriso mtools gcc@11
++          # python3 -m pip install -r kernel/requirements.txt
+           # brew tap nativeos/i686-elf-toolchain
+           brew services start selenium-server
+           brew install i686-elf-binutils i686-elf-gcc i686-elf-newlib
+-- 
+2.43.0
+

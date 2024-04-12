@@ -1,0 +1,23 @@
+From ec7d1c6903701fa5bd8bcb1431554bd7bb35ab1d Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 4 Apr 2024 17:52:19 -0400
+Subject: [PATCH 248/493] Patch
+
+---
+ .github/workflows/tests.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
+index 675ab50..4fa7d43 100644
+--- a/.github/workflows/tests.yml
++++ b/.github/workflows/tests.yml
+@@ -32,5 +32,5 @@ jobs:
+ 
+     - name: Build project
+       run: |
+-        nasm -f elf32 -O0 kernelz/src/core/cpuhelper.asm -o kernelz/obj/core/cpuhelper.o
++        # nasm -f elf32 -O0 kernelz/src/core/cpuhelper.asm -o kernelz/obj/core/cpuhelper.o
+         make qemu # Replace 'make' with your build command
+-- 
+2.43.0
+

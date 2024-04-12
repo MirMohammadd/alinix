@@ -1,0 +1,33 @@
+From 0c99f34fbee957bd52013d95103947f01e9d9c0a Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 10 Apr 2024 17:39:56 -0400
+Subject: [PATCH 458/493] Update
+
+---
+ apps/welcome/welcome.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/apps/welcome/welcome.cpp b/apps/welcome/welcome.cpp
+index 956dd0c..46d4a3a 100644
+--- a/apps/welcome/welcome.cpp
++++ b/apps/welcome/welcome.cpp
+@@ -58,13 +58,13 @@ int main(){
+     // helpMoreOptions->MouseClick += HelpMoreOptionsCallback;
+ }
+ 
+-void exitButtonCallback(void *sender,MouseButtonArgs args){
++static void exitButtonCallback(void *sender,MouseButtonArgs args){
+     /**
+      * @brief This should be the sys exit call after user click on the close button
+     */
+     DoSyscall(SYSCALL_EXIT);
+ }
+ 
+-void rebootSystemAndSayGoodBye(void *sender,MouseButtonArgs args){
++static void rebootSystemAndSayGoodBye(void *sender,MouseButtonArgs args){
+     DoSyscall(SYSCALL_REBOOT);
+ }
+\ No newline at end of file
+-- 
+2.43.0
+

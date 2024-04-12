@@ -1,0 +1,32 @@
+From 292c0804979be8f2fc7f39cfacfb2a2626821b08 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 15:44:57 -0400
+Subject: [PATCH 063/493] Patch
+
+---
+ kernel/arch/x86-pc/gui/test.h | 0
+ kernel/arch/x86-pc/startup.c  | 4 +++-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
+ create mode 100644 kernel/arch/x86-pc/gui/test.h
+
+diff --git a/kernel/arch/x86-pc/gui/test.h b/kernel/arch/x86-pc/gui/test.h
+new file mode 100644
+index 0000000..e69de29
+diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.c
+index 93b97a7..3142c13 100644
+--- a/kernel/arch/x86-pc/startup.c
++++ b/kernel/arch/x86-pc/startup.c
+@@ -21,7 +21,9 @@
+ #include <io/console.h>
+ #include <colorforth/colorforth.h>
+ #include <arch/x86-pc/io/video.h>
+-#include <arch/x86-pc/gui/shared.hpp>
++#include <arch/x86-pc/gui/test.h>
++
++
+ /**
+  * The kernel entry point. All starts from here!
+  */
+-- 
+2.43.0
+

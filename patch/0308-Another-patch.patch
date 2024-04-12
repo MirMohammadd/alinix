@@ -1,0 +1,101 @@
+From 092fa0ef6ff44f6bbffab579a55cce37eee9dd46 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 23:19:42 -0400
+Subject: [PATCH 308/493] Another patch
+
+---
+ kernelz/src/bin/bootloader.s | 82 ------------------------------------
+ 1 file changed, 82 deletions(-)
+ delete mode 100644 kernelz/src/bin/bootloader.s
+
+diff --git a/kernelz/src/bin/bootloader.s b/kernelz/src/bin/bootloader.s
+deleted file mode 100644
+index b66ff8d..0000000
+--- a/kernelz/src/bin/bootloader.s
++++ /dev/null
+@@ -1,82 +0,0 @@
+-.set ALIGN,    1<<0             
+-.set MEMINFO,  1<<1             
+-.set FLAGS,    ALIGN | MEMINFO  
+-.set MAGIC,    0x1BADB002       
+-.set CHECKSUM, -(MAGIC + FLAGS) 
+-
+-.section .multiboot
+-	.align 4
+-	.long MAGIC
+-	.long FLAGS
+-	.long CHECKSUM
+-
+-.set KERNEL_VIRTUAL_BASE, 0xC0000000
+-.set KERNEL_PAGE_NUMBER, (KERNEL_VIRTUAL_BASE >> 22)
+-
+-.section .bootstrap_stack, "aw", @nobits
+-stack_bottom:
+-.skip 16384 
+-.global stack_top
+-stack_top:
+-
+-.section .data
+-.align 0x1000
+-.global BootPageDirectory
+-BootPageDirectory:
+-	.long 0x00000083
+-	
+-	.rept (KERNEL_PAGE_NUMBER - 1)
+-	.long 0
+-	.endr
+-	
+-	.long 0x00000083
+-
+-	.rept (1024 - KERNEL_PAGE_NUMBER - 1)
+-	.long 0
+-	.endr
+-
+-.global _kernel_virtual_base
+-_kernel_virtual_base:
+-	.long KERNEL_VIRTUAL_BASE
+-
+-.section .text
+-.align 4
+-.global _entrypoint
+-.type _entrypoint, @function
+-
+-_entrypoint:
+-	mov $(BootPageDirectory - KERNEL_VIRTUAL_BASE), %ecx
+-	mov %ecx, %cr3
+-
+-	mov %cr4, %ecx
+-	or $0x00000010, %ecx
+-	mov %ecx, %cr4
+-
+-	mov %cr0, %ecx
+-	or $0x80000001, %ecx
+-	mov %ecx, %cr0
+-
+-	lea 4f, %ecx
+-	jmp *%ecx
+-
+-4:
+-	movl $0, BootPageDirectory
+-	invlpg 0
+-
+-	movl $stack_top, %esp
+-	movl $0, %ebp
+-
+-	add $KERNEL_VIRTUAL_BASE, %ebx
+-
+-    call callConstructors
+-
+-	push $_kernel_base
+-	push $_kernel_end
+-    push %eax
+-    push %ebx
+-    call kernelMain
+-
+-_stop:
+-    cli
+-    hlt
+-    jmp _stop
+-- 
+2.43.0
+

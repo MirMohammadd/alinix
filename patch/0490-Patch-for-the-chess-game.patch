@@ -1,0 +1,55 @@
+From 8968273da8dd150bea244a9cc8edaa5c28c5eb46 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 20:01:09 -0400
+Subject: [PATCH 490/493] Patch for the chess game
+
+---
+ apps/chess/option.cpp |  3 ++-
+ apps/chess/piece.cpp  | 21 +++++++++++++++++++++
+ 2 files changed, 23 insertions(+), 1 deletion(-)
+ create mode 100644 apps/chess/piece.cpp
+
+diff --git a/apps/chess/option.cpp b/apps/chess/option.cpp
+index 810da12..b767c69 100644
+--- a/apps/chess/option.cpp
++++ b/apps/chess/option.cpp
+@@ -112,4 +112,5 @@ namespace LIBHeisenKernel{
+         }
+ 
+     };
+-};
+\ No newline at end of file
++};
++// TODO This file has incomplete code functions
+\ No newline at end of file
+diff --git a/apps/chess/piece.cpp b/apps/chess/piece.cpp
+new file mode 100644
+index 0000000..2cfe2e5
+--- /dev/null
++++ b/apps/chess/piece.cpp
+@@ -0,0 +1,21 @@
++#include "colour.h"
++#include "piece.h"
++
++namespace LIBHeisenKernel
++{
++    namespace engine
++    {
++        /**
++         * @brief Constants defined here 
++        */
++        const int PawnMake[ColourNb] = { WhitePawn256, BlackPawn256 };
++        const int PieceFrom12[12] = {
++            WhitePawn256,   BlackPawn256,
++            WhiteKnight256, BlackKnight256,
++            WhiteBishop256, BlackBishop256,
++            WhiteRook256,   BlackRook256,
++            WhiteQueen256,  BlackQueen256,
++            WhiteKing256,   BlackKing256,
++        };
++    };
++};
+\ No newline at end of file
+-- 
+2.43.0
+

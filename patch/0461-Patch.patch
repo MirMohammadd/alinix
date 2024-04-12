@@ -1,0 +1,53 @@
+From 39bfa3059a13bcb888ccc75365830ac3f95b7c2c Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 10 Apr 2024 21:34:09 -0400
+Subject: [PATCH 461/493] Patch
+
+---
+ apps/welcome/welcome.cpp | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/apps/welcome/welcome.cpp b/apps/welcome/welcome.cpp
+index 52a1ba3..aa179d0 100644
+--- a/apps/welcome/welcome.cpp
++++ b/apps/welcome/welcome.cpp
+@@ -32,7 +32,7 @@ static const char multi_line_string[] =
+ static void helpButtonCallback(void *sender,MouseButtonArgs args);
+ static void exitButtonCallback(void *sender,MouseButtonArgs args);
+ static void rebootSystemAndSayGoodBye(void *sender,MouseButtonArgs args);
+-
++static void moreTipsHelpMenu(void *sender,MouseButtonArgs args);
+ 
+ int main(){
+     GUI::SetDefaultFont();
+@@ -62,6 +62,13 @@ int main(){
+     exit->x = 1;
+     exit->y = 100;
+     exit->MouseClick += exitButtonCallback;
++
++    Button* moreOptions = new Button("More Options");
++    moreOptions->width = 150 - 2;
++    moreOptions->height = 47;
++    moreOptions->x = 1;
++    moreOptions->y = 150;
++    moreOptions->MouseClick += moreTipsHelpMenu;
+     // helpMoreOptions->MouseClick += HelpMoreOptionsCallback;
+ }
+ 
+@@ -77,4 +84,12 @@ static void rebootSystemAndSayGoodBye(void *sender,MouseButtonArgs args){
+      * @brief This should be the sys reboot call after user click on the close button
+     */
+     DoSyscall(SYSCALL_REBOOT);
++}
++
++
++static void moreTipsHelpMenu(void *sender,MouseButtonArgs args){
++    /**
++     * @brief This should be the sys reboot call after user click on the close button
++    */
++    DoSyscall(SYSCALL_EXIT);
+ }
+\ No newline at end of file
+-- 
+2.43.0
+

@@ -1,0 +1,32 @@
+From b168c40aad0b34017d7512a340eb9cefd172a1ad Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 20:01:47 -0400
+Subject: [PATCH 205/493] Testing updates
+
+---
+ Makefile | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 6075a49..96b661a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -78,11 +78,11 @@ $/(KRNLOBJDIR)/%.o: $(LOADERFILE)/%.s
+ 	mkdir -p $(@D)
+ 	nasm -f elf32 $< -o $@
+ 
+-	
+ 
+-$/(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
+-	mkdir -p $(@D)
+-	nasm -f elf32 -O0 $< -o $@ 2>/dev/null || true
++
++# $/(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
++# 	mkdir -p $(@D)
++# 	nasm -f elf32 -O0 $< -o $@ 2>/dev/null || true
+ 
+ 
+ 
+-- 
+2.43.0
+

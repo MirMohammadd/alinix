@@ -1,0 +1,71 @@
+From 1d72dfa2513fe0d33974e5093ebe94adbc678c3b Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 18:33:39 -0400
+Subject: [PATCH 109/493] Added welcome window
+
+---
+ apps/welcome/welcome.cpp | 51 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
+ create mode 100644 apps/welcome/welcome.cpp
+
+diff --git a/apps/welcome/welcome.cpp b/apps/welcome/welcome.cpp
+new file mode 100644
+index 0000000..e748b9e
+--- /dev/null
++++ b/apps/welcome/welcome.cpp
+@@ -0,0 +1,51 @@
++#include <new.h>
++#include <gui/gui.h>
++#include <gui/widgets/button.h>
++#include <gui/widgets/control.h>
++#include <gui/widgets/scrollbar.h>
++#include <gui/widgets/window.h>
++#include <gui/directgui.h>
++#include <convert.h>
++#include <string.h>
++#include <log.h>
++#include <proc.h>
++
++
++using namespace LIBHeisenKernel;
++using namespace LIBHeisenKernel::Imaging;
++
++char* path = "B:\\boot.jpg";
++
++Window* welcomeWindow = 0;
++
++void ValueChange(void *s,int v){
++    welcomeWindow->backColor = v * 1000;
++}
++
++
++int main(){
++    Log(Info,"Welcome to the Heisen OS!!!");
++    GUI::SetDefaultFont();
++
++    welcomeWindow = new Window(600, 600, 300, 300);
++    welcomeWindow->titleString = "Welcome to the Heisen OS!";
++
++    ScrollBar* scroll = new ScrollBar(Vertical);
++    scroll->x = 100;
++    scroll->y = 200;
++
++    scroll->value.onChanged += ValueChange;
++    welcomeWindow->AddChild(scroll);
++
++
++    while (GUI::HasItems()){
++        GUI::DrawGUI();
++        GUI::ProcessEvents();
++        //scroll->value += 1;
++        if(scroll->value >= scroll->maxValue) {
++            scroll->value = 0;
++            scroll->maxValue += 20;
++        }
++    }
++    return 0;
++}
+\ No newline at end of file
+-- 
+2.43.0
+

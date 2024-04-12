@@ -1,0 +1,33 @@
+From 297cfcc15ce4c91e28963cc5fcd6669c140abeee Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sat, 6 Apr 2024 00:40:16 -0400
+Subject: [PATCH 338/493] Another minor patch
+
+---
+ kernelz/src/core/idthelper.s | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/kernelz/src/core/idthelper.s b/kernelz/src/core/idthelper.s
+index b0b846c..835ad08 100644
+--- a/kernelz/src/core/idthelper.s
++++ b/kernelz/src/core/idthelper.s
+@@ -1,13 +1,13 @@
+ .macro HandleException num
+     HandleException\num:
+-        pushl $0\num
++        pushl $0    
+         jmp interrupthandler
+ .endm
+ 
+ .macro HandleInterruptRequest num
+     HandleInterruptRequest\num:
+-        pushl $0
+-        pushl $\num + 0x20
++        pushl $0    
++        pushl $\num + 0x20   
+         jmp interrupthandler
+ .endm
+ 
+-- 
+2.43.0
+

@@ -1,0 +1,25 @@
+From 02aa07a7fe3359c1fc4913ac02b5fae250bfc452 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 17:59:31 -0400
+Subject: [PATCH 079/493] Added new CI/CD tools
+
+---
+ .github/workflows/test.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index 567ecb6..09fdcb9 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -17,7 +17,7 @@ jobs:
+       - name: Install Dependencies
+         run: |
+           sudo apt-get update
+-          sudo apt-get install -y build-essential git wget bzip2 xz-utils unzip help2man libtool-bin nasm python2 python3 python-pip grub-common xorriso mtools  build-essential
++          sudo apt-get install -y build-essential git wget bzip2 xz-utils unzip help2man libtool-bin nasm python2 python3 python-pip grub-common xorriso mtools  build-essential build-essential gcc-multilib g++-multilib
+           python2 -m pip install -r kernel/requirements.txt
+           
+       - name: Run Make Command
+-- 
+2.43.0
+

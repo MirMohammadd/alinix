@@ -1,0 +1,46 @@
+From 79ea383ebc1f795084673def2d726db89fd12f11 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 22:32:56 -0400
+Subject: [PATCH 304/493] Minor update
+
+---
+ kernelz/src/boot/loader.s | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/kernelz/src/boot/loader.s b/kernelz/src/boot/loader.s
+index 757ab7d..e079500 100644
+--- a/kernelz/src/boot/loader.s
++++ b/kernelz/src/boot/loader.s
+@@ -22,6 +22,8 @@ stack_top:
+ 
+ .section .data
+     .align 0x1000
++
++#ifndef BootPageDirectory
+ .global BootPageDirectory
+ BootPageDirectory:
+     .long 0x00000083
+@@ -35,12 +37,14 @@ BootPageDirectory:
+     .rept (1024 - KERNEL_PAGE_NUMBER - 1)
+         .long 0
+     .endr
++#endif
+ 
+ .section .text
+     .align 4
++
++#ifndef _entrypoint
+ .global _entrypoint
+ .type _entrypoint, @function
+-
+ _entrypoint:
+     mov $(BootPageDirectory - KERNEL_VIRTUAL_BASE), %ecx
+     mov %ecx, %cr3
+@@ -77,3 +81,4 @@ _stop:
+     cli
+     hlt
+     jmp _stop
++#endif
+-- 
+2.43.0
+

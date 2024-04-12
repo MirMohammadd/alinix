@@ -1,0 +1,25 @@
+From e677e0270b990e7c340452bd3d260519e75eccaa Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 9 Apr 2024 18:27:26 -0400
+Subject: [PATCH 436/493] Patch
+
+---
+ drivers/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/Makefile b/drivers/Makefile
+index 0b39673..4ee5d9c 100644
+--- a/drivers/Makefile
++++ b/drivers/Makefile
+@@ -13,7 +13,7 @@ GCCPARAMS := -m32 $(DEBUG) -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) -I $(LIBDRIVEINCLU
+ LDPARAMS := -m elf_i386
+ 
+ USB_DIR := usb3
+-APPOUT := ../isofiles/apps
++APPOUT := ../isofiles/drivers
+ 
+ SRCFILES := $(shell find $(USB_DIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) #Find all the files in usb3 that end with .cpp/.s/.asm/.c
+ OBJFILES := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(SRCFILES))))) #Replace the .cpp/.s/.asm/.c extension with .o
+-- 
+2.43.0
+

@@ -1,0 +1,27 @@
+From afe91332cd6c1041009c8cd37df839eb66e8a885 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 10 Apr 2024 21:47:19 -0400
+Subject: [PATCH 462/493] Added missing documents
+
+---
+ kernelz/src/installer/textgui.cpp | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/kernelz/src/installer/textgui.cpp b/kernelz/src/installer/textgui.cpp
+index 6dca193..5a3f8b9 100644
+--- a/kernelz/src/installer/textgui.cpp
++++ b/kernelz/src/installer/textgui.cpp
+@@ -27,6 +27,10 @@ void TextGUI::ClearScreen(char color)
+ }
+ void TextGUI::StatusBar(char* text, int percentage)
+ {
++    /**
++     * @param text: Text to display
++     * @param percentage: Percentage of progress completed [0-100]
++    */
+     for(int x = 0; x < VGA_WIDTH; x++)
+         SetPixel(x, VGA_HEIGHT - 1, TEXT_COLOR, ' ', VGA_COLOR_LIGHT_GREY);
+     
+-- 
+2.43.0
+

@@ -1,0 +1,25 @@
+From f54b0d9a5ed5fc4c1189584360c056f9bc533b93 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 21:44:10 -0400
+Subject: [PATCH 151/493] Patch
+
+---
+ kernelz/include/system/system.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernelz/include/system/system.h b/kernelz/include/system/system.h
+index ae255d6..d7d8e56 100644
+--- a/kernelz/include/system/system.h
++++ b/kernelz/include/system/system.h
+@@ -102,7 +102,7 @@ namespace HeisenOs
+             static Scheduler* scheduler;
+             static SystemCallHandler* syscalls;
+             static APMController* apm;
+-            static LIBCactusOS::SharedSystemInfo* systemInfo;
++            static LIBHeisenKernel::SharedSystemInfo* systemInfo;
+ 
+             static ScreenMode screenMode;
+             static bool gdbEnabled; //Is the gdb stub enabled?
+-- 
+2.43.0
+

@@ -1,0 +1,3166 @@
+From 70ac8ffd0a2f5cdd6ffff7a8dee7d1319dc27a63 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 00:02:50 -0400
+Subject: [PATCH 106/493] Big Patch
+
+---
+ kernelz/include/common/convert.h              |  2 +-
+ kernelz/include/common/list.h                 |  4 ++--
+ kernelz/include/common/memoryoperations.h     |  2 +-
+ kernelz/include/common/random.h               |  2 +-
+ kernelz/include/common/string.h               |  2 +-
+ kernelz/include/common/types.h                |  2 +-
+ kernelz/include/core/cpu.h                    |  2 +-
+ kernelz/include/core/exceptions.h             |  2 +-
+ kernelz/include/core/fpu.h                    |  2 +-
+ kernelz/include/core/gdt.h                    |  4 ++--
+ kernelz/include/core/idt.h                    |  2 +-
+ kernelz/include/core/physicalmemory.h         |  6 +++---
+ kernelz/include/core/port.h                   |  2 +-
+ kernelz/include/core/power.h                  |  2 +-
+ kernelz/include/core/registers.h              |  2 +-
+ kernelz/include/core/virtualmemory.h          |  2 +-
+ kernelz/include/installer/installer.h         |  4 ++--
+ kernelz/include/installer/textgui.h           |  2 +-
+ kernelz/include/system/bootconsole.h          |  2 +-
+ kernelz/include/system/components/apm.h       |  2 +-
+ kernelz/include/system/components/bochsvbe.h  |  2 +-
+ kernelz/include/system/components/dma.h       |  2 +-
+ kernelz/include/system/components/edid.h      |  2 +-
+ .../system/components/graphicsdevice.h        |  2 +-
+ kernelz/include/system/components/pci.h       |  6 +++---
+ kernelz/include/system/components/pit.h       |  2 +-
+ kernelz/include/system/components/rtc.h       |  2 +-
+ kernelz/include/system/components/smbios.h    |  2 +-
+ .../system/components/systemcomponent.h       |  2 +-
+ kernelz/include/system/components/vesa.h      |  2 +-
+ kernelz/include/system/debugger.h             |  2 +-
+ kernelz/include/system/disks/disk.h           |  2 +-
+ kernelz/include/system/disks/diskcontroller.h |  2 +-
+ kernelz/include/system/disks/diskmanager.h    |  2 +-
+ .../include/system/disks/partitionmanager.h   |  2 +-
+ .../system/drivers/disk/ahci/ahcicontroller.h |  2 +-
+ .../system/drivers/disk/ahci/ahcidefs.h       |  2 +-
+ .../system/drivers/disk/ahci/ahciport.h       |  2 +-
+ kernelz/include/system/drivers/disk/ide.h     |  2 +-
+ kernelz/include/system/drivers/driver.h       |  2 +-
+ .../include/system/drivers/drivermanager.h    |  2 +-
+ .../system/drivers/integrated/floppy.h        |  2 +-
+ .../system/drivers/integrated/ps2-keyboard.h  |  2 +-
+ .../system/drivers/integrated/ps2-mouse.h     |  2 +-
+ kernelz/include/system/drivers/pcidrivers.h   |  2 +-
+ .../system/drivers/usb/controllers/ehci.h     |  2 +-
+ .../system/drivers/usb/controllers/ohci.h     |  2 +-
+ .../system/drivers/usb/controllers/uhci.h     |  2 +-
+ .../system/drivers/usb/controllers/xhci.h     |  2 +-
+ .../include/system/drivers/usb/mass_storage.h |  2 +-
+ .../include/system/drivers/usb/usbcomborecv.h |  2 +-
+ kernelz/include/system/drivers/usb/usbdefs.h  |  2 +-
+ .../include/system/drivers/usb/usbdriver.h    |  2 +-
+ .../include/system/drivers/usb/usbkeyboard.h  |  2 +-
+ kernelz/include/system/drivers/usb/usbmouse.h |  2 +-
+ .../include/system/drivers/video/vmwaresvga.h |  2 +-
+ kernelz/include/system/initrd.h               |  2 +-
+ kernelz/include/system/input/keyboard.h       |  2 +-
+ .../include/system/input/keyboardmanager.h    |  2 +-
+ kernelz/include/system/interruptmanager.h     |  2 +-
+ .../system/listings/directorylisting.h        |  2 +-
+ .../system/listings/listingcontroller.h       |  2 +-
+ kernelz/include/system/listings/systeminfo.h  |  2 +-
+ kernelz/include/system/log.h                  |  2 +-
+ kernelz/include/system/memory/deviceheap.h    |  2 +-
+ kernelz/include/system/memory/fifostream.h    |  2 +-
+ kernelz/include/system/memory/heap.h          |  2 +-
+ kernelz/include/system/memory/new.h           |  2 +-
+ kernelz/include/system/memory/sharedmem.h     |  2 +-
+ kernelz/include/system/memory/stream.h        |  2 +-
+ kernelz/include/system/serialport.h           |  2 +-
+ .../syscalls/implementations/cactusos.h       |  2 +-
+ .../system/syscalls/implementations/linux.h   |  2 +-
+ kernelz/include/system/syscalls/syscalls.h    |  2 +-
+ kernelz/include/system/system.h               |  2 +-
+ kernelz/include/system/tasking/elf.h          |  2 +-
+ kernelz/include/system/tasking/ipcmanager.h   |  2 +-
+ kernelz/include/system/tasking/lock.h         |  2 +-
+ kernelz/include/system/tasking/process.h      |  2 +-
+ kernelz/include/system/tasking/scheduler.h    |  2 +-
+ kernelz/include/system/tasking/thread.h       |  2 +-
+ kernelz/include/system/usb/hidparser.h        |  2 +-
+ kernelz/include/system/usb/usbcontroller.h    |  2 +-
+ kernelz/include/system/usb/usbdevice.h        |  2 +-
+ kernelz/include/system/usb/usbendpoint.h      |  2 +-
+ kernelz/include/system/usb/usbmanager.h       |  2 +-
+ kernelz/include/system/vfs/fat.h              |  2 +-
+ kernelz/include/system/vfs/iso9660.h          |  2 +-
+ kernelz/include/system/vfs/vfsmanager.h       |  2 +-
+ .../include/system/vfs/virtualfilesystem.h    |  2 +-
+ kernelz/include/system/virtual8086/VM86Args.h |  2 +-
+ .../include/system/virtual8086/VM86Manager.h  |  2 +-
+ .../include/system/virtual8086/VM86Monitor.h  |  2 +-
+ kernelz/src/common/convert.cpp                |  2 +-
+ kernelz/src/common/memoryoperations.cpp       |  2 +-
+ kernelz/src/common/print.cpp                  |  8 ++++----
+ kernelz/src/common/random.cpp                 |  2 +-
+ kernelz/src/common/string.cpp                 |  4 ++--
+ kernelz/src/core/cpu.cpp                      |  8 ++++----
+ kernelz/src/core/exceptions.cpp               |  8 ++++----
+ kernelz/src/core/fpu.cpp                      |  6 +++---
+ kernelz/src/core/gdt.cpp                      |  4 ++--
+ kernelz/src/core/idt.cpp                      |  8 ++++----
+ kernelz/src/core/physicalmemory.cpp           |  8 ++++----
+ kernelz/src/core/power.cpp                    |  8 ++++----
+ kernelz/src/core/tss.cpp                      |  6 +++---
+ kernelz/src/core/virtualmemory.cpp            |  8 ++++----
+ kernelz/src/gdb/gdbimpl.cpp                   |  8 ++++----
+ kernelz/src/installer/installer.cpp           | 20 +++++++++----------
+ kernelz/src/installer/textgui.cpp             |  8 ++++----
+ kernelz/src/kernel.cpp                        |  8 ++++----
+ kernelz/src/system/bootconsole.cpp            |  8 ++++----
+ kernelz/src/system/components/apm.cpp         |  8 ++++----
+ kernelz/src/system/components/bochsvbe.cpp    |  8 ++++----
+ kernelz/src/system/components/dma.cpp         |  8 ++++----
+ kernelz/src/system/components/edid.cpp        |  8 ++++----
+ .../src/system/components/graphicsdevice.cpp  |  6 +++---
+ kernelz/src/system/components/pci.cpp         |  8 ++++----
+ kernelz/src/system/components/pit.cpp         |  8 ++++----
+ kernelz/src/system/components/rtc.cpp         |  8 ++++----
+ kernelz/src/system/components/smbios.cpp      |  6 +++---
+ .../system/components/systemcomponents.cpp    |  6 +++---
+ kernelz/src/system/components/vesa.cpp        |  8 ++++----
+ kernelz/src/system/debugger.cpp               |  8 ++++----
+ kernelz/src/system/disks/disk.cpp             |  6 +++---
+ kernelz/src/system/disks/diskcontroller.cpp   |  6 +++---
+ kernelz/src/system/disks/diskmanager.cpp      |  8 ++++----
+ kernelz/src/system/disks/partitionmanager.cpp |  8 ++++----
+ .../drivers/disk/ahci/ahcicontroller.cpp      | 10 +++++-----
+ .../src/system/drivers/disk/ahci/ahciport.cpp | 10 +++++-----
+ kernelz/src/system/drivers/disk/ide.cpp       | 10 +++++-----
+ kernelz/src/system/drivers/driver.cpp         |  6 +++---
+ kernelz/src/system/drivers/drivermanager.cpp  |  6 +++---
+ .../src/system/drivers/integrated/floppy.cpp  | 10 +++++-----
+ .../drivers/integrated/ps2-keyboard.cpp       | 10 +++++-----
+ .../system/drivers/integrated/ps2-mouse.cpp   | 10 +++++-----
+ kernelz/src/system/drivers/pcidrivers.cpp     | 10 +++++-----
+ .../system/drivers/usb/controllers/ehci.cpp   | 10 +++++-----
+ .../system/drivers/usb/controllers/ohci.cpp   | 10 +++++-----
+ .../system/drivers/usb/controllers/uhci.cpp   | 10 +++++-----
+ .../system/drivers/usb/controllers/xhci.cpp   | 10 +++++-----
+ .../src/system/drivers/usb/mass_storage.cpp   | 10 +++++-----
+ .../src/system/drivers/usb/usbcomborecv.cpp   | 10 +++++-----
+ kernelz/src/system/drivers/usb/usbdriver.cpp  | 10 +++++-----
+ .../src/system/drivers/usb/usbkeyboard.cpp    | 10 +++++-----
+ kernelz/src/system/drivers/usb/usbmouse.cpp   | 10 +++++-----
+ .../src/system/drivers/video/vmwaresvga.cpp   | 10 +++++-----
+ kernelz/src/system/initrd.cpp                 |  6 +++---
+ kernelz/src/system/input/keyboard.cpp         |  6 +++---
+ kernelz/src/system/input/keyboardmanager.cpp  |  6 +++---
+ kernelz/src/system/interruptmanager.cpp       |  6 +++---
+ .../src/system/listings/directorylisting.cpp  |  8 ++++----
+ .../src/system/listings/listingcontroller.cpp |  8 ++++----
+ kernelz/src/system/listings/systeminfo.cpp    | 10 +++++-----
+ kernelz/src/system/log.cpp                    | 12 +++++------
+ kernelz/src/system/memory/deviceheap.cpp      |  8 ++++----
+ kernelz/src/system/memory/fifostream.cpp      |  6 +++---
+ kernelz/src/system/memory/heap.cpp            |  8 ++++----
+ kernelz/src/system/memory/sharedmem.cpp       |  8 ++++----
+ kernelz/src/system/memory/stream.cpp          |  6 +++---
+ kernelz/src/system/serialport.cpp             |  8 ++++----
+ .../syscalls/implementations/cactusos.cpp     |  8 ++++----
+ .../system/syscalls/implementations/linux.cpp | 12 +++++------
+ kernelz/src/system/syscalls/syscalls.cpp      | 10 +++++-----
+ kernelz/src/system/system.cpp                 | 10 +++++-----
+ kernelz/src/system/tasking/ipcmanager.cpp     |  8 ++++----
+ kernelz/src/system/tasking/lock.cpp           |  4 ++--
+ kernelz/src/system/tasking/process.cpp        |  8 ++++----
+ kernelz/src/system/tasking/scheduler.cpp      |  8 ++++----
+ kernelz/src/system/tasking/thread.cpp         |  8 ++++----
+ kernelz/src/system/usb/hidparser.cpp          |  6 +++---
+ kernelz/src/system/usb/usbcontroller.cpp      | 10 +++++-----
+ kernelz/src/system/usb/usbdevice.cpp          | 10 +++++-----
+ kernelz/src/system/usb/usbendpoint.cpp        |  6 +++---
+ kernelz/src/system/usb/usbmanager.cpp         | 10 +++++-----
+ kernelz/src/system/vfs/fat.cpp                |  6 +++---
+ kernelz/src/system/vfs/iso9660.cpp            |  6 +++---
+ kernelz/src/system/vfs/vfsmanager.cpp         | 10 +++++-----
+ kernelz/src/system/vfs/virtualfilesystem.cpp  |  6 +++---
+ .../src/system/virtual8086/VM8086Manager.cpp  |  8 ++++----
+ .../src/system/virtual8086/VM8086Monitor.cpp  |  8 ++++----
+ 181 files changed, 451 insertions(+), 451 deletions(-)
+
+diff --git a/kernelz/include/common/convert.h b/kernelz/include/common/convert.h
+index a43e705..5b6c4df 100644
+--- a/kernelz/include/common/convert.h
++++ b/kernelz/include/common/convert.h
+@@ -4,7 +4,7 @@
+ #include <common/types.h>
+ #include <common/memoryoperations.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace common
+     {
+diff --git a/kernelz/include/common/list.h b/kernelz/include/common/list.h
+index bfdb60a..f72c597 100644
+--- a/kernelz/include/common/list.h
++++ b/kernelz/include/common/list.h
+@@ -3,7 +3,7 @@
+ 
+ #include <system/tasking/lock.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace common
+     {
+@@ -88,7 +88,7 @@ namespace CactusOS
+     }
+ }
+ 
+-using namespace CactusOS::common;
++using namespace HeisenOs::common;
+ 
+ /////////////
+ // Implementations
+diff --git a/kernelz/include/common/memoryoperations.h b/kernelz/include/common/memoryoperations.h
+index 65b3cf2..021df32 100644
+--- a/kernelz/include/common/memoryoperations.h
++++ b/kernelz/include/common/memoryoperations.h
+@@ -3,7 +3,7 @@
+ 
+ #include <common/types.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace common
+     {
+diff --git a/kernelz/include/common/random.h b/kernelz/include/common/random.h
+index a6fed3e..655ab64 100644
+--- a/kernelz/include/common/random.h
++++ b/kernelz/include/common/random.h
+@@ -3,7 +3,7 @@
+ 
+ #include <common/types.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace common
+     {
+diff --git a/kernelz/include/common/string.h b/kernelz/include/common/string.h
+index b18e660..6b950d6 100644
+--- a/kernelz/include/common/string.h
++++ b/kernelz/include/common/string.h
+@@ -5,7 +5,7 @@
+ #include <common/list.h>
+ #include <common/memoryoperations.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace common
+     {
+diff --git a/kernelz/include/common/types.h b/kernelz/include/common/types.h
+index 1445b50..8d4c194 100644
+--- a/kernelz/include/common/types.h
++++ b/kernelz/include/common/types.h
+@@ -1,7 +1,7 @@
+ #ifndef CACTUSOS__COMMON__TYPES_H
+ #define CACTUSOS__COMMON__TYPES_H
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace common
+     {
+diff --git a/kernelz/include/core/cpu.h b/kernelz/include/core/cpu.h
+index 27664c1..2753b06 100644
+--- a/kernelz/include/core/cpu.h
++++ b/kernelz/include/core/cpu.h
+@@ -3,7 +3,7 @@
+ 
+ #include <common/types.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace core
+     {
+diff --git a/kernelz/include/core/exceptions.h b/kernelz/include/core/exceptions.h
+index 65d9f8c..e240f71 100644
+--- a/kernelz/include/core/exceptions.h
++++ b/kernelz/include/core/exceptions.h
+@@ -6,7 +6,7 @@
+ #include <common/convert.h>
+ #include <core/idt.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace core
+     {
+diff --git a/kernelz/include/core/fpu.h b/kernelz/include/core/fpu.h
+index 6e9242d..037e129 100644
+--- a/kernelz/include/core/fpu.h
++++ b/kernelz/include/core/fpu.h
+@@ -3,7 +3,7 @@
+ 
+ #include <common/types.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace core
+     {
+diff --git a/kernelz/include/core/gdt.h b/kernelz/include/core/gdt.h
+index a786403..ff3a656 100644
+--- a/kernelz/include/core/gdt.h
++++ b/kernelz/include/core/gdt.h
+@@ -3,9 +3,9 @@
+ 
+ #include <common/types.h>
+ 
+-using namespace CactusOS::common;
++using namespace HeisenOs::common;
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace core
+     {
+diff --git a/kernelz/include/core/idt.h b/kernelz/include/core/idt.h
+index 26e184a..a1dcbb9 100644
+--- a/kernelz/include/core/idt.h
++++ b/kernelz/include/core/idt.h
+@@ -10,7 +10,7 @@
+ #include <common/memoryoperations.h>
+ #include <system/interruptmanager.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace core
+     {
+diff --git a/kernelz/include/core/physicalmemory.h b/kernelz/include/core/physicalmemory.h
+index 4f19f9b..4369696 100644
+--- a/kernelz/include/core/physicalmemory.h
++++ b/kernelz/include/core/physicalmemory.h
+@@ -1,5 +1,5 @@
+-#ifndef __CACTUSOS__CORE__PHYSICALMEMORY_H
+-#define __CACTUSOS__CORE__PHYSICALMEMORY_H
++#ifndef __HeisenOs__CORE__PHYSICALMEMORY_H
++#define __HeisenOs__CORE__PHYSICALMEMORY_H
+ 
+ #include <common/types.h>
+ #include <common/convert.h>
+@@ -7,7 +7,7 @@
+ #include <system/bootconsole.h>
+ #include <multiboot/multiboot.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace core
+     {
+diff --git a/kernelz/include/core/port.h b/kernelz/include/core/port.h
+index f2d7b99..d0cb166 100644
+--- a/kernelz/include/core/port.h
++++ b/kernelz/include/core/port.h
+@@ -3,7 +3,7 @@
+ 
+ #include <common/types.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace core
+     {
+diff --git a/kernelz/include/core/power.h b/kernelz/include/core/power.h
+index 1225eab..25dd3f4 100644
+--- a/kernelz/include/core/power.h
++++ b/kernelz/include/core/power.h
+@@ -3,7 +3,7 @@
+ 
+ #include <core/port.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace core
+     {
+diff --git a/kernelz/include/core/registers.h b/kernelz/include/core/registers.h
+index 20e3fb2..c1b7a5e 100644
+--- a/kernelz/include/core/registers.h
++++ b/kernelz/include/core/registers.h
+@@ -3,7 +3,7 @@
+ 
+ #include <common/types.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace core
+     {
+diff --git a/kernelz/include/core/virtualmemory.h b/kernelz/include/core/virtualmemory.h
+index 7d74cf0..d84d37c 100644
+--- a/kernelz/include/core/virtualmemory.h
++++ b/kernelz/include/core/virtualmemory.h
+@@ -9,7 +9,7 @@
+ #include <common/types.h>
+ #include <system/memory/heap.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace core
+     {
+diff --git a/kernelz/include/installer/installer.h b/kernelz/include/installer/installer.h
+index 17a2679..f6ba816 100644
+--- a/kernelz/include/installer/installer.h
++++ b/kernelz/include/installer/installer.h
+@@ -4,9 +4,9 @@
+ #include <system/disks/partitionmanager.h>
+ #include <system/vfs/fat.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+-    // Class responsible for installing CactusOS on a hard drive
++    // Class responsible for installing HeisenOs on a hard drive
+     class Installer
+     {
+     public:
+diff --git a/kernelz/include/installer/textgui.h b/kernelz/include/installer/textgui.h
+index 6f5a1e6..eaf6d8e 100644
+--- a/kernelz/include/installer/textgui.h
++++ b/kernelz/include/installer/textgui.h
+@@ -3,7 +3,7 @@
+ 
+ #include <system/bootconsole.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     #define TEXT_COLOR system::VGA_COLOR_WHITE
+ 
+diff --git a/kernelz/include/system/bootconsole.h b/kernelz/include/system/bootconsole.h
+index 2340131..6b0aefd 100644
+--- a/kernelz/include/system/bootconsole.h
++++ b/kernelz/include/system/bootconsole.h
+@@ -6,7 +6,7 @@
+ 
+ #include <stdarg.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/components/apm.h b/kernelz/include/system/components/apm.h
+index 681e39b..df5c148 100644
+--- a/kernelz/include/system/components/apm.h
++++ b/kernelz/include/system/components/apm.h
+@@ -4,7 +4,7 @@
+ #include <system/components/systemcomponent.h>
+ #include <common/types.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/components/bochsvbe.h b/kernelz/include/system/components/bochsvbe.h
+index 097a13f..5387a50 100644
+--- a/kernelz/include/system/components/bochsvbe.h
++++ b/kernelz/include/system/components/bochsvbe.h
+@@ -3,7 +3,7 @@
+ 
+ #include <system/components/graphicsdevice.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/components/dma.h b/kernelz/include/system/components/dma.h
+index 07f0eb1..93c29e5 100644
+--- a/kernelz/include/system/components/dma.h
++++ b/kernelz/include/system/components/dma.h
+@@ -6,7 +6,7 @@
+ #include <system/components/systemcomponent.h>
+ #include <common/types.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/components/edid.h b/kernelz/include/system/components/edid.h
+index 9a29f36..686fdc3 100644
+--- a/kernelz/include/system/components/edid.h
++++ b/kernelz/include/system/components/edid.h
+@@ -3,7 +3,7 @@
+ 
+ #include <system/components/systemcomponent.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/components/graphicsdevice.h b/kernelz/include/system/components/graphicsdevice.h
+index 429aab3..a02e57f 100644
+--- a/kernelz/include/system/components/graphicsdevice.h
++++ b/kernelz/include/system/components/graphicsdevice.h
+@@ -3,7 +3,7 @@
+ 
+ #include <system/components/systemcomponent.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/components/pci.h b/kernelz/include/system/components/pci.h
+index c250315..ef5e7ea 100644
+--- a/kernelz/include/system/components/pci.h
++++ b/kernelz/include/system/components/pci.h
+@@ -7,7 +7,7 @@
+ #include <system/bootconsole.h>
+ #include <system/initrd.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+@@ -43,8 +43,8 @@ namespace CactusOS
+         {
+             bool prefetchable;
+             BaseAddressRegisterType type;
+-            CactusOS::common::uint32_t size;
+-            CactusOS::common::uint64_t address;
++            HeisenOs::common::uint32_t size;
++            HeisenOs::common::uint64_t address;
+         };
+ 
+         class PCIController : public SystemComponent
+diff --git a/kernelz/include/system/components/pit.h b/kernelz/include/system/components/pit.h
+index 4941253..a723fd3 100644
+--- a/kernelz/include/system/components/pit.h
++++ b/kernelz/include/system/components/pit.h
+@@ -5,7 +5,7 @@
+ #include <system/components/systemcomponent.h>
+ #include <core/port.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/components/rtc.h b/kernelz/include/system/components/rtc.h
+index fb172c7..46c6e54 100644
+--- a/kernelz/include/system/components/rtc.h
++++ b/kernelz/include/system/components/rtc.h
+@@ -4,7 +4,7 @@
+ #include <core/port.h>
+ #include <system/components/systemcomponent.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/components/smbios.h b/kernelz/include/system/components/smbios.h
+index f54dbff..c0af7fe 100644
+--- a/kernelz/include/system/components/smbios.h
++++ b/kernelz/include/system/components/smbios.h
+@@ -6,7 +6,7 @@
+ #include <common/string.h>
+ #include <common/list.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/components/systemcomponent.h b/kernelz/include/system/components/systemcomponent.h
+index 93c5369..995f367 100644
+--- a/kernelz/include/system/components/systemcomponent.h
++++ b/kernelz/include/system/components/systemcomponent.h
+@@ -3,7 +3,7 @@
+ 
+ #include <common/types.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/components/vesa.h b/kernelz/include/system/components/vesa.h
+index 3cbfb81..faeae72 100644
+--- a/kernelz/include/system/components/vesa.h
++++ b/kernelz/include/system/components/vesa.h
+@@ -6,7 +6,7 @@
+ #include <system/components/graphicsdevice.h>
+ #include <core/virtualmemory.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/debugger.h b/kernelz/include/system/debugger.h
+index 7ee9bcf..bddae0b 100644
+--- a/kernelz/include/system/debugger.h
++++ b/kernelz/include/system/debugger.h
+@@ -5,7 +5,7 @@
+ #include <common/types.h>
+ #include <common/list.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/disks/disk.h b/kernelz/include/system/disks/disk.h
+index d461639..39414e1 100644
+--- a/kernelz/include/system/disks/disk.h
++++ b/kernelz/include/system/disks/disk.h
+@@ -5,7 +5,7 @@
+ 
+ #include <system/disks/diskcontroller.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/disks/diskcontroller.h b/kernelz/include/system/disks/diskcontroller.h
+index 16436bf..ab0f1b9 100644
+--- a/kernelz/include/system/disks/diskcontroller.h
++++ b/kernelz/include/system/disks/diskcontroller.h
+@@ -9,7 +9,7 @@
+ #include <system/disks/disk.h>
+ #include <system/disks/diskmanager.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/disks/diskmanager.h b/kernelz/include/system/disks/diskmanager.h
+index 595bd79..b55cafb 100644
+--- a/kernelz/include/system/disks/diskmanager.h
++++ b/kernelz/include/system/disks/diskmanager.h
+@@ -11,7 +11,7 @@
+ #include <system/bootconsole.h>
+ #include <system/disks/disk.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/disks/partitionmanager.h b/kernelz/include/system/disks/partitionmanager.h
+index f078c31..ab157ff 100644
+--- a/kernelz/include/system/disks/partitionmanager.h
++++ b/kernelz/include/system/disks/partitionmanager.h
+@@ -4,7 +4,7 @@
+ #include <system/disks/diskmanager.h>
+ #include <system/vfs/vfsmanager.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/drivers/disk/ahci/ahcicontroller.h b/kernelz/include/system/drivers/disk/ahci/ahcicontroller.h
+index c055ef3..25efd3b 100644
+--- a/kernelz/include/system/drivers/disk/ahci/ahcicontroller.h
++++ b/kernelz/include/system/drivers/disk/ahci/ahcicontroller.h
+@@ -8,7 +8,7 @@
+ 
+ #include <system/disks/diskcontroller.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/drivers/disk/ahci/ahcidefs.h b/kernelz/include/system/drivers/disk/ahci/ahcidefs.h
+index ac0483d..74b102b 100644
+--- a/kernelz/include/system/drivers/disk/ahci/ahcidefs.h
++++ b/kernelz/include/system/drivers/disk/ahci/ahcidefs.h
+@@ -7,7 +7,7 @@
+ 
+ #include <system/disks/diskcontroller.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/drivers/disk/ahci/ahciport.h b/kernelz/include/system/drivers/disk/ahci/ahciport.h
+index 81f98da..ff8e32e 100644
+--- a/kernelz/include/system/drivers/disk/ahci/ahciport.h
++++ b/kernelz/include/system/drivers/disk/ahci/ahciport.h
+@@ -9,7 +9,7 @@
+ 
+ #include <system/disks/diskcontroller.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/drivers/disk/ide.h b/kernelz/include/system/drivers/disk/ide.h
+index 4fc5f38..3cf1996 100644
+--- a/kernelz/include/system/drivers/disk/ide.h
++++ b/kernelz/include/system/drivers/disk/ide.h
+@@ -12,7 +12,7 @@ https://wiki.osdev.org/PCI_IDE_Controller
+ #include <system/disks/diskcontroller.h>
+ #include <system/tasking/lock.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/drivers/driver.h b/kernelz/include/system/drivers/driver.h
+index 923624a..e4d32c8 100644
+--- a/kernelz/include/system/drivers/driver.h
++++ b/kernelz/include/system/drivers/driver.h
+@@ -1,7 +1,7 @@
+ #ifndef __CACTUSOS__SYSTEM__DRIVER_H
+ #define __CACTUSOS__SYSTEM__DRIVER_H
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/drivers/drivermanager.h b/kernelz/include/system/drivers/drivermanager.h
+index 8e9efbb..03facd9 100644
+--- a/kernelz/include/system/drivers/drivermanager.h
++++ b/kernelz/include/system/drivers/drivermanager.h
+@@ -7,7 +7,7 @@
+ #include <system/drivers/driver.h>
+ #include <system/bootconsole.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/drivers/integrated/floppy.h b/kernelz/include/system/drivers/integrated/floppy.h
+index c9eec1c..c6222b8 100644
+--- a/kernelz/include/system/drivers/integrated/floppy.h
++++ b/kernelz/include/system/drivers/integrated/floppy.h
+@@ -5,7 +5,7 @@
+ #include <system/interruptmanager.h>
+ #include <system/disks/diskcontroller.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/drivers/integrated/ps2-keyboard.h b/kernelz/include/system/drivers/integrated/ps2-keyboard.h
+index 30f1d80..289e444 100644
+--- a/kernelz/include/system/drivers/integrated/ps2-keyboard.h
++++ b/kernelz/include/system/drivers/integrated/ps2-keyboard.h
+@@ -6,7 +6,7 @@
+ #include <system/memory/fifostream.h>
+ #include <system/input/keyboard.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/drivers/integrated/ps2-mouse.h b/kernelz/include/system/drivers/integrated/ps2-mouse.h
+index 76cc485..98e628d 100644
+--- a/kernelz/include/system/drivers/integrated/ps2-mouse.h
++++ b/kernelz/include/system/drivers/integrated/ps2-mouse.h
+@@ -4,7 +4,7 @@
+ #include <system/drivers/driver.h>
+ #include <system/interruptmanager.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/drivers/pcidrivers.h b/kernelz/include/system/drivers/pcidrivers.h
+index 39d1569..f05b465 100644
+--- a/kernelz/include/system/drivers/pcidrivers.h
++++ b/kernelz/include/system/drivers/pcidrivers.h
+@@ -4,7 +4,7 @@
+ #include <system/components/pci.h>
+ #include <system/drivers/drivermanager.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/drivers/usb/controllers/ehci.h b/kernelz/include/system/drivers/usb/controllers/ehci.h
+index c304acd..e632650 100644
+--- a/kernelz/include/system/drivers/usb/controllers/ehci.h
++++ b/kernelz/include/system/drivers/usb/controllers/ehci.h
+@@ -7,7 +7,7 @@
+ #include <system/interruptmanager.h>
+ #include <system/usb/usbcontroller.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/drivers/usb/controllers/ohci.h b/kernelz/include/system/drivers/usb/controllers/ohci.h
+index 9103009..765193f 100644
+--- a/kernelz/include/system/drivers/usb/controllers/ohci.h
++++ b/kernelz/include/system/drivers/usb/controllers/ohci.h
+@@ -7,7 +7,7 @@
+ #include <system/interruptmanager.h>
+ #include <system/usb/usbcontroller.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/drivers/usb/controllers/uhci.h b/kernelz/include/system/drivers/usb/controllers/uhci.h
+index c12ad67..bcd6f2c 100644
+--- a/kernelz/include/system/drivers/usb/controllers/uhci.h
++++ b/kernelz/include/system/drivers/usb/controllers/uhci.h
+@@ -7,7 +7,7 @@
+ #include <system/interruptmanager.h>
+ #include <system/usb/usbcontroller.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/drivers/usb/controllers/xhci.h b/kernelz/include/system/drivers/usb/controllers/xhci.h
+index 70bad34..91b947a 100644
+--- a/kernelz/include/system/drivers/usb/controllers/xhci.h
++++ b/kernelz/include/system/drivers/usb/controllers/xhci.h
+@@ -12,7 +12,7 @@
+ #include <system/interruptmanager.h>
+ #include <system/usb/usbcontroller.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/drivers/usb/mass_storage.h b/kernelz/include/system/drivers/usb/mass_storage.h
+index ceaae16..ace796d 100644
+--- a/kernelz/include/system/drivers/usb/mass_storage.h
++++ b/kernelz/include/system/drivers/usb/mass_storage.h
+@@ -5,7 +5,7 @@
+ #include <system/disks/disk.h>
+ #include <system/tasking/lock.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/drivers/usb/usbcomborecv.h b/kernelz/include/system/drivers/usb/usbcomborecv.h
+index d096eb2..825f325 100644
+--- a/kernelz/include/system/drivers/usb/usbcomborecv.h
++++ b/kernelz/include/system/drivers/usb/usbcomborecv.h
+@@ -5,7 +5,7 @@
+ #include <system/usb/hidparser.h>
+ #include <system/input/keyboard.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/drivers/usb/usbdefs.h b/kernelz/include/system/drivers/usb/usbdefs.h
+index 44a2869..98a99c8 100644
+--- a/kernelz/include/system/drivers/usb/usbdefs.h
++++ b/kernelz/include/system/drivers/usb/usbdefs.h
+@@ -3,7 +3,7 @@
+ 
+ #include <common/types.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/drivers/usb/usbdriver.h b/kernelz/include/system/drivers/usb/usbdriver.h
+index 77043cb..2f08f7e 100644
+--- a/kernelz/include/system/drivers/usb/usbdriver.h
++++ b/kernelz/include/system/drivers/usb/usbdriver.h
+@@ -4,7 +4,7 @@
+ #include <system/drivers/driver.h>
+ #include <system/usb/usbdevice.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/drivers/usb/usbkeyboard.h b/kernelz/include/system/drivers/usb/usbkeyboard.h
+index 1d294ed..bf8cdfe 100644
+--- a/kernelz/include/system/drivers/usb/usbkeyboard.h
++++ b/kernelz/include/system/drivers/usb/usbkeyboard.h
+@@ -5,7 +5,7 @@
+ #include <system/usb/hidparser.h>
+ #include <system/input/keyboard.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/drivers/usb/usbmouse.h b/kernelz/include/system/drivers/usb/usbmouse.h
+index 0d110c2..3ff49a6 100644
+--- a/kernelz/include/system/drivers/usb/usbmouse.h
++++ b/kernelz/include/system/drivers/usb/usbmouse.h
+@@ -4,7 +4,7 @@
+ #include <system/drivers/usb/usbdriver.h>
+ #include <system/usb/hidparser.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/drivers/video/vmwaresvga.h b/kernelz/include/system/drivers/video/vmwaresvga.h
+index 278bdc2..cf18709 100644
+--- a/kernelz/include/system/drivers/video/vmwaresvga.h
++++ b/kernelz/include/system/drivers/video/vmwaresvga.h
+@@ -6,7 +6,7 @@
+ #include <system/interruptmanager.h>
+ #include <system/components/graphicsdevice.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/initrd.h b/kernelz/include/system/initrd.h
+index d9405a7..badcb2b 100644
+--- a/kernelz/include/system/initrd.h
++++ b/kernelz/include/system/initrd.h
+@@ -6,7 +6,7 @@
+ #include <system/bootconsole.h>
+ #include <common/string.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/input/keyboard.h b/kernelz/include/system/input/keyboard.h
+index a1cf2c6..7cd6a9a 100644
+--- a/kernelz/include/system/input/keyboard.h
++++ b/kernelz/include/system/input/keyboard.h
+@@ -3,7 +3,7 @@
+ 
+ #include <common/types.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/input/keyboardmanager.h b/kernelz/include/system/input/keyboardmanager.h
+index a0043d4..61b32da 100644
+--- a/kernelz/include/system/input/keyboardmanager.h
++++ b/kernelz/include/system/input/keyboardmanager.h
+@@ -5,7 +5,7 @@
+ #include <common/list.h>
+ #include <system/memory/fifostream.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/interruptmanager.h b/kernelz/include/system/interruptmanager.h
+index 4756649..5e1b4c1 100644
+--- a/kernelz/include/system/interruptmanager.h
++++ b/kernelz/include/system/interruptmanager.h
+@@ -4,7 +4,7 @@
+ #include <common/list.h>
+ #include <common/types.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/listings/directorylisting.h b/kernelz/include/system/listings/directorylisting.h
+index 3c914bc..9b3b4f1 100644
+--- a/kernelz/include/system/listings/directorylisting.h
++++ b/kernelz/include/system/listings/directorylisting.h
+@@ -3,7 +3,7 @@
+ 
+ #include <system/listings/listingcontroller.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/listings/listingcontroller.h b/kernelz/include/system/listings/listingcontroller.h
+index 91e28c0..60d5f30 100644
+--- a/kernelz/include/system/listings/listingcontroller.h
++++ b/kernelz/include/system/listings/listingcontroller.h
+@@ -4,7 +4,7 @@
+ #include <system/vfs/virtualfilesystem.h>
+ #include <system/tasking/process.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/listings/systeminfo.h b/kernelz/include/system/listings/systeminfo.h
+index 70495a0..9f42ef0 100644
+--- a/kernelz/include/system/listings/systeminfo.h
++++ b/kernelz/include/system/listings/systeminfo.h
+@@ -3,7 +3,7 @@
+ 
+ #include <common/types.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/log.h b/kernelz/include/system/log.h
+index 7c0f3db..98e2b4e 100644
+--- a/kernelz/include/system/log.h
++++ b/kernelz/include/system/log.h
+@@ -3,7 +3,7 @@
+ 
+ #include <common/types.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/memory/deviceheap.h b/kernelz/include/system/memory/deviceheap.h
+index f450302..ce7d175 100644
+--- a/kernelz/include/system/memory/deviceheap.h
++++ b/kernelz/include/system/memory/deviceheap.h
+@@ -4,7 +4,7 @@
+ #include <core/virtualmemory.h>
+ #include <common/types.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/memory/fifostream.h b/kernelz/include/system/memory/fifostream.h
+index ec3c782..920c8bc 100644
+--- a/kernelz/include/system/memory/fifostream.h
++++ b/kernelz/include/system/memory/fifostream.h
+@@ -5,7 +5,7 @@
+ #include <common/memoryoperations.h>
+ #include <system/memory/stream.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/memory/heap.h b/kernelz/include/system/memory/heap.h
+index 95ff22f..12623a5 100644
+--- a/kernelz/include/system/memory/heap.h
++++ b/kernelz/include/system/memory/heap.h
+@@ -4,7 +4,7 @@
+ #include <core/virtualmemory.h>
+ #include <system/tasking/lock.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/memory/new.h b/kernelz/include/system/memory/new.h
+index 065d32d..c2647f6 100644
+--- a/kernelz/include/system/memory/new.h
++++ b/kernelz/include/system/memory/new.h
+@@ -4,7 +4,7 @@
+ #include <stddef.h>
+ #include <system/memory/heap.h>
+ 
+-using namespace CactusOS::system;
++using namespace HeisenOs::system;
+  
+ void *operator new(size_t size)
+ {
+diff --git a/kernelz/include/system/memory/sharedmem.h b/kernelz/include/system/memory/sharedmem.h
+index 9f418f8..5474d2e 100644
+--- a/kernelz/include/system/memory/sharedmem.h
++++ b/kernelz/include/system/memory/sharedmem.h
+@@ -3,7 +3,7 @@
+ 
+ #include <system/tasking/process.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/memory/stream.h b/kernelz/include/system/memory/stream.h
+index e07f38d..9c2caf3 100644
+--- a/kernelz/include/system/memory/stream.h
++++ b/kernelz/include/system/memory/stream.h
+@@ -3,7 +3,7 @@
+ 
+ #include <common/types.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/serialport.h b/kernelz/include/system/serialport.h
+index e1729b9..c8b967b 100644
+--- a/kernelz/include/system/serialport.h
++++ b/kernelz/include/system/serialport.h
+@@ -5,7 +5,7 @@
+ #include <core/port.h>
+ #include <system/serialport.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/syscalls/implementations/cactusos.h b/kernelz/include/system/syscalls/implementations/cactusos.h
+index eeab027..2af6c34 100644
+--- a/kernelz/include/system/syscalls/implementations/cactusos.h
++++ b/kernelz/include/system/syscalls/implementations/cactusos.h
+@@ -3,7 +3,7 @@
+ 
+ #include <core/registers.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/syscalls/implementations/linux.h b/kernelz/include/system/syscalls/implementations/linux.h
+index f9dbc7a..d225b0d 100644
+--- a/kernelz/include/system/syscalls/implementations/linux.h
++++ b/kernelz/include/system/syscalls/implementations/linux.h
+@@ -3,7 +3,7 @@
+ 
+ #include <core/registers.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/syscalls/syscalls.h b/kernelz/include/system/syscalls/syscalls.h
+index ac89ae9..cf02001 100644
+--- a/kernelz/include/system/syscalls/syscalls.h
++++ b/kernelz/include/system/syscalls/syscalls.h
+@@ -3,7 +3,7 @@
+ 
+ #include <system/interruptmanager.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/system.h b/kernelz/include/system/system.h
+index 001c123..ae255d6 100644
+--- a/kernelz/include/system/system.h
++++ b/kernelz/include/system/system.h
+@@ -44,7 +44,7 @@
+ 
+ #define GDB_BREAK() asm("int $3");
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/tasking/elf.h b/kernelz/include/system/tasking/elf.h
+index e1906c1..77ee021 100644
+--- a/kernelz/include/system/tasking/elf.h
++++ b/kernelz/include/system/tasking/elf.h
+@@ -4,7 +4,7 @@
+ #include <common/types.h>
+ #include <system/tasking/process.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/tasking/ipcmanager.h b/kernelz/include/system/tasking/ipcmanager.h
+index 37cf551..af95604 100644
+--- a/kernelz/include/system/tasking/ipcmanager.h
++++ b/kernelz/include/system/tasking/ipcmanager.h
+@@ -4,7 +4,7 @@
+ #include <core/registers.h>
+ #include <system/tasking/process.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/tasking/lock.h b/kernelz/include/system/tasking/lock.h
+index 1e53604..acdf449 100644
+--- a/kernelz/include/system/tasking/lock.h
++++ b/kernelz/include/system/tasking/lock.h
+@@ -3,7 +3,7 @@
+ 
+ #include <common/types.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/tasking/process.h b/kernelz/include/system/tasking/process.h
+index ac671e3..073b242 100644
+--- a/kernelz/include/system/tasking/process.h
++++ b/kernelz/include/system/tasking/process.h
+@@ -7,7 +7,7 @@
+ #include <../../lib/include/ipc.h>
+ #include <system/memory/stream.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/tasking/scheduler.h b/kernelz/include/system/tasking/scheduler.h
+index 52fb534..2edfc83 100644
+--- a/kernelz/include/system/tasking/scheduler.h
++++ b/kernelz/include/system/tasking/scheduler.h
+@@ -5,7 +5,7 @@
+ #include <system/interruptmanager.h>
+ #include <system/tasking/thread.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/tasking/thread.h b/kernelz/include/system/tasking/thread.h
+index 6483740..682211e 100644
+--- a/kernelz/include/system/tasking/thread.h
++++ b/kernelz/include/system/tasking/thread.h
+@@ -6,7 +6,7 @@
+ #include <common/types.h>
+ #include <core/registers.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/usb/hidparser.h b/kernelz/include/system/usb/hidparser.h
+index 6f67e34..67b8c3a 100644
+--- a/kernelz/include/system/usb/hidparser.h
++++ b/kernelz/include/system/usb/hidparser.h
+@@ -3,7 +3,7 @@
+ 
+ #include <common/types.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/usb/usbcontroller.h b/kernelz/include/system/usb/usbcontroller.h
+index 3a20415..4031d7f 100644
+--- a/kernelz/include/system/usb/usbcontroller.h
++++ b/kernelz/include/system/usb/usbcontroller.h
+@@ -6,7 +6,7 @@
+ #include <system/interruptmanager.h>
+ #include <system/usb/usbdevice.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/usb/usbdevice.h b/kernelz/include/system/usb/usbdevice.h
+index a6eadf5..879a450 100644
+--- a/kernelz/include/system/usb/usbdevice.h
++++ b/kernelz/include/system/usb/usbdevice.h
+@@ -4,7 +4,7 @@
+ #include <system/usb/usbcontroller.h>
+ #include <system/usb/usbendpoint.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/usb/usbendpoint.h b/kernelz/include/system/usb/usbendpoint.h
+index a7f7042..e087755 100644
+--- a/kernelz/include/system/usb/usbendpoint.h
++++ b/kernelz/include/system/usb/usbendpoint.h
+@@ -3,7 +3,7 @@
+ 
+ #include <system/drivers/usb/usbdefs.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/usb/usbmanager.h b/kernelz/include/system/usb/usbmanager.h
+index accc580..dbef0eb 100644
+--- a/kernelz/include/system/usb/usbmanager.h
++++ b/kernelz/include/system/usb/usbmanager.h
+@@ -4,7 +4,7 @@
+ #include <system/usb/usbcontroller.h>
+ #include <system/usb/usbdevice.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/vfs/fat.h b/kernelz/include/system/vfs/fat.h
+index 33dabf3..49688b4 100644
+--- a/kernelz/include/system/vfs/fat.h
++++ b/kernelz/include/system/vfs/fat.h
+@@ -3,7 +3,7 @@
+ 
+ #include <system/vfs/virtualfilesystem.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/vfs/iso9660.h b/kernelz/include/system/vfs/iso9660.h
+index d2db65b..0edc592 100644
+--- a/kernelz/include/system/vfs/iso9660.h
++++ b/kernelz/include/system/vfs/iso9660.h
+@@ -4,7 +4,7 @@
+ #include <common/types.h>
+ #include <system/vfs/virtualfilesystem.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/vfs/vfsmanager.h b/kernelz/include/system/vfs/vfsmanager.h
+index 00dfc09..fa26ab6 100644
+--- a/kernelz/include/system/vfs/vfsmanager.h
++++ b/kernelz/include/system/vfs/vfsmanager.h
+@@ -3,7 +3,7 @@
+ 
+ #include <system/vfs/virtualfilesystem.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/vfs/virtualfilesystem.h b/kernelz/include/system/vfs/virtualfilesystem.h
+index 5a47556..7102ad0 100644
+--- a/kernelz/include/system/vfs/virtualfilesystem.h
++++ b/kernelz/include/system/vfs/virtualfilesystem.h
+@@ -7,7 +7,7 @@
+ #include <system/disks/disk.h>
+ #include <../../lib/include/shared.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/virtual8086/VM86Args.h b/kernelz/include/system/virtual8086/VM86Args.h
+index 3af00fc..3436d57 100644
+--- a/kernelz/include/system/virtual8086/VM86Args.h
++++ b/kernelz/include/system/virtual8086/VM86Args.h
+@@ -3,7 +3,7 @@
+ 
+ #include <common/types.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/virtual8086/VM86Manager.h b/kernelz/include/system/virtual8086/VM86Manager.h
+index 328f156..f407117 100644
+--- a/kernelz/include/system/virtual8086/VM86Manager.h
++++ b/kernelz/include/system/virtual8086/VM86Manager.h
+@@ -7,7 +7,7 @@
+ #include <core/idt.h>
+ #include <core/tss.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/include/system/virtual8086/VM86Monitor.h b/kernelz/include/system/virtual8086/VM86Monitor.h
+index 9879fed..6fea4fa 100644
+--- a/kernelz/include/system/virtual8086/VM86Monitor.h
++++ b/kernelz/include/system/virtual8086/VM86Monitor.h
+@@ -6,7 +6,7 @@
+ #include <core/port.h>
+ #include <system/bootconsole.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace system
+     {
+diff --git a/kernelz/src/common/convert.cpp b/kernelz/src/common/convert.cpp
+index c1a22ec..f443326 100644
+--- a/kernelz/src/common/convert.cpp
++++ b/kernelz/src/common/convert.cpp
+@@ -1,7 +1,7 @@
+ #include <common/convert.h>
+ #include <common/string.h>
+ 
+-using namespace CactusOS::common;
++using namespace HeisenOs::common;
+ 
+ int IsSpace(char c)
+ {
+diff --git a/kernelz/src/common/memoryoperations.cpp b/kernelz/src/common/memoryoperations.cpp
+index f8eae17..f0fe1c5 100644
+--- a/kernelz/src/common/memoryoperations.cpp
++++ b/kernelz/src/common/memoryoperations.cpp
+@@ -1,6 +1,6 @@
+ #include <common/memoryoperations.h>
+ 
+-using namespace CactusOS::common;
++using namespace HeisenOs::common;
+ 
+ void* MemoryOperations::memmove(void* dstptr, const void* srcptr, uint32_t size)
+ {
+diff --git a/kernelz/src/common/print.cpp b/kernelz/src/common/print.cpp
+index a2b9ea0..613f82e 100644
+--- a/kernelz/src/common/print.cpp
++++ b/kernelz/src/common/print.cpp
+@@ -1,9 +1,9 @@
+ #include <common/print.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::system;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
++using namespace HeisenOs;
++using namespace HeisenOs::system;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
+ 
+ void Print::printfHex(uint8_t key)
+ {
+diff --git a/kernelz/src/common/random.cpp b/kernelz/src/common/random.cpp
+index 000410e..14544a8 100644
+--- a/kernelz/src/common/random.cpp
++++ b/kernelz/src/common/random.cpp
+@@ -1,6 +1,6 @@
+ #include <common/random.h>
+ 
+-using namespace CactusOS::common;
++using namespace HeisenOs::common;
+ 
+ uint32_t Random::next;
+ 
+diff --git a/kernelz/src/common/string.cpp b/kernelz/src/common/string.cpp
+index 308887a..1aeeeab 100644
+--- a/kernelz/src/common/string.cpp
++++ b/kernelz/src/common/string.cpp
+@@ -1,7 +1,7 @@
+ #include <common/string.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
+ 
+ int String::strlen(const char* str)
+ {
+diff --git a/kernelz/src/core/cpu.cpp b/kernelz/src/core/cpu.cpp
+index f3a839f..a53af8b 100644
+--- a/kernelz/src/core/cpu.cpp
++++ b/kernelz/src/core/cpu.cpp
+@@ -1,10 +1,10 @@
+ #include <core/cpu.h>
+ #include <system/bootconsole.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::core;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::core;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
+ 
+ extern "C" void EnableSSE();
+ 
+diff --git a/kernelz/src/core/exceptions.cpp b/kernelz/src/core/exceptions.cpp
+index 1e91e5c..fac54cb 100644
+--- a/kernelz/src/core/exceptions.cpp
++++ b/kernelz/src/core/exceptions.cpp
+@@ -2,10 +2,10 @@
+ #include <system/system.h>
+ #include <common/print.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ // Should we try to automaticaly fix pagefaults?
+ bool autoFixPagefaults = false;
+diff --git a/kernelz/src/core/fpu.cpp b/kernelz/src/core/fpu.cpp
+index 01f3792..ff0931a 100644
+--- a/kernelz/src/core/fpu.cpp
++++ b/kernelz/src/core/fpu.cpp
+@@ -1,9 +1,9 @@
+ #include <core/fpu.h>
+ #include <common/memoryoperations.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
+ 
+ void FPU::Enable()
+ {
+diff --git a/kernelz/src/core/gdt.cpp b/kernelz/src/core/gdt.cpp
+index d9aee48..7b0a09c 100644
+--- a/kernelz/src/core/gdt.cpp
++++ b/kernelz/src/core/gdt.cpp
+@@ -1,7 +1,7 @@
+ #include <core/gdt.h>
+ 
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
+ 
+ /*/////////////////
+ // Variables
+diff --git a/kernelz/src/core/idt.cpp b/kernelz/src/core/idt.cpp
+index f8cb572..1e1fed4 100644
+--- a/kernelz/src/core/idt.cpp
++++ b/kernelz/src/core/idt.cpp
+@@ -1,9 +1,9 @@
+ #include <core/idt.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ /*/////////////////
+ // Variables
+diff --git a/kernelz/src/core/physicalmemory.cpp b/kernelz/src/core/physicalmemory.cpp
+index 0a26b0a..0a885fe 100644
+--- a/kernelz/src/core/physicalmemory.cpp
++++ b/kernelz/src/core/physicalmemory.cpp
+@@ -1,10 +1,10 @@
+ #include <core/physicalmemory.h>
+ #include <common/print.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ uint32_t PhysicalMemoryManager::memorySize = 0;
+ uint32_t PhysicalMemoryManager::usedBlocks = 0;
+diff --git a/kernelz/src/core/power.cpp b/kernelz/src/core/power.cpp
+index 32b0375..050de22 100644
+--- a/kernelz/src/core/power.cpp
++++ b/kernelz/src/core/power.cpp
+@@ -2,10 +2,10 @@
+ #include <core/idt.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ ////////////
+ // Shutdown code from: https://forum.osdev.org/viewtopic.php?t=16990
+diff --git a/kernelz/src/core/tss.cpp b/kernelz/src/core/tss.cpp
+index 266cdc0..57454f3 100644
+--- a/kernelz/src/core/tss.cpp
++++ b/kernelz/src/core/tss.cpp
+@@ -1,8 +1,8 @@
+ #include <core/tss.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
+ 
+ static TSSEntry tss;
+ 
+diff --git a/kernelz/src/core/virtualmemory.cpp b/kernelz/src/core/virtualmemory.cpp
+index 94013ed..4d1ad4f 100644
+--- a/kernelz/src/core/virtualmemory.cpp
++++ b/kernelz/src/core/virtualmemory.cpp
+@@ -2,10 +2,10 @@
+ #include <system/log.h>
+ #include <system/debugger.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ void VirtualMemoryManager::ReloadCR3()
+ {
+diff --git a/kernelz/src/gdb/gdbimpl.cpp b/kernelz/src/gdb/gdbimpl.cpp
+index b37409e..6880190 100644
+--- a/kernelz/src/gdb/gdbimpl.cpp
++++ b/kernelz/src/gdb/gdbimpl.cpp
+@@ -4,10 +4,10 @@
+ #include <common/convert.h>
+ #include <common/string.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ extern "C" void _putDebugChar(char a)
+ {
+diff --git a/kernelz/src/installer/installer.cpp b/kernelz/src/installer/installer.cpp
+index 812ec01..357d367 100644
+--- a/kernelz/src/installer/installer.cpp
++++ b/kernelz/src/installer/installer.cpp
+@@ -4,11 +4,11 @@
+ #include <core/power.h>
+ #include <system/vfs/fat.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ 
+ #define SECTORS_PER_TRACK 80
+ 
+@@ -29,7 +29,7 @@ char* FileList[] = {
+     "B:\\setup\\warning.txt",
+ };
+ 
+-// Modules required by grub in order to boot CactusOS
++// Modules required by grub in order to boot HeisenOs
+ char* GrubModules[] = {
+     "B:\\boot\\grub\\i386-pc\\bufio.mod",
+     "B:\\boot\\grub\\i386-pc\\gettext.mod",
+@@ -161,7 +161,7 @@ void Installer::ShowWarningMessage()
+ void Installer::ShowDiskSelection()
+ {
+     TextGUI::ClearScreen(VGA_COLOR_BLUE);
+-    TextGUI::DrawString("Select a disk to install CactusOS to:", 0, 0);
++    TextGUI::DrawString("Select a disk to install HeisenOs to:", 0, 0);
+     TextGUI::StatusBar("Select disk.    [Up/Down/Enter]", 10);
+ 
+     const int optionStart = 5; //Rows between options to start
+@@ -243,7 +243,7 @@ void Installer::ShowDiskEraseMenu()
+ void Installer::ShowInstallScreen()
+ {
+     TextGUI::ClearScreen();
+-    TextGUI::DrawString("You are about to start the installation of CactusOS to your hard drive", 0, 0);
++    TextGUI::DrawString("You are about to start the installation of HeisenOs to your hard drive", 0, 0);
+     TextGUI::DrawString("The installation process will contain the following:", 0, 1);
+     TextGUI::DrawString("   - Replace the MBR with grub stage1 boot code + partition table", 0, 2);
+     TextGUI::DrawString("   - Copy rest of the bootloader to harddisk", 0, 3);
+@@ -481,7 +481,7 @@ void Installer::CreateFatPartition(PartitionTableEntry* pEntry)
+     biosParameterBlock.bootCode[1] = 0x3C;
+     biosParameterBlock.bootCode[2] = 0x90;
+ 
+-    MemoryOperations::memcpy(biosParameterBlock.Oem_Id, "CactusOS", 8);
++    MemoryOperations::memcpy(biosParameterBlock.Oem_Id, "HeisenOs", 8);
+     biosParameterBlock.bytesPerSector = 512;
+     biosParameterBlock.SectorsPerCluster = sizeMB > 32_KB ? 64 : sizeMB > 16_KB ? 32 : sizeMB > 8_KB ? 16 : sizeMB > 260 ? 8 : 1; //_KB Can be a bit misleading, we are comparing MB with MB
+     biosParameterBlock.ReservedSectors = 32;
+@@ -512,7 +512,7 @@ void Installer::CreateFatPartition(PartitionTableEntry* pEntry)
+ 
+     char volumeID[4] = { (char)System::rtc->GetSecond(), (char)System::rtc->GetDay(), (char)System::rtc->GetMonth(), (char)(System::rtc->GetYear() - 2000) };
+     biosParameterBlock.VolumeIDSerial = *(uint32_t*)volumeID;
+-    MemoryOperations::memcpy(biosParameterBlock.VolumeLabel, "CactusOS HD", 11);
++    MemoryOperations::memcpy(biosParameterBlock.VolumeLabel, "HeisenOs HD", 11);
+     MemoryOperations::memcpy(biosParameterBlock.SystemIDString, "FAT32   ", 8);
+     biosParameterBlock.BootSignature = 0xAA55;
+ 
+diff --git a/kernelz/src/installer/textgui.cpp b/kernelz/src/installer/textgui.cpp
+index 366fa65..6dca193 100644
+--- a/kernelz/src/installer/textgui.cpp
++++ b/kernelz/src/installer/textgui.cpp
+@@ -2,10 +2,10 @@
+ #include <common/types.h>
+ #include <core/port.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
+-using namespace CactusOS::core;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
++using namespace HeisenOs::core;
+ 
+ volatile uint16_t* videoMemory = (uint16_t*)0xC00B8000;
+ 
+diff --git a/kernelz/src/kernel.cpp b/kernelz/src/kernel.cpp
+index 14bc051..f6dca39 100644
+--- a/kernelz/src/kernel.cpp
++++ b/kernelz/src/kernel.cpp
+@@ -16,10 +16,10 @@
+ #include <core/power.h>
+ #include <installer/installer.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ extern "C" uint32_t _kernel_base;
+ extern "C" uint32_t _kernel_end;
+diff --git a/kernelz/src/system/bootconsole.cpp b/kernelz/src/system/bootconsole.cpp
+index 0b4ff8f..bd5de79 100644
+--- a/kernelz/src/system/bootconsole.cpp
++++ b/kernelz/src/system/bootconsole.cpp
+@@ -1,8 +1,8 @@
+ #include <system/bootconsole.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
+ 
+ /*/////////////////
+ // Static variable initialisations
+@@ -50,7 +50,7 @@ void BootConsole::Init(bool enableSerial)
+     if(enableSerial)
+     {
+         Serialport::Init(COMPort::COM1);
+-        BootConsole::WriteLine("Start of serial log for CactusOS");
++        BootConsole::WriteLine("Start of serial log for HeisenOs");
+     }
+ }
+ 
+diff --git a/kernelz/src/system/components/apm.cpp b/kernelz/src/system/components/apm.cpp
+index 6ee93cb..ced36ef 100644
+--- a/kernelz/src/system/components/apm.cpp
++++ b/kernelz/src/system/components/apm.cpp
+@@ -2,10 +2,10 @@
+ 
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ APMController::APMController()
+ : SystemComponent("APM Controller", "Controls Advanced Power Management via BIOS calls")
+diff --git a/kernelz/src/system/components/bochsvbe.cpp b/kernelz/src/system/components/bochsvbe.cpp
+index df4b0a4..449e5fc 100644
+--- a/kernelz/src/system/components/bochsvbe.cpp
++++ b/kernelz/src/system/components/bochsvbe.cpp
+@@ -5,10 +5,10 @@ https://wiki.osdev.org/Bochs_VBE_Extensions
+ #include <system/components/bochsvbe.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
+-using namespace CactusOS::core;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
++using namespace HeisenOs::core;
+ 
+ BochsVBE::BochsVBE()
+ : GraphicsDevice("Bochs VBE Adapter"),
+diff --git a/kernelz/src/system/components/dma.cpp b/kernelz/src/system/components/dma.cpp
+index e2dcf96..9c1aa84 100644
+--- a/kernelz/src/system/components/dma.cpp
++++ b/kernelz/src/system/components/dma.cpp
+@@ -2,10 +2,10 @@
+ 
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ DMAController::DMAController()
+ : SystemComponent("Direct Memory Access Controller (DMA)", "Controller for the legacy Intel 8237 DMA chip")
+diff --git a/kernelz/src/system/components/edid.cpp b/kernelz/src/system/components/edid.cpp
+index eaf9833..27c55a8 100644
+--- a/kernelz/src/system/components/edid.cpp
++++ b/kernelz/src/system/components/edid.cpp
+@@ -2,10 +2,10 @@
+ 
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ uint8_t* edidBuffer = 0;
+ 
+diff --git a/kernelz/src/system/components/graphicsdevice.cpp b/kernelz/src/system/components/graphicsdevice.cpp
+index 5391977..b820b1c 100644
+--- a/kernelz/src/system/components/graphicsdevice.cpp
++++ b/kernelz/src/system/components/graphicsdevice.cpp
+@@ -3,9 +3,9 @@
+ #include <system/components/vesa.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
+ 
+ GraphicsDevice::GraphicsDevice(char* name)
+ {
+diff --git a/kernelz/src/system/components/pci.cpp b/kernelz/src/system/components/pci.cpp
+index d97713c..03f86fb 100644
+--- a/kernelz/src/system/components/pci.cpp
++++ b/kernelz/src/system/components/pci.cpp
+@@ -1,10 +1,10 @@
+ #include <system/components/pci.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ bool PCIController::DeviceHasFunctions(uint16_t bus, uint16_t device)
+ {
+diff --git a/kernelz/src/system/components/pit.cpp b/kernelz/src/system/components/pit.cpp
+index 2db86a6..07a49a4 100644
+--- a/kernelz/src/system/components/pit.cpp
++++ b/kernelz/src/system/components/pit.cpp
+@@ -1,10 +1,10 @@
+ #include <system/components/pit.h>
+ #include <core/idt.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ PIT::PIT()
+ : SystemComponent("PIT", "Legacy Programmable Interval Timer"),
+diff --git a/kernelz/src/system/components/rtc.cpp b/kernelz/src/system/components/rtc.cpp
+index 291c790..7975fb4 100644
+--- a/kernelz/src/system/components/rtc.cpp
++++ b/kernelz/src/system/components/rtc.cpp
+@@ -1,9 +1,9 @@
+ #include <system/components/rtc.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ bool RTC::UpdateInProgress()
+ {
+diff --git a/kernelz/src/system/components/smbios.cpp b/kernelz/src/system/components/smbios.cpp
+index 1966842..e90c44d 100644
+--- a/kernelz/src/system/components/smbios.cpp
++++ b/kernelz/src/system/components/smbios.cpp
+@@ -2,9 +2,9 @@
+ #include <system/system.h>
+ #include <system/listings/systeminfo.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
+ 
+ char* SMBIOS::CopyString(char* src)
+ {
+diff --git a/kernelz/src/system/components/systemcomponents.cpp b/kernelz/src/system/components/systemcomponents.cpp
+index a3df66a..faf3c91 100644
+--- a/kernelz/src/system/components/systemcomponents.cpp
++++ b/kernelz/src/system/components/systemcomponents.cpp
+@@ -1,8 +1,8 @@
+ #include <system/components/systemcomponent.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
+ 
+ SystemComponent::SystemComponent(char* name, char* description)
+ {
+diff --git a/kernelz/src/system/components/vesa.cpp b/kernelz/src/system/components/vesa.cpp
+index f898816..b0b3029 100644
+--- a/kernelz/src/system/components/vesa.cpp
++++ b/kernelz/src/system/components/vesa.cpp
+@@ -5,10 +5,10 @@ http://www.petesqbsite.com/sections/tutorials/tuts/vbe3.pdf
+ #include <system/components/vesa.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
+-using namespace CactusOS::core;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
++using namespace HeisenOs::core;
+ 
+ uint16_t* RealPTRToAddr(Real_Pointer ptr){
+     return (uint16_t*)((ptr.B * 0x10) + ptr.A);
+diff --git a/kernelz/src/system/debugger.cpp b/kernelz/src/system/debugger.cpp
+index 7b744c8..cf82fce 100644
+--- a/kernelz/src/system/debugger.cpp
++++ b/kernelz/src/system/debugger.cpp
+@@ -3,10 +3,10 @@
+ #include <system/memory/deviceheap.h>
+ #include <system/listings/systeminfo.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
+-using namespace CactusOS::core;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
++using namespace HeisenOs::core;
+ 
+ SymbolDebugger::SymbolDebugger(char* symFile, bool kernel)
+ {
+diff --git a/kernelz/src/system/disks/disk.cpp b/kernelz/src/system/disks/disk.cpp
+index d4efb7c..ed7e8a8 100644
+--- a/kernelz/src/system/disks/disk.cpp
++++ b/kernelz/src/system/disks/disk.cpp
+@@ -1,9 +1,9 @@
+ #include <system/disks/disk.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
+ 
+ Disk::Disk(uint32_t controllerIndex, DiskController* controller, DiskType type, uint64_t size, uint32_t blocks, uint32_t blocksize)
+ {
+diff --git a/kernelz/src/system/disks/diskcontroller.cpp b/kernelz/src/system/disks/diskcontroller.cpp
+index c9ec40c..3577753 100644
+--- a/kernelz/src/system/disks/diskcontroller.cpp
++++ b/kernelz/src/system/disks/diskcontroller.cpp
+@@ -1,8 +1,8 @@
+ #include <system/disks/diskcontroller.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
+ 
+ DiskController::DiskController()
+ { }
+diff --git a/kernelz/src/system/disks/diskmanager.cpp b/kernelz/src/system/disks/diskmanager.cpp
+index 065a6b5..059264b 100644
+--- a/kernelz/src/system/disks/diskmanager.cpp
++++ b/kernelz/src/system/disks/diskmanager.cpp
+@@ -3,10 +3,10 @@
+ #include <system/drivers/disk/ide.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ 
+ // VM86 Function to get info about a specific disk device
+ // We must do it this way because the DS:SI gets used by the CallInterrupt() method
+diff --git a/kernelz/src/system/disks/partitionmanager.cpp b/kernelz/src/system/disks/partitionmanager.cpp
+index 120c100..ac7f6a1 100644
+--- a/kernelz/src/system/disks/partitionmanager.cpp
++++ b/kernelz/src/system/disks/partitionmanager.cpp
+@@ -4,10 +4,10 @@
+ #include <system/vfs/fat.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ void PartitionManager::DetectAndLoadFilesystem(Disk* disk)
+ {
+diff --git a/kernelz/src/system/drivers/disk/ahci/ahcicontroller.cpp b/kernelz/src/system/drivers/disk/ahci/ahcicontroller.cpp
+index be9270e..2eb2c42 100644
+--- a/kernelz/src/system/drivers/disk/ahci/ahcicontroller.cpp
++++ b/kernelz/src/system/drivers/disk/ahci/ahcicontroller.cpp
+@@ -5,11 +5,11 @@
+ #include <system/tasking/lock.h>
+ #include <system/memory/deviceheap.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ 
+ 
+ uint32_t AHCIController::readRegister(uint32_t offset)
+diff --git a/kernelz/src/system/drivers/disk/ahci/ahciport.cpp b/kernelz/src/system/drivers/disk/ahci/ahciport.cpp
+index e92872d..0ff802e 100644
+--- a/kernelz/src/system/drivers/disk/ahci/ahciport.cpp
++++ b/kernelz/src/system/drivers/disk/ahci/ahciport.cpp
+@@ -8,11 +8,11 @@
+ #include <system/drivers/disk/ide.h>
+ #include <system/disks/disk.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ 
+ uint32_t AHCIPort::readRegister(uint32_t offset)
+ {
+diff --git a/kernelz/src/system/drivers/disk/ide.cpp b/kernelz/src/system/drivers/disk/ide.cpp
+index 56617ac..96103f5 100644
+--- a/kernelz/src/system/drivers/disk/ide.cpp
++++ b/kernelz/src/system/drivers/disk/ide.cpp
+@@ -3,11 +3,11 @@
+ #include <system/tasking/scheduler.h>
+ #include <system/tasking/lock.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ 
+ IDEInterruptHandler::IDEInterruptHandler(IDEController* parent, uint8_t interrupt)
+ : InterruptHandler(IDT_INTERRUPT_OFFSET + interrupt)
+diff --git a/kernelz/src/system/drivers/driver.cpp b/kernelz/src/system/drivers/driver.cpp
+index e52b838..e05724c 100644
+--- a/kernelz/src/system/drivers/driver.cpp
++++ b/kernelz/src/system/drivers/driver.cpp
+@@ -1,9 +1,9 @@
+ #include <system/drivers/driver.h>
+ #include <system/log.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ 
+ Driver::Driver(char* name, char* description)
+ {
+diff --git a/kernelz/src/system/drivers/drivermanager.cpp b/kernelz/src/system/drivers/drivermanager.cpp
+index 3e0ce12..7e0bb59 100644
+--- a/kernelz/src/system/drivers/drivermanager.cpp
++++ b/kernelz/src/system/drivers/drivermanager.cpp
+@@ -1,9 +1,9 @@
+ #include <system/drivers/drivermanager.h>
+ #include <system/log.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ 
+ DriverManager::DriverManager()
+ {
+diff --git a/kernelz/src/system/drivers/integrated/floppy.cpp b/kernelz/src/system/drivers/integrated/floppy.cpp
+index cc08da2..9cd799d 100644
+--- a/kernelz/src/system/drivers/integrated/floppy.cpp
++++ b/kernelz/src/system/drivers/integrated/floppy.cpp
+@@ -3,11 +3,11 @@
+ #include <system/memory/deviceheap.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
+-using namespace CactusOS::core;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
++using namespace HeisenOs::core;
+ 
+ static const char* FloppyTypes[8] = {
+     "none",
+diff --git a/kernelz/src/system/drivers/integrated/ps2-keyboard.cpp b/kernelz/src/system/drivers/integrated/ps2-keyboard.cpp
+index 406283e..70bf6f3 100644
+--- a/kernelz/src/system/drivers/integrated/ps2-keyboard.cpp
++++ b/kernelz/src/system/drivers/integrated/ps2-keyboard.cpp
+@@ -3,11 +3,11 @@
+ #include <system/bootconsole.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
+-using namespace CactusOS::core;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
++using namespace HeisenOs::core;
+ 
+ PS2KeyboardDriver::PS2KeyboardDriver()
+ : InterruptHandler(0x21), Keyboard(KeyboardType::PS2), Driver("PS2 Keyboard", "Driver for a generic ps2 keyboard"), FIFOStream(100)
+diff --git a/kernelz/src/system/drivers/integrated/ps2-mouse.cpp b/kernelz/src/system/drivers/integrated/ps2-mouse.cpp
+index 24566cf..aed8a0b 100644
+--- a/kernelz/src/system/drivers/integrated/ps2-mouse.cpp
++++ b/kernelz/src/system/drivers/integrated/ps2-mouse.cpp
+@@ -2,11 +2,11 @@
+ #include <core/port.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
+-using namespace CactusOS::core;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
++using namespace HeisenOs::core;
+ 
+ PS2MouseDriver::PS2MouseDriver()
+ : InterruptHandler(0x2C), Driver("PS2 Mouse", "Driver for a generic ps2 mouse")
+diff --git a/kernelz/src/system/drivers/pcidrivers.cpp b/kernelz/src/system/drivers/pcidrivers.cpp
+index 3dd4c80..8b10b11 100644
+--- a/kernelz/src/system/drivers/pcidrivers.cpp
++++ b/kernelz/src/system/drivers/pcidrivers.cpp
+@@ -10,11 +10,11 @@
+ #include <system/drivers/video/vmwaresvga.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ 
+ 
+ PCIAttachedDriverEntry pciDriverList[] = 
+diff --git a/kernelz/src/system/drivers/usb/controllers/ehci.cpp b/kernelz/src/system/drivers/usb/controllers/ehci.cpp
+index cbad347..8304413 100644
+--- a/kernelz/src/system/drivers/usb/controllers/ehci.cpp
++++ b/kernelz/src/system/drivers/usb/controllers/ehci.cpp
+@@ -3,11 +3,11 @@
+ #include <system/memory/deviceheap.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ 
+ EHCIController::EHCIController(PCIDevice* device)
+ : USBController(EHCI), Driver("EHCI USB Controller", "Controller for a EHCI device")
+diff --git a/kernelz/src/system/drivers/usb/controllers/ohci.cpp b/kernelz/src/system/drivers/usb/controllers/ohci.cpp
+index f7f7fad..bef9717 100644
+--- a/kernelz/src/system/drivers/usb/controllers/ohci.cpp
++++ b/kernelz/src/system/drivers/usb/controllers/ohci.cpp
+@@ -4,11 +4,11 @@
+ #include <system/drivers/usb/usbdefs.h>
+ #include <system/drivers/usb/usbdriver.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ 
+ OHCIController::OHCIController(PCIDevice* device)
+ : USBController(OHCI), Driver("OHCI USB Controller", "Controller for a OHCI device"),
+diff --git a/kernelz/src/system/drivers/usb/controllers/uhci.cpp b/kernelz/src/system/drivers/usb/controllers/uhci.cpp
+index d140b4b..51894ca 100644
+--- a/kernelz/src/system/drivers/usb/controllers/uhci.cpp
++++ b/kernelz/src/system/drivers/usb/controllers/uhci.cpp
+@@ -3,11 +3,11 @@
+ #include <system/drivers/usb/usbdriver.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ 
+ UHCIController::UHCIController(PCIDevice* device)
+ : USBController(UHCI), Driver("UHCI USB Controller", "Controller for a UHCI device"), InterruptHandler(IDT_INTERRUPT_OFFSET + device->interrupt)
+diff --git a/kernelz/src/system/drivers/usb/controllers/xhci.cpp b/kernelz/src/system/drivers/usb/controllers/xhci.cpp
+index 85f84f7..7e78da9 100644
+--- a/kernelz/src/system/drivers/usb/controllers/xhci.cpp
++++ b/kernelz/src/system/drivers/usb/controllers/xhci.cpp
+@@ -3,11 +3,11 @@
+ #include <system/drivers/usb/controllers/xhci.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ 
+ XHCIController::XHCIController(PCIDevice* device)
+ : USBController(xHCI), Driver("XHCI USB Controller", "Controller for a XHCI device"),
+diff --git a/kernelz/src/system/drivers/usb/mass_storage.cpp b/kernelz/src/system/drivers/usb/mass_storage.cpp
+index 689eb35..6d33e91 100644
+--- a/kernelz/src/system/drivers/usb/mass_storage.cpp
++++ b/kernelz/src/system/drivers/usb/mass_storage.cpp
+@@ -3,11 +3,11 @@
+ #include <system/log.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ 
+ // Create new driver for a MSD
+ USBMassStorageDriver::USBMassStorageDriver(USBDevice* dev)
+diff --git a/kernelz/src/system/drivers/usb/usbcomborecv.cpp b/kernelz/src/system/drivers/usb/usbcomborecv.cpp
+index d57e0b7..45861a3 100644
+--- a/kernelz/src/system/drivers/usb/usbcomborecv.cpp
++++ b/kernelz/src/system/drivers/usb/usbcomborecv.cpp
+@@ -4,11 +4,11 @@
+ #include <system/system.h>
+ #include <system/usb/hidparser.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ 
+ USBComboReceiver::USBComboReceiver(USBDevice* dev)
+ : USBDriver(dev, "USB Combo Receiver"), Keyboard(KeyboardType::USB)
+diff --git a/kernelz/src/system/drivers/usb/usbdriver.cpp b/kernelz/src/system/drivers/usb/usbdriver.cpp
+index 99a116e..2dc8597 100644
+--- a/kernelz/src/system/drivers/usb/usbdriver.cpp
++++ b/kernelz/src/system/drivers/usb/usbdriver.cpp
+@@ -1,11 +1,11 @@
+ #include <system/drivers/usb/usbdriver.h>
+ #include <system/log.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ 
+ USBDriver::USBDriver(USBDevice* dev, char* driverName)
+ : Driver(driverName)
+diff --git a/kernelz/src/system/drivers/usb/usbkeyboard.cpp b/kernelz/src/system/drivers/usb/usbkeyboard.cpp
+index 24c8daa..30a4aec 100644
+--- a/kernelz/src/system/drivers/usb/usbkeyboard.cpp
++++ b/kernelz/src/system/drivers/usb/usbkeyboard.cpp
+@@ -4,11 +4,11 @@
+ #include <system/system.h>
+ #include <system/usb/hidparser.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ 
+ USBKeyboard::USBKeyboard(USBDevice* dev)
+ : USBDriver(dev, "USB HID Keyboard"), Keyboard(KeyboardType::USB)
+diff --git a/kernelz/src/system/drivers/usb/usbmouse.cpp b/kernelz/src/system/drivers/usb/usbmouse.cpp
+index 5a13396..2954996 100644
+--- a/kernelz/src/system/drivers/usb/usbmouse.cpp
++++ b/kernelz/src/system/drivers/usb/usbmouse.cpp
+@@ -4,11 +4,11 @@
+ #include <system/system.h>
+ #include <system/usb/hidparser.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ 
+ USBMouse::USBMouse(USBDevice* dev)
+ : USBDriver(dev, "USB HID Mouse")
+diff --git a/kernelz/src/system/drivers/video/vmwaresvga.cpp b/kernelz/src/system/drivers/video/vmwaresvga.cpp
+index 4dbddfe..cb51bda 100644
+--- a/kernelz/src/system/drivers/video/vmwaresvga.cpp
++++ b/kernelz/src/system/drivers/video/vmwaresvga.cpp
+@@ -2,11 +2,11 @@
+ 
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
+-using namespace CactusOS::core;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
++using namespace HeisenOs::core;
+ 
+ VMWARESVGAII::VMWARESVGAII(PCIDevice* pciDev)
+ : Driver("VMWare SVGAII", "VMWare Graphics Adapter"),
+diff --git a/kernelz/src/system/initrd.cpp b/kernelz/src/system/initrd.cpp
+index 9972ceb..5112041 100644
+--- a/kernelz/src/system/initrd.cpp
++++ b/kernelz/src/system/initrd.cpp
+@@ -1,9 +1,9 @@
+ #include <system/initrd.h>
+ #include <system/log.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
+ 
+ void* locationInMemory = 0;
+ 
+diff --git a/kernelz/src/system/input/keyboard.cpp b/kernelz/src/system/input/keyboard.cpp
+index 3a42cdb..daacb86 100644
+--- a/kernelz/src/system/input/keyboard.cpp
++++ b/kernelz/src/system/input/keyboard.cpp
+@@ -1,9 +1,9 @@
+ #include <system/input/keyboard.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
+ 
+ Keyboard::Keyboard(KeyboardType type)
+ {
+diff --git a/kernelz/src/system/input/keyboardmanager.cpp b/kernelz/src/system/input/keyboardmanager.cpp
+index a02383f..3100476 100644
+--- a/kernelz/src/system/input/keyboardmanager.cpp
++++ b/kernelz/src/system/input/keyboardmanager.cpp
+@@ -2,9 +2,9 @@
+ #include <../../lib/include/shared.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
+ 
+ KeyboardManager::KeyboardManager()
+ { 
+diff --git a/kernelz/src/system/interruptmanager.cpp b/kernelz/src/system/interruptmanager.cpp
+index 02e52dc..964b8a9 100644
+--- a/kernelz/src/system/interruptmanager.cpp
++++ b/kernelz/src/system/interruptmanager.cpp
+@@ -1,8 +1,8 @@
+ #include <system/interruptmanager.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
+ 
+ 
+ InterruptHandler::InterruptHandler(uint8_t interruptNumber)
+diff --git a/kernelz/src/system/listings/directorylisting.cpp b/kernelz/src/system/listings/directorylisting.cpp
+index 9bc0dc2..c02b6e1 100644
+--- a/kernelz/src/system/listings/directorylisting.cpp
++++ b/kernelz/src/system/listings/directorylisting.cpp
+@@ -1,10 +1,10 @@
+ #include <system/listings/directorylisting.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ // List which holds the files in the current requested directory.
+ List<LIBCactusOS::VFSEntry>* currentDirectoryList = 0;
+diff --git a/kernelz/src/system/listings/listingcontroller.cpp b/kernelz/src/system/listings/listingcontroller.cpp
+index eb62e7e..8c9b1a2 100644
+--- a/kernelz/src/system/listings/listingcontroller.cpp
++++ b/kernelz/src/system/listings/listingcontroller.cpp
+@@ -1,10 +1,10 @@
+ #include <system/listings/listingcontroller.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ ListingController::ListingController()
+ : waitingQueue(), currentReqThread(), requestBusy(false) {}
+diff --git a/kernelz/src/system/listings/systeminfo.cpp b/kernelz/src/system/listings/systeminfo.cpp
+index e3bf9bc..5f2f541 100644
+--- a/kernelz/src/system/listings/systeminfo.cpp
++++ b/kernelz/src/system/listings/systeminfo.cpp
+@@ -1,11 +1,11 @@
+ #include <system/listings/systeminfo.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ 
+ SIBIOS SystemInfoManager::bios;
+ SISYSTEM SystemInfoManager::system;
+diff --git a/kernelz/src/system/log.cpp b/kernelz/src/system/log.cpp
+index 697cd61..fe02118 100644
+--- a/kernelz/src/system/log.cpp
++++ b/kernelz/src/system/log.cpp
+@@ -8,10 +8,10 @@
+ #include <stdbool.h>
+ #include <stdarg.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ char* logLevelMessage[3] {
+     "[Info]",
+@@ -28,7 +28,7 @@ uint32_t GetMSSinceBoot()
+ }
+ #endif
+ 
+-void CactusOS::system::Print(const char* data, uint32_t length) {
++void HeisenOs::system::Print(const char* data, uint32_t length) {
+     if(System::screenMode == ScreenMode::TextMode)
+     {
+         for (uint32_t i = 0; i < length; i++)
+@@ -41,7 +41,7 @@ void CactusOS::system::Print(const char* data, uint32_t length) {
+     }
+ }
+ 
+-void CactusOS::system::Log(LogLevel level, const char* __restrict__ format, ...)
++void HeisenOs::system::Log(LogLevel level, const char* __restrict__ format, ...)
+ {
+     uint8_t prevColor = BootConsole::ForegroundColor;
+     if(System::screenMode == ScreenMode::TextMode)
+diff --git a/kernelz/src/system/memory/deviceheap.cpp b/kernelz/src/system/memory/deviceheap.cpp
+index f6bd396..9b6f35d 100644
+--- a/kernelz/src/system/memory/deviceheap.cpp
++++ b/kernelz/src/system/memory/deviceheap.cpp
+@@ -2,10 +2,10 @@
+ #include <system/memory/heap.h>
+ #include <system/log.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ uint32_t DeviceHeap::currentAddress = DEVICE_HEAP_START;
+ 
+diff --git a/kernelz/src/system/memory/fifostream.cpp b/kernelz/src/system/memory/fifostream.cpp
+index 276d49e..22de163 100644
+--- a/kernelz/src/system/memory/fifostream.cpp
++++ b/kernelz/src/system/memory/fifostream.cpp
+@@ -1,9 +1,9 @@
+ #include <system/memory/fifostream.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
+ 
+ FIFOStream::FIFOStream(int capacity)
+ {
+diff --git a/kernelz/src/system/memory/heap.cpp b/kernelz/src/system/memory/heap.cpp
+index 3cf2a3c..2792207 100644
+--- a/kernelz/src/system/memory/heap.cpp
++++ b/kernelz/src/system/memory/heap.cpp
+@@ -1,10 +1,10 @@
+ #include <system/memory/heap.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ uint32_t KernelHeap::startAddress = 0;
+ uint32_t KernelHeap::endAddress = 0;
+diff --git a/kernelz/src/system/memory/sharedmem.cpp b/kernelz/src/system/memory/sharedmem.cpp
+index d7f67a1..dcba510 100644
+--- a/kernelz/src/system/memory/sharedmem.cpp
++++ b/kernelz/src/system/memory/sharedmem.cpp
+@@ -2,10 +2,10 @@
+ #include <core/virtualmemory.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ bool SharedMemory::CreateSharedRegion(Process* proc1, Process* proc2, uint32_t virtStart, uint32_t len)
+ {
+diff --git a/kernelz/src/system/memory/stream.cpp b/kernelz/src/system/memory/stream.cpp
+index 6f7ac5f..31a49b0 100644
+--- a/kernelz/src/system/memory/stream.cpp
++++ b/kernelz/src/system/memory/stream.cpp
+@@ -1,9 +1,9 @@
+ #include <system/memory/stream.h>
+ #include <system/log.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
+ 
+ Stream::Stream() {}
+ Stream::~Stream() {}
+diff --git a/kernelz/src/system/serialport.cpp b/kernelz/src/system/serialport.cpp
+index 43f1630..a4e77d8 100644
+--- a/kernelz/src/system/serialport.cpp
++++ b/kernelz/src/system/serialport.cpp
+@@ -1,9 +1,9 @@
+ #include <system/serialport.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ /*/////////////////
+ // Static variable initialisations
+diff --git a/kernelz/src/system/syscalls/implementations/cactusos.cpp b/kernelz/src/system/syscalls/implementations/cactusos.cpp
+index edfd816..397870b 100644
+--- a/kernelz/src/system/syscalls/implementations/cactusos.cpp
++++ b/kernelz/src/system/syscalls/implementations/cactusos.cpp
+@@ -10,10 +10,10 @@
+ #include <system/listings/listingcontroller.h>
+ #include <system/listings/systeminfo.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ MutexLock stdOutStream;
+ extern PowerRequest powerRequestState; //Defined in kernel.cpp
+diff --git a/kernelz/src/system/syscalls/implementations/linux.cpp b/kernelz/src/system/syscalls/implementations/linux.cpp
+index ec273ec..cac9f80 100644
+--- a/kernelz/src/system/syscalls/implementations/linux.cpp
++++ b/kernelz/src/system/syscalls/implementations/linux.cpp
+@@ -2,17 +2,17 @@
+ 
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ CPUState* LinuxSyscalls::HandleSyscall(CPUState* state)
+ {
+     switch (state->EAX)
+     {
+-        case 0xFFFF: //We use this systemcall for setting the CactusOS Syscall implementation for this process since linux is the default one
+-            //From now on this uses CactusOS Systemcalls
++        case 0xFFFF: //We use this systemcall for setting the HeisenOs Syscall implementation for this process since linux is the default one
++            //From now on this uses HeisenOs Systemcalls
+             System::scheduler->CurrentProcess()->syscallID = 1;
+             //Return a succes
+             state->EAX = System::scheduler->CurrentProcess()->id; //Return the pid
+diff --git a/kernelz/src/system/syscalls/syscalls.cpp b/kernelz/src/system/syscalls/syscalls.cpp
+index 0a90789..2a630fa 100644
+--- a/kernelz/src/system/syscalls/syscalls.cpp
++++ b/kernelz/src/system/syscalls/syscalls.cpp
+@@ -4,10 +4,10 @@
+ #include <system/syscalls/implementations/cactusos.h>
+ #include <system/syscalls/implementations/linux.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
+-using namespace CactusOS::core;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
++using namespace HeisenOs::core;
+ 
+ SystemCallHandler::SystemCallHandler()
+ : InterruptHandler(0x80) {
+@@ -26,7 +26,7 @@ uint32_t SystemCallHandler::HandleInterrupt(uint32_t esp)
+         case 0: //Linux Systemcall
+             return (uint32_t)LinuxSyscalls::HandleSyscall((CPUState*)esp);
+             break;
+-        case 1: //CactusOS Systemcall
++        case 1: //HeisenOs Systemcall
+             return (uint32_t)CactusOSSyscalls::HandleSyscall((CPUState*)esp);
+             break;   
+         default:
+diff --git a/kernelz/src/system/system.cpp b/kernelz/src/system/system.cpp
+index 344b17d..4bc07d4 100644
+--- a/kernelz/src/system/system.cpp
++++ b/kernelz/src/system/system.cpp
+@@ -1,11 +1,11 @@
+ #include <system/system.h>
+ #include <system/listings/directorylisting.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ using namespace LIBCactusOS;
+ 
+ multiboot_info_t* System::mbi = 0;
+diff --git a/kernelz/src/system/tasking/ipcmanager.cpp b/kernelz/src/system/tasking/ipcmanager.cpp
+index 3622cd0..053ac98 100644
+--- a/kernelz/src/system/tasking/ipcmanager.cpp
++++ b/kernelz/src/system/tasking/ipcmanager.cpp
+@@ -2,10 +2,10 @@
+ #include <system/tasking/ipcmanager.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ List<IPCReceiveDescriptor>* receivingBlockedList;
+ void IPCManager::Initialize()
+diff --git a/kernelz/src/system/tasking/lock.cpp b/kernelz/src/system/tasking/lock.cpp
+index d995c1f..249a41e 100644
+--- a/kernelz/src/system/tasking/lock.cpp
++++ b/kernelz/src/system/tasking/lock.cpp
+@@ -1,8 +1,8 @@
+ #include <system/tasking/lock.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::system;
+ 
+ extern "C" int TestAndSet(int newValue, int* ptr);
+ 
+diff --git a/kernelz/src/system/tasking/process.cpp b/kernelz/src/system/tasking/process.cpp
+index 813b5da..016f6da 100644
+--- a/kernelz/src/system/tasking/process.cpp
++++ b/kernelz/src/system/tasking/process.cpp
+@@ -4,10 +4,10 @@
+ #include <system/memory/deviceheap.h>
+ #include <system/tasking/elf.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ static int currentPID = 1;
+ List<Process*> ProcessHelper::Processes;
+diff --git a/kernelz/src/system/tasking/scheduler.cpp b/kernelz/src/system/tasking/scheduler.cpp
+index 436b4c8..ec4a258 100644
+--- a/kernelz/src/system/tasking/scheduler.cpp
++++ b/kernelz/src/system/tasking/scheduler.cpp
+@@ -3,10 +3,10 @@
+ #include <system/system.h>
+ #include <core/tss.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
+-using namespace CactusOS::core;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
++using namespace HeisenOs::core;
+ 
+ extern "C" void enter_usermode(uint32_t location, uint32_t stackAddress, uint32_t flags);
+ 
+diff --git a/kernelz/src/system/tasking/thread.cpp b/kernelz/src/system/tasking/thread.cpp
+index eeb8ffa..01c9fbe 100644
+--- a/kernelz/src/system/tasking/thread.cpp
++++ b/kernelz/src/system/tasking/thread.cpp
+@@ -3,10 +3,10 @@
+ #include <system/memory/heap.h> 
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ ThreadHelper::ThreadHelper()
+ {   }
+diff --git a/kernelz/src/system/usb/hidparser.cpp b/kernelz/src/system/usb/hidparser.cpp
+index 8b87881..72e7da4 100644
+--- a/kernelz/src/system/usb/hidparser.cpp
++++ b/kernelz/src/system/usb/hidparser.cpp
+@@ -2,9 +2,9 @@
+ #include <common/memoryoperations.h>
+ #include <system/log.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
+ 
+ #define HID_SHOW_INFO 0
+ 
+diff --git a/kernelz/src/system/usb/usbcontroller.cpp b/kernelz/src/system/usb/usbcontroller.cpp
+index a799401..7b1dbb6 100644
+--- a/kernelz/src/system/usb/usbcontroller.cpp
++++ b/kernelz/src/system/usb/usbcontroller.cpp
+@@ -2,11 +2,11 @@
+ #include <system/drivers/usb/usbdefs.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ 
+ USBController::USBController(USBControllerType usbType)
+ {
+diff --git a/kernelz/src/system/usb/usbdevice.cpp b/kernelz/src/system/usb/usbdevice.cpp
+index 9bcfe69..cf617d4 100644
+--- a/kernelz/src/system/usb/usbdevice.cpp
++++ b/kernelz/src/system/usb/usbdevice.cpp
+@@ -8,11 +8,11 @@
+ #include <system/drivers/usb/usbkeyboard.h>
+ #include <system/drivers/usb/usbcomborecv.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ 
+ char* USBControllerStrings[] =
+ {
+diff --git a/kernelz/src/system/usb/usbendpoint.cpp b/kernelz/src/system/usb/usbendpoint.cpp
+index dd2ba50..aa06542 100644
+--- a/kernelz/src/system/usb/usbendpoint.cpp
++++ b/kernelz/src/system/usb/usbendpoint.cpp
+@@ -1,8 +1,8 @@
+ #include <system/usb/usbendpoint.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
+ 
+ USBEndpoint::USBEndpoint(struct ENDPOINT_DESC* src)
+ {
+diff --git a/kernelz/src/system/usb/usbmanager.cpp b/kernelz/src/system/usb/usbmanager.cpp
+index 65318b9..c00c49a 100644
+--- a/kernelz/src/system/usb/usbmanager.cpp
++++ b/kernelz/src/system/usb/usbmanager.cpp
+@@ -1,11 +1,11 @@
+ #include <system/usb/usbmanager.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
+-using namespace CactusOS::system::drivers;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
++using namespace HeisenOs::system::drivers;
+ 
+ extern char* USBControllerStrings[];
+ 
+diff --git a/kernelz/src/system/vfs/fat.cpp b/kernelz/src/system/vfs/fat.cpp
+index 7e80b84..d241242 100644
+--- a/kernelz/src/system/vfs/fat.cpp
++++ b/kernelz/src/system/vfs/fat.cpp
+@@ -3,9 +3,9 @@
+ #include <system/log.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ FAT::FAT(Disk* disk, uint32_t start, uint32_t size)
+ : VirtualFileSystem(disk, start, size) 
+diff --git a/kernelz/src/system/vfs/iso9660.cpp b/kernelz/src/system/vfs/iso9660.cpp
+index d376dec..ba43362 100644
+--- a/kernelz/src/system/vfs/iso9660.cpp
++++ b/kernelz/src/system/vfs/iso9660.cpp
+@@ -4,9 +4,9 @@
+ 
+ #include <system/memory/heap.h>
+ 
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ //with this we don't need to allocate and free buffers all the time
+ uint8_t readBuffer[CDROM_SECTOR_SIZE];
+diff --git a/kernelz/src/system/vfs/vfsmanager.cpp b/kernelz/src/system/vfs/vfsmanager.cpp
+index 72fb389..964a40c 100644
+--- a/kernelz/src/system/vfs/vfsmanager.cpp
++++ b/kernelz/src/system/vfs/vfsmanager.cpp
+@@ -1,10 +1,10 @@
+ #include <system/vfs/vfsmanager.h>
+ #include <system/system.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ VFSManager::VFSManager()
+ {
+@@ -67,7 +67,7 @@ void VFSManager::UnmountByDisk(Disk* disk)
+ bool VFSManager::SearchBootPartition()
+ {
+     List<Disk*> posibleDisks;
+-    char* pathString = "####:\\boot\\CactusOS.bin";
++    char* pathString = "####:\\boot\\HeisenOs.bin";
+ 
+     // First we create a collection of disks which may be the boot disk
+     // Could be more then one when there are more than 1 cd drives installed
+diff --git a/kernelz/src/system/vfs/virtualfilesystem.cpp b/kernelz/src/system/vfs/virtualfilesystem.cpp
+index 05dd5e2..0b59f5f 100644
+--- a/kernelz/src/system/vfs/virtualfilesystem.cpp
++++ b/kernelz/src/system/vfs/virtualfilesystem.cpp
+@@ -1,9 +1,9 @@
+ #include <system/vfs/virtualfilesystem.h>
+ #include <system/log.h>
+ 
+-using namespace CactusOS::common;
+-using namespace CactusOS::core;
+-using namespace CactusOS::system;
++using namespace HeisenOs::common;
++using namespace HeisenOs::core;
++using namespace HeisenOs::system;
+ 
+ VirtualFileSystem::VirtualFileSystem(Disk* disk, common::uint32_t start, common::uint32_t size, char* name)
+ {
+diff --git a/kernelz/src/system/virtual8086/VM8086Manager.cpp b/kernelz/src/system/virtual8086/VM8086Manager.cpp
+index 0d7e570..5f75fe6 100644
+--- a/kernelz/src/system/virtual8086/VM8086Manager.cpp
++++ b/kernelz/src/system/virtual8086/VM8086Manager.cpp
+@@ -2,10 +2,10 @@
+ #include <system/system.h>
+ #include <system/memory/deviceheap.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
+-using namespace CactusOS::core;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
++using namespace HeisenOs::core;
+ 
+ static const uint16_t codeSegment = 0x2000;
+ static const uint16_t stackSegment = 0x8000;
+diff --git a/kernelz/src/system/virtual8086/VM8086Monitor.cpp b/kernelz/src/system/virtual8086/VM8086Monitor.cpp
+index e743561..10df774 100644
+--- a/kernelz/src/system/virtual8086/VM8086Monitor.cpp
++++ b/kernelz/src/system/virtual8086/VM8086Monitor.cpp
+@@ -2,10 +2,10 @@
+ #include <common/memoryoperations.h>
+ #include <system/log.h>
+ 
+-using namespace CactusOS;
+-using namespace CactusOS::common;
+-using namespace CactusOS::system;
+-using namespace CactusOS::core;
++using namespace HeisenOs;
++using namespace HeisenOs::common;
++using namespace HeisenOs::system;
++using namespace HeisenOs::core;
+ 
+ extern CPUState vm86CPUState;
+ 
+-- 
+2.43.0
+

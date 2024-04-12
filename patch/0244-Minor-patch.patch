@@ -1,0 +1,36 @@
+From 66de78ece804b5b51a13e07924fb818dc4ba2279 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 22:23:09 -0400
+Subject: [PATCH 244/493] Minor patch
+
+---
+ kernelz/obj/boot/loader.o | Bin 9260 -> 0 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ delete mode 100644 kernelz/obj/boot/loader.o
+
+diff --git a/kernelz/obj/boot/loader.o b/kernelz/obj/boot/loader.o
+deleted file mode 100644
+index fa0a974df7a79877640e6fa1748b2f91d38b429f..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 9260
+zcmeHNy^9l35TAS)JwMoZU}a$pih>ZX5EMknCT?QLCKnSU7UH_eEnc`J8+KpB*ywS!
+z_y_2ppkON~<PeeTY%K#8f>ppu57wF8eMz(sixaMxfqnCvk2m|?Z#Ix(9&36b5{ZD6
+z2*hA+0lY{Dk&C`M4~Jn1-XP8@>CZ}PvbB>`(i0`My}5(Co+#<<r^n7>*qeMj5Nrfc
+zB3B8%rR5zho9}TMf8F&wZ=Gy^sWp7ZkMG}h$;ZMBFayj0Gr$Zm1Iz$3zzi@0%m6dM
+z3@`(G$H3O!mEuaw05iZ0Fayj0Gr$Zm1Iz$3u+JIb|Nr~EL3})B;Qul(j=p|%GKTN?
+zxmy47w^z|*0L=!>=L4qRLA0Z@O;b-nOtk`;dM6N2eQ6Vzzh~;52?Apozf53OVCt2F
+zK)5F0HljN-Uj*(F&IXPoB!XFjz=R|gdPF!W<1u&^#z-yWO`b2<l=kuun`RxPQ2c{5
+zQ2S+7y;Q71MXQvmg;gl%YOw(owOGnS{<@YgH<}eFYxSz88@EdJn@v?Wa%w}9zM5Lp
+zjB2xz)9T;~v%O)oY$5C(7_P7fp^H$?wnfdnZ(Zv+R$JK42#gKO>04dnLB|n8vum_W
+z*8;=p3uiR2JADCdv)j$veOEX`+TqT21exJ>tG@;TteBmC(BGo~r|^C>7IKa>+LuTl
+z0Vtx5Vv}{Uk$@YdkAvTr=rS4^chnPR3$<_py)Kbsbu+?xC?K<D3KKFd*M&@P*cF`?
+z-VSYCG1na6<&g?3_HW{!6;l&oI?bxw3o)s9i0Ru~!Y3QrNt|sVOy4kl)0B4z9~xjG
+zd-fUPJ>!0}(Mb~G3kWG+=EYNJEQtJ_te{U~3R50ZIum)mE9hCQmrS7}i%%%B2I;7D
+qqNcnRbkbgIk$(?5BHdM<4IyMt1AHP7imZq2`z^1Ayik9o$h==AP^vZn
+
+-- 
+2.43.0
+

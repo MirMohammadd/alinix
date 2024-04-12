@@ -1,0 +1,32 @@
+From ba7a93ced9ad42269c24775a0454942f766b4ae3 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sat, 6 Apr 2024 00:33:59 -0400
+Subject: [PATCH 335/493] Patch
+
+---
+ kernelz/src/core/idthelper.s | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/kernelz/src/core/idthelper.s b/kernelz/src/core/idthelper.s
+index d107a5a..414c2af 100644
+--- a/kernelz/src/core/idthelper.s
++++ b/kernelz/src/core/idthelper.s
+@@ -1,13 +1,13 @@
+ .macro HandleException num
+     HandleException\num:
+-        pushl $\num
++        pushl \num
+         jmp interrupthandler
+ .endm
+ 
+ .macro HandleInterruptRequest num
+     HandleInterruptRequest\num:
+         pushl $0
+-        pushl $\num + 0x20
++        pushl \num + 0x20
+         jmp interrupthandler
+ .endm
+ 
+-- 
+2.43.0
+

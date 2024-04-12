@@ -1,0 +1,429 @@
+From 5b71ae16ef5cde60569546ef18dc12d3a9a6f7af Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 18:42:02 -0400
+Subject: [PATCH 087/493] Main header files updated
+
+---
+ apps/desktop/desktop.cc              | 107 ++++++++++++++++++++
+ apps/desktop/item.hpp                |  57 +++++++++++
+ kernel/include/bitreader.hpp         |  72 +++++++++++++
+ kernel/include/imaging/pngformat.hpp | 146 +++++++++++++++++++++++++++
+ 4 files changed, 382 insertions(+)
+ create mode 100644 apps/desktop/desktop.cc
+ create mode 100644 apps/desktop/item.hpp
+ create mode 100644 kernel/include/bitreader.hpp
+ create mode 100644 kernel/include/imaging/pngformat.hpp
+
+diff --git a/apps/desktop/desktop.cc b/apps/desktop/desktop.cc
+new file mode 100644
+index 0000000..e2011d4
+--- /dev/null
++++ b/apps/desktop/desktop.cc
+@@ -0,0 +1,107 @@
++#include <new.hpp>
++#include <gui/gui.hpp>
++#include <gui/directgui.hpp>
++#include <convert.hpp>
++#include <time.hpp>
++#include <datetime.hpp>
++#include <string.hpp>
++#include <math.hpp>
++#include <log.hpp>
++#include <proc.hpp>
++#include <vfs.hpp>
++#include "item.hpp"
++
++List<DesktopItem*>* items = 0;
++
++void ButtonHandler(void* sender, MouseButtonArgs arg)
++{
++    Print("Desktop Button Handler\n");
++    Context* source = (Context*)sender;
++    for(DesktopItem* item : *items)
++        if(item->context == source && item->filename != 0)
++            Process::Run(item->filename);
++}
++
++int main(int argc, char** argv)
++{
++    GUI::SetDefaultFont();
++
++    // Create list
++    items = new List<DesktopItem*>();
++    
++    Log(Info, "Parsing desktop items");
++    if(FileExists("B:\\desktop\\items.txt") == false)
++    {
++        Log(Error, "B:\\desktop\\items.txt does not exist");
++        return -1;
++    }
++
++    uint32_t fileSize = GetFileSize("B:\\desktop\\items.txt");
++    if(fileSize != (uint32_t)-1)
++    {
++        char* fileBuf = new char[fileSize];
++        ReadFile("B:\\desktop\\items.txt", (uint8_t*)fileBuf);
++
++        int x = 5;
++        int y = 5;
++        
++        List<char*> lines = str_Split(fileBuf, '\n');
++        for(int i = 0; i < lines.size(); i++)
++        {
++            char* str = lines[i];
++            if(str[0] != '"') { //not an entry
++                delete str;
++                continue;
++            }
++
++            int labelLength = str_IndexOf(str, '"', 1) - str_IndexOf(str, '"', 0) - 1;
++            int filenameLength = str_IndexOf(str, '"', 3) - str_IndexOf(str, '"', 2) - 1;
++            int iconpathLength = str_IndexOf(str, '"', 5) - str_IndexOf(str, '"', 4) - 1;
++
++            char* labelBuffer = new char[labelLength+1];
++            labelBuffer[labelLength] = '\0';
++            char* filenameBuffer = new char[filenameLength+1];
++            filenameBuffer[filenameLength] = '\0';
++            char* iconpathBuffer = new char[iconpathLength+1];
++            iconpathBuffer[iconpathLength] = '\0';
++
++            memcpy(labelBuffer, str + str_IndexOf(str, '"', 0) + 1, labelLength);
++            memcpy(filenameBuffer, str + str_IndexOf(str, '"', 2) + 1, filenameLength);
++            memcpy(iconpathBuffer, str + str_IndexOf(str, '"', 4) + 1, iconpathLength);
++
++            DesktopItem* item = new DesktopItem(x, y, 90, 110);
++            x += 100;
++            if(x >= 205)
++            { x = 5; y += 120; }
++
++            item->filename = filenameBuffer;
++            item->label = labelBuffer;
++            item->iconBuffer = 0;
++            item->context->MouseClick += ButtonHandler;
++            item->drawLabel = false;
++
++            if(FileExists(iconpathBuffer))
++            {
++                uint32_t iconSize = GetFileSize(iconpathBuffer);
++                if(iconSize != (uint32_t)-1)
++                {
++                    uint8_t* iconBuf = new uint8_t[iconSize];
++                    ReadFile(iconpathBuffer, iconBuf);
++                    item->iconBuffer = iconBuf;
++                }
++            }
++            else
++                item->drawLabel = true;
++                
++            items->push_back(item);
++            item->DrawToContext();
++
++            delete str;
++        }
++    }
++
++    while(1)
++    {
++        GUI::ProcessEvents();
++    }
++}
+\ No newline at end of file
+diff --git a/apps/desktop/item.hpp b/apps/desktop/item.hpp
+new file mode 100644
+index 0000000..dfb04f7
+--- /dev/null
++++ b/apps/desktop/item.hpp
+@@ -0,0 +1,57 @@
++#ifndef ITEM_H
++#define ITEM_H
++
++#include <gui/context.hpp>
++#include <gui/gui.hpp>
++#include <imaging/image.hpp>
++#include <imaging/pngformat.hpp>
++
++using namespace LIBHeisenKernel;
++using namespace LIBHeisenKernel::Imaging;
++
++class DesktopItem : Rectangle
++{
++public:
++    Context* context;
++    char* label;
++    bool drawLabel;
++    char* filename;
++    uint8_t* iconBuffer;
++    DesktopItem(int x, int y, int width, int height);
++
++    void DrawToContext();
++};
++
++DesktopItem::DesktopItem(int x, int y, int width, int height)
++: Rectangle(width, height, x, y) {
++    this->context = GUI::RequestContext(width, height, x, y);
++    this->context->canvas->Clear();
++    this->context->sharedContextInfo->background = true;
++    this->context->sharedContextInfo->supportsTransparency = true;
++    this->context->sharedContextInfo->supportsDirtyRects = true;
++}
++
++void DesktopItem::DrawToContext()
++{
++    if(this->iconBuffer)
++    {
++        Image* img = PNGDecoder::ConvertRAW(this->iconBuffer);
++        if(img) {
++            uint32_t* src = img->GetBufferPtr();
++            for(int x = 0; x < img->GetWidth(); x++)
++                for(int y = 0; y < img->GetHeight(); y++) {
++                    uint32_t argb = src[y * img->GetWidth() + x];
++                    this->context->canvas->SetPixel(x, y, argb);
++                }
++        }
++        else
++            this->context->canvas->Clear(Colors::Black);
++    }
++    if(this->drawLabel) {
++        this->context->canvas->DrawRect(0xFF000000, 0, height-20, width-1, 20-1);
++        this->context->canvas->DrawString(GUI::defaultFont, this->label, 5, height-17, 0xFFFFFFFF);
++    }
++    this->context->sharedContextInfo->AddDirtyArea(0, 0, width, height);
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/include/bitreader.hpp b/kernel/include/bitreader.hpp
+new file mode 100644
+index 0000000..2161ae4
+--- /dev/null
++++ b/kernel/include/bitreader.hpp
+@@ -0,0 +1,72 @@
++#ifndef __LIBCACTUSOS__BITREADER_H
++#define __LIBCACTUSOS__BITREADER_H
++
++#include <types.hpp>
++
++namespace LIBHeisenKernel
++{
++    // Used to read specific bits of a datastream
++    class BitReader
++    {
++    private:
++        uint8_t* dataPtr = 0;
++        uint32_t pos = 0;
++        uint8_t  byte = 0;
++        uint32_t numBits = 0;
++    public:
++        BitReader(uint8_t* data)
++        {
++            this->dataPtr = data;
++            this->pos = 0;
++            this->byte = 0;
++            this->numBits = 0;
++        }
++
++        // Read single byte
++        uint8_t ReadByte()
++        {
++            // Discard other bits
++            this->numBits = 0;
++            uint8_t b = this->dataPtr[this->pos];
++            this->pos += 1;
++            return b;
++        }
++
++        // Read single bit
++        uint8_t ReadBit()
++        {
++            if(this->numBits <= 0) {
++                this->byte = this->ReadByte();
++                this->numBits = 8;
++            }
++            this->numBits -= 1;
++            uint8_t bit = this->byte & 1;
++            this->byte >>= 1;
++            return bit;
++        }
++
++        // Read bits as type
++        template<typename T>
++        T ReadBits(uint32_t n)
++        {
++            T ret = 0;
++            for(uint32_t i = 0; i < n; i++)
++                ret |= (this->ReadBit() << i);
++            
++            return ret;            
++        }
++
++        // Read bytes as type
++        template<typename T>
++        T ReadBytes(uint32_t n)
++        {
++            T ret = 0;
++            for(uint32_t i = 0; i < n; i++)
++                ret |= (this->ReadByte() << (i*8));
++            
++            return ret;
++        }
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/include/imaging/pngformat.hpp b/kernel/include/imaging/pngformat.hpp
+new file mode 100644
+index 0000000..abd8a67
+--- /dev/null
++++ b/kernel/include/imaging/pngformat.hpp
+@@ -0,0 +1,146 @@
++#ifndef __CACTUSOSLIB__IMAGING__PNGIMAGE_H
++#define __CACTUSOSLIB__IMAGING__PNGIMAGE_H
++
++#include <imaging/image.hpp>
++#include <bitreader.hpp>
++#include <list.hpp>
++#include <string.hpp>
++#include <vector.hpp>
++
++namespace LIBHeisenKernel
++{
++    namespace Imaging
++    {
++        struct PNGChunk
++        {
++            uint32_t length;
++            uint8_t type[4];
++            //uint8_t data;
++            //uint32_t crc;
++        } __attribute__((packed));
++
++        struct IHDRChunk
++        {
++            uint32_t width;
++            uint32_t height;
++            uint8_t bits;
++            uint8_t colorType;
++            uint8_t compression;
++            uint8_t filter;
++            uint8_t interlace;
++        } __attribute__((packed));
++
++        class PNGDecoder
++        {
++        private:
++            static uint8_t PaethPredictor(uint8_t* recon, uint8_t a, uint8_t b, uint8_t c);
++            static uint8_t Recon_a(uint8_t* recon, uint32_t stride, uint32_t r, uint32_t c);
++            static uint8_t Recon_b(uint8_t* recon, uint32_t stride, uint32_t r, uint32_t c);
++            static uint8_t Recon_c(uint8_t* recon, uint32_t stride, uint32_t r, uint32_t c);
++        public:
++            // Convert image file into image buffer
++            static Image* Convert(const char* filepath);
++
++            // Create image from array of bytes in png format
++            static Image* ConvertRAW(const uint8_t* rawData);
++        };
++
++        // Represents a single node in the huffman tree
++        class HuffmanNode
++        {
++        public:
++            uint32_t symbol = 0;
++            HuffmanNode* left = 0;
++            HuffmanNode* right = 0;
++
++            HuffmanNode()
++            {
++                this->symbol = 0;
++                this->left = 0;
++                this->right = 0;
++            }
++        };
++        class HuffmanTree
++        {
++        private:
++            void DeleteNode(HuffmanNode* node)
++            {
++                if(node->left) DeleteNode(node->left);
++                if(node->right) DeleteNode(node->right);
++                delete node;
++            }
++        public:
++            HuffmanNode* root = 0;
++
++            HuffmanTree()
++            {
++                this->root = new HuffmanNode();
++            }
++            ~HuffmanTree()
++            {
++                this->DeleteNode(this->root);
++            }
++            void Insert(uint32_t codeWord, uint32_t n, uint32_t symbol)
++            {
++                HuffmanNode* node = this->root;
++                HuffmanNode* nextNode = 0;
++                for(int i = n - 1; i >= 0; i--) {
++                    uint32_t b = codeWord & (1 << i);
++                    if(b) {
++                        nextNode = node->right;
++                        if(nextNode == 0) {
++                            node->right = new HuffmanNode();
++                            nextNode = node->right;
++                        }
++                    }
++                    else {
++                        nextNode = node->left;
++                        if(nextNode == 0) {
++                            node->left = new HuffmanNode();
++                            nextNode = node->left;
++                        }
++                    }
++                    node = nextNode;
++                }
++                node->symbol = symbol;
++            }
++        };
++
++        struct DecodeTreesResult
++        {
++            HuffmanTree* literalLengthTree;
++            HuffmanTree* distanceTree;
++        };
++
++        // Class used to decompress ZLIB data such as png and zip files
++        class ZLIBDecompressor
++        {
++        private:
++            // Reads data from a non compression block
++            static void InflateBlockNoCompression(BitReader* reader, Vector<uint8_t>* target);
++            
++            // Reads data from dynamic block
++            static void InflateBlockDynamic(BitReader* reader, Vector<uint8_t>* target);
++
++            // Reads data from static block
++            static void InflateBlockStatic(BitReader* reader, Vector<uint8_t>* target);
++
++            // Decodes one symbol from bitstream using a HuffmanTree
++            static uint32_t DecodeSymbol(BitReader* reader, HuffmanTree* tree);
++
++            static void InflateBlockData(BitReader* reader, HuffmanTree* literalLengthTree, HuffmanTree* distanceTree, Vector<uint8_t>* target);
++
++            static HuffmanTree* BitListToTree(Vector<uint32_t>* bitList, Vector<uint8_t>* alphabet);
++        
++            static DecodeTreesResult DecodeTrees(BitReader* reader);
++        public:
++            // Perform decompression on input and return the complete set of data
++            static Vector<uint8_t>* Decompress(uint8_t* input);
++
++            // Perform the actual inflation of the DEFLATE block
++            static Vector<uint8_t>* Inflate(BitReader* reader);
++        };
++    }
++}
++
++#endif
+\ No newline at end of file
+-- 
+2.43.0
+

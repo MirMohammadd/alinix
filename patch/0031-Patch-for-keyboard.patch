@@ -1,0 +1,24 @@
+From bc5a3a6234d65bfe84740ea69c4b00682c739b56 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 12:44:16 -0400
+Subject: [PATCH 031/493] Patch for keyboard
+
+---
+ kernel/arch/x86-pc/io/keyboard.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/kernel/arch/x86-pc/io/keyboard.c b/kernel/arch/x86-pc/io/keyboard.c
+index 3f1f483..041f83c 100644
+--- a/kernel/arch/x86-pc/io/keyboard.c
++++ b/kernel/arch/x86-pc/io/keyboard.c
+@@ -139,7 +139,6 @@ void keyboard_interrupt_handler(int number)
+ 	if (scancode < 0x80)
+ 	{
+ 		console_add_character(terminal, scancode);
+-		console_add_character(terminal,"Hello Kernel!");
+ 	}
+ }
+ 
+-- 
+2.43.0
+

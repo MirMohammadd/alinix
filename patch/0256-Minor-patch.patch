@@ -1,0 +1,35 @@
+From 0f02a055fe38bf013a57919575379582e1492516 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 4 Apr 2024 19:46:22 -0400
+Subject: [PATCH 256/493] Minor patch
+
+---
+ apps/settings/settings.cpp | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/apps/settings/settings.cpp b/apps/settings/settings.cpp
+index 3b8fd81..7a8b520 100644
+--- a/apps/settings/settings.cpp
++++ b/apps/settings/settings.cpp
+@@ -15,7 +15,7 @@ char* path = "B:\\settings.jpg";
+ void CapacityDriveCallback(void* sender, MouseButtonArgs args){
+     double size = getDriveSize(0);
+     Print("Drive Size: %f\n", size);
+-    
++
+ }
+ 
+ void SystemArgumentsCallBack(void* sender, MouseButtonArgs args){
+@@ -29,7 +29,9 @@ void SystemArgumentsCallBack(void* sender, MouseButtonArgs args){
+     CapacityDiskButton->height = 49;
+     CapacityDiskButton->y = 50;
+     CapacityDiskButton->x = 1;
++    CapacityDiskButton->MouseClick += CapacityDriveCallback;
+     SystemWindow->AddChild(CapacityDiskButton);
++
+     
+     Print("Opened System Settings\n");
+ 
+-- 
+2.43.0
+

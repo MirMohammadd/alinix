@@ -1,0 +1,27 @@
+From 0c84effefcaf049a1cf22041c08d6e607c1f739a Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 21:12:18 -0400
+Subject: [PATCH 133/493] Update to Fix CI/CD
+
+---
+ .github/workflows/tests.yml | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
+index 07f5f77..ac6d67d 100644
+--- a/.github/workflows/tests.yml
++++ b/.github/workflows/tests.yml
+@@ -26,10 +26,5 @@ jobs:
+     - name: Try to fix broken packages
+       run: sudo apt-get install -f
+ 
+-    - name: Install specific version of gcc-11-i686-linux-gnu
+-      run: |
+-        sudo apt-get update
+-        sudo apt-get install -y gcc-11-i686-linux-gnu=11.2.0-1
+-
+     - name: Build project
+       run: make  # Replace 'make build' with your build command
+-- 
+2.43.0
+

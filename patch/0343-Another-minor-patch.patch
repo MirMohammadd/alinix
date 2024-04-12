@@ -1,0 +1,22 @@
+From 75f5982e7818acc034f305ad45dd035a3c32b841 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sat, 6 Apr 2024 12:24:49 -0400
+Subject: [PATCH 343/493] Another minor patch
+
+---
+ kernelz/src/core/gdthelper.asm | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernelz/src/core/gdthelper.asm b/kernelz/src/core/gdthelper.asm
+index fe45240..90388b2 100644
+--- a/kernelz/src/core/gdthelper.asm
++++ b/kernelz/src/core/gdthelper.asm
+@@ -1,4 +1,4 @@
+-[GLOBAL gdt_flush]    ; Allows the C code to call gdt_flush().
++[GLOBAL gdt_flush]    
+ 
+ gdt_flush:
+    mov eax, [esp+4]  
+-- 
+2.43.0
+

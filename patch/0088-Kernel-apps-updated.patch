@@ -1,0 +1,1067 @@
+From bc27c6fd53e67ef1f479c89c71debd29158496c1 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 18:47:59 -0400
+Subject: [PATCH 088/493] Kernel apps updated
+
+---
+ apps/compositor/compositor.cc      | 480 +++++++++++++++++++++++++++++
+ apps/compositor/compositor.hpp     | 143 +++++++++
+ apps/compositor/contextmanager.cc  |  40 +++
+ apps/compositor/contextmanager.hpp |  36 +++
+ apps/compositor/cursor.hpp         |  36 +++
+ apps/compositor/debugger.cc        |  68 ++++
+ apps/compositor/debugger.hpp       |  30 ++
+ apps/compositor/main.cc            |  48 +++
+ apps/compositor/scancodes.cc       |  95 ++++++
+ 9 files changed, 976 insertions(+)
+ create mode 100644 apps/compositor/compositor.cc
+ create mode 100644 apps/compositor/compositor.hpp
+ create mode 100644 apps/compositor/contextmanager.cc
+ create mode 100644 apps/compositor/contextmanager.hpp
+ create mode 100644 apps/compositor/cursor.hpp
+ create mode 100644 apps/compositor/debugger.cc
+ create mode 100644 apps/compositor/debugger.hpp
+ create mode 100644 apps/compositor/main.cc
+ create mode 100644 apps/compositor/scancodes.cc
+
+diff --git a/apps/compositor/compositor.cc b/apps/compositor/compositor.cc
+new file mode 100644
+index 0000000..7f2ac85
+--- /dev/null
++++ b/apps/compositor/compositor.cc
+@@ -0,0 +1,480 @@
++#include "compositor.hpp"
++#include "cursor.hpp"
++
++#include <gui/directgui.hpp>
++#include <gui/gui.hpp>
++#include <gui/colors.hpp>
++#include <imaging/image.hpp>
++#include <systeminfo.hpp>
++#include <proc.hpp>
++#include <gui/contextheap.hpp>
++#include <log.hpp>
++#include <ipc.hpp>
++#include <math.hpp>
++#include <string.hpp>
++#include <heap.hpp>
++
++using namespace LIBHeisenKernel;
++using namespace LIBHeisenKernel::Imaging;
++
++extern uint8_t ConvertKeycode(KeypressPacket* packet); //In scancodes.cpp
++
++Compositor::Compositor()
++: dirtyRectList()
++{
++    GUI::SetDefaultFont();
++    
++    Print("[Compositor] Starting Compositor\n");
++    if(!DirectGUI::RequestFramebuffer()) {
++        Print("[Compositor] Error initializing framebuffer\n");
++        return;
++    }
++    Print("[Compositor] Direct Framebuffer Initialized\n");
++
++    Print("[Compositor] Starting Context Manager\n");
++    this->contextManager = new ContextManager();
++
++    Print("[Compositor] Loading debugger\n");
++    this->debugger = new CompositorDebugger(this);
++
++    Print("[Compositor] Allocating Backbuffer of %f Mb\n", (double)(GUI::Width*GUI::Height*4) / (double)1_MB);
++    this->backBuffer = new uint8_t[GUI::Width*GUI::Height*4];
++    this->backBufferCanvas = new Canvas(backBuffer, GUI::Width, GUI::Height);
++
++    DirectGUI::DrawString("Loading Background from disk....", 3, 3, 0xFF000000);
++    Image* orgBackground = Image::CreateFromFile("B:\\wallpap.jpg");
++
++    DirectGUI::DrawString("Resizing Background...", 3, 16, 0xFF000000);
++    this->backgroundImage = Image::Resize(orgBackground, GUI::Width, GUI::Height, Bilinear);
++    if(this->backgroundImage == 0) // Error with loading background
++    {
++        Print("[Compositor] Creating custom background\n");
++        this->backgroundImage = new Image(GUI::Width, GUI::Height);
++        this->backgroundImage->GetCanvas()->Clear(COMPOSITOR_DEFAULT_BACKGROUND);
++
++        if(orgBackground) delete orgBackground;
++    }
++    
++    // Point buffer and canvas to this resized image we use as the background
++    this->backgroundBuffer = (uint8_t*)(this->backgroundImage->GetBufferPtr());
++    this->backgroundCanvas = this->backgroundImage->GetCanvas();
++
++    // Copy background to backbuffer, otherwise it contains noise at the start
++    memcpy(this->backBuffer, this->backgroundBuffer, GUI::Width*GUI::Height*4);
++
++    Print("[Compositor] Requesting Systeminfo\n");
++    if(!SystemInfo::RequestSystemInfo())
++        return;
++
++    Print("[Compositor] Requesting direct keyboard input\n");
++    Process::BindSTDIO(-1, Process::ID);
++
++    Print("[Compositor] Preparing Context Memory allocation\n");
++    ContextHeap::Init();
++
++    Print("[Compositor] Compositor initialized\n");
++}
++
++Compositor::~Compositor()
++{
++    Print("[Compositor] Freeing up memory used by compositor\n");
++
++    if(this->backBuffer)
++        delete this->backBuffer;
++    
++    if(this->backBufferCanvas)
++        delete this->backBufferCanvas;
++    
++    if(this->backgroundBuffer)
++        delete this->backgroundBuffer;
++    
++    if(this->backgroundCanvas)
++        delete this->backgroundCanvas;
++    
++    if(this->contextManager)
++        delete this->contextManager;
++}
++
++void Compositor::ApplyDesktopBounds(Rectangle* rect)
++{
++    if(rect->x < 0) {
++        rect->width -= Math::Abs(rect->x);
++        rect->x = 0;
++    }
++    if(rect->y < 0) {
++        rect->height -= Math::Abs(rect->y);
++        rect->y = 0;
++    }
++    if((rect->x + rect->width) >= GUI::Width) {
++        rect->width = GUI::Width - rect->x;
++    }
++    if((rect->y + rect->height) >= GUI::Height) {
++        rect->height = GUI::Height - rect->y;
++    }
++}
++
++void Compositor::DrawCursor()
++{
++    // Calculate the boundary for the cursor
++    uint8_t x_d = this->curMouseX + CURSOR_W < GUI::Width  ? CURSOR_W : GUI::Width  - this->curMouseX;
++    uint8_t y_d = this->curMouseY + CURSOR_H < GUI::Height ? CURSOR_H : GUI::Height - this->curMouseY;
++
++    // Loop through all the individual cursor pixels
++    for(uint8_t x = 0; x < x_d; x++)
++        for(uint8_t y = 0; y < y_d; y++) {
++            uint8_t cd = cursorBitmap[y*CURSOR_W+x];
++            if(cd != ALPHA) // Don't draw it if this pixel should be transparent
++                this->backBufferCanvas->SetPixel(this->curMouseX + x, this->curMouseY + y, cd==WHITE ? 0xFFFFFFFF : 0xFF000000);
++        }
++}
++
++// Instead of this function it is also possible to simply add a dirty rectangle for the cursor.
++// But the speed impact is so little that we don't really care about this.
++void Compositor::RemovePreviousCursor()
++{
++    // How much of the previous cursor should be removed?
++    // These values will be smaller than the cursor width when the mouse is partially in the corner
++    uint8_t x_d = this->prevMouseX + CURSOR_W < GUI::Width  ? CURSOR_W : GUI::Width  - this->prevMouseX;
++    uint8_t y_d = this->prevMouseY + CURSOR_H < GUI::Height ? CURSOR_H : GUI::Height - this->prevMouseY;
++
++    for(uint8_t x = 0; x < x_d; x++)
++        for(uint8_t y = 0; y < y_d; y++)
++            this->backBufferCanvas->SetPixel(this->prevMouseX + x, this->prevMouseY + y, this->backgroundCanvas->GetPixel(this->prevMouseX + x, this->prevMouseY + y));
++}
++
++void Compositor::DrawFrame()
++{
++    // Check if we have valid values for prevMouseX/Y and check if the mouse has moved
++    if(this->prevMouseX != -1 && this->prevMouseY != -1 && (this->prevMouseX != this->curMouseX || this->prevMouseY != this->curMouseY))
++        RemovePreviousCursor();
++
++    // Update dirty rectangles by drawing the background image at every dirty rect position
++    for(Rectangle rect : dirtyRectList) 
++    {
++        //Print("[Compositor] Dirty Rectangle (%d,%d,%d,%d)\n", rect.x, rect.y, rect.width, rect.height);
++
++        ApplyDesktopBounds(&rect);
++        uint32_t byteWidth = (rect.width + rect.x <= GUI::Width ? rect.width : rect.width-(rect.x + rect.width - GUI::Width))*4;
++        for(uint32_t y = 0; y < (uint32_t)rect.height; y++)
++            memcpy((void*)(backBuffer + ((rect.y + y)*GUI::Width*4) + rect.x*4), (void*)((uint32_t)this->backgroundBuffer + (rect.y + y)*GUI::Width*4 + rect.x*4), byteWidth);
++    }
++    dirtyRectList.Clear(); // After processing all the dirty rects for this frame, we can clear the list.
++
++    // Draw every context bottom to top since the contextList is organized that way
++    for(int i = (this->contextManager->contextList.size()-1); i >= 0; i--)
++    {
++        ContextInfo* context = this->contextManager->contextList[i];
++        if(context->x >= GUI::Width || context->y >= GUI::Height) {
++            Print("[Compositor] Warning! Context %d is out of desktop bounds\n", i);
++            continue; // Skip this context since it will not be visible anyway
++        }
++
++        // Context does not support dirty rectangles
++        if(!context->supportsDirtyRects) {
++            // Create rectangle for this context for easy calculations
++            Rectangle contextRectangle = Rectangle(context->width, context->height, context->x, context->y);
++            ApplyDesktopBounds(&contextRectangle);
++            
++            uint32_t leftOffset = ((context->x < 0) ? -context->x : 0);
++            uint32_t topOffset = ((context->y < 0) ? -context->y : 0);
++
++            // Check if context needs to be drawn using the transparency method
++            if(context->supportsTransparency) {
++                for(int y = 0; y < contextRectangle.height; y++)
++                    for(int x = 0; x < contextRectangle.width; x++)
++                        *(uint32_t*)(this->backBuffer + (contextRectangle.y + y)*GUI::Width*4 + (contextRectangle.x + x)*4) = Colors::AlphaBlend(*(uint32_t*)(this->backgroundBuffer + (contextRectangle.y + y)*GUI::Width*4 + (contextRectangle.x + x)*4), *(uint32_t*)(context->virtAddrServer + (topOffset+y)*context->width*4 + (leftOffset+x)*4));
++            }
++            else { // Otherwise we use the very optimized way of drawing
++                for(int hOffset = 0; hOffset < contextRectangle.height; hOffset++)
++                    memcpy((this->backBuffer + (contextRectangle.y+hOffset)*GUI::Width*4 + contextRectangle.x*4), (void*)(context->virtAddrServer + leftOffset*4 + (topOffset + hOffset)*context->width*4), contextRectangle.width * 4);
++            }
++        }
++        else if(context->numDirtyRects > 0)
++        {
++            //Log(Info, "[Compositor] Drawing dirty rectangles for client");
++            for(int dirtyIndex = 0; dirtyIndex < context->numDirtyRects; dirtyIndex++)
++            {
++                // Create rectangle for this context for easy calculations
++                Rectangle contextRectangle = Rectangle(context->dirtyRects[dirtyIndex].width, context->dirtyRects[dirtyIndex].height, context->dirtyRects[dirtyIndex].x + context->x, context->dirtyRects[dirtyIndex].y + context->y);
++                ApplyDesktopBounds(&contextRectangle);
++                
++                uint32_t leftOffset = (context->dirtyRects[dirtyIndex].x);
++                uint32_t topOffset = (context->dirtyRects[dirtyIndex].y);
++
++                // Check if context needs to be drawn using the transparency method
++                if(context->supportsTransparency) {
++                    for(int y = 0; y < contextRectangle.height; y++)
++                        for(int x = 0; x < contextRectangle.width; x++)
++                            *(uint32_t*)(this->backBuffer + (contextRectangle.y + y)*GUI::Width*4 + (contextRectangle.x + x)*4) = Colors::AlphaBlend(*(uint32_t*)(this->backgroundBuffer + (contextRectangle.y + y)*GUI::Width*4 + (contextRectangle.x + x)*4), *(uint32_t*)(context->virtAddrServer + (topOffset+y)*context->width*4 + (leftOffset+x)*4));
++                }
++                else { // Otherwise we use the very optimized way of drawing
++                    for(int hOffset = 0; hOffset < contextRectangle.height; hOffset++)
++                        memcpy((this->backBuffer + (contextRectangle.y+hOffset)*GUI::Width*4 + contextRectangle.x*4), (void*)(context->virtAddrServer + leftOffset*4 + (topOffset + hOffset)*context->width*4), contextRectangle.width * 4);
++                }
++            }
++            context->numDirtyRects = 0;
++        }
++
++        // Draw debug info for this context when we should
++        if(this->debugger->enabled)
++            this->debugger->ProcessContext(context);
++    }
++    // Draw debug info when enabled
++    if(this->debugger->enabled)
++        this->debugger->ProcessGeneral();
++
++    // Finally draw the cursor to the backbuffer
++    DrawCursor();
++
++    // Swap buffers, after this the frame is visible on the framebuffer
++    memcpy(DirectGUI::GetCanvas()->bufferPointer, this->backBuffer, GUI::Width*GUI::Height*4);
++}
++
++void Compositor::ProcessEvents()
++{
++    bool mouseLeft = Process::systemInfo->MouseLeftButton;
++    bool mouseRight = Process::systemInfo->MouseRightButton;
++    bool mouseMiddle = Process::systemInfo->MouseMiddleButton;
++
++    // MouseButton state changed
++    if(mouseLeft != this->prevMouseLeft || mouseRight != this->prevMouseRight || mouseMiddle != this->prevMouseMiddle)
++    {
++        // Get context that is below the cursor
++        ContextInfo* info = this->contextManager->FindTargetContext(this->curMouseX, this->curMouseY);
++
++        uint8_t changedButton;
++        if(mouseLeft != this->prevMouseLeft)
++            changedButton = 0;
++        else if(mouseMiddle != this->prevMouseMiddle)
++            changedButton = 1;
++        else
++            changedButton = 2;
++
++        if(info != 0) {
++            // Check if the mouse has been held down or up
++            bool mouseDown = changedButton == 0 ? mouseLeft : (changedButton == 1 ? mouseMiddle : (changedButton == 2 ? mouseRight : 0));
++            IPCSend(info->clientID, IPCMessageType::GUIEvent, mouseDown ? GUIEvents::MouseDown : GUIEvents::MouseUp, this->curMouseX, this->curMouseY, changedButton);
++
++            // If the mouse is held down on this context and it is not supposed to be in the background
++            // Then we move the context to the front
++            if(mouseDown && !info->background)
++                this->contextManager->MoveToFront(info);
++        }
++    }
++
++    // Mouse has moved
++    if(this->curMouseX != this->prevMouseX || this->curMouseY != this->prevMouseY)
++    {
++        // Which context was under the previous mouse
++        ContextInfo* prevMouseInfo = this->contextManager->FindTargetContext(this->prevMouseX, this->prevMouseY);
++
++        // Which context is under the current mouse
++        ContextInfo* curMouseInfo = this->contextManager->FindTargetContext(this->curMouseX, this->curMouseY);
++        
++        if(prevMouseInfo != 0) {
++            IPCSend(prevMouseInfo->clientID, IPCMessageType::GUIEvent, GUIEvents::MouseMove, this->prevMouseX, this->prevMouseY, this->curMouseX, this->curMouseY);
++        }
++        if(curMouseInfo != 0 && curMouseInfo != prevMouseInfo) {
++            IPCSend(curMouseInfo->clientID, IPCMessageType::GUIEvent, GUIEvents::MouseMove, this->prevMouseX, this->prevMouseY, this->curMouseX, this->curMouseY);
++        }
++
++        // Apply dirty rectangles if required
++        Rectangle prevMouseRect = Rectangle(CURSOR_W, CURSOR_H, this->prevMouseX, this->prevMouseY);
++        Rectangle curMouseRect = Rectangle(CURSOR_W, CURSOR_H, this->curMouseX, this->curMouseY);
++        ApplyDesktopBounds(&prevMouseRect);
++        ApplyDesktopBounds(&curMouseRect);
++
++        for(ContextInfo* c : contextManager->FindTargetContexts(prevMouseRect))
++            c->AddDirtyArea(0, 0, c->width, c->height);
++
++        for(ContextInfo* c : contextManager->FindTargetContexts(curMouseRect))
++            c->AddDirtyArea(0, 0, c->width, c->height);
++    }
++
++    // Mouse scroll wheel position has changed
++    if(this->curMouseZ != this->prevMouseZ)
++    {
++        // Calculate difference
++        int32_t delta = this->curMouseZ - this->prevMouseZ;
++
++        // Get context that is below the cursor
++        ContextInfo* info = this->contextManager->FindTargetContext(this->curMouseX, this->curMouseY);
++
++        // Send event to context
++        if(info)
++            IPCSend(info->clientID, IPCMessageType::GUIEvent, GUIEvents::MouseScroll, info->id, delta, this->curMouseX, this->curMouseY);
++    }
++
++    // Update variables for next iteration
++    this->prevMouseLeft     = mouseLeft;
++    this->prevMouseMiddle   = mouseMiddle;
++    this->prevMouseRight    = mouseRight;
++
++    // Process all the pressed keys
++    while(Process::StdInAvailable() > 0)
++    {
++        uint8_t startByte = Process::ReadStdIn();
++        if(startByte != KEYPACKET_START) {
++            Print("[Compositor] Warning! Some noise on Compositor standard input\n");
++            continue;
++        }
++        
++        KeypressPacket packet;
++        memset(&packet, 0, sizeof(KeypressPacket));
++        // i = 1 for skipping start byte
++        for(int i = 1; i < (int)sizeof(KeypressPacket); i++)
++            *(uint8_t*)((uint32_t)&packet + i) = Process::ReadStdIn();
++        
++        uint8_t key = ConvertKeycode(&packet);
++        if(key == 0) {
++            Print("[Compositor] No key for scancode %b\n", packet.keyCode);
++            continue;
++        }
++
++        // Debug mode key (Ctrl + d)
++        if(key == 'd' && (packet.flags & LeftControl) && (packet.flags & Pressed)) {
++            Print("[Compositor] Switching debug mode to %b\n", !this->debugger->enabled);
++            this->debugger->enabled = !this->debugger->enabled;
++
++            if(this->debugger->enabled == false) // Cleanup mess left by debugger
++                this->dirtyRectList.push_back(Rectangle(GUI::Width, GUI::Height));
++
++            continue;
++        }
++
++        // No context present to send the key to
++        if(this->contextManager->contextList.size() == 0)
++            continue; // Use continue instead of break so that all keys will get processed and not remain in the buffer
++        
++        ContextInfo* sendTo = this->contextManager->contextList.GetAt(0); //Send key to the context currently in focus
++        IPCSend(sendTo->clientID, IPCMessageType::GUIEvent, GUIEvents::Keypress, (uint32_t)key, (uint32_t)packet.flags, (uint32_t)sendTo->id);
++    }
++}
++
++void Compositor::ProcessRequests()
++{
++    // Check if there is a message that needs to be handled
++    while(IPCAvailable() > 0)
++    {
++        int msgError = 0;
++        IPCMessage message;
++
++        // Receive message via IPC bus
++        message = ICPReceive(-1, &msgError, IPCMessageType::GUIRequest);
++
++        // Check if message is received properly
++        if(msgError == SYSCALL_RET_ERROR) {
++            Print("[Compositor] Warning! Something wrong with message, ignoring\n");
++            return;
++        }
++
++        // Call the function that handles all the possible events
++        this->HandleClientRequest(message);
++    }
++}
++
++void Compositor::HandleClientRequest(IPCMessage msg)
++{
++    //Print("[Compositor] Received request from %d ---> type = %d\n", msg.source, msg.arg1);
++
++    switch (msg.arg1)
++    {
++        // A process is requesting a new context to draw to
++        case GUICommunction::REQUEST_CONTEXT:
++        {
++            // Gather parameters from message
++            uint32_t width = msg.arg3;
++            uint32_t height = msg.arg4;
++            uint32_t x = msg.arg5;
++            uint32_t y = msg.arg6;
++
++            // Address of memory on the client side
++            uint32_t memAddressClient = msg.arg2;
++
++            // Calculate the required bytes needed for this context
++            uint32_t bytesRequired = (width * height * 4) + CONTEXT_INFO_SIZE;
++
++            // Address of memory on the server side (our side)
++            uint32_t contextAddress = ContextHeap::AllocateArea(pageRoundUp(bytesRequired) / 4_KB);
++            Print("[Compositor] Process %d requested a context of %d bytes at %x (w=%d,h=%d,x=%d,y=%d) mapping to %x\n", msg.source, bytesRequired, memAddressClient, width, height, x, y, contextAddress);
++            
++            // Map this memory between us and the client process
++            // Virtual memory is managed in blocks of 4Kb so it must be page aligned
++            if(Process::CreateSharedMemory(msg.source, contextAddress, memAddressClient, pageRoundUp(bytesRequired)) == false) {
++                Print("[Compositor] Error creating shared memory\n");
++                IPCSend(msg.source, IPCMessageType::GUIRequest, 0);
++                break;
++            }
++
++            // Create pointer to struct that we want to fill with info about this context
++            ContextInfo* info = (ContextInfo*)contextAddress;
++
++            // Make sure it is completely zeroed
++            memset(info, 0, CONTEXT_INFO_SIZE);
++
++            // Start filling in the info
++            info->bytes = bytesRequired;
++            info->virtAddrClient = memAddressClient + CONTEXT_INFO_SIZE;
++            info->virtAddrServer = contextAddress + CONTEXT_INFO_SIZE;
++            info->width = width;
++            info->height = height;
++            info->x = x;
++            info->y = y;
++            info->clientID = msg.source;
++            info->supportsTransparency = false;
++            info->background = false;
++            info->id = nextContextID++;
++            info->numDirtyRects = 1;
++
++            // Add this context to our list of all contexts
++            this->contextManager->contextList.push_front(info);
++
++            // Send response to client
++            IPCSend(msg.source, IPCMessageType::GUIRequest, 1);
++            break;
++        }
++        // A process is sending us a message that one of its contexts has moved
++        case GUICommunction::CONTEXT_MOVED:
++        {
++            Rectangle dirtyRect(msg.arg4, msg.arg5, msg.arg2, msg.arg3);
++            this->dirtyRectList.push_back(dirtyRect);
++            break;
++        }
++        // A process requested a close of context
++        case GUICommunction::REQUEST_CLOSE:
++        {
++            int contextID = msg.arg2;
++            for(int i = 0; i < this->contextManager->contextList.size(); i++)
++            {
++                ContextInfo* c = this->contextManager->contextList[i];
++                if(c == 0)
++                    continue;
++
++                if(c->id == contextID)
++                {
++                    Print("[Compositor] Removing context: %x\n", (uint32_t)c);
++                    this->contextManager->contextList.Remove(c);
++
++                    // Add a dirty rect at the old position of the context
++                    Rectangle dirtyRect(c->width, c->height, c->x, c->y);
++                    this->dirtyRectList.push_back(dirtyRect);
++
++                    // Free area of virtual allocated memory
++                    ContextHeap::FreeArea(c->virtAddrServer + CONTEXT_INFO_SIZE, pageRoundUp(c->bytes) / 4_KB);
++                    
++                    // Free shared memory
++                    if(!Process::DeleteSharedMemory(c->clientID, c->virtAddrServer - CONTEXT_INFO_SIZE, c->virtAddrClient - CONTEXT_INFO_SIZE, pageRoundUp(c->bytes)))
++                        Print("[Compositor] Error! Could not remove shared memory\n");
++                }
++            }
++            IPCSend(msg.source, IPCMessageType::GUIRequest, 1);
++            break;
++        }
++
++        default:
++        {
++            Print("[Compositor] Error! Got unknown type of message from %d type = %d\n", msg.source, msg.arg1);
++            break;
++        }
++    }
++}
+\ No newline at end of file
+diff --git a/apps/compositor/compositor.hpp b/apps/compositor/compositor.hpp
+new file mode 100644
+index 0000000..5a44463
+--- /dev/null
++++ b/apps/compositor/compositor.hpp
+@@ -0,0 +1,143 @@
++#ifndef __COMPISTOR_H
++#define __COMPISTOR_H
++
++#include <types.hpp>
++#include <gui/rect.hpp>
++#include <gui/canvas.hpp>
++#include <ipc.hpp>
++#include <imaging/image.hpp>
++#include "contextmanager.hpp"
++#include "debugger.hpp"
++
++#define COMPOSITOR_DEFAULT_BACKGROUND 0xFFBFFFD0
++
++class CompositorDebugger;
++
++// Main class of the compositor software
++class Compositor
++{
++friend class CompositorDebugger;
++public:
++#pragma region Mouse Specifics
++
++    /**
++     * Mouse current X position
++    */
++    int32_t curMouseX = -1;
++    /**
++     * Mouse current Y position
++    */
++    int32_t curMouseY = -1;
++    /**
++     * Mouse current Z position
++    */
++    int32_t curMouseZ = -1;
++
++    /**
++     * The previous X position of the mouse
++    */
++    int32_t prevMouseX = -1;
++    /**
++     * The previous Y position of the mouse
++    */
++    int32_t prevMouseY = -1;
++    /**
++     * The previous Z position of the mouse
++    */
++    int32_t prevMouseZ = -1;
++
++protected:
++    /**
++     * Holds if the left mouse button was previously pressed
++    */
++    bool prevMouseLeft = false;
++    /**
++     * Holds if the right mouse button was previously pressed
++    */
++    bool prevMouseRight = false;
++    /**
++     * Holds if the middle mouse button was previously pressed
++    */
++    bool prevMouseMiddle = false;
++
++#pragma endregion
++#pragma region Buffer Pointers
++
++    /**
++     * The double buffer used for drawing frames
++     * First all contexts are drawn to this buffer, then the buffer gets pushed to the framebuffer
++    */
++    uint8_t* backBuffer = 0;
++
++    /**
++     * A buffer that stores the current background
++     * The size of this buffer is -> Width * Height * 4
++    */
++    uint8_t* backgroundBuffer = 0;
++
++    /**
++     * Image class of the background
++    */
++    LIBHeisenKernel::Imaging::Image* backgroundImage = 0;
++
++#pragma endregion
++#pragma region Canvasses
++
++    /**
++     * A canvas that can be used to manipulate the backbuffer
++    */
++
++    Canvas* backBufferCanvas;
++    /**
++     * A canvas that can be used to manipulate the background buffer
++    */
++    Canvas* backgroundCanvas = 0;
++
++#pragma endregion
++
++    // The contextmanager we are using for this compositor
++    ContextManager* contextManager = 0;
++
++    // The debugger used by this compositor
++    CompositorDebugger* debugger = 0;
++    
++    // List of dirty rectangles
++    List<Rectangle> dirtyRectList;
++
++    /**
++     * Which ID does the next context get on creation? 
++    */
++    int nextContextID = 1;
++
++protected:
++    // Makes rectangle fit into desktop rectangle
++    void ApplyDesktopBounds(Rectangle* rect);
++
++    // Draws the current cursor to the backbuffer
++    void DrawCursor();
++
++    // Removes the previous cursor still visible in the backbuffer
++    void RemovePreviousCursor();
++
++    // Function that handles a request from a client
++    void HandleClientRequest(IPCMessage message);
++public:
++    // Create a new instance of a compositor, there should be only 1 at a time. (Propably never more than the default one though)
++    Compositor();
++
++    // Deconstructor used to free memory
++    ~Compositor();
++
++    // Draw a new frame of the desktop to the framebuffer
++    void DrawFrame();
++
++    // Process all the events
++    // This includes keypresses and mouse movement/clicks
++    void ProcessEvents();
++
++    // Process all the requests received via IPC.
++    // This handles things like context creation, resizing, movement and more.
++    void ProcessRequests();
++};
++
++#endif
+\ No newline at end of file
+diff --git a/apps/compositor/contextmanager.cc b/apps/compositor/contextmanager.cc
+new file mode 100644
+index 0000000..06e5a2e
+--- /dev/null
++++ b/apps/compositor/contextmanager.cc
+@@ -0,0 +1,40 @@
++#include "contextmanager.hpp"
++
++using namespace LIBHeisenKernel;
++
++ContextManager::ContextManager()
++: contextList()
++{ }
++
++ContextManager::~ContextManager()
++{ }
++
++ContextInfo* ContextManager::FindTargetContext(int x, int y)
++{
++    // Loop through all known contexts starting at the one on the front
++    for(ContextInfo* c : contextList)
++    {
++        if(x >= c->x && x <= c->x + (int)c->width)       // Check if the coordinate x,y fits in the border
++            if(y >= c->y && y <= c->y + (int)c->height)  // of the context. If so return as result.
++                return c;
++    }
++
++    return 0;
++}
++List<ContextInfo*> ContextManager::FindTargetContexts(Rectangle area)
++{
++    List<ContextInfo*> result;
++    for(ContextInfo* c : contextList)
++    {
++        Rectangle item = Rectangle(c->width, c->height, c->x, c->y);
++        if(area.Intersect(item, 0))
++            result.push_back(c);
++    }
++    return result;
++}
++
++void ContextManager::MoveToFront(ContextInfo* info)
++{
++    contextList.Remove(info);
++    contextList.push_front(info);
++}
+\ No newline at end of file
+diff --git a/apps/compositor/contextmanager.hpp b/apps/compositor/contextmanager.hpp
+new file mode 100644
+index 0000000..770a370
+--- /dev/null
++++ b/apps/compositor/contextmanager.hpp
+@@ -0,0 +1,36 @@
++#ifndef __CONTEXTMANAGER_H
++#define __CONTEXTMANAGER_H
++
++#include <types.hpp>
++#include <list.hpp>
++#include <gui/contextinfo.hpp>
++
++// Class that manages a list of contexts
++class ContextManager
++{
++private:
++
++public:
++    // List of al contexts present on the desktop
++    // Organized from top to bottom, so top context is at position 0
++    List<ContextInfo*> contextList;
++
++    // Initialize a new instance of the ContextManager
++    ContextManager();
++
++    // Destructor
++    ~ContextManager();
++
++    
++    // Find the corresponding context at the position given by x and y
++    // The order is from top to bottom!
++    ContextInfo* FindTargetContext(int x, int y);
++
++    // Find all contexts that exist in the given area
++    List<ContextInfo*> FindTargetContexts(Rectangle area);
++
++    // Move a context to the front of the desktop
++    void MoveToFront(ContextInfo* info);
++};
++
++#endif
+\ No newline at end of file
+diff --git a/apps/compositor/cursor.hpp b/apps/compositor/cursor.hpp
+new file mode 100644
+index 0000000..24d2180
+--- /dev/null
++++ b/apps/compositor/cursor.hpp
+@@ -0,0 +1,36 @@
++#ifndef _CURSOR_H
++#define _CURSOR_H
++
++#include <types.hpp>
++
++#define ALPHA 0
++#define BLACK 1
++#define WHITE 2
++
++#define CURSOR_W 12
++#define CURSOR_H 19
++
++LIBHeisenKernel::uint8_t cursorBitmap[CURSOR_W * CURSOR_H] = 
++{
++    BLACK,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,
++    BLACK,BLACK,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,
++    BLACK,WHITE,BLACK,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,
++    BLACK,WHITE,WHITE,BLACK,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,
++    BLACK,WHITE,WHITE,WHITE,BLACK,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,
++    BLACK,WHITE,WHITE,WHITE,WHITE,BLACK,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,
++    BLACK,WHITE,WHITE,WHITE,WHITE,WHITE,BLACK,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,
++    BLACK,WHITE,WHITE,WHITE,WHITE,WHITE,WHITE,BLACK,ALPHA,ALPHA,ALPHA,ALPHA,
++    BLACK,WHITE,WHITE,WHITE,WHITE,WHITE,WHITE,WHITE,BLACK,ALPHA,ALPHA,ALPHA,
++    BLACK,WHITE,WHITE,WHITE,WHITE,WHITE,WHITE,WHITE,WHITE,BLACK,ALPHA,ALPHA,
++    BLACK,WHITE,WHITE,WHITE,WHITE,WHITE,WHITE,WHITE,WHITE,WHITE,BLACK,ALPHA,
++    BLACK,WHITE,WHITE,WHITE,WHITE,WHITE,WHITE,WHITE,WHITE,WHITE,WHITE,BLACK,
++    BLACK,WHITE,WHITE,WHITE,WHITE,WHITE,WHITE,BLACK,BLACK,BLACK,BLACK,BLACK,
++    BLACK,WHITE,WHITE,WHITE,BLACK,WHITE,WHITE,BLACK,ALPHA,ALPHA,ALPHA,ALPHA,
++    BLACK,WHITE,WHITE,BLACK,ALPHA,BLACK,WHITE,WHITE,BLACK,ALPHA,ALPHA,ALPHA,
++    BLACK,WHITE,BLACK,ALPHA,ALPHA,BLACK,WHITE,WHITE,BLACK,ALPHA,ALPHA,ALPHA,
++    BLACK,BLACK,ALPHA,ALPHA,ALPHA,ALPHA,BLACK,WHITE,WHITE,BLACK,ALPHA,ALPHA,
++    ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,BLACK,WHITE,WHITE,BLACK,ALPHA,ALPHA,
++    ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,BLACK,BLACK,ALPHA,ALPHA,ALPHA
++};
++
++#endif
+\ No newline at end of file
+diff --git a/apps/compositor/debugger.cc b/apps/compositor/debugger.cc
+new file mode 100644
+index 0000000..ce9bafe
+--- /dev/null
++++ b/apps/compositor/debugger.cc
+@@ -0,0 +1,68 @@
++#include "debugger.hpp"
++#include <convert.hpp>
++#include <time.hpp>
++#include <gui/gui.hpp>
++
++using namespace LIBHeisenKernel;
++
++CompositorDebugger::CompositorDebugger(Compositor* target)
++{
++    this->target = target;
++}
++
++
++void CompositorDebugger::ProcessContext(ContextInfo* ctx)
++{
++    if(ctx->background)
++        return;
++    
++    this->target->backBufferCanvas->DrawString(GUI::defaultFont, Convert::IntToString(ctx->width), ctx->x + ctx->width/2 - 30, ctx->y + ctx->height - 20, 0xFF0000FF);
++    this->target->backBufferCanvas->DrawString(GUI::defaultFont, Convert::IntToString(ctx->height), ctx->x + 5, ctx->y + ctx->height/2 - 30, 0xFF0000FF);
++
++    // Grey Box
++    this->target->backBufferCanvas->DrawFillRect(0xFFAAAAAA, ctx->x + ctx->width - 200, ctx->y + 30, 200, 200);
++
++    // Framebuffer address info server
++    this->target->backBufferCanvas->DrawString(GUI::defaultFont, "Addr,Svr: 0x", ctx->x + ctx->width - 200 + 5, ctx->y + 30 + 5, 0xFF0000FF);
++    this->target->backBufferCanvas->DrawString(GUI::defaultFont, Convert::IntToHexString(ctx->virtAddrServer), ctx->x + ctx->width - 100, ctx->y + 30 + 5, 0xFF0000FF);
++
++    // Framebuffer address info client
++    this->target->backBufferCanvas->DrawString(GUI::defaultFont, "Addr,Clt: 0x", ctx->x + ctx->width - 200 + 5, ctx->y + 30 + 25, 0xFF0000FF);
++    this->target->backBufferCanvas->DrawString(GUI::defaultFont, Convert::IntToHexString(ctx->virtAddrClient), ctx->x + ctx->width - 100, ctx->y + 30 + 25, 0xFF0000FF);
++
++    // ID Info
++    this->target->backBufferCanvas->DrawString(GUI::defaultFont, "ID: ", ctx->x + ctx->width - 200 + 5, ctx->y + 30 + 45, 0xFF0000FF);
++    this->target->backBufferCanvas->DrawString(GUI::defaultFont, Convert::IntToString(ctx->id), ctx->x + ctx->width - 160, ctx->y + 30 + 45, 0xFF0000FF);
++
++    // Proc Info
++    this->target->backBufferCanvas->DrawString(GUI::defaultFont, "PID: ", ctx->x + ctx->width - 200 + 5, ctx->y + 30 + 65, 0xFF0000FF);
++    this->target->backBufferCanvas->DrawString(GUI::defaultFont, Convert::IntToString(ctx->clientID), ctx->x + ctx->width - 150, ctx->y + 30 + 65, 0xFF0000FF);
++}
++
++void CompositorDebugger::ProcessGeneral()
++{
++    static uint64_t startFrameTime = 0;
++    static uint32_t frameCount = 0;
++    static int fps = 60;
++
++    if(startFrameTime == 0)
++        startFrameTime = Time::Ticks();
++
++    // Increase framecount by 1
++    frameCount++;
++
++    if(Time::Ticks() - startFrameTime >= 1000) // 1 sec had passed
++    {
++        // Reset frametime
++        startFrameTime = 0;
++
++        // Calculate fps
++        fps = frameCount;
++
++        // Reset framecount
++        frameCount = 0;
++    }
++
++    this->target->backBufferCanvas->DrawFillRect(0xFFAAAAAA, 0, 0, 50, 25);
++    this->target->backBufferCanvas->DrawString(GUI::defaultFont, Convert::IntToString(fps), 5, 5, 0xFF0000FF);
++}
+diff --git a/apps/compositor/debugger.hpp b/apps/compositor/debugger.hpp
+new file mode 100644
+index 0000000..1287602
+--- /dev/null
++++ b/apps/compositor/debugger.hpp
+@@ -0,0 +1,30 @@
++#ifndef __DEBUGGER_H
++#define __DEBUGGER_H
++
++#include "compositor.hpp"
++
++class Compositor;
++
++// Class used to display usefull debugging information when testing the compositor
++class CompositorDebugger
++{
++private:
++    // To which compositor is this debugger atached?
++    Compositor* target = 0;
++public:
++    // Is the debugger enabled?
++    bool enabled = false;
++
++    // Create a new instance of a CompositorDebugger
++    CompositorDebugger(Compositor* target);
++
++
++    // Handle the debugging of one specific context
++    // Called for every context every frame
++    void ProcessContext(ContextInfo* ctx);
++
++    // Handles any additional debugging for each frame
++    void ProcessGeneral();
++};
++
++#endif
+\ No newline at end of file
+diff --git a/apps/compositor/main.cc b/apps/compositor/main.cc
+new file mode 100644
+index 0000000..cb4e0e7
+--- /dev/null
++++ b/apps/compositor/main.cc
+@@ -0,0 +1,48 @@
++#include <new.hpp>
++#include <log.hpp>
++#include <time.hpp>
++#include <proc.hpp>
++#include <gui/directgui.hpp>
++
++#include "compositor.hpp"
++
++using namespace LIBHeisenKernel;
++
++int main(int argc, char** argv)
++{
++    Compositor* mainCompositor = new Compositor();
++    while(1) 
++    {
++        // Update cursor position with the value stored in SysInfo
++        mainCompositor->curMouseX = Process::systemInfo->MouseX;
++        mainCompositor->curMouseY = Process::systemInfo->MouseY;
++        mainCompositor->curMouseZ = Process::systemInfo->MouseZ;
++
++        ///////////////////////////
++        // Process GUI Events
++        ///////////////////////////
++        mainCompositor->ProcessEvents();
++
++        ///////////////////////////
++        // Process GUI Requests from clients
++        ///////////////////////////
++        mainCompositor->ProcessRequests();
++
++        ///////////////////////////
++        // Draw a new version of the desktop
++        ///////////////////////////
++        mainCompositor->DrawFrame();
++
++        // Update cursor variables for next run
++        mainCompositor->prevMouseX = mainCompositor->curMouseX;
++        mainCompositor->prevMouseY = mainCompositor->curMouseY;
++        mainCompositor->prevMouseZ = mainCompositor->curMouseZ;
++
++        // Switch processes after drawing desktop
++        // It is useless to draw it like 30 times in a couple milliseconds.
++        Process::Yield();
++    }
++
++    delete mainCompositor;
++    return 0;
++}
+\ No newline at end of file
+diff --git a/apps/compositor/scancodes.cc b/apps/compositor/scancodes.cc
+new file mode 100644
+index 0000000..20f0751
+--- /dev/null
++++ b/apps/compositor/scancodes.cc
+@@ -0,0 +1,95 @@
++#include <types.hpp>
++#include <shared.hpp>
++
++using namespace LIBHeisenKernel;
++
++/////////////////
++// US/International keyboard map
++/////////////////
++const uint8_t US_Keyboard[128] =
++{
++    0, EscapeKey,
++    '1','2','3','4','5','6','7','8','9','0',
++    '-','=','\b',
++    '\t', /* tab */
++    'q','w','e','r','t','y','u','i','o','p','[',']','\n',
++    LeftControlKey, /* control */
++    'a','s','d','f','g','h','j','k','l',';','\'', '\\',
++    LeftShiftKey, /* left shift */
++    '\\','z','x','c','v','b','n','m',',','.','/',
++    RightShiftKey, /* right shift */
++    '*',
++    AltKey, /* alt */
++    ' ', /* space */
++    CapsLockKey, /* caps lock */
++    F1Key, /* F1 [59] */
++    F2Key, F3Key, F4Key, F5Key, F6Key, F7Key, F8Key, F9Key,
++    F10Key, /* ... F10 */
++    NumLockKey, /* 69 num lock */
++    0, /* scroll lock */
++    0, /* home */
++    0, /* up */
++    0, /* page up */
++    '-',
++    0, /* left arrow */
++    0,
++    0, /* right arrow */
++    '+',
++    0, /* 79 end */
++    0, /* down */
++    0, /* page down */
++    0, /* insert */
++    0, /* delete */
++    0, 0, 0,
++    F11Key, /* F11 */
++    F12Key, /* F12 */
++    0, /* everything else */
++};
++const uint8_t US_KeyboardShift[128] =
++{
++    0, EscapeKey,
++    '!','@','#','$','%','^','&','*','(',')',
++    '_','+','\b',
++    '\t', /* tab */
++    'Q','W','E','R','T','Y','U','I','O','P','{','}','\n',
++    LeftControlKey, /* control */
++    'A','S','D','F','G','H','J','K','L',':','\"', '|',
++    LeftShiftKey, /* left shift */
++    '|','Z','X','C','V','B','N','M','<','>','?',
++    RightShiftKey, /* right shift */
++    '*',
++    AltKey, /* alt */
++    ' ', /* space */
++    CapsLockKey, /* caps lock */
++    F1Key, /* F1 [59] */
++    F2Key, F3Key, F4Key, F5Key, F6Key, F7Key, F8Key, F9Key,
++    F10Key, /* ... F10 */
++    NumLockKey, /* 69 num lock */
++    0, /* scroll lock */
++    0, /* home */
++    0, /* up */
++    0, /* page up */
++    '-',
++    0, /* left arrow */
++    0,
++    0, /* right arrow */
++    '+',
++    0, /* 79 end */
++    0, /* down */
++    0, /* page down */
++    0, /* insert */
++    0, /* delete */
++    0, 0, 0,
++    F11Key, /* F11 */
++    F12Key, /* F12 */
++    0, /* everything else */
++};
++
++uint8_t ConvertKeycode(KeypressPacket* packet)
++{
++    bool upperCase = (packet->flags & KEYPACKET_FLAGS::LeftShift) || (packet->flags & KEYPACKET_FLAGS::RightShift) || (packet->flags & KEYPACKET_FLAGS::CapsLock);
++    if(upperCase)
++        return US_KeyboardShift[packet->keyCode];
++    else
++        return US_Keyboard[packet->keyCode];
++}
+\ No newline at end of file
+-- 
+2.43.0
+

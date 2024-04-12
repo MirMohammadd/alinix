@@ -1,0 +1,2225 @@
+From 209ec31576ba2105089da301c61455a4478a3e70 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 17:35:02 -0400
+Subject: [PATCH 013/493] Update for the kernel GUI
+
+---
+ include/mouse.h             |   25 +
+ include/pex.h               |   33 +
+ kernel/hashmap.h            |   53 ++
+ kernel/kbd.h                |  143 +++++
+ kernel/list.h               |   55 ++
+ kernel/main.c               |    1 -
+ kernel/yutani/decorations.h |   85 +++
+ kernel/yutani/yutani.c      | 1170 +++++++++++++++++++++++++++++++++++
+ kernel/yutani/yutani.h      |  573 +++++++++++++++++
+ 9 files changed, 2137 insertions(+), 1 deletion(-)
+ create mode 100644 include/mouse.h
+ create mode 100644 include/pex.h
+ create mode 100644 kernel/hashmap.h
+ create mode 100644 kernel/kbd.h
+ create mode 100644 kernel/list.h
+ create mode 100644 kernel/yutani/decorations.h
+ create mode 100644 kernel/yutani/yutani.c
+ create mode 100644 kernel/yutani/yutani.h
+
+diff --git a/include/mouse.h b/include/mouse.h
+new file mode 100644
+index 0000000..72daab6
+--- /dev/null
++++ b/include/mouse.h
+@@ -0,0 +1,25 @@
++#pragma once
++
++#include <_cheader.h>
++
++_Begin_C_Header
++
++typedef enum {
++	LEFT_CLICK   = 0x01,
++	RIGHT_CLICK  = 0x02,
++	MIDDLE_CLICK = 0x04,
++
++	MOUSE_SCROLL_UP = 0x10,
++	MOUSE_SCROLL_DOWN = 0x20,
++} mouse_click_t;
++
++typedef struct {
++	uint32_t magic;
++	int32_t x_difference;
++	int32_t y_difference;
++	mouse_click_t buttons;
++} mouse_device_packet_t;
++
++#define MOUSE_MAGIC 0xFEED1234
++
++_End_C_Header
+diff --git a/include/pex.h b/include/pex.h
+new file mode 100644
+index 0000000..13bbf01
+--- /dev/null
++++ b/include/pex.h
+@@ -0,0 +1,33 @@
++#pragma once
++
++#include <_cheader.h>
++#include <stdint.h>
++#include <stdio.h>
++
++_Begin_C_Header
++
++typedef struct pex_packet {
++	uintptr_t source;
++	size_t      size;
++	uint8_t     data[];
++} pex_packet_t;
++#define MAX_PACKET_SIZE 1024
++#define PACKET_SIZE (sizeof(pex_packet_t) + MAX_PACKET_SIZE)
++
++typedef struct pex_header {
++	uintptr_t target;
++	uint8_t data[];
++} pex_header_t;
++
++extern size_t pex_send(FILE * sock, uintptr_t rcpt, size_t size, char * blob);
++extern size_t pex_broadcast(FILE * sock, size_t size, char * blob);
++extern size_t pex_listen(FILE * sock, pex_packet_t * packet);
++
++extern size_t pex_reply(FILE * sock, size_t size, char * blob);
++extern size_t pex_recv(FILE * sock, char * blob);
++extern size_t pex_query(FILE * sock);
++
++extern FILE * pex_bind(char * target);
++extern FILE * pex_connect(char * target);
++
++_End_C_Header
+diff --git a/kernel/hashmap.h b/kernel/hashmap.h
+new file mode 100644
+index 0000000..8d71983
+--- /dev/null
++++ b/kernel/hashmap.h
+@@ -0,0 +1,53 @@
++#pragma once
++
++#include <_cheader.h>
++
++#ifdef _KERNEL_
++#	include <kernel/system.h>
++#else
++#	include <string.h>
++#	include <stddef.h>
++#	include <stdlib.h>
++#endif
++
++#include "list.h"
++
++_Begin_C_Header
++
++typedef unsigned int (*hashmap_hash_t) (const void * key);
++typedef int (*hashmap_comp_t) (const void * a, const void * b);
++typedef void (*hashmap_free_t) (void *);
++typedef void * (*hashmap_dupe_t) (const void *);
++
++typedef struct hashmap_entry {
++	char * key;
++	void * value;
++	struct hashmap_entry * next;
++} hashmap_entry_t;
++
++typedef struct hashmap {
++	hashmap_hash_t hash_func;
++	hashmap_comp_t hash_comp;
++	hashmap_dupe_t hash_key_dup;
++	hashmap_free_t hash_key_free;
++	hashmap_free_t hash_val_free;
++	size_t         size;
++	hashmap_entry_t ** entries;
++} hashmap_t;
++
++extern hashmap_t * hashmap_create(int size);
++extern hashmap_t * hashmap_create_int(int size);
++extern void * hashmap_set(hashmap_t * map, const void * key, void * value);
++extern void * hashmap_get(hashmap_t * map, const void * key);
++extern void * hashmap_remove(hashmap_t * map, const void * key);
++extern int hashmap_has(hashmap_t * map, const void * key);
++extern list_t * hashmap_keys(hashmap_t * map);
++extern list_t * hashmap_values(hashmap_t * map);
++extern void hashmap_free(hashmap_t * map);
++
++extern unsigned int hashmap_string_hash(const void * key);
++extern int hashmap_string_comp(const void * a, const void * b);
++extern void * hashmap_string_dupe(const void * key);
++extern int hashmap_is_empty(hashmap_t * map);
++
++_End_C_Header
+diff --git a/kernel/kbd.h b/kernel/kbd.h
+new file mode 100644
+index 0000000..41e8a55
+--- /dev/null
++++ b/kernel/kbd.h
+@@ -0,0 +1,143 @@
++#pragma once
++
++#include <_cheader.h>
++
++_Begin_C_Header
++
++#define KEY_NONE        0
++#define KEY_BACKSPACE   8
++#define KEY_CTRL_A      1
++#define KEY_CTRL_B      2
++#define KEY_CTRL_C      3
++#define KEY_CTRL_D      4
++#define KEY_CTRL_E      5
++#define KEY_CTRL_F      6
++#define KEY_CTRL_G      7
++#define KEY_CTRL_H      8
++#define KEY_CTRL_I      9
++#define KEY_CTRL_J      10
++#define KEY_CTRL_K      11
++#define KEY_CTRL_L      12
++#define KEY_CTRL_M      13
++#define KEY_CTRL_N      14
++#define KEY_CTRL_O      15
++#define KEY_CTRL_P      16
++#define KEY_CTRL_Q      17
++#define KEY_CTRL_R      18
++#define KEY_CTRL_S      19
++#define KEY_CTRL_T      20
++#define KEY_CTRL_U      21
++#define KEY_CTRL_V      22
++#define KEY_CTRL_W      23
++#define KEY_CTRL_X      24
++#define KEY_CTRL_Y      25
++#define KEY_CTRL_Z      26
++#define KEY_ESCAPE      27
++#define KEY_NORMAL_MAX  256
++#define KEY_ARROW_UP    257
++#define KEY_ARROW_DOWN  258
++#define KEY_ARROW_RIGHT 259
++#define KEY_ARROW_LEFT  260
++
++#define KEY_LEFT_CTRL   1001
++#define KEY_LEFT_SHIFT  1002
++#define KEY_LEFT_ALT    1003
++#define KEY_LEFT_SUPER  1004
++
++#define KEY_RIGHT_CTRL  1011
++#define KEY_RIGHT_SHIFT 1012
++#define KEY_RIGHT_ALT   1013
++#define KEY_RIGHT_SUPER 1014
++
++#define KEY_F1          2001
++#define KEY_F2          2002
++#define KEY_F3          2003
++#define KEY_F4          2004
++#define KEY_F5          2005
++#define KEY_F6          2006
++#define KEY_F7          2007
++#define KEY_F8          2008
++#define KEY_F9          2009
++#define KEY_F10         2010
++#define KEY_F11         2011
++#define KEY_F12         2012
++
++#define KEY_PAGE_DOWN   2013
++#define KEY_PAGE_UP     2014
++
++#define KEY_HOME        2015
++#define KEY_END         2016
++#define KEY_DEL         2017
++#define KEY_INSERT      2018
++#define KEY_PAUSE       2019
++#define KEY_SCROLL_LOCK 2020
++#define KEY_PRINT_SCREEN 2021
++#define KEY_APP         2022
++
++#define KEY_NUM_0       2500
++#define KEY_NUM_1       2501
++#define KEY_NUM_2       2502
++#define KEY_NUM_3       2503
++#define KEY_NUM_4       2504
++#define KEY_NUM_5       2505
++#define KEY_NUM_6       2506
++#define KEY_NUM_7       2507
++#define KEY_NUM_8       2508
++#define KEY_NUM_9       2509
++#define KEY_NUM_DOT     2510
++#define KEY_NUM_DIV     2511
++#define KEY_NUM_STAR    2512
++#define KEY_NUM_MINUS   2513
++#define KEY_NUM_PLUS    2514
++#define KEY_NUM_ENTER   2515
++
++#define KEY_MOD_LEFT_CTRL   0x01
++#define KEY_MOD_LEFT_SHIFT  0x02
++#define KEY_MOD_LEFT_ALT    0x04
++#define KEY_MOD_LEFT_SUPER  0x08
++
++#define KEY_MOD_RIGHT_CTRL  0x10
++#define KEY_MOD_RIGHT_SHIFT 0x20
++#define KEY_MOD_RIGHT_ALT   0x40
++#define KEY_MOD_RIGHT_SUPER 0x80
++
++#define KEY_ACTION_DOWN     0x01
++#define KEY_ACTION_UP       0x02
++
++typedef unsigned int  kbd_key_t;
++typedef unsigned int  kbd_mod_t;
++typedef unsigned char kbd_act_t;
++
++typedef struct {
++	kbd_key_t keycode;
++	kbd_mod_t modifiers;
++	kbd_act_t action;
++
++	unsigned char key; /* Key as a raw code, ready for reading, or \0 if it's not a good down strike / was a modifier change / etc/. */
++} key_event_t;
++
++typedef struct {
++	int kbd_state;
++	int kbd_s_state;
++
++	int k_ctrl;
++	int k_shift;
++	int k_alt;
++	int k_super;
++
++	int kl_ctrl;
++	int kl_shift;
++	int kl_alt;
++	int kl_super;
++
++	int kr_ctrl;
++	int kr_shift;
++	int kr_alt;
++	int kr_super;
++
++	int kbd_esc_buf;
++} key_event_state_t;
++
++extern int kbd_scancode(key_event_state_t * state, unsigned char c, key_event_t * event);
++
++_End_C_Header
+diff --git a/kernel/list.h b/kernel/list.h
+new file mode 100644
+index 0000000..5850da7
+--- /dev/null
++++ b/kernel/list.h
+@@ -0,0 +1,55 @@
++#pragma once
++
++#include <_cheader.h>
++
++#ifdef _KERNEL_
++#	include <kernel/types.h>
++#else
++#	include <stdint.h>
++#	include <stddef.h>
++#	include <assert.h>
++#endif
++
++_Begin_C_Header
++
++typedef struct node {
++	struct node * next;
++	struct node * prev;
++	void * value;
++	void * owner;
++} __attribute__((packed)) node_t;
++
++typedef struct {
++	node_t * head;
++	node_t * tail;
++	size_t length;
++} __attribute__((packed)) list_t;
++
++extern void list_destroy(list_t * list);
++extern void list_free(list_t * list);
++extern void list_append(list_t * list, node_t * item);
++extern node_t * list_insert(list_t * list, void * item);
++extern list_t * list_create(void);
++extern node_t * list_find(list_t * list, void * value);
++extern int list_index_of(list_t * list, void * value);
++extern void list_remove(list_t * list, size_t index);
++extern void list_delete(list_t * list, node_t * node);
++extern node_t * list_pop(list_t * list);
++extern node_t * list_dequeue(list_t * list);
++extern list_t * list_copy(list_t * original);
++extern void list_merge(list_t * target, list_t * source);
++extern void * list_index(list_t * list, int index);
++
++extern void list_append_after(list_t * list, node_t * before, node_t * node);
++extern node_t * list_insert_after(list_t * list, node_t * before, void * item);
++
++extern void list_append_before(list_t * list, node_t * after, node_t * node);
++extern node_t * list_insert_before(list_t * list, node_t * after, void * item);
++
++/* Known to conflict with some popular third-party libraries. */
++#ifndef TOARU_LIST_NO_FOREACH
++#  define foreach(i, list) for (node_t * i = (list)->head; i != NULL; i = i->next)
++#  define foreachr(i, list) for (node_t * i = (list)->tail; i != NULL; i = i->prev)
++#endif
++
++_End_C_Header
+diff --git a/kernel/main.c b/kernel/main.c
+index 45c0635..27e4a18 100644
+--- a/kernel/main.c
++++ b/kernel/main.c
+@@ -35,7 +35,6 @@ int kmain(multiboot_info_t *info) {
+     
+     sched_init();
+ 
+-    terminal_writeline("Hello World");
+ 
+     
+     while(1)
+diff --git a/kernel/yutani/decorations.h b/kernel/yutani/decorations.h
+new file mode 100644
+index 0000000..c8c31d5
+--- /dev/null
++++ b/kernel/yutani/decorations.h
+@@ -0,0 +1,85 @@
++/**
++ * @brief Client-side Window Decoration library
++ *
++ * @copyright
++ * This file is part of ToaruOS and is released under the terms
++ * of the NCSA / University of Illinois License - see LICENSE.md
++ * Copyright (C) 2012-2018 K. Lange
++ */
++#pragma once
++
++#include <_cheader.h>
++#include <graphics.h>
++#include <yutani.h>
++
++_Begin_C_Header
++
++/*
++ * Render decorations to a window. A buffer pointer is
++ * provided so that you may render in double-buffered mode.
++ *
++ * Run me at least once for each window, and any time you may need to
++ * redraw them.
++ */
++extern void render_decorations(yutani_window_t * window, gfx_context_t * ctx, char * title);
++
++/** DEPRECATED */
++extern void render_decorations_inactive(yutani_window_t * window, gfx_context_t * ctx, char * title);
++
++/**
++ * Decoration boundaries
++ */
++struct decor_bounds {
++	int top_height;
++	int bottom_height;
++	int left_width;
++	int right_width;
++
++	/* Convenience */
++	int width;
++	int height;
++};
++
++/*
++ * Used by decoration libraries to set callbacks
++ */
++extern void (*decor_render_decorations)(yutani_window_t *, gfx_context_t *, char *, int);
++extern int  (*decor_check_button_press)(yutani_window_t *, int x, int y);
++extern int  (*decor_get_bounds)(yutani_window_t *, struct decor_bounds *);
++extern int decor_hover_button;
++extern yutani_window_t * decor_hover_window;
++
++/*
++ * Run me once to set things up
++ */
++extern void init_decorations();
++
++extern int decor_handle_event(yutani_t * yctx, yutani_msg_t * m);
++
++/* Callbacks for handle_event */
++extern void decor_set_close_callback(void (*callback)(yutani_window_t *));
++extern void decor_set_resize_callback(void (*callback)(yutani_window_t *));
++extern void decor_set_maximize_callback(void (*callback)(yutani_window_t *));
++extern yutani_window_t * decor_show_default_menu(yutani_window_t * window, int y, int x);
++
++/* Responses from handle_event */
++#define DECOR_OTHER     1 /* Clicked on title bar but otherwise unimportant */
++#define DECOR_CLOSE     2 /* Clicked on close button */
++#define DECOR_RESIZE    3 /* Resize button */
++#define DECOR_MAXIMIZE  4
++#define DECOR_RIGHT     5
++#define DECOR_MINIMIZE  6
++#define DECOR_REDRAW    7
++
++#define DECOR_ACTIVE   0
++#define DECOR_INACTIVE 1
++
++#define DECOR_FLAG_DECORATED   (1 << 0)
++#define DECOR_FLAG_NO_MAXIMIZE (1 << 1)
++#define DECOR_FLAG_TILED       (0xF << 2)
++#define DECOR_FLAG_TILE_LEFT   (0x1 << 2)
++#define DECOR_FLAG_TILE_RIGHT  (0x2 << 2)
++#define DECOR_FLAG_TILE_UP     (0x4 << 2)
++#define DECOR_FLAG_TILE_DOWN   (0x8 << 2)
++
++_End_C_Header
+diff --git a/kernel/yutani/yutani.c b/kernel/yutani/yutani.c
+new file mode 100644
+index 0000000..bd8f46b
+--- /dev/null
++++ b/kernel/yutani/yutani.c
+@@ -0,0 +1,1170 @@
++/**
++ * @brief Yutani Client Library
++ *
++ * Client library for the compositing window system.
++ *
++ * @copyright
++ * This file is part of ToaruOS and is released under the terms
++ * of the NCSA / University of Illinois License - see LICENSE.md
++ * Copyright (C) 2014-2018 K. Lange
++ */
++#include <string.h>
++#include <stdlib.h>
++#include <sys/shm.h>
++
++#include <pex.h>
++#include <graphics.h>
++#include <kbd.h>
++#include <hashmap.h>
++#include <list.h>
++#include <yutani.h>
++#include <yutani-internal.h>
++#include <mouse.h>
++
++/* We need the flags but don't want the library dep (maybe the flags should be here?) */
++#include "decorations.h"
++
++/**
++ * yutani_wait_for
++ *
++ * Wait for a particular kind of message, queuing other types
++ * of messages for processing later.
++ */
++yutani_msg_t * yutani_wait_for(yutani_t * y, uint32_t type) {
++	do {
++		yutani_msg_t * out;
++		size_t size;
++		{
++			char tmp[MAX_PACKET_SIZE];
++			size = pex_recv(y->sock, tmp);
++			out = malloc(size);
++			memcpy(out, tmp, size);
++		}
++
++		if (out->type == type) {
++			return out;
++		} else {
++			list_insert(y->queued, out);
++		}
++	} while (1); /* XXX: (!y->abort) */
++}
++
++/**
++ * yutani_query
++ *
++ * Check if there is an available message, either in the
++ * internal queue or directly from the server interface.
++ */
++size_t yutani_query(yutani_t * y) {
++	if (y->queued->length > 0) return 1;
++	return pex_query(y->sock);
++}
++
++/**
++ * _handle_internal
++ *
++ * Some messages are processed internally. They are still
++ * available to the client application, but some work will
++ * be done before they are handed off.
++ *
++ * WELCOME: Update the display_width and display_height for the connection.
++ * WINDOW_MOVE: Update the window location.
++ */
++static void _handle_internal(yutani_t * y, yutani_msg_t * out) {
++	switch (out->type) {
++		case YUTANI_MSG_WELCOME:
++			{
++				struct yutani_msg_welcome * mw = (void *)out->data;
++				y->display_width = mw->display_width;
++				y->display_height = mw->display_height;
++			}
++			break;
++		case YUTANI_MSG_WINDOW_MOVE:
++			{
++				struct yutani_msg_window_move * wm = (void *)out->data;
++				yutani_window_t * win = hashmap_get(y->windows, (void *)(uintptr_t)wm->wid);
++				if (win) {
++					win->x = wm->x;
++					win->y = wm->y;
++				}
++			}
++			break;
++		case YUTANI_MSG_RESIZE_OFFER:
++			{
++				struct yutani_msg_window_resize * wr = (void *)out->data;
++				yutani_window_t * win = hashmap_get(y->windows, (void *)(uintptr_t)wr->wid);
++				if (win) {
++					win->decorator_flags &= ~(DECOR_FLAG_TILED);
++					win->decorator_flags |= (wr->flags & YUTANI_RESIZE_TILED) << 2;
++				}
++			}
++		default:
++			break;
++	}
++}
++
++/**
++ * yutani_poll
++ *
++ * Wait for a message to be available, processing it if
++ * it has internal processing requirements.
++ */
++yutani_msg_t * yutani_poll(yutani_t * y) {
++	yutani_msg_t * out;
++
++	if (y->queued->length > 0) {
++		node_t * node = list_dequeue(y->queued);
++		out = (yutani_msg_t *)node->value;
++		free(node);
++		_handle_internal(y, out);
++		return out;
++	}
++
++	ssize_t size;
++	{
++		char tmp[MAX_PACKET_SIZE];
++		size = pex_recv(y->sock, tmp);
++		if (size <= 0) return NULL;
++		out = malloc(size);
++		memcpy(out, tmp, size);
++	}
++
++	_handle_internal(y, out);
++
++	return out;
++}
++
++/**
++ * yutani_poll_async
++ *
++ * Get the next available message, if there is one, otherwise
++ * return immediately. Generally should be called in a loop
++ * after an initial call to yutani_poll in case processing
++ * caused additional messages to be queued.
++ */
++yutani_msg_t * yutani_poll_async(yutani_t * y) {
++	if (yutani_query(y) > 0) {
++		return yutani_poll(y);
++	}
++	return NULL;
++}
++
++void yutani_msg_buildx_hello(yutani_msg_t * msg) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_HELLO;
++	msg->size  = sizeof(struct yutani_message);
++}
++
++
++void yutani_msg_buildx_flip(yutani_msg_t * msg, yutani_wid_t wid) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_FLIP;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_flip);
++
++	struct yutani_msg_flip * mw = (void *)msg->data;
++
++	mw->wid = wid;
++}
++
++
++void yutani_msg_buildx_welcome(yutani_msg_t * msg, uint32_t width, uint32_t height) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_WELCOME;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_welcome);
++
++	struct yutani_msg_welcome * mw = (void *)msg->data;
++
++	mw->display_width = width;
++	mw->display_height = height;
++}
++
++
++void yutani_msg_buildx_window_new(yutani_msg_t * msg, uint32_t width, uint32_t height) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_WINDOW_NEW;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_new);
++
++	struct yutani_msg_window_new * mw = (void *)msg->data;
++
++	mw->width = width;
++	mw->height = height;
++}
++
++
++void yutani_msg_buildx_window_new_flags(yutani_msg_t * msg, uint32_t width, uint32_t height, uint32_t flags) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_WINDOW_NEW_FLAGS;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_new_flags);
++
++	struct yutani_msg_window_new_flags * mw = (void *)msg->data;
++
++	mw->width = width;
++	mw->height = height;
++	mw->flags = flags;
++}
++
++
++void yutani_msg_buildx_window_init(yutani_msg_t * msg, yutani_wid_t wid, uint32_t width, uint32_t height, uint32_t bufid) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_WINDOW_INIT;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_init);
++
++	struct yutani_msg_window_init * mw = (void *)msg->data;
++
++	mw->wid = wid;
++	mw->width = width;
++	mw->height = height;
++	mw->bufid = bufid;
++}
++
++
++void yutani_msg_buildx_window_close(yutani_msg_t * msg, yutani_wid_t wid) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_WINDOW_CLOSE;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_close);
++
++	struct yutani_msg_window_close * mw = (void *)msg->data;
++
++	mw->wid = wid;
++}
++
++
++void yutani_msg_buildx_key_event(yutani_msg_t * msg, yutani_wid_t wid, key_event_t * event, key_event_state_t * state) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_KEY_EVENT;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_key_event);
++
++	struct yutani_msg_key_event * mw = (void *)msg->data;
++
++	mw->wid = wid;
++	memcpy(&mw->event, event, sizeof(key_event_t));
++	memcpy(&mw->state, state, sizeof(key_event_state_t));
++}
++
++
++void yutani_msg_buildx_mouse_event(yutani_msg_t * msg, yutani_wid_t wid, mouse_device_packet_t * event, int32_t type) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_MOUSE_EVENT;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_mouse_event);
++
++	struct yutani_msg_mouse_event * mw = (void *)msg->data;
++
++	mw->wid = wid;
++	memcpy(&mw->event, event, sizeof(mouse_device_packet_t));
++	mw->type = type;
++}
++
++
++void yutani_msg_buildx_window_move(yutani_msg_t * msg, yutani_wid_t wid, int32_t x, int32_t y) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_WINDOW_MOVE;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_move);
++
++	struct yutani_msg_window_move * mw = (void *)msg->data;
++
++	mw->wid = wid;
++	mw->x = x;
++	mw->y = y;
++}
++
++void yutani_msg_buildx_window_move_relative(yutani_msg_t * msg, yutani_wid_t wid, yutani_wid_t wid2, int32_t x, int32_t y) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_WINDOW_MOVE_RELATIVE;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_move_relative);
++
++	struct yutani_msg_window_move_relative * mw = (void *)msg->data;
++
++	mw->wid_to_move = wid;
++	mw->wid_base = wid2;
++	mw->x = x;
++	mw->y = y;
++}
++
++void yutani_msg_buildx_window_stack(yutani_msg_t * msg, yutani_wid_t wid, int z) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_WINDOW_STACK;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_stack);
++
++	struct yutani_msg_window_stack * mw = (void *)msg->data;
++
++	mw->wid = wid;
++	mw->z = z;
++}
++
++
++void yutani_msg_buildx_window_focus_change(yutani_msg_t * msg, yutani_wid_t wid, int focused) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_WINDOW_FOCUS_CHANGE;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_focus_change);
++
++	struct yutani_msg_window_focus_change * mw = (void *)msg->data;
++
++	mw->wid = wid;
++	mw->focused = focused;
++}
++
++
++void yutani_msg_buildx_window_mouse_event(yutani_msg_t * msg, yutani_wid_t wid, int32_t new_x, int32_t new_y, int32_t old_x, int32_t old_y, uint8_t buttons, uint8_t command, uint8_t modifiers) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_WINDOW_MOUSE_EVENT;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_mouse_event);
++
++	struct yutani_msg_window_mouse_event * mw = (void *)msg->data;
++
++	mw->wid = wid;
++	mw->new_x = new_x;
++	mw->new_y = new_y;
++	mw->old_x = old_x;
++	mw->old_y = old_y;
++	mw->buttons = buttons;
++	mw->command = command;
++	mw->modifiers = modifiers;
++}
++
++
++void yutani_msg_buildx_flip_region(yutani_msg_t * msg, yutani_wid_t wid, int32_t x, int32_t y, int32_t width, int32_t height) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_FLIP_REGION;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_flip_region);
++
++	struct yutani_msg_flip_region * mw = (void *)msg->data;
++
++	mw->wid = wid;
++	mw->x = x;
++	mw->y = y;
++	mw->width = width;
++	mw->height = height;
++}
++
++
++void yutani_msg_buildx_window_resize(yutani_msg_t * msg, uint32_t type, yutani_wid_t wid, uint32_t width, uint32_t height, uint32_t bufid, uint32_t flags) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = type;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_resize);
++
++	struct yutani_msg_window_resize * mw = (void *)msg->data;
++
++	mw->wid = wid;
++	mw->width = width;
++	mw->height = height;
++	mw->bufid = bufid;
++	mw->flags = flags;
++}
++
++
++void yutani_msg_buildx_window_advertise(yutani_msg_t * msg, yutani_wid_t wid, uint32_t flags, uint32_t icon, uint32_t bufid, uint32_t width, uint32_t height, size_t length, char * data) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_WINDOW_ADVERTISE;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_advertise) + length;
++
++	struct yutani_msg_window_advertise * mw = (void *)msg->data;
++
++	mw->wid = wid;
++	mw->flags = flags;
++	mw->size = length;
++	mw->icon = icon;
++	mw->bufid = bufid;
++	mw->width = width;
++	mw->height = height;
++	if (data) {
++		memcpy(mw->strings, data, mw->size);
++	}
++}
++
++
++void yutani_msg_buildx_subscribe(yutani_msg_t * msg) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_SUBSCRIBE;
++	msg->size  = sizeof(struct yutani_message);
++}
++
++
++void yutani_msg_buildx_unsubscribe(yutani_msg_t * msg) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_UNSUBSCRIBE;
++	msg->size  = sizeof(struct yutani_message);
++}
++
++
++void yutani_msg_buildx_query_windows(yutani_msg_t * msg) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_QUERY_WINDOWS;
++	msg->size  = sizeof(struct yutani_message);
++}
++
++
++void yutani_msg_buildx_notify(yutani_msg_t * msg) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_NOTIFY;
++	msg->size  = sizeof(struct yutani_message);
++}
++
++
++void yutani_msg_buildx_session_end(yutani_msg_t * msg) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_SESSION_END;
++	msg->size  = sizeof(struct yutani_message);
++}
++
++
++void yutani_msg_buildx_window_focus(yutani_msg_t * msg, yutani_wid_t wid) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_WINDOW_FOCUS;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_focus);
++
++	struct yutani_msg_window_focus * mw = (void *)msg->data;
++
++	mw->wid = wid;
++}
++
++
++void yutani_msg_buildx_key_bind(yutani_msg_t * msg, kbd_key_t key, kbd_mod_t mod, int response) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_KEY_BIND;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_key_bind);
++
++	struct yutani_msg_key_bind * mw = (void *)msg->data;
++
++	mw->key = key;
++	mw->modifiers = mod;
++	mw->response = response;
++}
++
++
++void yutani_msg_buildx_window_drag_start(yutani_msg_t * msg, yutani_wid_t wid) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_WINDOW_DRAG_START;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_drag_start);
++
++	struct yutani_msg_window_drag_start * mw = (void *)msg->data;
++
++	mw->wid = wid;
++}
++
++
++void yutani_msg_buildx_window_update_shape(yutani_msg_t * msg, yutani_wid_t wid, int set_shape) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_WINDOW_UPDATE_SHAPE;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_update_shape);
++
++	struct yutani_msg_window_update_shape * mw = (void *)msg->data;
++
++	mw->wid = wid;
++	mw->set_shape = set_shape;
++}
++
++
++void yutani_msg_buildx_window_warp_mouse(yutani_msg_t * msg, yutani_wid_t wid, int32_t x, int32_t y) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_WINDOW_WARP_MOUSE;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_warp_mouse);
++
++	struct yutani_msg_window_warp_mouse * mw = (void *)msg->data;
++
++	mw->wid = wid;
++	mw->x = x;
++	mw->y = y;
++}
++
++
++void yutani_msg_buildx_window_show_mouse(yutani_msg_t * msg, yutani_wid_t wid, int32_t show_mouse) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_WINDOW_SHOW_MOUSE;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_show_mouse);
++
++	struct yutani_msg_window_show_mouse * mw = (void *)msg->data;
++
++	mw->wid = wid;
++	mw->show_mouse = show_mouse;
++}
++
++
++void yutani_msg_buildx_window_resize_start(yutani_msg_t * msg, yutani_wid_t wid, yutani_scale_direction_t direction) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_WINDOW_RESIZE_START;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_resize_start);
++
++	struct yutani_msg_window_resize_start * mw = (void *)msg->data;
++
++	mw->wid = wid;
++	mw->direction = direction;
++}
++
++
++void yutani_msg_buildx_special_request(yutani_msg_t * msg, yutani_wid_t wid, uint32_t request) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_SPECIAL_REQUEST;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_special_request);
++
++	struct yutani_msg_special_request * sr = (void *)msg->data;
++
++	sr->wid   = wid;
++	sr->request = request;
++}
++
++void yutani_msg_buildx_clipboard(yutani_msg_t * msg, char * content) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_CLIPBOARD;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_clipboard) + strlen(content);
++
++	struct yutani_msg_clipboard * cl = (void *)msg->data;
++
++	cl->size = strlen(content);
++	memcpy(cl->content, content, strlen(content));
++}
++
++void yutani_msg_buildx_window_panel_size(yutani_msg_t * msg, yutani_wid_t wid, int32_t x, int32_t y, int32_t w, int32_t h) {
++	msg->magic = YUTANI_MSG__MAGIC;
++	msg->type  = YUTANI_MSG_WINDOW_PANEL_SIZE;
++	msg->size  = sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_panel_size);
++
++	struct yutani_msg_window_panel_size * ps = (void *)msg->data;
++	ps->wid = wid;
++	ps->x = x;
++	ps->y = y;
++	ps->w = w;
++	ps->h = h;
++}
++
++int yutani_msg_send(yutani_t * y, yutani_msg_t * msg) {
++	return pex_reply(y->sock, msg->size, (char *)msg);
++}
++
++yutani_t * yutani_context_create(FILE * socket) {
++	yutani_t * out = malloc(sizeof(yutani_t));
++
++	out->sock = socket;
++	out->display_width  = 0;
++	out->display_height = 0;
++	out->windows = hashmap_create_int(10);
++	out->queued = list_create();
++	return out;
++}
++
++/**
++ * yutani_init
++ *
++ * Connect to the compositor.
++ *
++ * Connects and handles the initial welcome message.
++ */
++yutani_t * yutani_init(void) {
++	char * server_name = getenv("DISPLAY");
++	if (!server_name) {
++		server_name = "compositor";
++	}
++	FILE * c = pex_connect(server_name);
++
++	if (!c) {
++		return NULL; /* Connection failed. */
++	}
++
++	yutani_t * y = yutani_context_create(c);
++	yutani_msg_buildx_hello_alloc(m);
++	yutani_msg_buildx_hello(m);
++	yutani_msg_send(y, m);
++
++	yutani_msg_t * mm = yutani_wait_for(y, YUTANI_MSG_WELCOME);
++	struct yutani_msg_welcome * mw = (void *)&mm->data;
++	y->display_width = mw->display_width;
++	y->display_height = mw->display_height;
++	y->server_ident = server_name;
++	free(mm);
++
++	return y;
++}
++
++/**
++ * yutani_window_create_flags
++ *
++ * Create a window with certain pre-specified properties.
++ */
++yutani_window_t * yutani_window_create_flags(yutani_t * y, int width, int height, uint32_t flags) {
++	yutani_window_t * win = malloc(sizeof(yutani_window_t));
++
++	yutani_msg_buildx_window_new_flags_alloc(m);
++	yutani_msg_buildx_window_new_flags(m, width, height, flags);
++	yutani_msg_send(y, m);
++
++	yutani_msg_t * mm = yutani_wait_for(y, YUTANI_MSG_WINDOW_INIT);
++	struct yutani_msg_window_init * mw = (void *)&mm->data;
++
++	win->width = mw->width;
++	win->height = mw->height;
++	win->bufid = mw->bufid;
++	win->wid = mw->wid;
++	win->focused = 0;
++	win->decorator_flags = 0;
++	win->x = 0;
++	win->y = 0;
++	win->user_data = NULL;
++	win->ctx = y;
++	win->mouse_state = -1;
++	free(mm);
++
++	hashmap_set(y->windows, (void*)(uintptr_t)win->wid, win);
++
++	char key[1024];
++	YUTANI_SHMKEY(y->server_ident, key, 1024, win);
++
++	size_t size = (width * height * 4);
++	win->buffer = shm_obtain(key, &size);
++	return win;
++
++}
++
++/**
++ * yutani_window_create
++ *
++ * Create a basic window.
++ */
++yutani_window_t * yutani_window_create(yutani_t * y, int width, int height) {
++	return yutani_window_create_flags(y,width,height,0);
++}
++
++/**
++ * yutani_flip
++ *
++ * Ask the server to redraw the window.
++ */
++void yutani_flip(yutani_t * y, yutani_window_t * win) {
++	yutani_msg_buildx_flip_alloc(m);
++	yutani_msg_buildx_flip(m, win->wid);
++	yutani_msg_send(y, m);
++}
++
++/**
++ * yutani_flip_region
++ *
++ * Ask the server to redraw a region relative the window.
++ */
++void yutani_flip_region(yutani_t * yctx, yutani_window_t * win, int32_t x, int32_t y, int32_t width, int32_t height) {
++	yutani_msg_buildx_flip_region_alloc(m);
++	yutani_msg_buildx_flip_region(m, win->wid, x, y, width, height);
++	yutani_msg_send(yctx, m);
++}
++
++/**
++ * yutani_close
++ *
++ * Close a window. A closed window should not be used again,
++ * and its associated buffers will be freed.
++ */
++void yutani_close(yutani_t * y, yutani_window_t * win) {
++	yutani_msg_buildx_window_close_alloc(m);
++	yutani_msg_buildx_window_close(m, win->wid);
++	yutani_msg_send(y, m);
++
++	/* Now destroy our end of the window */
++	{
++		char key[1024];
++		YUTANI_SHMKEY_EXP(y->server_ident, key, 1024, win->bufid);
++		shm_release(key);
++	}
++
++	hashmap_remove(y->windows, (void*)(uintptr_t)win->wid);
++	free(win);
++}
++
++/**
++ * yutani_window_move
++ *
++ * Request a window be moved to new a location on screen.
++ */
++void yutani_window_move(yutani_t * yctx, yutani_window_t * window, int x, int y) {
++	yutani_msg_buildx_window_move_alloc(m);
++	yutani_msg_buildx_window_move(m, window->wid, x, y);
++	yutani_msg_send(yctx, m);
++}
++
++/**
++ * yutani_window_move_relative
++ *
++ * Move a window to a location based on the local coordinate space of a base window.
++ */
++void yutani_window_move_relative(yutani_t * yctx, yutani_window_t * window, yutani_window_t * base, int x, int y) {
++	yutani_msg_buildx_window_move_relative_alloc(m);
++	yutani_msg_buildx_window_move_relative(m, window->wid, base->wid, x, y);
++	yutani_msg_send(yctx, m);
++}
++
++/**
++ * yutani_set_stack
++ *
++ * Set the stacking order of the window.
++ */
++void yutani_set_stack(yutani_t * yctx, yutani_window_t * window, int z) {
++	yutani_msg_buildx_window_stack_alloc(m);
++	yutani_msg_buildx_window_stack(m, window->wid, z);
++	yutani_msg_send(yctx, m);
++}
++
++/**
++ * yutani_window_resize
++ *
++ * Request that the server resize a window.
++ */
++void yutani_window_resize(yutani_t * yctx, yutani_window_t * window, uint32_t width, uint32_t height) {
++	yutani_msg_buildx_window_resize_alloc(m);
++	yutani_msg_buildx_window_resize(m, YUTANI_MSG_RESIZE_REQUEST, window->wid, width, height, 0, 0);
++	yutani_msg_send(yctx, m);
++}
++
++/**
++ * yutani_window_resize_offer
++ *
++ * In a response to a server resize message, offer an alternative size.
++ * Allows the client to reject a user-provided resize request due to
++ * size constraints or other reasons.
++ */
++void yutani_window_resize_offer(yutani_t * yctx, yutani_window_t * window, uint32_t width, uint32_t height) {
++	yutani_msg_buildx_window_resize_alloc(m);
++	yutani_msg_buildx_window_resize(m, YUTANI_MSG_RESIZE_OFFER, window->wid, width, height, 0, 0);
++	yutani_msg_send(yctx, m);
++}
++
++/**
++ * yutani_window_resize_accept
++ *
++ * Accept the server's resize request, initialize new buffers
++ * and all the client to draw into the new buffers.
++ */
++void yutani_window_resize_accept(yutani_t * yctx, yutani_window_t * window, uint32_t width, uint32_t height) {
++	yutani_msg_buildx_window_resize_alloc(m);
++	yutani_msg_buildx_window_resize(m, YUTANI_MSG_RESIZE_ACCEPT, window->wid, width, height, 0, 0);
++	yutani_msg_send(yctx, m);
++
++	/* Now wait for the new bufid */
++	yutani_msg_t * mm = yutani_wait_for(yctx, YUTANI_MSG_RESIZE_BUFID);
++	struct yutani_msg_window_resize * wr = (void*)mm->data;
++
++	if (window->wid != wr->wid) {
++		/* I am not sure what to do here. */
++		return;
++	}
++
++	/* Update the window */
++	window->width = wr->width;
++	window->height = wr->height;
++	window->oldbufid = window->bufid;
++	window->bufid = wr->bufid;
++	free(mm);
++
++	/* Allocate the buffer */
++	{
++		char key[1024];
++		YUTANI_SHMKEY(yctx->server_ident, key, 1024, window);
++
++		size_t size = (window->width * window->height * 4);
++		window->buffer = shm_obtain(key, &size);
++	}
++}
++
++/**
++ * yutani_window_resize_done
++ *
++ * The client has finished drawing into the new buffers after
++ * accepting a resize request and the server should now
++ * discard the old buffer and switch to the new one.
++ */
++void yutani_window_resize_done(yutani_t * yctx, yutani_window_t * window) {
++	/* Destroy the old buffer */
++	{
++		char key[1024];
++		YUTANI_SHMKEY_EXP(yctx->server_ident, key, 1024, window->oldbufid);
++		shm_release(key);
++	}
++
++	yutani_msg_buildx_window_resize_alloc(m);
++	yutani_msg_buildx_window_resize(m, YUTANI_MSG_RESIZE_DONE, window->wid, window->width, window->height, window->bufid, 0);
++	yutani_msg_send(yctx, m);
++}
++
++/**
++ * yutani_window_advertise
++ *
++ * Provide a title for a window to have it show up
++ * in the panel window list.
++ */
++void yutani_window_advertise(yutani_t * yctx, yutani_window_t * window, char * name) {
++
++	uint32_t flags = 0; /* currently, no client flags */
++	uint32_t length = 0;
++	uint32_t icon = 0;
++	char * strings;
++
++	if (!name) {
++		length = 1;
++		strings = " ";
++	} else {
++		length = strlen(name) + 1;
++		strings = name;
++		icon = strlen(name);
++	}
++
++	yutani_msg_buildx_window_advertise_alloc(m, length);
++	yutani_msg_buildx_window_advertise(m, window->wid, flags, icon, 0, 0, 0, length, strings);
++	yutani_msg_send(yctx, m);
++}
++
++/**
++ * yutani_window_advertise_icon
++ *
++ * Provide a title and an icon for the panel to show.
++ *
++ * Note that three additional fields are available in the advertisement
++ * messages which are not yet used. This is to allow for future expansion.
++ */
++void yutani_window_advertise_icon(yutani_t * yctx, yutani_window_t * window, char * name, char * icon) {
++
++	uint32_t flags = 0; /* currently no client flags */
++	uint32_t iconx = 0;
++	uint32_t length = strlen(name) + strlen(icon) + 2;
++	char * strings = malloc(length);
++
++	if (name) {
++		memcpy(&strings[0], name, strlen(name)+1);
++		iconx = strlen(name);
++	}
++	if (icon) {
++		memcpy(&strings[strlen(name)+1], icon, strlen(icon)+1);
++		iconx = strlen(name)+1;
++	}
++
++	yutani_msg_buildx_window_advertise_alloc(m, length);
++	yutani_msg_buildx_window_advertise(m, window->wid, flags, iconx, 0, 0, 0, length, strings);
++	yutani_msg_send(yctx, m);
++	free(strings);
++}
++
++/**
++ * yutani_subscribe_windows
++ *
++ * Subscribe to messages about new window advertisements.
++ * Basically, if you're a panel, you want to do this, so
++ * you can know when windows move around or change focus.
++ */
++void yutani_subscribe_windows(yutani_t * y) {
++	yutani_msg_buildx_subscribe_alloc(m);
++	yutani_msg_buildx_subscribe(m);
++	yutani_msg_send(y, m);
++}
++
++/**
++ * yutani_unsubscribe_windows
++ *
++ * If you no longer wish to receive window change messages,
++ * you can unsubscribe your client from them.
++ */
++void yutani_unsubscribe_windows(yutani_t * y) {
++	yutani_msg_buildx_unsubscribe_alloc(m);
++	yutani_msg_buildx_unsubscribe(m);
++	yutani_msg_send(y, m);
++}
++
++/**
++ * yutani_query_windows
++ *
++ * When notified of changes, call this to request
++ * the new information.
++ */
++void yutani_query_windows(yutani_t * y) {
++	yutani_msg_buildx_query_windows_alloc(m);
++	yutani_msg_buildx_query_windows(m);
++	yutani_msg_send(y, m);
++}
++
++/**
++ * yutani_session_end
++ *
++ * For use by session managers, tell the compositor
++ * that the session has ended and it should inform
++ * other clients of this so they can exit.
++ */
++void yutani_session_end(yutani_t * y) {
++	yutani_msg_buildx_session_end_alloc(m);
++	yutani_msg_buildx_session_end(m);
++	yutani_msg_send(y, m);
++}
++
++/**
++ * yutani_focus_window
++ *
++ * Change focus to the given window. Mostly used by
++ * panels and other window management things, but if you
++ * have a multi-window application, such as one with a
++ * model dialog, and you want to force focus away from one
++ * window and onto another, you can use this.
++ */
++void yutani_focus_window(yutani_t * yctx, yutani_wid_t wid) {
++	yutani_msg_buildx_window_focus_alloc(m);
++	yutani_msg_buildx_window_focus(m, wid);
++	yutani_msg_send(yctx, m);
++}
++
++/**
++ * yutani_key_bind
++ *
++ * Request a key combination always be sent to this client.
++ * You can request for the combination to be sent only to
++ * this client (steal binding) or to also go to other clients
++ * (spy binding), the latter of which is useful for catching
++ * changes to modifier keys.
++ */
++void yutani_key_bind(yutani_t * yctx, kbd_key_t key, kbd_mod_t mod, int response) {
++	yutani_msg_buildx_key_bind_alloc(m);
++	yutani_msg_buildx_key_bind(m, key,mod,response);
++	yutani_msg_send(yctx, m);
++}
++
++/**
++ * yutani_window_drag_start
++ *
++ * Begin a mouse-driven window movement action.
++ * Typically used by decorators to start moving the window
++ * when the user clicks and drags on the title bar.
++ */
++void yutani_window_drag_start(yutani_t * yctx, yutani_window_t * window) {
++	yutani_msg_buildx_window_drag_start_alloc(m);
++	yutani_msg_buildx_window_drag_start(m, window->wid);
++	yutani_msg_send(yctx, m);
++}
++
++/**
++ * yutani_window_drag_start_wid
++ *
++ * Same as above, but takes a wid (of a presumably-foreign window)
++ * instead of a window pointer; used by the panel to initiate
++ * window movement through a drop-down menu for other clients.
++ */
++void yutani_window_drag_start_wid(yutani_t * yctx, yutani_wid_t wid) {
++	yutani_msg_buildx_window_drag_start_alloc(m);
++	yutani_msg_buildx_window_drag_start(m, wid);
++	yutani_msg_send(yctx, m);
++}
++
++/**
++ * yutani_window_update_shape
++ *
++ * Change the window shaping threshold.
++ * Allows partially-transparent windows to control whether they
++ * should still receive mouse events in their transparent regions.
++ */
++void yutani_window_update_shape(yutani_t * yctx, yutani_window_t * window, int set_shape) {
++	yutani_msg_buildx_window_update_shape_alloc(m);
++	yutani_msg_buildx_window_update_shape(m, window->wid, set_shape);
++	yutani_msg_send(yctx, m);
++}
++
++/**
++ * yutani_window_warp_mouse
++ *
++ * Move the mouse to a locate relative to the window.
++ * Only works with relative mouse cursor.
++ * Useful for games.
++ *
++ * TODO: We still need a way to lock the cursor to a particular window.
++ *       Even in games where warping happens quickly, we can still
++ *       end up with the cursor outside of the window when a click happens.
++ */
++void yutani_window_warp_mouse(yutani_t * yctx, yutani_window_t * window, int32_t x, int32_t y) {
++	yutani_msg_buildx_window_warp_mouse_alloc(m);
++	yutani_msg_buildx_window_warp_mouse(m, window->wid, x, y);
++	yutani_msg_send(yctx, m);
++}
++
++/**
++ * yutani_window_show_mouse
++ *
++ * Set the cursor type. Used to change to risize and drag indicators.
++ * Could be used to show a text insertion bar, or a link-clicking hand,
++ * but those cursors need to be added in the server.
++ *
++ * TODO: We should add a way to use client-provided cursor textures.
++ */
++void yutani_window_show_mouse(yutani_t * yctx, yutani_window_t * window, int32_t show_mouse) {
++	if (window->mouse_state != show_mouse) {
++		window->mouse_state = show_mouse;
++		yutani_msg_buildx_window_show_mouse_alloc(m);
++		yutani_msg_buildx_window_show_mouse(m, window->wid, show_mouse);
++		yutani_msg_send(yctx, m);
++	}
++}
++
++/**
++ * yutani_window_resize_start
++ *
++ * Start a mouse-driven window resize action.
++ * Used by decorators.
++ */
++void yutani_window_resize_start(yutani_t * yctx, yutani_window_t * window, yutani_scale_direction_t direction) {
++	yutani_msg_buildx_window_resize_start_alloc(m);
++	yutani_msg_buildx_window_resize_start(m, window->wid, direction);
++	yutani_msg_send(yctx, m);
++}
++
++/**
++ * yutani_special_request
++ *
++ * Send one of the special request messages that aren't
++ * important enough to get their own message types.
++ *
++ * (MAXIMIZE, PLEASE_CLOSE, CLIPBOARD)
++ *
++ * Note that, especially in the CLIPBOARD case, the
++ * window does not to be set.
++ */
++void yutani_special_request(yutani_t * yctx, yutani_window_t * window, uint32_t request) {
++	/* wid isn't necessary; if window is null, set to 0 */
++	yutani_msg_buildx_special_request_alloc(m);
++	yutani_msg_buildx_special_request(m, window ? window->wid : 0, request);
++	yutani_msg_send(yctx, m);
++}
++
++/**
++ * yutani_special_request_wid
++ *
++ * Same as above, but takes a wid instead of a window pointer,
++ * for use with foreign windows.
++ */
++void yutani_special_request_wid(yutani_t * yctx, yutani_wid_t wid, uint32_t request) {
++	/* For working with other applications' windows */
++	yutani_msg_buildx_special_request_alloc(m);
++	yutani_msg_buildx_special_request(m, wid, request);
++	yutani_msg_send(yctx, m);
++}
++
++/**
++ * yutani_set_clipboard
++ *
++ * Set the clipboard content.
++ *
++ * If the clipboard content is too large for a message,
++ * it will be stored in a file and a special clipboard string
++ * will be set to indicate the real contents are
++ * in the file.
++ *
++ * To get the clipboard contents, send a CLIPBOARD special
++ * request and wait for the CLIPBOARD response message.
++ */
++void yutani_set_clipboard(yutani_t * yctx, char * content) {
++	/* Set clipboard contents */
++	int len = strlen(content);
++	if (len > 511) {
++		char tmp_file[100];
++		sprintf(tmp_file, "/tmp/.clipboard.%s", yctx->server_ident);
++		FILE * tmp = fopen(tmp_file, "w+");
++		fwrite(content, len, 1, tmp);
++		fclose(tmp);
++
++		char tmp_data[100];
++		sprintf(tmp_data, "\002 %d", len);
++		yutani_msg_buildx_clipboard_alloc(m, strlen(tmp_data));
++		yutani_msg_buildx_clipboard(m, tmp_data);
++		yutani_msg_send(yctx, m);
++	} else {
++		yutani_msg_buildx_clipboard_alloc(m, len);
++		yutani_msg_buildx_clipboard(m, content);
++		yutani_msg_send(yctx, m);
++	}
++}
++
++void yutani_window_panel_size(yutani_t * yctx, yutani_wid_t wid, int32_t x, int32_t y, int32_t w, int32_t h) {
++	yutani_msg_buildx_window_panel_size_alloc(m);
++	yutani_msg_buildx_window_panel_size(m,wid,x,y,w,h);
++	yutani_msg_send(yctx, m);
++}
++
++/**
++ * yutani_open_clipboard
++ *
++ * Open the clipboard contents file.
++ */
++FILE * yutani_open_clipboard(yutani_t * yctx) {
++	char tmp_file[100];
++	sprintf(tmp_file, "/tmp/.clipboard.%s", yctx->server_ident);
++	return fopen(tmp_file, "r");
++}
++
++/**
++ * init_graphics_yutani
++ *
++ * Create a graphical context around a Yutani window.
++ */
++gfx_context_t * init_graphics_yutani(yutani_window_t * window) {
++	gfx_context_t * out = malloc(sizeof(gfx_context_t));
++	out->width  = window->width;
++	out->height = window->height;
++	out->stride = window->width * sizeof(uint32_t);
++	out->depth  = 32;
++	out->size   = GFX_H(out) * GFX_W(out) * GFX_B(out);
++	out->buffer = window->buffer;
++	out->backbuffer = out->buffer;
++	out->clips  = NULL;
++	return out;
++}
++
++/**
++ * init_graphics_yutani_double_buffer
++ *
++ * Create a graphics context around a Yutani window
++ * with a separate backing store for double-buffering.
++ */
++gfx_context_t *  init_graphics_yutani_double_buffer(yutani_window_t * window) {
++	gfx_context_t * out = init_graphics_yutani(window);
++	out->backbuffer = malloc(GFX_B(out) * GFX_W(out) * GFX_H(out));
++	return out;
++}
++
++/**
++ * reinit_graphics_yutani
++ *
++ * Reinitialize a graphics context, such as when
++ * the window size changes.
++ */
++void reinit_graphics_yutani(gfx_context_t * out, yutani_window_t * window) {
++	out->width  = window->width;
++	out->height = window->height;
++	out->stride = window->width * 4;
++	out->depth  = 32;
++	out->size   = GFX_H(out) * GFX_W(out) * GFX_B(out);
++
++	if (out->clips && out->clips_size != out->height) {
++		free(out->clips);
++		out->clips = NULL;
++		out->clips_size = 0;
++	}
++
++	if (out->buffer == out->backbuffer) {
++		out->buffer = window->buffer;
++		out->backbuffer = out->buffer;
++	} else {
++		out->buffer = window->buffer;
++		out->backbuffer = realloc(out->backbuffer, GFX_B(out) * GFX_W(out) * GFX_H(out));
++	}
++}
++
++/**
++ * release_graphics_yutani
++ *
++ * Release a graphics context.
++ * XXX: This seems to work generically for any graphics context?
++ */
++void release_graphics_yutani(gfx_context_t * gfx) {
++	if (gfx->backbuffer != gfx->buffer) {
++		free(gfx->backbuffer);
++	}
++	free(gfx);
++}
++
++void yutani_internal_refocus(yutani_t * yctx, yutani_window_t * window) {
++	/* Check if a refocus is already in our queue to be processed */
++	foreach(node, yctx->queued) {
++		yutani_msg_t * out = (yutani_msg_t *)node->value;
++		if (out->type == YUTANI_MSG_WINDOW_FOCUS_CHANGE) return;
++	}
++	/* Otherwise, produce an artificial one matching the reported focus state of the window */
++	yutani_msg_t * msg = malloc(sizeof(struct yutani_message) + sizeof(struct yutani_msg_window_focus_change));
++	yutani_msg_buildx_window_focus_change(msg, window->wid, window->focused);
++	list_insert(yctx->queued, msg);
++}
+diff --git a/kernel/yutani/yutani.h b/kernel/yutani/yutani.h
+new file mode 100644
+index 0000000..b07731b
+--- /dev/null
++++ b/kernel/yutani/yutani.h
+@@ -0,0 +1,573 @@
++/**
++ * @brief Yutani Client Library
++ *
++ * Client library for the compositing window system.
++ *
++ * @copyright
++ * This file is part of ToaruOS and is released under the terms
++ * of the NCSA / University of Illinois License - see LICENSE.md
++ * Copyright (C) 2014-2021 K. Lange
++ */
++#pragma once
++
++#include <_cheader.h>
++#include <stdio.h>
++#include <stdint.h>
++#include <stdbool.h>
++
++#include <hashmap.h>
++#include <graphics.h>
++#include <kbd.h>
++#include <mouse.h>
++#include <list.h>
++
++_Begin_C_Header
++
++typedef unsigned int yutani_wid_t;
++
++/*
++ * Server connection context.
++ */
++typedef struct yutani_context {
++	FILE * sock;
++
++	/* server display size */
++	size_t display_width;
++	size_t display_height;
++
++	/* Hash of window IDs to window objects */
++	hashmap_t * windows;
++
++	/* queued events */
++	list_t * queued;
++
++	/* server identifier string */
++	char * server_ident;
++} yutani_t;
++
++typedef struct yutani_window {
++	/* Server window identifier, unique to each window */
++	yutani_wid_t wid;
++
++	/* Window size */
++	uint32_t width;
++	uint32_t height;
++
++	/* Window backing buffer */
++	char * buffer;
++	/*
++	 * Because the buffer can change during resizing,
++	 * buffers are indexed to ensure we are using
++	 * the one the server expects.
++	 */
++	uint32_t bufid;
++
++	/* Window focused flag */
++	uint8_t focused;
++
++	/* Old buffer ID */
++	uint32_t oldbufid;
++
++	/* Generic pointer for client use */
++	void * user_data;
++
++	/* Window position in the server; automatically updated */
++	int32_t x;
++	int32_t y;
++
++	/* Flags for the decorator library to use */
++	uint32_t decorator_flags;
++
++	/* Server context that owns this window */
++	yutani_t * ctx;
++
++	int32_t mouse_state;
++} yutani_window_t;
++
++typedef struct yutani_message {
++	uint32_t magic;
++	uint32_t type;
++	uint32_t size;
++	char data[];
++} yutani_msg_t;
++
++struct yutani_msg_welcome {
++	uint32_t display_width;
++	uint32_t display_height;
++};
++
++struct yutani_msg_flip {
++	yutani_wid_t wid;
++};
++
++struct yutani_msg_window_close {
++	yutani_wid_t wid;
++};
++
++struct yutani_msg_window_new {
++	uint32_t width;
++	uint32_t height;
++};
++
++struct yutani_msg_window_new_flags {
++	uint32_t width;
++	uint32_t height;
++	uint32_t flags;
++};
++
++struct yutani_msg_window_init {
++	yutani_wid_t wid;
++	uint32_t width;
++	uint32_t height;
++	uint32_t bufid;
++};
++
++struct yutani_msg_window_move {
++	yutani_wid_t wid;
++	int32_t x;
++	int32_t y;
++};
++
++struct yutani_msg_window_move_relative {
++	yutani_wid_t wid_to_move;
++	yutani_wid_t wid_base;
++	int32_t x;
++	int32_t y;
++};
++
++struct yutani_msg_key_event {
++	yutani_wid_t wid;
++	key_event_t event;
++	key_event_state_t state;
++};
++
++struct yutani_msg_window_stack {
++	yutani_wid_t wid;
++	int z;
++};
++
++struct yutani_msg_window_focus_change {
++	yutani_wid_t wid;
++	int focused;
++};
++
++struct yutani_msg_window_mouse_event {
++	yutani_wid_t wid;
++	int32_t new_x;
++	int32_t new_y;
++	int32_t old_x;
++	int32_t old_y;
++	uint8_t buttons;
++	uint8_t command;
++	uint8_t modifiers;
++};
++
++struct yutani_msg_mouse_event {
++	yutani_wid_t wid;
++	mouse_device_packet_t event;
++	int32_t type;
++};
++
++struct yutani_msg_flip_region {
++	yutani_wid_t wid;
++	int32_t x;
++	int32_t y;
++	int32_t width;
++	int32_t height;
++};
++
++struct yutani_msg_window_resize {
++	yutani_wid_t wid;
++	uint32_t width;
++	uint32_t height;
++	uint32_t bufid;
++	uint32_t flags;
++};
++
++struct yutani_msg_window_advertise {
++	yutani_wid_t wid;
++	uint32_t flags; /* Types, focused, etc. */
++	uint32_t icon;  /* Icon offset in strings[] */
++	uint32_t bufid;
++	uint32_t width;
++	uint32_t height;
++	uint32_t size;
++	char strings[];
++};
++
++struct yutani_msg_window_focus {
++	yutani_wid_t wid;
++};
++
++struct yutani_msg_key_bind {
++	kbd_key_t key;
++	kbd_mod_t modifiers;
++	int response;
++};
++
++struct yutani_msg_window_drag_start {
++	yutani_wid_t wid;
++};
++
++struct yutani_msg_window_update_shape {
++	yutani_wid_t wid;
++	int set_shape;
++};
++
++struct yutani_msg_window_warp_mouse {
++	yutani_wid_t wid;
++	int32_t x;
++	int32_t y;
++};
++
++struct yutani_msg_window_show_mouse {
++	yutani_wid_t wid;
++	int32_t show_mouse;
++};
++
++typedef enum {
++	SCALE_AUTO,
++
++	SCALE_UP,
++	SCALE_DOWN,
++	SCALE_LEFT,
++	SCALE_RIGHT,
++
++	SCALE_UP_LEFT,
++	SCALE_UP_RIGHT,
++	SCALE_DOWN_LEFT,
++	SCALE_DOWN_RIGHT,
++
++	SCALE_NONE,
++} yutani_scale_direction_t;
++
++struct yutani_msg_window_resize_start {
++	yutani_wid_t wid;
++	yutani_scale_direction_t direction;
++};
++
++struct yutani_msg_special_request {
++	yutani_wid_t wid;
++	uint32_t request;
++};
++
++struct yutani_msg_clipboard {
++	uint32_t size;
++	char content[];
++};
++
++struct yutani_msg_window_panel_size {
++	yutani_wid_t wid;
++	int32_t x;
++	int32_t y;
++	int32_t w;
++	int32_t h;
++};
++
++/* Magic value */
++#define YUTANI_MSG__MAGIC 0xABAD1DEA
++
++/* Client messages */
++#define YUTANI_MSG_HELLO               0x00000001
++#define YUTANI_MSG_WINDOW_NEW          0x00000002
++#define YUTANI_MSG_FLIP                0x00000003
++#define YUTANI_MSG_KEY_EVENT           0x00000004
++#define YUTANI_MSG_MOUSE_EVENT         0x00000005
++#define YUTANI_MSG_WINDOW_MOVE         0x00000006
++#define YUTANI_MSG_WINDOW_CLOSE        0x00000007
++#define YUTANI_MSG_WINDOW_SHOW         0x00000008
++#define YUTANI_MSG_WINDOW_HIDE         0x00000009
++#define YUTANI_MSG_WINDOW_STACK        0x0000000A
++#define YUTANI_MSG_WINDOW_FOCUS_CHANGE 0x0000000B
++#define YUTANI_MSG_WINDOW_MOUSE_EVENT  0x0000000C
++#define YUTANI_MSG_FLIP_REGION         0x0000000D
++#define YUTANI_MSG_WINDOW_NEW_FLAGS    0x0000000E
++
++#define YUTANI_MSG_RESIZE_REQUEST      0x00000010
++#define YUTANI_MSG_RESIZE_OFFER        0x00000011
++#define YUTANI_MSG_RESIZE_ACCEPT       0x00000012
++#define YUTANI_MSG_RESIZE_BUFID        0x00000013
++#define YUTANI_MSG_RESIZE_DONE         0x00000014
++
++#define YUTANI_MSG_WINDOW_MOVE_RELATIVE 0x00000015
++
++/* Some session management / de stuff */
++#define YUTANI_MSG_WINDOW_ADVERTISE    0x00000020
++#define YUTANI_MSG_SUBSCRIBE           0x00000021
++#define YUTANI_MSG_UNSUBSCRIBE         0x00000022
++#define YUTANI_MSG_NOTIFY              0x00000023
++#define YUTANI_MSG_QUERY_WINDOWS       0x00000024
++#define YUTANI_MSG_WINDOW_FOCUS        0x00000025
++#define YUTANI_MSG_WINDOW_DRAG_START   0x00000026
++#define YUTANI_MSG_WINDOW_WARP_MOUSE   0x00000027
++#define YUTANI_MSG_WINDOW_SHOW_MOUSE   0x00000028
++#define YUTANI_MSG_WINDOW_RESIZE_START 0x00000029
++#define YUTANI_MSG_WINDOW_PANEL_SIZE   0x0000002a
++
++#define YUTANI_MSG_SESSION_END         0x00000030
++
++#define YUTANI_MSG_KEY_BIND            0x00000040
++
++#define YUTANI_MSG_WINDOW_UPDATE_SHAPE 0x00000050
++
++#define YUTANI_MSG_CLIPBOARD           0x00000060
++
++#define YUTANI_MSG_GOODBYE             0x000000F0
++
++/* Special request (eg. one-off single-shot requests like "please maximize me" */
++#define YUTANI_MSG_SPECIAL_REQUEST     0x00000100
++
++/* Server responses */
++#define YUTANI_MSG_WELCOME             0x00010001
++#define YUTANI_MSG_WINDOW_INIT         0x00010002
++
++/*
++ * YUTANI_ZORDER
++ *
++ * Specifies which stack set a window should appear in.
++ */
++#define YUTANI_ZORDER_MAX     0xFFFF
++#define YUTANI_ZORDER_TOP     0xFFFF
++#define YUTANI_ZORDER_MENU    0xFFFE
++#define YUTANI_ZORDER_OVERLAY 0xFFED
++#define YUTANI_ZORDER_BOTTOM  0x0000
++
++/*
++ * YUTANI_MOUSE_BUTTON
++ *
++ * Button specifiers. Multiple specifiers may be set.
++ */
++#define YUTANI_MOUSE_BUTTON_LEFT   0x01
++#define YUTANI_MOUSE_BUTTON_RIGHT  0x02
++#define YUTANI_MOUSE_BUTTON_MIDDLE 0x04
++#define YUTANI_MOUSE_SCROLL_UP     0x10
++#define YUTANI_MOUSE_SCROLL_DOWN   0x20
++
++/*
++ * YUTANI_MOUSE_STATE
++ *
++ * The mouse has for effective states internally:
++ *
++ * NORMAL: The mouse is performing normally.
++ * MOVING: The mouse is engaged in moving a window.
++ * DRAGGING: The mouse is down and sending drag events.
++ * RESIZING: The mouse is engaged in resizing a window.
++ */
++#define YUTANI_MOUSE_STATE_NORMAL     0
++#define YUTANI_MOUSE_STATE_MOVING     1
++#define YUTANI_MOUSE_STATE_DRAGGING   2
++#define YUTANI_MOUSE_STATE_RESIZING   3
++#define YUTANI_MOUSE_STATE_ROTATING   4
++
++/*
++ * YUTANI_MOUSE_EVENT
++ *
++ * Mouse events have different types.
++ *
++ * Most of these should be self-explanatory.
++ *
++ * CLICK: A down-up click has occured.
++ * DRAG: The mouse is down and moving.
++ * RAISE: A mouse button was released.
++ * DOWN: A mouse button has been pressed.
++ * MOVE: The mouse has moved without a mouse button pressed.
++ * LEAVE: The mouse has left the given window.
++ * ENTER: The mouse has entered the given window.
++ */
++#define YUTANI_MOUSE_EVENT_CLICK 0
++#define YUTANI_MOUSE_EVENT_DRAG  1
++#define YUTANI_MOUSE_EVENT_RAISE 2
++#define YUTANI_MOUSE_EVENT_DOWN  3
++#define YUTANI_MOUSE_EVENT_MOVE  4
++#define YUTANI_MOUSE_EVENT_LEAVE 5
++#define YUTANI_MOUSE_EVENT_ENTER 6
++
++/*
++ * YUTANI_MOUSE_EVENT_TYPE
++ *
++ * (For mouse drivers)
++ *
++ * RELATIVE: Mouse positions are relative to the previous reported location.
++ * ABSOLUTE: Mouse positions are in absolute coordinates.
++ */
++#define YUTANI_MOUSE_EVENT_TYPE_RELATIVE 0
++#define YUTANI_MOUSE_EVENT_TYPE_ABSOLUTE 1
++
++/*
++ * YUTANI_KEY_MODIFIER
++ *
++ * These are sent with mouse events. The LEFT and RIGHT
++ * version are specific to those keys. The non-LEFT/RIGHT
++ * versions are masks that can match either key.
++ *
++ * Must match with the <kbd.h> definitions.
++ */
++#define YUTANI_KEY_MODIFIER_LEFT_CTRL    0x01
++#define YUTANI_KEY_MODIFIER_LEFT_SHIFT   0x02
++#define YUTANI_KEY_MODIFIER_LEFT_ALT     0x04
++#define YUTANI_KEY_MODIFIER_LEFT_SUPER   0x08
++#define YUTANI_KEY_MODIFIER_RIGHT_CTRL   0x10
++#define YUTANI_KEY_MODIFIER_RIGHT_SHIFT  0x20
++#define YUTANI_KEY_MODIFIER_RIGHT_ALT    0x40
++#define YUTANI_KEY_MODIFIER_RIGHT_SUPER  0x80
++#define YUTANI_KEY_MODIFIER_CTRL         0x11
++#define YUTANI_KEY_MODIFIER_SHIFT        0x22
++#define YUTANI_KEY_MODIFIER_ALT          0x44
++#define YUTANI_KEY_MODIFIER_SUPER        0x88
++
++/*
++ * YUTANI_BIND
++ *
++ * Used to control keyboard binding modes.
++ *
++ * PASSTHROUGH: The key event will continue to the window that would have normally received.
++ * STEAL: The key event will not be passed to the next window and is stolen by the bound window.
++ */
++#define YUTANI_BIND_PASSTHROUGH 0
++#define YUTANI_BIND_STEAL       1
++
++/*
++ * YUTANI_SHAPE_THRESHOLD
++ *
++ * Used with yutani_window_update_shape to set the alpha threshold for window shaping.
++ * All windows are shaped based on their transparency (alpha channel). The default
++ * mode is NONE - meaning the alpha channel is ignored.
++ *
++ * NONE:  The window is always clickable, regardless of alpha transparency.
++ * CLEAR: Only completely clear (alpha = 0) regions will pass through.
++ * HALF:  Threshold of 50% - alpha values below 127 will pass through. Good for most cases.
++ * ANY:   Any amount of alpha transparency will pass through - only fully opaque regions are kept.
++ * PASSTHROUGH: All clicks pass through. Useful for tooltips / overlays.
++ */
++#define YUTANI_SHAPE_THRESHOLD_NONE        0
++#define YUTANI_SHAPE_THRESHOLD_CLEAR       1
++#define YUTANI_SHAPE_THRESHOLD_HALF        127
++#define YUTANI_SHAPE_THRESHOLD_ANY         255
++#define YUTANI_SHAPE_THRESHOLD_PASSTHROUGH 256
++
++/*
++ * YUTANI_CURSOR_TYPE
++ *
++ * Used with SHOW_MOUSE to set the cursor type for this window.
++ * Note that modifications made to the cursor will only display
++ * while it the current window is active and that cursor settings
++ * are per-window, not per-application.
++ *
++ * HIDE:              Disable the mouse cursor. Useful for games.
++ * NORMAL:            The normal arrow cursor.
++ * DRAG:              A 4-directional arrow.
++ * RESIZE_VERTICAL:   An up-down arrow / resize indicator.
++ * RESIZE_HORIZONTAL: A left-right arrow / resize indicator.
++ * RESIZE_UP_DOWN:    A diagonal ＼-shaped arrow.
++ * RESIZE_DOWN_UP:    A diagonal ／-shaped arrow.
++ *
++ * RESET: If the cursor was previously hidden, hide it again.
++ *        Otherwise, show the normal cursor. Allows for decorator
++ *        to set resize cursors without having to know if a window
++ *        had set the default mode to HIDE.
++ */
++#define YUTANI_CURSOR_TYPE_RESET            -1
++#define YUTANI_CURSOR_TYPE_HIDE              0
++#define YUTANI_CURSOR_TYPE_NORMAL            1
++#define YUTANI_CURSOR_TYPE_DRAG              2
++#define YUTANI_CURSOR_TYPE_RESIZE_VERTICAL   3
++#define YUTANI_CURSOR_TYPE_RESIZE_HORIZONTAL 4
++#define YUTANI_CURSOR_TYPE_RESIZE_UP_DOWN    5
++#define YUTANI_CURSOR_TYPE_RESIZE_DOWN_UP    6
++#define YUTANI_CURSOR_TYPE_POINT             7
++#define YUTANI_CURSOR_TYPE_IBEAM             8
++
++/*
++ * YUTANI_WINDOW_FLAG
++ *
++ * Flags for new windows describing how the window
++ * should be created.
++ */
++#define YUTANI_WINDOW_FLAG_NO_STEAL_FOCUS   (1 << 0)
++#define YUTANI_WINDOW_FLAG_DISALLOW_DRAG    (1 << 1)
++#define YUTANI_WINDOW_FLAG_DISALLOW_RESIZE  (1 << 2)
++#define YUTANI_WINDOW_FLAG_ALT_ANIMATION    (1 << 3)
++#define YUTANI_WINDOW_FLAG_DIALOG_ANIMATION (1 << 4)
++#define YUTANI_WINDOW_FLAG_NO_ANIMATION     (1 << 5)
++#define YUTANI_WINDOW_FLAG_BLUR_BEHIND      (1 << 8)
++
++/* YUTANI_SPECIAL_REQUEST
++ *
++ * Special one-off single-shot request messages.
++ */
++#define YUTANI_SPECIAL_REQUEST_MAXIMIZE     1
++#define YUTANI_SPECIAL_REQUEST_PLEASE_CLOSE 2
++#define YUTANI_SPECIAL_REQUEST_MINIMIZE     3
++
++#define YUTANI_SPECIAL_REQUEST_CLIPBOARD    10
++
++#define YUTANI_SPECIAL_REQUEST_RELOAD       20
++
++/*
++ * YUTANI_RESIZE
++ *
++ * Flags provided in resize offers describing the window state.
++ */
++#define YUTANI_RESIZE_NORMAL 0x00000000
++#define YUTANI_RESIZE_TILED  0x0000000f
++
++#define YUTANI_RESIZE_TILE_LEFT  0x00000001
++#define YUTANI_RESIZE_TILE_RIGHT 0x00000002
++#define YUTANI_RESIZE_TILE_UP    0x00000004
++#define YUTANI_RESIZE_TILE_DOWN  0x00000008
++
++typedef struct {
++	int x;
++	int y;
++	unsigned int width;
++	unsigned int height;
++} yutani_damage_rect_t;
++
++extern yutani_msg_t * yutani_wait_for(yutani_t * y, uint32_t type);
++extern yutani_msg_t * yutani_poll(yutani_t * y);
++extern yutani_msg_t * yutani_poll_async(yutani_t * y);
++extern size_t yutani_query(yutani_t * y);
++
++extern int yutani_msg_send(yutani_t * y, yutani_msg_t * msg);
++extern yutani_t * yutani_context_create(FILE * socket);
++extern yutani_t * yutani_init(void);
++extern yutani_window_t * yutani_window_create(yutani_t * y, int width, int height);
++extern yutani_window_t * yutani_window_create_flags(yutani_t * y, int width, int height, uint32_t flags);
++extern void yutani_flip(yutani_t * y, yutani_window_t * win);
++extern void yutani_window_move(yutani_t * yctx, yutani_window_t * window, int x, int y);
++extern void yutani_window_move_relative(yutani_t * yctx, yutani_window_t * window, yutani_window_t * base, int x, int y);
++extern void yutani_close(yutani_t * y, yutani_window_t * win);
++extern void yutani_set_stack(yutani_t *, yutani_window_t *, int);
++extern void yutani_flip_region(yutani_t *, yutani_window_t * win, int32_t x, int32_t y, int32_t width, int32_t height);
++extern void yutani_window_resize(yutani_t * yctx, yutani_window_t * window, uint32_t width, uint32_t height);
++extern void yutani_window_resize_offer(yutani_t * yctx, yutani_window_t * window, uint32_t width, uint32_t height);
++extern void yutani_window_resize_accept(yutani_t * yctx, yutani_window_t * window, uint32_t width, uint32_t height);
++extern void yutani_window_resize_done(yutani_t * yctx, yutani_window_t * window);
++extern void yutani_window_advertise(yutani_t * yctx, yutani_window_t * window, char * name);
++extern void yutani_window_advertise_icon(yutani_t * yctx, yutani_window_t * window, char * name, char * icon);
++extern void yutani_window_panel_size(yutani_t * yctx, yutani_wid_t wid, int32_t x, int32_t y, int32_t w, int32_t h);
++extern void yutani_subscribe_windows(yutani_t * y); 
++extern void yutani_unsubscribe_windows(yutani_t * y);
++extern void yutani_query_windows(yutani_t * y);
++extern void yutani_session_end(yutani_t * y);
++extern void yutani_focus_window(yutani_t * y, yutani_wid_t wid);
++extern void yutani_key_bind(yutani_t * yctx, kbd_key_t key, kbd_mod_t mod, int response);
++extern void yutani_window_drag_start(yutani_t * yctx, yutani_window_t * window);
++extern void yutani_window_drag_start_wid(yutani_t * yctx, yutani_wid_t wid);
++extern void yutani_window_update_shape(yutani_t * yctx, yutani_window_t * window, int set_shape);
++extern void yutani_window_warp_mouse(yutani_t * yctx, yutani_window_t * window, int32_t x, int32_t y);
++extern void yutani_window_show_mouse(yutani_t * yctx, yutani_window_t * window, int32_t show_mouse);
++extern void yutani_window_resize_start(yutani_t * yctx, yutani_window_t * window, yutani_scale_direction_t direction);
++extern void yutani_special_request(yutani_t * yctx, yutani_window_t * window, uint32_t request);
++extern void yutani_special_request_wid(yutani_t * yctx, yutani_wid_t wid, uint32_t request);
++extern void yutani_set_clipboard(yutani_t * yctx, char * content);
++extern FILE * yutani_open_clipboard(yutani_t * yctx);
++
++extern gfx_context_t * init_graphics_yutani(yutani_window_t * window);
++extern gfx_context_t *  init_graphics_yutani_double_buffer(yutani_window_t * window);
++extern void reinit_graphics_yutani(gfx_context_t * out, yutani_window_t * window);
++extern void release_graphics_yutani(gfx_context_t * gfx);
++extern void yutani_internal_refocus(yutani_t * yctx, yutani_window_t * window);
++
++_End_C_Header
++
+-- 
+2.43.0
+

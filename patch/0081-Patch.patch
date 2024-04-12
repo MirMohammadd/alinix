@@ -1,0 +1,24 @@
+From 6e1e459b07e325597b6f5f9d8af65a5586769ee4 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 18:04:28 -0400
+Subject: [PATCH 081/493] Patch
+
+---
+ .github/workflows/test.yml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index dae996b..148ee82 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -23,6 +23,7 @@ jobs:
+           tar -xzf gcc-11.2.0.tar.gz
+           cd gcc-11.2.0
+           ./configure --target=i686-elf --prefix="$HOME/opt/cross" --disable-nls --enable-languages=c,c++ --without-headers
++          i686-elf-gcc --version
+ 
+           
+       - name: Run Make Command
+-- 
+2.43.0
+

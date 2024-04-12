@@ -1,0 +1,25 @@
+From d9ccb091624723374b64e9fa9fd97d14b8a8dc17 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 21:45:29 -0400
+Subject: [PATCH 152/493] Patch
+
+---
+ kernelz/include/system/tasking/process.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernelz/include/system/tasking/process.h b/kernelz/include/system/tasking/process.h
+index 073b242..4f8247c 100644
+--- a/kernelz/include/system/tasking/process.h
++++ b/kernelz/include/system/tasking/process.h
+@@ -42,7 +42,7 @@ namespace HeisenOs
+                 common::uint32_t heapStart;
+                 common::uint32_t heapEnd;
+             } heap;
+-            List<LIBCactusOS::IPCMessage> ipcMessages;
++            List<LIBHeisenKernel::IPCMessage> ipcMessages;
+ 
+             Stream* stdInput;
+             Stream* stdOutput;
+-- 
+2.43.0
+

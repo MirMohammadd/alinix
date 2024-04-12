@@ -1,0 +1,25 @@
+From ffdb7aea104894977441e43b0f03094e5ab73f60 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 00:04:04 -0400
+Subject: [PATCH 108/493] Patch
+
+---
+ kernelz/src/system/system.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernelz/src/system/system.cpp b/kernelz/src/system/system.cpp
+index 4bc07d4..6e7aae8 100644
+--- a/kernelz/src/system/system.cpp
++++ b/kernelz/src/system/system.cpp
+@@ -6,7 +6,7 @@ using namespace HeisenOs::common;
+ using namespace HeisenOs::core;
+ using namespace HeisenOs::system;
+ using namespace HeisenOs::system::drivers;
+-using namespace LIBCactusOS;
++using namespace LIBHeisenKernel;
+ 
+ multiboot_info_t* System::mbi = 0;
+ PIT* System::pit = 0;
+-- 
+2.43.0
+

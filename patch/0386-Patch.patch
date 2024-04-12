@@ -1,0 +1,217 @@
+From e8d8ce17cd59f381bd0d2f92c2d8d9958f26059a Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sat, 6 Apr 2024 14:27:16 -0400
+Subject: [PATCH 386/493] Patch
+
+---
+ kernelz/src/core/idthelper.s                  | 142 ++++++++++++------
+ kernelz/src/core/usb3.cpp                     |   2 +-
+ .../src/system/virtual8086/VM8086Helper.asm   |   2 +-
+ lib/include/{string.h => string.hpp}          |   4 +-
+ 4 files changed, 101 insertions(+), 49 deletions(-)
+ rename lib/include/{string.h => string.hpp} (93%)
+
+diff --git a/kernelz/src/core/idthelper.s b/kernelz/src/core/idthelper.s
+index 6cc388d..ca49df6 100644
+--- a/kernelz/src/core/idthelper.s
++++ b/kernelz/src/core/idthelper.s
+@@ -1,54 +1,104 @@
+-.macro HandleException num
+-    HandleException\num:
+-        push $\num
+-        jmp interrupthandler
++.macro HandleExceptionWithError num
++.global HandleException\num\()
++HandleException\num\():
++    pushl $\num
++    jmp interrupthandler
+ .endm
+ 
++.macro HandleExceptionNoError num
++.global HandleException\num\()
++HandleException\num\():
++    pushl $0 # Add empty error code
++    pushl $\num
++    jmp interrupthandler
++.endm
++
++
+ .macro HandleInterruptRequest num
+-    HandleInterruptRequest\num:
+-        push 0
+-        push $\num + 0x20
+-        jmp interrupthandler
++.global HandleInterruptRequest\num\()
++HandleInterruptRequest\num\():
++    pushl $0
++    pushl $\num + 0x20
++    jmp interrupthandler
+ .endm
+ 
+-HandleException 0
+-HandleException 1
+-HandleException 2
+-HandleException 3
+-HandleException 4
+-HandleException 5
+-HandleException 6
+-HandleException 7
+-HandleException 8
+-HandleException 9
+-HandleException 10
+-HandleException 11
+-HandleException 12
+-HandleException 13
+-HandleException 14
+-HandleException 15
+-
+-HandleInterruptRequest 0
+-HandleInterruptRequest 1
+-HandleInterruptRequest 2
+-HandleInterruptRequest 3
+-HandleInterruptRequest 4
+-HandleInterruptRequest 5
+-HandleInterruptRequest 6
+-HandleInterruptRequest 7
+-HandleInterruptRequest 8
+-HandleInterruptRequest 9
+-HandleInterruptRequest 10
+-HandleInterruptRequest 11
+-HandleInterruptRequest 12
+-HandleInterruptRequest 13
+-HandleInterruptRequest 14
+-HandleInterruptRequest 15
+-HandleInterruptRequest 31
+-HandleInterruptRequest 221 
+-
+-interrupthandler:
++HandleExceptionNoError 0x00
++HandleExceptionNoError 0x01
++HandleExceptionNoError 0x02
++HandleExceptionNoError 0x03
++HandleExceptionNoError 0x04
++HandleExceptionNoError 0x05
++HandleExceptionNoError 0x06
++HandleExceptionNoError 0x07
++HandleExceptionWithError 0x08
++HandleExceptionNoError 0x09
++HandleExceptionWithError 0x0A
++HandleExceptionWithError 0x0B
++HandleExceptionWithError 0x0C
++HandleExceptionWithError 0x0D
++HandleExceptionWithError 0x0E
++HandleExceptionNoError 0x0F
++HandleExceptionNoError 0x10
++HandleExceptionNoError 0x11
++HandleExceptionNoError 0x12
++HandleExceptionNoError 0x13
++
++HandleInterruptRequest 0x00
++HandleInterruptRequest 0x01
++HandleInterruptRequest 0x02
++HandleInterruptRequest 0x03
++HandleInterruptRequest 0x04
++HandleInterruptRequest 0x05
++HandleInterruptRequest 0x06
++HandleInterruptRequest 0x07
++HandleInterruptRequest 0x08
++HandleInterruptRequest 0x09
++HandleInterruptRequest 0x0A
++HandleInterruptRequest 0x0B
++HandleInterruptRequest 0x0C
++HandleInterruptRequest 0x0D
++HandleInterruptRequest 0x0E
++HandleInterruptRequest 0x0F
++HandleInterruptRequest 0x31
++
++HandleInterruptRequest 0xDD
++HandleInterruptRequest 0x60
++
++interrupthandler:    
++	cli # Stop Interrupts
++	
++    # Save Registers
++    pusha
++	pushl %ds
++	pushl %es
++	pushl %fs
++	pushl %gs
++
++    # load the kernel data segment descriptor
++	mov $0x10, %ax
++	mov %ax, %ds
++	mov %ax, %es
++	mov %ax, %fs
++	mov %ax, %gs
++
++	pushl %esp
++	# Call the kernel IRQ handler
++	call _ZN8CactusOS4core24InterruptDescriptorTable15HandleInterruptEPNS0_8CPUStateE
++	mov %eax, %esp
++
++    # Restore Registers
++	popl %gs
++	popl %fs
++	popl %es
++	popl %ds
++	popa
++
++    # Clean up
++	add $8, %esp
++
++	sti # Restart Interrupts
++    iret
+ 
+ .global IgnoreInterrupt
+ IgnoreInterrupt:
+-    iret
++    iret
+\ No newline at end of file
+diff --git a/kernelz/src/core/usb3.cpp b/kernelz/src/core/usb3.cpp
+index f49815f..d312a26 100644
+--- a/kernelz/src/core/usb3.cpp
++++ b/kernelz/src/core/usb3.cpp
+@@ -15,7 +15,7 @@
+ 
+  */
+ #include <usb3.h>
+-#include <string.h>
++#include <string.hpp>
+ 
+ using namespace LIBHeisenKernel;
+ 
+diff --git a/kernelz/src/system/virtual8086/VM8086Helper.asm b/kernelz/src/system/virtual8086/VM8086Helper.asm
+index d154771..57de92b 100644
+--- a/kernelz/src/system/virtual8086/VM8086Helper.asm
++++ b/kernelz/src/system/virtual8086/VM8086Helper.asm
+@@ -9,7 +9,7 @@ cpuGetESP:
+   add eax, 4
+   ret
+ 
+-;VM86 Code
++
+ global cpuEnterV86Int
+ cpuEnterV86Int:
+   push ebp
+diff --git a/lib/include/string.h b/lib/include/string.hpp
+similarity index 93%
+rename from lib/include/string.h
+rename to lib/include/string.hpp
+index 15520f8..ed04984 100644
+--- a/lib/include/string.h
++++ b/lib/include/string.hpp
+@@ -1,8 +1,10 @@
+ #ifndef __CACTUSOSLIB__MEMORYOPERATIONS_H
+ #define __CACTUSOSLIB__MEMORYOPERATIONS_H
+ 
+-#include <stddef.h>
+ #include <list.h>
++#include "types.h"
++
++using  namespace LIBHeisenKernel;
+ 
+ extern "C"
+ {
+-- 
+2.43.0
+

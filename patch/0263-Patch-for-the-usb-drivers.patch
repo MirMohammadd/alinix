@@ -1,0 +1,130 @@
+From 62e37f2979ac119522d4407c3c1467f2209588f5 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 18:23:51 -0400
+Subject: [PATCH 263/493] Patch for the usb drivers
+
+---
+ apps/settings/settings.cpp |  1 +
+ kernelz/src/core/usb3.cpp  |  1 +
+ lib/include/types.h        | 14 +----------
+ lib/include/usb3.h         |  1 +
+ lib/include/xhci.h         | 48 ++++++++++++++++++++++++++++++++++++++
+ 5 files changed, 52 insertions(+), 13 deletions(-)
+ create mode 100644 kernelz/src/core/usb3.cpp
+ create mode 100644 lib/include/xhci.h
+
+diff --git a/apps/settings/settings.cpp b/apps/settings/settings.cpp
+index bb83ede..715487f 100644
+--- a/apps/settings/settings.cpp
++++ b/apps/settings/settings.cpp
+@@ -6,6 +6,7 @@
+ #include <log.h>
+ #include <hardware/ata.hpp>
+ #include <imaging/image.h>
++#include "usb3.h"
+ 
+ 
+ using namespace LIBHeisenKernel;
+diff --git a/kernelz/src/core/usb3.cpp b/kernelz/src/core/usb3.cpp
+new file mode 100644
+index 0000000..9c4fce7
+--- /dev/null
++++ b/kernelz/src/core/usb3.cpp
+@@ -0,0 +1 @@
++#include <usb3.h>
+\ No newline at end of file
+diff --git a/lib/include/types.h b/lib/include/types.h
+index 581b6dd..e32f2b3 100644
+--- a/lib/include/types.h
++++ b/lib/include/types.h
+@@ -1,19 +1,7 @@
+ #ifndef __CACTUSOSLIB__TYPES_H
+ #define __CACTUSOSLIB__TYPES_H
+ 
+-#pragma pack(push,1)
+-typedef struct _xhci_cap_regs_ {
+-	uint8_t cap_caplen_version;
+-	uint8_t reserved;
+-	uint16_t hci_version;
+-	uint32_t cap_hcsparams1;
+-	uint32_t cap_hcsparams2;
+-	uint32_t cap_hcsparams3;
+-	uint32_t cap_hccparams1;
+-	uint32_t cap_dboff;
+-	uint32_t cap_hccparams2;
+-}xhci_cap_regs_t;
+-#pragma pack(pop)
++
+ 
+ namespace LIBHeisenKernel
+ {
+diff --git a/lib/include/usb3.h b/lib/include/usb3.h
+index 51bfb55..c6578cf 100644
+--- a/lib/include/usb3.h
++++ b/lib/include/usb3.h
+@@ -3,6 +3,7 @@
+ 
+ #include "types.h"
+ #include "llist.h"
++#include "xhci.h"
+ 
+ 
+ #if !defined(__cplusplus)
+diff --git a/lib/include/xhci.h b/lib/include/xhci.h
+new file mode 100644
+index 0000000..2e85b3a
+--- /dev/null
++++ b/lib/include/xhci.h
+@@ -0,0 +1,48 @@
++#ifndef _HEISEN_KERNEL_XHCI__
++#define _HEISEN_KERNEL_XHCI__
++
++#if defined(__cplusplus)
++#include "types.h"
++using namespace LIBHeisenKernel;
++
++#else 
++#include <stdint.h>
++
++#endif 
++
++
++
++#pragma pack(push,1)
++typedef struct _xhci_doorbell_ {
++	unsigned doorbell[256];
++}xhci_doorbell_regs_t;
++#pragma pack(pop)
++
++#pragma pack(push,1)
++typedef struct _xhci_cap_regs_ {
++	uint8_t cap_caplen_version;
++	uint8_t reserved;
++	uint16_t hci_version;
++	uint32_t cap_hcsparams1;
++	uint32_t cap_hcsparams2;
++	uint32_t cap_hcsparams3;
++	uint32_t cap_hccparams1;
++	uint32_t cap_dboff;
++	uint32_t cap_hccparams2;
++}xhci_cap_regs_t;
++#pragma pack(pop)
++
++#pragma pack(push,1)
++typedef struct _xhci_cap_regs_ {
++	uint8_t cap_caplen_version;
++	uint8_t reserved;
++	uint16_t hci_version;
++	uint32_t cap_hcsparams1;
++	uint32_t cap_hcsparams2;
++	uint32_t cap_hcsparams3;
++	uint32_t cap_hccparams1;
++	uint32_t cap_dboff;
++	uint32_t cap_hccparams2;
++}xhci_cap_regs_t;
++#pragma pack(pop)
++#endif
+\ No newline at end of file
+-- 
+2.43.0
+

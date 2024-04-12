@@ -1,0 +1,23 @@
+From d34bc9ccf09be6c744b0518d0b2c27684f251c20 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 7 Apr 2024 19:07:05 -0400
+Subject: [PATCH 403/493] Update
+
+---
+ dialog.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/dialog.sh b/dialog.sh
+index 64b1f2b..7bd2084 100755
+--- a/dialog.sh
++++ b/dialog.sh
+@@ -26,4 +26,4 @@ if grep -q "1" .config; then
+     else
+         echo "Heisen Kernel will not be compiled with GCC cross compiler."
+     fi
+-fi
++fi
+\ No newline at end of file
+-- 
+2.43.0
+

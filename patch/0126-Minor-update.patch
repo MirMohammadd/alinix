@@ -1,0 +1,48 @@
+From d630184a3443f63f6ec124de335c994f2183a744 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 21:01:50 -0400
+Subject: [PATCH 126/493] Minor update
+
+---
+ .github/workflows/test.yml | 21 ++++++++++++++++++---
+ 1 file changed, 18 insertions(+), 3 deletions(-)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index 96c1291..28d2109 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -25,13 +25,28 @@ jobs:
+           # wget https://raw.githubusercontent.com/lordmilko/i686-elf-tools/master/i686-elf-tools.sh
+           # chmod +x ./i686-elf-tools.sh
+           # ./i686-elf-tools.sh
+-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
++          # /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+           # brew install git wget bzip2 xz unzip nasm python@3 xorriso mtools gcc@11
+           # python3 -m pip install -r kernel/requirements.txt
+           # brew tap nativeos/i686-elf-toolchain
+-          brew services start selenium-server
+-          brew install i686-elf-binutils 
++          # brew services start selenium-server
++          # brew install i686-elf-binutils 
+           # i686-elf-gcc i686-elf-newlib
++          sudo apt-get update
++          sudo apt-get install build-essential wget
++          mkdir i686-elf-gcc
++          cd i686-elf-gcc
++          wget https://ftp.gnu.org/gnu/gcc/gcc-{version}/gcc-{version}.tar.gz
++          tar -xzf gcc-{version}.tar.gz
++          mkdir build
++          cd build
++          ../gcc-{version}/configure --target=i686-elf --prefix=$HOME/i686-elf-gcc --disable-nls --disable-libssp --disable-multilib
++          make all-gcc
++          make install-gcc
++          export PATH=$HOME/i686-elf-gcc/bin:$PATH
++
++
++
+ 
+ 
+ 
+-- 
+2.43.0
+

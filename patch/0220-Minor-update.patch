@@ -1,0 +1,234 @@
+From a08257f6f832f8c747259c75d1ece00f3d9b04c2 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 20:46:05 -0400
+Subject: [PATCH 220/493] Minor update
+
+---
+ kernel/arch/x86-pc/bootstrap/multiboot.asm | 37 +++++++++-------------
+ kernelz/src/bin/bootloader.s               | 22 ++++---------
+ kernelz/src/boot/loader.s                  | 21 ++++--------
+ 3 files changed, 27 insertions(+), 53 deletions(-)
+
+diff --git a/kernel/arch/x86-pc/bootstrap/multiboot.asm b/kernel/arch/x86-pc/bootstrap/multiboot.asm
+index 7102a3c..4146f4a 100644
+--- a/kernel/arch/x86-pc/bootstrap/multiboot.asm
++++ b/kernel/arch/x86-pc/bootstrap/multiboot.asm
+@@ -1,21 +1,16 @@
+-; @see http://wiki.osdev.org/Bare_Bones
+-; Slightly modified by me
+ 
+-extern roentgenium_main	; this is our kernel's entry point
++extern roentgenium_main	
+ 
+-; Setting up the Multiboot header - see GRUB docs for details
+-MBALIGN		equ	1<<0		; align loaded modules on page boundaries
+-MEMINFO		equ	1<<1		; provide memory map
+-FLAGS		equ	MBALIGN | MEMINFO	; this is the Multiboot 'flag' field
+-MAGIC		equ	0x1BADB002		; 'magic number' lets bootloader find the header
+-CHECKSUM	equ	-(MAGIC + FLAGS)	; checksum required to prove that we are multiboot
+-STACK_SIZE	equ	0x4000		; our stack size is 16KiB
++MBALIGN		equ	1<<0		
++MEMINFO		equ	1<<1		
++FLAGS		equ	MBALIGN | MEMINFO	
++MAGIC		equ	0x1BADB002		
++CHECKSUM	equ	-(MAGIC + FLAGS)	
++STACK_SIZE	equ	0x4000		
+ 
+ 
+-; The multiboot header must come first.
+ section .multiboot
+ 
+-; Multiboot header must be aligned on a 4-byte boundary
+ align 4
+ 
+ multiboot_header:
+@@ -23,24 +18,22 @@ dd MAGIC
+ dd FLAGS
+ dd -(MAGIC + FLAGS)
+ 
+-; The beginning of our kernel code
+ section .text
+ 
+ global multiboot_entry
+ multiboot_entry:
+-	mov esp, stack + STACK_SIZE	; set up the stack
+-	mov [magic], ebx		; multiboot magic number
+-	mov [multiboot_info], eax	; multiboot data structure
++	mov esp, stack + STACK_SIZE	
++	mov [magic], ebx		
++	mov [multiboot_info], eax	
+ 
+-	call roentgenium_main		; calling the kernel
++	call roentgenium_main		
+ 
+ hang:
+-	hlt				; something bad happened, machine halted
++	hlt				
+ 	jmp hang
+ 
+ 
+ section .bss nobits align=4
+-; Reserve initial kernel stack space
+-stack:          resb STACK_SIZE ; reserve 16 KiB stack
+-multiboot_info: resd 1          ; we will use this in kernel's main
+-magic:          resd 1          ; we will use this in kernel's main
++stack:          resb STACK_SIZE 
++multiboot_info: resd 1          
++magic:          resd 1          
+diff --git a/kernelz/src/bin/bootloader.s b/kernelz/src/bin/bootloader.s
+index d0f199c..b66ff8d 100644
+--- a/kernelz/src/bin/bootloader.s
++++ b/kernelz/src/bin/bootloader.s
+@@ -1,8 +1,8 @@
+-.set ALIGN,    1<<0             ; align loaded modules on page boundaries
+-.set MEMINFO,  1<<1             ; provide memory map
+-.set FLAGS,    ALIGN | MEMINFO  ; this is the Multiboot 'flag' field
+-.set MAGIC,    0x1BADB002       ; 'magic number' lets bootloader find the header
+-.set CHECKSUM, -(MAGIC + FLAGS) ; checksum of above, to prove we are multiboot
++.set ALIGN,    1<<0             
++.set MEMINFO,  1<<1             
++.set FLAGS,    ALIGN | MEMINFO  
++.set MAGIC,    0x1BADB002       
++.set CHECKSUM, -(MAGIC + FLAGS) 
+ 
+ .section .multiboot
+ 	.align 4
+@@ -15,7 +15,7 @@
+ 
+ .section .bootstrap_stack, "aw", @nobits
+ stack_bottom:
+-.skip 16384 ; 16 KiB
++.skip 16384 
+ .global stack_top
+ stack_top:
+ 
+@@ -23,18 +23,14 @@ stack_top:
+ .align 0x1000
+ .global BootPageDirectory
+ BootPageDirectory:
+-	; identity map the first 4 MB
+ 	.long 0x00000083
+ 	
+-	; pages before kernel
+ 	.rept (KERNEL_PAGE_NUMBER - 1)
+ 	.long 0
+ 	.endr
+ 	
+-	; this page contains the kernel
+ 	.long 0x00000083
+ 
+-	; pages after kernel
+ 	.rept (1024 - KERNEL_PAGE_NUMBER - 1)
+ 	.long 0
+ 	.endr
+@@ -52,27 +48,22 @@ _entrypoint:
+ 	mov $(BootPageDirectory - KERNEL_VIRTUAL_BASE), %ecx
+ 	mov %ecx, %cr3
+ 
+-	; enable 4 mb pages
+ 	mov %cr4, %ecx
+ 	or $0x00000010, %ecx
+ 	mov %ecx, %cr4
+ 
+-	; enable paging
+ 	mov %cr0, %ecx
+ 	or $0x80000001, %ecx
+ 	mov %ecx, %cr0
+ 
+-	; jump to higher half code
+ 	lea 4f, %ecx
+ 	jmp *%ecx
+ 
+ 4:
+-	; Unmap the identity-mapped pages
+ 	movl $0, BootPageDirectory
+ 	invlpg 0
+ 
+ 	movl $stack_top, %esp
+-	; Mark end of call stack for unwinding
+ 	movl $0, %ebp
+ 
+ 	add $KERNEL_VIRTUAL_BASE, %ebx
+@@ -89,4 +80,3 @@ _stop:
+     cli
+     hlt
+     jmp _stop
+-    
+\ No newline at end of file
+diff --git a/kernelz/src/boot/loader.s b/kernelz/src/boot/loader.s
+index d2e9639..ad4d7a0 100644
+--- a/kernelz/src/boot/loader.s
++++ b/kernelz/src/boot/loader.s
+@@ -1,8 +1,8 @@
+-.set ALIGN,    1<<0             ; align loaded modules on page boundaries
+-.set MEMINFO,  1<<1             ; provide memory map
+-.set FLAGS,    ALIGN | MEMINFO  ; this is the Multiboot 'flag' field
+-.set MAGIC,    0x1BADB002       ; 'magic number' lets bootloader find the header
+-.set CHECKSUM, -(MAGIC + FLAGS) ; checksum of above, to prove we are multiboot
++.set ALIGN,    1<<0             
++.set MEMINFO,  1<<1             
++.set FLAGS,    ALIGN | MEMINFO  
++.set MAGIC,    0x1BADB002      
++.set CHECKSUM, -(MAGIC + FLAGS) 
+ 
+ .section .multiboot
+     .align 4
+@@ -15,7 +15,7 @@
+ 
+ .section .bootstrap_stack, "aw", @nobits
+ stack_bottom:
+-    .skip 16384 ; 16 KiB
++    .skip 16384 
+ .global stack_top
+ stack_top:
+ 
+@@ -23,18 +23,14 @@ stack_top:
+     .align 0x1000
+ .global BootPageDirectory
+ BootPageDirectory:
+-    ; identity map the first 4 MB
+     .long 0x00000083
+     
+-    ; pages before kernel
+     .rept (KERNEL_PAGE_NUMBER - 1)
+         .long 0
+     .endr
+     
+-    ; this page contains the kernel
+     .long 0x00000083
+ 
+-    ; pages after kernel
+     .rept (1024 - KERNEL_PAGE_NUMBER - 1)
+         .long 0
+     .endr
+@@ -52,27 +48,22 @@ _entrypoint:
+     mov $(BootPageDirectory - KERNEL_VIRTUAL_BASE), %ecx
+     mov %ecx, %cr3
+ 
+-    ; enable 4 mb pages
+     mov %cr4, %ecx
+     or $0x00000010, %ecx
+     mov %ecx, %cr4
+ 
+-    ; enable paging
+     mov %cr0, %ecx
+     or $0x80000001, %ecx
+     mov %ecx, %cr0
+ 
+-    ; jump to higher half code
+     lea 4f, %ecx
+     jmp *%ecx
+ 
+ 4:
+-    ; Unmap the identity-mapped pages
+     movl $0, BootPageDirectory
+     invlpg 0
+ 
+     movl $stack_top, %esp
+-    ; Mark end of call stack for unwinding
+     movl $0, %ebp
+ 
+     add $KERNEL_VIRTUAL_BASE, %ebx
+-- 
+2.43.0
+

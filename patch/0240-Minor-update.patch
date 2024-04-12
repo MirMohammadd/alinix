@@ -1,0 +1,25 @@
+From 5f4959e6836c6cc2f7fff3bff8fb7ac8234e455c Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 22:05:57 -0400
+Subject: [PATCH 240/493] Minor update
+
+---
+ kernelz/include/common/types.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernelz/include/common/types.h b/kernelz/include/common/types.h
+index de03dc0..8d4c194 100644
+--- a/kernelz/include/common/types.h
++++ b/kernelz/include/common/types.h
+@@ -61,6 +61,6 @@ namespace HeisenOs
+     {
+         return no * (1024_MB);
+     }
+-};
++}
+ 
+ #endif
+\ No newline at end of file
+-- 
+2.43.0
+

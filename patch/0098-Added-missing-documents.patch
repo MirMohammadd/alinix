@@ -1,0 +1,386 @@
+From 34c8843f19a8802299eebbefd7707cedbb40128d Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 20:04:08 -0400
+Subject: [PATCH 098/493] Added missing documents
+
+---
+ lib/src/api.cpp        | 16 ++++++++++++++++
+ lib/src/convert.cpp    | 16 ++++++++++++++++
+ lib/src/datetime.cpp   | 16 ++++++++++++++++
+ lib/src/heap.cpp       | 16 ++++++++++++++++
+ lib/src/ipc.cpp        | 16 ++++++++++++++++
+ lib/src/log.cpp        | 16 ++++++++++++++++
+ lib/src/main.cpp       | 16 ++++++++++++++++
+ lib/src/math.cpp       | 16 ++++++++++++++++
+ lib/src/proc.cpp       | 16 ++++++++++++++++
+ lib/src/random.cpp     | 16 ++++++++++++++++
+ lib/src/string.cpp     | 16 ++++++++++++++++
+ lib/src/syscall.cpp    | 16 ++++++++++++++++
+ lib/src/systeminfo.cpp | 16 ++++++++++++++++
+ lib/src/time.cpp       | 16 ++++++++++++++++
+ lib/src/vfs.cpp        | 16 ++++++++++++++++
+ 15 files changed, 240 insertions(+)
+
+diff --git a/lib/src/api.cpp b/lib/src/api.cpp
+index d3d195b..a28037b 100644
+--- a/lib/src/api.cpp
++++ b/lib/src/api.cpp
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file api.cpp
++
++ */
+ #include <api.h>
+ 
+ #include <syscall.h>
+diff --git a/lib/src/convert.cpp b/lib/src/convert.cpp
+index 742a36e..25c84c9 100644
+--- a/lib/src/convert.cpp
++++ b/lib/src/convert.cpp
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file convert.cpp
++
++ */
+ #include <convert.h>
+ #include <string.h>
+ 
+diff --git a/lib/src/datetime.cpp b/lib/src/datetime.cpp
+index c27a09a..7203a22 100644
+--- a/lib/src/datetime.cpp
++++ b/lib/src/datetime.cpp
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file datetime.cpp
++
++ */
+ #include <datetime.h>
+ #include <syscall.h>
+ #include <types.h>
+diff --git a/lib/src/heap.cpp b/lib/src/heap.cpp
+index 23be254..2ba72bc 100644
+--- a/lib/src/heap.cpp
++++ b/lib/src/heap.cpp
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file heap.cpp
++
++ */
+ #include <heap.h>
+ #include <syscall.h>
+ #include <log.h>
+diff --git a/lib/src/ipc.cpp b/lib/src/ipc.cpp
+index a441043..2ad6d26 100644
+--- a/lib/src/ipc.cpp
++++ b/lib/src/ipc.cpp
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file ipc.cpp
++
++ */
+ #include <ipc.h>
+ #include <proc.h>
+ #include <string.h>
+diff --git a/lib/src/log.cpp b/lib/src/log.cpp
+index 0ccb510..afadb90 100644
+--- a/lib/src/log.cpp
++++ b/lib/src/log.cpp
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file log.cpp
++
++ */
+ #include <log.h>
+ #include <syscall.h>
+ #include <stdarg.h>
+diff --git a/lib/src/main.cpp b/lib/src/main.cpp
+index 71b006b..304ef85 100644
+--- a/lib/src/main.cpp
++++ b/lib/src/main.cpp
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file main.cpp
++
++ */
+ #include <syscall.h>
+ #include <api.h>
+ #include <heap.h>
+diff --git a/lib/src/math.cpp b/lib/src/math.cpp
+index 14fe855..751cfde 100644
+--- a/lib/src/math.cpp
++++ b/lib/src/math.cpp
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file main.cpp
++
++ */
+ #include <math.h>
+ #include <types.h>
+ #include <log.h>
+diff --git a/lib/src/proc.cpp b/lib/src/proc.cpp
+index 7769eab..fc2c71b 100644
+--- a/lib/src/proc.cpp
++++ b/lib/src/proc.cpp
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file proc.cpp
++
++ */
+ #include <proc.h>
+ #include <listing.h>
+ 
+diff --git a/lib/src/random.cpp b/lib/src/random.cpp
+index c007962..5eda065 100644
+--- a/lib/src/random.cpp
++++ b/lib/src/random.cpp
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file random.cpp
++
++ */
+ #include <random.hpp>
+ 
+ using namespace LIBHeisenKernel;
+diff --git a/lib/src/string.cpp b/lib/src/string.cpp
+index 8b77fc9..3a29c14 100644
+--- a/lib/src/string.cpp
++++ b/lib/src/string.cpp
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file string.cpp
++
++ */
+ #include <string.hpp>
+ 
+ void* memmove(void* dstptr, const void* srcptr, size_t size) {
+diff --git a/lib/src/syscall.cpp b/lib/src/syscall.cpp
+index 0316727..7741092 100644
+--- a/lib/src/syscall.cpp
++++ b/lib/src/syscall.cpp
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file syscall.cpp
++
++ */
+ #include <syscall.hpp>
+ 
+ /*
+diff --git a/lib/src/systeminfo.cpp b/lib/src/systeminfo.cpp
+index 98df774..2790ba1 100644
+--- a/lib/src/systeminfo.cpp
++++ b/lib/src/systeminfo.cpp
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file systeminfo.cpp
++
++ */
+ #include <systeminfo.hpp>
+ #include <syscall.hpp>
+ #include <proc.hpp>
+diff --git a/lib/src/time.cpp b/lib/src/time.cpp
+index b05509d..c6dc801 100644
+--- a/lib/src/time.cpp
++++ b/lib/src/time.cpp
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file time.cpp
++
++ */
+ #include <time.hpp>
+ 
+ #include <syscall.hpp>
+diff --git a/lib/src/vfs.cpp b/lib/src/vfs.cpp
+index 1b9823b..71054d0 100644
+--- a/lib/src/vfs.cpp
++++ b/lib/src/vfs.cpp
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file vfs.cpp
++
++ */
+ #include <vfs.hpp>
+ 
+ #include <syscall.hpp>
+-- 
+2.43.0
+

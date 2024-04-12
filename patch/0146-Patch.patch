@@ -1,0 +1,41 @@
+From f23fca07e17a646399d4e5f98abef7944f627de3 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 21:34:32 -0400
+Subject: [PATCH 146/493] Patch
+
+---
+ Makefile | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 3d2e720..1bb089c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -44,21 +44,21 @@ KRNLOBJS := $(subst $(KRNLSRCDIR),$(KRNLOBJDIR),$(KRNLOBJS)) #Replace the kernel
+ ####################################
+ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.cpp
+ 	mkdir -p $(@D)
+-	gcc $(G++PARAMS) -c -o $@ $<
++	gcc $(G++PARAMS) -I. $(find /usr/include -type d -printf '-I%s\n') $(find . -type d -printf '-I%s\n') -c -o $@ $<
+ 
+ ####################################
+ #C source files
+ ####################################
+ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.c
+ 	mkdir -p $(@D)
+-	gcc $(GCCPARAMS) -c -o $@ $<
++	gcc $(GCCPARAMS) -I. $(find /usr/include -type d -printf '-I%s\n') $(find . -type d -printf '-I%s\n') -c -o $@ $<
+ 
+ ####################################
+ #GDB Stub
+ ####################################
+ $(KRNLOBJDIR)/gdb/i386-stub.o: $(KRNLSRCDIR)/gdb/i386-stub.c
+ 	mkdir -p $(@D)
+-	gcc $(GCCPARAMS) -fleading-underscore -c -o $@ $<
++	gcc $(GCCPARAMS) -I. $(find /usr/include -type d -printf '-I%s\n') $(find . -type d -printf '-I%s\n') -fleading-underscore -c -o $@ $<
+ 
+ ####################################
+ #GAS assembly files
+-- 
+2.43.0
+

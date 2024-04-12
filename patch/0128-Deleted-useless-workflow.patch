@@ -1,0 +1,79 @@
+From 6b89272a2e03bff3288370bff57a5d9931124438 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 21:04:37 -0400
+Subject: [PATCH 128/493] Deleted useless workflow
+
+---
+ .github/workflows/test.yml | 60 --------------------------------------
+ 1 file changed, 60 deletions(-)
+ delete mode 100644 .github/workflows/test.yml
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+deleted file mode 100644
+index 28d2109..0000000
+--- a/.github/workflows/test.yml
++++ /dev/null
+@@ -1,60 +0,0 @@
+-name: HiesenKernel
+-
+-on:
+-  push:
+-    branches:
+-      - Caps  # Adjust branch name as needed
+-      - main
+-
+-jobs:
+-  build:
+-    runs-on: Ubuntu-latest  # Specify the operating system you're using
+-
+-    steps:
+-      - name: Checkout Repository
+-        uses: actions/checkout@v2  # This step checks out your repository
+-
+-      - name: Install Dependencies
+-        run: |
+-          # sudo apt-get update
+-          # sudo apt-get install -y build-essential git wget bzip2 xz-utils unzip help2man libtool-bin nasm python2 python3 python-pip grub-common xorriso mtools  build-essential build-essential gcc-multilib g++-multilib build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo  
+-          # python2 -m pip install -r kernel/requirements.txt
+-          # docker run -it -v "/home/admin:/root" --rm lordmilko/i686-elf-tools
+-          # docker run -it -v "/home/admin:/root" --rm lordmilko/i686-elf-tools -gv 9.2.0 -bv 2.34 -dv 9.1
+-          # sudo -s
+-          # wget https://raw.githubusercontent.com/lordmilko/i686-elf-tools/master/i686-elf-tools.sh
+-          # chmod +x ./i686-elf-tools.sh
+-          # ./i686-elf-tools.sh
+-          # /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+-          # brew install git wget bzip2 xz unzip nasm python@3 xorriso mtools gcc@11
+-          # python3 -m pip install -r kernel/requirements.txt
+-          # brew tap nativeos/i686-elf-toolchain
+-          # brew services start selenium-server
+-          # brew install i686-elf-binutils 
+-          # i686-elf-gcc i686-elf-newlib
+-          sudo apt-get update
+-          sudo apt-get install build-essential wget
+-          mkdir i686-elf-gcc
+-          cd i686-elf-gcc
+-          wget https://ftp.gnu.org/gnu/gcc/gcc-{version}/gcc-{version}.tar.gz
+-          tar -xzf gcc-{version}.tar.gz
+-          mkdir build
+-          cd build
+-          ../gcc-{version}/configure --target=i686-elf --prefix=$HOME/i686-elf-gcc --disable-nls --disable-libssp --disable-multilib
+-          make all-gcc
+-          make install-gcc
+-          export PATH=$HOME/i686-elf-gcc/bin:$PATH
+-
+-
+-
+-
+-
+-
+-
+-
+-          
+-      - name: Run Make Command
+-        run: |
+-          make
+-          cd kernel
+-          make
+-- 
+2.43.0
+

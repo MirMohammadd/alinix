@@ -1,0 +1,157 @@
+From 772902f6518eb7ef88e0262e4bdfa7077fa332e2 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 7 Apr 2024 14:30:40 -0400
+Subject: [PATCH 397/493] Patches added for the PID and usb
+
+---
+ kernelz/include/common/enums.hpp | 44 ++++++++++++++++++++++++++
+ libdrive/include/driver.h        | 54 ++++++++++++++++++++++++++++++++
+ libdrive/include/io.h            | 21 +++++++++++++
+ 3 files changed, 119 insertions(+)
+ create mode 100644 kernelz/include/common/enums.hpp
+ create mode 100644 libdrive/include/driver.h
+ create mode 100644 libdrive/include/io.h
+
+diff --git a/kernelz/include/common/enums.hpp b/kernelz/include/common/enums.hpp
+new file mode 100644
+index 0000000..8ec6ea7
+--- /dev/null
++++ b/kernelz/include/common/enums.hpp
+@@ -0,0 +1,44 @@
++#ifndef _HEISEN_KERNEL_Z_ENUMS_HPP
++#define _HEISEN_KERNEL_Z_ENUMS_HPP
++
++#ifdef __cplusplus
++extern "C"{
++#endif
++namespace HeisenOs
++{
++    enum class PowerState
++    {
++        None,
++        Reboot,
++        Shutdown
++    };
++    #if defined(__cplusplus)
++    enum class Priority{
++        /*A class that defined a proccess priority*/
++        LOWEST = -150,
++        LOWER = -50,
++        LOW = -10,
++        NORMAL = 0,
++        HIGH = 10,
++        HIGHER = 50,
++        HIGHEST = 150
++    };
++    #else 
++    typedef enum
++    {
++        /*A class that defined a proccess priority*/
++        LOWEST = -150,
++        LOWER = -50,
++        LOW = -10,
++        NORMAL = 0,
++        HIGH = 10,
++        HIGHER = 50,
++        HIGHEST = 150
++    }Priority;
++    #endif 
++}
++#ifdef __cplusplus
++}
++#endif
++
++#endif /*_HEISEN_KERNEL_Z_ENUMS_HPP*/
+\ No newline at end of file
+diff --git a/libdrive/include/driver.h b/libdrive/include/driver.h
+new file mode 100644
+index 0000000..ec23545
+--- /dev/null
++++ b/libdrive/include/driver.h
+@@ -0,0 +1,54 @@
++#ifndef _HEISEN_KERNEL_DRIVER_H_HEADER_LIB_USB_HEADER
++#define _HEISEN_KERNEL_DRIVER_H_HEADER_LIB_USB_HEADER
++
++#include "libusbserial.h"
++
++struct usbserial_driver
++{
++    int (*check_supported_by_vid_pid)(uint16_t vid, uint16_t pid);
++    int (*check_supported_by_class)(
++            uint8_t class,
++            uint8_t subclass);
++    const char* (*get_device_name)(
++            uint16_t vid,
++            uint16_t pid,
++            uint8_t classs,
++            uint8_t subclass);
++    unsigned int (*get_ports_count)(uint16_t vid, uint16_t pid);
++
++    int (*port_init)(struct usbserial_port *port);
++    int (*port_deinit)(struct usbserial_port *port);
++
++    int (*port_set_config)(
++            struct usbserial_port *port,
++            const struct usbserial_config* config);
++
++    int (*start_reader)(struct usbserial_port *port);
++    int (*stop_reader)(struct usbserial_port *port);
++
++    int (*read)(
++            struct usbserial_port *port,
++            void *data,
++            size_t size,
++			int timeout);
++    int (*write)(
++            struct usbserial_port *port,
++            const void *data,
++            size_t size);
++    int (*purge)(
++            struct usbserial_port *port,
++            int rx,
++            int tx);
++
++    void (*read_data_process)(
++            struct usbserial_port *port,
++            void *data,
++            size_t *size);
++			
++	int (*set_dtr_rts)(
++            struct usbserial_port *port,
++            int dtr,
++            int rts);
++};
++
++#endif /*_HEISEN_KERNEL_DRIVER_H_HEADER_LIB_USB_HEADER*/
+\ No newline at end of file
+diff --git a/libdrive/include/io.h b/libdrive/include/io.h
+new file mode 100644
+index 0000000..484d060
+--- /dev/null
++++ b/libdrive/include/io.h
+@@ -0,0 +1,21 @@
++#ifndef _HEISEN_LIB_USB_KERNEL_HEADER_H
++#define _HEISEN_LIB_USB_KERNEL_HEADER_H
++
++#include "internal.h"
++
++
++int usbserial_io_init_bulk_read_transfer(struct usbserial_port *port);
++
++int usbserial_io_cancel_bulk_read_transfer(struct usbserial_port *port);
++
++int usbserial_io_bulk_read(struct usbserial_port *port,
++        void *data, size_t size, int timeout);
++
++int usbserial_io_bulk_write(struct usbserial_port *port,
++        const void *data, size_t size);
++
++int usbserial_io_get_endpoint(struct usbserial_port *port, uint8_t classs);
++
++int usbserial_io_free_endpoint(struct usbserial_port *port);
++
++#endif /*_HEISEN_LIB_USB_KERNEL_HEADER_H*/
+\ No newline at end of file
+-- 
+2.43.0
+

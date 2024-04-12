@@ -1,24 +1,797 @@
-From e6da8891180caa858a2588c12db11b23bd920bfd Mon Sep 17 00:00:00 2001
+From 7edb17d4354b5361ac697ffc0f85382289c77e37 Mon Sep 17 00:00:00 2001
 From: Heisenberg <alimirmohammad.1386@gmail.com>
-Date: Sun, 31 Mar 2024 21:50:55 -0400
-Subject: [PATCH 37/50] Patch
+Date: Mon, 1 Apr 2024 13:58:12 -0400
+Subject: [PATCH 037/493] Patch
 
 ---
- kernel/Makefile | 1 -
- 1 file changed, 1 deletion(-)
+ kernel/include/gui/contextinfo.hpp     | 113 +++++++++++++++
+ kernel/include/gui/fonts/control.hpp   | 153 ++++++++++++++++++++
+ kernel/include/gui/fonts/events.hpp    | 187 +++++++++++++++++++++++++
+ kernel/include/gui/widgets/control.hpp | 187 +++++++++++++++++++++++++
+ kernel/include/proc.hpp                | 101 +++++++++++++
+ 5 files changed, 741 insertions(+)
+ create mode 100644 kernel/include/gui/contextinfo.hpp
+ create mode 100644 kernel/include/gui/fonts/control.hpp
+ create mode 100644 kernel/include/gui/fonts/events.hpp
+ create mode 100644 kernel/include/gui/widgets/control.hpp
+ create mode 100644 kernel/include/proc.hpp
 
-diff --git a/kernel/Makefile b/kernel/Makefile
-index 3244769..376d27f 100644
---- a/kernel/Makefile
-+++ b/kernel/Makefile
-@@ -14,7 +14,6 @@ INITRD_PATH     = arch/x86-pc/bootstrap/iso
- 
- OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
- 	arch/x86-pc/io/vga.o                    \
--	io/video.o								\
- 	arch/x86/mmu/gdt.o                      \
- 	arch/x86/interrupts/idt.o               \
- 	arch/x86/interrupts/isr-stubs.o         \
+diff --git a/kernel/include/gui/contextinfo.hpp b/kernel/include/gui/contextinfo.hpp
+new file mode 100644
+index 0000000..9779200
+--- /dev/null
++++ b/kernel/include/gui/contextinfo.hpp
+@@ -0,0 +1,113 @@
++#ifndef CONTEXTINFO_H
++#define CONTEXTINFO_H
++
++#include <types.hpp>
++#include <proc.hpp>
++#include <gui/rect.hpp>
++
++// We reserve 1 page for the context info structure for alignment reasons
++// The struct itself is not actually this big though
++#define CONTEXT_INFO_SIZE 4_KB
++
++// Maximum of dirty rects per frame per contextinfo struct
++#define CONTEXT_INFO_MAX_DIRTY 200
++
++// Directions a context can be resized in
++enum Direction
++{
++    None = (0<<0),
++    Top = (1<<0),
++    Right = (1<<1),
++    Bottom = (1<<2),
++    Left = (1<<3)
++};
++
++inline Direction operator|(Direction a, Direction b)
++{
++    return static_cast<Direction>(static_cast<int>(a) | static_cast<int>(b));
++}
++
++struct ContextInfo
++{
++    // To which memory address is the framebuffer mapped on the server side (ContextInfo is placed just before this address)
++    LIBHeisenKernel::uint32_t virtAddrServer;
++    // To which memory address is the framebuffer mapped on the client side (ContextInfo is placed just before this address)
++    LIBHeisenKernel::uint32_t virtAddrClient;
++
++    // How many bytes does this context use? This includes the memory used by this struct
++    LIBHeisenKernel::uint32_t bytes;
++    // The width of this context
++    LIBHeisenKernel::uint32_t width;
++    // The height of this context
++    LIBHeisenKernel::uint32_t height;
++    // The position on the horizontal axis
++    LIBHeisenKernel::int32_t x;
++    // The position on the vertical axis
++    LIBHeisenKernel::int32_t y;
++
++    // The PID of the process that created this context
++    int clientID;
++
++    // Does this context support transparency? If so it will be drawn using an alternative method.
++    // Warning: If set to true the drawing will be slower.
++    bool supportsTransparency;
++
++    // Can this context be moved to the front using a mouse click in it? (this will be done automatically when set to false)
++    bool background;
++
++    // Each context gets it own unique id, this way the compositor can find the right context for each message. For example when a keypress occurs.
++    int id;
++
++    // Does this context support the dirty rectangle technique?
++    bool supportsDirtyRects;
++
++    // Spinlock for modifying dirty rectangles
++    bool dirtyLockFlag;
++
++    // Number of dirty rectangles in the array below
++    LIBHeisenKernel::uint16_t numDirtyRects;
++
++    // Array of dirty rectangles specific to this context
++    struct
++    {
++        // The width of this rectangle
++        int width;
++        // The height of this rectangle
++        int height;
++        // The x coördinate of this rectangle
++        int x;
++        // The y coördinate of this rectangle
++        int y;
++    } dirtyRects[CONTEXT_INFO_MAX_DIRTY];
++
++    // Mark an area as dirty so that the compositor draws it
++    void AddDirtyArea(int x, int y, int width, int height)
++    {
++        // Wait until no one else is also doing this
++        while(dirtyLockFlag) Process::Yield();
++
++        if(this->numDirtyRects >= CONTEXT_INFO_MAX_DIRTY)
++            return; // Skip this one since the array is full :(
++
++        // Now we take control
++        dirtyLockFlag = true;
++
++        // Add dirty rectangle
++        this->dirtyRects[this->numDirtyRects].x = x;
++        this->dirtyRects[this->numDirtyRects].y = y;
++        this->dirtyRects[this->numDirtyRects].width = width;
++        this->dirtyRects[this->numDirtyRects].height = height;
++        this->numDirtyRects += 1;
++
++        // Release lock
++        dirtyLockFlag = false;
++    }
++
++    // Mark an area as dirty so that the compositor draws it
++    void AddDirtyArea(Rectangle* rect) { this->AddDirtyArea(rect->x, rect->y, rect->width, rect->height); }
++};
++
++// Check if the structure doesn't cross page boundary
++STATIC_ASSERT(sizeof(ContextInfo) < CONTEXT_INFO_SIZE);
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/include/gui/fonts/control.hpp b/kernel/include/gui/fonts/control.hpp
+new file mode 100644
+index 0000000..8a9fd5b
+--- /dev/null
++++ b/kernel/include/gui/fonts/control.hpp
+@@ -0,0 +1,153 @@
++#ifndef __HEISENLIB__GUI__CONTROL_H
++#define __HEISENLIB__GUI__CONTROL_H
++
++#include <types.hpp>
++#include <gui/rect.hpp>
++#include <list.hpp>
++#include <gui/canvas.hpp>
++#include <gui/events.hpp>
++#include <gui/contextinfo.hpp>
++#include <gui/property.hpp>
++#include <gui/fonts/font.hpp>
++#include <gui/colors.hpp>
++
++namespace LIBCactusOS
++{
++    // Defines the alignment of a specific entry
++    // This is for the x and the y direction
++    struct Alignment
++    {
++        // Possible options for the alignment on the x-axis
++        enum class Horizontal
++        {
++            Left,
++            Center,
++            Right
++        };
++
++        // Possible options for the alignment on the y-axis
++        enum class Vertical
++        {
++            Top,
++            Center,
++            Bottom
++        };
++
++        Horizontal x; // X-Axis
++        Vertical y; // Y-Axis
++    };
++
++    // Possible style options for corners of controls
++    enum CornerStyle
++    {
++        Sharp,
++        Rounded
++    };
++
++    /**
++     * A class describing a gui object with possible children
++    */
++    class Control : public EventObject, public Rectangle
++    {
++    public:
++        // All controls that are present on this control.
++        List<Control*> childs;
++
++        // Which control currently is focused?
++        Control* focusedChild = 0;
++
++        // If we are a child of some control this will point to our parent.
++        Control* parent = 0;
++
++        // Does this control needs to be painted again?
++        bool needsRepaint = false;
++        
++        // Public properties for this control
++        GUIProperty<uint32_t>       backColor       = GUIProperty<uint32_t>(this, 0xFF919191);
++        GUIProperty<uint32_t>       borderColor     = GUIProperty<uint32_t>(this, 0xFF333333);
++        GUIProperty<Font*>          font            = GUIProperty<Font*>(this, 0);
++        GUIProperty<Alignment>      textAlignment   = GUIProperty<Alignment>(this, { Alignment::Horizontal::Left, Alignment::Vertical::Top });
++        GUIProperty<uint32_t>       textColor       = GUIProperty<uint32_t>(this, Colors::Black);
++        GUIProperty<CornerStyle>    cornerStyle     = GUIProperty<CornerStyle>(this, CornerStyle::Sharp);
++        GUIProperty<uint16_t>       cornerRadius    = GUIProperty<uint16_t>(this, 5);
++
++        // Anchor of this control
++        Direction anchor = Direction::None;
++    public:
++        /**
++         * Create new control with a given width, height, x and y position
++        */
++        Control(int w, int h, int x = 0, int y = 0);
++        /**
++         * Destructor
++        */
++        virtual ~Control();
++
++        /**
++         * Draw this control to a canvas
++         * 
++         * x_abs/y_abs: the coördinate of this control in absolute related to the canvas
++        */
++        virtual void DrawTo(Canvas* context, int x_abs, int y_abs);
++
++        // Add a control to the childs of this control, this will also set the parent property of the child to us.
++        virtual void AddChild(Control* child, bool focus = true);
++
++        // Remove a child from this control, does not delete the child!
++        virtual void RemoveChild(Control* child);
++
++        // Is this control focused?
++        virtual bool Focused();
++
++        // Force this control to be drawn aggain
++        virtual void ForcePaint();
++
++        // Return the visual portion of this control in aspect with the parent
++        virtual Rectangle GetParentsBounds(int xOffset, int yOffset);
++
++    /*/////////
++    // Events called by parent or context
++    *//////////
++    friend class Window;
++    friend class Context;
++    protected:
++        /**
++         * Called when mouse is down on control
++        */
++        virtual void OnMouseDown(int x_abs, int y_abs, uint8_t button);
++        /**
++         * Called when mouse is up on control
++        */
++        virtual void OnMouseUp(int x_abs, int y_abs, uint8_t button);
++        /**
++         * Called when mouse is moved on control
++        */
++        virtual void OnMouseMove(int prevX_abs, int prevY_abs, int newX_abs, int newY_abs);
++        /**
++         * Called when mouse enters control
++        */
++        virtual void OnMouseEnter(int prevX_abs, int prevY_abs, int newX_abs, int newY_abs);
++        /**
++         * Called when mouse leaves control
++        */
++        virtual void OnMouseLeave(int prevX_abs, int prevY_abs, int newX_abs, int newY_abs);
++        /**
++         * Called when key is held down
++        */
++        virtual void OnKeyDown(uint8_t key, KEYPACKET_FLAGS modifiers);
++        /**
++         * Called when key is held up
++        */
++        virtual void OnKeyUp(uint8_t key, KEYPACKET_FLAGS modifiers);
++        /**
++         * Called when control is resized
++        */
++        virtual void OnResize(Rectangle old);
++        /**
++         * Called when there is a scroll event on control
++        */
++        virtual void OnScroll(int32_t deltaZ, int x_abs, int y_abs);
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/include/gui/fonts/events.hpp b/kernel/include/gui/fonts/events.hpp
+new file mode 100644
+index 0000000..6e626d4
+--- /dev/null
++++ b/kernel/include/gui/fonts/events.hpp
+@@ -0,0 +1,187 @@
++#ifndef __LIBCACTUSOS__GUI__EVENTS_H
++#define __LIBCACTUSOS__GUI__EVENTS_H
++
++#include <list.hpp>
++#include <gui/widgets/control.hpp>
++#include <shared.hpp>
++
++namespace LIBHeisenKernel
++{
++    // A class that defines a callback function 
++    template<typename ArgumentType>
++    class IEventCallback
++    {
++    public:
++        virtual void Invoke(void*, ArgumentType) {}
++    };
++
++    // A callback that is a class method
++    template<typename T, typename ArgumentType>
++    class MethodCallback : public IEventCallback<ArgumentType>
++    {
++    private:
++        T* instance;
++        void (T::*function)(void* s, ArgumentType arg);
++    public:
++        // Create a new callback based on a member function
++        MethodCallback(T* instance, void (T::*function)(void* s, ArgumentType arg))
++        : instance(instance), function(function) 
++        {}
++
++        virtual void Invoke(void* s, ArgumentType arg) override
++        {
++            (instance->*function)(s, arg); 
++        }
++    };
++
++    // A callback that is a static function
++    template<typename ArgumentType>
++    class StaticFunctionCallback : public IEventCallback<ArgumentType>
++    {
++    private:
++        void (*func_)(void*, ArgumentType);
++    
++    public:
++        StaticFunctionCallback(void (*func)(void*, ArgumentType))
++        : func_(func)
++        {}
++        
++        virtual void Invoke(void* s, ArgumentType a)
++        {
++            return (*func_)(s, a);
++        }
++    };
++
++    // A class that manages a list of multipile callback for a specific event
++    template<typename ArgumentType>
++    class EventHandlerList
++    {
++    private:
++	    List<IEventCallback<ArgumentType>*> Callbacks;
++    public:
++        EventHandlerList() {}
++        ~EventHandlerList() {}
++
++        void AddHandler(IEventCallback<ArgumentType>* action)
++        {
++            Callbacks.push_back(action);
++        }
++	    void RemoveHandler(IEventCallback<ArgumentType>* action)
++        {
++            Callbacks.Remove(action);
++            delete action;
++        }
++	    void Invoke(void* sender, ArgumentType arg)
++        {
++            for (IEventCallback<ArgumentType>* action : Callbacks)
++                action->Invoke(sender, arg);
++        }
++
++        void operator+= (IEventCallback<ArgumentType>* action)
++        {
++            AddHandler(action);
++        }
++        void operator+= (void (*func)(void*, ArgumentType))
++        {
++            AddHandler(new StaticFunctionCallback<ArgumentType>(func));
++        }
++        void operator-= (IEventCallback<ArgumentType>* action)
++        {
++            RemoveHandler(action);
++        }
++    };
++
++    ////////////////////
++    // Argument macro implementations
++    ////////////////////
++    #define CREATE_ARGUMENT_CLASS0(name) \
++        class name \
++        { \
++        public: \
++            name() {} \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS1(name, t1, var1) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            name(t1 var1) \
++            { \
++                this->var1 = var1; \
++            } \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS2(name, t1, var1, t2, var2) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            t2 var2; \
++            name(t1 var1, t2 var2) \
++            { \
++                this->var1 = var1; \
++                this->var2 = var2; \
++            } \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS3(name, t1, var1, t2, var2, t3, var3) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            t2 var2; \
++            t3 var3; \
++            name(t1 var1, t2 var2, t3 var3) \
++            { \
++                this->var1 = var1; \
++                this->var2 = var2; \
++                this->var3 = var3; \
++            } \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS4(name, t1, var1, t2, var2, t3, var3, t4, var4) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            t2 var2; \
++            t3 var3; \
++            t4 var4; \
++            name(t1 var1, t2 var2, t3 var3, t4 var4) \
++            { \
++                this->var1 = var1; \
++                this->var2 = var2; \
++                this->var3 = var3; \
++                this->var4 = var4; \
++            } \
++        }; \
++
++    ///////////
++    // Argument classes for keypress or mouse events, more will be added later
++    ///////////
++    CREATE_ARGUMENT_CLASS4(MouseMoveArgs, int, prevX, int, prevY, int, newX, int, newY)
++    CREATE_ARGUMENT_CLASS3(MouseButtonArgs, int, x, int, y, int, button)
++    CREATE_ARGUMENT_CLASS2(KeypressArgs, uint8_t, key, KEYPACKET_FLAGS, modifiers)
++    CREATE_ARGUMENT_CLASS3(MouseScrollArgs, int, delta, int, x, int, y);
++
++    /**
++     * An object that hosts multiple gui events
++     */
++    class EventObject
++    {
++    public:
++        EventHandlerList<MouseButtonArgs> MouseDown;
++        EventHandlerList<MouseButtonArgs> MouseUp;
++        EventHandlerList<MouseButtonArgs> MouseClick;
++        EventHandlerList<KeypressArgs> KeyDown;
++        EventHandlerList<KeypressArgs> KeyUp;
++        EventHandlerList<MouseScrollArgs> MouseScroll;
++
++        EventObject()
++        : MouseDown(), MouseUp(), MouseClick(), KeyDown(), KeyUp(), MouseScroll()
++        {        }
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/include/gui/widgets/control.hpp b/kernel/include/gui/widgets/control.hpp
+new file mode 100644
+index 0000000..cc1a0ff
+--- /dev/null
++++ b/kernel/include/gui/widgets/control.hpp
+@@ -0,0 +1,187 @@
++#ifndef __LIBHeisenKernel__GUI__EVENTS_H
++#define __LIBHeisenKernel__GUI__EVENTS_H
++
++#include <list.hpp>
++#include <gui/widgets/control.hpp>
++#include <shared.hpp>
++
++namespace LIBHeisenKernel
++{
++    // A class that defines a callback function 
++    template<typename ArgumentType>
++    class IEventCallback
++    {
++    public:
++        virtual void Invoke(void*, ArgumentType) {}
++    };
++
++    // A callback that is a class method
++    template<typename T, typename ArgumentType>
++    class MethodCallback : public IEventCallback<ArgumentType>
++    {
++    private:
++        T* instance;
++        void (T::*function)(void* s, ArgumentType arg);
++    public:
++        // Create a new callback based on a member function
++        MethodCallback(T* instance, void (T::*function)(void* s, ArgumentType arg))
++        : instance(instance), function(function) 
++        {}
++
++        virtual void Invoke(void* s, ArgumentType arg) override
++        {
++            (instance->*function)(s, arg); 
++        }
++    };
++
++    // A callback that is a static function
++    template<typename ArgumentType>
++    class StaticFunctionCallback : public IEventCallback<ArgumentType>
++    {
++    private:
++        void (*func_)(void*, ArgumentType);
++    
++    public:
++        StaticFunctionCallback(void (*func)(void*, ArgumentType))
++        : func_(func)
++        {}
++        
++        virtual void Invoke(void* s, ArgumentType a)
++        {
++            return (*func_)(s, a);
++        }
++    };
++
++    // A class that manages a list of multipile callback for a specific event
++    template<typename ArgumentType>
++    class EventHandlerList
++    {
++    private:
++	    List<IEventCallback<ArgumentType>*> Callbacks;
++    public:
++        EventHandlerList() {}
++        ~EventHandlerList() {}
++
++        void AddHandler(IEventCallback<ArgumentType>* action)
++        {
++            Callbacks.push_back(action);
++        }
++	    void RemoveHandler(IEventCallback<ArgumentType>* action)
++        {
++            Callbacks.Remove(action);
++            delete action;
++        }
++	    void Invoke(void* sender, ArgumentType arg)
++        {
++            for (IEventCallback<ArgumentType>* action : Callbacks)
++                action->Invoke(sender, arg);
++        }
++
++        void operator+= (IEventCallback<ArgumentType>* action)
++        {
++            AddHandler(action);
++        }
++        void operator+= (void (*func)(void*, ArgumentType))
++        {
++            AddHandler(new StaticFunctionCallback<ArgumentType>(func));
++        }
++        void operator-= (IEventCallback<ArgumentType>* action)
++        {
++            RemoveHandler(action);
++        }
++    };
++
++    ////////////////////
++    // Argument macro implementations
++    ////////////////////
++    #define CREATE_ARGUMENT_CLASS0(name) \
++        class name \
++        { \
++        public: \
++            name() {} \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS1(name, t1, var1) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            name(t1 var1) \
++            { \
++                this->var1 = var1; \
++            } \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS2(name, t1, var1, t2, var2) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            t2 var2; \
++            name(t1 var1, t2 var2) \
++            { \
++                this->var1 = var1; \
++                this->var2 = var2; \
++            } \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS3(name, t1, var1, t2, var2, t3, var3) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            t2 var2; \
++            t3 var3; \
++            name(t1 var1, t2 var2, t3 var3) \
++            { \
++                this->var1 = var1; \
++                this->var2 = var2; \
++                this->var3 = var3; \
++            } \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS4(name, t1, var1, t2, var2, t3, var3, t4, var4) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            t2 var2; \
++            t3 var3; \
++            t4 var4; \
++            name(t1 var1, t2 var2, t3 var3, t4 var4) \
++            { \
++                this->var1 = var1; \
++                this->var2 = var2; \
++                this->var3 = var3; \
++                this->var4 = var4; \
++            } \
++        }; \
++
++    ///////////
++    // Argument classes for keypress or mouse events, more will be added later
++    ///////////
++    CREATE_ARGUMENT_CLASS4(MouseMoveArgs, int, prevX, int, prevY, int, newX, int, newY)
++    CREATE_ARGUMENT_CLASS3(MouseButtonArgs, int, x, int, y, int, button)
++    CREATE_ARGUMENT_CLASS2(KeypressArgs, uint8_t, key, KEYPACKET_FLAGS, modifiers)
++    CREATE_ARGUMENT_CLASS3(MouseScrollArgs, int, delta, int, x, int, y);
++
++    /**
++     * An object that hosts multiple gui events
++     */
++    class EventObject
++    {
++    public:
++        EventHandlerList<MouseButtonArgs> MouseDown;
++        EventHandlerList<MouseButtonArgs> MouseUp;
++        EventHandlerList<MouseButtonArgs> MouseClick;
++        EventHandlerList<KeypressArgs> KeyDown;
++        EventHandlerList<KeypressArgs> KeyUp;
++        EventHandlerList<MouseScrollArgs> MouseScroll;
++
++        EventObject()
++        : MouseDown(), MouseUp(), MouseClick(), KeyDown(), KeyUp(), MouseScroll()
++        {        }
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/include/proc.hpp b/kernel/include/proc.hpp
+new file mode 100644
+index 0000000..b833f82
+--- /dev/null
++++ b/kernel/include/proc.hpp
+@@ -0,0 +1,101 @@
++#ifndef _HEISEN_KERNEL_PROC__HPP   
++#define _HEISEN_KERNEL_PROC__HPP
++
++#include <syscall.hpp>
++#include <types.hpp>
++#include <systeminfo.hpp>
++#include <list.hpp>
++#include <shared.hpp>
++
++
++namespace LIBHeisenKernel
++{
++    #define DECLARE_LOCK(name) volatile int name ## Locked
++    #define LOCK(name) \
++	    while (name ## Locked == 1) asm("pause"); \
++	    __sync_synchronize();
++    #define UNLOCK(name) \
++	    __sync_synchronize(); \
++	    name ## Locked = 0;
++
++    class Process
++    {
++    private:
++        /**
++         * How many threads does this application have?
++        */
++        static int numThreads;
++    public:
++        /**
++         * The PID of this process
++        */
++        static int ID;
++        /**
++         * A pointer to a buffer shared with the kernel that contains some systeminfo
++        */
++        static SharedSystemInfo* systemInfo;
++        /**
++         * Start a new process and return its PID, if block is set to true the process will not be started automaticly.
++        */
++        static int Run(const char* path, bool block = false);
++        /**
++         * Create a block of shared memory
++        */
++        static bool CreateSharedMemory(int proc2ID, uint32_t virtStart, uint32_t len);
++        /**
++         * Create a block of shared memory
++        */
++        static bool CreateSharedMemory(int proc2ID, uint32_t virtStart1, uint32_t virtStart2, uint32_t len);
++        /**
++         * Remove a block of shared memory 
++        */
++        static bool DeleteSharedMemory(int proc2ID, uint32_t virtStart, uint32_t len);
++        /**
++         * Remove a block of shared memory
++        */
++        static bool DeleteSharedMemory(int proc2ID, uint32_t virtStart1, uint32_t virtStart2, uint32_t len);
++        /**
++         * Create a new thread for this application
++        */
++        static void CreateThread(void (*entryPoint)(), bool switchTo = false);
++        /**
++         * Force a task switch
++        */
++        static void Yield();
++        /**
++         * Write a byte to this processes standard output stream 
++        */
++        static void WriteStdOut(char byte);
++        /**
++         * Write bytes to this processes standard output stream 
++        */
++        static void WriteStdOut(char* bytes, int length);
++        /**
++         * Read a byte from this processes standard input stream
++        */
++        static char ReadStdIn();
++        /**
++         * How many bytes can be read from the stdin stream? 
++        */
++        static int StdInAvailable();
++        /**
++         * Redirect one process output to another process input 
++        */
++        static void BindSTDIO(int fromID, int toID);
++        /**
++         * Returns if a process with given pid is present and running.
++        */
++        static bool Active(int pid);
++        /**
++         * Unblock a thread of a process
++        */
++        static void Unblock(int procPID, int thread = 0);
++        /**
++         * Dissable or enable kernel scheduler
++        */
++        static void SetScheduler(bool active);
++    };
++}
++
++
++#endif // _HEISEN_KERNEL_PROC_HPP
+\ No newline at end of file
 -- 
 2.43.0
 

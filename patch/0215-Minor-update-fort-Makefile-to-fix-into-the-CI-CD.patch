@@ -1,0 +1,25 @@
+From 128d14791c7f01c100ee79d5935d9aa55e6eaf5b Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 20:31:29 -0400
+Subject: [PATCH 215/493] Minor update fort Makefile to fix into the CI/CD
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 65cb265..ec4b31c 100644
+--- a/Makefile
++++ b/Makefile
+@@ -50,7 +50,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
+ 	nasm -f elf32 -O0 $< -o $@ 2>/dev/null || true
+ 
+ CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
+-	gcc $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
++	gcc $(LDPARAMS) -T kernelz/linker.ld -o CactusOS.bin $(KRNLOBJS)
+ 
+ CactusOS.iso: CactusOS.bin
+ 	cd lib/ && $(MAKE)
+-- 
+2.43.0
+

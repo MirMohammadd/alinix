@@ -1,40 +1,25 @@
-From ab98c1f8cbdac778cf2a2d915abb3d1e9ca861a1 Mon Sep 17 00:00:00 2001
+From e14ad827da2a2df50050ea41b01439b73b3902b3 Mon Sep 17 00:00:00 2001
 From: Heisenberg <alimirmohammad.1386@gmail.com>
-Date: Sun, 31 Mar 2024 21:44:32 -0400
-Subject: [PATCH 33/50] Patch
+Date: Mon, 1 Apr 2024 13:07:19 -0400
+Subject: [PATCH 033/493] Patch
 
 ---
- kernel/arch/x86-pc/lib/stdio.h  | 2 +-
- kernel/arch/x86-pc/lib/string.h | 3 +--
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ .github/workflows/test.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/arch/x86-pc/lib/stdio.h b/kernel/arch/x86-pc/lib/stdio.h
-index eab2d99..603c8d6 100644
---- a/kernel/arch/x86-pc/lib/stdio.h
-+++ b/kernel/arch/x86-pc/lib/stdio.h
-@@ -3,7 +3,7 @@
- #ifndef _STDIO_H
- #define _STDIO_H
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index 4a52d78..fd0cb37 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -3,7 +3,7 @@ name: HiesenKernel
+ on:
+   push:
+     branches:
+-      - Caps  # Adjust branch name as needed
++      - main  # Adjust branch name as needed
  
--#include <stdarg.h>
-+#include "stdarg.h"
- 
- #define MAX_DIGITS_IN_INTEGER 11
- 
-diff --git a/kernel/arch/x86-pc/lib/string.h b/kernel/arch/x86-pc/lib/string.h
-index 7a8317c..34f2c32 100644
---- a/kernel/arch/x86-pc/lib/string.h
-+++ b/kernel/arch/x86-pc/lib/string.h
-@@ -2,8 +2,7 @@
- #ifndef STRING_H
- #define STRING_H
- 
--#include <stddef.h>
--#include <sys/types.h>
-+#include "stddef.h"
- 
- char *strncpy(char *dest, const char *source, size_t n);
- int strncmp(const char *s1, const char *s2, size_t n);
+ jobs:
+   build:
 -- 
 2.43.0
 

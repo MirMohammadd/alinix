@@ -1,0 +1,28 @@
+From f48e025cbbc8fa01dc645cea4ae0dec03ec93757 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 4 Apr 2024 18:04:45 -0400
+Subject: [PATCH 250/493] Minor update
+
+---
+ apps/settings/settings.cpp | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/apps/settings/settings.cpp b/apps/settings/settings.cpp
+index e93ee1d..45e5ad9 100644
+--- a/apps/settings/settings.cpp
++++ b/apps/settings/settings.cpp
+@@ -13,7 +13,11 @@ void SystemArgumentsCallBack(void* sender, MouseButtonArgs args){
+     Window* SystemWindow = new Window(400, 300, 0, 0);
+     SystemWindow->titleString = "System Settings";
+     SystemWindow->backColor = 0xFF150534;
++    SystemWindow->height = 300;
++    SystemWindow->width = 400;
++    
+     Print("Opened System Settings\n");
++
+     
+ }
+ 
+-- 
+2.43.0
+

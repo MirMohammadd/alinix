@@ -63,6 +63,14 @@ namespace LIBHeisenKernel
             assert(SQUARE_IS_OK(square));
             assert(string != NULL);
             assert (size > 0);
+
+            if (size < 3) return false;
+
+            string[0] = file_to_char(SQUARE_FILE(square));
+            string[1] = rank_to_char(SQUARE_RANK(square));
+            string[2] = 0;
+            return true;
+            
         }
 
     }

@@ -24,6 +24,11 @@ namespace LIBHeisenKernel{
         const int ValueMate    = 30000;
         const int ValueInf     = ValueMate;
         const int ValueEvalInf = ValueMate - 256; // handle mates upto 255 plies
+        /**
+         * @brief Defining some macros here
+        */
+        #define VALUE_MATE(height) (-ValueMate+(height))
+        #define VALUE_PIECE(piece) (ValuePiece[piece])
     }
 };
 

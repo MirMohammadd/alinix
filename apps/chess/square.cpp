@@ -37,5 +37,8 @@ namespace LIBHeisenKernel
         SquareIsPromote[sq] = SQUARE_IS_OK(sq) && (SQUARE_RANK(sq) == Rank1 || SQUARE_RANK(sq) == Rank8);
         }
 
+
     }
+
+    
 }

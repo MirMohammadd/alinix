@@ -4,6 +4,7 @@
 #include "colors.h"
 
 using namespace LIBHeisenKernel::Chess::engine;
+using namespace LIBHeisenKernel::engine;
 
 namespace LIBHeisenKernel
 {

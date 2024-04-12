@@ -29,6 +29,11 @@ namespace LIBHeisenKernel{
         */
         #define VALUE_MATE(height) (-ValueMate+(height))
         #define VALUE_PIECE(piece) (ValuePiece[piece])
+
+        /**
+         * @brief variables
+        */
+        extern int ValuePiece[PieceNb];
     }
 };
 

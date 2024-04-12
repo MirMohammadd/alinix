@@ -5,6 +5,7 @@
 #include "square.h"
 #include "util.h"
 #include "vector.h"
+#include <assert.h>
 
 
 namespace LIBHeisenKernel
@@ -25,6 +26,15 @@ namespace LIBHeisenKernel
             int dist,tmp;
 
             for (delta = 0; delta < DeltaNb;delta++)Distance[delta] = -1;
+
+            for (y = -7;y <= 7;y++){
+                for (x = -7;x <=7;x++){
+                    delta = y*16+x;
+                    assert(delta_is_ok(delta));
+                    
+                    
+                }
+            }
         }
     };
 };

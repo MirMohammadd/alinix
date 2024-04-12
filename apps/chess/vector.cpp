@@ -46,6 +46,14 @@ namespace LIBHeisenKernel
 
                 }
             }
+
+        }
+
+        bool data_is_ok(int delta){
+            if (delta < -119 || delta > 119) return false;
+            if ((delta & 0xF) == 8) return false; // HACK: delta % 16 would be ill-defined for negative numbers
+
+            return true;
         }
     };
 };

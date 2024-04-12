@@ -1,5 +1,6 @@
 #include "colour.h"
 #include "piece.h"
+#include <assert.h>
 
 namespace LIBHeisenKernel
 {
@@ -83,6 +84,21 @@ namespace LIBHeisenKernel
         PieceInc[BlackQueen256]  = QueenInc;
         PieceInc[BlackKing256]   = KingInc;
         }
+
+        bool piece_is_ok(int piece){
+            if (piece <0 || piece >= PieceNb) return false;
+
+            if (PieceTo12[piece] < 0) return false;
+
+            return true;
+        }
+
+        int piece_from_12(int piece12){
+            assert( piece12 >= 0 && piece12 < 12 );
+            return PieceFrom12[piece12];
+        }
+
+        
 
     };
 };

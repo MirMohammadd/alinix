@@ -1,6 +1,12 @@
 #ifndef ALINIX_KERNEL_APPS_CHESS_GAME_H
 #define ALINIX_KERNEL_APPS_CHESS_GAME_H
 
+#include <types.h>
+
+#ifdef __cplusplus
+using namespace HeisenOs::common;
+#endif // __cplusplus
+
 namespace LIBHeisenKernel{
     namespace engine{
         
@@ -20,7 +26,15 @@ namespace LIBHeisenKernel{
 
         #define LIST_MOVE(list,pos)  ((list)->move[pos])
         #define LIST_VALUE(list,pos) ((list)->value[pos])
+
+        struct list_t{
+            int size;
+            uint16_t move[ListSize];
+            uint16_t value[ListSize];
+        };
     };
 };
+
+
 
 #endif /*ALINIX_KERNEL_APPS_CHESS_GAME_H*/

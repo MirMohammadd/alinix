@@ -55,6 +55,16 @@ namespace LIBHeisenKernel
 
             return true;
         }
+        bool inc_is_ok(int inc) {
+
+            int dir;
+
+            for (dir = 0; dir < 8; dir++) {
+                if (KingInc[dir] == inc) return true;
+            }
+
+            return false;
+            }
     };
 };
 

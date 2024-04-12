@@ -5,6 +5,41 @@
 
 namespace LIBHeisenKernel
 {
+
+    /**
+     * @brief Colors implemented for the chess game 
+     * 
+    */
+
+    namespace Chess{
+
+        namespace engine{
+        // Constants
+        const int ColorNone = -1;
+
+        const int White = 0;
+        const int Black = 1;
+
+        const int ColorNb = 2;
+
+        const int WhiteFlag = 1 << White;
+        const int BlackFlag = 1 << Black;
+    
+        };
+    
+    // Some useful macros
+
+    #define COLOR_IS_OK(colour) (((colour)&~1)==0)
+
+    #define COLOUR_IS_WHITE(colour) ((colour)==White)
+    #define COLOUR_IS_BLACK(colour) ((colour)!=White)
+
+    #define COLOUR_IS(piece,colour) (FLAG_IS((piece),COLOUR_FLAG(colour)))
+    #define FLAG_IS(piece,flag)     (((piece)&(flag))!=0)
+
+    #define COLOUR_OPP(colour)      ((colour)^(White^Black))
+    #define COLOUR_FLAG(colour)     ((colour)+1)
+    };
     // Union describing a ARGB color in the following format:
     // 0xAARRGGBB
     typedef union Color4Tag

@@ -20,6 +20,10 @@ namespace LIBHeisenKernel
     typedef unsigned char byte_t;
     typedef unsigned int dword_t;
     typedef long unsigned int word_t;
+    typedef signed short sint16_t;
+    typedef signed char sint8_t;
+    typedef unsigned int sint32_t;
+    typedef signed long long int sint64_t;
 
 
     constexpr uint32_t operator"" _KB(unsigned long long no)

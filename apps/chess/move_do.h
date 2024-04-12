@@ -1,5 +1,5 @@
-#ifndef _HEISEN_KERNEL_MOVE_DO_
-#define _HEISEN_KERNEL_MOVE_DO_
+#ifndef _HEISEN_KERNEL_MOVE_DO_HEADER
+#define _HEISEN_KERNEL_MOVE_DO_HEADER
 
 #include <types.h>
 #include "board.h"

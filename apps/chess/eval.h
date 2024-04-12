@@ -1,5 +1,5 @@
-#ifndef _ALINIX_KERNEL_APPS_HEADER_H
-#define _ALINIX_KERNEL_APPS_HEADER_H
+#ifndef _ALINIX_KERNEL_APPS_HEADER__EVAL_H
+#define _ALINIX_KERNEL_APPS_HEADER__EVAL_H
 
 #include "board.h"
 #include "util.h"

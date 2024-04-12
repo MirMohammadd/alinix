@@ -1,5 +1,5 @@
-#ifndef _ALINIX_KERNEL_APPS_CHESS_GAME_H
-#define _ALINIX_KERNEL_APPS_CHESS_GAME_H
+#ifndef _ALINIX_KERNEL_APPS_CHESS_GAME_COLOUR__H
+#define _ALINIX_KERNEL_APPS_CHESS_GAME_COLOUR__H
 
 #include "board.h"
 #include "util.h"

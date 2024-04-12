@@ -33,6 +33,7 @@ namespace LIBHeisenKernel
                 // static const char NullMoveString[] = "null"; // "0000" in UCI
                 
         };
+
     }
 }
 

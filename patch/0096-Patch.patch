@@ -1,0 +1,25 @@
+From 387892dda02d00e5f892cc2cb983e3a96431ac4c Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 19:41:51 -0400
+Subject: [PATCH 096/493] Patch
+
+---
+ apps/browser/main.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/apps/browser/main.cc b/apps/browser/main.cc
+index ab5f96b..5485899 100644
+--- a/apps/browser/main.cc
++++ b/apps/browser/main.cc
+@@ -24,7 +24,7 @@ int main(int argc, char** argv)
+     GUI::SetDefaultFont();
+ 
+     mainWindow = new Window(600, 600, 300, 300);
+-    mainWindow->titleString = "CactusOS File Browser";
++    mainWindow->titleString = "HeisenKernel File Browser";
+ 
+     ScrollBar* scroll = new ScrollBar(Vertical);
+     scroll->x = 100;
+-- 
+2.43.0
+

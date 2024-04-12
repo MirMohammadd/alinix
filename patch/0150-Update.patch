@@ -1,0 +1,605 @@
+From 22be6c71d84f4e8676d513c5bb2294c04cac8160 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 21:42:41 -0400
+Subject: [PATCH 150/493] Update
+
+---
+ kernelz/src/installer/installer.cpp           |  2 +-
+ .../src/system/listings/directorylisting.cpp  |  6 +-
+ kernelz/src/system/listings/systeminfo.cpp    | 28 +++---
+ .../syscalls/implementations/cactusos.cpp     | 88 +++++++++----------
+ kernelz/src/system/tasking/ipcmanager.cpp     |  8 +-
+ kernelz/src/system/vfs/fat.cpp                |  8 +-
+ kernelz/src/system/vfs/iso9660.cpp            |  8 +-
+ kernelz/src/system/vfs/vfsmanager.cpp         |  2 +-
+ kernelz/src/system/vfs/virtualfilesystem.cpp  |  2 +-
+ 9 files changed, 76 insertions(+), 76 deletions(-)
+
+diff --git a/kernelz/src/installer/installer.cpp b/kernelz/src/installer/installer.cpp
+index 357d367..96a0877 100644
+--- a/kernelz/src/installer/installer.cpp
++++ b/kernelz/src/installer/installer.cpp
+@@ -361,7 +361,7 @@ void CopyFile(VirtualFileSystem* src, VirtualFileSystem* dest, char* path)
+ void CopyDirectory(VirtualFileSystem* src, VirtualFileSystem* dest, char* path)
+ {
+     auto content = src->DirectoryList(path);
+-    for(LIBCactusOS::VFSEntry item : *content)
++    for(LIBHeisenKernel::VFSEntry item : *content)
+     {
+         char itemPath[255];
+         MemoryOperations::memset(itemPath, 0, 255);
+diff --git a/kernelz/src/system/listings/directorylisting.cpp b/kernelz/src/system/listings/directorylisting.cpp
+index c02b6e1..b903ddc 100644
+--- a/kernelz/src/system/listings/directorylisting.cpp
++++ b/kernelz/src/system/listings/directorylisting.cpp
+@@ -7,7 +7,7 @@ using namespace HeisenOs::core;
+ using namespace HeisenOs::system;
+ 
+ // List which holds the files in the current requested directory.
+-List<LIBCactusOS::VFSEntry>* currentDirectoryList = 0;
++List<LIBHeisenKernel::VFSEntry>* currentDirectoryList = 0;
+ 
+ DirectoryListing::DirectoryListing()
+ : ListingController() { }
+@@ -41,8 +41,8 @@ int DirectoryListing::GetEntry(Thread* thread, int entry, uint32_t bufPtr)
+ 
+     if(entry >= 0 && currentDirectoryList->size() > entry && buf != 0)
+     {
+-        LIBCactusOS::VFSEntry item = currentDirectoryList->GetAt(entry);
+-        MemoryOperations::memcpy(buf, &item, sizeof(LIBCactusOS::VFSEntry));
++        LIBHeisenKernel::VFSEntry item = currentDirectoryList->GetAt(entry);
++        MemoryOperations::memcpy(buf, &item, sizeof(LIBHeisenKernel::VFSEntry));
+ 
+         return 1;
+     }
+diff --git a/kernelz/src/system/listings/systeminfo.cpp b/kernelz/src/system/listings/systeminfo.cpp
+index 5f2f541..831363a 100644
+--- a/kernelz/src/system/listings/systeminfo.cpp
++++ b/kernelz/src/system/listings/systeminfo.cpp
+@@ -14,14 +14,14 @@ SIPROCESSOR SystemInfoManager::processor;
+ 
+ bool SystemInfoManager::HandleSysinfoRequest(void* arrayPointer, int count, common::uint32_t retAddr, bool getSize)
+ {
+-    LIBCactusOS::SIPropertyProvider* items = (LIBCactusOS::SIPropertyProvider*)arrayPointer;
++    LIBHeisenKernel::SIPropertyProvider* items = (LIBHeisenKernel::SIPropertyProvider*)arrayPointer;
+ 
+-    if(items[0].type != LIBCactusOS::SIPropertyIdentifier::String || !items[0].id)
++    if(items[0].type != LIBHeisenKernel::SIPropertyIdentifier::String || !items[0].id)
+         return false; // First identifier needs to be a string
+ 
+     if(String::strcmp(items[0].id, "properties"))
+     {
+-        if(items[1].type != LIBCactusOS::SIPropertyIdentifier::String || !items[1].id)
++        if(items[1].type != LIBHeisenKernel::SIPropertyIdentifier::String || !items[1].id)
+             return false; // Second identifier needs to be a string
+         
+         if(String::strcmp(items[1].id, "disks")) {
+@@ -29,7 +29,7 @@ bool SystemInfoManager::HandleSysinfoRequest(void* arrayPointer, int count, comm
+                 *((int*)retAddr) = System::diskManager->allDisks.size();
+                 return true;
+             }
+-            if(items[2].type != LIBCactusOS::SIPropertyIdentifier::Index || items[3].type != LIBCactusOS::SIPropertyIdentifier::String)
++            if(items[2].type != LIBHeisenKernel::SIPropertyIdentifier::Index || items[3].type != LIBHeisenKernel::SIPropertyIdentifier::String)
+                 return false; // Needs to be index for collection and next needs to be property id
+ 
+             int index = items[2].index;
+@@ -64,7 +64,7 @@ bool SystemInfoManager::HandleSysinfoRequest(void* arrayPointer, int count, comm
+                 *((int*)retAddr) = System::usbManager->deviceList.size();
+                 return true;
+             }
+-            if(items[2].type != LIBCactusOS::SIPropertyIdentifier::Index || items[3].type != LIBCactusOS::SIPropertyIdentifier::String)
++            if(items[2].type != LIBHeisenKernel::SIPropertyIdentifier::Index || items[3].type != LIBHeisenKernel::SIPropertyIdentifier::String)
+                 return false; // Needs to be index for collection and next needs to be property id
+ 
+             int index = items[2].index;
+@@ -107,7 +107,7 @@ bool SystemInfoManager::HandleSysinfoRequest(void* arrayPointer, int count, comm
+                 *((int*)retAddr) = System::usbManager->controllerList.size();
+                 return true;
+             }
+-            if(items[2].type != LIBCactusOS::SIPropertyIdentifier::Index || items[3].type != LIBCactusOS::SIPropertyIdentifier::String)
++            if(items[2].type != LIBHeisenKernel::SIPropertyIdentifier::Index || items[3].type != LIBHeisenKernel::SIPropertyIdentifier::String)
+                 return false; // Needs to be index for collection and next needs to be property id
+ 
+             int index = items[2].index;
+@@ -123,7 +123,7 @@ bool SystemInfoManager::HandleSysinfoRequest(void* arrayPointer, int count, comm
+                 *((int*)retAddr) = System::pci->deviceList.size();
+                 return true;
+             }
+-            if(items[2].type != LIBCactusOS::SIPropertyIdentifier::Index || items[3].type != LIBCactusOS::SIPropertyIdentifier::String)
++            if(items[2].type != LIBHeisenKernel::SIPropertyIdentifier::Index || items[3].type != LIBHeisenKernel::SIPropertyIdentifier::String)
+                 return false; // Needs to be index for collection and next needs to be property id
+ 
+             int index = items[2].index;
+@@ -171,7 +171,7 @@ bool SystemInfoManager::HandleSysinfoRequest(void* arrayPointer, int count, comm
+                 return false;         
+         }
+         else if(String::strcmp(items[1].id, "gfxdevice")) {
+-            if(items[2].type != LIBCactusOS::SIPropertyIdentifier::String)
++            if(items[2].type != LIBHeisenKernel::SIPropertyIdentifier::String)
+                 return false; // Needs to be property id
+             
+             if(String::strcmp(items[2].id, "bpp")) {
+@@ -205,7 +205,7 @@ bool SystemInfoManager::HandleSysinfoRequest(void* arrayPointer, int count, comm
+                 *((int*)retAddr) = ProcessHelper::Processes.size();
+                 return true;
+             }
+-            if(items[2].type != LIBCactusOS::SIPropertyIdentifier::Index || items[3].type != LIBCactusOS::SIPropertyIdentifier::String)
++            if(items[2].type != LIBHeisenKernel::SIPropertyIdentifier::Index || items[3].type != LIBHeisenKernel::SIPropertyIdentifier::String)
+                 return false; // Needs to be index for collection and next needs to be property id
+ 
+             int index = items[2].index;
+@@ -248,7 +248,7 @@ bool SystemInfoManager::HandleSysinfoRequest(void* arrayPointer, int count, comm
+                 return false;
+         }
+         else if(String::strcmp(items[1].id, "memory")) {
+-            if(items[2].type != LIBCactusOS::SIPropertyIdentifier::String)
++            if(items[2].type != LIBHeisenKernel::SIPropertyIdentifier::String)
+                 return false; // Needs to be property id
+             
+             if(String::strcmp(items[2].id, "total")) {
+@@ -267,7 +267,7 @@ bool SystemInfoManager::HandleSysinfoRequest(void* arrayPointer, int count, comm
+                 return false;
+         }
+         else if(String::strcmp(items[1].id, "bios")) {
+-            if(items[2].type != LIBCactusOS::SIPropertyIdentifier::String)
++            if(items[2].type != LIBHeisenKernel::SIPropertyIdentifier::String)
+                 return false; // Needs to be property id
+ 
+             if(String::strcmp(items[2].id, "vendor")) {                
+@@ -295,7 +295,7 @@ bool SystemInfoManager::HandleSysinfoRequest(void* arrayPointer, int count, comm
+                 return false;
+         }
+         else if(String::strcmp(items[1].id, "system")) {
+-            if(items[2].type != LIBCactusOS::SIPropertyIdentifier::String)
++            if(items[2].type != LIBHeisenKernel::SIPropertyIdentifier::String)
+                 return false; // Needs to be property id
+ 
+             if(String::strcmp(items[2].id, "manufacturer")) {                
+@@ -344,7 +344,7 @@ bool SystemInfoManager::HandleSysinfoRequest(void* arrayPointer, int count, comm
+                 return false;
+         }
+         else if(String::strcmp(items[1].id, "enclosure")) {
+-            if(items[2].type != LIBCactusOS::SIPropertyIdentifier::String)
++            if(items[2].type != LIBHeisenKernel::SIPropertyIdentifier::String)
+                 return false; // Needs to be property id
+ 
+             if(String::strcmp(items[2].id, "manufacturer")) {                
+@@ -379,7 +379,7 @@ bool SystemInfoManager::HandleSysinfoRequest(void* arrayPointer, int count, comm
+                 return false;
+         }
+         else if(String::strcmp(items[1].id, "processor")) {
+-            if(items[2].type != LIBCactusOS::SIPropertyIdentifier::String)
++            if(items[2].type != LIBHeisenKernel::SIPropertyIdentifier::String)
+                 return false; // Needs to be property id
+ 
+             if(String::strcmp(items[2].id, "manufacturer")) {                
+diff --git a/kernelz/src/system/syscalls/implementations/cactusos.cpp b/kernelz/src/system/syscalls/implementations/cactusos.cpp
+index 397870b..42bf62b 100644
+--- a/kernelz/src/system/syscalls/implementations/cactusos.cpp
++++ b/kernelz/src/system/syscalls/implementations/cactusos.cpp
+@@ -20,12 +20,12 @@ extern PowerRequest powerRequestState; //Defined in kernel.cpp
+ 
+ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+ {
+-    LIBCactusOS::Systemcalls sysCall = (LIBCactusOS::Systemcalls)state->EAX;
++    LIBHeisenKernel::Systemcalls sysCall = (LIBHeisenKernel::Systemcalls)state->EAX;
+     Process* proc = System::scheduler->CurrentProcess();
+ 
+     switch (sysCall)
+     {
+-        case LIBCactusOS::SYSCALL_EXIT:
++        case LIBHeisenKernel::SYSCALL_EXIT:
+             Log(Info, "Process %d %s exited with code %d", proc->id, proc->fileName, (int)state->EBX);
+             ProcessHelper::RemoveProcess(proc);
+             state->EAX = SYSCALL_RET_SUCCES;
+@@ -35,11 +35,11 @@ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+         // Logging
+         /////////////
+ 
+-        case LIBCactusOS::SYSCALL_LOG:
++        case LIBHeisenKernel::SYSCALL_LOG:
+             Log((LogLevel)state->EBX, (const char* __restrict__)state->ECX);
+             state->EAX = SYSCALL_RET_SUCCES;
+             break;
+-        case LIBCactusOS::SYSCALL_PRINT:
++        case LIBHeisenKernel::SYSCALL_PRINT:
+             Print((const char*)state->EBX, state->ECX);
+             break;
+         
+@@ -47,28 +47,28 @@ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+         // VFS
+         /////////////
+         
+-        case LIBCactusOS::SYSCALL_FILE_EXISTS:
++        case LIBHeisenKernel::SYSCALL_FILE_EXISTS:
+             state->EAX = System::vfs->FileExists((char*)state->EBX);
+             break;
+-        case LIBCactusOS::SYSCALL_DIR_EXISTS:
++        case LIBHeisenKernel::SYSCALL_DIR_EXISTS:
+             state->EAX = System::vfs->DirectoryExists((char*)state->EBX);
+             break;
+-        case LIBCactusOS::SYSCALL_GET_FILESIZE:
++        case LIBHeisenKernel::SYSCALL_GET_FILESIZE:
+             state->EAX = System::vfs->GetFileSize((char*)state->EBX);
+             break;
+-        case LIBCactusOS::SYSCALL_READ_FILE:
++        case LIBHeisenKernel::SYSCALL_READ_FILE:
+             state->EAX = System::vfs->ReadFile((char*)state->EBX, (uint8_t*)state->ECX);
+             break;
+-        case LIBCactusOS::SYSCALL_WRITE_FILE:
++        case LIBHeisenKernel::SYSCALL_WRITE_FILE:
+             state->EAX = System::vfs->WriteFile((char*)state->EBX, (uint8_t*)state->ECX, state->EDX, (bool)state->ESI);
+             break;
+-        case LIBCactusOS::SYSCALL_CREATE_FILE:
++        case LIBHeisenKernel::SYSCALL_CREATE_FILE:
+             state->EAX = System::vfs->CreateFile((char*)state->EBX);
+             break;
+-        case LIBCactusOS::SYSCALL_CREATE_DIRECTORY:
++        case LIBHeisenKernel::SYSCALL_CREATE_DIRECTORY:
+             state->EAX = System::vfs->CreateDirectory((char*)state->EBX);
+             break;
+-        case LIBCactusOS::SYSCALL_EJECT_DISK:
++        case LIBHeisenKernel::SYSCALL_EJECT_DISK:
+             state->EAX = System::vfs->EjectDrive((char*)state->EBX);
+             break;
+ 
+@@ -76,13 +76,13 @@ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+         // GUI
+         //////////////
+         
+-        case LIBCactusOS::SYSCALL_GUI_GETLFB:
++        case LIBHeisenKernel::SYSCALL_GUI_GETLFB:
+             VirtualMemoryManager::mapVirtualToPhysical((void*)System::gfxDevice->framebufferPhys, (void*)state->EBX, pageRoundUp(System::gfxDevice->GetBufferSize()), false, true);
+             state->EAX = SYSCALL_RET_SUCCES;
+             Log(Info, "Mapped LFB for process %d to virtual address %x", proc->id, state->EBX);
+             break;
+ 
+-        case LIBCactusOS::SYSCALL_GET_SCREEN_PROPERTIES:
++        case LIBHeisenKernel::SYSCALL_GET_SCREEN_PROPERTIES:
+             if(System::gfxDevice) {
+                 *((int*)state->EBX) = System::gfxDevice->width;
+                 *((int*)state->ECX) = System::gfxDevice->height;
+@@ -98,17 +98,17 @@ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+         // Memory
+         //////////////
+ 
+-        case LIBCactusOS::SYSCALL_GET_HEAP_START:
++        case LIBHeisenKernel::SYSCALL_GET_HEAP_START:
+             state->EAX = proc->heap.heapStart;
+             break;
+-        case LIBCactusOS::SYSCALL_GET_HEAP_END:
++        case LIBHeisenKernel::SYSCALL_GET_HEAP_END:
+             state->EAX = proc->heap.heapEnd;
+             break;
+-        case LIBCactusOS::SYSCALL_SET_HEAP_SIZE:
++        case LIBHeisenKernel::SYSCALL_SET_HEAP_SIZE:
+             ProcessHelper::UpdateHeap(proc, state->EBX);
+             state->EAX = SYSCALL_RET_SUCCES;
+             break;
+-        case LIBCactusOS::SYSCALL_CREATE_SHARED_MEM:
++        case LIBHeisenKernel::SYSCALL_CREATE_SHARED_MEM:
+             {
+                 Process* proc2 = ProcessHelper::ProcessById(state->EBX);
+                 if(proc2 == 0) {
+@@ -118,7 +118,7 @@ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+                 state->EAX = SharedMemory::CreateSharedRegion(proc, proc2, state->ECX, state->EDX, state->ESI);
+             }
+             break;
+-        case LIBCactusOS::SYSCALL_REMOVE_SHARED_MEM:
++        case LIBHeisenKernel::SYSCALL_REMOVE_SHARED_MEM:
+             {
+                 Process* proc2 = ProcessHelper::ProcessById(state->EBX);
+                 if(proc2 == 0) {
+@@ -128,7 +128,7 @@ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+                 state->EAX = SharedMemory::RemoveSharedRegion(proc, proc2, state->ECX, state->EDX, state->ESI);
+             }
+             break;
+-        case LIBCactusOS::SYSCALL_MAP_SYSINFO:
++        case LIBHeisenKernel::SYSCALL_MAP_SYSINFO:
+             {
+                 //Put systeminfo into address space
+                 uint32_t sysInfoPhys = (uint32_t)VirtualMemoryManager::virtualToPhysical((void*)System::systemInfo);
+@@ -146,7 +146,7 @@ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+         // Scheduler
+         //////////////
+         
+-        case LIBCactusOS::SYSCALL_RUN_PROC:
++        case LIBHeisenKernel::SYSCALL_RUN_PROC:
+             {    
+                 char* applicationPath = (char*)state->EBX;
+                 bool block = (bool)state->ECX;
+@@ -172,14 +172,14 @@ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+                     state->EAX = SYSCALL_RET_ERROR;
+             }
+             break;
+-        case LIBCactusOS::SYSCALL_SLEEP_MS:
++        case LIBHeisenKernel::SYSCALL_SLEEP_MS:
+             {
+                 Thread* currentThread = System::scheduler->CurrentThread();
+                 currentThread->timeDelta = state->EBX;
+                 System::scheduler->Block(currentThread, BlockedState::SleepMS);
+             }
+             break;
+-        case LIBCactusOS::SYSCALL_START_THREAD:
++        case LIBHeisenKernel::SYSCALL_START_THREAD:
+             {     
+                 Log(Info, "Creating new thread for proc %d %s, jumps to %x", proc->id, proc->fileName, state->EBX);
+                 //Create new thread
+@@ -202,10 +202,10 @@ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+                     System::scheduler->ForceSwitch();
+             }
+             break;
+-        case LIBCactusOS::SYSCALL_YIELD:
++        case LIBHeisenKernel::SYSCALL_YIELD:
+             System::scheduler->ForceSwitch();
+             break;
+-        case LIBCactusOS::SYSCALL_PROC_EXIST:
++        case LIBHeisenKernel::SYSCALL_PROC_EXIST:
+             {
+                 Process* proc = ProcessHelper::ProcessById(state->EBX);
+                 if(proc != 0)
+@@ -214,20 +214,20 @@ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+                     state->EAX = false;
+             }
+             break;
+-        case LIBCactusOS::SYSCALL_UNBLOCK:
++        case LIBHeisenKernel::SYSCALL_UNBLOCK:
+             {
+                 Process* proc = ProcessHelper::ProcessById(state->EBX);
+                 if(proc != 0 && (int)state->ECX < proc->Threads.size())
+                     proc->Threads[state->ECX]->state = Started;
+             }
+             break;
+-        case LIBCactusOS::SYSCALL_SET_SCHEDULER:
++        case LIBHeisenKernel::SYSCALL_SET_SCHEDULER:
+             {
+                 bool active = (bool)state->EBX;
+                 System::scheduler->Enabled = active;
+             }
+             break;
+-        case LIBCactusOS::SYSCALL_GET_ARGUMENTS:
++        case LIBHeisenKernel::SYSCALL_GET_ARGUMENTS:
+             {
+                 char* target = (char*)state->EBX;
+                 char* src = proc->args;
+@@ -242,13 +242,13 @@ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+         // IPC
+         //////////////
+         
+-        case LIBCactusOS::SYSCALL_IPC_SEND:
++        case LIBHeisenKernel::SYSCALL_IPC_SEND:
+             IPCManager::HandleSend(state, proc);
+             break;
+-        case LIBCactusOS::SYSCALL_IPC_RECEIVE:
++        case LIBHeisenKernel::SYSCALL_IPC_RECEIVE:
+             IPCManager::HandleReceive(state, proc);
+             break;
+-        case LIBCactusOS::SYSCALL_IPC_AVAILABLE:
++        case LIBHeisenKernel::SYSCALL_IPC_AVAILABLE:
+             state->EAX = proc->ipcMessages.size();
+             break;
+ 
+@@ -256,16 +256,16 @@ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+         // Clock
+         //////////////
+ 
+-        case LIBCactusOS::SYSCALL_GET_TICKS:
++        case LIBHeisenKernel::SYSCALL_GET_TICKS:
+             {
+                 uint64_t* ticksPtr = (uint64_t*)state->EBX;
+                 *ticksPtr = System::pit->Ticks();
+                 state->EAX = SYSCALL_RET_SUCCES;
+             }
+             break;
+-        case LIBCactusOS::SYSCALL_GET_DATETIME:
++        case LIBHeisenKernel::SYSCALL_GET_DATETIME:
+             {
+-                LIBCactusOS::DateTime* resultPtr = (LIBCactusOS::DateTime*)state->EBX;
++                LIBHeisenKernel::DateTime* resultPtr = (LIBHeisenKernel::DateTime*)state->EBX;
+                 resultPtr->Day = System::rtc->GetDay();
+                 resultPtr->Hours = System::rtc->GetHour();
+                 resultPtr->Minutes = System::rtc->GetMinute();
+@@ -280,13 +280,13 @@ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+         // Power
+         //////////////
+ 
+-        case LIBCactusOS::SYSCALL_SHUTDOWN:
++        case LIBHeisenKernel::SYSCALL_SHUTDOWN:
+             Log(Info, "Process requested shutdown");
+             powerRequestState = Shutdown; //Tell kernel process to shutdown on next schedule
+             
+             state->EAX = SYSCALL_RET_SUCCES;
+             break;
+-        case LIBCactusOS::SYSCALL_REBOOT:
++        case LIBHeisenKernel::SYSCALL_REBOOT:
+             Log(Info, "Process requested reboot");
+             powerRequestState = Reboot; //Tell kernel process to reboot on next schedule
+ 
+@@ -297,7 +297,7 @@ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+         // STDIO
+         //////////////        
+ 
+-        case LIBCactusOS::SYSCALL_READ_STDIO:
++        case LIBHeisenKernel::SYSCALL_READ_STDIO:
+             if(proc->stdInput != 0)
+             {
+                 while (proc->stdInput->Available() <= 0) //TODO: Use blocking here
+@@ -308,7 +308,7 @@ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+                 Log(Warning, "StdIn is zero for process %s", proc->fileName);
+ 
+             break;
+-        case LIBCactusOS::SYSCALL_WRITE_STDIO:
++        case LIBHeisenKernel::SYSCALL_WRITE_STDIO:
+             if(proc->stdOutput != 0) {
+                 char* data = (char*)state->EBX;
+                 if(data == 0 || state->ECX <= 0)
+@@ -329,7 +329,7 @@ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+                 Log(Warning, "StdOut is zero for process %s", proc->fileName);
+             
+             break;
+-        case LIBCactusOS::SYSCALL_REDIRECT_STDIO:
++        case LIBHeisenKernel::SYSCALL_REDIRECT_STDIO:
+             {
+                 int fromID = state->EBX;
+                 int toID = state->ECX;
+@@ -356,7 +356,7 @@ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+                 fromProc->stdOutput = toProc->stdInput;
+             }
+             break;
+-        case LIBCactusOS::SYSCALL_STDIO_AVAILABLE:
++        case LIBHeisenKernel::SYSCALL_STDIO_AVAILABLE:
+             if(proc->stdInput != 0)
+                 state->EAX = proc->stdInput->Available();
+             else
+@@ -368,7 +368,7 @@ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+         // Listings
+         //////////////        
+ 
+-        case LIBCactusOS::SYSCALL_BEGIN_LISTING:
++        case LIBHeisenKernel::SYSCALL_BEGIN_LISTING:
+             {
+                 int type = state->EBX;
+                 if(!(System::listings->size() > type)) {
+@@ -379,7 +379,7 @@ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+                 state->EAX = System::listings->GetAt(type)->BeginListing(System::scheduler->CurrentThread(), state->ECX);
+             }
+             break;
+-        case LIBCactusOS::SYSCALL_LISTING_ENTRY:
++        case LIBHeisenKernel::SYSCALL_LISTING_ENTRY:
+             {
+                 int type = state->EBX;
+                 if(!(System::listings->size() > type)) {
+@@ -390,7 +390,7 @@ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+                 state->EAX = System::listings->GetAt(type)->GetEntry(System::scheduler->CurrentThread(), (int)state->ECX, state->EDX);
+             }
+             break;
+-        case LIBCactusOS::SYSCALL_END_LISTING:
++        case LIBHeisenKernel::SYSCALL_END_LISTING:
+             {
+                 int type = state->EBX;
+                 if(!(System::listings->size() > type)) {
+@@ -401,7 +401,7 @@ CPUState* CactusOSSyscalls::HandleSyscall(CPUState* state)
+                 System::listings->GetAt(type)->EndListing(System::scheduler->CurrentThread());
+             }
+             break;
+-        case LIBCactusOS::SYSCALL_GET_SYSINFO_VALUE:
++        case LIBHeisenKernel::SYSCALL_GET_SYSINFO_VALUE:
+             {
+                 state->EAX = SystemInfoManager::HandleSysinfoRequest((void*)state->EBX, state->EDX, state->ECX, (bool)state->ESI);
+             }
+diff --git a/kernelz/src/system/tasking/ipcmanager.cpp b/kernelz/src/system/tasking/ipcmanager.cpp
+index 053ac98..e15e507 100644
+--- a/kernelz/src/system/tasking/ipcmanager.cpp
++++ b/kernelz/src/system/tasking/ipcmanager.cpp
+@@ -18,7 +18,7 @@ void IPCManager::HandleSend(core::CPUState* state, Process* proc)
+ {
+     //Log(Info, "IPC Send from process %s", proc->fileName);
+     // Get message pointer from ebx register
+-    LIBCactusOS::IPCMessage* msg = (LIBCactusOS::IPCMessage*)state->EBX;
++    LIBHeisenKernel::IPCMessage* msg = (LIBHeisenKernel::IPCMessage*)state->EBX;
+     
+     //Check if the source is valid
+     if (msg->source != proc->id) {
+@@ -83,7 +83,7 @@ void IPCManager::HandleReceive(core::CPUState* state, Process* proc)
+ 
+     //If we get here we are either unblocked or there was already a message ready to receive
+     int messageIndex = 0;
+-    LIBCactusOS::IPCMessage message = proc->ipcMessages.GetAt(messageIndex);
++    LIBHeisenKernel::IPCMessage message = proc->ipcMessages.GetAt(messageIndex);
+     
+     //Loop throug all the messages until we find a correct one.
+     while ((message.dest != proc->id || (recvFrom == -1 ? false : recvFrom != message.source) || (type == -1 ? false : type != message.type)) && (messageIndex < proc->ipcMessages.size())) { //Is the message not for us or not from the correct source
+@@ -99,8 +99,8 @@ void IPCManager::HandleReceive(core::CPUState* state, Process* proc)
+     }
+ 
+     //Copy message
+-    LIBCactusOS::IPCMessage* targetMessage = (LIBCactusOS::IPCMessage*)state->EBX;
+-    MemoryOperations::memcpy(targetMessage, &message, sizeof(LIBCactusOS::IPCMessage));
++    LIBHeisenKernel::IPCMessage* targetMessage = (LIBHeisenKernel::IPCMessage*)state->EBX;
++    MemoryOperations::memcpy(targetMessage, &message, sizeof(LIBHeisenKernel::IPCMessage));
+ 
+     //Remove it from the list
+     proc->ipcMessages.Remove(messageIndex);
+diff --git a/kernelz/src/system/vfs/fat.cpp b/kernelz/src/system/vfs/fat.cpp
+index d241242..ae13c81 100644
+--- a/kernelz/src/system/vfs/fat.cpp
++++ b/kernelz/src/system/vfs/fat.cpp
+@@ -960,9 +960,9 @@ uint16_t FAT::FatDate()
+ 
+ 
+ 
+-List<LIBCactusOS::VFSEntry>* FAT::DirectoryList(const char* path)
++List<LIBHeisenKernel::VFSEntry>* FAT::DirectoryList(const char* path)
+ { 
+-    List<LIBCactusOS::VFSEntry>* ret = new List<LIBCactusOS::VFSEntry>();
++    List<LIBHeisenKernel::VFSEntry>* ret = new List<LIBHeisenKernel::VFSEntry>();
+     uint32_t parentCluster = this->rootDirCluster;
+     bool rootdir = String::strlen(path) == 0;
+ 
+@@ -978,8 +978,8 @@ List<LIBCactusOS::VFSEntry>* FAT::DirectoryList(const char* path)
+     List<FATEntryInfo> childs = GetDirectoryEntries(parentCluster, rootdir);
+     for(FATEntryInfo item : childs) {
+         // Create new entry and clear it to 0's
+-        LIBCactusOS::VFSEntry entry;
+-        MemoryOperations::memset(&entry, 0, sizeof(LIBCactusOS::VFSEntry));
++        LIBHeisenKernel::VFSEntry entry;
++        MemoryOperations::memset(&entry, 0, sizeof(LIBHeisenKernel::VFSEntry));
+         
+         // Fill in the info
+         entry.size = item.entry.FileSize;
+diff --git a/kernelz/src/system/vfs/iso9660.cpp b/kernelz/src/system/vfs/iso9660.cpp
+index ba43362..dbe2f78 100644
+--- a/kernelz/src/system/vfs/iso9660.cpp
++++ b/kernelz/src/system/vfs/iso9660.cpp
+@@ -210,9 +210,9 @@ DirectoryRecord* ISO9660::GetEntry(const char* path)
+     return 0;
+ }
+ 
+-List<LIBCactusOS::VFSEntry>* ISO9660::DirectoryList(const char* path)
++List<LIBHeisenKernel::VFSEntry>* ISO9660::DirectoryList(const char* path)
+ {
+-    List<LIBCactusOS::VFSEntry>* result = new List<LIBCactusOS::VFSEntry>();
++    List<LIBHeisenKernel::VFSEntry>* result = new List<LIBHeisenKernel::VFSEntry>();
+     DirectoryRecord* parent = String::strlen(path) > 0 ? GetEntry(path) : rootDirectory;
+     if(parent == 0 || GetEntryType(parent) == Iso_File)
+         return result;
+@@ -240,8 +240,8 @@ List<LIBCactusOS::VFSEntry>* ISO9660::DirectoryList(const char* path)
+             {
+                 char* entryName = GetRecordName(record);
+                 if(entryName != 0) {
+-                    LIBCactusOS::VFSEntry entry;
+-                    MemoryOperations::memset(&entry, 0, sizeof(LIBCactusOS::VFSEntry));
++                    LIBHeisenKernel::VFSEntry entry;
++                    MemoryOperations::memset(&entry, 0, sizeof(LIBHeisenKernel::VFSEntry));
+ 
+                     // Fill in the info
+                     entry.size = record->data_length;
+diff --git a/kernelz/src/system/vfs/vfsmanager.cpp b/kernelz/src/system/vfs/vfsmanager.cpp
+index 964a40c..991336b 100644
+--- a/kernelz/src/system/vfs/vfsmanager.cpp
++++ b/kernelz/src/system/vfs/vfsmanager.cpp
+@@ -120,7 +120,7 @@ bool VFSManager::SearchBootPartition()
+     return false;
+ }
+ 
+-List<LIBCactusOS::VFSEntry>* VFSManager::DirectoryList(const char* path)
++List<LIBHeisenKernel::VFSEntry>* VFSManager::DirectoryList(const char* path)
+ {
+     uint8_t idSize = 0;
+     int disk = ExtractDiskNumber(path, &idSize);
+diff --git a/kernelz/src/system/vfs/virtualfilesystem.cpp b/kernelz/src/system/vfs/virtualfilesystem.cpp
+index 0b59f5f..25df3ed 100644
+--- a/kernelz/src/system/vfs/virtualfilesystem.cpp
++++ b/kernelz/src/system/vfs/virtualfilesystem.cpp
+@@ -58,7 +58,7 @@ uint32_t VirtualFileSystem::GetFileSize(const char* filename)
+     Log(Error, "Virtual function called directly %s:%d", __FILE__, __LINE__);
+     return -1;
+ }
+-List<LIBCactusOS::VFSEntry>* VirtualFileSystem::DirectoryList(const char* path)
++List<LIBHeisenKernel::VFSEntry>* VirtualFileSystem::DirectoryList(const char* path)
+ {
+     Log(Error, "Virtual function called directly %s:%d", __FILE__, __LINE__);
+     return 0;
+-- 
+2.43.0
+

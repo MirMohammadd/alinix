@@ -1,0 +1,28 @@
+From 212308f191c06c288902cf7939c2216b845abcd3 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 21:36:04 -0400
+Subject: [PATCH 289/493] Another patch for the linker file
+
+---
+ kernelz/linker.ld | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/kernelz/linker.ld b/kernelz/linker.ld
+index 7fc96f4..d64d875 100644
+--- a/kernelz/linker.ld
++++ b/kernelz/linker.ld
+@@ -43,6 +43,11 @@ SECTIONS
+         *(__GLOBAL_OFFSET_TABLE_)
+         *(operator new*)
+         *(operator delete*)
++        *(HeisenOs::core::VirtualMemoryManager::virtualToPhysical*)
++        *(HeisenOs::core::VirtualMemoryManager::mapVirtualToPhysical*)
++        *(HeisenOs::core::pageRoundDown*)
++        *(HeisenOs::core::pageRoundUp*)
++        *(HeisenOs::core::Power::Reboot*)
+     }
+ 
+     /DISCARD/ : { *(.fini_array*) *(.comment) }
+-- 
+2.43.0
+

@@ -1,0 +1,88 @@
+From b3704d59f16bb7c520bb2445da942045e46035a1 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 14:58:20 -0400
+Subject: [PATCH 048/493] Patch
+
+---
+ kernel/include/new.h | 48 ++++++++++++++++++++++++++++++++++++++++++++
+ kernel/src/main.cc   | 11 ++++++++++
+ 2 files changed, 59 insertions(+)
+ create mode 100644 kernel/include/new.h
+ create mode 100644 kernel/src/main.cc
+
+diff --git a/kernel/include/new.h b/kernel/include/new.h
+new file mode 100644
+index 0000000..3eb7bab
+--- /dev/null
++++ b/kernel/include/new.h
+@@ -0,0 +1,48 @@
++#ifndef __LIBCACTUSOS__NEW_H
++#define __LIBCACTUSOS__NEW_H
++
++#include <stddef.h>
++#include <heap.hpp>
++
++using namespace LIBHeisenKernel;
++ 
++void *operator new(size_t size)
++{
++    return UserHeap::Malloc(size);
++}
++ 
++void *operator new[](size_t size)
++{
++    return UserHeap::Malloc(size);
++}
++
++void* operator new(size_t size, void* ptr)
++{
++    return ptr;
++}
++
++void* operator new[](size_t size, void* ptr)
++{
++    return ptr;
++}
++ 
++void operator delete(void *p)
++{
++    UserHeap::Free(p);
++}
++ 
++void operator delete[](void *p)
++{
++    UserHeap::Free(p);
++}
++
++void operator delete(void* ptr, size_t size)
++{
++    UserHeap::Free(ptr);
++}
++void operator delete[](void* ptr, size_t size)
++{
++    UserHeap::Free(ptr);
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/src/main.cc b/kernel/src/main.cc
+new file mode 100644
+index 0000000..610f60d
+--- /dev/null
++++ b/kernel/src/main.cc
+@@ -0,0 +1,11 @@
++#include <new.hpp>
++#include <gui/gui.hpp>
++#include <gui/widgets/button.hpp>
++#include <gui/widgets/control.hpp>
++#include <gui/widgets/scrollbar.hpp>
++#include <gui/widgets/window.hpp>
++#include <gui/directgui.hpp>
++#include <convert.hpp>
++#include <string.hpp>
++#include <log.hpp>
++#include <proc.hpp>
+\ No newline at end of file
+-- 
+2.43.0
+

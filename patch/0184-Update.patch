@@ -1,0 +1,32 @@
+From 1a11963e4514833c5af78d46eaaef60e21e23e48 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 23:12:40 -0400
+Subject: [PATCH 184/493] Update
+
+---
+ kernelz/obj/system/virtual8086/loader.o | Bin 0 -> 992 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 kernelz/obj/system/virtual8086/loader.o
+
+diff --git a/kernelz/obj/system/virtual8086/loader.o b/kernelz/obj/system/virtual8086/loader.o
+new file mode 100644
+index 0000000000000000000000000000000000000000..0b8c772c3a843722e262a3d0253a5cfd177ff5be
+GIT binary patch
+literal 992
+zcmb7DL2DCH5T4COjo_gQq9BEO5cFVzAVm-)F(ffG+d`ukJ%pFIO%}VGvb)9hWN)S5
+zLHq~e!IRJ*;K3i`LGa>&H<jo2b>GWwjt<Ox^UchD``%>prZea|jw99_aiw4)P1Cr4
+zhPS0ARXh4$NKJahJaq(esia_4S>xP!(|ZSUy)?IC@+-g^+%^0ZbG4=+0IPQmxt(E`
+za}Svq<GW}#;r49gKhao&^BjC9^@w-iWxW-UPpDb5diPMcXp6wFm|Fv$gY!Mq<M}J6
+zpKnm__ty3|fPCS`PgbjlADMptqqY9^<1bpd)x-VWG#Jn4snk>d0CAioQcq?{8mDTE
+z>@dvH@YvtY2d%;q+Viqll}wkL%U=TTUEUD6E9-cm(8%;7@M0>{UGQRGnI5o@I|E>u
+z-bS={Cx5|mlYy4$ojftokz-_67qyDKUF1w$c~59E&|LX|$Yti{$}O7$`Fp-z;yAgA
+zC$q-EgY~<6lLohpwW__wV(E32gc8sFD4qIIupf>>6-44aZVmdqP4PNjf3v$K-9f82
+z6tC6mx2650)7}_9^JMt6)!rBl`_DVFkQ>c>_0o?^1t`adGE>o1l2lDzm0CfxGnY_J
+YgGq5{?%u)2biv@+{|Edscm)^y2ZW1!Hvj+t
+
+literal 0
+HcmV?d00001
+
+-- 
+2.43.0
+

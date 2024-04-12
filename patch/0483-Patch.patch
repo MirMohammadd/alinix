@@ -1,0 +1,38 @@
+From ef5d26718f15e71f519d77fd1ae0a50fddabb309 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 18:28:43 -0400
+Subject: [PATCH 483/493] Patch
+
+---
+ apps/chess/book.h | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+ create mode 100644 apps/chess/book.h
+
+diff --git a/apps/chess/book.h b/apps/chess/book.h
+new file mode 100644
+index 0000000..acc8566
+--- /dev/null
++++ b/apps/chess/book.h
+@@ -0,0 +1,18 @@
++#ifndef _HEISEN_KERNEL_BOOK_APPS_HEADER_H
++#define _HEISEN_KERNEL_BOOK_APPS_HEADER_H
++
++#include "board.h"
++
++namespace LIBHeisenKernel
++{
++    namespace engine{
++        extern void book_init  ();
++
++        extern void book_open  (const char file_name[]);
++        extern void book_close ();
++
++        extern int  book_move  (board_t * board);
++    };
++};
++
++#endif /*_HEISEN_KERNEL_BOOK_APPS_HEADER_H*/
+\ No newline at end of file
+-- 
+2.43.0
+

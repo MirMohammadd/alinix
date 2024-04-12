@@ -1,0 +1,26 @@
+From 3148ea1be05b91e830519fa01632f360ffdd6125 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 17:36:27 -0400
+Subject: [PATCH 070/493] Minor update
+
+---
+ kernel/arch/x86-pc/main.cc | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/kernel/arch/x86-pc/main.cc b/kernel/arch/x86-pc/main.cc
+index f9bc16f..7bbbe1e 100644
+--- a/kernel/arch/x86-pc/main.cc
++++ b/kernel/arch/x86-pc/main.cc
+@@ -4,7 +4,8 @@
+ 
+ #include <arch/x86-pc/gui/gui/widgets/button.hpp>
+ 
+-#include <gui/widgets/control.hpp>
++#include <arch/x86-pc/gui/gui/widgets/control.hpp>
++
+ #include <gui/widgets/scrollbar.hpp>
+ #include <gui/widgets/window.hpp>
+ #include <gui/directgui.hpp>
+-- 
+2.43.0
+

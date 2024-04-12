@@ -1,0 +1,76 @@
+From 048d51a7406da6a6678ef2586e8fe9c6a2d22862 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 8 Apr 2024 13:38:28 -0400
+Subject: [PATCH 421/493] Minor patch
+
+---
+ drivers/usb3/error.c | 56 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 56 insertions(+)
+ create mode 100644 drivers/usb3/error.c
+
+diff --git a/drivers/usb3/error.c b/drivers/usb3/error.c
+new file mode 100644
+index 0000000..20a2e89
+--- /dev/null
++++ b/drivers/usb3/error.c
+@@ -0,0 +1,56 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file error.c
++
++ */
++
++#include <libusbserial.h>
++static const char* ERROR_MSG_UNSUPPORTED_OPERATION = "Unsupported operation";
++static const char* ERROR_MSG_ILLEGAL_STATE = "Illegal state";
++static const char* ERROR_MSG_INVALID_PARAMETER = "Invalid parameter";
++static const char* ERROR_MSG_RESOURCE_ALLOC_FAILED = "Resource allocation failed";
++static const char* ERROR_MSG_NO_SUCH_DEVICE = "No such device";
++static const char* ERROR_MSG_UNSUPPORTED_DEVICE = "Unsupported device";
++static const char* ERROR_MSG_UNSUPPORTED_BAUD_RATE = "Unsupported baud rate";
++static const char* ERROR_MSG_INVALID_PORT_IDX = "Invalid port index";
++static const char* ERROR_MSG_CTRL_CMD_FAILED = "Control command failed";
++
++static const char* ERROR_MSG_UNKNOWN = "Unknown error";
++
++
++const char* usbserial_get_error_str(int error_code){
++    if (!error_code){
++        return NULL;
++    }
++
++    if ((-1 >= error_code) && (-99 <= error_code)){
++        return libusb_error_name(error_code);
++    }
++
++    switch (error_code){
++        case USBSERIAL_ERROR_UNSUPPORTED_OPERATION  :
++            return ERROR_MSG_UNSUPPORTED_OPERATION;
++        
++        case USBSERIAL_ERROR_ILLEGAL_STATE:
++            return ERROR_MSG_ILLEGAL_STATE;
++        
++        case USBSERIAL_ERROR_INVALID_PARAMETER:
++            return ERROR_MSG_INVALID_PARAMETER;
++        
++        case USBSERIAL_ERROR_RESOURCE_ALLOC_FAILED:
++            return  ERROR_MSG_RESOURCE_ALLOC_FAILED;
++        
++        
++    }
++}
+\ No newline at end of file
+-- 
+2.43.0
+

@@ -1,0 +1,52 @@
+From 7cf8d56699a5bbac5bb16bca0821edb391c62946 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 4 Apr 2024 18:07:03 -0400
+Subject: [PATCH 251/493] Generic Patch
+
+---
+ lib/include/hardware/generic.h | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
+ create mode 100644 lib/include/hardware/generic.h
+
+diff --git a/lib/include/hardware/generic.h b/lib/include/hardware/generic.h
+new file mode 100644
+index 0000000..ff403a6
+--- /dev/null
++++ b/lib/include/hardware/generic.h
+@@ -0,0 +1,32 @@
++#ifndef _HEISEN_KERNEL_OS_HARDWARE_H
++#define _HEISEN_KERNEL_OS_HARDWARE_H
++
++struct IDEChannelRegisters {
++   unsigned short base;  // I/O Base.
++   unsigned short ctrl;  // Control Base
++   unsigned short bmide; // Bus Master IDE
++   unsigned char  nIEN;  // nIEN (No Interrupt);
++} channels[2];
++
++
++unsigned char ide_buf[2048] = {0};
++volatile unsigned static char ide_irq_invoked = 0;
++unsigned static char atapi_packet[12] = {0xA8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
++
++
++struct ide_device {
++   unsigned char  Reserved;    // 0 (Empty) or 1 (This Drive really exists).
++   unsigned char  Channel;     // 0 (Primary Channel) or 1 (Secondary Channel).
++   unsigned char  Drive;       // 0 (Master Drive) or 1 (Slave Drive).
++   unsigned short Type;        // 0: ATA, 1:ATAPI.
++   unsigned short Signature;   // Drive Signature
++   unsigned short Capabilities;// Features.
++   unsigned int   CommandSets; // Command Sets Supported.
++   unsigned int   Size;        // Size in Sectors.
++   unsigned char  Model[41];   // Model in string.
++} ide_devices[4];
++
++
++
++
++#endif // _HEISEN_KERNEL_OS_HARDWARE_H
+\ No newline at end of file
+-- 
+2.43.0
+

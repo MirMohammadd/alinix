@@ -1,0 +1,60 @@
+From 68a2d72cc5eaf136eb26c161768e2f9cbe5cad2a Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 23:39:36 -0400
+Subject: [PATCH 313/493] Another minor patch
+
+---
+ Makefile                           | 6 +++---
+ kernelz/src/core/exceptions.cpp    | 2 +-
+ kernelz/src/core/virtualmemory.cpp | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index f01eb69..2b754ec 100644
+--- a/Makefile
++++ b/Makefile
+@@ -27,10 +27,10 @@ INCLUDEDIRS := kernelz/include
+ INCLUDEDIRSLIB := lib/include
+ QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../qemuTrace.txt -d cpu_reset #-readconfig qemu-usb-config.cfg -drive if=none,id=stick,file=disk.img -device usb-storage,bus=ehci.0,drive=stick
+ 
+-G++PARAMS := -m64 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -std=c++20 -lstdc++ -fPIC  
+-GCCPARAMS := -m64 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -ffreestanding -fno-builtin -Wno-unknown-pragmas -lstdc++ -fPIC 
++G++PARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -std=c++20 -lstdc++ -fPIC  
++GCCPARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -ffreestanding -fno-builtin -Wno-unknown-pragmas -lstdc++ -fPIC 
+ ASPARAMS := --32
+-LDPARAMS := -m64 -no-pie
++LDPARAMS := -m32 -no-pie
+ 
+ KRNLSRCDIR := kernelz/src
+ KRNLOBJDIR := kernelz/obj
+diff --git a/kernelz/src/core/exceptions.cpp b/kernelz/src/core/exceptions.cpp
+index edc2345..fac54cb 100644
+--- a/kernelz/src/core/exceptions.cpp
++++ b/kernelz/src/core/exceptions.cpp
+@@ -56,7 +56,7 @@ uint32_t Exceptions::PageFault(uint32_t esp)
+     InterruptDescriptorTable::DisableInterrupts();
+ 
+     uint32_t errorAddress;
+-    asm volatile("movq %%cr2, %0" : "=r" (errorAddress));
++    asm volatile("mov %%cr2, %0" : "=r" (errorAddress));
+ 
+     CPUState* regs = (CPUState*)esp;
+ 
+diff --git a/kernelz/src/core/virtualmemory.cpp b/kernelz/src/core/virtualmemory.cpp
+index 83ffbc6..4d1ad4f 100644
+--- a/kernelz/src/core/virtualmemory.cpp
++++ b/kernelz/src/core/virtualmemory.cpp
+@@ -9,8 +9,8 @@ using namespace HeisenOs::system;
+ 
+ void VirtualMemoryManager::ReloadCR3()
+ {
+-    asm volatile("movq	%cr3,%eax");
+-	asm volatile("movq	%eax,%cr3");
++    asm volatile("movl	%cr3,%eax");
++	asm volatile("movl	%eax,%cr3");
+ }
+ 
+ 
+-- 
+2.43.0
+

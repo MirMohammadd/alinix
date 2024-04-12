@@ -1,0 +1,42 @@
+From efb11b8171f285fa8bebd46f0927a754aff2c34d Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 10 Apr 2024 17:18:26 -0400
+Subject: [PATCH 453/493] Patch
+
+---
+ apps/welcome/welcome.cpp | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/apps/welcome/welcome.cpp b/apps/welcome/welcome.cpp
+index 97e101a..fd15302 100644
+--- a/apps/welcome/welcome.cpp
++++ b/apps/welcome/welcome.cpp
+@@ -16,6 +16,12 @@ const int fieldWidth = 10;
+ const int fieldHeight = 10;
+ const int numOfMines = 16;
+ 
++
++static const char multi_line_string[] = 
++"Heisen Os , licensed under MIT license, written by Heisenberg and intended to provide utility for personal use\n"
++"\n"
++"\n";
++
+ int main(){
+     GUI::SetDefaultFont();
+ 
+@@ -24,4 +30,11 @@ int main(){
+ 
+     Control* control = new Control(600, 400, 0, 0);
+     control->backColor = 0xFFBBBBBB;
++
++    Button* helpMoreOptions = new Button("More Options");
++    helpMoreOptions->width = 150 - 2;
++    helpMoreOptions->height = 47;
++    helpMoreOptions->x = 1;
++    helpMoreOptions->y = 2;
++    // helpMoreOptions->MouseClick += HelpMoreOptionsCallback;
+ }
+\ No newline at end of file
+-- 
+2.43.0
+

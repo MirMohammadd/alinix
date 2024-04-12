@@ -1,0 +1,25 @@
+From 2fb5609f4f0952d1fa1b3e6bcdc9d9e6aa0a7fc9 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 21:30:25 -0400
+Subject: [PATCH 144/493] Patch
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 647350a..385fe9e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -44,7 +44,7 @@ KRNLOBJS := $(subst $(KRNLSRCDIR),$(KRNLOBJDIR),$(KRNLOBJS)) #Replace the kernel
+ ####################################
+ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.cpp
+ 	mkdir -p $(@D)
+-	i686-elf-g++ $(G++PARAMS) -c -o $@ $<
++	i686-elf-gcc $(G++PARAMS) -c -o $@ $<
+ 
+ ####################################
+ #C source files
+-- 
+2.43.0
+

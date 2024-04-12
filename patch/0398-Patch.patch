@@ -1,0 +1,402 @@
+From 814a72a1adb1e9e4d316ea72936bc2015a7401d7 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 7 Apr 2024 16:42:38 -0400
+Subject: [PATCH 398/493] Patch
+
+---
+ dialog.sh           |   6 +-
+ drivers/Makefile    |  76 ++++++++++++------------
+ kernel/Makefile     | 138 ++++++++++++++++++++++----------------------
+ kernel/src/Makefile | 100 ++++++++++++++++----------------
+ 4 files changed, 160 insertions(+), 160 deletions(-)
+
+diff --git a/dialog.sh b/dialog.sh
+index c2e321d..64b1f2b 100755
+--- a/dialog.sh
++++ b/dialog.sh
+@@ -1,13 +1,13 @@
+ #!/bin/bash
+ 
+-
+-
+ # Display the initial dialog for feature selection
+ dialog --no-shadow --backtitle "Kernel Configuration" --title "Heisen Kernel Configuration" --clear --stdout --checklist "Select features to enable:" 20 60 10 \
+     1 "General setup" on \
+     2 "EHCI" off \
+     3 "UHCI" off \
+     4 "OHCI" off \
++    5 "64 bit compile" off \
++    6 "32 bit compile" off\
+     > .config
+ 
+ # Check if "General setup" is selected
+@@ -16,7 +16,7 @@ if grep -q "1" .config; then
+     dialog --no-shadow --backtitle "Basic setup" --msgbox "Basic setup Config" 10 40
+ 
+     # Ask user whether to compile Heisen Kernel with GCC cross compiler
+-    dialog --no-shadow --backtitle "Basic setup" --title "Compile Heisen Kernel with GCC cross compiler" --clear --stdout --yesno "Do you want to compile Heisen Kernel with GCC cross compiler?" 10 40
++    dialog --no-shadow --backtitle "Basic setup" --title "Compile Heisen Kernel with GCC cross compiler" --clear --stdout --yesno "GCC cross compiler setup" 10 40
+ 
+     # Check the exit status of the previous dialog
+     if [ $? -eq 0 ]; then
+diff --git a/drivers/Makefile b/drivers/Makefile
+index 2412f88..e4a631a 100644
+--- a/drivers/Makefile
++++ b/drivers/Makefile
+@@ -1,50 +1,50 @@
+-CONFIG = ../makefile.config
+-include ${CONFIG}
++# CONFIG = ../makefile.config
++# include ${CONFIG}
+ 
+-LIBINCLUDE := ../lib/include
+-LIBDIR := ../lib
+-LIBFILE := ../lib/libcactusos.a
+-DEBUG := -g
+-LIBDRIVEINCLUDE = ../libdrive/include
++# LIBINCLUDE := ../lib/include
++# LIBDIR := ../lib
++# LIBFILE := ../lib/libcactusos.a
++# DEBUG := -g
++# LIBDRIVEINCLUDE = ../libdrive/include
+ 
+-G++PARAMS := -m32 $(DEBUG) -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) $(LIBDRIVEINCLUDE) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
+-GCCPARAMS := -m32 $(DEBUG) -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) $(LIBDRIVEINCLUDE) -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -fleading-underscore -Wno-unknown-pragmas
+-LDPARAMS := -m elf_i386
++# G++PARAMS := -m32 $(DEBUG) -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) -I $(LIBDRIVEINCLUDE) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
++# GCCPARAMS := -m32 $(DEBUG) -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) -I $(LIBDRIVEINCLUDE) -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -fleading-underscore -Wno-unknown-pragmas
++# LDPARAMS := -m elf_i386
+ 
+-USB_DIR := usb3
+-APPOUT := ../isofiles/apps
++# USB_DIR := usb3
++# APPOUT := ../isofiles/apps
+ 
+-SRCFILES := $(shell find $(USB_DIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) #Find all the files in usb3 that end with .cpp/.s/.asm/.c
+-OBJFILES := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(SRCFILES))))) #Replace the .cpp/.s/.asm/.c extension with .o
++# SRCFILES := $(shell find $(USB_DIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) #Find all the files in usb3 that end with .cpp/.s/.asm/.c
++# OBJFILES := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(SRCFILES))))) #Replace the .cpp/.s/.asm/.c extension with .o
+ 
+-.PHONY: all clean
++# .PHONY: all clean
+ 
+-all: linker.ld $(LIBFILE) $(OBJFILES)
+-	for app in $(USB_DIR) ; do \
+-		echo building $$app.bin to $(APPOUT)/$$app.bin; \
+-    	i686-elf-ld $(LDPARAMS) -T $< -o $(APPOUT)/$$app.bin $$app/*.o -L$(LIBDIR) --library=cactusos; \
+-		nm -a $(APPOUT)/$$app.bin | sort -d > $(APPOUT)/$$app.sym; \
+-	done
++# all: linker.ld $(LIBFILE) $(OBJFILES)
++# 	for app in $(USB_DIR) ; do \
++# 		echo building $$app.bin to $(APPOUT)/$$app.bin; \
++#     	i686-elf-ld $(LDPARAMS) -T $< -o $(APPOUT)/$$app.bin $$app/*.o -L$(LIBDIR) --library=cactusos; \
++# 		nm -a $(APPOUT)/$$app.bin | sort -d > $(APPOUT)/$$app.sym; \
++# 	done
+ 
+-clean:
+-	rm -rf $(OBJFILES) $(LIBFILE)
++# clean:
++# 	rm -rf $(OBJFILES) $(LIBFILE)
+ 
+-# Build libcactusos.a with makefile in the LIBDIR
+-$(LIBFILE):
+-	cd $(LIBDIR) && $(MAKE)
++# # Build libcactusos.a with makefile in the LIBDIR
++# $(LIBFILE):
++# 	cd $(LIBDIR) && $(MAKE)
+ 
+-%.o: %.cpp
+-	mkdir -p $(@D)
+-	i686-elf-g++ $(G++PARAMS) -c -o $@ $<
++# %.o: %.cpp
++# 	mkdir -p $(@D)
++# 	i686-elf-g++ $(G++PARAMS) -c -o $@ $<
+ 
+-%.o: %.c
+-	mkdir -p $(@D)
+-	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
++# %.o: %.c
++# 	mkdir -p $(@D)
++# 	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
+ 
+-%.o: %.asm
+-	mkdir -p $(@D)
+-	nasm -f elf32 -O0 $< -o $@
++# %.o: %.asm
++# 	mkdir -p $(@D)
++# 	nasm -f elf32 -O0 $< -o $@
+ 
+-%.o: %.s
+-	mkdir -p $(@D)
+-	i686-elf-as --32 -o $@ $<
++# %.o: %.s
++# 	mkdir -p $(@D)
++# 	i686-elf-as --32 -o $@ $<
+diff --git a/kernel/Makefile b/kernel/Makefile
+index d065f55..eb27538 100644
+--- a/kernel/Makefile
++++ b/kernel/Makefile
+@@ -1,84 +1,84 @@
+-VERBOSE = off # Set this to see commands being run
+-COLOR   = on
++# VERBOSE = off # Set this to see commands being run
++# COLOR   = on
+ 
+-include messages.make
++# include messages.make
+ 
+-CC      = gcc
+-PWD    := $(shell pwd)
+-CFLAGS  = -Wall -Wextra -m32 -Wa,--32 -nostdlib -nostdinc -ffreestanding -fgnu89-inline -I$(PWD)
+-LDFLAGS = --warn-common -melf_i386 --strip-all
++# CC      = gcc
++# PWD    := $(shell pwd)
++# CFLAGS  = -Wall -Wextra -m32 -Wa,--32 -nostdlib -nostdinc -ffreestanding -fgnu89-inline -I$(PWD)
++# LDFLAGS = --warn-common -melf_i386 --strip-all
+ 
+-BOOTLOADER_PATH = arch/x86-pc/bootstrap
+-BUILD_PATH      = ../build
+-INITRD_PATH     = arch/x86-pc/bootstrap/iso
++# BOOTLOADER_PATH = arch/x86-pc/bootstrap
++# BUILD_PATH      = ../build
++# INITRD_PATH     = arch/x86-pc/bootstrap/iso
+ 
+-OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
+-	arch/x86-pc/io/vga.o                    \
+-	arch/x86/mmu/gdt.o                      \
+-	arch/x86/interrupts/idt.o               \
+-	arch/x86/interrupts/isr-stubs.o         \
+-	arch/x86/interrupts/isr.o               \
+-	arch/x86/interrupts/pic.o               \
+-	arch/x86/interrupts/irq-stubs.o         \
+-	arch/x86/interrupts/irq.o               \
+-	arch/x86-pc/timer/pit.o                 \
+-	arch/x86-pc/io/keyboard.o               \
+-	lib/libc.o                              \
+-	memory/physical-memory.o                \
+-	arch/x86/threading/cpu-context.o        \
+-	arch/x86/threading/cpu-context-switch.o \
+-	threading/thread.o                      \
+-	threading/scheduler.o                   \
+-	io/console.o                            \
+-	io/terminal.o                           \
+-	io/string.o                             \
+-	colorforth/editor.o                     \
+-	colorforth/compiler.o                   \
+-	arch/x86-pc/startup.o                   \
+-	io/video.o								\
++# OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
++# 	arch/x86-pc/io/vga.o                    \
++# 	arch/x86/mmu/gdt.o                      \
++# 	arch/x86/interrupts/idt.o               \
++# 	arch/x86/interrupts/isr-stubs.o         \
++# 	arch/x86/interrupts/isr.o               \
++# 	arch/x86/interrupts/pic.o               \
++# 	arch/x86/interrupts/irq-stubs.o         \
++# 	arch/x86/interrupts/irq.o               \
++# 	arch/x86-pc/timer/pit.o                 \
++# 	arch/x86-pc/io/keyboard.o               \
++# 	lib/libc.o                              \
++# 	memory/physical-memory.o                \
++# 	arch/x86/threading/cpu-context.o        \
++# 	arch/x86/threading/cpu-context-switch.o \
++# 	threading/thread.o                      \
++# 	threading/scheduler.o                   \
++# 	io/console.o                            \
++# 	io/terminal.o                           \
++# 	io/string.o                             \
++# 	colorforth/editor.o                     \
++# 	colorforth/compiler.o                   \
++# 	arch/x86-pc/startup.o                   \
++# 	io/video.o								\
+ 
+ 
+-KERNEL          = $(BUILD_PATH)/roentgenium.elf
+-MULTIBOOT_IMAGE	= $(BUILD_PATH)/heisen.iso
++# KERNEL          = $(BUILD_PATH)/roentgenium.elf
++# MULTIBOOT_IMAGE	= $(BUILD_PATH)/heisen.iso
+ 
+-all: kernel initrd cdrom
++# all: kernel initrd cdrom
+ 
+-kernel: $(KERNEL)
++# kernel: $(KERNEL)
+ 
+-$(KERNEL): $(OBJECTS)
+-	@if [ ! -d $(BUILD_PATH) ];  \
+-	then                         \
+-		mkdir $(BUILD_PATH); \
+-	fi
+-	$(linking) '$< > $@'
+-	$(LD) $(LDFLAGS) -T arch/x86-pc/linker.ld -o $@ $^
++# $(KERNEL): $(OBJECTS)
++# 	@if [ ! -d $(BUILD_PATH) ];  \
++# 	then                         \
++# 		mkdir $(BUILD_PATH); \
++# 	fi
++# 	$(linking) '$< > $@'
++# 	$(LD) $(LDFLAGS) -T arch/x86-pc/linker.ld -o $@ $^
+ 
+-%.o: %.c
+-	$(compiling) '$< > $@'
+-	$(CC) -c $< -o $@ $(CFLAGS)
++# %.o: %.c
++# 	$(compiling) '$< > $@'
++# 	$(CC) -c $< -o $@ $(CFLAGS)
+ 
+-%.o: %.asm
+-	$(assembling) '$< > $@'
+-	nasm -f elf $<
++# %.o: %.asm
++# 	$(assembling) '$< > $@'
++# 	nasm -f elf $<
+ 
+-cdrom:
+-	$(generating) '$@'
+-	mv $(KERNEL) $(BOOTLOADER_PATH)/iso/boot/
+-	grub-mkrescue -o $(MULTIBOOT_IMAGE) $(BOOTLOADER_PATH)/iso/
++# cdrom:
++# 	$(generating) '$@'
++# 	mv $(KERNEL) $(BOOTLOADER_PATH)/iso/boot/
++# 	grub-mkrescue -o $(MULTIBOOT_IMAGE) $(BOOTLOADER_PATH)/iso/
+ 
+-initrd:
+-	$(generating) '$@'
+-	../tools/blocks_converter.py tocf ../initrd/blocks.cfs $(INITRD_PATH)/initrd.img
++# initrd:
++# 	$(generating) '$@'
++# 	../tools/blocks_converter.py tocf ../initrd/blocks.cfs $(INITRD_PATH)/initrd.img
+ 
+-run:
+-	qemu-system-i386 -m 16 -cdrom $(MULTIBOOT_IMAGE)
++# run:
++# 	qemu-system-i386 -m 16 -cdrom $(MULTIBOOT_IMAGE)
+ 
+-clean:
+-	$(cleaning)
+-	@if [ -d $(BUILD_PATH) ];    \
+-	then                         \
+-		rm -R $(BUILD_PATH); \
+-	fi
+-	$(RM) $(OBJECTS)
+-	$(RM) $(BOOTLOADER_PATH)/iso/boot/roentgenium.elf
+-	$(RM) $(INITRD_PATH)/initrd.img
+\ No newline at end of file
++# clean:
++# 	$(cleaning)
++# 	@if [ -d $(BUILD_PATH) ];    \
++# 	then                         \
++# 		rm -R $(BUILD_PATH); \
++# 	fi
++# 	$(RM) $(OBJECTS)
++# 	$(RM) $(BOOTLOADER_PATH)/iso/boot/roentgenium.elf
++# 	$(RM) $(INITRD_PATH)/initrd.img
+\ No newline at end of file
+diff --git a/kernel/src/Makefile b/kernel/src/Makefile
+index a53a89c..79dce22 100644
+--- a/kernel/src/Makefile
++++ b/kernel/src/Makefile
+@@ -1,50 +1,50 @@
+-CONFIG = makefile.config
+-include ${CONFIG}
+-
+-INCLUDEDIRS := include
+-DEBUG := -g
+-
+-GCCPARAMS := -m32 $(DEBUG) -I $(INCLUDEDIRS) $(OPTIMIZE_FLAGS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
+-ASPARAMS := --32
+-
+-SRCDIR := ./src
+-OBJDIR := obj
+-
+-SRCFILES := $(shell find $(SRCDIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm \)) #Find all the files that end with .cpp/.s/.asm
+-OBJFILES := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(SRCFILES)))) #Replace the .cpp/.s/.asm extension with .o
+-OBJFILES := $(subst $(SRCDIR),$(OBJDIR),$(OBJFILES)) #Replace the "src" part with "obj"
+-
+-
+-####################################
+-#C++ source files
+-####################################
+-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+-	mkdir -p $(@D)
+-	i686-elf-g++ $(GCCPARAMS) -c -o $@ $<
+-
+-####################################
+-#GAS assembly files
+-####################################
+-$(OBJDIR)/%.o: $(SRCDIR)/%.s
+-	mkdir -p $(@D)
+-	i686-elf-as $(ASPARAMS) -o $@ $<
+-
+-####################################
+-#NASM assembly files
+-####################################
+-$(OBJDIR)/%.o: $(SRCDIR)/%.asm
+-	mkdir -p $(@D)
+-	nasm -f elf32 -O0 $< -o $@
+-
+-libcactusos.a: $(OBJFILES)
+-	i686-elf-ar r libcactusos.a $(OBJFILES)
+-
+-.PHONY: clean filelist
+-clean:
+-	rm -rf $(OBJDIR) libcactusos.a
+-
+-filelist:
+-	@echo "Source Files:"
+-	@echo -$(SRCFILES)
+-	@echo "Object Files:"
+-	@echo -$(OBJFILES)
++# CONFIG = makefile.config
++# include ${CONFIG}
++
++# INCLUDEDIRS := include
++# DEBUG := -g
++
++# GCCPARAMS := -m32 $(DEBUG) -I $(INCLUDEDIRS) $(OPTIMIZE_FLAGS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
++# ASPARAMS := --32
++
++# SRCDIR := ./src
++# OBJDIR := obj
++
++# SRCFILES := $(shell find $(SRCDIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm \)) #Find all the files that end with .cpp/.s/.asm
++# OBJFILES := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(SRCFILES)))) #Replace the .cpp/.s/.asm extension with .o
++# OBJFILES := $(subst $(SRCDIR),$(OBJDIR),$(OBJFILES)) #Replace the "src" part with "obj"
++
++
++# ####################################
++# #C++ source files
++# ####################################
++# $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
++# 	mkdir -p $(@D)
++# 	i686-elf-g++ $(GCCPARAMS) -c -o $@ $<
++
++# ####################################
++# #GAS assembly files
++# ####################################
++# $(OBJDIR)/%.o: $(SRCDIR)/%.s
++# 	mkdir -p $(@D)
++# 	i686-elf-as $(ASPARAMS) -o $@ $<
++
++# ####################################
++# #NASM assembly files
++# ####################################
++# $(OBJDIR)/%.o: $(SRCDIR)/%.asm
++# 	mkdir -p $(@D)
++# 	nasm -f elf32 -O0 $< -o $@
++
++# libcactusos.a: $(OBJFILES)
++# 	i686-elf-ar r libcactusos.a $(OBJFILES)
++
++# .PHONY: clean filelist
++# clean:
++# 	rm -rf $(OBJDIR) libcactusos.a
++
++# filelist:
++# 	@echo "Source Files:"
++# 	@echo -$(SRCFILES)
++# 	@echo "Object Files:"
++# 	@echo -$(OBJFILES)
+-- 
+2.43.0
+

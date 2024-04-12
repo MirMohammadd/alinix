@@ -1,0 +1,53 @@
+From 8be5a552dd24462f0540985bc8070c21732d8600 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 4 Apr 2024 19:49:42 -0400
+Subject: [PATCH 257/493] Minor patch
+
+---
+ apps/settings/settings.cpp | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/apps/settings/settings.cpp b/apps/settings/settings.cpp
+index 7a8b520..f1402c0 100644
+--- a/apps/settings/settings.cpp
++++ b/apps/settings/settings.cpp
+@@ -5,9 +5,11 @@
+ #include <gui/widgets/control.h>
+ #include <log.h>
+ #include <hardware/ata.hpp>
++#include <imaging/image.h>
+ 
+ 
+ using namespace LIBHeisenKernel;
++using namespace Imaging;
+ char* path = "B:\\settings.jpg";
+ 
+ 
+@@ -31,21 +33,19 @@ void SystemArgumentsCallBack(void* sender, MouseButtonArgs args){
+     CapacityDiskButton->x = 1;
+     CapacityDiskButton->MouseClick += CapacityDriveCallback;
+     SystemWindow->AddChild(CapacityDiskButton);
+-
+-    
+     Print("Opened System Settings\n");
+ 
+     
+-
+-    
+ }
+ 
+ int main(){
+     GUI::SetDefaultFont();
+     Window* mainWindow = new Window(800, 600, 0, 0);
++    Image* logo = Image::CreateFromFile(path);
++    if(logo)
++        logo->DrawTo(DirectGUI::GetCanvas(), GUI::Width / 2 - logo->GetWidth()/2, GUI::Height / 2 - logo->GetHeight()/2);
+     mainWindow->titleString = "Settings";
+     mainWindow->backColor = 0xFF150534;
+-
+     Button* SystemButton = new Button("System");
+     SystemButton->width = 130 -2;
+     SystemButton->height = 47;
+-- 
+2.43.0
+

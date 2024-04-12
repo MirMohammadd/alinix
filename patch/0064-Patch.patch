@@ -1,0 +1,40 @@
+From c06b85f314f2fc0507b6ffc636b94b9908d11885 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 15:48:20 -0400
+Subject: [PATCH 064/493] Patch
+
+---
+ kernel/arch/x86-pc/gui/shared.hpp | 2 +-
+ kernel/arch/x86-pc/startup.c      | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/kernel/arch/x86-pc/gui/shared.hpp b/kernel/arch/x86-pc/gui/shared.hpp
+index edac6c9..175242f 100644
+--- a/kernel/arch/x86-pc/gui/shared.hpp
++++ b/kernel/arch/x86-pc/gui/shared.hpp
+@@ -1,7 +1,7 @@
+ #ifndef _HEISEN_SHARED_HPP
+ #define _HEISEN_SHARED_HPP
+ 
+-#include <types.hpp>
++#include "types.hpp"
+ 
+ namespace LIBHeisenKernel
+ {
+diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.c
+index 3142c13..e3e302e 100644
+--- a/kernel/arch/x86-pc/startup.c
++++ b/kernel/arch/x86-pc/startup.c
+@@ -21,7 +21,8 @@
+ #include <io/console.h>
+ #include <colorforth/colorforth.h>
+ #include <arch/x86-pc/io/video.h>
+-#include <arch/x86-pc/gui/test.h>
++
++#include <arch/x86-pc/gui/shared.hpp>
+ 
+ 
+ /**
+-- 
+2.43.0
+

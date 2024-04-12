@@ -1,0 +1,31 @@
+From a34a577d89d306ec9cb06b6379b83f91b1412b0c Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 17:11:41 -0400
+Subject: [PATCH 012/493] Minor patch
+
+---
+ kernel/main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/kernel/main.c b/kernel/main.c
+index 2872936..45c0635 100644
+--- a/kernel/main.c
++++ b/kernel/main.c
+@@ -34,10 +34,12 @@ int kmain(multiboot_info_t *info) {
+     ata_init();
+     
+     sched_init();
++
++    terminal_writeline("Hello World");
++
+     
+     while(1)
+         halt();
+-        terminal_writeline("Hello World");
+     
+     return 0;
+ }
+\ No newline at end of file
+-- 
+2.43.0
+

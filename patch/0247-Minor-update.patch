@@ -1,0 +1,196 @@
+From 0bc3a1a22efbd531169b820a42bfe07d34b8818f Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 4 Apr 2024 17:51:44 -0400
+Subject: [PATCH 247/493] Minor update
+
+---
+ apps/settings/handlers.h        | 19 ++++++++++
+ apps/settings/settings.cpp      | 14 +++++---
+ lib/include/hardware/commands.h | 64 +++++++++++++++++++++++++++++++++
+ lib/include/hardware/errors.h   | 13 +++++++
+ lib/include/hardware/status.h   | 15 ++++++++
+ 5 files changed, 121 insertions(+), 4 deletions(-)
+ create mode 100644 apps/settings/handlers.h
+ create mode 100644 lib/include/hardware/commands.h
+ create mode 100644 lib/include/hardware/errors.h
+ create mode 100644 lib/include/hardware/status.h
+
+diff --git a/apps/settings/handlers.h b/apps/settings/handlers.h
+new file mode 100644
+index 0000000..26dc8c8
+--- /dev/null
++++ b/apps/settings/handlers.h
+@@ -0,0 +1,19 @@
++#ifndef _HEISEN_HANDLERS_APPS_H
++#define _HEISEN_HANDLERS_APPS_H
++
++#include <gui/context.h>
++#include <gui/widgets/button.h>
++#include <gui/widgets/label.h>
++#include <gui/directgui.h>
++#include <gui/widgets/control.h>
++#include <log.h>
++
++using namespace LIBHeisenKernel;
++void SystemArgumentsCallBack(void* sender, MouseButtonArgs args);
++void PowerBatteryButtonCallBack(void* sender, MouseButtonArgs args);
++void StorageHandlerCallBack(void* sender, MouseButtonArgs args);
++
++
++
++
++#endif // _HEISEN_HANDLERS_APPS_H
+\ No newline at end of file
+diff --git a/apps/settings/settings.cpp b/apps/settings/settings.cpp
+index 278f1dc..e93ee1d 100644
+--- a/apps/settings/settings.cpp
++++ b/apps/settings/settings.cpp
+@@ -3,11 +3,20 @@
+ #include <gui/widgets/label.h>
+ #include <gui/directgui.h>
+ #include <gui/widgets/control.h>
++#include <log.h>
+ 
+ 
+ using namespace LIBHeisenKernel;
+ 
+ 
++void SystemArgumentsCallBack(void* sender, MouseButtonArgs args){
++    Window* SystemWindow = new Window(400, 300, 0, 0);
++    SystemWindow->titleString = "System Settings";
++    SystemWindow->backColor = 0xFF150534;
++    Print("Opened System Settings\n");
++    
++}
++
+ int main(){
+     GUI::SetDefaultFont();
+     Window* mainWindow = new Window(800, 600, 0, 0);
+@@ -19,9 +28,6 @@ int main(){
+     SystemButton->height = 47;
+     SystemButton->x = 1;
+     SystemButton->y = 2;
+-    SystemButton->MouseClick += SystemButtonCallback;
++    SystemButton->MouseClick += SystemArgumentsCallBack;
+ }
+ 
+-void SystemButtonCallback(void* sender, MouseButtonArgs arg){
+-    DoSyscall(SYSCALL_SHUTDOWN);
+-}
+\ No newline at end of file
+diff --git a/lib/include/hardware/commands.h b/lib/include/hardware/commands.h
+new file mode 100644
+index 0000000..06800de
+--- /dev/null
++++ b/lib/include/hardware/commands.h
+@@ -0,0 +1,64 @@
++#ifndef _HEISEN_KERNEL_COMMANDS_HARDWARE_H__
++#define _HEISEN_KERNEL_COMMANDS_HARDWARE_H__
++
++#define ATA_CMD_READ_PIO          0x20
++#define ATA_CMD_READ_PIO_EXT      0x24
++#define ATA_CMD_READ_DMA          0xC8
++#define ATA_CMD_READ_DMA_EXT      0x25
++#define ATA_CMD_WRITE_PIO         0x30
++#define ATA_CMD_WRITE_PIO_EXT     0x34
++#define ATA_CMD_WRITE_DMA         0xCA
++#define ATA_CMD_WRITE_DMA_EXT     0x35
++#define ATA_CMD_CACHE_FLUSH       0xE7
++#define ATA_CMD_CACHE_FLUSH_EXT   0xEA
++#define ATA_CMD_PACKET            0xA0
++#define ATA_CMD_IDENTIFY_PACKET   0xA1
++#define ATA_CMD_IDENTIFY          0xEC
++
++#define ATA_IDENT_DEVICETYPE   0
++#define ATA_IDENT_CYLINDERS    2
++#define ATA_IDENT_HEADS        6
++#define ATA_IDENT_SECTORS      12
++#define ATA_IDENT_SERIAL       20
++#define ATA_IDENT_MODEL        54
++#define ATA_IDENT_CAPABILITIES 98
++#define ATA_IDENT_FIELDVALID   106
++#define ATA_IDENT_MAX_LBA      120
++#define ATA_IDENT_COMMANDSETS  164
++#define ATA_IDENT_MAX_LBA_EXT  200
++
++#define IDE_ATA        0x00
++#define IDE_ATAPI      0x01
++ 
++#define ATA_MASTER     0x00
++#define ATA_SLAVE      0x01
++
++
++#define ATA_REG_DATA       0x00
++#define ATA_REG_ERROR      0x01
++#define ATA_REG_FEATURES   0x01
++#define ATA_REG_SECCOUNT0  0x02
++#define ATA_REG_LBA0       0x03
++#define ATA_REG_LBA1       0x04
++#define ATA_REG_LBA2       0x05
++#define ATA_REG_HDDEVSEL   0x06
++#define ATA_REG_COMMAND    0x07
++#define ATA_REG_STATUS     0x07
++#define ATA_REG_SECCOUNT1  0x08
++#define ATA_REG_LBA3       0x09
++#define ATA_REG_LBA4       0x0A
++#define ATA_REG_LBA5       0x0B
++#define ATA_REG_CONTROL    0x0C
++#define ATA_REG_ALTSTATUS  0x0C
++#define ATA_REG_DEVADDRESS 0x0D
++
++
++// Channels:
++#define      ATA_PRIMARY      0x00
++#define      ATA_SECONDARY    0x01
++
++// Directions:
++#define      ATA_READ      0x00
++#define      ATA_WRITE     0x01
++
++#endif // _HEISEN_KERNEL_COMMANDS_HARDWARE_H__
+\ No newline at end of file
+diff --git a/lib/include/hardware/errors.h b/lib/include/hardware/errors.h
+new file mode 100644
+index 0000000..3488e93
+--- /dev/null
++++ b/lib/include/hardware/errors.h
+@@ -0,0 +1,13 @@
++#ifndef _HEISEN_KERNEL_ERRORS_HARDWARE_H
++#define _HEISEN_KERNEL_ERRORS_HARDWARE_H
++
++#define ATA_ER_BBK      0x80    // Bad block
++#define ATA_ER_UNC      0x40    // Uncorrectable data
++#define ATA_ER_MC       0x20    // Media changed
++#define ATA_ER_IDNF     0x10    // ID mark not found
++#define ATA_ER_MCR      0x08    // Media change request
++#define ATA_ER_ABRT     0x04    // Command aborted
++#define ATA_ER_TK0NF    0x02    // Track 0 not found
++#define ATA_ER_AMNF     0x01    // No address mark
++
++#endif // _HEISEN_KERNEL_ERRORS_HARDWARE_H
+\ No newline at end of file
+diff --git a/lib/include/hardware/status.h b/lib/include/hardware/status.h
+new file mode 100644
+index 0000000..d222b4c
+--- /dev/null
++++ b/lib/include/hardware/status.h
+@@ -0,0 +1,15 @@
++#ifndef _HEISEN_KERNEL_STATUS_H 
++#define  _HEISEN_KERNEL_STATUS_H
++
++#define ATA_SR_BSY     0x80    // Busy
++#define ATA_SR_DRDY    0x40    // Drive ready
++#define ATA_SR_DF      0x20    // Drive write fault
++#define ATA_SR_DSC     0x10    // Drive seek complete
++#define ATA_SR_DRQ     0x08    // Data request ready
++#define ATA_SR_CORR    0x04    // Corrected data
++#define ATA_SR_IDX     0x02    // Index
++#define ATA_SR_ERR     0x01    // Error
++
++
++
++#endif // _HEISEN_KERNEL_STATUS_H
+\ No newline at end of file
+-- 
+2.43.0
+

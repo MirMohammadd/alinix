@@ -1,0 +1,25 @@
+From 37d70a7a92aa55a8bd98f9c6aff0851165b45411 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 21:03:41 -0400
+Subject: [PATCH 227/493] Minor update
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 420567c..6b1220f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -77,7 +77,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
+ 
+ 
+ CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
+-	i686-elf-gold $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
++	ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
+ 
+ CactusOS.iso: CactusOS.bin
+ 	cd lib/ && $(MAKE)
+-- 
+2.43.0
+

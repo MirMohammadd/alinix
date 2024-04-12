@@ -1,0 +1,30 @@
+From 9cd5b403ef03ed04e64e93f145d600abc0d4dcdb Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sat, 6 Apr 2024 00:18:25 -0400
+Subject: [PATCH 330/493] Another patch
+
+---
+ kernelz/linker.ld | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/kernelz/linker.ld b/kernelz/linker.ld
+index ea67ca0..5ecde90 100644
+--- a/kernelz/linker.ld
++++ b/kernelz/linker.ld
+@@ -1,5 +1,5 @@
+ OUTPUT_FORMAT(binary)
+-OUTPUT_ARCH(i386:x86-64)
++OUTPUT_ARCH(i386)
+ 
+ ENTRY(_entrypoint)
+ 
+@@ -61,4 +61,4 @@ SECTIONS
+     /DISCARD/ : { *(libgcc.a) }
+     /DISCARD/ : { *(libgcc_s.so.1) }
+     /DISCARD/ : { *(libc.a) }
+-}
++}
+\ No newline at end of file
+-- 
+2.43.0
+

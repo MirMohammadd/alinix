@@ -1,0 +1,38 @@
+From 601e06fcd6268d30407bb5a7690e39e8d24bf2e3 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sat, 6 Apr 2024 00:46:20 -0400
+Subject: [PATCH 342/493] A patch
+
+---
+ kernelz/src/core/gdthelper.asm | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/kernelz/src/core/gdthelper.asm b/kernelz/src/core/gdthelper.asm
+index 8856221..fe45240 100644
+--- a/kernelz/src/core/gdthelper.asm
++++ b/kernelz/src/core/gdthelper.asm
+@@ -1,15 +1,15 @@
+ [GLOBAL gdt_flush]    ; Allows the C code to call gdt_flush().
+ 
+ gdt_flush:
+-   mov eax, [esp+4]  ; Get the pointer to the GDT, passed as a parameter.
+-   lgdt [eax]        ; Load the new GDT pointer
++   mov eax, [esp+4]  
++   lgdt [eax]        
+ 
+-   mov ax, 0x10      ; 0x10 is the offset in the GDT to our data segment
+-   mov ds, ax        ; Load all data segment selectors
++   mov ax, 0x10      
++   mov ds, ax        
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    mov ss, ax
+-   jmp 0x08:.flush   ; 0x08 is the offset to our code segment: Far jump!
++   jmp 0x08:.flush   
+ .flush:
+    ret
+\ No newline at end of file
+-- 
+2.43.0
+

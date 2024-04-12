@@ -1,0 +1,842 @@
+From 8eb2d42dca69f0d88c46a593729933f603adedf3 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 18:28:27 -0400
+Subject: [PATCH 083/493] Minor update
+
+---
+ apps/Makefile                    |  49 ++++++
+ apps/linker.ld                   |  31 ++++
+ apps/sysinfo/sysinfo.cc          | 257 +++++++++++++++++++++++++++++++
+ apps/terminal/terminal.cc        | 174 +++++++++++++++++++++
+ apps/terminal/terminalcontrol.cc | 196 +++++++++++++++++++++++
+ apps/terminal/terminalcontrol.h  |  43 ++++++
+ kernel/include/api.hpp           |  18 +++
+ 7 files changed, 768 insertions(+)
+ create mode 100644 apps/Makefile
+ create mode 100644 apps/linker.ld
+ create mode 100644 apps/sysinfo/sysinfo.cc
+ create mode 100644 apps/terminal/terminal.cc
+ create mode 100644 apps/terminal/terminalcontrol.cc
+ create mode 100644 apps/terminal/terminalcontrol.h
+ create mode 100644 kernel/include/api.hpp
+
+diff --git a/apps/Makefile b/apps/Makefile
+new file mode 100644
+index 0000000..e021986
+--- /dev/null
++++ b/apps/Makefile
+@@ -0,0 +1,49 @@
++CONFIG = ../makefile.config
++include ${CONFIG}
++
++LIBINCLUDE := ../lib/include
++LIBDIR := ../lib
++LIBFILE := ../lib/libcactusos.a
++DEBUG := -g
++
++G++PARAMS := -m32 $(DEBUG) -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
++GCCPARAMS := -m32 $(DEBUG) -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -fleading-underscore -Wno-unknown-pragmas
++LDPARAMS := -m elf_i386
++
++APPS := $(shell find * -type d)
++APPOUT := ../isofiles/apps
++
++SRCFILES := $(shell find $(APPS) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) #Find all the files that end with .cpp/.s/.asm/.c
++OBJFILES := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(SRCFILES))))) #Replace the .cpp/.s/.asm/.c extension with .o
++
++.PHONY: all clean
++
++all: linker.ld $(LIBFILE) $(OBJFILES)
++	for app in $(APPS) ; do \
++		echo building $$app.bin to $(APPOUT)/$$app.bin; \
++    	i686-elf-ld $(LDPARAMS) -T $< -o $(APPOUT)/$$app.bin $$app/*.o -L$(LIBDIR) --library=cactusos; \
++		nm -a $(APPOUT)/$$app.bin | sort -d > $(APPOUT)/$$app.sym; \
++	done
++
++clean:
++	rm -rf $(OBJFILES) $(LIBFILE)
++
++# Build libcactusos.a with makefile in the LIBDIR
++$(LIBFILE):
++	cd $(LIBDIR) && $(MAKE)
++
++%.o: %.cpp
++	mkdir -p $(@D)
++	i686-elf-g++ $(G++PARAMS) -c -o $@ $<
++
++%.o: %.c
++	mkdir -p $(@D)
++	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
++
++%.o: %.asm
++	mkdir -p $(@D)
++	nasm -f elf32 -O0 $< -o $@
++
++%.o: %.s
++	mkdir -p $(@D)
++	i686-elf-as --32 -o $@ $<
+\ No newline at end of file
+diff --git a/apps/linker.ld b/apps/linker.ld
+new file mode 100644
+index 0000000..cb24bbd
+--- /dev/null
++++ b/apps/linker.ld
+@@ -0,0 +1,31 @@
++ENTRY(_start)
++SECTIONS
++{
++	. = 8M;
++	.text BLOCK(4K) : ALIGN(4K)
++	{
++		*(.text)
++	}
++	.rodata BLOCK(4K) : ALIGN(4K)
++	{
++		start_ctors = .;
++        *(SORT(.ctors*))  /* Note the "SORT" */
++        end_ctors = .;
++
++        start_dtors = .;
++        *(SORT(.dtors*))
++        end_dtors = .;
++
++		*(.rodata)
++	}
++	.data BLOCK(4K) : ALIGN(4K)
++	{
++		*(.data)
++	}
++	.bss BLOCK(4K) : ALIGN(4K)
++	{
++		*(COMMON)
++		*(.bss)
++		*(.bootstrap_stack)
++	}
++} 
+\ No newline at end of file
+diff --git a/apps/sysinfo/sysinfo.cc b/apps/sysinfo/sysinfo.cc
+new file mode 100644
+index 0000000..6e5b4f6
+--- /dev/null
++++ b/apps/sysinfo/sysinfo.cc
+@@ -0,0 +1,257 @@
++#include <log.hpp>
++#include <api.hpp>
++#include <types.hpp>
++#include <vfs.hpp>
++#include <syscall.hpp>
++#include <string.hpp>
++#include <new.hpp>
++#include <proc.hpp>
++#include <ipc.hpp>
++#include <time.hpp>
++#include <math.hpp>
++
++void PrintDiskInfo()
++{
++    Print("Disks found on system:\n");
++
++    int diskCount = SystemInfo::Properties["disks"].size();
++    for(int i = 0; i < diskCount; i++) {
++        char* id = (char*)SystemInfo::Properties["disks"][i]["identifier"];
++        uint64_t sz = (uint64_t)SystemInfo::Properties["disks"][i]["size"];
++
++        Print("    %d: %s\n", i, id);
++        
++        if(sz < 1_MB)
++            Print("        -> Size = %d Kb\n", sz / 1_KB);
++        else if (sz < 1_GB)
++            Print("        -> Size = %d Mb\n", sz / 1_MB);
++        else
++            Print("        -> Size = %d Gb\n", sz / 1_GB);
++
++        Print("        -> Blocks = %d\n", (uint32_t)SystemInfo::Properties["disks"][i]["blocks"]);
++        Print("        -> BlockSize = %d\n", (uint32_t)SystemInfo::Properties["disks"][i]["blocksize"]);
++
++        switch((int)SystemInfo::Properties["disks"][i]["type"]) {
++            case 0: {
++                Print("        -> Type = HardDisk\n");
++                break;
++            }
++            case 1: {
++                Print("        -> Type = USB-MSD\n");
++                break;
++            }
++            case 2: {
++                Print("        -> Type = Floppy\n");
++                break;
++            }
++            case 3: {
++                Print("        -> Type = CDROM\n");
++                break;
++            }
++        }
++
++        delete id;
++    }
++}
++
++void PrintUSBInfo()
++{
++    Print("USB Controllers found:\n");
++    int ctrlCount = SystemInfo::Properties["usbcontrollers"].size();
++    for(int i = 0; i < ctrlCount; i++) {
++        switch((int)SystemInfo::Properties["usbcontrollers"][i]["type"]) {
++            case 0: {
++                Print("    %d: USB UHCI Controller\n", i);
++                break;
++            }
++            case 1: {
++                Print("    %d: USB OHCI Controller\n", i);
++                break;
++            }
++            case 2: {
++                Print("    %d: USB EHCI Controller\n", i);
++                break;
++            }
++            case 3: {
++                Print("    %d: USB xHCI Controller\n", i);
++                break;
++            }
++        }
++    }
++
++
++    Print("USB Devices found:\n");
++    int devCount = SystemInfo::Properties["usbdevices"].size();
++    for(int i = 0; i < devCount; i++) {
++        char* id = (char*)SystemInfo::Properties["usbdevices"][i]["name"];
++
++        Print("    %d: %s\n", i, id);
++        Print("        -> Address    = %d\n", (int)SystemInfo::Properties["usbdevices"][i]["address"]);
++        Print("        -> Controller = %d\n", (int)SystemInfo::Properties["usbdevices"][i]["controller"]);
++        Print("        -> VendorID   = %w\n", (uint16_t)SystemInfo::Properties["usbdevices"][i]["vendID"]);
++        Print("        -> ProductID  = %w\n", (uint16_t)SystemInfo::Properties["usbdevices"][i]["prodID"]);
++        Print("        -> Endpoints  = %d\n", (int)SystemInfo::Properties["usbdevices"][i]["vendID"].size());
++
++        delete id;
++    }
++}
++
++void PrintPCIInfo()
++{
++    Print("PCI Devices found:\n");
++    int devCount = SystemInfo::Properties["pcidevs"].size();
++    for(int i = 0; i < devCount; i++) {
++
++        Print("    %d: %d:%d:%d   %w:%w   %b:%b    (Int = %b)\n", i, 
++            (uint16_t)SystemInfo::Properties["pcidevs"][i]["bus"],
++            (uint16_t)SystemInfo::Properties["pcidevs"][i]["device"],
++            (uint16_t)SystemInfo::Properties["pcidevs"][i]["function"],
++            (uint16_t)SystemInfo::Properties["pcidevs"][i]["vendorID"],
++            (uint16_t)SystemInfo::Properties["pcidevs"][i]["deviceID"],
++             (uint8_t)SystemInfo::Properties["pcidevs"][i]["classID"],
++             (uint8_t)SystemInfo::Properties["pcidevs"][i]["subclassID"],
++             (uint8_t)SystemInfo::Properties["pcidevs"][i]["interrupt"]);
++    }
++}
++
++void PrintGFXInfo()
++{
++    Print("Current GFX Device:\n");
++
++    char* name = (char*)SystemInfo::Properties["gfxdevice"]["name"];
++    Print("  -> Name = %s\n", name);
++    Print("  -> Bpp = %d\n", (uint8_t)SystemInfo::Properties["gfxdevice"]["bpp"]);
++    Print("  -> Width = %d\n", (uint32_t)SystemInfo::Properties["gfxdevice"]["width"]);
++    Print("  -> Height = %d\n", (uint32_t)SystemInfo::Properties["gfxdevice"]["height"]);
++    Print("  -> Buffer = %x\n", (uint32_t)SystemInfo::Properties["gfxdevice"]["framebuffer"]);
++
++    delete name;
++}
++
++void PrintPROCInfo()
++{
++    Print("Processes found:\n");
++    int procCount = SystemInfo::Properties["processes"].size();
++    for(int i = 0; i < procCount; i++) {
++        char* id = (char*)SystemInfo::Properties["processes"][i]["filename"];
++
++        Print("    %d: %s\n", i, id);
++        Print("        -> Pid    = %d\n", (int)SystemInfo::Properties["processes"][i]["pid"]);
++        Print("        -> Ring-3 = %d\n", (bool)SystemInfo::Properties["processes"][i]["userspace"]);
++        Print("        -> State  = %d\n", (int)SystemInfo::Properties["processes"][i]["state"]);
++        Print("        -> Base   = %x\n", (uint32_t)SystemInfo::Properties["processes"][i]["membase"]);
++        Print("        -> Size   = %x\n", (uint32_t)SystemInfo::Properties["processes"][i]["memsize"]);
++        Print("        -> Heap   = %d Kb\n", ((uint32_t)SystemInfo::Properties["processes"][i]["heap-end"] - (uint32_t)SystemInfo::Properties["processes"][i]["heap-start"]) / 1_KB);
++
++        delete id;
++    }
++}
++
++void PrintMEMInfo()
++{
++    Print("Memory Stats:\n");
++
++    uint32_t total = (uint32_t)SystemInfo::Properties["memory"]["total"];
++    uint32_t free = (uint32_t)SystemInfo::Properties["memory"]["free"];
++    uint32_t used = (uint32_t)SystemInfo::Properties["memory"]["used"];
++
++    Print("  -> Total = %d Mb\n", total / 1_MB);
++    Print("  -> Free = %d MB\n", free / 1_MB);
++    Print("  -> Used = %d Mb (%d%)\n", used / 1_MB, (uint32_t)(((double)used / (double)total) * 100.0));  
++}
++
++void PrintBIOSInfo()
++{
++    Print("BIOS Information:\n");
++
++    char* vendor = (char*)SystemInfo::Properties["bios"]["vendor"];
++    char* version = (char*)SystemInfo::Properties["bios"]["version"];
++    char* release = (char*)SystemInfo::Properties["bios"]["releasedate"];
++
++    Print("  -> Vendor = %s\n", vendor);
++    Print("  -> Version = %s\n", version);
++    Print("  -> Release = %s\n", release);
++
++    delete vendor;
++    delete version;
++    delete release;
++}
++
++void PrintSystemInfo()
++{
++    Print("System Information:\n");
++
++    char* manufacturer = (char*)SystemInfo::Properties["system"]["manufacturer"];
++    char* product = (char*)SystemInfo::Properties["system"]["product"];
++    char* version = (char*)SystemInfo::Properties["system"]["version"];
++    char* serial = (char*)SystemInfo::Properties["system"]["serial"];
++    char* sku = (char*)SystemInfo::Properties["system"]["sku"];
++    char* family = (char*)SystemInfo::Properties["system"]["family"];
++
++    Print("  -> Manufacturer = %s\n", manufacturer);
++    Print("  -> Product = %s\n", product);
++    Print("  -> Version = %s\n", version);
++    Print("  -> Serial = %s\n", serial);
++    Print("  -> Sku = %s\n", sku);
++    Print("  -> Family = %s\n", family);
++    
++    delete manufacturer;
++    delete product;
++    delete version;
++    delete serial;
++    delete sku;
++    delete family;
++}
++
++void PrintEnclosureInfo()
++{
++    Print("Enclosure Information:\n");
++
++    char* manufacturer = (char*)SystemInfo::Properties["enclosure"]["manufacturer"];
++    char* version = (char*)SystemInfo::Properties["enclosure"]["version"];
++    char* serial = (char*)SystemInfo::Properties["enclosure"]["serial"];
++    char* sku = (char*)SystemInfo::Properties["enclosure"]["sku"];
++
++    Print("  -> Manufacturer = %s\n", manufacturer);
++    Print("  -> Version = %s\n", version);
++    Print("  -> Serial = %s\n", serial);
++    Print("  -> Sku = %s\n", sku);
++    
++    delete manufacturer;
++    delete version;
++    delete serial;
++    delete sku;
++}
++
++void PrintProcessorInfo()
++{
++    Print("Processor Information:\n");
++
++    char* manufacturer = (char*)SystemInfo::Properties["processor"]["manufacturer"];
++    char* socket = (char*)SystemInfo::Properties["processor"]["socket"];
++    char* version = (char*)SystemInfo::Properties["processor"]["version"];
++
++    Print("  -> Manufacturer = %s\n", manufacturer);
++    Print("  -> Socket = %s\n", socket);
++    Print("  -> Version = %s\n", version);
++    
++    delete manufacturer;
++    delete socket;
++    delete version;
++}
++
++int main(int argc, char** argv)
++{
++    Print("---------- Start of system information dump ----------\n");
++    PrintDiskInfo();
++    PrintUSBInfo();
++    PrintPCIInfo();
++    PrintGFXInfo();
++    PrintPROCInfo();
++    PrintMEMInfo();
++    PrintBIOSInfo();
++    PrintSystemInfo();
++    PrintEnclosureInfo();
++    PrintProcessorInfo();
++    Print("------------------------------------------------------\n");
++}
+\ No newline at end of file
+diff --git a/apps/terminal/terminal.cc b/apps/terminal/terminal.cc
+new file mode 100644
+index 0000000..693d1f7
+--- /dev/null
++++ b/apps/terminal/terminal.cc
+@@ -0,0 +1,174 @@
++#include <new.hpp>
++#include <gui/gui.hpp>
++#include <gui/widgets/window.hpp>
++#include <gui/widgets/label.hpp>
++#include <gui/directgui.hpp>
++#include <string.hpp>
++#include <log.hpp>
++#include <proc.hpp>
++#include <convert.hpp>
++#include <ipc.hpp>
++#include <vfs.hpp>
++#include <time.hpp>
++#include "terminalcontrol.h"
++
++char* workingDir = "B:\\";
++TerminalControl* termWindow = 0;
++
++int ExecCommand(char* cmd);
++
++void GUIThread()
++{
++    while(1)
++    {
++        static uint64_t ticks = 0;
++        if(Time::Ticks() - ticks > 500) {
++            termWindow->ToggleCursor();
++            ticks = Time::Ticks();
++        }
++
++        GUI::DrawGUI();
++        if(IPCAvailable())
++            GUI::ProcessEvents();
++        else
++            Process::Yield();
++    }
++}
++int main(int argc, char** argv)
++{
++    GUI::SetDefaultFont();
++    
++    Window* mainWindow = new Window(600, 400, GUI::Width/2 - 300, GUI::Width/2 - 200);
++    mainWindow->titleString = "CactusOS Terminal";
++
++    termWindow = new TerminalControl(mainWindow->width, mainWindow->height - 30);
++    mainWindow->AddChild(termWindow);
++    
++    Process::CreateThread(GUIThread, false);
++    while(GUI::HasItems())
++    {
++        mainWindow->titleString = workingDir;
++        char* cmd = termWindow->ReadCommand(workingDir);
++        int pid = ExecCommand(cmd);
++        
++        if(pid != 0)
++        {
++            Process::BindSTDIO(pid, Process::ID);
++            Process::Unblock(pid);
++            while(Process::Active(pid)) {
++                if(Process::StdInAvailable() > 0)
++                    termWindow->Write(Process::ReadStdIn());
++            }
++
++            //Read remaining data from process if available
++            while(Process::StdInAvailable() > 0)
++                termWindow->Write(Process::ReadStdIn());
++        }
++        
++        delete cmd;
++    }
++
++    return 0;
++}
++
++// Execute command and return pid of created process if necessary
++int ExecCommand(char* cmd)
++{
++    if(memcmp(cmd, "ls", 3) == 0)
++    {
++        List<VFSEntry> items = DirectoryListing(workingDir);
++        for(VFSEntry item : items)
++        {
++            //termWindow->Write(item.isDir ? (char*)"DIR: " : (char*)"FILE: ");
++            termWindow->Write(item.name); termWindow->Write('\n');
++            //Print("[Terminal ls] File = %s Size = %d Date = %d:%d:%d Time = %d:%d:%d IsDir = %d\n", item.name, item.size, item.creationDate.year, item.creationDate.month, item.creationDate.day, item.creationTime.hour, item.creationTime.min, item.creationTime.sec, item.isDir);
++        }
++        return 0;
++    }
++    else if(memcmp(cmd, "cd", 3) == 0)
++    {
++        workingDir = "B:\\";
++        return 0;
++    }
++    else if(memcmp(cmd, "cd ", 3) == 0) //cd with argument
++    {
++        int l = strlen(cmd+3);
++        if(l <= 0)
++            return 0;
++        
++        char* newWD = new char[l+1];
++        memcpy(newWD, cmd + 3, l);
++        newWD[l] = '\0';
++        workingDir = newWD;
++        
++        return 0;
++    }
++    else if(memcmp(cmd, "proc", 5) == 0)
++    {
++        int procCount = SystemInfo::Properties["processes"].size();
++        for(int i = 0; i < procCount; i++) {
++            char* id = (char*)SystemInfo::Properties["processes"][i]["filename"];
++
++            termWindow->Write("  ");
++            termWindow->Write(id);
++            termWindow->Write("\n  -> PID = ");
++            termWindow->Write(Convert::IntToString((int)SystemInfo::Properties["processes"][i]["pid"]));
++            termWindow->Write("\n  -> State = ");
++            termWindow->Write(Convert::IntToString((int)SystemInfo::Properties["processes"][i]["state"]));
++            termWindow->Write("\n  -> Heap = ");
++            termWindow->Write(Convert::IntToString(((uint32_t)SystemInfo::Properties["processes"][i]["heap-end"] - (uint32_t)SystemInfo::Properties["processes"][i]["heap-start"]) / 1_KB));
++            termWindow->Write(" Kb");
++            termWindow->Write('\n');
++
++            delete id;
++        }
++
++        return 0;
++    }
++    else if(memcmp(cmd, "shutdown", 8) == 0) {
++        DoSyscall(SYSCALL_SHUTDOWN);
++        return 0;
++    }
++    else if(memcmp(cmd, "reboot", 6) == 0) {
++        DoSyscall(SYSCALL_REBOOT);
++        return 0;
++    }
++    else if(memcmp(cmd, "lv", 2) == 0) {
++        static char* diskTypes[] = {
++                "HardDisk",
++                "USBDisk",
++                "Floppy",
++                "CDROM"
++        };
++
++        int diskCount = SystemInfo::Properties["disks"].size();
++        for(int i = 0; i < diskCount; i++) {
++            char* id = (char*)SystemInfo::Properties["disks"][i]["identifier"];
++            
++            termWindow->Write(diskTypes[(int)SystemInfo::Properties["disks"][i]["type"]]); termWindow->Write(" ["); termWindow->Write(Convert::IntToString((uint32_t)SystemInfo::Properties["disks"][i]["size"] / 1_MB)); termWindow->Write(" MB] -> ");
++            termWindow->Write(id); termWindow->Write('\n');
++
++            delete id;
++        }
++        return 0;
++    }
++    else
++    {
++        // Combine working directory and cmd into one string
++        char* comboCMD = str_Combine(workingDir, cmd);
++
++        if(FileExists(comboCMD)) {
++            int ret = Process::Run(comboCMD, true);
++            if(ret == 0)
++                termWindow->Write("File is not an executable\n");
++            
++            delete comboCMD;
++            return ret;
++        }
++        else {
++            termWindow->Write("Command or executable not found\n");
++        }
++        delete comboCMD;
++    }
++    return 0;
++}
+\ No newline at end of file
+diff --git a/apps/terminal/terminalcontrol.cc b/apps/terminal/terminalcontrol.cc
+new file mode 100644
+index 0000000..22ad02d
+--- /dev/null
++++ b/apps/terminal/terminalcontrol.cc
+@@ -0,0 +1,196 @@
++#include "terminalcontrol.h"
++#include <string.hpp>
++#include <proc.hpp>
++#include <gui/widgets/window.hpp>
++
++using namespace LIBHeisenKernel;
++
++TerminalControl::TerminalControl(int w, int h)
++: Control(w, h), inputKeys()
++{
++    this->textBuffer = new char[TERM_WIDTH * TERM_HEIGH];
++    memset(this->textBuffer, '\0', TERM_WIDTH * TERM_HEIGH);
++
++    this->x = 0;
++    this->y = 0;
++}
++TerminalControl::~TerminalControl()
++{
++    delete this->textBuffer;
++}
++
++void TerminalControl::Write(char c)
++{
++    if(c == 0)
++        return;
++
++    switch(c)
++    {
++        case '\n':
++            {
++                this->x = 0;
++                if(this->y == TERM_HEIGH-1)
++                    ScrollLine();
++                else
++                    this->y++;
++            }
++            break;
++        case '\t':
++            {
++                for(int i = 0; i < 4; i++)
++                    Write(' ');
++            }
++            break;
++        case '\b':
++            {
++                textBuffer[this->y * TERM_WIDTH + this->x] = '\0';
++                if(this->x >= 1)
++                {
++                    this->x--;
++                    textBuffer[this->y * TERM_WIDTH + this->x] = '\0';
++                }
++                else if(this->y >= 1) //We need to go one line up
++                {
++                    this->y--;
++                    this->x = TERM_WIDTH-1;
++                    textBuffer[this->y * TERM_WIDTH + this->x] = '\0';
++                }
++            }
++            break;
++        default:
++            {
++                if(this->x == TERM_WIDTH)
++                {
++                    this->x = 0;
++                    if(this->y == TERM_HEIGH-1)
++                        ScrollLine();
++                    else
++                        this->y++;
++                }
++
++                textBuffer[this->y * TERM_WIDTH + this->x] = c;
++                this->x++;
++            }
++            break;
++    }
++}
++void TerminalControl::ScrollLine()
++{
++    for(int i = 0; i < TERM_HEIGH; i++)
++        memcpy(textBuffer + i*TERM_WIDTH, textBuffer + ((i+1)*TERM_WIDTH), TERM_WIDTH);
++
++    for(int i = 0; i < TERM_WIDTH; i++)
++        textBuffer[(TERM_HEIGH-1)*TERM_WIDTH + i] = '\0';
++}
++void TerminalControl::Clear()
++{
++    this->x = 0;
++    this->y = 0;
++    memset(this->textBuffer, '\0', TERM_WIDTH * TERM_HEIGH);
++}
++void TerminalControl::ToggleCursor()
++{
++    this->cursor = !this->cursor;
++
++    textBuffer[this->y * TERM_WIDTH + this->x] = this->cursor ? '>' : '\0';
++
++    this->ForcePaint();
++}
++void TerminalControl::Write(char* str)
++{
++    int i = 0;
++    while(str[i])
++        Write(str[i++]);
++}
++
++char* TerminalControl::ReadCommand(char* prompt)
++{
++    Write(prompt);
++
++    char* result = new char[100];
++
++    uint8_t numChars = 0;
++    while(true)
++    {
++        while(this->inputKeys.size() == 0)
++            if(GUI::HasItems())
++                Process::Yield();
++            else //Window has been closed down
++            {
++                result[0] = '\0';
++                return result; //Return empty string so appliation exits
++            }
++        
++        char lastInputKey = this->inputKeys[0];
++        switch(lastInputKey)
++        {
++            case '\n':
++                {
++                    //Create new line
++                    Write('\n');
++
++                    //terminate string
++                    result[numChars] = '\0';
++
++                    //remove key
++                    this->inputKeys.Remove(0);
++                    return result;
++                }
++
++            case '\b':
++                {
++                    if(numChars > 0)
++                    {
++                        Write('\b');
++                        
++                        result[numChars] = '\0';
++                        numChars--;
++                    }
++                }
++                break;
++            default: 
++                {
++                    if(numChars < 100) {
++                        result[numChars] = lastInputKey;
++                        numChars++; 
++
++                        Write(lastInputKey);
++                    }
++                }
++                break;
++        }
++        this->inputKeys.Remove(0);
++        this->ForcePaint();
++    }
++}
++
++void TerminalControl::DrawTo(Canvas* context, int x_abs, int y_abs)
++{
++    context->DrawFillRect(0xFF428052, x_abs, y_abs+1, width+1, height-1);
++
++    char tmpStr[2];
++    tmpStr[1] = '\0';
++
++    int xoff = 2;
++    for(int yp = 0; yp < TERM_HEIGH; yp++) {
++        for(int xp = 0; xp < TERM_WIDTH; xp++)
++        {
++            tmpStr[0] = textBuffer[yp * TERM_WIDTH + xp];
++            context->DrawString(this->font, tmpStr, x_abs + xoff, y_abs + 1 + yp*14, textColor);
++
++            Font* fnt = this->font;
++            int w,h = 0;
++            fnt->BoundingBox(tmpStr, &w, &h);
++            xoff += w;
++        }
++        xoff = 2;
++    }
++}
++
++void TerminalControl::OnKeyDown(uint8_t key, KEYPACKET_FLAGS modifiers)
++{
++    if(isvalid(key))
++        inputKeys.push_back(key);
++
++    Control::OnKeyDown(key, modifiers);
++}
+\ No newline at end of file
+diff --git a/apps/terminal/terminalcontrol.h b/apps/terminal/terminalcontrol.h
+new file mode 100644
+index 0000000..71daaa8
+--- /dev/null
++++ b/apps/terminal/terminalcontrol.h
+@@ -0,0 +1,43 @@
++#ifndef TERMINAL_CONTROL_H
++#define TERMINAL_CONTROL_H
++
++#include <gui/widgets/control.hpp>
++
++#define TERM_WIDTH 74
++#define TERM_HEIGH 26
++
++class TerminalControl : public Control
++{
++private:
++    char* textBuffer = 0;
++    List<char> inputKeys;
++
++    int x,y;
++    bool cursor = false;
++public:
++    uint32_t textColor = 0xFF000000;
++
++    TerminalControl(int w, int h);
++    ~TerminalControl();
++
++    // Read a new command from this command prompt.
++    char* ReadCommand(char* prompt = 0);
++    void Write(char c);
++    void Write(char* str);
++    void ScrollLine();
++    void Clear();
++    void ToggleCursor();
++
++    void DrawTo(Canvas* context, int x_abs, int y_abs) override;
++    
++/*/////////
++// Events called by parent or context
++*//////////
++friend class Window;
++friend class Context;
++protected:
++    // Called on keypress 
++    void OnKeyDown(uint8_t key, KEYPACKET_FLAGS modifiers) override;
++};
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/include/api.hpp b/kernel/include/api.hpp
+new file mode 100644
+index 0000000..03e7490
+--- /dev/null
++++ b/kernel/include/api.hpp
+@@ -0,0 +1,18 @@
++#ifndef __CACTUSOSLIB__API_H
++#define __CACTUSOSLIB__API_H
++
++#include <types.h>
++
++namespace LIBHeisenKernel
++{
++    class API
++    {
++    public:
++        /**
++         * Initialize the CactusOS Api for this process
++        */
++        static void Initialize();
++    };
++}
++
++#endif
+\ No newline at end of file
+-- 
+2.43.0
+

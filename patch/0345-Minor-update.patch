@@ -1,0 +1,31 @@
+From 463050f9d5831694ca961ca7ab3474e3313d549f Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sat, 6 Apr 2024 12:28:34 -0400
+Subject: [PATCH 345/493] Minor update
+
+---
+ kernelz/src/core/gdthelper.asm | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/kernelz/src/core/gdthelper.asm b/kernelz/src/core/gdthelper.asm
+index ec5f671..ea1a84c 100644
+--- a/kernelz/src/core/gdthelper.asm
++++ b/kernelz/src/core/gdthelper.asm
+@@ -1,3 +1,4 @@
++section .text
+ global gdt_flush
+ 
+ gdt_flush:
+@@ -10,6 +11,6 @@ gdt_flush:
+    mov fs, ax
+    mov gs, ax
+    mov ss, ax
+-   jmp 0x08:.flush   
++   jmp 0x08, .flush   
+ .flush:
+-   ret
+\ No newline at end of file
++   ret
+-- 
+2.43.0
+

@@ -1,0 +1,5289 @@
+From 0a0f100b8e965756850b67b8f68b7726579cd8fc Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 8 Apr 2024 22:32:26 -0400
+Subject: [PATCH 434/493] Minor patch
+
+---
+ drivers/Makefile                     |   4 +-
+ drivers/usb3/driver_cdc.c            |   2 +
+ drivers/usb3/driver_silabs.c         |  22 +-
+ kernel/include/cdefs.h               | 412 ++++++++++++++++++++++++
+ lib/include/assert.h                 |  46 +++
+ lib/include/bits/libc-header-start.h | 110 +++++++
+ lib/include/features.h               | 455 ++++++++++++++++++++++++++
+ lib/include/list.h                   | 451 ++++++++++++++++++++++++++
+ lib/include/machine/_types.h         | 125 +++++++
+ lib/include/machine/cdefs.h          |  19 ++
+ lib/include/machine/endian.h         |  89 +++++
+ lib/include/pthread.h                | 315 ++++++++++++++++++
+ lib/include/sched.h                  | 124 +++++++
+ lib/include/stdc-predef.h            |  60 ++++
+ lib/include/stdlib.h                 | 324 +++++++++++++++++++
+ lib/include/string.h                 |  15 +-
+ lib/include/sys/_endian.h            | 179 +++++++++++
+ lib/include/sys/_null.h              |  18 ++
+ lib/include/sys/_types.h             |  79 +++++
+ lib/include/sys/cdefs.h              | 413 ++++++++++++++++++++++++
+ lib/include/sys/endian.h             | 124 +++++++
+ lib/include/sys/select.h             | 137 ++++++++
+ lib/include/sys/siginfo.h            | 200 ++++++++++++
+ lib/include/sys/signal.h             | 202 ++++++++++++
+ lib/include/sys/time.h               | 465 +++++++++++++++++++++++++++
+ lib/include/sys/types.h              | 262 +++++++++++++++
+ lib/include/time.h                   |   7 +
+ libdrive/include/libusb.h            |   4 +-
+ libdrive/include/libusbtypes.h       |  13 +-
+ libdrive/include/stdint.h            | 231 -------------
+ libstdc/include/string.h             |   6 +
+ libstdc/test.c                       |   0
+ 32 files changed, 4666 insertions(+), 247 deletions(-)
+ create mode 100644 kernel/include/cdefs.h
+ create mode 100644 lib/include/assert.h
+ create mode 100644 lib/include/bits/libc-header-start.h
+ create mode 100644 lib/include/features.h
+ create mode 100644 lib/include/machine/_types.h
+ create mode 100644 lib/include/machine/cdefs.h
+ create mode 100644 lib/include/machine/endian.h
+ create mode 100644 lib/include/pthread.h
+ create mode 100644 lib/include/sched.h
+ create mode 100644 lib/include/stdc-predef.h
+ create mode 100644 lib/include/stdlib.h
+ create mode 100644 lib/include/sys/_endian.h
+ create mode 100644 lib/include/sys/_null.h
+ create mode 100644 lib/include/sys/_types.h
+ create mode 100644 lib/include/sys/cdefs.h
+ create mode 100644 lib/include/sys/endian.h
+ create mode 100644 lib/include/sys/select.h
+ create mode 100644 lib/include/sys/siginfo.h
+ create mode 100644 lib/include/sys/signal.h
+ create mode 100644 lib/include/sys/time.h
+ create mode 100644 lib/include/sys/types.h
+ delete mode 100644 libdrive/include/stdint.h
+ create mode 100644 libstdc/include/string.h
+ create mode 100644 libstdc/test.c
+
+diff --git a/drivers/Makefile b/drivers/Makefile
+index 4837300..0b39673 100644
+--- a/drivers/Makefile
++++ b/drivers/Makefile
+@@ -8,8 +8,8 @@ DEBUG := -g
+ LIBDRIVEINCLUDE = ../libdrive/include
+ 
+ 
+-G++PARAMS := -m32 $(DEBUG) -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) -I $(LIBDRIVEINCLUDE) -I ../kernel/include -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
+-GCCPARAMS := -m32 $(DEBUG) -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) -I $(LIBDRIVEINCLUDE) -I ../kernel/include -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -fleading-underscore -Wno-unknown-pragmas
++G++PARAMS := -m32 $(DEBUG) -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) -I $(LIBDRIVEINCLUDE) -I ../kernel/include -Wall -I ../lib/include -fno-omit-frame-pointer -I ../libdrive/include -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
++GCCPARAMS := -m32 $(DEBUG) -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) -I $(LIBDRIVEINCLUDE) -I ../kernel/include -Wall -I ../lib/include -I ../libdrive/include -fno-omit-frame-pointer -nostdlib -fno-builtin -fleading-underscore -Wno-unknown-pragmas
+ LDPARAMS := -m elf_i386
+ 
+ USB_DIR := usb3
+diff --git a/drivers/usb3/driver_cdc.c b/drivers/usb3/driver_cdc.c
+index d29e56c..6f0f2ca 100644
+--- a/drivers/usb3/driver_cdc.c
++++ b/drivers/usb3/driver_cdc.c
+@@ -23,6 +23,8 @@
+ #include <string.h>
+ #include <sys/_endian.h>
+ 
++#include <config.h>
++
+ 
+ /**
+  * @brief Let's define some useful macros for the  CDC driver.
+diff --git a/drivers/usb3/driver_silabs.c b/drivers/usb3/driver_silabs.c
+index e290cbf..3e77960 100644
+--- a/drivers/usb3/driver_silabs.c
++++ b/drivers/usb3/driver_silabs.c
+@@ -22,6 +22,10 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <config.h>
++#include <libusbtypes.h>
++#include <libusbserial.h>
++#include <stddef.h>
++#include <types.h>
+ #ifdef __LINUX__
+ #include <sys/_endian.h>
+ #endif 
+@@ -196,32 +200,32 @@ static int silabs_port_set_config(struct usbserial_port *port, const struct usbs
+ 
+     switch (config->parity)
+     {
+-    case USBSERIAL_PARITY_NONE:  parity_byte = 0; break;
+-    case USBSERIAL_PARITY_ODD:   parity_byte = 1; break;
+-    case USBSERIAL_PARITY_EVEN:  parity_byte = 2; break;
+-    case USBSERIAL_PARITY_MARK:  parity_byte = 3; break;
+-    case USBSERIAL_PARITY_SPACE: parity_byte = 4; break;
++    case USB_SERIAL_PARITY_NONE:  parity_byte = 0; break;
++    case USB_PARITY_ODD:   parity_byte = 1; break;
++    case USB_PARITY_EVEN:  parity_byte = 2; break;
++    case USB_PARITY_MARK:  parity_byte = 3; break;
++    case USB_PARITY_SPACE: parity_byte = 4; break;
+ 
+     default: return USBSERIAL_ERROR_INVALID_PARAMETER;
+     }
+ 
+     flow_control_byte = 0; /* Hardware flow control not supported (yet) */
+ 
+-    data_bits_byte = (unsigned char) config->data_bits;
++    data_bits_byte = (unsigned char) config->databits;
+ 
+-    switch (config->stop_bits)
++    switch (config->stopbits)
+     {
+     case USBSERIAL_STOPBITS_1:
+         stop_bits_byte = 0;
+         break;
+     case USBSERIAL_STOPBITS_1_5:
+         stop_bits_byte = 1;
+-        if (USBSERIAL_DATABITS_5 != config->data_bits)
++        if (USBSERIAL_DATABITS_5 != config->databits)
+             return USBSERIAL_ERROR_UNSUPPORTED_OPERATION;
+         break;
+     case USBSERIAL_STOPBITS_2:
+         stop_bits_byte = 1;
+-        if (USBSERIAL_DATABITS_5 == config->data_bits)
++        if (USBSERIAL_DATABITS_5 == config->databits)
+             return USBSERIAL_ERROR_UNSUPPORTED_OPERATION;
+         break;
+ 
+diff --git a/kernel/include/cdefs.h b/kernel/include/cdefs.h
+new file mode 100644
+index 0000000..3ebe39e
+--- /dev/null
++++ b/kernel/include/cdefs.h
+@@ -0,0 +1,412 @@
++/*	$OpenBSD: cdefs.h,v 1.43 2018/10/29 17:10:40 guenther Exp $	*/
++/*	$NetBSD: cdefs.h,v 1.16 1996/04/03 20:46:39 christos Exp $	*/
++
++/*
++ * Copyright (c) 1991, 1993
++ *	The Regents of the University of California.  All rights reserved.
++ *
++ * This code is derived from software contributed to Berkeley by
++ * Berkeley Software Design, Inc.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the distribution.
++ * 3. Neither the name of the University nor the names of its contributors
++ *    may be used to endorse or promote products derived from this software
++ *    without specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
++ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
++ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
++ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
++ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
++ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
++ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
++ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
++ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
++ * SUCH DAMAGE.
++ *
++ *	@(#)cdefs.h	8.7 (Berkeley) 1/21/94
++ */
++
++#ifndef	_SYS_CDEFS_H_
++#define	_SYS_CDEFS_H_
++
++
++/*
++ * Macro to test if we're using a specific version of gcc or later.
++ */
++#ifdef __GNUC__
++#define __GNUC_PREREQ__(ma, mi) \
++	((__GNUC__ > (ma)) || (__GNUC__ == (ma) && __GNUC_MINOR__ >= (mi)))
++#else
++#define __GNUC_PREREQ__(ma, mi) 0
++#endif
++
++/*
++ * The __CONCAT macro is used to concatenate parts of symbol names, e.g.
++ * with "#define OLD(foo) __CONCAT(old,foo)", OLD(foo) produces oldfoo.
++ * The __CONCAT macro is a bit tricky -- make sure you don't put spaces
++ * in between its arguments.  Do not use __CONCAT on double-quoted strings,
++ * such as those from the __STRING macro: to concatenate strings just put
++ * them next to each other.
++ */
++#if defined(__STDC__) || defined(__cplusplus)
++#define	__P(protos)	protos		/* full-blown ANSI C */
++#define	__CONCAT(x,y)	x ## y
++#define	__STRING(x)	#x
++
++#define	__const		const		/* define reserved names to standard */
++#define	__signed	signed
++#define	__volatile	volatile
++#if defined(__cplusplus) || defined(__PCC__)
++#define	__inline	inline		/* convert to C++ keyword */
++#else
++#if !defined(__GNUC__)
++#define	__inline			/* delete GCC keyword */
++#endif /* !__GNUC__ */
++#endif /* !__cplusplus */
++
++#else	/* !(__STDC__ || __cplusplus) */
++#define	__P(protos)	()		/* traditional C preprocessor */
++#define	__CONCAT(x,y)	x/**/y
++#define	__STRING(x)	"x"
++
++#if !defined(__GNUC__)
++#define	__const				/* delete pseudo-ANSI C keywords */
++#define	__inline
++#define	__signed
++#define	__volatile
++#endif	/* !__GNUC__ */
++#endif	/* !(__STDC__ || __cplusplus) */
++
++/*
++ * GCC1 and some versions of GCC2 declare dead (non-returning) and
++ * pure (no side effects) functions using "volatile" and "const";
++ * unfortunately, these then cause warnings under "-ansi -pedantic".
++ * GCC >= 2.5 uses the __attribute__((attrs)) style.  All of these
++ * work for GNU C++ (modulo a slight glitch in the C++ grammar in
++ * the distribution version of 2.5.5).
++ */
++
++#if !__GNUC_PREREQ__(2, 5) && !defined(__PCC__)
++#define	__attribute__(x)	/* delete __attribute__ if non-gcc or gcc1 */
++#if defined(__GNUC__) && !defined(__STRICT_ANSI__)
++#define	__dead		__volatile
++#define	__pure		__const
++#endif
++#else
++#define __dead		__attribute__((__noreturn__))
++#define __pure		__attribute__((__const__))
++#endif
++
++#if __GNUC_PREREQ__(2, 7)
++#define	__unused	__attribute__((__unused__))
++#else
++#define	__unused	/* delete */
++#endif
++
++#if __GNUC_PREREQ__(3, 1)
++#define	__used		__attribute__((__used__))
++#else
++#define	__used		__unused	/* suppress -Wunused warnings */
++#endif
++
++#if __GNUC_PREREQ__(3,4)
++# define __warn_unused_result	__attribute__((__warn_unused_result__))
++#else
++# define __warn_unused_result	/* delete */
++#endif
++
++#if __GNUC_PREREQ__(3,3) && !defined(__clang__)
++# define __bounded(args)	__attribute__ ((__bounded__ args ))
++#else
++# define __bounded(args)	/* delete */
++#endif
++
++/*
++ * __returns_twice makes the compiler not assume the function
++ * only returns once.  This affects registerisation of variables:
++ * even local variables need to be in memory across such a call.
++ * Example: setjmp()
++ */
++#if __GNUC_PREREQ__(4, 1)
++#define __returns_twice	__attribute__((returns_twice))
++#else
++#define __returns_twice
++#endif
++
++/*
++ * __only_inline makes the compiler only use this function definition
++ * for inlining; references that can't be inlined will be left as
++ * external references instead of generating a local copy.  The
++ * matching library should include a simple extern definition for
++ * the function to handle those references.  c.f. ctype.h
++ */
++#ifdef __GNUC__
++#  if __GNUC_PREREQ__(4, 2)
++#define __only_inline	extern __inline __attribute__((__gnu_inline__))
++#  else
++#define __only_inline	extern __inline
++#  endif
++#else
++#define __only_inline	static __inline
++#endif
++
++/*
++ * GNU C version 2.96 adds explicit branch prediction so that
++ * the CPU back-end can hint the processor and also so that
++ * code blocks can be reordered such that the predicted path
++ * sees a more linear flow, thus improving cache behavior, etc.
++ *
++ * The following two macros provide us with a way to utilize this
++ * compiler feature.  Use __predict_true() if you expect the expression
++ * to evaluate to true, and __predict_false() if you expect the
++ * expression to evaluate to false.
++ *
++ * A few notes about usage:
++ *
++ *	* Generally, __predict_false() error condition checks (unless
++ *	  you have some _strong_ reason to do otherwise, in which case
++ *	  document it), and/or __predict_true() `no-error' condition
++ *	  checks, assuming you want to optimize for the no-error case.
++ *
++ *	* Other than that, if you don't know the likelihood of a test
++ *	  succeeding from empirical or other `hard' evidence, don't
++ *	  make predictions.
++ *
++ *	* These are meant to be used in places that are run `a lot'.
++ *	  It is wasteful to make predictions in code that is run
++ *	  seldomly (e.g. at subsystem initialization time) as the
++ *	  basic block reordering that this affects can often generate
++ *	  larger code.
++ */
++#if __GNUC_PREREQ__(2, 96)
++#define __predict_true(exp)	__builtin_expect(((exp) != 0), 1)
++#define __predict_false(exp)	__builtin_expect(((exp) != 0), 0)
++#else
++#define __predict_true(exp)	((exp) != 0)
++#define __predict_false(exp)	((exp) != 0)
++#endif
++
++/* Delete pseudo-keywords wherever they are not available or needed. */
++#ifndef __dead
++#define	__dead
++#define	__pure
++#endif
++
++/*
++ * The __packed macro indicates that a variable or structure members
++ * should have the smallest possible alignment, despite any host CPU
++ * alignment requirements.
++ *
++ * The __aligned(x) macro specifies the minimum alignment of a
++ * variable or structure.
++ *
++ * These macros together are useful for describing the layout and
++ * alignment of messages exchanged with hardware or other systems.
++ */
++
++#if __GNUC_PREREQ__(2, 7) || defined(__PCC__)
++#define	__packed	__attribute__((__packed__))
++#define	__aligned(x)	__attribute__((__aligned__(x)))
++#endif
++
++#if !__GNUC_PREREQ__(2, 8)
++#define	__extension__
++#endif
++
++#if __GNUC_PREREQ__(3, 0)
++#define	__malloc	__attribute__((__malloc__))
++#else
++#define	__malloc
++#endif
++
++#if defined(__cplusplus)
++#define	__BEGIN_EXTERN_C	extern "C" {
++#define	__END_EXTERN_C		}
++#else
++#define	__BEGIN_EXTERN_C
++#define	__END_EXTERN_C
++#endif
++
++#if __GNUC_PREREQ__(4, 0)
++#define	__dso_public	__attribute__((__visibility__("default")))
++#define	__dso_hidden	__attribute__((__visibility__("hidden")))
++#define	__BEGIN_PUBLIC_DECLS \
++	_Pragma("GCC visibility push(default)") __BEGIN_EXTERN_C
++#define	__END_PUBLIC_DECLS	__END_EXTERN_C _Pragma("GCC visibility pop")
++#define	__BEGIN_HIDDEN_DECLS \
++	_Pragma("GCC visibility push(hidden)") __BEGIN_EXTERN_C
++#define	__END_HIDDEN_DECLS	__END_EXTERN_C _Pragma("GCC visibility pop")
++#else
++#define	__dso_public
++#define	__dso_hidden
++#define	__BEGIN_PUBLIC_DECLS	__BEGIN_EXTERN_C
++#define	__END_PUBLIC_DECLS	__END_EXTERN_C
++#define	__BEGIN_HIDDEN_DECLS	__BEGIN_EXTERN_C
++#define	__END_HIDDEN_DECLS	__END_EXTERN_C
++#endif
++
++#define	__BEGIN_DECLS	__BEGIN_EXTERN_C
++#define	__END_DECLS	__END_EXTERN_C
++
++/*
++ * "The nice thing about standards is that there are so many to choose from."
++ * There are a number of "feature test macros" specified by (different)
++ * standards that determine which interfaces and types the header files
++ * should expose.
++ *
++ * Because of inconsistencies in these macros, we define our own
++ * set in the private name space that end in _VISIBLE.  These are
++ * always defined and so headers can test their values easily.
++ * Things can get tricky when multiple feature macros are defined.
++ * We try to take the union of all the features requested.
++ *
++ * The following macros are guaranteed to have a value after cdefs.h
++ * has been included:
++ *	__POSIX_VISIBLE
++ *	__XPG_VISIBLE
++ *	__ISO_C_VISIBLE
++ *	__BSD_VISIBLE
++ */
++
++/*
++ * X/Open Portability Guides and Single Unix Specifications.
++ * _XOPEN_SOURCE				XPG3
++ * _XOPEN_SOURCE && _XOPEN_VERSION = 4		XPG4
++ * _XOPEN_SOURCE && _XOPEN_SOURCE_EXTENDED = 1	XPG4v2
++ * _XOPEN_SOURCE == 500				XPG5
++ * _XOPEN_SOURCE == 520				XPG5v2
++ * _XOPEN_SOURCE == 600				POSIX 1003.1-2001 with XSI
++ * _XOPEN_SOURCE == 700				POSIX 1003.1-2008 with XSI
++ *
++ * The XPG spec implies a specific value for _POSIX_C_SOURCE.
++ */
++#ifdef _XOPEN_SOURCE
++# if (_XOPEN_SOURCE - 0 >= 700)
++#  define __XPG_VISIBLE		700
++#  undef _POSIX_C_SOURCE
++#  define _POSIX_C_SOURCE	200809L
++# elif (_XOPEN_SOURCE - 0 >= 600)
++#  define __XPG_VISIBLE		600
++#  undef _POSIX_C_SOURCE
++#  define _POSIX_C_SOURCE	200112L
++# elif (_XOPEN_SOURCE - 0 >= 520)
++#  define __XPG_VISIBLE		520
++#  undef _POSIX_C_SOURCE
++#  define _POSIX_C_SOURCE	199506L
++# elif (_XOPEN_SOURCE - 0 >= 500)
++#  define __XPG_VISIBLE		500
++#  undef _POSIX_C_SOURCE
++#  define _POSIX_C_SOURCE	199506L
++# elif (_XOPEN_SOURCE_EXTENDED - 0 == 1)
++#  define __XPG_VISIBLE		420
++# elif (_XOPEN_VERSION - 0 >= 4)
++#  define __XPG_VISIBLE		400
++# else
++#  define __XPG_VISIBLE		300
++# endif
++#endif
++
++/*
++ * POSIX macros, these checks must follow the XOPEN ones above.
++ *
++ * _POSIX_SOURCE == 1		1003.1-1988 (superseded by _POSIX_C_SOURCE)
++ * _POSIX_C_SOURCE == 1		1003.1-1990
++ * _POSIX_C_SOURCE == 2		1003.2-1992
++ * _POSIX_C_SOURCE == 199309L	1003.1b-1993
++ * _POSIX_C_SOURCE == 199506L   1003.1c-1995, 1003.1i-1995,
++ *				and the omnibus ISO/IEC 9945-1:1996
++ * _POSIX_C_SOURCE == 200112L   1003.1-2001
++ * _POSIX_C_SOURCE == 200809L   1003.1-2008
++ *
++ * The POSIX spec implies a specific value for __ISO_C_VISIBLE, though
++ * this may be overridden by the _ISOC99_SOURCE macro later.
++ */
++#ifdef _POSIX_C_SOURCE
++# if (_POSIX_C_SOURCE - 0 >= 200809)
++#  define __POSIX_VISIBLE	200809
++#  define __ISO_C_VISIBLE	1999
++# elif (_POSIX_C_SOURCE - 0 >= 200112)
++#  define __POSIX_VISIBLE	200112
++#  define __ISO_C_VISIBLE	1999
++# elif (_POSIX_C_SOURCE - 0 >= 199506)
++#  define __POSIX_VISIBLE	199506
++#  define __ISO_C_VISIBLE	1990
++# elif (_POSIX_C_SOURCE - 0 >= 199309)
++#  define __POSIX_VISIBLE	199309
++#  define __ISO_C_VISIBLE	1990
++# elif (_POSIX_C_SOURCE - 0 >= 2)
++#  define __POSIX_VISIBLE	199209
++#  define __ISO_C_VISIBLE	1990
++# else
++#  define __POSIX_VISIBLE	199009
++#  define __ISO_C_VISIBLE	1990
++# endif
++#elif defined(_POSIX_SOURCE)
++# define __POSIX_VISIBLE	198808
++#  define __ISO_C_VISIBLE	0
++#endif
++
++/*
++ * _ANSI_SOURCE means to expose ANSI C89 interfaces only.
++ * If the user defines it in addition to one of the POSIX or XOPEN
++ * macros, assume the POSIX/XOPEN macro(s) should take precedence.
++ */
++#if defined(_ANSI_SOURCE) && !defined(__POSIX_VISIBLE) && \
++    !defined(__XPG_VISIBLE)
++# define __POSIX_VISIBLE	0
++# define __XPG_VISIBLE		0
++# define __ISO_C_VISIBLE	1990
++#endif
++
++/*
++ * _ISOC99_SOURCE, _ISOC11_SOURCE, __STDC_VERSION__, and __cplusplus
++ * override any of the other macros since they are non-exclusive.
++ */
++#if defined(_ISOC11_SOURCE) || \
++    (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112) || \
++    (defined(__cplusplus) && __cplusplus >= 201703)
++# undef __ISO_C_VISIBLE
++# define __ISO_C_VISIBLE	2011
++#elif defined(_ISOC99_SOURCE) || \
++    (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901) || \
++    (defined(__cplusplus) && __cplusplus >= 201103)
++# undef __ISO_C_VISIBLE
++# define __ISO_C_VISIBLE	1999
++#endif
++
++/*
++ * Finally deal with BSD-specific interfaces that are not covered
++ * by any standards.  We expose these when none of the POSIX or XPG
++ * macros is defined or if the user explicitly asks for them.
++ */
++#if !defined(_BSD_SOURCE) && \
++   (defined(_ANSI_SOURCE) || defined(__XPG_VISIBLE) || defined(__POSIX_VISIBLE))
++# define __BSD_VISIBLE		0
++#endif
++
++/*
++ * Default values.
++ */
++#ifndef __XPG_VISIBLE
++# define __XPG_VISIBLE		700
++#endif
++#ifndef __POSIX_VISIBLE
++# define __POSIX_VISIBLE	200809
++#endif
++#ifndef __ISO_C_VISIBLE
++# define __ISO_C_VISIBLE	2011
++#endif
++#ifndef __BSD_VISIBLE
++# define __BSD_VISIBLE		1
++#endif
++
++#endif /* !_SYS_CDEFS_H_ */
+\ No newline at end of file
+diff --git a/lib/include/assert.h b/lib/include/assert.h
+new file mode 100644
+index 0000000..14f503e
+--- /dev/null
++++ b/lib/include/assert.h
+@@ -0,0 +1,46 @@
++/* assert.h
++00002    Copyright (C) 2001, 2003 Free Software Foundation, Inc.
++00003    Written by Stephane Carrez (stcarrez@nerim.fr)       
++00004 
++00005 This file is free software; you can redistribute it and/or modify it
++00006 under the terms of the GNU General Public License as published by the
++00007 Free Software Foundation; either version 2, or (at your option) any
++00008 later version.
++00009 
++00010 In addition to the permissions in the GNU General Public License, the
++00011 Free Software Foundation gives you unlimited permission to link the
++00012 compiled version of this file with other programs, and to distribute
++00013 those programs without any restriction coming from the use of this
++00014 file.  (The General Public License restrictions do apply in other
++00015 respects; for example, they cover modification of the file, and
++00016 distribution when not linked into another program.)
++00017 
++00018 This file is distributed in the hope that it will be useful, but
++00019 WITHOUT ANY WARRANTY; without even the implied warranty of
++00020 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++00021 General Public License for more details.
++00022 
++00023 You should have received a copy of the GNU General Public License
++00024 along with this program; see the file COPYING.  If not, write to
++00025 the Free Software Foundation, 59 Temple Place - Suite 330,
++00026 Boston, MA 02111-1307, USA.  */
++ 
++#ifndef _ASSERT_H
++#define _ASSERT_H
++
++#ifdef NDEBUG
++# define assert(EX)
++#else
++# define assert(EX) (void)((EX) || (__assert (#EX, __FILE__, __LINE__),0))
++#endif
++
++#ifdef __cplusplus
++extern "C" {
++#endif
++
++extern void __assert (const char *msg, const char *file, int line);
++
++#ifdef __cplusplus
++};
++#endif
++#endif
+\ No newline at end of file
+diff --git a/lib/include/bits/libc-header-start.h b/lib/include/bits/libc-header-start.h
+new file mode 100644
+index 0000000..783e5b1
+--- /dev/null
++++ b/lib/include/bits/libc-header-start.h
+@@ -0,0 +1,110 @@
++/* Handle feature test macros at the start of a header.
++   Copyright (C) 2016-2024 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
++
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
++
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser General Public License for more details.
++
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <https://www.gnu.org/licenses/>.  */
++
++/* This header is internal to glibc and should not be included outside
++   of glibc headers.  Headers including it must define
++   __GLIBC_INTERNAL_STARTING_HEADER_IMPLEMENTATION first.  This header
++   cannot have multiple include guards because ISO C feature test
++   macros depend on the definition of the macro when an affected
++   header is included, not when the first system header is
++   included.  */
++
++#ifndef __GLIBC_INTERNAL_STARTING_HEADER_IMPLEMENTATION
++# error "Never include <bits/libc-header-start.h> directly."
++#endif
++
++#undef __GLIBC_INTERNAL_STARTING_HEADER_IMPLEMENTATION
++
++#include <features.h>
++
++/* ISO/IEC TR 24731-2:2010 defines the __STDC_WANT_LIB_EXT2__
++   macro.  */
++#undef __GLIBC_USE_LIB_EXT2
++#if (defined __USE_GNU							\
++     || (defined __STDC_WANT_LIB_EXT2__ && __STDC_WANT_LIB_EXT2__ > 0))
++# define __GLIBC_USE_LIB_EXT2 1
++#else
++# define __GLIBC_USE_LIB_EXT2 0
++#endif
++
++/* ISO/IEC TS 18661-1:2014 defines the __STDC_WANT_IEC_60559_BFP_EXT__
++   macro.  Most but not all symbols enabled by that macro in TS
++   18661-1 are enabled unconditionally in C23.  In C23, the symbols in
++   Annex F still require a new feature test macro
++   __STDC_WANT_IEC_60559_EXT__ instead (C23 does not define
++   __STDC_WANT_IEC_60559_BFP_EXT__), while a few features from TS
++   18661-1 are not included in C23 (and thus should depend on
++   __STDC_WANT_IEC_60559_BFP_EXT__ even when C23 features are
++   enabled).
++
++   __GLIBC_USE (IEC_60559_BFP_EXT) controls those features from TS
++   18661-1 not included in C23.
++
++   __GLIBC_USE (IEC_60559_BFP_EXT_C23) controls those features from TS
++   18661-1 that are also included in C23 (with no feature test macro
++   required in C23).
++
++   __GLIBC_USE (IEC_60559_EXT) controls those features from TS 18661-1
++   that are included in C23 but conditional on
++   __STDC_WANT_IEC_60559_EXT__.  (There are currently no features
++   conditional on __STDC_WANT_IEC_60559_EXT__ that are not in TS
++   18661-1.)  */
++#undef __GLIBC_USE_IEC_60559_BFP_EXT
++#if defined __USE_GNU || defined __STDC_WANT_IEC_60559_BFP_EXT__
++# define __GLIBC_USE_IEC_60559_BFP_EXT 1
++#else
++# define __GLIBC_USE_IEC_60559_BFP_EXT 0
++#endif
++#undef __GLIBC_USE_IEC_60559_BFP_EXT_C23
++#if __GLIBC_USE (IEC_60559_BFP_EXT) || __GLIBC_USE (ISOC23)
++# define __GLIBC_USE_IEC_60559_BFP_EXT_C23 1
++#else
++# define __GLIBC_USE_IEC_60559_BFP_EXT_C23 0
++#endif
++#undef __GLIBC_USE_IEC_60559_EXT
++#if __GLIBC_USE (IEC_60559_BFP_EXT) || defined __STDC_WANT_IEC_60559_EXT__
++# define __GLIBC_USE_IEC_60559_EXT 1
++#else
++# define __GLIBC_USE_IEC_60559_EXT 0
++#endif
++
++/* ISO/IEC TS 18661-4:2015 defines the
++   __STDC_WANT_IEC_60559_FUNCS_EXT__ macro.  Other than the reduction
++   functions, the symbols from this TS are enabled unconditionally in
++   C23.  */
++#undef __GLIBC_USE_IEC_60559_FUNCS_EXT
++#if defined __USE_GNU || defined __STDC_WANT_IEC_60559_FUNCS_EXT__
++# define __GLIBC_USE_IEC_60559_FUNCS_EXT 1
++#else
++# define __GLIBC_USE_IEC_60559_FUNCS_EXT 0
++#endif
++#undef __GLIBC_USE_IEC_60559_FUNCS_EXT_C23
++#if __GLIBC_USE (IEC_60559_FUNCS_EXT) || __GLIBC_USE (ISOC23)
++# define __GLIBC_USE_IEC_60559_FUNCS_EXT_C23 1
++#else
++# define __GLIBC_USE_IEC_60559_FUNCS_EXT_C23 0
++#endif
++
++/* ISO/IEC TS 18661-3:2015 defines the
++   __STDC_WANT_IEC_60559_TYPES_EXT__ macro.  */
++#undef __GLIBC_USE_IEC_60559_TYPES_EXT
++#if defined __USE_GNU || defined __STDC_WANT_IEC_60559_TYPES_EXT__
++# define __GLIBC_USE_IEC_60559_TYPES_EXT 1
++#else
++# define __GLIBC_USE_IEC_60559_TYPES_EXT 0
++#endif
+\ No newline at end of file
+diff --git a/lib/include/features.h b/lib/include/features.h
+new file mode 100644
+index 0000000..ff047d6
+--- /dev/null
++++ b/lib/include/features.h
+@@ -0,0 +1,455 @@
++/* Copyright (C) 1991-2018 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
++
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
++
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser General Public License for more details.
++
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <http://www.gnu.org/licenses/>.  */
++
++#ifndef	_FEATURES_H
++#define	_FEATURES_H	1
++
++/* These are defined by the user (or the compiler)
++   to specify the desired environment:
++
++   __STRICT_ANSI__	ISO Standard C.
++   _ISOC99_SOURCE	Extensions to ISO C89 from ISO C99.
++   _ISOC11_SOURCE	Extensions to ISO C99 from ISO C11.
++   __STDC_WANT_LIB_EXT2__
++			Extensions to ISO C99 from TR 27431-2:2010.
++   __STDC_WANT_IEC_60559_BFP_EXT__
++			Extensions to ISO C11 from TS 18661-1:2014.
++   __STDC_WANT_IEC_60559_FUNCS_EXT__
++			Extensions to ISO C11 from TS 18661-4:2015.
++   __STDC_WANT_IEC_60559_TYPES_EXT__
++			Extensions to ISO C11 from TS 18661-3:2015.
++
++   _POSIX_SOURCE	IEEE Std 1003.1.
++   _POSIX_C_SOURCE	If ==1, like _POSIX_SOURCE; if >=2 add IEEE Std 1003.2;
++			if >=199309L, add IEEE Std 1003.1b-1993;
++			if >=199506L, add IEEE Std 1003.1c-1995;
++			if >=200112L, all of IEEE 1003.1-2004
++			if >=200809L, all of IEEE 1003.1-2008
++   _XOPEN_SOURCE	Includes POSIX and XPG things.  Set to 500 if
++			Single Unix conformance is wanted, to 600 for the
++			sixth revision, to 700 for the seventh revision.
++   _XOPEN_SOURCE_EXTENDED XPG things and X/Open Unix extensions.
++   _LARGEFILE_SOURCE	Some more functions for correct standard I/O.
++   _LARGEFILE64_SOURCE	Additional functionality from LFS for large files.
++   _FILE_OFFSET_BITS=N	Select default filesystem interface.
++   _ATFILE_SOURCE	Additional *at interfaces.
++   _GNU_SOURCE		All of the above, plus GNU extensions.
++   _DEFAULT_SOURCE	The default set of features (taking precedence over
++			__STRICT_ANSI__).
++
++   _FORTIFY_SOURCE	Add security hardening to many library functions.
++			Set to 1 or 2; 2 performs stricter checks than 1.
++
++   _REENTRANT, _THREAD_SAFE
++			Obsolete; equivalent to _POSIX_C_SOURCE=199506L.
++
++   The `-ansi' switch to the GNU C compiler, and standards conformance
++   options such as `-std=c99', define __STRICT_ANSI__.  If none of
++   these are defined, or if _DEFAULT_SOURCE is defined, the default is
++   to have _POSIX_SOURCE set to one and _POSIX_C_SOURCE set to
++   200809L, as well as enabling miscellaneous functions from BSD and
++   SVID.  If more than one of these are defined, they accumulate.  For
++   example __STRICT_ANSI__, _POSIX_SOURCE and _POSIX_C_SOURCE together
++   give you ISO C, 1003.1, and 1003.2, but nothing else.
++
++   These are defined by this file and are used by the
++   header files to decide what to declare or define:
++
++   __GLIBC_USE (F)	Define things from feature set F.  This is defined
++			to 1 or 0; the subsequent macros are either defined
++			or undefined, and those tests should be moved to
++			__GLIBC_USE.
++   __USE_ISOC11		Define ISO C11 things.
++   __USE_ISOC99		Define ISO C99 things.
++   __USE_ISOC95		Define ISO C90 AMD1 (C95) things.
++   __USE_ISOCXX11	Define ISO C++11 things.
++   __USE_POSIX		Define IEEE Std 1003.1 things.
++   __USE_POSIX2		Define IEEE Std 1003.2 things.
++   __USE_POSIX199309	Define IEEE Std 1003.1, and .1b things.
++   __USE_POSIX199506	Define IEEE Std 1003.1, .1b, .1c and .1i things.
++   __USE_XOPEN		Define XPG things.
++   __USE_XOPEN_EXTENDED	Define X/Open Unix things.
++   __USE_UNIX98		Define Single Unix V2 things.
++   __USE_XOPEN2K        Define XPG6 things.
++   __USE_XOPEN2KXSI     Define XPG6 XSI things.
++   __USE_XOPEN2K8       Define XPG7 things.
++   __USE_XOPEN2K8XSI    Define XPG7 XSI things.
++   __USE_LARGEFILE	Define correct standard I/O things.
++   __USE_LARGEFILE64	Define LFS things with separate names.
++   __USE_FILE_OFFSET64	Define 64bit interface as default.
++   __USE_MISC		Define things from 4.3BSD or System V Unix.
++   __USE_ATFILE		Define *at interfaces and AT_* constants for them.
++   __USE_GNU		Define GNU extensions.
++   __USE_FORTIFY_LEVEL	Additional security measures used, according to level.
++
++   The macros `__GNU_LIBRARY__', `__GLIBC__', and `__GLIBC_MINOR__' are
++   defined by this file unconditionally.  `__GNU_LIBRARY__' is provided
++   only for compatibility.  All new code should use the other symbols
++   to test for features.
++
++   All macros listed above as possibly being defined by this file are
++   explicitly undefined if they are not explicitly defined.
++   Feature-test macros that are not defined by the user or compiler
++   but are implied by the other feature-test macros defined (or by the
++   lack of any definitions) are defined by the file.
++
++   ISO C feature test macros depend on the definition of the macro
++   when an affected header is included, not when the first system
++   header is included, and so they are handled in
++   <bits/libc-header-start.h>, which does not have a multiple include
++   guard.  Feature test macros that can be handled from the first
++   system header included are handled here.  */
++
++
++/* Undefine everything, so we get a clean slate.  */
++#undef	__USE_ISOC11
++#undef	__USE_ISOC99
++#undef	__USE_ISOC95
++#undef	__USE_ISOCXX11
++#undef	__USE_POSIX
++#undef	__USE_POSIX2
++#undef	__USE_POSIX199309
++#undef	__USE_POSIX199506
++#undef	__USE_XOPEN
++#undef	__USE_XOPEN_EXTENDED
++#undef	__USE_UNIX98
++#undef	__USE_XOPEN2K
++#undef	__USE_XOPEN2KXSI
++#undef	__USE_XOPEN2K8
++#undef	__USE_XOPEN2K8XSI
++#undef	__USE_LARGEFILE
++#undef	__USE_LARGEFILE64
++#undef	__USE_FILE_OFFSET64
++#undef	__USE_MISC
++#undef	__USE_ATFILE
++#undef	__USE_GNU
++#undef	__USE_FORTIFY_LEVEL
++#undef	__KERNEL_STRICT_NAMES
++#undef	__GLIBC_USE_DEPRECATED_GETS
++
++/* Suppress kernel-name space pollution unless user expressedly asks
++   for it.  */
++#ifndef _LOOSE_KERNEL_NAMES
++# define __KERNEL_STRICT_NAMES
++#endif
++
++/* Convenience macro to test the version of gcc.
++   Use like this:
++   #if __GNUC_PREREQ (2,8)
++   ... code requiring gcc 2.8 or later ...
++   #endif
++   Note: only works for GCC 2.0 and later, because __GNUC_MINOR__ was
++   added in 2.0.  */
++#if defined __GNUC__ && defined __GNUC_MINOR__
++# define __GNUC_PREREQ(maj, min) \
++	((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min))
++#else
++# define __GNUC_PREREQ(maj, min) 0
++#endif
++
++/* Similarly for clang.  Features added to GCC after version 4.2 may
++   or may not also be available in clang, and clang's definitions of
++   __GNUC(_MINOR)__ are fixed at 4 and 2 respectively.  Not all such
++   features can be queried via __has_extension/__has_feature.  */
++#if defined __clang_major__ && defined __clang_minor__
++# define __glibc_clang_prereq(maj, min) \
++  ((__clang_major__ << 16) + __clang_minor__ >= ((maj) << 16) + (min))
++#else
++# define __glibc_clang_prereq(maj, min) 0
++#endif
++
++/* Whether to use feature set F.  */
++#define __GLIBC_USE(F)	__GLIBC_USE_ ## F
++
++/* _BSD_SOURCE and _SVID_SOURCE are deprecated aliases for
++   _DEFAULT_SOURCE.  If _DEFAULT_SOURCE is present we do not
++   issue a warning; the expectation is that the source is being
++   transitioned to use the new macro.  */
++#if (defined _BSD_SOURCE || defined _SVID_SOURCE) \
++    && !defined _DEFAULT_SOURCE
++# warning "_BSD_SOURCE and _SVID_SOURCE are deprecated, use _DEFAULT_SOURCE"
++# undef  _DEFAULT_SOURCE
++# define _DEFAULT_SOURCE	1
++#endif
++
++/* If _GNU_SOURCE was defined by the user, turn on all the other features.  */
++#ifdef _GNU_SOURCE
++# undef  _ISOC95_SOURCE
++# define _ISOC95_SOURCE	1
++# undef  _ISOC99_SOURCE
++# define _ISOC99_SOURCE	1
++# undef  _ISOC11_SOURCE
++# define _ISOC11_SOURCE	1
++# undef  _POSIX_SOURCE
++# define _POSIX_SOURCE	1
++# undef  _POSIX_C_SOURCE
++# define _POSIX_C_SOURCE	200809L
++# undef  _XOPEN_SOURCE
++# define _XOPEN_SOURCE	700
++# undef  _XOPEN_SOURCE_EXTENDED
++# define _XOPEN_SOURCE_EXTENDED	1
++# undef	 _LARGEFILE64_SOURCE
++# define _LARGEFILE64_SOURCE	1
++# undef  _DEFAULT_SOURCE
++# define _DEFAULT_SOURCE	1
++# undef  _ATFILE_SOURCE
++# define _ATFILE_SOURCE	1
++#endif
++
++/* If nothing (other than _GNU_SOURCE and _DEFAULT_SOURCE) is defined,
++   define _DEFAULT_SOURCE.  */
++#if (defined _DEFAULT_SOURCE					\
++     || (!defined __STRICT_ANSI__				\
++	 && !defined _ISOC99_SOURCE && !defined _ISOC11_SOURCE	\
++	 && !defined _POSIX_SOURCE && !defined _POSIX_C_SOURCE	\
++	 && !defined _XOPEN_SOURCE))
++# undef  _DEFAULT_SOURCE
++# define _DEFAULT_SOURCE	1
++#endif
++
++/* This is to enable the ISO C11 extension.  */
++#if (defined _ISOC11_SOURCE \
++     || (defined __STDC_VERSION__ && __STDC_VERSION__ >= 201112L))
++# define __USE_ISOC11	1
++#endif
++
++/* This is to enable the ISO C99 extension.  */
++#if (defined _ISOC99_SOURCE || defined _ISOC11_SOURCE \
++     || (defined __STDC_VERSION__ && __STDC_VERSION__ >= 199901L))
++# define __USE_ISOC99	1
++#endif
++
++/* This is to enable the ISO C90 Amendment 1:1995 extension.  */
++#if (defined _ISOC99_SOURCE || defined _ISOC11_SOURCE \
++     || (defined __STDC_VERSION__ && __STDC_VERSION__ >= 199409L))
++# define __USE_ISOC95	1
++#endif
++
++#ifdef __cplusplus
++/* This is to enable compatibility for ISO C++17.  */
++# if __cplusplus >= 201703L
++#  define __USE_ISOC11	1
++# endif
++/* This is to enable compatibility for ISO C++11.
++   Check the temporary macro for now, too.  */
++# if __cplusplus >= 201103L || defined __GXX_EXPERIMENTAL_CXX0X__
++#  define __USE_ISOCXX11	1
++#  define __USE_ISOC99	1
++# endif
++#endif
++
++/* If none of the ANSI/POSIX macros are defined, or if _DEFAULT_SOURCE
++   is defined, use POSIX.1-2008 (or another version depending on
++   _XOPEN_SOURCE).  */
++#ifdef _DEFAULT_SOURCE
++# if !defined _POSIX_SOURCE && !defined _POSIX_C_SOURCE
++#  define __USE_POSIX_IMPLICITLY	1
++# endif
++# undef  _POSIX_SOURCE
++# define _POSIX_SOURCE	1
++# undef  _POSIX_C_SOURCE
++# define _POSIX_C_SOURCE	200809L
++#endif
++
++#if ((!defined __STRICT_ANSI__					\
++      || (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500))	\
++     && !defined _POSIX_SOURCE && !defined _POSIX_C_SOURCE)
++# define _POSIX_SOURCE	1
++# if defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) < 500
++#  define _POSIX_C_SOURCE	2
++# elif defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) < 600
++#  define _POSIX_C_SOURCE	199506L
++# elif defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) < 700
++#  define _POSIX_C_SOURCE	200112L
++# else
++#  define _POSIX_C_SOURCE	200809L
++# endif
++# define __USE_POSIX_IMPLICITLY	1
++#endif
++
++/* Some C libraries once required _REENTRANT and/or _THREAD_SAFE to be
++   defined in all multithreaded code.  GNU libc has not required this
++   for many years.  We now treat them as compatibility synonyms for
++   _POSIX_C_SOURCE=199506L, which is the earliest level of POSIX with
++   comprehensive support for multithreaded code.  Using them never
++   lowers the selected level of POSIX conformance, only raises it.  */
++#if ((!defined _POSIX_C_SOURCE || (_POSIX_C_SOURCE - 0) < 199506L) \
++     && (defined _REENTRANT || defined _THREAD_SAFE))
++# define _POSIX_SOURCE   1
++# undef  _POSIX_C_SOURCE
++# define _POSIX_C_SOURCE 199506L
++#endif
++
++#if (defined _POSIX_SOURCE					\
++     || (defined _POSIX_C_SOURCE && _POSIX_C_SOURCE >= 1)	\
++     || defined _XOPEN_SOURCE)
++# define __USE_POSIX	1
++#endif
++
++#if defined _POSIX_C_SOURCE && _POSIX_C_SOURCE >= 2 || defined _XOPEN_SOURCE
++# define __USE_POSIX2	1
++#endif
++
++#if defined _POSIX_C_SOURCE && (_POSIX_C_SOURCE - 0) >= 199309L
++# define __USE_POSIX199309	1
++#endif
++
++#if defined _POSIX_C_SOURCE && (_POSIX_C_SOURCE - 0) >= 199506L
++# define __USE_POSIX199506	1
++#endif
++
++#if defined _POSIX_C_SOURCE && (_POSIX_C_SOURCE - 0) >= 200112L
++# define __USE_XOPEN2K		1
++# undef __USE_ISOC95
++# define __USE_ISOC95		1
++# undef __USE_ISOC99
++# define __USE_ISOC99		1
++#endif
++
++#if defined _POSIX_C_SOURCE && (_POSIX_C_SOURCE - 0) >= 200809L
++# define __USE_XOPEN2K8		1
++# undef  _ATFILE_SOURCE
++# define _ATFILE_SOURCE	1
++#endif
++
++#ifdef	_XOPEN_SOURCE
++# define __USE_XOPEN	1
++# if (_XOPEN_SOURCE - 0) >= 500
++#  define __USE_XOPEN_EXTENDED	1
++#  define __USE_UNIX98	1
++#  undef _LARGEFILE_SOURCE
++#  define _LARGEFILE_SOURCE	1
++#  if (_XOPEN_SOURCE - 0) >= 600
++#   if (_XOPEN_SOURCE - 0) >= 700
++#    define __USE_XOPEN2K8	1
++#    define __USE_XOPEN2K8XSI	1
++#   endif
++#   define __USE_XOPEN2K	1
++#   define __USE_XOPEN2KXSI	1
++#   undef __USE_ISOC95
++#   define __USE_ISOC95		1
++#   undef __USE_ISOC99
++#   define __USE_ISOC99		1
++#  endif
++# else
++#  ifdef _XOPEN_SOURCE_EXTENDED
++#   define __USE_XOPEN_EXTENDED	1
++#  endif
++# endif
++#endif
++
++#ifdef _LARGEFILE_SOURCE
++# define __USE_LARGEFILE	1
++#endif
++
++#ifdef _LARGEFILE64_SOURCE
++# define __USE_LARGEFILE64	1
++#endif
++
++#if defined _FILE_OFFSET_BITS && _FILE_OFFSET_BITS == 64
++# define __USE_FILE_OFFSET64	1
++#endif
++
++#if defined _DEFAULT_SOURCE
++# define __USE_MISC	1
++#endif
++
++#ifdef	_ATFILE_SOURCE
++# define __USE_ATFILE	1
++#endif
++
++#ifdef	_GNU_SOURCE
++# define __USE_GNU	1
++#endif
++
++#if defined _FORTIFY_SOURCE && _FORTIFY_SOURCE > 0
++# if !defined __OPTIMIZE__ || __OPTIMIZE__ <= 0
++#  warning _FORTIFY_SOURCE requires compiling with optimization (-O)
++# elif !__GNUC_PREREQ (4, 1)
++#  warning _FORTIFY_SOURCE requires GCC 4.1 or later
++# elif _FORTIFY_SOURCE > 1
++#  define __USE_FORTIFY_LEVEL 2
++# else
++#  define __USE_FORTIFY_LEVEL 1
++# endif
++#endif
++#ifndef __USE_FORTIFY_LEVEL
++# define __USE_FORTIFY_LEVEL 0
++#endif
++
++/* The function 'gets' existed in C89, but is impossible to use
++   safely.  It has been removed from ISO C11 and ISO C++14.  Note: for
++   compatibility with various implementations of <cstdio>, this test
++   must consider only the value of __cplusplus when compiling C++.  */
++#if defined __cplusplus ? __cplusplus >= 201402L : defined __USE_ISOC11
++# define __GLIBC_USE_DEPRECATED_GETS 0
++#else
++# define __GLIBC_USE_DEPRECATED_GETS 1
++#endif
++
++/* Get definitions of __STDC_* predefined macros, if the compiler has
++   not preincluded this header automatically.  */
++#include <stdc-predef.h>
++
++/* This macro indicates that the installed library is the GNU C Library.
++   For historic reasons the value now is 6 and this will stay from now
++   on.  The use of this variable is deprecated.  Use __GLIBC__ and
++   __GLIBC_MINOR__ now (see below) when you want to test for a specific
++   GNU C library version and use the values in <gnu/lib-names.h> to get
++   the sonames of the shared libraries.  */
++#undef  __GNU_LIBRARY__
++#define __GNU_LIBRARY__ 6
++
++/* Major and minor version number of the GNU C library package.  Use
++   these macros to test for features in specific releases.  */
++#define	__GLIBC__	2
++#define	__GLIBC_MINOR__	28
++
++#define __GLIBC_PREREQ(maj, min) \
++	((__GLIBC__ << 16) + __GLIBC_MINOR__ >= ((maj) << 16) + (min))
++
++/* This is here only because every header file already includes this one.  */
++#ifndef __ASSEMBLER__
++# ifndef _SYS_CDEFS_H
++#  include <sys/cdefs.h>
++# endif
++
++/* If we don't have __REDIRECT, prototypes will be missing if
++   __USE_FILE_OFFSET64 but not __USE_LARGEFILE[64]. */
++# if defined __USE_FILE_OFFSET64 && !defined __REDIRECT
++#  define __USE_LARGEFILE	1
++#  define __USE_LARGEFILE64	1
++# endif
++
++#endif	/* !ASSEMBLER */
++
++/* Decide whether we can define 'extern inline' functions in headers.  */
++#if __GNUC_PREREQ (2, 7) && defined __OPTIMIZE__ \
++    && !defined __OPTIMIZE_SIZE__ && !defined __NO_INLINE__ \
++    && defined __extern_inline
++# define __USE_EXTERN_INLINES	1
++#endif
++
++
++/* This is here only because every header file already includes this one.
++   Get the definitions of all the appropriate `__stub_FUNCTION' symbols.
++   <gnu/stubs.h> contains `#define __stub_FUNCTION' when FUNCTION is a stub
++   that will always return failure (and set errno to ENOSYS).  */
++// #include <gnu/stubs.h>
++
++
++#endif	/* features.h  */
+\ No newline at end of file
+diff --git a/lib/include/list.h b/lib/include/list.h
+index 3eaa9ee..5206d7c 100644
+--- a/lib/include/list.h
++++ b/lib/include/list.h
+@@ -1,6 +1,7 @@
+ #ifndef __HEISEN_KERNEL_COMMON_FILES__COMMON__LIST_H
+ #define __HEISEN_KERNEL_COMMON_FILES__COMMON__LIST_H
+ 
++#if  defined(__cplusplus)
+ namespace LIBHeisenKernel
+ {
+     template <typename T>
+@@ -201,4 +202,454 @@ void List<T>::operator-=(const T &e)
+     Remove(e);
+ }
+ 
++#else 
++#define __GLIBC_INTERNAL_STARTING_HEADER_IMPLEMENTATION
++#include <bits/libc-header-start.h>
++__BEGIN_DECLS
++/* Get size_t and NULL from <stddef.h>.  */
++#define        __need_size_t
++#define        __need_NULL
++#include <stddef.h>
++/* Tell the caller that we provide correct C++ prototypes.  */
++#if defined __cplusplus && (__GNUC_PREREQ (4, 4) \
++                            || __glibc_clang_prereq (3, 5))
++# define __CORRECT_ISO_CPP_STRING_H_PROTO
++#endif
++/* Copy N bytes of SRC to DEST.  */
++extern void *memcpy (void *__restrict __dest, const void *__restrict __src,
++                     size_t __n) __THROW __nonnull ((1, 2));
++/* Copy N bytes of SRC to DEST, guaranteeing
++   correct behavior for overlapping strings.  */
++extern void *memmove (void *__dest, const void *__src, size_t __n)
++     __THROW __nonnull ((1, 2));
++/* Copy no more than N bytes of SRC to DEST, stopping when C is found.
++   Return the position in DEST one byte past where C was copied,
++   or NULL if C was not found in the first N bytes of SRC.  */
++#if defined __USE_MISC || defined __USE_XOPEN || __GLIBC_USE (ISOC2X)
++extern void *memccpy (void *__restrict __dest, const void *__restrict __src,
++                      int __c, size_t __n)
++    __THROW __nonnull ((1, 2)) __attr_access ((__write_only__, 1, 4));
++#endif /* Misc || X/Open.  */
++/* Set N bytes of S to C.  */
++extern void *memset (void *__s, int __c, size_t __n) __THROW __nonnull ((1));
++/* Compare N bytes of S1 and S2.  */
++extern int memcmp (const void *__s1, const void *__s2, size_t __n)
++     __THROW __attribute_pure__ __nonnull ((1, 2));
++/* Compare N bytes of S1 and S2.  Return zero if S1 and S2 are equal.
++   Return some non-zero value otherwise.
++   Essentially __memcmpeq has the exact same semantics as memcmp
++   except the return value is less constrained.  memcmp is always a
++   correct implementation of __memcmpeq.  As well !!memcmp, -memcmp,
++   or bcmp are correct implementations.
++   __memcmpeq is meant to be used by compilers when memcmp return is
++   only used for its bolean value.
++   __memcmpeq is declared only for use by compilers.  Programs should
++   continue to use memcmp.  */
++extern int __memcmpeq (const void *__s1, const void *__s2, size_t __n)
++     __THROW __attribute_pure__ __nonnull ((1, 2));
++/* Search N bytes of S for C.  */
++#ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
++extern "C++"
++{
++extern void *memchr (void *__s, int __c, size_t __n)
++      __THROW __asm ("memchr") __attribute_pure__ __nonnull ((1));
++extern const void *memchr (const void *__s, int __c, size_t __n)
++      __THROW __asm ("memchr") __attribute_pure__ __nonnull ((1));
++# ifdef __OPTIMIZE__
++__extern_always_inline void *
++memchr (void *__s, int __c, size_t __n) __THROW
++{
++  return __builtin_memchr (__s, __c, __n);
++}
++__extern_always_inline const void *
++memchr (const void *__s, int __c, size_t __n) __THROW
++{
++  return __builtin_memchr (__s, __c, __n);
++}
++# endif
++}
++#else
++extern void *memchr (const void *__s, int __c, size_t __n)
++      __THROW __attribute_pure__ __nonnull ((1));
++#endif
++#ifdef __USE_GNU
++/* Search in S for C.  This is similar to `memchr' but there is no
++   length limit.  */
++# ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
++extern "C++" void *rawmemchr (void *__s, int __c)
++     __THROW __asm ("rawmemchr") __attribute_pure__ __nonnull ((1));
++extern "C++" const void *rawmemchr (const void *__s, int __c)
++     __THROW __asm ("rawmemchr") __attribute_pure__ __nonnull ((1));
++# else
++extern void *rawmemchr (const void *__s, int __c)
++     __THROW __attribute_pure__ __nonnull ((1));
++# endif
++/* Search N bytes of S for the final occurrence of C.  */
++# ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
++extern "C++" void *memrchr (void *__s, int __c, size_t __n)
++      __THROW __asm ("memrchr") __attribute_pure__ __nonnull ((1))
++      __attr_access ((__read_only__, 1, 3));
++extern "C++" const void *memrchr (const void *__s, int __c, size_t __n)
++      __THROW __asm ("memrchr") __attribute_pure__ __nonnull ((1))
++      __attr_access ((__read_only__, 1, 3));
++# else
++extern void *memrchr (const void *__s, int __c, size_t __n)
++      __THROW __attribute_pure__ __nonnull ((1))
++      __attr_access ((__read_only__, 1, 3));
++# endif
++#endif
++/* Copy SRC to DEST.  */
++extern char *strcpy (char *__restrict __dest, const char *__restrict __src)
++     __THROW __nonnull ((1, 2));
++/* Copy no more than N characters of SRC to DEST.  */
++extern char *strncpy (char *__restrict __dest,
++                      const char *__restrict __src, size_t __n)
++     __THROW __nonnull ((1, 2));
++/* Append SRC onto DEST.  */
++extern char *strcat (char *__restrict __dest, const char *__restrict __src)
++     __THROW __nonnull ((1, 2));
++/* Append no more than N characters from SRC onto DEST.  */
++extern char *strncat (char *__restrict __dest, const char *__restrict __src,
++                      size_t __n) __THROW __nonnull ((1, 2));
++/* Compare S1 and S2.  */
++extern int strcmp (const char *__s1, const char *__s2)
++     __THROW __attribute_pure__ __nonnull ((1, 2));
++/* Compare N characters of S1 and S2.  */
++extern int strncmp (const char *__s1, const char *__s2, size_t __n)
++     __THROW __attribute_pure__ __nonnull ((1, 2));
++/* Compare the collated forms of S1 and S2.  */
++extern int strcoll (const char *__s1, const char *__s2)
++     __THROW __attribute_pure__ __nonnull ((1, 2));
++/* Put a transformation of SRC into no more than N bytes of DEST.  */
++extern size_t strxfrm (char *__restrict __dest,
++                       const char *__restrict __src, size_t __n)
++    __THROW __nonnull ((2)) __attr_access ((__write_only__, 1, 3));
++#ifdef __USE_XOPEN2K8
++/* POSIX.1-2008 extended locale interface (see locale.h).  */
++// # include <bits/types/locale_t.h>
++/* Compare the collated forms of S1 and S2, using sorting rules from L.  */
++extern int strcoll_l (const char *__s1, const char *__s2, locale_t __l)
++     __THROW __attribute_pure__ __nonnull ((1, 2, 3));
++/* Put a transformation of SRC into no more than N bytes of DEST,
++   using sorting rules from L.  */
++extern size_t strxfrm_l (char *__dest, const char *__src, size_t __n,
++                         locale_t __l) __THROW __nonnull ((2, 4))
++     __attr_access ((__write_only__, 1, 3));
++#endif
++#if (defined __USE_XOPEN_EXTENDED || defined __USE_XOPEN2K8        \
++     || __GLIBC_USE (LIB_EXT2) || __GLIBC_USE (ISOC2X))
++/* Duplicate S, returning an identical malloc'd string.  */
++extern char *strdup (const char *__s)
++     __THROW __attribute_malloc__ __nonnull ((1));
++#endif
++/* Return a malloc'd copy of at most N bytes of STRING.  The
++   resultant string is terminated even if no null terminator
++   appears before STRING[N].  */
++#if defined __USE_XOPEN2K8 || __GLIBC_USE (LIB_EXT2) || __GLIBC_USE (ISOC2X)
++extern char *strndup (const char *__string, size_t __n)
++     __THROW __attribute_malloc__ __nonnull ((1));
++#endif
++#if defined __USE_GNU && defined __GNUC__
++/* Duplicate S, returning an identical alloca'd string.  */
++# define strdupa(s)                                                              \
++  (__extension__                                                              \
++    ({                                                                              \
++      const char *__old = (s);                                                      \
++      size_t __len = strlen (__old) + 1;                                      \
++      char *__new = (char *) __builtin_alloca (__len);                              \
++      (char *) memcpy (__new, __old, __len);                                      \
++    }))
++/* Return an alloca'd copy of at most N bytes of string.  */
++# define strndupa(s, n)                                                              \
++  (__extension__                                                              \
++    ({                                                                              \
++      const char *__old = (s);                                                      \
++      size_t __len = strnlen (__old, (n));                                      \
++      char *__new = (char *) __builtin_alloca (__len + 1);                      \
++      __new[__len] = '\0';                                                      \
++      (char *) memcpy (__new, __old, __len);                                      \
++    }))
++#endif
++/* Find the first occurrence of C in S.  */
++#ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
++extern "C++"
++{
++extern char *strchr (char *__s, int __c)
++     __THROW __asm ("strchr") __attribute_pure__ __nonnull ((1));
++extern const char *strchr (const char *__s, int __c)
++     __THROW __asm ("strchr") __attribute_pure__ __nonnull ((1));
++# ifdef __OPTIMIZE__
++__extern_always_inline char *
++strchr (char *__s, int __c) __THROW
++{
++  return __builtin_strchr (__s, __c);
++}
++__extern_always_inline const char *
++strchr (const char *__s, int __c) __THROW
++{
++  return __builtin_strchr (__s, __c);
++}
++# endif
++}
++#else
++extern char *strchr (const char *__s, int __c)
++     __THROW __attribute_pure__ __nonnull ((1));
++#endif
++/* Find the last occurrence of C in S.  */
++#ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
++extern "C++"
++{
++extern char *strrchr (char *__s, int __c)
++     __THROW __asm ("strrchr") __attribute_pure__ __nonnull ((1));
++extern const char *strrchr (const char *__s, int __c)
++     __THROW __asm ("strrchr") __attribute_pure__ __nonnull ((1));
++# ifdef __OPTIMIZE__
++__extern_always_inline char *
++strrchr (char *__s, int __c) __THROW
++{
++  return __builtin_strrchr (__s, __c);
++}
++__extern_always_inline const char *
++strrchr (const char *__s, int __c) __THROW
++{
++  return __builtin_strrchr (__s, __c);
++}
++# endif
++}
++#else
++extern char *strrchr (const char *__s, int __c)
++     __THROW __attribute_pure__ __nonnull ((1));
++#endif
++#ifdef __USE_GNU
++/* This function is similar to `strchr'.  But it returns a pointer to
++   the closing NUL byte in case C is not found in S.  */
++# ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
++extern "C++" char *strchrnul (char *__s, int __c)
++     __THROW __asm ("strchrnul") __attribute_pure__ __nonnull ((1));
++extern "C++" const char *strchrnul (const char *__s, int __c)
++     __THROW __asm ("strchrnul") __attribute_pure__ __nonnull ((1));
++# else
++extern char *strchrnul (const char *__s, int __c)
++     __THROW __attribute_pure__ __nonnull ((1));
++# endif
++#endif
++/* Return the length of the initial segment of S which
++   consists entirely of characters not in REJECT.  */
++extern size_t strcspn (const char *__s, const char *__reject)
++     __THROW __attribute_pure__ __nonnull ((1, 2));
++/* Return the length of the initial segment of S which
++   consists entirely of characters in ACCEPT.  */
++extern size_t strspn (const char *__s, const char *__accept)
++     __THROW __attribute_pure__ __nonnull ((1, 2));
++/* Find the first occurrence in S of any character in ACCEPT.  */
++#ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
++extern "C++"
++{
++extern char *strpbrk (char *__s, const char *__accept)
++     __THROW __asm ("strpbrk") __attribute_pure__ __nonnull ((1, 2));
++extern const char *strpbrk (const char *__s, const char *__accept)
++     __THROW __asm ("strpbrk") __attribute_pure__ __nonnull ((1, 2));
++# ifdef __OPTIMIZE__
++__extern_always_inline char *
++strpbrk (char *__s, const char *__accept) __THROW
++{
++  return __builtin_strpbrk (__s, __accept);
++}
++__extern_always_inline const char *
++strpbrk (const char *__s, const char *__accept) __THROW
++{
++  return __builtin_strpbrk (__s, __accept);
++}
++# endif
++}
++#else
++extern char *strpbrk (const char *__s, const char *__accept)
++     __THROW __attribute_pure__ __nonnull ((1, 2));
++#endif
++/* Find the first occurrence of NEEDLE in HAYSTACK.  */
++#ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
++extern "C++"
++{
++extern char *strstr (char *__haystack, const char *__needle)
++     __THROW __asm ("strstr") __attribute_pure__ __nonnull ((1, 2));
++extern const char *strstr (const char *__haystack, const char *__needle)
++     __THROW __asm ("strstr") __attribute_pure__ __nonnull ((1, 2));
++# ifdef __OPTIMIZE__
++__extern_always_inline char *
++strstr (char *__haystack, const char *__needle) __THROW
++{
++  return __builtin_strstr (__haystack, __needle);
++}
++__extern_always_inline const char *
++strstr (const char *__haystack, const char *__needle) __THROW
++{
++  return __builtin_strstr (__haystack, __needle);
++}
++# endif
++}
++#else
++extern char *strstr (const char *__haystack, const char *__needle)
++     __THROW __attribute_pure__ __nonnull ((1, 2));
++#endif
++/* Divide S into tokens separated by characters in DELIM.  */
++extern char *strtok (char *__restrict __s, const char *__restrict __delim)
++     __THROW __nonnull ((2));
++/* Divide S into tokens separated by characters in DELIM.  Information
++   passed between calls are stored in SAVE_PTR.  */
++extern char *__strtok_r (char *__restrict __s,
++                         const char *__restrict __delim,
++                         char **__restrict __save_ptr)
++     __THROW __nonnull ((2, 3));
++#ifdef __USE_POSIX
++extern char *strtok_r (char *__restrict __s, const char *__restrict __delim,
++                       char **__restrict __save_ptr)
++     __THROW __nonnull ((2, 3));
++#endif
++#ifdef __USE_GNU
++/* Similar to `strstr' but this function ignores the case of both strings.  */
++# ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
++extern "C++" char *strcasestr (char *__haystack, const char *__needle)
++     __THROW __asm ("strcasestr") __attribute_pure__ __nonnull ((1, 2));
++extern "C++" const char *strcasestr (const char *__haystack,
++                                     const char *__needle)
++     __THROW __asm ("strcasestr") __attribute_pure__ __nonnull ((1, 2));
++# else
++extern char *strcasestr (const char *__haystack, const char *__needle)
++     __THROW __attribute_pure__ __nonnull ((1, 2));
++# endif
++#endif
++#ifdef __USE_GNU
++/* Find the first occurrence of NEEDLE in HAYSTACK.
++   NEEDLE is NEEDLELEN bytes long;
++   HAYSTACK is HAYSTACKLEN bytes long.  */
++extern void *memmem (const void *__haystack, size_t __haystacklen,
++                     const void *__needle, size_t __needlelen)
++     __THROW __attribute_pure__ __nonnull ((1, 3))
++    __attr_access ((__read_only__, 1, 2))
++    __attr_access ((__read_only__, 3, 4));
++/* Copy N bytes of SRC to DEST, return pointer to bytes after the
++   last written byte.  */
++extern void *__mempcpy (void *__restrict __dest,
++                        const void *__restrict __src, size_t __n)
++     __THROW __nonnull ((1, 2));
++extern void *mempcpy (void *__restrict __dest,
++                      const void *__restrict __src, size_t __n)
++     __THROW __nonnull ((1, 2));
++#endif
++/* Return the length of S.  */
++extern size_t strlen (const char *__s)
++     __THROW __attribute_pure__ __nonnull ((1));
++#ifdef        __USE_XOPEN2K8
++/* Find the length of STRING, but scan at most MAXLEN characters.
++   If no '\0' terminator is found in that many characters, return MAXLEN.  */
++extern size_t strnlen (const char *__string, size_t __maxlen)
++     __THROW __attribute_pure__ __nonnull ((1));
++#endif
++/* Return a string describing the meaning of the `errno' code in ERRNUM.  */
++extern char *strerror (int __errnum) __THROW;
++#ifdef __USE_XOPEN2K
++/* Reentrant version of `strerror'.
++   There are 2 flavors of `strerror_r', GNU which returns the string
++   and may or may not use the supplied temporary buffer and POSIX one
++   which fills the string into the buffer.
++   To use the POSIX version, -D_XOPEN_SOURCE=600 or -D_POSIX_C_SOURCE=200112L
++   without -D_GNU_SOURCE is needed, otherwise the GNU version is
++   preferred.  */
++# if defined __USE_XOPEN2K && !defined __USE_GNU
++/* Fill BUF with a string describing the meaning of the `errno' code in
++   ERRNUM.  */
++#  ifdef __REDIRECT_NTH
++extern int __REDIRECT_NTH (strerror_r,
++                           (int __errnum, char *__buf, size_t __buflen),
++                           __xpg_strerror_r) __nonnull ((2))
++    __attr_access ((__write_only__, 2, 3));
++#  else
++extern int __xpg_strerror_r (int __errnum, char *__buf, size_t __buflen)
++     __THROW __nonnull ((2)) __attr_access ((__write_only__, 2, 3));
++#   define strerror_r __xpg_strerror_r
++#  endif
++# else
++/* If a temporary buffer is required, at most BUFLEN bytes of BUF will be
++   used.  */
++extern char *strerror_r (int __errnum, char *__buf, size_t __buflen)
++     __THROW __nonnull ((2)) __wur  __attr_access ((__write_only__, 2, 3));
++# endif
++# ifdef __USE_GNU
++/* Return a string describing the meaning of tthe error in ERR.  */
++extern const char *strerrordesc_np (int __err) __THROW;
++/* Return a string with the error name in ERR.  */
++extern const char *strerrorname_np (int __err) __THROW;
++# endif
++#endif
++#ifdef __USE_XOPEN2K8
++/* Translate error number to string according to the locale L.  */
++extern char *strerror_l (int __errnum, locale_t __l) __THROW;
++#endif
++#ifdef __USE_MISC
++// # include <strings.h>
++/* Set N bytes of S to 0.  The compiler will not delete a call to this
++   function, even if S is dead after the call.  */
++extern void explicit_bzero (void *__s, size_t __n) __THROW __nonnull ((1))
++    __fortified_attr_access (__write_only__, 1, 2);
++/* Return the next DELIM-delimited token from *STRINGP,
++   terminating it with a '\0', and update *STRINGP to point past it.  */
++extern char *strsep (char **__restrict __stringp,
++                     const char *__restrict __delim)
++     __THROW __nonnull ((1, 2));
++#endif
++#ifdef        __USE_XOPEN2K8
++/* Return a string describing the meaning of the signal number in SIG.  */
++extern char *strsignal (int __sig) __THROW;
++# ifdef __USE_GNU
++/* Return an abbreviation string for the signal number SIG.  */
++extern const char *sigabbrev_np (int __sig) __THROW;
++/* Return a string describing the meaning of the signal number in SIG,
++   the result is not translated.  */
++extern const char *sigdescr_np (int __sig) __THROW;
++# endif
++/* Copy SRC to DEST, returning the address of the terminating '\0' in DEST.  */
++extern char *__stpcpy (char *__restrict __dest, const char *__restrict __src)
++     __THROW __nonnull ((1, 2));
++extern char *stpcpy (char *__restrict __dest, const char *__restrict __src)
++     __THROW __nonnull ((1, 2));
++/* Copy no more than N characters of SRC to DEST, returning the address of
++   the last character written into DEST.  */
++extern char *__stpncpy (char *__restrict __dest,
++                        const char *__restrict __src, size_t __n)
++     __THROW __nonnull ((1, 2));
++extern char *stpncpy (char *__restrict __dest,
++                      const char *__restrict __src, size_t __n)
++     __THROW __nonnull ((1, 2));
++#endif
++#ifdef        __USE_GNU
++/* Compare S1 and S2 as strings holding name & indices/version numbers.  */
++extern int strverscmp (const char *__s1, const char *__s2)
++     __THROW __attribute_pure__ __nonnull ((1, 2));
++/* Sautee STRING briskly.  */
++extern char *strfry (char *__string) __THROW __nonnull ((1));
++/* Frobnicate N bytes of S.  */
++extern void *memfrob (void *__s, size_t __n) __THROW __nonnull ((1))
++    __attr_access ((__read_write__, 1, 2));
++# ifndef basename
++/* Return the file name within directory of FILENAME.  We don't
++   declare the function if the `basename' macro is available (defined
++   in <libgen.h>) which makes the XPG version of this function
++   available.  */
++#  ifdef __CORRECT_ISO_CPP_STRING_H_PROTO
++extern "C++" char *basename (char *__filename)
++     __THROW __asm ("basename") __nonnull ((1));
++extern "C++" const char *basename (const char *__filename)
++     __THROW __asm ("basename") __nonnull ((1));
++#  else
++extern char *basename (const char *__filename) __THROW __nonnull ((1));
++#  endif
++# endif
++#endif
++#if __GNUC_PREREQ (3,4)
++# if __USE_FORTIFY_LEVEL > 0 && defined __fortify_function
++/* Functions with security checks.  */
++#  include <bits/string_fortified.h>
++# endif
++__END_DECLS
++
+ #endif
+\ No newline at end of file
+diff --git a/lib/include/machine/_types.h b/lib/include/machine/_types.h
+new file mode 100644
+index 0000000..366dc75
+--- /dev/null
++++ b/lib/include/machine/_types.h
+@@ -0,0 +1,125 @@
++/*	$OpenBSD: _types.h,v 1.3 2006/02/14 18:12:58 miod Exp $	*/
++
++/*-
++ * Copyright (c) 1990, 1993
++ *	The Regents of the University of California.  All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the distribution.
++ * 3. Neither the name of the University nor the names of its contributors
++ *    may be used to endorse or promote products derived from this software
++ *    without specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
++ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
++ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
++ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
++ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
++ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
++ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
++ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
++ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
++ * SUCH DAMAGE.
++ *
++ *	@(#)types.h	8.3 (Berkeley) 1/5/94
++ *	@(#)ansi.h	8.2 (Berkeley) 1/4/94
++ */
++
++#ifndef _ARM__TYPES_H_
++#define _ARM__TYPES_H_
++
++
++#if !defined(__ARM_EABI__)
++/* the kernel defines size_t as unsigned int, but g++ wants it to be unsigned long */
++#define _SIZE_T
++#define _SSIZE_T
++#define _PTRDIFF_T
++typedef unsigned long  size_t;
++typedef long           ssize_t;
++typedef long           ptrdiff_t;
++#endif
++
++/* 7.18.1.1 Exact-width integer types */
++typedef	__signed char		__int8_t;
++typedef	unsigned char		__uint8_t;
++typedef	short			__int16_t;
++typedef	unsigned short		__uint16_t;
++typedef	int			__int32_t;
++typedef	unsigned int		__uint32_t;
++/* LONGLONG */
++typedef	long long		__int64_t;
++/* LONGLONG */
++typedef	unsigned long long	__uint64_t;
++
++/* 7.18.1.2 Minimum-width integer types */
++typedef	__int8_t		__int_least8_t;
++typedef	__uint8_t		__uint_least8_t;
++typedef	__int16_t		__int_least16_t;
++typedef	__uint16_t		__uint_least16_t;
++typedef	__int32_t		__int_least32_t;
++typedef	__uint32_t		__uint_least32_t;
++typedef	__int64_t		__int_least64_t;
++typedef	__uint64_t		__uint_least64_t;
++
++/* 7.18.1.3 Fastest minimum-width integer types */
++typedef	__int32_t		__int_fast8_t;
++typedef	__uint32_t		__uint_fast8_t;
++typedef	__int32_t		__int_fast16_t;
++typedef	__uint32_t		__uint_fast16_t;
++typedef	__int32_t		__int_fast32_t;
++typedef	__uint32_t		__uint_fast32_t;
++typedef	__int64_t		__int_fast64_t;
++typedef	__uint64_t		__uint_fast64_t;
++
++/* 7.18.1.4 Integer types capable of holding object pointers */
++typedef	int 			__intptr_t;
++typedef	unsigned int 		__uintptr_t;
++
++/* 7.18.1.5 Greatest-width integer types */
++typedef	__int64_t		__intmax_t;
++typedef	__uint64_t		__uintmax_t;
++
++/* Register size */
++typedef __int32_t		__register_t;
++
++/* VM system types */
++typedef unsigned long		__vaddr_t;
++typedef unsigned long		__paddr_t;
++typedef unsigned long		__vsize_t;
++typedef unsigned long		__psize_t;
++
++/* Standard system types */
++typedef int			__clock_t;
++typedef int			__clockid_t;
++typedef long			__ptrdiff_t;
++typedef	int			__time_t;
++typedef int			__timer_t;
++#if defined(__GNUC__) && __GNUC__ >= 3
++typedef	__builtin_va_list	__va_list;
++#else
++typedef	char *			__va_list;
++#endif
++
++/* Wide character support types */
++#ifndef __cplusplus
++typedef	int			__wchar_t;
++#endif
++typedef int			__wint_t;
++typedef	int			__rune_t;
++typedef	void *			__wctrans_t;
++typedef	void *			__wctype_t;
++
++#ifdef __ARMEB__
++#define _BYTE_ORDER _BIG_ENDIAN
++#else
++#define _BYTE_ORDER _LITTLE_ENDIAN
++#endif
++
++#endif	/* _ARM__TYPES_H_ */
+\ No newline at end of file
+diff --git a/lib/include/machine/cdefs.h b/lib/include/machine/cdefs.h
+new file mode 100644
+index 0000000..a618dd7
+--- /dev/null
++++ b/lib/include/machine/cdefs.h
+@@ -0,0 +1,19 @@
++/*	$OpenBSD: cdefs.h,v 1.2 2005/11/24 20:46:44 deraadt Exp $	*/
++
++#ifndef	_MACHINE_CDEFS_H_
++#define	_MACHINE_CDEFS_H_
++
++#if defined(lint)
++#define __indr_reference(sym,alias)	__lint_equal__(sym,alias)
++#define __warn_references(sym,msg)
++#define __weak_alias(alias,sym)		__lint_equal__(sym,alias)
++#elif defined(__GNUC__) && defined(__STDC__)
++#define __weak_alias(alias,sym)					\
++	__asm__(".weak " __STRING(alias) " ; " __STRING(alias)	\
++	    " = " __STRING(sym));
++#define	__warn_references(sym,msg)				\
++	__asm__(".section .gnu.warning." __STRING(sym)		\
++	    " ; .ascii \"" msg "\" ; .text");
++#endif
++
++#endif /* !_MACHINE_CDEFS_H_ */
+\ No newline at end of file
+diff --git a/lib/include/machine/endian.h b/lib/include/machine/endian.h
+new file mode 100644
+index 0000000..ddb8ce1
+--- /dev/null
++++ b/lib/include/machine/endian.h
+@@ -0,0 +1,89 @@
++/*	$OpenBSD: endian.h,v 1.3 2005/12/13 00:35:23 millert Exp $	*/
++
++/*
++ * Copyright (C) 2010 The Android Open Source Project
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ *  * Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ *  * Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in
++ *    the documentation and/or other materials provided with the
++ *    distribution.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
++ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
++ * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
++ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
++ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
++ * OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
++ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
++ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
++ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
++ * SUCH DAMAGE.
++ */
++
++#ifndef _ARM_ENDIAN_H_
++#define _ARM_ENDIAN_H_
++
++#ifdef __GNUC__
++
++/*
++ * REV and REV16 weren't available on ARM5 or ARM4.
++ * We don't include <machine/cpu-features.h> because it pollutes the
++ * namespace with macros like PLD.
++ */
++#if !defined __ARM_ARCH_5__ && !defined __ARM_ARCH_5T__ && \
++    !defined __ARM_ARCH_5TE__ && !defined __ARM_ARCH_5TEJ__ && \
++    !defined __ARM_ARCH_4T__ && !defined __ARM_ARCH_4__
++
++/* According to RealView Assembler User's Guide, REV and REV16 are available
++ * in Thumb code and 16-bit instructions when used in Thumb-2 code.
++ *
++ * REV Rd, Rm
++ *   Rd and Rm must both be Lo registers.
++ *
++ * REV16 Rd, Rm
++ *   Rd and Rm must both be Lo registers.
++ *
++ * The +l constraint takes care of this without constraining us in ARM mode.
++ */
++#define __swap16md(x) ({                                        \
++    register u_int16_t _x = (x);                                \
++    __asm volatile ("rev16 %0, %0" : "+l" (_x));                \
++    _x;                                                         \
++})
++
++#define __swap32md(x) ({                                        \
++    register u_int32_t _x = (x);                                \
++    __asm volatile ("rev %0, %0" : "+l" (_x));                  \
++    _x;                                                         \
++})
++
++#define __swap64md(x) ({                                        \
++    u_int64_t _swap64md_x = (x);                                \
++    (u_int64_t) __swap32md(_swap64md_x >> 32) |                 \
++        (u_int64_t) __swap32md(_swap64md_x & 0xffffffff) << 32; \
++})
++
++/* Tell sys/endian.h we have MD variants of the swap macros.  */
++#define MD_SWAP
++
++#endif  /* __ARM_ARCH__ */
++#endif  /* __GNUC__ */
++
++#ifdef __ARMEB__
++#define _BYTE_ORDER _BIG_ENDIAN
++#else
++#define _BYTE_ORDER _LITTLE_ENDIAN
++#endif
++#define __STRICT_ALIGNMENT
++#include <sys/types.h>
++#include <sys/endian.h>
++
++#endif  /* !_ARM_ENDIAN_H_ */
+\ No newline at end of file
+diff --git a/lib/include/pthread.h b/lib/include/pthread.h
+new file mode 100644
+index 0000000..14141e3
+--- /dev/null
++++ b/lib/include/pthread.h
+@@ -0,0 +1,315 @@
++/*	$OpenBSD: pthread.h,v 1.4 2018/03/05 01:15:26 deraadt Exp $	*/
++
++/*
++ * Copyright (c) 1993, 1994 by Chris Provenzano, proven@mit.edu
++ * Copyright (c) 1995-1998 by John Birrell <jb@cimlogic.com.au>
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the distribution.
++ * 3. All advertising materials mentioning features or use of this software
++ *    must display the following acknowledgement:
++ *  This product includes software developed by Chris Provenzano.
++ * 4. The name of Chris Provenzano may not be used to endorse or promote 
++ *	  products derived from this software without specific prior written
++ *	  permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY CHRIS PROVENZANO ``AS IS'' AND
++ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
++ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED.  IN NO EVENT SHALL CHRIS PROVENZANO BE LIABLE FOR ANY 
++ * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
++ * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
++ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
++ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
++ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
++ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
++ * SUCH DAMAGE.
++ *
++ * $FreeBSD: pthread.h,v 1.13 1999/07/31 08:36:07 rse Exp $
++ */
++#ifndef _PTHREAD_H_
++#define _PTHREAD_H_
++
++/*
++ * Header files.
++ */
++#include <sys/types.h>
++#include <sys/time.h>
++#include <sys/signal.h>
++#include <limits.h>
++#include <sched.h>
++
++/*
++ * Run-time invariant values:
++ */
++#define PTHREAD_DESTRUCTOR_ITERATIONS		4
++#define PTHREAD_KEYS_MAX			256
++#define PTHREAD_STACK_MIN			(1U << _MAX_PAGE_SHIFT)
++#define PTHREAD_THREADS_MAX			ULONG_MAX
++
++/*
++ * Flags for threads and thread attributes.
++ */
++#define PTHREAD_DETACHED            0x1
++#define PTHREAD_SCOPE_SYSTEM        0x2
++#define PTHREAD_INHERIT_SCHED       0x4
++#define PTHREAD_NOFLOAT             0x8
++
++#define PTHREAD_CREATE_DETACHED     PTHREAD_DETACHED
++#define PTHREAD_CREATE_JOINABLE     0
++#define PTHREAD_SCOPE_PROCESS       0
++#define PTHREAD_EXPLICIT_SCHED      0
++
++/*
++ * Flags for read/write lock attributes
++ */
++#define PTHREAD_PROCESS_PRIVATE     0
++#define PTHREAD_PROCESS_SHARED      1	
++
++/*
++ * Flags for cancelling threads
++ */
++#define PTHREAD_CANCEL_ENABLE		0
++#define PTHREAD_CANCEL_DISABLE		1
++#define PTHREAD_CANCEL_DEFERRED		0
++#define PTHREAD_CANCEL_ASYNCHRONOUS	2
++#define PTHREAD_CANCELED		((void *) 1)
++
++/*
++ * Barrier flags
++ */
++#define PTHREAD_BARRIER_SERIAL_THREAD -1
++
++/*
++ * Forward structure definitions.
++ *
++ * These are mostly opaque to the user.
++ */
++struct pthread;
++struct pthread_attr;
++struct pthread_cond;
++struct pthread_cond_attr;
++struct pthread_mutex;
++struct pthread_mutex_attr;
++struct pthread_once;
++struct pthread_rwlock;
++struct pthread_rwlockattr;
++
++/*
++ * Primitive system data type definitions required by P1003.1c.
++ *
++ * Note that P1003.1c specifies that there are no defined comparison
++ * or assignment operators for the types pthread_attr_t, pthread_cond_t,
++ * pthread_condattr_t, pthread_mutex_t, pthread_mutexattr_t.
++ */
++typedef struct	pthread			*pthread_t;
++typedef struct	pthread_attr		*pthread_attr_t;
++typedef volatile struct pthread_mutex	*pthread_mutex_t;
++typedef struct	pthread_mutex_attr	*pthread_mutexattr_t;
++typedef struct	pthread_cond		*pthread_cond_t;
++typedef struct	pthread_cond_attr	*pthread_condattr_t;
++typedef int				pthread_key_t;
++typedef struct	pthread_once		pthread_once_t;
++typedef struct	pthread_rwlock		*pthread_rwlock_t;
++typedef struct	pthread_rwlockattr	*pthread_rwlockattr_t;
++typedef struct	pthread_barrier		*pthread_barrier_t;
++typedef struct	pthread_barrierattr	*pthread_barrierattr_t;
++typedef struct	pthread_spinlock	*pthread_spinlock_t;
++
++/*
++ * Additional type definitions:
++ *
++ * Note that P1003.1c reserves the prefixes pthread_ and PTHREAD_ for
++ * use in header symbols.
++ */
++typedef void	*pthread_addr_t;
++typedef void	*(*pthread_startroutine_t)(void *);
++
++/*
++ * Once definitions.
++ */
++struct pthread_once {
++	int		state;
++	pthread_mutex_t	mutex;
++};
++
++/*
++ * Flags for once initialization.
++ */
++#define PTHREAD_NEEDS_INIT  0
++#define PTHREAD_DONE_INIT   1
++
++/*
++ * Static once initialization values. 
++ */
++#define PTHREAD_ONCE_INIT   { PTHREAD_NEEDS_INIT, PTHREAD_MUTEX_INITIALIZER }
++
++/*
++ * Static initialization values. 
++ */
++#define PTHREAD_MUTEX_INITIALIZER	NULL
++#define PTHREAD_COND_INITIALIZER	NULL
++#define PTHREAD_RWLOCK_INITIALIZER	NULL
++
++#define PTHREAD_PRIO_NONE	0
++#define PTHREAD_PRIO_INHERIT	1
++#define PTHREAD_PRIO_PROTECT	2
++
++/*
++ * Mutex types.
++ */
++enum pthread_mutextype {
++	PTHREAD_MUTEX_ERRORCHECK	= 1,	/* Error checking mutex */
++	PTHREAD_MUTEX_RECURSIVE		= 2,	/* Recursive mutex */
++	PTHREAD_MUTEX_NORMAL		= 3,	/* No error checking */
++	PTHREAD_MUTEX_STRICT_NP		= 4,	/* Strict error checking */
++	PTHREAD_MUTEX_TYPE_MAX
++};
++
++#define PTHREAD_MUTEX_ERRORCHECK	PTHREAD_MUTEX_ERRORCHECK
++#define PTHREAD_MUTEX_RECURSIVE		PTHREAD_MUTEX_RECURSIVE
++#define PTHREAD_MUTEX_NORMAL		PTHREAD_MUTEX_NORMAL
++#define PTHREAD_MUTEX_STRICT_NP		PTHREAD_MUTEX_STRICT_NP
++#define PTHREAD_MUTEX_DEFAULT		PTHREAD_MUTEX_STRICT_NP
++
++/*
++ * Thread function prototype definitions:
++ */
++__BEGIN_DECLS
++int		pthread_atfork(void (*)(void), void (*)(void), void (*)(void));
++int		pthread_attr_destroy(pthread_attr_t *);
++int		pthread_attr_getstack(const pthread_attr_t *,
++			void **, size_t *);
++int		pthread_attr_getstacksize(const pthread_attr_t *, size_t *);
++int		pthread_attr_getstackaddr(const pthread_attr_t *, void **);
++int		pthread_attr_getguardsize(const pthread_attr_t *, size_t *);
++int		pthread_attr_getdetachstate(const pthread_attr_t *, int *);
++int		pthread_attr_init(pthread_attr_t *);
++int		pthread_attr_setstacksize(pthread_attr_t *, size_t);
++int		pthread_attr_setstack(pthread_attr_t *, void *, size_t);
++int		pthread_attr_setstackaddr(pthread_attr_t *, void *);
++int		pthread_attr_setguardsize(pthread_attr_t *, size_t);
++int		pthread_attr_setdetachstate(pthread_attr_t *, int);
++void		pthread_cleanup_pop(int);
++void		pthread_cleanup_push(void (*) (void *), void *routine_arg);
++int		pthread_condattr_destroy(pthread_condattr_t *);
++int		pthread_condattr_init(pthread_condattr_t *);
++
++int		pthread_cond_broadcast(pthread_cond_t *);
++int		pthread_cond_destroy(pthread_cond_t *);
++int		pthread_cond_init(pthread_cond_t *,
++			const pthread_condattr_t *);
++int		pthread_cond_signal(pthread_cond_t *);
++int		pthread_cond_timedwait(pthread_cond_t *,
++			pthread_mutex_t *, const struct timespec *);
++int		pthread_cond_wait(pthread_cond_t *, pthread_mutex_t *);
++int		pthread_create(pthread_t *, const pthread_attr_t *,
++			void *(*) (void *), void *);
++int		pthread_detach(pthread_t);
++int		pthread_equal(pthread_t, pthread_t);
++__dead void	pthread_exit(void *);
++void		*pthread_getspecific(pthread_key_t);
++int		pthread_join(pthread_t, void **);
++int		pthread_key_create(pthread_key_t *,
++			void (*) (void *));
++int		pthread_key_delete(pthread_key_t);
++int		pthread_kill(pthread_t, int);
++int		pthread_mutexattr_init(pthread_mutexattr_t *);
++int		pthread_mutexattr_destroy(pthread_mutexattr_t *);
++int		pthread_mutexattr_gettype(pthread_mutexattr_t *, int *);
++int		pthread_mutexattr_settype(pthread_mutexattr_t *, int);
++int		pthread_mutex_destroy(pthread_mutex_t *);
++int		pthread_mutex_init(pthread_mutex_t *,
++			const pthread_mutexattr_t *);
++int		pthread_mutex_lock(pthread_mutex_t *);
++int		pthread_mutex_timedlock(pthread_mutex_t *,
++		    const struct timespec *);
++int		pthread_mutex_trylock(pthread_mutex_t *);
++int		pthread_mutex_unlock(pthread_mutex_t *);
++int		pthread_once(pthread_once_t *, void (*) (void));
++int		pthread_rwlock_destroy(pthread_rwlock_t *);
++int		pthread_rwlock_init(pthread_rwlock_t *,
++			const pthread_rwlockattr_t *);
++int		pthread_rwlock_rdlock(pthread_rwlock_t *);
++int		pthread_rwlock_timedrdlock(pthread_rwlock_t *,
++			const struct timespec *);
++int		pthread_rwlock_timedwrlock(pthread_rwlock_t *,
++			const struct timespec *);
++int		pthread_rwlock_tryrdlock(pthread_rwlock_t *);
++int		pthread_rwlock_trywrlock(pthread_rwlock_t *);
++int		pthread_rwlock_unlock(pthread_rwlock_t *);
++int		pthread_rwlock_wrlock(pthread_rwlock_t *);
++int		pthread_rwlockattr_init(pthread_rwlockattr_t *);
++int		pthread_rwlockattr_getpshared(const pthread_rwlockattr_t *,
++			int *);
++int		pthread_rwlockattr_setpshared(pthread_rwlockattr_t *, int);
++int		pthread_rwlockattr_destroy(pthread_rwlockattr_t *);
++pthread_t	pthread_self(void);
++int		pthread_setspecific(pthread_key_t, const void *);
++
++int		pthread_cancel(pthread_t);
++int		pthread_setcancelstate(int, int *);
++int		pthread_setcanceltype(int, int *);
++void		pthread_testcancel(void);
++
++int		pthread_getprio(pthread_t);
++int		pthread_setprio(pthread_t, int);
++void		pthread_yield(void);
++
++int		pthread_mutexattr_getprioceiling(pthread_mutexattr_t *,
++			int *);
++int		pthread_mutexattr_setprioceiling(pthread_mutexattr_t *,
++			int);
++int		pthread_mutex_getprioceiling(pthread_mutex_t *, int *);
++int		pthread_mutex_setprioceiling(pthread_mutex_t *, int, int *);
++
++int		pthread_mutexattr_getprotocol(pthread_mutexattr_t *, int *);
++int		pthread_mutexattr_setprotocol(pthread_mutexattr_t *, int);
++
++int		pthread_condattr_getclock(const pthread_condattr_t *,
++		    clockid_t *);
++int		pthread_condattr_setclock(pthread_condattr_t *, clockid_t);
++
++int		pthread_attr_getinheritsched(const pthread_attr_t *, int *);
++int		pthread_attr_getschedparam(const pthread_attr_t *,
++			struct sched_param *);
++int		pthread_attr_getschedpolicy(const pthread_attr_t *, int *);
++int		pthread_attr_getscope(const pthread_attr_t *, int *);
++int		pthread_attr_setinheritsched(pthread_attr_t *, int);
++int		pthread_attr_setschedparam(pthread_attr_t *,
++			const struct sched_param *);
++int		pthread_attr_setschedpolicy(pthread_attr_t *, int);
++int		pthread_attr_setscope(pthread_attr_t *, int);
++int		pthread_getschedparam(pthread_t pthread, int *,
++			struct sched_param *);
++int		pthread_setschedparam(pthread_t, int,
++			const struct sched_param *);
++int		pthread_getconcurrency(void);
++int		pthread_setconcurrency(int);
++int		pthread_barrier_init(pthread_barrier_t *,
++		    pthread_barrierattr_t *, unsigned int);
++int		pthread_barrier_destroy(pthread_barrier_t *);
++int		pthread_barrier_wait(pthread_barrier_t *);
++int		pthread_barrierattr_init(pthread_barrierattr_t *);
++int		pthread_barrierattr_destroy(pthread_barrierattr_t *);
++int		pthread_barrierattr_getpshared(pthread_barrierattr_t *, int *);
++int		pthread_barrierattr_setpshared(pthread_barrierattr_t *, int);
++int		pthread_spin_init(pthread_spinlock_t *, int);
++int		pthread_spin_destroy(pthread_spinlock_t *);
++int		pthread_spin_trylock(pthread_spinlock_t *);
++int		pthread_spin_lock(pthread_spinlock_t *);
++int		pthread_spin_unlock(pthread_spinlock_t *);
++
++#if __POSIX_VISIBLE >= 200112
++int		pthread_getcpuclockid(pthread_t, clockid_t *);
++#endif
++__END_DECLS
++
++#endif /* _PTHREAD_H_ */
+\ No newline at end of file
+diff --git a/lib/include/sched.h b/lib/include/sched.h
+new file mode 100644
+index 0000000..f85547a
+--- /dev/null
++++ b/lib/include/sched.h
+@@ -0,0 +1,124 @@
++/*
++ * Copyright (C) 2008 The Android Open Source Project
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ *  * Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ *  * Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in
++ *    the documentation and/or other materials provided with the
++ *    distribution.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
++ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
++ * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
++ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
++ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
++ * OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED
++ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
++ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
++ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
++ * SUCH DAMAGE.
++ */
++#ifndef _SCHED_H_
++#define _SCHED_H_
++#include <sys/cdefs.h>
++#include <sys/time.h>
++#ifdef __LINUX__
++#include <linux/sched.h>
++#endif
++
++
++__BEGIN_DECLS
++/* This name is used by glibc, but not by the kernel. */
++#define SCHED_OTHER SCHED_NORMAL
++struct sched_param {
++  int sched_priority;
++};
++extern int sched_setscheduler(pid_t, int, const struct sched_param*);
++extern int sched_getscheduler(pid_t);
++extern int sched_yield(void);
++extern int sched_get_priority_max(int);
++extern int sched_get_priority_min(int);
++extern int sched_setparam(pid_t, const struct sched_param*);
++extern int sched_getparam(pid_t, struct sched_param*);
++extern int sched_rr_get_interval(pid_t, struct timespec*);
++#if defined(__USE_GNU)
++extern int clone(int (*)(void*), void*, int, void*, ...);
++extern int unshare(int);
++extern int sched_getcpu(void);
++extern int setns(int, int);
++#ifdef __LP64__
++#define CPU_SETSIZE 1024
++#else
++#define CPU_SETSIZE 32
++#endif
++#define __CPU_BITTYPE  unsigned long int  /* mandated by the kernel  */
++#define __CPU_BITS     (8 * sizeof(__CPU_BITTYPE))
++#define __CPU_ELT(x)   ((x) / __CPU_BITS)
++#define __CPU_MASK(x)  ((__CPU_BITTYPE)1 << ((x) & (__CPU_BITS - 1)))
++typedef struct {
++  __CPU_BITTYPE  __bits[ CPU_SETSIZE / __CPU_BITS ];
++} cpu_set_t;
++extern int sched_setaffinity(pid_t pid, size_t setsize, const cpu_set_t* set);
++extern int sched_getaffinity(pid_t pid, size_t setsize, cpu_set_t* set);
++#define CPU_ZERO(set)          CPU_ZERO_S(sizeof(cpu_set_t), set)
++#define CPU_SET(cpu, set)      CPU_SET_S(cpu, sizeof(cpu_set_t), set)
++#define CPU_CLR(cpu, set)      CPU_CLR_S(cpu, sizeof(cpu_set_t), set)
++#define CPU_ISSET(cpu, set)    CPU_ISSET_S(cpu, sizeof(cpu_set_t), set)
++#define CPU_COUNT(set)         CPU_COUNT_S(sizeof(cpu_set_t), set)
++#define CPU_EQUAL(set1, set2)  CPU_EQUAL_S(sizeof(cpu_set_t), set1, set2)
++#define CPU_AND(dst, set1, set2)  __CPU_OP(dst, set1, set2, &)
++#define CPU_OR(dst, set1, set2)   __CPU_OP(dst, set1, set2, |)
++#define CPU_XOR(dst, set1, set2)  __CPU_OP(dst, set1, set2, ^)
++#define __CPU_OP(dst, set1, set2, op)  __CPU_OP_S(sizeof(cpu_set_t), dst, set1, set2, op)
++/* Support for dynamically-allocated cpu_set_t */
++#define CPU_ALLOC_SIZE(count) \
++  __CPU_ELT((count) + (__CPU_BITS - 1)) * sizeof(__CPU_BITTYPE)
++#define CPU_ALLOC(count)  __sched_cpualloc((count))
++#define CPU_FREE(set)     __sched_cpufree((set))
++extern cpu_set_t* __sched_cpualloc(size_t count);
++extern void       __sched_cpufree(cpu_set_t* set);
++#define CPU_ZERO_S(setsize, set)  __builtin_memset(set, 0, setsize)
++#define CPU_SET_S(cpu, setsize, set) \
++  do { \
++    size_t __cpu = (cpu); \
++    if (__cpu < 8 * (setsize)) \
++      (set)->__bits[__CPU_ELT(__cpu)] |= __CPU_MASK(__cpu); \
++  } while (0)
++#define CPU_CLR_S(cpu, setsize, set) \
++  do { \
++    size_t __cpu = (cpu); \
++    if (__cpu < 8 * (setsize)) \
++      (set)->__bits[__CPU_ELT(__cpu)] &= ~__CPU_MASK(__cpu); \
++  } while (0)
++#define CPU_ISSET_S(cpu, setsize, set) \
++  (__extension__ ({ \
++    size_t __cpu = (cpu); \
++    (__cpu < 8 * (setsize)) \
++      ? ((set)->__bits[__CPU_ELT(__cpu)] & __CPU_MASK(__cpu)) != 0 \
++      : 0; \
++  }))
++#define CPU_EQUAL_S(setsize, set1, set2)  (__builtin_memcmp(set1, set2, setsize) == 0)
++#define CPU_AND_S(setsize, dst, set1, set2)  __CPU_OP_S(setsize, dst, set1, set2, &)
++#define CPU_OR_S(setsize, dst, set1, set2)   __CPU_OP_S(setsize, dst, set1, set2, |)
++#define CPU_XOR_S(setsize, dst, set1, set2)  __CPU_OP_S(setsize, dst, set1, set2, ^)
++#define __CPU_OP_S(setsize, dstset, srcset1, srcset2, op) \
++  do { \
++    cpu_set_t* __dst = (dstset); \
++    const __CPU_BITTYPE* __src1 = (srcset1)->__bits; \
++    const __CPU_BITTYPE* __src2 = (srcset2)->__bits; \
++    size_t __nn = 0, __nn_max = (setsize)/sizeof(__CPU_BITTYPE); \
++    for (; __nn < __nn_max; __nn++) \
++      (__dst)->__bits[__nn] = __src1[__nn] op __src2[__nn]; \
++  } while (0)
++#define CPU_COUNT_S(setsize, set)  __sched_cpucount((setsize), (set))
++extern int __sched_cpucount(size_t setsize, cpu_set_t* set);
++#endif /* __USE_GNU */
++__END_DECLS
++#endif /* _SCHED_H_ */
+\ No newline at end of file
+diff --git a/lib/include/stdc-predef.h b/lib/include/stdc-predef.h
+new file mode 100644
+index 0000000..7e3ca06
+--- /dev/null
++++ b/lib/include/stdc-predef.h
+@@ -0,0 +1,60 @@
++/* Copyright (C) 1991-2018 Free Software Foundation, Inc.
++   This file is part of the GNU C Library.
++
++   The GNU C Library is free software; you can redistribute it and/or
++   modify it under the terms of the GNU Lesser General Public
++   License as published by the Free Software Foundation; either
++   version 2.1 of the License, or (at your option) any later version.
++
++   The GNU C Library is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++   Lesser General Public License for more details.
++
++   You should have received a copy of the GNU Lesser General Public
++   License along with the GNU C Library; if not, see
++   <http://www.gnu.org/licenses/>.  */
++
++#ifndef	_STDC_PREDEF_H
++#define	_STDC_PREDEF_H	1
++
++/* This header is separate from features.h so that the compiler can
++   include it implicitly at the start of every compilation.  It must
++   not itself include <features.h> or any other header that includes
++   <features.h> because the implicit include comes before any feature
++   test macros that may be defined in a source file before it first
++   explicitly includes a system header.  GCC knows the name of this
++   header in order to preinclude it.  */
++
++/* glibc's intent is to support the IEC 559 math functionality, real
++   and complex.  If the GCC (4.9 and later) predefined macros
++   specifying compiler intent are available, use them to determine
++   whether the overall intent is to support these features; otherwise,
++   presume an older compiler has intent to support these features and
++   define these macros by default.  */
++
++#ifdef __GCC_IEC_559
++# if __GCC_IEC_559 > 0
++#  define __STDC_IEC_559__		1
++# endif
++#else
++# define __STDC_IEC_559__		1
++#endif
++
++#ifdef __GCC_IEC_559_COMPLEX
++# if __GCC_IEC_559_COMPLEX > 0
++#  define __STDC_IEC_559_COMPLEX__	1
++# endif
++#else
++# define __STDC_IEC_559_COMPLEX__	1
++#endif
++
++/* wchar_t uses Unicode 10.0.0.  Version 10.0 of the Unicode Standard is
++   synchronized with ISO/IEC 10646:2017, fifth edition, plus
++   the following additions from Amendment 1 to the fifth edition:
++   - 56 emoji characters
++   - 285 hentaigana
++   - 3 additional Zanabazar Square characters */
++#define __STDC_ISO_10646__		201706L
++
++#endif
+\ No newline at end of file
+diff --git a/lib/include/stdlib.h b/lib/include/stdlib.h
+new file mode 100644
+index 0000000..bc880a8
+--- /dev/null
++++ b/lib/include/stdlib.h
+@@ -0,0 +1,324 @@
++/*	$OpenBSD: stdlib.h,v 1.77 2024/03/01 21:30:40 millert Exp $	*/
++/*	$NetBSD: stdlib.h,v 1.25 1995/12/27 21:19:08 jtc Exp $	*/
++
++/*-
++ * Copyright (c) 1990 The Regents of the University of California.
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the distribution.
++ * 3. Neither the name of the University nor the names of its contributors
++ *    may be used to endorse or promote products derived from this software
++ *    without specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
++ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
++ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
++ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
++ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
++ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
++ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
++ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
++ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
++ * SUCH DAMAGE.
++ *
++ *	@(#)stdlib.h	5.13 (Berkeley) 6/4/91
++ */
++
++#ifndef _STDLIB_H_
++#define _STDLIB_H_
++
++#include <sys/cdefs.h>
++#include <sys/_null.h>
++#include <machine/_types.h>
++#if __BSD_VISIBLE	/* for quad_t, etc. (XXX - use protected types) */
++#include <sys/types.h>
++#endif
++
++#ifndef	_SIZE_T_DEFINED_
++#define	_SIZE_T_DEFINED_
++typedef	__size_t	size_t;
++#endif
++
++/* in C++, wchar_t is a built-in type */
++#if !defined(_WCHAR_T_DEFINED_) && !defined(__cplusplus)
++#define _WCHAR_T_DEFINED_
++typedef	__wchar_t	wchar_t;
++#endif
++
++typedef struct {
++	int quot;		/* quotient */
++	int rem;		/* remainder */
++} div_t;
++
++typedef struct {
++	long quot;		/* quotient */
++	long rem;		/* remainder */
++} ldiv_t;
++
++#if __ISO_C_VISIBLE >= 1999
++typedef struct {
++	long long quot;		/* quotient */
++	long long rem;		/* remainder */
++} lldiv_t;
++#endif
++
++#if __BSD_VISIBLE
++typedef struct {
++	quad_t quot;		/* quotient */
++	quad_t rem;		/* remainder */
++} qdiv_t;
++#endif
++
++#define	EXIT_FAILURE	1
++#define	EXIT_SUCCESS	0
++
++#define	RAND_MAX	0x7fffffff
++
++#define	MB_CUR_MAX	__mb_cur_max()
++
++/*
++ * Some header files may define an abs macro.
++ * If defined, undef it to prevent a syntax error and issue a warning.
++ */
++#ifdef abs
++#undef abs
++#warning abs macro collides with abs() prototype, undefining
++#endif
++
++__BEGIN_DECLS
++__dead void	 abort(void);
++int	 abs(int);
++int	 atexit(void (*)(void));
++double	 atof(const char *);
++int	 atoi(const char *);
++long	 atol(const char *);
++void	*bsearch(const void *, const void *, size_t, size_t,
++	    int (*)(const void *, const void *));
++void	*calloc(size_t, size_t);
++div_t	 div(int, int);
++__dead void	 exit(int);
++__dead void	 _Exit(int);
++void	 free(void *);
++char	*getenv(const char *);
++long	 labs(long);
++ldiv_t	 ldiv(long, long);
++void	*malloc(size_t);
++#if __BSD_VISIBLE
++void	freezero(void *, size_t)
++		 __attribute__ ((__bounded__(__buffer__,1,2)));
++void	*calloc_conceal(size_t, size_t);
++void	*malloc_conceal(size_t);
++void	*reallocarray(void *, size_t, size_t);
++void	*recallocarray(void *, size_t, size_t, size_t);
++#endif /* __BSD_VISIBLE */
++void	 qsort(void *, size_t, size_t, int (*)(const void *, const void *));
++int	 rand(void);
++void	*realloc(void *, size_t);
++void	 srand(unsigned);
++void	 srand_deterministic(unsigned);
++double	 strtod(const char *__restrict, char **__restrict);
++float	 strtof(const char *__restrict, char **__restrict);
++long	 strtol(const char *__restrict, char **__restrict, int);
++long double
++	 strtold(const char *__restrict, char **__restrict);
++unsigned long
++	 strtoul(const char *__restrict, char **__restrict, int);
++int	 system(const char *);
++
++size_t	 __mb_cur_max(void);
++int	 mblen(const char *, size_t);
++size_t	 mbstowcs(wchar_t *, const char *, size_t);
++int	 wctomb(char *, wchar_t);
++int	 mbtowc(wchar_t *, const char *, size_t);
++size_t	 wcstombs(char *, const wchar_t *, size_t);
++
++/*
++ * IEEE Std 1003.1c-95, also adopted by X/Open CAE Spec Issue 5 Version 2
++ */
++#if __BSD_VISIBLE || __POSIX_VISIBLE >= 199506 || defined(_REENTRANT)
++int	 rand_r(unsigned int *);
++#endif
++
++#if __BSD_VISIBLE || __XPG_VISIBLE >= 400
++double	 drand48(void);
++double	 erand48(unsigned short[3]);
++long	 jrand48(unsigned short[3]);
++void	 lcong48(unsigned short[7]);
++void	 lcong48_deterministic(unsigned short[7]);
++long	 lrand48(void);
++long	 mrand48(void);
++long	 nrand48(unsigned short[3]);
++unsigned short *seed48(unsigned short[3]);
++unsigned short *seed48_deterministic(unsigned short[3]);
++void	 srand48(long);
++void	 srand48_deterministic(long);
++
++int	 putenv(char *);
++#endif
++
++/*
++ * XSI functions marked LEGACY in IEEE Std 1003.1-2001 (POSIX) and
++ * removed in IEEE Std 1003.1-2008
++ */
++#if __BSD_VISIBLE || __XPG_VISIBLE < 700
++char	*ecvt(double, int, int *, int *);
++char	*fcvt(double, int, int *, int *);
++char	*gcvt(double, int, char *);
++#if __BSD_VISIBLE || __XPG_VISIBLE >= 420
++char	*mktemp(char *);
++#endif
++#endif	/* __BSD_VISIBLE || __XPG_VISIBLE < 700 */
++
++#if __BSD_VISIBLE || __XPG_VISIBLE >= 420
++long	 a64l(const char *);
++char	*l64a(long);
++
++char	*initstate(unsigned int, char *, size_t)
++		__attribute__((__bounded__ (__string__,2,3)));
++long	 random(void);
++char	*setstate(char *);
++void	 srandom(unsigned int);
++void	 srandom_deterministic(unsigned int);
++
++char	*realpath(const char *, char *)
++		__attribute__((__bounded__ (__minbytes__,2,1024)));
++
++/*
++ * XSI functions marked LEGACY in XPG5 and removed in IEEE Std 1003.1-2001
++ */
++#if __BSD_VISIBLE || __XPG_VISIBLE < 600
++int	 ttyslot(void);
++void	*valloc(size_t);		/* obsoleted by malloc() */
++#endif
++#endif /* __BSD_VISIBLE || __XPG_VISIBLE >= 420 */
++
++/*
++ * 4.4BSD, then XSI in XPG4.2, then added to POSIX base in IEEE Std 1003.1-2008
++ */
++#if __BSD_VISIBLE || __XPG_VISIBLE >= 420 || __POSIX_VISIBLE >= 200809
++int	 mkstemp(char *);
++#endif
++
++/*
++ * ISO C99
++ */
++#if __ISO_C_VISIBLE >= 1999
++long long
++	 atoll(const char *);
++long long
++	 llabs(long long);
++lldiv_t
++	 lldiv(long long, long long);
++long long
++	 strtoll(const char *__restrict, char **__restrict, int);
++unsigned long long
++	 strtoull(const char *__restrict, char **__restrict, int);
++#endif
++
++#if __ISO_C_VISIBLE >= 2011
++void *
++	aligned_alloc(size_t, size_t);
++#endif
++
++/*
++ * The Open Group Base Specifications, Issue 6; IEEE Std 1003.1-2001 (POSIX)
++ */
++#if __BSD_VISIBLE || __POSIX_VISIBLE >= 200112
++int	 posix_memalign(void **, size_t, size_t);
++int	 setenv(const char *, const char *, int);
++int	 unsetenv(const char *);
++#endif
++#if __XPG_VISIBLE >= 420 || __POSIX_VISIBLE >= 200112
++char	*ptsname(int);
++int	 grantpt(int);
++int	 unlockpt(int);
++#endif
++#if __POSIX_VISIBLE >= 200112
++int	 posix_openpt(int);
++#endif
++
++/*
++ * The Open Group Base Specifications, Issue 7; IEEE Std 1003.1-2008 (POSIX)
++ */
++#if __BSD_VISIBLE || __POSIX_VISIBLE >= 200809
++char	*mkdtemp(char *);
++#endif
++
++#if __XPG_VISIBLE >= 420 || __POSIX_VISIBLE >= 200809
++int     getsubopt(char **, char * const *, char **);
++#endif
++
++/*
++ * The Open Group Base Specifications, post-Issue 7
++ */
++#if __BSD_VISIBLE
++int	mkostemp(char *, int);
++#endif
++
++#if __BSD_VISIBLE
++#define alloca(n) __builtin_alloca(n)
++
++char	*getbsize(int *, long *);
++char	*cgetcap(char *, const char *, int);
++int	 cgetclose(void);
++int	 cgetent(char **, char **, const char *);
++int	 cgetfirst(char **, char **);
++int	 cgetmatch(char *, const char *);
++int	 cgetnext(char **, char **);
++int	 cgetnum(char *, const char *, long *);
++int	 cgetset(const char *);
++int	 cgetusedb(int);
++int	 cgetstr(char *, const char *, char **);
++int	 cgetustr(char *, const char *, char **);
++
++int	 daemon(int, int);
++char	*devname(dev_t, mode_t);
++int	 getloadavg(double [], int);
++
++const char *
++	getprogname(void);
++void	setprogname(const char *);
++
++extern	 char *suboptarg;		/* getsubopt(3) external variable */
++
++char *	 mkdtemps(char *, int);
++int	 mkstemps(char *, int);
++int	 mkostemps(char *, int, int);
++
++int	 heapsort(void *, size_t, size_t, int (*)(const void *, const void *));
++int	 mergesort(void *, size_t, size_t, int (*)(const void *, const void *));
++int	 radixsort(const unsigned char **, int, const unsigned char *,
++	    unsigned);
++int	 sradixsort(const unsigned char **, int, const unsigned char *,
++	    unsigned);
++
++void	 srandomdev(void);
++long long
++	 strtonum(const char *, long long, long long, const char **);
++
++void	 setproctitle(const char *, ...)
++	__attribute__((__format__ (__printf__, 1, 2)));
++
++quad_t	 qabs(quad_t);
++qdiv_t	 qdiv(quad_t, quad_t);
++quad_t	 strtoq(const char *__restrict, char **__restrict, int);
++u_quad_t strtouq(const char *__restrict, char **__restrict, int);
++
++uint32_t arc4random(void);
++uint32_t arc4random_uniform(uint32_t);
++void arc4random_buf(void *, size_t)
++	__attribute__((__bounded__ (__buffer__,1,2)));
++
++#endif /* __BSD_VISIBLE */
++
++__END_DECLS
++
++#endif /* _STDLIB_H_ */
+\ No newline at end of file
+diff --git a/lib/include/string.h b/lib/include/string.h
+index a55cd76..a38c44d 100644
+--- a/lib/include/string.h
++++ b/lib/include/string.h
+@@ -2,9 +2,11 @@
+ #define _STRING_H_COOMMON_HEISEN_KERNEL_DEFINED_G
+ 
+ #include <types.h>
++#ifdef __cplusplus
+ #include <list.h>
++#endif
+ 
+-#ifndef size_t
++#ifndef size_t_defined
+ typedef unsigned int size_t; // Define size_t if it's not already defined
+ #endif
+ 
+@@ -33,7 +35,15 @@ extern void* memset (void * p, int val, size_t len);
+ extern void* memcpy (void* to, const void* from, size_t len);
+ void* memmove(void* dstptr, const void* srcptr, size_t size);
+ size_t strlen(const char* str);
++
++
++#ifdef __cplusplus
+ int str_IndexOf(const char* str, char c, int skip = 0);
++#else 
++int str_IndexOf(const char* str, char c, int skip);
++#endif
++
++
+ bool str_Contains(const char* str, char c);
+ // List<char*> str_Split(const char* str, char d);
+ char* str_Uppercase(char* str);
+@@ -42,8 +52,9 @@ char* str_Add(char* str, char c);
+ char* str_Combine(char* part1, char* part2);
+ int strcmp(const char *s1, const char *s2);
+ int memcmp(const void* aptr, const void* bptr, size_t size);
++#ifdef __cplusplus
+ List<char*> str_Split(const char* str, char d);
+-
++#endif
+ 
+ bool isvalid(unsigned char key);
+ 
+diff --git a/lib/include/sys/_endian.h b/lib/include/sys/_endian.h
+new file mode 100644
+index 0000000..570cc6f
+--- /dev/null
++++ b/lib/include/sys/_endian.h
+@@ -0,0 +1,179 @@
++/*	$OpenBSD: _endian.h,v 1.8 2018/01/11 23:13:37 dlg Exp $	*/
++
++/*-
++ * Copyright (c) 1997 Niklas Hallqvist.  All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the distribution.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
++ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
++ * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
++ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
++ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++/*
++ * Internal endianness macros.  This pulls in <machine/endian.h> to
++ * get the correct setting direction for the platform and sets internal
++ * ('__' prefix) macros appropriately.
++ */
++
++#ifndef _SYS__ENDIAN_H_
++#define _SYS__ENDIAN_H_
++
++#include <sys/_types.h>
++
++#define __FROM_SYS__ENDIAN
++#include <machine/endian.h>
++#undef __FROM_SYS__ENDIAN
++
++#define _LITTLE_ENDIAN	1234
++#define _BIG_ENDIAN	4321
++#define _PDP_ENDIAN	3412
++
++/* Note that these macros evaluate their arguments several times.  */
++
++#define __swap16gen(x)							\
++    (__uint16_t)(((__uint16_t)(x) & 0xffU) << 8 | ((__uint16_t)(x) & 0xff00U) >> 8)
++
++#define __swap32gen(x)							\
++    (__uint32_t)(((__uint32_t)(x) & 0xff) << 24 |			\
++    ((__uint32_t)(x) & 0xff00) << 8 | ((__uint32_t)(x) & 0xff0000) >> 8 |\
++    ((__uint32_t)(x) & 0xff000000) >> 24)
++
++#define __swap64gen(x)							\
++	(__uint64_t)((((__uint64_t)(x) & 0xff) << 56) |			\
++	    ((__uint64_t)(x) & 0xff00ULL) << 40 |			\
++	    ((__uint64_t)(x) & 0xff0000ULL) << 24 |			\
++	    ((__uint64_t)(x) & 0xff000000ULL) << 8 |			\
++	    ((__uint64_t)(x) & 0xff00000000ULL) >> 8 |			\
++	    ((__uint64_t)(x) & 0xff0000000000ULL) >> 24 |		\
++	    ((__uint64_t)(x) & 0xff000000000000ULL) >> 40 |		\
++	    ((__uint64_t)(x) & 0xff00000000000000ULL) >> 56)
++
++#ifndef __HAVE_MD_SWAP
++static __inline __uint16_t
++__swap16md(__uint16_t x)
++{
++	return (__swap16gen(x));
++}
++
++static __inline __uint32_t
++__swap32md(__uint32_t x)
++{
++	return (__swap32gen(x));
++}
++
++static __inline __uint64_t
++__swap64md(__uint64_t x)
++{
++	return (__swap64gen(x));
++}
++#endif
++
++#define __swap16(x)							\
++	(__uint16_t)(__builtin_constant_p(x) ? __swap16gen(x) : __swap16md(x))
++#define __swap32(x)							\
++	(__uint32_t)(__builtin_constant_p(x) ? __swap32gen(x) : __swap32md(x))
++#define __swap64(x)							\
++	(__uint64_t)(__builtin_constant_p(x) ? __swap64gen(x) : __swap64md(x))
++
++#if _BYTE_ORDER == _LITTLE_ENDIAN
++
++#define _QUAD_HIGHWORD 1
++#define _QUAD_LOWWORD 0
++
++#define __htobe16	__swap16
++#define __htobe32	__swap32
++#define __htobe64	__swap64
++#define __htole16(x)	((__uint16_t)(x))
++#define __htole32(x)	((__uint32_t)(x))
++#define __htole64(x)	((__uint64_t)(x))
++
++#ifdef _KERNEL
++#ifdef __HAVE_MD_SWAPIO
++
++#define __bemtoh16(_x) __mswap16(_x)
++#define __bemtoh32(_x) __mswap32(_x)
++#define __bemtoh64(_x) __mswap64(_x)
++
++#define __htobem16(_x, _v) __swapm16((_x), (_v))
++#define __htobem32(_x, _v) __swapm32((_x), (_v))
++#define __htobem64(_x, _v) __swapm64((_x), (_v))
++
++#endif /* __HAVE_MD_SWAPIO */
++#endif /* _KERNEL */
++#endif /* _BYTE_ORDER == _LITTLE_ENDIAN */
++
++#if _BYTE_ORDER == _BIG_ENDIAN
++
++#define _QUAD_HIGHWORD 0
++#define _QUAD_LOWWORD 1
++
++#define __htobe16(x)	((__uint16_t)(x))
++#define __htobe32(x)	((__uint32_t)(x))
++#define __htobe64(x)	((__uint64_t)(x))
++#define __htole16	__swap16
++#define __htole32	__swap32
++#define __htole64	__swap64
++
++#ifdef _KERNEL
++#ifdef __HAVE_MD_SWAPIO
++
++#define __lemtoh16(_x) __mswap16(_x)
++#define __lemtoh32(_x) __mswap32(_x)
++#define __lemtoh64(_x) __mswap64(_x)
++
++#define __htolem16(_x, _v) __swapm16((_x), (_v))
++#define __htolem32(_x, _v) __swapm32((_x), (_v))
++#define __htolem64(_x, _v) __swapm64((_x), (_v))
++
++#endif /* __HAVE_MD_SWAPIO */
++#endif /* _KERNEL */
++#endif /* _BYTE_ORDER == _BIG_ENDIAN */
++
++
++#ifdef _KERNEL
++/*
++ * Fill in the __hto[bl]em{16,32,64} and __[bl]emtoh{16,32,64} macros
++ * that haven't been defined yet
++ */
++
++#ifndef __bemtoh16
++#define __bemtoh16(_x)		__htobe16(*(__uint16_t *)(_x))
++#define __bemtoh32(_x)		__htobe32(*(__uint32_t *)(_x))
++#define __bemtoh64(_x)		__htobe64(*(__uint64_t *)(_x))
++#endif
++
++#ifndef __htobem16
++#define __htobem16(_x, _v)	(*(__uint16_t *)(_x) = __htobe16(_v))
++#define __htobem32(_x, _v)	(*(__uint32_t *)(_x) = __htobe32(_v))
++#define __htobem64(_x, _v)	(*(__uint64_t *)(_x) = __htobe64(_v))
++#endif
++
++#ifndef __lemtoh16
++#define __lemtoh16(_x)		__htole16(*(__uint16_t *)(_x))
++#define __lemtoh32(_x)		__htole32(*(__uint32_t *)(_x))
++#define __lemtoh64(_x)		__htole64(*(__uint64_t *)(_x))
++#endif
++
++#ifndef __htolem16
++#define __htolem16(_x, _v)	(*(__uint16_t *)(_x) = __htole16(_v))
++#define __htolem32(_x, _v)	(*(__uint32_t *)(_x) = __htole32(_v))
++#define __htolem64(_x, _v)	(*(__uint64_t *)(_x) = __htole64(_v))
++#endif
++#endif /* _KERNEL */
++
++#endif /* _SYS__ENDIAN_H_ */
+\ No newline at end of file
+diff --git a/lib/include/sys/_null.h b/lib/include/sys/_null.h
+new file mode 100644
+index 0000000..f25deb1
+--- /dev/null
++++ b/lib/include/sys/_null.h
+@@ -0,0 +1,18 @@
++/*	$OpenBSD: _null.h,v 1.2 2016/09/09 22:07:58 millert Exp $	*/
++
++/*
++ * Written by Todd C. Miller, September 9, 2016
++ * Public domain.
++ */
++
++#ifndef NULL
++#if !defined(__cplusplus)
++#define	NULL	((void *)0)
++#elif __cplusplus >= 201103L
++#define	NULL	nullptr
++#elif defined(__GNUG__)
++#define	NULL	__null
++#else
++#define	NULL	0L
++#endif
++#endif
+\ No newline at end of file
+diff --git a/lib/include/sys/_types.h b/lib/include/sys/_types.h
+new file mode 100644
+index 0000000..843f4d5
+--- /dev/null
++++ b/lib/include/sys/_types.h
+@@ -0,0 +1,79 @@
++/*	$OpenBSD: _types.h,v 1.10 2022/08/06 13:31:13 semarie Exp $	*/
++
++/*-
++ * Copyright (c) 1990, 1993
++ *	The Regents of the University of California.  All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the distribution.
++ * 3. Neither the name of the University nor the names of its contributors
++ *    may be used to endorse or promote products derived from this software
++ *    without specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
++ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
++ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
++ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
++ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
++ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
++ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
++ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
++ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
++ * SUCH DAMAGE.
++ *
++ *	@(#)types.h	8.3 (Berkeley) 1/5/94
++ */
++
++#ifndef _SYS__TYPES_H_
++#define	_SYS__TYPES_H_
++
++#include <machine/_types.h>
++
++typedef __int64_t	__blkcnt_t;	/* blocks allocated for file */
++typedef __int32_t	__blksize_t;	/* optimal blocksize for I/O */
++#ifndef  __clock_t_defined
++typedef	__int64_t	__clock_t;	/* ticks in CLOCKS_PER_SEC */
++#endif
++typedef	__int32_t	__clockid_t;	/* CLOCK_* identifiers */
++typedef	unsigned long	__cpuid_t;	/* CPU id */
++typedef	__int32_t	__dev_t;	/* device number */
++typedef	__uint32_t	__fixpt_t;	/* fixed point number */
++typedef	__uint64_t	__fsblkcnt_t;	/* file system block count */
++typedef	__uint64_t	__fsfilcnt_t;	/* file system file count */
++typedef	__uint32_t	__gid_t;	/* group id */
++typedef	__uint32_t	__id_t;		/* may contain pid, uid or gid */
++typedef	__uint32_t	__in_addr_t;	/* base type for internet address */
++typedef	__uint16_t	__in_port_t;	/* IP port type */
++typedef	__uint64_t	__ino_t;	/* inode number */
++typedef	long		__key_t;	/* IPC key (for Sys V IPC) */
++typedef	__uint32_t	__mode_t;	/* permissions */
++typedef	__uint32_t	__nlink_t;	/* link count */
++typedef	__int64_t	__off_t;	/* file offset or size */
++typedef	__int32_t	__pid_t;	/* process id */
++typedef	__uint64_t	__rlim_t;	/* resource limit */
++typedef	__uint8_t	__sa_family_t;	/* sockaddr address family type */
++typedef	__int32_t	__segsz_t;	/* segment size */
++typedef	__uint32_t	__socklen_t;	/* length type for network syscalls */
++typedef	long		__suseconds_t;	/* microseconds (signed) */
++typedef	__int64_t	__time_t;	/* epoch time */
++typedef	__int32_t	__timer_t;	/* POSIX timer identifiers */
++typedef	__uint32_t	__uid_t;	/* user id */
++typedef	__uint32_t	__useconds_t;	/* microseconds */
++
++/*
++ * mbstate_t is an opaque object to keep conversion state, during multibyte
++ * stream conversions. The content must not be referenced by user programs.
++ */
++typedef union {
++	char __mbstate8[128];
++	__int64_t __mbstateL;			/* for alignment */
++} __mbstate_t;
++
++#endif /* !_SYS__TYPES_H_ */
+\ No newline at end of file
+diff --git a/lib/include/sys/cdefs.h b/lib/include/sys/cdefs.h
+new file mode 100644
+index 0000000..f2b1424
+--- /dev/null
++++ b/lib/include/sys/cdefs.h
+@@ -0,0 +1,413 @@
++/*	$OpenBSD: cdefs.h,v 1.43 2018/10/29 17:10:40 guenther Exp $	*/
++/*	$NetBSD: cdefs.h,v 1.16 1996/04/03 20:46:39 christos Exp $	*/
++
++/*
++ * Copyright (c) 1991, 1993
++ *	The Regents of the University of California.  All rights reserved.
++ *
++ * This code is derived from software contributed to Berkeley by
++ * Berkeley Software Design, Inc.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the distribution.
++ * 3. Neither the name of the University nor the names of its contributors
++ *    may be used to endorse or promote products derived from this software
++ *    without specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
++ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
++ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
++ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
++ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
++ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
++ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
++ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
++ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
++ * SUCH DAMAGE.
++ *
++ *	@(#)cdefs.h	8.7 (Berkeley) 1/21/94
++ */
++
++#ifndef	_SYS_CDEFS_H_
++#define	_SYS_CDEFS_H_
++
++#include <machine/cdefs.h>
++
++/*
++ * Macro to test if we're using a specific version of gcc or later.
++ */
++#ifdef __GNUC__
++#define __GNUC_PREREQ__(ma, mi) \
++	((__GNUC__ > (ma)) || (__GNUC__ == (ma) && __GNUC_MINOR__ >= (mi)))
++#else
++#define __GNUC_PREREQ__(ma, mi) 0
++#endif
++
++/*
++ * The __CONCAT macro is used to concatenate parts of symbol names, e.g.
++ * with "#define OLD(foo) __CONCAT(old,foo)", OLD(foo) produces oldfoo.
++ * The __CONCAT macro is a bit tricky -- make sure you don't put spaces
++ * in between its arguments.  Do not use __CONCAT on double-quoted strings,
++ * such as those from the __STRING macro: to concatenate strings just put
++ * them next to each other.
++ */
++#if defined(__STDC__) || defined(__cplusplus)
++#define	__P(protos)	protos		/* full-blown ANSI C */
++#define	__CONCAT(x,y)	x ## y
++#define	__STRING(x)	#x
++
++#define	__const		const		/* define reserved names to standard */
++#define	__signed	signed
++#define	__volatile	volatile
++#if defined(__cplusplus) || defined(__PCC__)
++#define	__inline	inline		/* convert to C++ keyword */
++#else
++#if !defined(__GNUC__)
++#define	__inline			/* delete GCC keyword */
++#endif /* !__GNUC__ */
++#endif /* !__cplusplus */
++
++#else	/* !(__STDC__ || __cplusplus) */
++#define	__P(protos)	()		/* traditional C preprocessor */
++#define	__CONCAT(x,y)	x/**/y
++#define	__STRING(x)	"x"
++
++#if !defined(__GNUC__)
++#define	__const				/* delete pseudo-ANSI C keywords */
++#define	__inline
++#define	__signed
++#define	__volatile
++#endif	/* !__GNUC__ */
++#endif	/* !(__STDC__ || __cplusplus) */
++
++/*
++ * GCC1 and some versions of GCC2 declare dead (non-returning) and
++ * pure (no side effects) functions using "volatile" and "const";
++ * unfortunately, these then cause warnings under "-ansi -pedantic".
++ * GCC >= 2.5 uses the __attribute__((attrs)) style.  All of these
++ * work for GNU C++ (modulo a slight glitch in the C++ grammar in
++ * the distribution version of 2.5.5).
++ */
++
++#if !__GNUC_PREREQ__(2, 5) && !defined(__PCC__)
++#define	__attribute__(x)	/* delete __attribute__ if non-gcc or gcc1 */
++#if defined(__GNUC__) && !defined(__STRICT_ANSI__)
++#define	__dead		__volatile
++#define	__pure		__const
++#endif
++#else
++#define __dead		__attribute__((__noreturn__))
++#define __pure		__attribute__((__const__))
++#endif
++
++#if __GNUC_PREREQ__(2, 7)
++#define	__unused	__attribute__((__unused__))
++#else
++#define	__unused	/* delete */
++#endif
++
++#if __GNUC_PREREQ__(3, 1)
++#define	__used		__attribute__((__used__))
++#else
++#define	__used		__unused	/* suppress -Wunused warnings */
++#endif
++
++#if __GNUC_PREREQ__(3,4)
++# define __warn_unused_result	__attribute__((__warn_unused_result__))
++#else
++# define __warn_unused_result	/* delete */
++#endif
++
++#if __GNUC_PREREQ__(3,3) && !defined(__clang__)
++# define __bounded(args)	__attribute__ ((__bounded__ args ))
++#else
++# define __bounded(args)	/* delete */
++#endif
++
++/*
++ * __returns_twice makes the compiler not assume the function
++ * only returns once.  This affects registerisation of variables:
++ * even local variables need to be in memory across such a call.
++ * Example: setjmp()
++ */
++#if __GNUC_PREREQ__(4, 1)
++#define __returns_twice	__attribute__((returns_twice))
++#else
++#define __returns_twice
++#endif
++
++/*
++ * __only_inline makes the compiler only use this function definition
++ * for inlining; references that can't be inlined will be left as
++ * external references instead of generating a local copy.  The
++ * matching library should include a simple extern definition for
++ * the function to handle those references.  c.f. ctype.h
++ */
++#ifdef __GNUC__
++#  if __GNUC_PREREQ__(4, 2)
++#define __only_inline	extern __inline __attribute__((__gnu_inline__))
++#  else
++#define __only_inline	extern __inline
++#  endif
++#else
++#define __only_inline	static __inline
++#endif
++
++/*
++ * GNU C version 2.96 adds explicit branch prediction so that
++ * the CPU back-end can hint the processor and also so that
++ * code blocks can be reordered such that the predicted path
++ * sees a more linear flow, thus improving cache behavior, etc.
++ *
++ * The following two macros provide us with a way to utilize this
++ * compiler feature.  Use __predict_true() if you expect the expression
++ * to evaluate to true, and __predict_false() if you expect the
++ * expression to evaluate to false.
++ *
++ * A few notes about usage:
++ *
++ *	* Generally, __predict_false() error condition checks (unless
++ *	  you have some _strong_ reason to do otherwise, in which case
++ *	  document it), and/or __predict_true() `no-error' condition
++ *	  checks, assuming you want to optimize for the no-error case.
++ *
++ *	* Other than that, if you don't know the likelihood of a test
++ *	  succeeding from empirical or other `hard' evidence, don't
++ *	  make predictions.
++ *
++ *	* These are meant to be used in places that are run `a lot'.
++ *	  It is wasteful to make predictions in code that is run
++ *	  seldomly (e.g. at subsystem initialization time) as the
++ *	  basic block reordering that this affects can often generate
++ *	  larger code.
++ */
++#if __GNUC_PREREQ__(2, 96)
++#define __predict_true(exp)	__builtin_expect(((exp) != 0), 1)
++#define __predict_false(exp)	__builtin_expect(((exp) != 0), 0)
++#else
++#define __predict_true(exp)	((exp) != 0)
++#define __predict_false(exp)	((exp) != 0)
++#endif
++
++/* Delete pseudo-keywords wherever they are not available or needed. */
++#ifndef __dead
++#define	__dead
++#define	__pure
++#endif
++
++/*
++ * The __packed macro indicates that a variable or structure members
++ * should have the smallest possible alignment, despite any host CPU
++ * alignment requirements.
++ *
++ * The __aligned(x) macro specifies the minimum alignment of a
++ * variable or structure.
++ *
++ * These macros together are useful for describing the layout and
++ * alignment of messages exchanged with hardware or other systems.
++ */
++
++#if __GNUC_PREREQ__(2, 7) || defined(__PCC__)
++#define	__packed	__attribute__((__packed__))
++#define	__aligned(x)	__attribute__((__aligned__(x)))
++#endif
++
++#if !__GNUC_PREREQ__(2, 8)
++#define	__extension__
++#endif
++
++#if __GNUC_PREREQ__(3, 0)
++#define	__malloc	__attribute__((__malloc__))
++#else
++#define	__malloc
++#endif
++
++#if defined(__cplusplus)
++#define	__BEGIN_EXTERN_C	extern "C" {
++#define	__END_EXTERN_C		}
++#else
++#define	__BEGIN_EXTERN_C
++#define	__END_EXTERN_C
++#endif
++
++#if __GNUC_PREREQ__(4, 0)
++#define	__dso_public	__attribute__((__visibility__("default")))
++#define	__dso_hidden	__attribute__((__visibility__("hidden")))
++#define	__BEGIN_PUBLIC_DECLS \
++	_Pragma("GCC visibility push(default)") __BEGIN_EXTERN_C
++#define	__END_PUBLIC_DECLS	__END_EXTERN_C _Pragma("GCC visibility pop")
++#define	__BEGIN_HIDDEN_DECLS \
++	_Pragma("GCC visibility push(hidden)") __BEGIN_EXTERN_C
++#define	__END_HIDDEN_DECLS	__END_EXTERN_C _Pragma("GCC visibility pop")
++#else
++#define	__dso_public
++#define	__dso_hidden
++#define	__BEGIN_PUBLIC_DECLS	__BEGIN_EXTERN_C
++#define	__END_PUBLIC_DECLS	__END_EXTERN_C
++#define	__BEGIN_HIDDEN_DECLS	__BEGIN_EXTERN_C
++#define	__END_HIDDEN_DECLS	__END_EXTERN_C
++#endif
++
++#define	__BEGIN_DECLS	__BEGIN_EXTERN_C
++#define	__END_DECLS	__END_EXTERN_C
++
++/*
++ * "The nice thing about standards is that there are so many to choose from."
++ * There are a number of "feature test macros" specified by (different)
++ * standards that determine which interfaces and types the header files
++ * should expose.
++ *
++ * Because of inconsistencies in these macros, we define our own
++ * set in the private name space that end in _VISIBLE.  These are
++ * always defined and so headers can test their values easily.
++ * Things can get tricky when multiple feature macros are defined.
++ * We try to take the union of all the features requested.
++ *
++ * The following macros are guaranteed to have a value after cdefs.h
++ * has been included:
++ *	__POSIX_VISIBLE
++ *	__XPG_VISIBLE
++ *	__ISO_C_VISIBLE
++ *	__BSD_VISIBLE
++ */
++
++/*
++ * X/Open Portability Guides and Single Unix Specifications.
++ * _XOPEN_SOURCE				XPG3
++ * _XOPEN_SOURCE && _XOPEN_VERSION = 4		XPG4
++ * _XOPEN_SOURCE && _XOPEN_SOURCE_EXTENDED = 1	XPG4v2
++ * _XOPEN_SOURCE == 500				XPG5
++ * _XOPEN_SOURCE == 520				XPG5v2
++ * _XOPEN_SOURCE == 600				POSIX 1003.1-2001 with XSI
++ * _XOPEN_SOURCE == 700				POSIX 1003.1-2008 with XSI
++ *
++ * The XPG spec implies a specific value for _POSIX_C_SOURCE.
++ */
++#ifdef _XOPEN_SOURCE
++# if (_XOPEN_SOURCE - 0 >= 700)
++#  define __XPG_VISIBLE		700
++#  undef _POSIX_C_SOURCE
++#  define _POSIX_C_SOURCE	200809L
++# elif (_XOPEN_SOURCE - 0 >= 600)
++#  define __XPG_VISIBLE		600
++#  undef _POSIX_C_SOURCE
++#  define _POSIX_C_SOURCE	200112L
++# elif (_XOPEN_SOURCE - 0 >= 520)
++#  define __XPG_VISIBLE		520
++#  undef _POSIX_C_SOURCE
++#  define _POSIX_C_SOURCE	199506L
++# elif (_XOPEN_SOURCE - 0 >= 500)
++#  define __XPG_VISIBLE		500
++#  undef _POSIX_C_SOURCE
++#  define _POSIX_C_SOURCE	199506L
++# elif (_XOPEN_SOURCE_EXTENDED - 0 == 1)
++#  define __XPG_VISIBLE		420
++# elif (_XOPEN_VERSION - 0 >= 4)
++#  define __XPG_VISIBLE		400
++# else
++#  define __XPG_VISIBLE		300
++# endif
++#endif
++
++/*
++ * POSIX macros, these checks must follow the XOPEN ones above.
++ *
++ * _POSIX_SOURCE == 1		1003.1-1988 (superseded by _POSIX_C_SOURCE)
++ * _POSIX_C_SOURCE == 1		1003.1-1990
++ * _POSIX_C_SOURCE == 2		1003.2-1992
++ * _POSIX_C_SOURCE == 199309L	1003.1b-1993
++ * _POSIX_C_SOURCE == 199506L   1003.1c-1995, 1003.1i-1995,
++ *				and the omnibus ISO/IEC 9945-1:1996
++ * _POSIX_C_SOURCE == 200112L   1003.1-2001
++ * _POSIX_C_SOURCE == 200809L   1003.1-2008
++ *
++ * The POSIX spec implies a specific value for __ISO_C_VISIBLE, though
++ * this may be overridden by the _ISOC99_SOURCE macro later.
++ */
++#ifdef _POSIX_C_SOURCE
++# if (_POSIX_C_SOURCE - 0 >= 200809)
++#  define __POSIX_VISIBLE	200809
++#  define __ISO_C_VISIBLE	1999
++# elif (_POSIX_C_SOURCE - 0 >= 200112)
++#  define __POSIX_VISIBLE	200112
++#  define __ISO_C_VISIBLE	1999
++# elif (_POSIX_C_SOURCE - 0 >= 199506)
++#  define __POSIX_VISIBLE	199506
++#  define __ISO_C_VISIBLE	1990
++# elif (_POSIX_C_SOURCE - 0 >= 199309)
++#  define __POSIX_VISIBLE	199309
++#  define __ISO_C_VISIBLE	1990
++# elif (_POSIX_C_SOURCE - 0 >= 2)
++#  define __POSIX_VISIBLE	199209
++#  define __ISO_C_VISIBLE	1990
++# else
++#  define __POSIX_VISIBLE	199009
++#  define __ISO_C_VISIBLE	1990
++# endif
++#elif defined(_POSIX_SOURCE)
++# define __POSIX_VISIBLE	198808
++#  define __ISO_C_VISIBLE	0
++#endif
++
++/*
++ * _ANSI_SOURCE means to expose ANSI C89 interfaces only.
++ * If the user defines it in addition to one of the POSIX or XOPEN
++ * macros, assume the POSIX/XOPEN macro(s) should take precedence.
++ */
++#if defined(_ANSI_SOURCE) && !defined(__POSIX_VISIBLE) && \
++    !defined(__XPG_VISIBLE)
++# define __POSIX_VISIBLE	0
++# define __XPG_VISIBLE		0
++# define __ISO_C_VISIBLE	1990
++#endif
++
++/*
++ * _ISOC99_SOURCE, _ISOC11_SOURCE, __STDC_VERSION__, and __cplusplus
++ * override any of the other macros since they are non-exclusive.
++ */
++#if defined(_ISOC11_SOURCE) || \
++    (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 201112) || \
++    (defined(__cplusplus) && __cplusplus >= 201703)
++# undef __ISO_C_VISIBLE
++# define __ISO_C_VISIBLE	2011
++#elif defined(_ISOC99_SOURCE) || \
++    (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901) || \
++    (defined(__cplusplus) && __cplusplus >= 201103)
++# undef __ISO_C_VISIBLE
++# define __ISO_C_VISIBLE	1999
++#endif
++
++/*
++ * Finally deal with BSD-specific interfaces that are not covered
++ * by any standards.  We expose these when none of the POSIX or XPG
++ * macros is defined or if the user explicitly asks for them.
++ */
++#if !defined(_BSD_SOURCE) && \
++   (defined(_ANSI_SOURCE) || defined(__XPG_VISIBLE) || defined(__POSIX_VISIBLE))
++# define __BSD_VISIBLE		0
++#endif
++
++/*
++ * Default values.
++ */
++#ifndef __XPG_VISIBLE
++# define __XPG_VISIBLE		700
++#endif
++#ifndef __POSIX_VISIBLE
++# define __POSIX_VISIBLE	200809
++#endif
++#ifndef __ISO_C_VISIBLE
++# define __ISO_C_VISIBLE	2011
++#endif
++#ifndef __BSD_VISIBLE
++# define __BSD_VISIBLE		1
++#endif
++
++#endif /* !_SYS_CDEFS_H_ */
+\ No newline at end of file
+diff --git a/lib/include/sys/endian.h b/lib/include/sys/endian.h
+new file mode 100644
+index 0000000..f4328aa
+--- /dev/null
++++ b/lib/include/sys/endian.h
+@@ -0,0 +1,124 @@
++/*	$OpenBSD: endian.h,v 1.25 2014/12/21 04:49:00 guenther Exp $	*/
++
++/*-
++ * Copyright (c) 1997 Niklas Hallqvist.  All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the distribution.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
++ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
++ * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
++ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
++ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++/*
++ * Public definitions for little- and big-endian systems.
++ * This file should be included as <endian.h> in userspace and as
++ * <sys/endian.h> in the kernel.
++ *
++ * System headers that need endian information but that can't or don't
++ * want to export the public names here should include <sys/_endian.h>
++ * and use the internal names: _BYTE_ORDER, _*_ENDIAN, etc.
++ */
++
++#ifndef _SYS_ENDIAN_H_
++#define _SYS_ENDIAN_H_
++
++#include <sys/cdefs.h>
++#include <sys/_endian.h>
++
++/* Public names */
++#define LITTLE_ENDIAN	_LITTLE_ENDIAN
++#define BIG_ENDIAN	_BIG_ENDIAN
++#define PDP_ENDIAN	_PDP_ENDIAN
++#define BYTE_ORDER	_BYTE_ORDER
++
++
++/*
++ * These are specified to be function-like macros to match the spec
++ */
++#define htobe16(x)	__htobe16(x)
++#define htobe32(x)	__htobe32(x)
++#define htobe64(x)	__htobe64(x)
++#define htole16(x)	__htole16(x)
++#define htole32(x)	__htole32(x)
++#define htole64(x)	__htole64(x)
++
++/* POSIX names */
++#define be16toh(x)	__htobe16(x)
++#define be32toh(x)	__htobe32(x)
++#define be64toh(x)	__htobe64(x)
++#define le16toh(x)	__htole16(x)
++#define le32toh(x)	__htole32(x)
++#define le64toh(x)	__htole64(x)
++
++
++#if __BSD_VISIBLE
++#define swap16(x) __swap16(x)
++#define swap32(x) __swap32(x)
++#define swap64(x) __swap64(x)
++
++#define swap16_multi(v, n) do {						\
++	__size_t __swap16_multi_n = (n);				\
++	__uint16_t *__swap16_multi_v = (v);				\
++									\
++	while (__swap16_multi_n) {					\
++		*__swap16_multi_v = swap16(*__swap16_multi_v);		\
++		__swap16_multi_v++;					\
++		__swap16_multi_n--;					\
++	}								\
++} while (0)
++
++/* original BSD names */
++#define betoh16(x)	__htobe16(x)
++#define betoh32(x)	__htobe32(x)
++#define betoh64(x)	__htobe64(x)
++#define letoh16(x)	__htole16(x)
++#define letoh32(x)	__htole32(x)
++#define letoh64(x)	__htole64(x)
++
++#ifndef htons
++/* these were exposed here before */
++#define htons(x)	__htobe16(x)
++#define htonl(x)	__htobe32(x)
++#define ntohs(x)	__htobe16(x)
++#define ntohl(x)	__htobe32(x)
++#endif
++
++/* ancient stuff */
++#define	NTOHL(x) (x) = ntohl((u_int32_t)(x))
++#define	NTOHS(x) (x) = ntohs((u_int16_t)(x))
++#define	HTONL(x) (x) = htonl((u_int32_t)(x))
++#define	HTONS(x) (x) = htons((u_int16_t)(x))
++#endif /* __BSD_VISIBLE */
++
++#ifdef _KERNEL
++/* to/from memory conversions */
++#define bemtoh16	__bemtoh16
++#define bemtoh32	__bemtoh32
++#define bemtoh64	__bemtoh64
++#define htobem16	__htobem16
++#define htobem32	__htobem32
++#define htobem64	__htobem64
++#define lemtoh16	__lemtoh16
++#define lemtoh32	__lemtoh32
++#define lemtoh64	__lemtoh64
++#define htolem16	__htolem16
++#define htolem32	__htolem32
++#define htolem64	__htolem64
++#endif /* _KERNEL */
++
++#endif /* _SYS_ENDIAN_H_ */
+\ No newline at end of file
+diff --git a/lib/include/sys/select.h b/lib/include/sys/select.h
+new file mode 100644
+index 0000000..7d9a52f
+--- /dev/null
++++ b/lib/include/sys/select.h
+@@ -0,0 +1,137 @@
++/*	$OpenBSD: select.h,v 1.17 2016/09/12 19:41:20 guenther Exp $	*/
++
++/*-
++ * Copyright (c) 1992, 1993
++ *	The Regents of the University of California.  All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the distribution.
++ * 3. Neither the name of the University nor the names of its contributors
++ *    may be used to endorse or promote products derived from this software
++ *    without specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
++ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
++ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
++ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
++ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
++ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
++ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
++ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
++ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
++ * SUCH DAMAGE.
++ *
++ *	@(#)select.h	8.2 (Berkeley) 1/4/94
++ */
++
++#ifndef _SYS_SELECT_H_
++#define	_SYS_SELECT_H_
++
++#include <sys/types.h>
++
++#ifndef _TIMEVAL_DECLARED
++#define _TIMEVAL_DECLARED
++struct timeval {
++	time_t		tv_sec;		/* seconds */
++	suseconds_t	tv_usec;	/* and microseconds */
++};
++#endif
++
++#ifndef _TIMESPEC_DECLARED
++#define _TIMESPEC_DECLARED
++struct timespec {
++	time_t	tv_sec;		/* seconds */
++	long	tv_nsec;	/* and nanoseconds */
++};
++#endif
++
++/*
++ * Select uses bit masks of file descriptors in longs.  These macros
++ * manipulate such bit fields (the filesystem macros use chars).
++ * FD_SETSIZE may be defined by the user, but the default here should
++ * be enough for most uses.
++ */
++#ifndef	FD_SETSIZE
++#define	FD_SETSIZE	1024
++#endif
++
++/*
++ * We don't want to pollute the namespace with select(2) internals.
++ * Non-underscore versions are exposed later #if __BSD_VISIBLE
++ */
++#define	__NBBY	8				/* number of bits in a byte */
++typedef uint32_t __fd_mask;
++#define __NFDBITS ((unsigned)(sizeof(__fd_mask) * __NBBY)) /* bits per mask */
++#define	__howmany(x, y)	(((x) + ((y) - 1)) / (y))
++
++typedef	struct fd_set {
++	__fd_mask fds_bits[__howmany(FD_SETSIZE, __NFDBITS)];
++} fd_set;
++
++static __inline void
++__fd_set(int fd, fd_set *p)
++{
++	p->fds_bits[fd / __NFDBITS] |= (1U << (fd % __NFDBITS));
++}
++#define FD_SET(n, p)	__fd_set((n), (p))
++
++static __inline void
++__fd_clr(int fd, fd_set *p)
++{
++	p->fds_bits[fd / __NFDBITS] &= ~(1U << (fd % __NFDBITS));
++}
++#define FD_CLR(n, p)	__fd_clr((n), (p))
++
++static __inline int
++__fd_isset(int fd, const fd_set *p)
++{
++	return (p->fds_bits[fd / __NFDBITS] & (1U << (fd % __NFDBITS)));
++}
++#define FD_ISSET(n, p)	__fd_isset((n), (p))
++
++#if __BSD_VISIBLE
++#define	FD_COPY(f, t)	(void)(*(t) = *(f))
++#endif
++#define	FD_ZERO(p) do {					\
++	fd_set *_p = (p);				\
++	__size_t _n = __howmany(FD_SETSIZE, __NFDBITS);	\
++							\
++	while (_n > 0)					\
++		_p->fds_bits[--_n] = 0;			\
++} while (0)
++
++#if __BSD_VISIBLE
++#define	NBBY	__NBBY
++#define fd_mask	__fd_mask
++#define NFDBITS	__NFDBITS
++#ifndef howmany
++#define howmany(x, y)	__howmany(x, y)
++#endif
++#endif /* __BSD_VISIBLE */
++
++#ifndef _KERNEL
++#ifndef _SIGSET_T_DEFINED_
++#define _SIGSET_T_DEFINED_
++typedef unsigned int sigset_t;
++#endif
++
++#ifndef _SELECT_DEFINED_
++#define _SELECT_DEFINED_
++__BEGIN_DECLS
++int	select(int, fd_set * __restrict, fd_set * __restrict,
++	    fd_set * __restrict, struct timeval * __restrict);
++int	pselect(int, fd_set * __restrict, fd_set * __restrict,
++	    fd_set * __restrict, const struct timespec * __restrict,
++	    const sigset_t * __restrict);
++__END_DECLS
++#endif
++#endif /* !_KERNEL */
++
++#endif /* !_SYS_SELECT_H_ */
+\ No newline at end of file
+diff --git a/lib/include/sys/siginfo.h b/lib/include/sys/siginfo.h
+new file mode 100644
+index 0000000..45f1511
+--- /dev/null
++++ b/lib/include/sys/siginfo.h
+@@ -0,0 +1,200 @@
++/*	$OpenBSD: siginfo.h,v 1.14 2024/02/21 15:53:07 deraadt Exp $	*/
++
++/*
++ * Copyright (c) 1997 Theo de Raadt
++ * All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the distribution.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
++ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
++ * IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
++ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
++ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
++ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
++ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
++ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
++ * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++#ifndef _SYS_SIGINFO_H
++#define _SYS_SIGINFO_H
++
++#include <sys/cdefs.h>
++ 
++union sigval {
++	int	sival_int;	/* integer value */
++	void	*sival_ptr;	/* pointer value */
++};
++ 
++/*
++ * Negative signal codes are reserved for future use for
++ * user generated signals.
++ */
++#define SI_FROMUSER(sip)	((sip)->si_code <= 0)
++#define SI_FROMKERNEL(sip)	((sip)->si_code > 0)
++ 
++#define SI_NOINFO	32767	/* no signal information */
++#define SI_USER		0	/* user generated signal via kill() */
++#define SI_LWP		(-1)	/* user generated signal via lwp_kill()*/
++#define SI_QUEUE	(-2)	/* user generated signal via sigqueue()*/
++#define SI_TIMER	(-3)	/* from timer expiration */
++
++#if __POSIX_VISIBLE >= 199309 || __XPG_VISIBLE
++/*
++ * The machine dependent signal codes (SIGILL, SIGFPE,
++ * SIGSEGV, and SIGBUS)
++ */
++#define ILL_ILLOPC	1	/* illegal opcode */
++#define ILL_ILLOPN	2	/* illegal operand */
++#define ILL_ILLADR	3	/* illegal addressing mode */
++#define ILL_ILLTRP	4	/* illegal trap */
++#define ILL_PRVOPC	5	/* privileged opcode */
++#define ILL_PRVREG	6	/* privileged register */
++#define ILL_COPROC	7	/* co-processor */
++#define ILL_BADSTK	8	/* bad stack */
++#define ILL_BTCFI	9	/* IBT missing on indirect call */
++#define NSIGILL		9
++
++#define EMT_TAGOVF	1	/* tag overflow */
++#define NSIGEMT		1
++
++#define FPE_INTDIV	1	/* integer divide by zero */
++#define FPE_INTOVF	2	/* integer overflow */
++#define FPE_FLTDIV	3	/* floating point divide by zero */
++#define FPE_FLTOVF	4	/* floating point overflow */
++#define FPE_FLTUND	5	/* floating point underflow */
++#define FPE_FLTRES	6	/* floating point inexact result */
++#define FPE_FLTINV	7	/* invalid floating point operation */
++#define FPE_FLTSUB	8	/* subscript out of range */
++#define NSIGFPE		8
++
++#define SEGV_MAPERR	1	/* address not mapped to object */
++#define SEGV_ACCERR	2	/* invalid permissions */
++#define NSIGSEGV	2
++
++#define BUS_ADRALN	1	/* invalid address alignment */
++#define BUS_ADRERR	2	/* non-existent physical address */
++#define BUS_OBJERR	3	/* object specific hardware error */
++#define NSIGBUS		3
++
++#endif /* __POSIX_VISIBLE >= 199309 || __XPG_VISIBLE */
++
++/*
++ * SIGTRAP signal codes
++ */
++#define TRAP_BRKPT	1	/* breakpoint trap */
++#define TRAP_TRACE	2	/* trace trap */
++#define NSIGTRAP	2
++
++/*
++ * SIGCHLD signal codes
++ */
++#define CLD_EXITED	1	/* child has exited */
++#define CLD_KILLED	2	/* child was killed */
++#define CLD_DUMPED	3	/* child has coredumped */
++#define CLD_TRAPPED	4	/* traced child has stopped */
++#define CLD_STOPPED	5	/* child has stopped on signal */
++#define CLD_CONTINUED	6	/* stopped child has continued */
++#define NSIGCLD		6
++
++#if 0
++/*
++ * SIGPOLL signal codes - not supported
++ */
++#define POLL_IN		1	/* input available */
++#define POLL_OUT	2	/* output possible */
++#define POLL_MSG	3	/* message available */
++#define POLL_ERR	4	/* I/O error */
++#define POLL_PRI	5	/* high priority input available */
++#define POLL_HUP	6	/* device disconnected */
++#define NSIGPOLL	6
++
++/*
++ * SIGPROF signal codes - not supported
++ */
++#define PROF_SIG	1	/* have to set code non-zero */
++#define NSIGPROF	1
++#endif
++
++#define SI_MAXSZ	128
++#define SI_PAD		((SI_MAXSZ / sizeof (int)) - 3)
++
++#include <sys/time.h>
++
++typedef struct {
++	int	si_signo;			/* signal from signal.h */
++	int	si_code;			/* code from above */
++	int	si_errno;			/* error from errno.h */
++	union {
++		int	_pad[SI_PAD];		/* for future growth */
++		struct {			/* kill(), SIGCHLD */
++			pid_t	_pid;		/* process ID */
++			uid_t	_uid;
++			union {
++				struct {
++					union sigval	_value;
++				} _kill;
++				struct {
++					clock_t	_utime;
++					clock_t	_stime;
++					int	_status;
++				} _cld;
++			} _pdata;
++		} _proc;
++		struct {	/* SIGSEGV, SIGBUS, SIGILL and SIGFPE */
++			void	*_addr;		/* faulting address */
++			int	_trapno;	/* illegal trap number */
++		} _fault;
++#if 0
++		struct {			/* SIGPOLL, SIGXFSZ */
++			/* fd not currently available for SIGPOLL */
++			int	_fd;		/* file descriptor */
++			long	_band;
++		} _file;
++		struct {			/* SIGPROF */
++			caddr_t _faddr;		/* last fault address */
++			timespec _tstamp;	/* real time stamp */
++			short	_syscall;	/* current syscall */
++			char	_nsysarg;	/* number of arguments */
++			char	_fault;		/* last fault type */
++			long	_sysarg[8];	/* syscall arguments */
++			long	_mstate[17];	/* exactly fills struct*/
++		} _prof;
++#endif
++	} _data;
++} siginfo_t;
++
++#define si_pid		_data._proc._pid
++#define si_uid		_data._proc._uid
++
++#define si_status	_data._proc._pdata._cld._status
++#define si_stime	_data._proc._pdata._cld._stime
++#define si_utime	_data._proc._pdata._cld._utime
++#define si_value	_data._proc._pdata._kill._value
++#define si_addr		_data._fault._addr
++#define si_trapno	_data._fault._trapno
++#define si_fd		_data._file._fd
++#define si_band		_data._file._band
++
++#define si_tstamp	_data._prof._tstamp
++#define si_syscall	_data._prof._syscall
++#define si_nsysarg	_data._prof._nsysarg
++#define si_sysarg	_data._prof._sysarg
++#define si_fault	_data._prof._fault
++#define si_faddr	_data._prof._faddr
++#define si_mstate	_data._prof._mstate
++
++#if defined(_KERNEL)
++void	initsiginfo(siginfo_t *, int, u_long, int, union sigval);
++#endif
++
++#endif	/* _SYS_SIGINFO_H */
+\ No newline at end of file
+diff --git a/lib/include/sys/signal.h b/lib/include/sys/signal.h
+new file mode 100644
+index 0000000..3bf711e
+--- /dev/null
++++ b/lib/include/sys/signal.h
+@@ -0,0 +1,202 @@
++/*	$OpenBSD: signal.h,v 1.29 2018/04/18 16:05:20 deraadt Exp $	*/
++/*	$NetBSD: signal.h,v 1.21 1996/02/09 18:25:32 christos Exp $	*/
++
++/*
++ * Copyright (c) 1982, 1986, 1989, 1991, 1993
++ *	The Regents of the University of California.  All rights reserved.
++ * (c) UNIX System Laboratories, Inc.
++ * All or some portions of this file are derived from material licensed
++ * to the University of California by American Telephone and Telegraph
++ * Co. or Unix System Laboratories, Inc. and are reproduced herein with
++ * the permission of UNIX System Laboratories, Inc.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the distribution.
++ * 3. Neither the name of the University nor the names of its contributors
++ *    may be used to endorse or promote products derived from this software
++ *    without specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
++ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
++ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
++ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
++ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
++ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
++ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
++ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
++ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
++ * SUCH DAMAGE.
++ *
++ *	@(#)signal.h	8.2 (Berkeley) 1/21/94
++ */
++
++#ifndef	_SYS_SIGNAL_H_
++#define	_SYS_SIGNAL_H_
++
++// #include <machine/signal.h>	/* sigcontext; codes for SIGILL, SIGFPE */
++
++#define _NSIG	33		/* counting 0 (mask is 1-32) */
++
++#if __BSD_VISIBLE
++#define NSIG _NSIG
++#endif
++
++#define	SIGHUP	1	/* hangup */
++#define	SIGINT	2	/* interrupt */
++#define	SIGQUIT	3	/* quit */
++#define	SIGILL	4	/* illegal instruction (not reset when caught) */
++#define	SIGTRAP	5	/* trace trap (not reset when caught) */
++#define	SIGABRT	6	/* abort() */
++#if __BSD_VISIBLE
++#define	SIGIOT	SIGABRT	/* compatibility */
++#define	SIGEMT	7	/* EMT instruction */
++#endif
++#define	SIGFPE	8	/* floating point exception */
++#define	SIGKILL	9	/* kill (cannot be caught or ignored) */
++#define	SIGBUS	10	/* bus error */
++#define	SIGSEGV	11	/* segmentation violation */
++#define	SIGSYS	12	/* bad argument to system call */
++#define	SIGPIPE	13	/* write on a pipe with no one to read it */
++#define	SIGALRM	14	/* alarm clock */
++#define	SIGTERM	15	/* software termination signal from kill */
++#define	SIGURG	16	/* urgent condition on IO channel */
++#define	SIGSTOP	17	/* sendable stop signal not from tty */
++#define	SIGTSTP	18	/* stop signal from tty */
++#define	SIGCONT	19	/* continue a stopped process */
++#define	SIGCHLD	20	/* to parent on child stop or exit */
++#define	SIGTTIN	21	/* to readers pgrp upon background tty read */
++#define	SIGTTOU	22	/* like TTIN for output if (tp->t_local&LTOSTOP) */
++#if __BSD_VISIBLE
++#define	SIGIO	23	/* input/output possible signal */
++#endif
++#define	SIGXCPU	24	/* exceeded CPU time limit */
++#define	SIGXFSZ	25	/* exceeded file size limit */
++#define	SIGVTALRM 26	/* virtual time alarm */
++#define	SIGPROF	27	/* profiling time alarm */
++#if __BSD_VISIBLE
++#define SIGWINCH 28	/* window size changes */
++#define SIGINFO	29	/* information request */
++#endif
++#define SIGUSR1 30	/* user defined signal 1 */
++#define SIGUSR2 31	/* user defined signal 2 */
++#if __BSD_VISIBLE
++#define SIGTHR  32	/* thread library AST */
++#endif
++
++/*
++ * Language spec says we must list exactly one parameter, even though we
++ * actually supply three.  Ugh!
++ */
++#define	SIG_DFL		(void (*)(int))0
++#define	SIG_IGN		(void (*)(int))1
++#define	SIG_ERR		(void (*)(int))-1
++
++#if __POSIX_VISIBLE || __XPG_VISIBLE
++#ifndef _SIGSET_T_DEFINED_
++#define _SIGSET_T_DEFINED_
++typedef unsigned int sigset_t;
++#endif
++
++#include <sys/siginfo.h>
++
++/*
++ * Signal vector "template" used in sigaction call.
++ */
++struct	sigaction {
++	union {		/* signal handler */
++		void	(*__sa_handler)(int);
++		void	(*__sa_sigaction)(int, siginfo_t *, void *);
++	} __sigaction_u;
++	sigset_t sa_mask;		/* signal mask to apply */
++	int	sa_flags;		/* see signal options below */
++};
++
++/* if SA_SIGINFO is set, sa_sigaction is to be used instead of sa_handler. */
++#define sa_handler      __sigaction_u.__sa_handler
++#define sa_sigaction    __sigaction_u.__sa_sigaction
++
++#if __XPG_VISIBLE >= 500
++#define SA_ONSTACK	0x0001	/* take signal on signal stack */
++#define SA_RESTART	0x0002	/* restart system on signal return */
++#define SA_RESETHAND	0x0004	/* reset to SIG_DFL when taking signal */
++#define SA_NODEFER	0x0010	/* don't mask the signal we're delivering */
++#define SA_NOCLDWAIT	0x0020	/* don't create zombies (assign to pid 1) */
++#endif /* __XPG_VISIBLE >= 500 */
++#define SA_NOCLDSTOP	0x0008	/* do not generate SIGCHLD on child stop */
++#if __POSIX_VISIBLE >= 199309 || __XPG_VISIBLE >= 500
++#define SA_SIGINFO	0x0040	/* generate siginfo_t */
++#endif
++
++/*
++ * Flags for sigprocmask:
++ */
++#define	SIG_BLOCK	1	/* block specified signal set */
++#define	SIG_UNBLOCK	2	/* unblock specified signal set */
++#define	SIG_SETMASK	3	/* set specified signal set */
++#endif	/* __POSIX_VISIBLE || __XPG_VISIBLE */
++
++#if __BSD_VISIBLE
++typedef	void (*sig_t)(int);	/* type of signal function */
++
++/*
++ * 4.3 compatibility:
++ * Signal vector "template" used in sigvec call.
++ */
++struct	sigvec {
++	void	(*sv_handler)(int);	/* signal handler */
++	int	sv_mask;		/* signal mask to apply */
++	int	sv_flags;		/* see signal options below */
++};
++#define SV_ONSTACK	SA_ONSTACK
++#define SV_INTERRUPT	SA_RESTART	/* same bit, opposite sense */
++#define SV_RESETHAND	SA_RESETHAND
++#define sv_onstack	sv_flags	/* isn't compatibility wonderful! */
++
++/*
++ * Macro for converting signal number to a mask suitable for
++ * sigblock().
++ */
++#define sigmask(m)	(1U << ((m)-1))
++
++#define	BADSIG		SIG_ERR
++
++#endif	/* __BSD_VISIBLE */
++
++#if __BSD_VISIBLE || __XPG_VISIBLE >= 420
++/*
++ * Structure used in sigaltstack call.
++ */
++typedef struct sigaltstack {
++	void	*ss_sp;			/* signal stack base */
++	size_t	ss_size;		/* signal stack length */
++	int	ss_flags;		/* SS_DISABLE and/or SS_ONSTACK */
++} stack_t;
++#define SS_ONSTACK	0x0001	/* take signals on alternate stack */
++#define SS_DISABLE	0x0004	/* disable taking signals on alternate stack */
++#define	MINSIGSTKSZ	(3U << _MAX_PAGE_SHIFT) /* minimum allowable stack */
++#if _MAX_PAGE_SHIFT < 14			/* recommended stack size */
++#define	SIGSTKSZ	(MINSIGSTKSZ + (1U << _MAX_PAGE_SHIFT) * 4)
++#else
++#define	SIGSTKSZ	(MINSIGSTKSZ + (1U << _MAX_PAGE_SHIFT) * 2)
++#endif
++
++typedef struct sigcontext ucontext_t;
++#endif /* __BSD_VISIBLE || __XPG_VISIBLE >= 420 */
++
++#ifndef _KERNEL
++/*
++ * For historical reasons; programs expect signal's return value to be
++ * defined by <sys/signal.h>.
++ */
++__BEGIN_DECLS
++void	(*signal(int, void (*)(int)))(int);
++__END_DECLS
++#endif /* !_KERNEL */
++#endif	/* !_SYS_SIGNAL_H_ */
+\ No newline at end of file
+diff --git a/lib/include/sys/time.h b/lib/include/sys/time.h
+new file mode 100644
+index 0000000..da41f1b
+--- /dev/null
++++ b/lib/include/sys/time.h
+@@ -0,0 +1,465 @@
++/*	$OpenBSD: time.h,v 1.66 2023/10/17 00:04:02 cheloha Exp $	*/
++/*	$NetBSD: time.h,v 1.18 1996/04/23 10:29:33 mycroft Exp $	*/
++
++/*
++ * Copyright (c) 1982, 1986, 1993
++ *	The Regents of the University of California.  All rights reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the distribution.
++ * 3. Neither the name of the University nor the names of its contributors
++ *    may be used to endorse or promote products derived from this software
++ *    without specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
++ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
++ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
++ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
++ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
++ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
++ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
++ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
++ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
++ * SUCH DAMAGE.
++ *
++ *	@(#)time.h	8.2 (Berkeley) 7/10/94
++ */
++
++#ifndef _SYS_TIME_H_
++#define _SYS_TIME_H_
++
++#include <sys/select.h>
++
++#ifndef _TIMEVAL_DECLARED
++#define _TIMEVAL_DECLARED
++/*
++ * Structure returned by gettimeofday(2) system call,
++ * and used in other calls.
++ */
++struct timeval {
++	time_t		tv_sec;		/* seconds */
++	suseconds_t	tv_usec;	/* and microseconds */
++};
++#endif
++
++#ifndef _TIMESPEC_DECLARED
++#define _TIMESPEC_DECLARED
++/*
++ * Structure defined by POSIX.1b to be like a timeval.
++ */
++struct timespec {
++	time_t	tv_sec;		/* seconds */
++	long	tv_nsec;	/* and nanoseconds */
++};
++#endif
++
++#define	TIMEVAL_TO_TIMESPEC(tv, ts) do {				\
++	(ts)->tv_sec = (tv)->tv_sec;					\
++	(ts)->tv_nsec = (tv)->tv_usec * 1000;				\
++} while (0)
++#define	TIMESPEC_TO_TIMEVAL(tv, ts) do {				\
++	(tv)->tv_sec = (ts)->tv_sec;					\
++	(tv)->tv_usec = (ts)->tv_nsec / 1000;				\
++} while (0)
++
++struct timezone {
++	int	tz_minuteswest;	/* minutes west of Greenwich */
++	int	tz_dsttime;	/* type of dst correction */
++};
++#define	DST_NONE	0	/* not on dst */
++#define	DST_USA		1	/* USA style dst */
++#define	DST_AUST	2	/* Australian style dst */
++#define	DST_WET		3	/* Western European dst */
++#define	DST_MET		4	/* Middle European dst */
++#define	DST_EET		5	/* Eastern European dst */
++#define	DST_CAN		6	/* Canada */
++
++/* Operations on timevals. */
++#define	timerclear(tvp)		(tvp)->tv_sec = (tvp)->tv_usec = 0
++#define	timerisset(tvp)		((tvp)->tv_sec || (tvp)->tv_usec)
++#define	timerisvalid(tvp)						\
++	((tvp)->tv_usec >= 0 && (tvp)->tv_usec < 1000000)
++#define	timercmp(tvp, uvp, cmp)						\
++	(((tvp)->tv_sec == (uvp)->tv_sec) ?				\
++	    ((tvp)->tv_usec cmp (uvp)->tv_usec) :			\
++	    ((tvp)->tv_sec cmp (uvp)->tv_sec))
++#define	timeradd(tvp, uvp, vvp)						\
++	do {								\
++		(vvp)->tv_sec = (tvp)->tv_sec + (uvp)->tv_sec;		\
++		(vvp)->tv_usec = (tvp)->tv_usec + (uvp)->tv_usec;	\
++		if ((vvp)->tv_usec >= 1000000) {			\
++			(vvp)->tv_sec++;				\
++			(vvp)->tv_usec -= 1000000;			\
++		}							\
++	} while (0)
++#define	timersub(tvp, uvp, vvp)						\
++	do {								\
++		(vvp)->tv_sec = (tvp)->tv_sec - (uvp)->tv_sec;		\
++		(vvp)->tv_usec = (tvp)->tv_usec - (uvp)->tv_usec;	\
++		if ((vvp)->tv_usec < 0) {				\
++			(vvp)->tv_sec--;				\
++			(vvp)->tv_usec += 1000000;			\
++		}							\
++	} while (0)
++
++/* Operations on timespecs. */
++#define	timespecclear(tsp)		(tsp)->tv_sec = (tsp)->tv_nsec = 0
++#define	timespecisset(tsp)		((tsp)->tv_sec || (tsp)->tv_nsec)
++#define	timespecisvalid(tsp)						\
++	((tsp)->tv_nsec >= 0 && (tsp)->tv_nsec < 1000000000L)
++#define	timespeccmp(tsp, usp, cmp)					\
++	(((tsp)->tv_sec == (usp)->tv_sec) ?				\
++	    ((tsp)->tv_nsec cmp (usp)->tv_nsec) :			\
++	    ((tsp)->tv_sec cmp (usp)->tv_sec))
++#define	timespecadd(tsp, usp, vsp)					\
++	do {								\
++		(vsp)->tv_sec = (tsp)->tv_sec + (usp)->tv_sec;		\
++		(vsp)->tv_nsec = (tsp)->tv_nsec + (usp)->tv_nsec;	\
++		if ((vsp)->tv_nsec >= 1000000000L) {			\
++			(vsp)->tv_sec++;				\
++			(vsp)->tv_nsec -= 1000000000L;			\
++		}							\
++	} while (0)
++#define	timespecsub(tsp, usp, vsp)					\
++	do {								\
++		(vsp)->tv_sec = (tsp)->tv_sec - (usp)->tv_sec;		\
++		(vsp)->tv_nsec = (tsp)->tv_nsec - (usp)->tv_nsec;	\
++		if ((vsp)->tv_nsec < 0) {				\
++			(vsp)->tv_sec--;				\
++			(vsp)->tv_nsec += 1000000000L;			\
++		}							\
++	} while (0)
++
++/*
++ * Names of the interval timers, and structure
++ * defining a timer setting.
++ */
++#define	ITIMER_REAL	0
++#define	ITIMER_VIRTUAL	1
++#define	ITIMER_PROF	2
++
++struct	itimerval {
++	struct	timeval it_interval;	/* timer interval */
++	struct	timeval it_value;	/* current value */
++};
++
++#if __BSD_VISIBLE
++/*
++ * clock information structure for sysctl({CTL_KERN, KERN_CLOCKRATE})
++ */
++struct clockinfo {
++	int	hz;		/* clock frequency */
++	int	tick;		/* micro-seconds per hz tick */
++	int	stathz;		/* statistics clock frequency */
++	int	profhz;		/* profiling clock frequency */
++};
++#endif /* __BSD_VISIBLE */
++
++#if defined(_KERNEL) || defined(_STANDALONE) || defined (_LIBC)
++#include <sys/_time.h>
++
++/* Time expressed as seconds and fractions of a second + operations on it. */
++struct bintime {
++	time_t	sec;
++	uint64_t frac;
++};
++#endif
++
++#if defined(_KERNEL) || defined(_STANDALONE) || defined (_LIBC)
++
++#define bintimecmp(btp, ctp, cmp)					\
++	((btp)->sec == (ctp)->sec ?					\
++	    (btp)->frac cmp (ctp)->frac :				\
++	    (btp)->sec cmp (ctp)->sec)
++
++static inline void
++bintimeaddfrac(const struct bintime *bt, uint64_t x, struct bintime *ct)
++{
++	ct->sec = bt->sec;
++	if (bt->frac > bt->frac + x)
++		ct->sec++;
++	ct->frac = bt->frac + x;
++}
++
++static inline void
++bintimeadd(const struct bintime *bt, const struct bintime *ct,
++    struct bintime *dt)
++{
++	dt->sec = bt->sec + ct->sec;
++	if (bt->frac > bt->frac + ct->frac)
++		dt->sec++;
++	dt->frac = bt->frac + ct->frac;
++}
++
++static inline void
++bintimesub(const struct bintime *bt, const struct bintime *ct,
++    struct bintime *dt)
++{
++	dt->sec = bt->sec - ct->sec;
++	if (bt->frac < bt->frac - ct->frac)
++		dt->sec--;
++	dt->frac = bt->frac - ct->frac;
++}
++
++static inline void
++TIMECOUNT_TO_BINTIME(u_int count, uint64_t scale, struct bintime *bt)
++{
++	uint64_t hi64;
++
++	hi64 = count * (scale >> 32);
++	bt->sec = hi64 >> 32;
++	bt->frac = hi64 << 32;
++	bintimeaddfrac(bt, count * (scale & 0xffffffff), bt);
++}
++
++/*-
++ * Background information:
++ *
++ * When converting between timestamps on parallel timescales of differing
++ * resolutions it is historical and scientific practice to round down rather
++ * than doing 4/5 rounding.
++ *
++ *   The date changes at midnight, not at noon.
++ *
++ *   Even at 15:59:59.999999999 it's not four'o'clock.
++ *
++ *   time_second ticks after N.999999999 not after N.4999999999
++ */
++
++static inline uint32_t
++FRAC_TO_NSEC(uint64_t frac)
++{
++	return ((frac >> 32) * 1000000000ULL) >> 32;
++}
++
++static inline void
++BINTIME_TO_TIMESPEC(const struct bintime *bt, struct timespec *ts)
++{
++	ts->tv_sec = bt->sec;
++	ts->tv_nsec = FRAC_TO_NSEC(bt->frac);
++}
++
++static inline void
++TIMESPEC_TO_BINTIME(const struct timespec *ts, struct bintime *bt)
++{
++	bt->sec = ts->tv_sec;
++	/* 18446744073 = int(2^64 / 1000000000) */
++	bt->frac = (uint64_t)ts->tv_nsec * (uint64_t)18446744073ULL; 
++}
++
++static inline void
++BINTIME_TO_TIMEVAL(const struct bintime *bt, struct timeval *tv)
++{
++	tv->tv_sec = bt->sec;
++	tv->tv_usec = (long)(((uint64_t)1000000 * (uint32_t)(bt->frac >> 32)) >> 32);
++}
++
++static inline void
++TIMEVAL_TO_BINTIME(const struct timeval *tv, struct bintime *bt)
++{
++	bt->sec = (time_t)tv->tv_sec;
++	/* 18446744073709 = int(2^64 / 1000000) */
++	bt->frac = (uint64_t)tv->tv_usec * (uint64_t)18446744073709ULL;
++}
++#endif
++
++#if defined(_KERNEL) || defined(_STANDALONE)
++
++/*
++ * Functions for looking at our clocks: [get]{bin,nano,micro}[boot|up]time()
++ *
++ * Functions without the "get" prefix returns the best timestamp
++ * we can produce in the given format.
++ *
++ * "bin"   == struct bintime  == seconds + 64 bit fraction of seconds.
++ * "nano"  == struct timespec == seconds + nanoseconds.
++ * "micro" == struct timeval  == seconds + microseconds.
++ *              
++ * Functions containing "up" returns time relative to boot and
++ * should be used for calculating time intervals.
++ *
++ * Functions containing "boot" return the GMT time at which the
++ * system booted.
++ *
++ * Functions with just "time" return the current GMT time.
++ *
++ * Functions with the "get" prefix returns a less precise result
++ * much faster than the functions without "get" prefix and should
++ * be used where a precision of 10 msec is acceptable or where
++ * performance is priority. (NB: "precision", _not_ "resolution" !) 
++ */
++
++void	bintime(struct bintime *);
++void	nanotime(struct timespec *);
++void	microtime(struct timeval *);
++
++void	getnanotime(struct timespec *);
++void	getmicrotime(struct timeval *);
++
++void	binuptime(struct bintime *);
++void	nanouptime(struct timespec *);
++void	microuptime(struct timeval *);
++
++void	getbinuptime(struct bintime *);
++void	getnanouptime(struct timespec *);
++void	getmicrouptime(struct timeval *);
++
++void	binboottime(struct bintime *);
++void	microboottime(struct timeval *);
++void	nanoboottime(struct timespec *);
++
++void	binruntime(struct bintime *);
++void	nanoruntime(struct timespec *);
++
++void getbinruntime(struct bintime *);
++uint64_t getnsecruntime(void);
++
++time_t	gettime(void);
++time_t	getuptime(void);
++
++uint64_t	nsecuptime(void);
++uint64_t	getnsecuptime(void);
++
++struct proc;
++int	clock_gettime(struct proc *, clockid_t, struct timespec *);
++
++struct clockrequest;
++void itimer_update(struct clockrequest *, void *, void *);
++
++void	cancel_all_itimers(void);
++int	settime(const struct timespec *);
++int	ratecheck(struct timeval *, const struct timeval *);
++int	ppsratecheck(struct timeval *, int *, int);
++
++/*
++ * "POSIX time" to/from "YY/MM/DD/hh/mm/ss"
++ */
++struct clock_ymdhms {
++        u_short dt_year;
++        u_char dt_mon;
++        u_char dt_day;
++        u_char dt_wday; /* Day of week */
++        u_char dt_hour;
++        u_char dt_min;
++        u_char dt_sec;
++};
++
++time_t clock_ymdhms_to_secs(struct clock_ymdhms *);
++void clock_secs_to_ymdhms(time_t, struct clock_ymdhms *);
++/*
++ * BCD to decimal and decimal to BCD.
++ */
++#define FROMBCD(x)      (((x) >> 4) * 10 + ((x) & 0xf))
++#define TOBCD(x)        (((x) / 10 * 16) + ((x) % 10))
++
++/* Some handy constants. */
++#define SECDAY          86400L
++#define SECYR           (SECDAY * 365)
++
++/* Traditional POSIX base year */
++#define POSIX_BASE_YEAR 1970
++
++#include <sys/stdint.h>
++
++static inline void
++USEC_TO_TIMEVAL(uint64_t us, struct timeval *tv)
++{
++	tv->tv_sec = us / 1000000;
++	tv->tv_usec = us % 1000000;
++}
++
++static inline void
++NSEC_TO_TIMEVAL(uint64_t ns, struct timeval *tv)
++{
++	tv->tv_sec = ns / 1000000000L;
++	tv->tv_usec = (ns % 1000000000L) / 1000;
++}
++
++static inline uint64_t
++TIMEVAL_TO_NSEC(const struct timeval *tv)
++{
++	uint64_t nsecs;
++
++	if (tv->tv_sec > UINT64_MAX / 1000000000ULL)
++		return UINT64_MAX;
++	nsecs = tv->tv_sec * 1000000000ULL;
++	if (tv->tv_usec * 1000ULL > UINT64_MAX - nsecs)
++		return UINT64_MAX;
++	return nsecs + tv->tv_usec * 1000ULL;
++}
++
++static inline void
++NSEC_TO_TIMESPEC(uint64_t ns, struct timespec *ts)
++{
++	ts->tv_sec = ns / 1000000000L;
++	ts->tv_nsec = ns % 1000000000L;
++}
++
++static inline uint64_t
++SEC_TO_NSEC(uint64_t seconds)
++{
++	if (seconds > UINT64_MAX / 1000000000ULL)
++		return UINT64_MAX;
++	return seconds * 1000000000ULL;
++}
++
++static inline uint64_t
++MSEC_TO_NSEC(uint64_t milliseconds)
++{
++	if (milliseconds > UINT64_MAX / 1000000ULL)
++		return UINT64_MAX;
++	return milliseconds * 1000000ULL;
++}
++
++static inline uint64_t
++USEC_TO_NSEC(uint64_t microseconds)
++{
++	if (microseconds > UINT64_MAX / 1000ULL)
++		return UINT64_MAX;
++	return microseconds * 1000ULL;
++}
++
++static inline uint64_t
++TIMESPEC_TO_NSEC(const struct timespec *ts)
++{
++	if (ts->tv_sec > (UINT64_MAX - ts->tv_nsec) / 1000000000ULL)
++		return UINT64_MAX;
++	return ts->tv_sec * 1000000000ULL + ts->tv_nsec;
++}
++
++static inline uint64_t
++BINTIME_TO_NSEC(const struct bintime *bt)
++{
++	return bt->sec * 1000000000ULL + FRAC_TO_NSEC(bt->frac);
++}
++
++#else /* !_KERNEL */
++#include <time.h>
++
++#if __BSD_VISIBLE || __XPG_VISIBLE
++__BEGIN_DECLS
++#if __BSD_VISIBLE
++int	adjtime(const struct timeval *, struct timeval *);
++int	adjfreq(const int64_t *, int64_t *);
++#endif
++#if __XPG_VISIBLE
++int	futimes(int, const struct timeval *);
++int	getitimer(int, struct itimerval *);
++int	gettimeofday(struct timeval *, struct timezone *);
++int	setitimer(int, const struct itimerval *, struct itimerval *);
++int	settimeofday(const struct timeval *, const struct timezone *);
++int	utimes(const char *, const struct timeval *);
++#endif /* __XPG_VISIBLE */
++__END_DECLS
++#endif /* __BSD_VISIBLE || __XPG_VISIBLE */
++
++#endif /* !_KERNEL */
++
++#endif /* !_SYS_TIME_H_ */
+\ No newline at end of file
+diff --git a/lib/include/sys/types.h b/lib/include/sys/types.h
+new file mode 100644
+index 0000000..d584959
+--- /dev/null
++++ b/lib/include/sys/types.h
+@@ -0,0 +1,262 @@
++/*	$OpenBSD: types.h,v 1.49 2022/08/06 13:31:13 semarie Exp $	*/
++/*	$NetBSD: types.h,v 1.29 1996/11/15 22:48:25 jtc Exp $	*/
++
++/*-
++ * Copyright (c) 1982, 1986, 1991, 1993
++ *	The Regents of the University of California.  All rights reserved.
++ * (c) UNIX System Laboratories, Inc.
++ * All or some portions of this file are derived from material licensed
++ * to the University of California by American Telephone and Telegraph
++ * Co. or Unix System Laboratories, Inc. and are reproduced herein with
++ * the permission of UNIX System Laboratories, Inc.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and/or other materials provided with the distribution.
++ * 3. Neither the name of the University nor the names of its contributors
++ *    may be used to endorse or promote products derived from this software
++ *    without specific prior written permission.
++ *
++ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
++ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
++ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
++ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
++ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
++ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
++ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
++ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
++ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
++ * SUCH DAMAGE.
++ *
++ *	@(#)types.h	8.4 (Berkeley) 1/21/94
++ */
++
++#ifndef _SYS_TYPES_H_
++#define	_SYS_TYPES_H_
++
++#include <sys/_types.h>
++
++#include <sys/cdefs.h>
++#if __BSD_VISIBLE
++#include <sys/endian.h>
++#else
++#include <sys/_endian.h>
++#endif
++
++#if __BSD_VISIBLE
++typedef	unsigned char	u_char;
++typedef	unsigned short	u_short;
++typedef	unsigned int	u_int;
++typedef	unsigned long	u_long;
++
++typedef unsigned char	unchar;		/* Sys V compatibility */
++typedef	unsigned short	ushort;		/* Sys V compatibility */
++typedef	unsigned int	uint;		/* Sys V compatibility */
++typedef unsigned long	ulong;		/* Sys V compatibility */
++
++typedef	__cpuid_t	cpuid_t;	/* CPU id */
++typedef	__register_t	register_t;	/* register-sized type */
++#endif /* __BSD_VISIBLE */
++
++/*
++ * XXX The exact-width bit types should only be exposed if __BSD_VISIBLE
++ *     but the rest of the includes are not ready for that yet.
++ */
++#ifndef	__BIT_TYPES_DEFINED__
++#define	__BIT_TYPES_DEFINED__
++#endif
++
++#ifndef	_INT8_T_DEFINED_
++#define	_INT8_T_DEFINED_
++typedef	__int8_t		int8_t;
++#endif
++
++#ifndef	_UINT8_T_DEFINED_
++#define	_UINT8_T_DEFINED_
++typedef	__uint8_t		uint8_t;
++#endif
++
++#ifndef	_INT16_T_DEFINED_
++#define	_INT16_T_DEFINED_
++typedef	__int16_t		int16_t;
++#endif
++
++#ifndef	_UINT16_T_DEFINED_
++#define	_UINT16_T_DEFINED_
++typedef	__uint16_t		uint16_t;
++#endif
++
++#ifndef	_INT32_T_DEFINED_
++#define	_INT32_T_DEFINED_
++typedef	__int32_t		int32_t;
++#endif
++
++#ifndef	_UINT32_T_DEFINED_
++#define	_UINT32_T_DEFINED_
++typedef	__uint32_t		uint32_t;
++#endif
++
++#ifndef	_INT64_T_DEFINED_
++#define	_INT64_T_DEFINED_
++typedef	__int64_t		int64_t;
++#endif
++
++#ifndef	_UINT64_T_DEFINED_
++#define	_UINT64_T_DEFINED_
++typedef	__uint64_t		uint64_t;
++#endif
++
++/* BSD-style unsigned bits types */
++typedef	__uint8_t	u_int8_t;
++typedef	__uint16_t	u_int16_t;
++typedef	__uint32_t	u_int32_t;
++typedef	__uint64_t	u_int64_t;
++
++/* quads, deprecated in favor of 64 bit int types */
++typedef	__int64_t	quad_t;
++typedef	__uint64_t	u_quad_t;
++
++#if __BSD_VISIBLE
++/* VM system types */
++typedef __vaddr_t	vaddr_t;
++typedef __paddr_t	paddr_t;
++typedef __vsize_t	vsize_t;
++typedef __psize_t	psize_t;
++#endif /* __BSD_VISIBLE */
++
++/* Standard system types */
++typedef long	blkcnt_t;	/* blocks allocated for file */
++typedef long	blksize_t;	/* optimal blocksize for I/O */
++typedef	char *		caddr_t;	/* core address */
++typedef	__int32_t	daddr32_t;	/* 32-bit disk address */
++typedef	__int64_t	daddr_t;	/* 64-bit disk address */
++typedef	unsigned int		dev_t;		/* device number */
++typedef	int32_t	fixpt_t;	/* fixed point number */
++typedef	unsigned int		gid_t;		/* group id */
++typedef	unsigned int		id_t;		/* may contain pid, uid or gid */
++typedef	unsigned long	ino_t;		/* inode number */
++typedef int		key_t;		/* IPC key (for Sys V IPC) */
++typedef	unsigned int	mode_t;		/* permissions */
++typedef	unsigned long	nlink_t;	/* link count */
++typedef	unsigned long	rlim_t;		/* resource limit */
++typedef	size_t	segsz_t;	/* segment size */
++typedef	unsigned int	uid_t;		/* user id */
++typedef	unsigned int	useconds_t;	/* microseconds */
++typedef	long	suseconds_t;	/* microseconds (signed) */
++typedef	unsigned long	fsblkcnt_t;	/* file system block count */
++typedef	unsigned long	fsfilcnt_t;	/* file system file count */
++
++/*
++ * The following types may be defined in multiple header files.
++ */
++#ifndef	_CLOCK_T_DEFINED_
++#define	_CLOCK_T_DEFINED_
++typedef	long	clock_t;
++#endif
++
++#ifndef	_CLOCKID_T_DEFINED_
++#define	_CLOCKID_T_DEFINED_
++typedef int	clockid_t;
++#endif
++
++#ifndef	_PID_T_DEFINED_
++#define	_PID_T_DEFINED_
++typedef int	pid_t;
++#endif
++
++#ifndef	_SIZE_T_DEFINED_
++#define	_SIZE_T_DEFINED_
++typedef	long  unsigned int	size_t;	
++#endif
++
++#ifndef	_SSIZE_T_DEFINED_
++#define	_SSIZE_T_DEFINED_
++typedef	long	ssize_t;
++#endif
++
++#ifndef	_TIME_T_DEFINED_
++#define	_TIME_T_DEFINED_
++typedef	long	time_t;
++#endif
++
++#ifndef	_TIMER_T_DEFINED_
++#define	_TIMER_T_DEFINED_
++typedef	void *timer_t;
++#endif
++
++#ifndef	_OFF_T_DEFINED_
++#define	_OFF_T_DEFINED_
++typedef	long	off_t;
++#endif
++
++/*
++ * These belong in unistd.h, but are placed here too to ensure that
++ * long arguments will be promoted to off_t if the program fails to
++ * include that header or explicitly cast them to off_t.
++ */
++#if __BSD_VISIBLE && !defined(_KERNEL)
++__BEGIN_DECLS
++off_t	 lseek(int, off_t, int);
++int	 ftruncate(int, off_t);
++int	 truncate(const char *, off_t);
++__END_DECLS
++#endif /* __BSD_VISIBLE && !_KERNEL */
++
++#if __BSD_VISIBLE
++/* Major, minor numbers, dev_t's. */
++#define	major(x)	(((unsigned)(x) >> 8) & 0xff)
++#define	minor(x)	((unsigned)((x) & 0xff) | (((x) & 0xffff0000) >> 8))
++#define	makedev(x,y)	((dev_t)((((x) & 0xff) << 8) | ((y) & 0xff) | (((y) & 0xffff00) << 8)))
++#endif
++
++#if defined(__STDC__) && defined(_KERNEL)
++/*
++ * Forward structure declarations for function prototypes.  We include the
++ * common structures that cross subsystem boundaries here; others are mostly
++ * used in the same place that the structure is defined.
++ */
++struct	proc;
++struct	pgrp;
++struct	ucred;
++struct	rusage;
++struct	file;
++struct	buf;
++struct	tty;
++struct	uio;
++#endif
++
++#ifdef _KERNEL
++#if defined(__GNUC__) || \
++	(defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901)
++/* Support for C99: type _Bool is already built-in. */
++#define false	0
++#define true	1
++
++#else
++/* `_Bool' type must promote to `int' or `unsigned int'. */
++typedef enum {
++	false = 0,
++	true = 1
++} _Bool;
++
++/* And those constants must also be available as macros. */
++#define	false	false
++#define	true	true
++
++#endif
++
++/* User visible type `bool' is provided as a macro which may be redefined */
++#define bool _Bool
++
++/* Inform that everything is fine */
++#define __bool_true_false_are_defined 1
++
++#endif /* _KERNEL */
++
++#endif /* !_SYS_TYPES_H_ */
+\ No newline at end of file
+diff --git a/lib/include/time.h b/lib/include/time.h
+index 1f34e99..24d6b95 100644
+--- a/lib/include/time.h
++++ b/lib/include/time.h
+@@ -3,6 +3,8 @@
+ 
+ #include <types.h>
+ 
++#ifdef  __cplusplus
++
+ namespace LIBHeisenKernel
+ {
+     class Time
+@@ -19,4 +21,9 @@ namespace LIBHeisenKernel
+     };
+ }
+ 
++#else 
++#include <sys/time.h>
++
++#endif
++
+ #endif
+\ No newline at end of file
+diff --git a/libdrive/include/libusb.h b/libdrive/include/libusb.h
+index f74fd34..c9568a9 100644
+--- a/libdrive/include/libusb.h
++++ b/libdrive/include/libusb.h
+@@ -24,7 +24,9 @@
+   
+  #ifndef LIBUSB_H
+  #define LIBUSB_H
+-  
++ #ifndef NULL
++ #define  NULL ((void*)0)
++ #endif
+  #if defined(_MSC_VER)
+  #pragma warning(push)
+  /* Disable: warning C4200: nonstandard extension used : zero-sized array in struct/union */
+diff --git a/libdrive/include/libusbtypes.h b/libdrive/include/libusbtypes.h
+index 35f754d..3b740c0 100644
+--- a/libdrive/include/libusbtypes.h
++++ b/libdrive/include/libusbtypes.h
+@@ -1,4 +1,5 @@
+-#pragma once
++#ifndef _HEISEN_KERNEL_USB_TYPES_H
++#define _HEISEN_KERNEL_USB_TYPES_H
+ 
+ typedef char                        int8_t;
+ typedef unsigned char               uint8_t;
+@@ -8,4 +9,12 @@ typedef int                         int32_t;
+ typedef unsigned int                uint32_t;
+ typedef long long int               int64_t;
+ typedef unsigned long long int      uint64_t;
+-typedef unsigned long long          uintptr_t;
+\ No newline at end of file
++typedef unsigned long long          uintptr_t;
++#if !defined(__cplusplus)
++#define false 0
++#define true 1
++typedef enum { false = 0, true = 1 } bool;
++#endif
++
++
++#endif /*_HEISEN_KERNEL_USB_TYPES_H*/
+\ No newline at end of file
+diff --git a/libdrive/include/stdint.h b/libdrive/include/stdint.h
+deleted file mode 100644
+index c0372ec..0000000
+--- a/libdrive/include/stdint.h
++++ /dev/null
+@@ -1,231 +0,0 @@
+-/*	$OpenBSD: stdint.h,v 1.11 2019/01/25 00:19:26 millert Exp $	*/
+-
+-/*
+- * Copyright (c) 1997, 2005 Todd C. Miller <millert@openbsd.org>
+- *
+- * Permission to use, copy, modify, and distribute this software for any
+- * purpose with or without fee is hereby granted, provided that the above
+- * copyright notice and this permission notice appear in all copies.
+- *
+- * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+- * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+- * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+- * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+- * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+- * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+- */
+-
+-#ifndef	_SYS_STDINT_H_
+-#define _SYS_STDINT_H_
+-
+-#include <sys/cdefs.h>
+-#include <machine/_types.h>
+-
+-#ifndef	__BIT_TYPES_DEFINED__
+-#define	__BIT_TYPES_DEFINED__
+-#endif
+-
+-/* 7.18.1.1 Exact-width integer types (also in sys/types.h) */
+-#ifndef	_INT8_T_DEFINED_
+-#define	_INT8_T_DEFINED_
+-typedef	__int8_t		int8_t;
+-#endif
+-
+-#ifndef	_UINT8_T_DEFINED_
+-#define	_UINT8_T_DEFINED_
+-typedef	__uint8_t		uint8_t;
+-#endif
+-
+-#ifndef	_INT16_T_DEFINED_
+-#define	_INT16_T_DEFINED_
+-typedef	__int16_t		int16_t;
+-#endif
+-
+-#ifndef	_UINT16_T_DEFINED_
+-#define	_UINT16_T_DEFINED_
+-typedef	__uint16_t		uint16_t;
+-#endif
+-
+-#ifndef	_INT32_T_DEFINED_
+-#define	_INT32_T_DEFINED_
+-typedef	__int32_t		int32_t;
+-#endif
+-
+-#ifndef	_UINT32_T_DEFINED_
+-#define	_UINT32_T_DEFINED_
+-typedef	__uint32_t		uint32_t;
+-#endif
+-
+-#ifndef	_INT64_T_DEFINED_
+-#define	_INT64_T_DEFINED_
+-typedef	__int64_t		int64_t;
+-#endif
+-
+-#ifndef	_UINT64_T_DEFINED_
+-#define	_UINT64_T_DEFINED_
+-typedef	__uint64_t		uint64_t;
+-#endif
+-
+-/* 7.18.1.2 Minimum-width integer types */
+-typedef	__int_least8_t		int_least8_t;
+-typedef	__uint_least8_t		uint_least8_t;
+-typedef	__int_least16_t		int_least16_t;
+-typedef	__uint_least16_t	uint_least16_t;
+-typedef	__int_least32_t		int_least32_t;
+-typedef	__uint_least32_t	uint_least32_t;
+-typedef	__int_least64_t		int_least64_t;
+-typedef	__uint_least64_t	uint_least64_t;
+-
+-/* 7.18.1.3 Fastest minimum-width integer types */
+-typedef	__int_fast8_t		int_fast8_t;
+-typedef	__uint_fast8_t		uint_fast8_t;
+-typedef	__int_fast16_t		int_fast16_t;
+-typedef	__uint_fast16_t		uint_fast16_t;
+-typedef	__int_fast32_t		int_fast32_t;
+-typedef	__uint_fast32_t		uint_fast32_t;
+-typedef	__int_fast64_t		int_fast64_t;
+-typedef	__uint_fast64_t		uint_fast64_t;
+-
+-/* 7.18.1.4 Integer types capable of holding object pointers */
+-#ifndef	_INTPTR_T_DEFINED_
+-#define	_INTPTR_T_DEFINED_
+-typedef	__intptr_t		intptr_t;
+-#endif
+-
+-typedef	__uintptr_t		uintptr_t;
+-
+-/* 7.18.1.5 Greatest-width integer types */
+-typedef	__intmax_t		intmax_t;
+-typedef	__uintmax_t		uintmax_t;
+-
+-/*
+- * 7.18.2 Limits of specified-width integer types.
+- *
+- * The following object-like macros specify the minimum and maximum limits
+- * of integer types corresponding to the typedef names defined above.
+- */
+-
+-/* 7.18.2.1 Limits of exact-width integer types */
+-#define	INT8_MIN		(-0x7f - 1)
+-#define	INT16_MIN		(-0x7fff - 1)
+-#define	INT32_MIN		(-0x7fffffff - 1)
+-#define	INT64_MIN		(-0x7fffffffffffffffLL - 1)
+-
+-#define	INT8_MAX		0x7f
+-#define	INT16_MAX		0x7fff
+-#define	INT32_MAX		0x7fffffff
+-#define	INT64_MAX		0x7fffffffffffffffLL
+-
+-#define	UINT8_MAX		0xff
+-#define	UINT16_MAX		0xffff
+-#define	UINT32_MAX		0xffffffffU
+-#define	UINT64_MAX		0xffffffffffffffffULL
+-
+-/* 7.18.2.2 Limits of minimum-width integer types */
+-#define	INT_LEAST8_MIN		INT8_MIN
+-#define	INT_LEAST16_MIN		INT16_MIN
+-#define	INT_LEAST32_MIN		INT32_MIN
+-#define	INT_LEAST64_MIN		INT64_MIN
+-
+-#define	INT_LEAST8_MAX		INT8_MAX
+-#define	INT_LEAST16_MAX		INT16_MAX
+-#define	INT_LEAST32_MAX		INT32_MAX
+-#define	INT_LEAST64_MAX		INT64_MAX
+-
+-#define	UINT_LEAST8_MAX		UINT8_MAX
+-#define	UINT_LEAST16_MAX	UINT16_MAX
+-#define	UINT_LEAST32_MAX	UINT32_MAX
+-#define	UINT_LEAST64_MAX	UINT64_MAX
+-
+-/* 7.18.2.3 Limits of fastest minimum-width integer types */
+-#define	INT_FAST8_MIN		__INT_FAST8_MIN
+-#define	INT_FAST16_MIN		__INT_FAST16_MIN
+-#define	INT_FAST32_MIN		__INT_FAST32_MIN
+-#define	INT_FAST64_MIN		__INT_FAST64_MIN
+-
+-#define	INT_FAST8_MAX		__INT_FAST8_MAX
+-#define	INT_FAST16_MAX		__INT_FAST16_MAX
+-#define	INT_FAST32_MAX		__INT_FAST32_MAX
+-#define	INT_FAST64_MAX		__INT_FAST64_MAX
+-
+-#define	UINT_FAST8_MAX		__UINT_FAST8_MAX
+-#define	UINT_FAST16_MAX		__UINT_FAST16_MAX
+-#define	UINT_FAST32_MAX		__UINT_FAST32_MAX
+-#define	UINT_FAST64_MAX		__UINT_FAST64_MAX
+-
+-/* 7.18.2.4 Limits of integer types capable of holding object pointers */
+-#ifdef __LP64__
+-#define	INTPTR_MIN		(-0x7fffffffffffffffL - 1)
+-#define	INTPTR_MAX		0x7fffffffffffffffL
+-#define	UINTPTR_MAX		0xffffffffffffffffUL
+-#else
+-#define	INTPTR_MIN		(-0x7fffffffL - 1)
+-#define	INTPTR_MAX		0x7fffffffL
+-#define	UINTPTR_MAX		0xffffffffUL
+-#endif
+-
+-/* 7.18.2.5 Limits of greatest-width integer types */
+-#define	INTMAX_MIN		INT64_MIN
+-#define	INTMAX_MAX		INT64_MAX
+-#define	UINTMAX_MAX		UINT64_MAX
+-
+-/*
+- * 7.18.3 Limits of other integer types.
+- *
+- * The following object-like macros specify the minimum and maximum limits
+- * of integer types corresponding to types specified in other standard
+- * header files.
+- */
+-
+-/* Limits of ptrdiff_t */
+-#define	PTRDIFF_MIN		INTPTR_MIN
+-#define	PTRDIFF_MAX		INTPTR_MAX
+-
+-/* Limits of sig_atomic_t */
+-#define	SIG_ATOMIC_MIN		INT32_MIN
+-#define	SIG_ATOMIC_MAX		INT32_MAX
+-
+-/* Limit of size_t */
+-#ifndef	SIZE_MAX
+-#define	SIZE_MAX		UINTPTR_MAX
+-#endif
+-
+-/* Limits of wchar_t */
+-#ifndef	WCHAR_MIN
+-#define	WCHAR_MIN		INT32_MIN
+-#endif
+-#ifndef	WCHAR_MAX
+-#define	WCHAR_MAX		INT32_MAX
+-#endif
+-
+-/* Limits of wint_t */
+-#define	WINT_MIN		INT32_MIN
+-#define	WINT_MAX		INT32_MAX
+-
+-/*
+- * 7.18.4 Macros for integer constants.
+- *
+- * The following function-like macros expand to integer constants
+- * suitable for initializing objects that have integer types corresponding
+- * to types defined in <stdint.h>.  The argument in any instance of
+- * these macros shall be a decimal, octal, or hexadecimal constant with
+- * a value that does not exceed the limits for the corresponding type.
+- */
+-
+-/* 7.18.4.1 Macros for minimum-width integer constants. */
+-#define	INT8_C(_c)		(_c)
+-#define	INT16_C(_c)		(_c)
+-#define	INT32_C(_c)		(_c)
+-#define	INT64_C(_c)		__CONCAT(_c, LL)
+-
+-#define	UINT8_C(_c)		(_c)
+-#define	UINT16_C(_c)		(_c)
+-#define	UINT32_C(_c)		__CONCAT(_c, U)
+-#define	UINT64_C(_c)		__CONCAT(_c, ULL)
+-
+-/* 7.18.4.2 Macros for greatest-width integer constants. */
+-#define	INTMAX_C(_c)		__CONCAT(_c, LL)
+-#define	UINTMAX_C(_c)		__CONCAT(_c, ULL)
+-
+-#endif /* _SYS_STDINT_H_ */
+\ No newline at end of file
+diff --git a/libstdc/include/string.h b/libstdc/include/string.h
+new file mode 100644
+index 0000000..b3b3196
+--- /dev/null
++++ b/libstdc/include/string.h
+@@ -0,0 +1,6 @@
++#ifndef _HEISEN_LIBSTDC_STRING_H
++#define _HEISEN_LIBSTDC_STRING_H
++
++
++
++#endif /*_HEISEN_LIBSTDC_STRING_H*/
+\ No newline at end of file
+diff --git a/libstdc/test.c b/libstdc/test.c
+new file mode 100644
+index 0000000..e69de29
+-- 
+2.43.0
+

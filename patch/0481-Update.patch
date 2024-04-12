@@ -1,0 +1,54 @@
+From 8d9290c7ee553132fd7a817c6db5ac3f0bca2ef9 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 18:24:17 -0400
+Subject: [PATCH 481/493] Update
+
+---
+ apps/chess/board.h | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
+
+diff --git a/apps/chess/board.h b/apps/chess/board.h
+index 941f1da..1f8a04c 100644
+--- a/apps/chess/board.h
++++ b/apps/chess/board.h
+@@ -4,6 +4,7 @@
+ #include "colour.h"
+ #include "piece.h"
+ #include "square.h"
++#include <types.h>
+ 
+ using namespace LIBHeisenKernel::Chess::engine;
+ using namespace LIBHeisenKernel::engine;
+@@ -62,8 +63,28 @@ namespace LIBHeisenKernel{
+ 
+         sq_t pawn[ColourNb][16]; // Just define 9
+         int pawn_size[ColourNb];
+-
+         
++        int piece_nb;
++        int number[16]; // only 12 are needed
++
++        int pawn_file[ColourNb][FileNb];
++
++        int turn;
++        int flags;
++        int ep_square;
++        int ply_nb;
++        int sp; // TODO: MOVE ME?
++
++        int cap_sq;
++
++        int opening;
++        int endgame;
++
++        uint64_t key;
++        uint64_t pawn_key;
++        uint64_t material_key;
++
++        uint64_t stack[StackSize];
+     };
+ };
+ 
+-- 
+2.43.0
+

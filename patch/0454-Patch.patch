@@ -1,0 +1,31 @@
+From 7642c6ab00807931c5edf281c2cfa9fcdb680e1f Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 10 Apr 2024 17:29:38 -0400
+Subject: [PATCH 454/493] Patch
+
+---
+ apps/welcome/welcome.cpp | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/apps/welcome/welcome.cpp b/apps/welcome/welcome.cpp
+index fd15302..cf8e2ba 100644
+--- a/apps/welcome/welcome.cpp
++++ b/apps/welcome/welcome.cpp
+@@ -22,6 +22,14 @@ static const char multi_line_string[] =
+ "\n"
+ "\n";
+ 
++/**
++ * @brief Static functions that will be implemented on the help GUI menu
++ * @todo call SYSCALL_EXIT (important! otherwise you'll have a memory leak)
++*/
++
++static void helpButtonCallback(void *sender,MouseButtonArgs args);
++static void exitButtonCallback(void *sender,MouseButtonArgs args);
++
+ int main(){
+     GUI::SetDefaultFont();
+ 
+-- 
+2.43.0
+

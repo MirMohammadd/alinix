@@ -1,0 +1,33 @@
+From d3d5e1f4edbc8ea37a0b2fa949736cc7219fc180 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 9 Apr 2024 22:46:37 -0400
+Subject: [PATCH 449/493] Patch for docs
+
+---
+ kernelz/include/common/print.h | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/kernelz/include/common/print.h b/kernelz/include/common/print.h
+index 6d7433b..d5d8fbc 100644
+--- a/kernelz/include/common/print.h
++++ b/kernelz/include/common/print.h
+@@ -12,6 +12,8 @@ namespace HeisenOs
+         class Print
+         {
+         public:
++        // -------------------------------------------------------------
++        // static functions for printing to the boot console
+             static void printfHex(uint8_t key);
+             static void printfHex16(uint16_t key);
+             static void printfHex32(uint32_t key);
+@@ -19,6 +21,7 @@ namespace HeisenOs
+             static void printbits(uint16_t key);
+             static void printbits(uint32_t key);
+             static void printbits(uint64_t key);
++        // -------------------------------------------------------------
+         };
+     }
+ }
+-- 
+2.43.0
+

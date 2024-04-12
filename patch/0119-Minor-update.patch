@@ -1,0 +1,24 @@
+From 2bc5b194274843788a3c24ebf622dcad4530bdbc Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 20:08:28 -0400
+Subject: [PATCH 119/493] Minor update
+
+---
+ .github/workflows/test.yml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index 8ab60c1..7e248ac 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -29,6 +29,7 @@ jobs:
+           brew install git wget bzip2 xz unzip nasm python@3 xorriso mtools gcc@11
+           python3 -m pip install -r kernel/requirements.txt
+           # brew tap nativeos/i686-elf-toolchain
++          brew services start selenium-server
+           brew install i686-elf-binutils i686-elf-gcc i686-elf-newlib
+ 
+ 
+-- 
+2.43.0
+

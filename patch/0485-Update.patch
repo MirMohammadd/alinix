@@ -1,0 +1,43 @@
+From 70b753f4c2758e1592e8105e63b532a9566fae70 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 19:16:37 -0400
+Subject: [PATCH 485/493] Update
+
+---
+ apps/chess/option.hpp | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+ create mode 100644 apps/chess/option.hpp
+
+diff --git a/apps/chess/option.hpp b/apps/chess/option.hpp
+new file mode 100644
+index 0000000..f9f3be7
+--- /dev/null
++++ b/apps/chess/option.hpp
+@@ -0,0 +1,23 @@
++#ifndef _HEISEN_KERNEL_OPTIONS_APPS_CHESS_H
++#define _HEISEN_KERNEL_OPTIONS_APPS_CHESS_H
++
++#include <types.h>
++
++namespace LIBHeisenKernel{
++    namespace engine{
++        /**
++         * @brief Functions are defined here
++        */
++
++        extern void option_init();
++        extern void option_list();
++        extern bool option_set(const char var[],const char val[]);
++        extern const char* option_get(const char var[]);
++
++        extern bool option_get_bool(const char var[]);
++        extern int          option_get_int    (const char var[]);
++        extern const char * option_get_string (const char var[]);
++    };
++};
++
++#endif /*_HEISEN_KERNEL_OPTIONS_APPS_CHESS_H*/
+\ No newline at end of file
+-- 
+2.43.0
+

@@ -1,0 +1,25 @@
+From 601a9f3750599e213c5063bec4c1eea03caf5433 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 22:12:17 -0400
+Subject: [PATCH 158/493] Minor patch
+
+---
+ kernelz/src/system/virtual8086/VM8086Helper.asm | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernelz/src/system/virtual8086/VM8086Helper.asm b/kernelz/src/system/virtual8086/VM8086Helper.asm
+index f9f61a2..d154771 100644
+--- a/kernelz/src/system/virtual8086/VM8086Helper.asm
++++ b/kernelz/src/system/virtual8086/VM8086Helper.asm
+@@ -9,7 +9,7 @@ cpuGetESP:
+   add eax, 4
+   ret
+ 
+-# VM86 Code
++;VM86 Code
+ global cpuEnterV86Int
+ cpuEnterV86Int:
+   push ebp
+-- 
+2.43.0
+

@@ -1,0 +1,95 @@
+From 0babea9ff0c28b6158f2076687ff9015403b69b7 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 18:50:09 -0400
+Subject: [PATCH 268/493] USB3 updated (Patch)
+
+---
+ kernelz/src/core/usb3.cpp |  7 +++++++
+ lib/include/usb3.h        | 39 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 46 insertions(+)
+
+diff --git a/kernelz/src/core/usb3.cpp b/kernelz/src/core/usb3.cpp
+index 99e4d66..31f673b 100644
+--- a/kernelz/src/core/usb3.cpp
++++ b/kernelz/src/core/usb3.cpp
+@@ -16,6 +16,8 @@
+  */
+ #include <usb3.h>
+ 
++using namespace LIBHeisenKernel;
++
+ 
+ /*Some Useful Macros defined for the USB Slot Context */
+ #define USB_SLOT_CTX_DWORD0(entries, hub, multi_tt, speed, route_string) \
+@@ -39,3 +41,8 @@
+ #define USB_ENDPOINT_CTX_DWORD4(max_esit_lo, average_trb_len) \
+ 	(((max_esit_lo & 0xFFFF) << 16) | (average_trb_len & 0xFFFF))
+ 
++
++
++void XHCIReset(USBDevice *dev){
++    dev->op_regs->op_usbsts |= (1 << 1);
++}
+diff --git a/lib/include/usb3.h b/lib/include/usb3.h
+index 70bb229..3391e00 100644
+--- a/lib/include/usb3.h
++++ b/lib/include/usb3.h
+@@ -6,16 +6,55 @@
+ #include "xhci.h"
+ 
+ 
++
+ #if !defined(__cplusplus)
+ #define true 1
+ #define false 0
+ 
+ typedef enum { false=0, true } bool_t;
++
++#include "spinlock.h"
++
++#else 
++
++#include "spinlock.hpp"
+ #endif
+ 
+ #if defined(__cplusplus)
+ 
+ namespace LIBHeisenKernel{
++
++        typedef struct {
++        bool initialised;
++        bool is_csz_64;
++        list_t *slot_list;
++        xhci_cap_regs_t* caps_reg;
++        xhci_op_regs_t* op_regs;
++        xhci_doorbell_regs_t* db_regs;
++        xhci_runtime_regs_t* rt_regs;
++        xhci_ext_cap_t* ext_cap;
++        xhci_port_regs_t* ports;
++        uint32_t num_slots;
++        uint32_t num_ports;
++        uint16_t max_intrs;
++        uint8_t irq;
++        uint64_t* dev_ctx_base_array;
++        xhci_trb_t* cmd_ring;
++        uint64_t cmd_ring_phys;
++        unsigned cmd_ring_index;
++        unsigned cmd_ring_max;
++        unsigned cmd_ring_cycle;
++        uint64_t* event_ring_segment;
++        uint64_t* event_ring_seg_phys;
++        unsigned evnt_ring_index;
++        unsigned evnt_ring_cycle;
++        unsigned evnt_ring_max;
++        int poll_event_for_trb;
++        bool event_available;
++        int poll_return_trb_type;
++        int trb_event_index;
++        Spinlock *usb_lock;
++    }USBDevice;
+     class USB3{
+         public:
+             USB3();
+-- 
+2.43.0
+

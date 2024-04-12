@@ -1,0 +1,22 @@
+From 6723380070dade0aed0206402ae1005e33805252 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sat, 6 Apr 2024 12:26:24 -0400
+Subject: [PATCH 344/493] Minor patch
+
+---
+ kernelz/src/core/gdthelper.asm | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernelz/src/core/gdthelper.asm b/kernelz/src/core/gdthelper.asm
+index 90388b2..ec5f671 100644
+--- a/kernelz/src/core/gdthelper.asm
++++ b/kernelz/src/core/gdthelper.asm
+@@ -1,4 +1,4 @@
+-[GLOBAL gdt_flush]    
++global gdt_flush
+ 
+ gdt_flush:
+    mov eax, [esp+4]  
+-- 
+2.43.0
+

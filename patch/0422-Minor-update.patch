@@ -1,0 +1,40 @@
+From 45c79721f79c719f0540fa97463ab51dcf7e9a64 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 8 Apr 2024 13:41:14 -0400
+Subject: [PATCH 422/493] Minor update
+
+---
+ drivers/usb3/error.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/drivers/usb3/error.c b/drivers/usb3/error.c
+index 20a2e89..3aaad27 100644
+--- a/drivers/usb3/error.c
++++ b/drivers/usb3/error.c
+@@ -51,6 +51,22 @@ const char* usbserial_get_error_str(int error_code){
+         case USBSERIAL_ERROR_RESOURCE_ALLOC_FAILED:
+             return  ERROR_MSG_RESOURCE_ALLOC_FAILED;
+         
++        case USBSERIAL_ERROR_NO_SUCH_DEVICE:
++            return ERROR_MSG_NO_SUCH_DEVICE;
+         
++        case USBSERIAL_ERROR_UNSUPPORTED_DEVICE:
++            return ERROR_MSG_UNSUPPORTED_DEVICE;
++
++        case USBSERIAL_ERROR_UNSUPPORTED_BAUD_RATE:
++		return ERROR_MSG_UNSUPPORTED_BAUD_RATE;
++
++        case USBSERIAL_ERROR_INVALID_PORT_IDX:
++            return ERROR_MSG_INVALID_PORT_IDX;
++
++        case USBSERIAL_ERROR_CTRL_CMD_FAILED:
++            return ERROR_MSG_CTRL_CMD_FAILED;
++        
++        default:
++            return ERROR_MSG_UNKNOWN;
+     }
+ }
+\ No newline at end of file
+-- 
+2.43.0
+

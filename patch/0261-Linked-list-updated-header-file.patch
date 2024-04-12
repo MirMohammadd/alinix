@@ -1,0 +1,61 @@
+From a1d95ea784c7e2eadf436412dee29be7f1693af1 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 18:13:31 -0400
+Subject: [PATCH 261/493] Linked list updated (header file)
+
+---
+ lib/include/llist.h | 41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
+ create mode 100644 lib/include/llist.h
+
+diff --git a/lib/include/llist.h b/lib/include/llist.h
+new file mode 100644
+index 0000000..a04c5fa
+--- /dev/null
++++ b/lib/include/llist.h
+@@ -0,0 +1,41 @@
++#if !defined( __HEISEN_KERNEL_LLIST_H__)
++#define __HEISEN_KERNEL_LLIST_H__
++
++#if defined(__cplusplus)
++#pragma pack(push,1)
++typedef struct _data_ {
++	_data_ *next;
++	_data_ *prev;
++	void* data;
++}dataentry;
++#pragma pack(pop)
++
++
++#pragma pack(push,1)
++typedef struct _list_ {
++	unsigned int pointer;
++	dataentry *entry_current;
++}list_t;
++#pragma pack(pop)
++
++
++#else
++
++
++
++typedef struct _data_ {
++    _data_ *next;
++    _data_ *prev;
++    void* data;
++} __attribute__((packed)) dataentry;
++
++typedef struct _list_ {
++    unsigned int pointer;
++    dataentry *entry_current;
++} __attribute__((packed)) list_t;
++
++
++
++#endif
++
++#endif  //__HEISEN_KERNEL_LLIST_H__
+\ No newline at end of file
+-- 
+2.43.0
+

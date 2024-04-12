@@ -1,0 +1,26 @@
+From dd5ef9bda296866b3e8b7948512c334523a3fe33 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 20:22:55 -0400
+Subject: [PATCH 121/493] Update
+
+---
+ .github/workflows/test.yml | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index d2f3bde..8ffeb63 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -30,7 +30,8 @@ jobs:
+           # python3 -m pip install -r kernel/requirements.txt
+           # brew tap nativeos/i686-elf-toolchain
+           brew services start selenium-server
+-          brew install i686-elf-binutils i686-elf-gcc i686-elf-newlib
++          brew install i686-elf-binutils 
++          # i686-elf-gcc i686-elf-newlib
+ 
+ 
+ 
+-- 
+2.43.0
+

@@ -1,0 +1,29 @@
+From 3a17f1888461cc9fe7e88d84d5ea5b8c41944a58 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 18:52:13 -0400
+Subject: [PATCH 270/493] [DOC] Added some doc strings
+
+---
+ kernelz/src/core/usb3.cpp | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/kernelz/src/core/usb3.cpp b/kernelz/src/core/usb3.cpp
+index 1ba677a..64a2bc4 100644
+--- a/kernelz/src/core/usb3.cpp
++++ b/kernelz/src/core/usb3.cpp
+@@ -42,7 +42,11 @@ using namespace LIBHeisenKernel;
+ 	(((max_esit_lo & 0xFFFF) << 16) | (average_trb_len & 0xFFFF))
+ 
+ 
+-
++/*
++ * XHCIReset -- reset the xhci controller
++ * @param dev -- pointer to USB device 
++ * structure
++ */
+ void XHCIReset(USBDevice *dev){
+     dev->op_regs->op_usbsts |= (1 << 1);
+ 	while ((dev->op_regs->op_usbcmd & (1 << 1)));
+-- 
+2.43.0
+

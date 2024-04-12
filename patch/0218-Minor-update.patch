@@ -1,0 +1,25 @@
+From b0788c4ec0f08607e5487d3e28ed53cef3e68594 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 20:38:53 -0400
+Subject: [PATCH 218/493] Minor update
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 8a9238a..7bba363 100644
+--- a/Makefile
++++ b/Makefile
+@@ -65,7 +65,7 @@ $(KRNLOBJDIR)/gdb/i386-stub.o: $(KRNLSRCDIR)/gdb/i386-stub.c
+ ####################################
+ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
+ 	mkdir -p $(@D)
+-	i686-elf-as $(ASPARAMS) -o $@ $<
++	as $(ASPARAMS) -o $@ $<
+ 
+ ####################################
+ #NASM assembly files
+-- 
+2.43.0
+

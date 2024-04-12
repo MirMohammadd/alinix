@@ -1,0 +1,24 @@
+From 3aa2decaed8dbe7f3e2389c4b8ca3f2287d7e5e6 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 8 Apr 2024 20:24:40 -0400
+Subject: [PATCH 432/493] Patch
+
+---
+ tools/advanceddebugger.py | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/tools/advanceddebugger.py b/tools/advanceddebugger.py
+index 62b290e..f0c5bb6 100644
+--- a/tools/advanceddebugger.py
++++ b/tools/advanceddebugger.py
+@@ -57,6 +57,7 @@ class Debugger(unittest.TestCase,AttribClass):
+ def parse_arguments(debug=False):
+     parser = argparse.ArgumentParser(description='Advanced Debugger')
+     parser.add_argument("--level",type=int,default=1,required=False,help="Debug level, range should be 1 to 6 (default: 1)")
++    parser.add_argument("-v","--verbose",action='store_true',required=False,help="Enable verbose output",default=1)
+     parser.add_argument('-d', '--debug', action='store_true', help='Enable debug output')
+     return parser.parse_args(
+         
+-- 
+2.43.0
+

@@ -1,0 +1,28 @@
+From b68356a199c6e323196aab3c8dcbfecd5fcedf7b Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 18:08:33 -0400
+Subject: [PATCH 082/493] CI/CD Patch
+
+---
+ .github/workflows/test.yml | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index 148ee82..b567e68 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -23,8 +23,11 @@ jobs:
+           tar -xzf gcc-11.2.0.tar.gz
+           cd gcc-11.2.0
+           ./configure --target=i686-elf --prefix="$HOME/opt/cross" --disable-nls --enable-languages=c,c++ --without-headers
++          make
++          sudo make install
+           i686-elf-gcc --version
+ 
++
+           
+       - name: Run Make Command
+         run: |
+-- 
+2.43.0
+

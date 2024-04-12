@@ -1,0 +1,30 @@
+From 8d668d427a83fbafbf744d4ae663e34273bc5734 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 17:56:12 -0400
+Subject: [PATCH 470/493] Minor update
+
+---
+ apps/chess/square.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/apps/chess/square.h b/apps/chess/square.h
+index 9b4430b..73af7bf 100644
+--- a/apps/chess/square.h
++++ b/apps/chess/square.h
+@@ -9,8 +9,12 @@ namespace LIBHeisenKernel{
+          * @brief Constants are defined here
+         */
+ 
+-        const int FieldNb = 16;
++        const int FileNb = 16;
+         const int RandNb = 16;
++
++        const int squareNb = FileNb*RandNb;
++
++        const unsigned int FileInc = 1;
+     };
+ };
+ 
+-- 
+2.43.0
+

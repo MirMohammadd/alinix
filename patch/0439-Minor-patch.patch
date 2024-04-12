@@ -1,0 +1,45 @@
+From 8f8b154676034b2b42aa4525c4149d9572ea2093 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 9 Apr 2024 18:42:52 -0400
+Subject: [PATCH 439/493] Minor patch
+
+---
+ drivers/usb3/driver_ftdi.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/usb3/driver_ftdi.c b/drivers/usb3/driver_ftdi.c
+index 4b6111b..08cd94e 100644
+--- a/drivers/usb3/driver_ftdi.c
++++ b/drivers/usb3/driver_ftdi.c
+@@ -102,7 +102,7 @@ struct fdti_data{
+     size_t max_packet_size;
+ };
+ 
+-struct fdti_baud_data{
++struct ftdi_baud_data{
+     int baud;
+     uint16_t value;
+ };
+@@ -124,4 +124,16 @@ static const struct ftdi_baud_data baud_lookup_table [] =
+     { 460800,  0x4006 },
+     { 921600,  0x8003 },
+     { 0,       0x0000 }
+-};
+\ No newline at end of file
++};
++
++
++static const struct ftdi_baud_data* ftdi_serial_baud(int baud){
++    const struct ftdi_baud_data *map = baud_lookup_table;
++
++    while (map->baud){
++        if (map->baud == baud) return map;
++        map++;
++
++    return NULL;
++    }
++}
+\ No newline at end of file
+-- 
+2.43.0
+

@@ -1,0 +1,43 @@
+From 4972cf72cf5428a9efe740e982ebc89fa4a023ac Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 17:00:40 -0400
+Subject: [PATCH 009/493] Minor update
+
+---
+ kernel/gui/calculator.h | 10 ++++++++++
+ kernel/main.c           |  1 +
+ 2 files changed, 11 insertions(+)
+ create mode 100644 kernel/gui/calculator.h
+
+diff --git a/kernel/gui/calculator.h b/kernel/gui/calculator.h
+new file mode 100644
+index 0000000..a7850cb
+--- /dev/null
++++ b/kernel/gui/calculator.h
+@@ -0,0 +1,10 @@
++#ifndef _HEISEN_CALCULATOR_H
++#define _HEISEN_CALCULATOR_H
++
++double sqrt(double x);
++double tan(double x);
++double cos(double x);
++double sin(double x);
++double div(double x, double y);
++
++#endif // _HEISEN_CALCULATOR_H
+\ No newline at end of file
+diff --git a/kernel/main.c b/kernel/main.c
+index 0967d90..5ae2e06 100644
+--- a/kernel/main.c
++++ b/kernel/main.c
+@@ -8,6 +8,7 @@
+ #include <drivers/mouse.h>
+ #include <drivers/video.h>
+ #include <proc/sched.h>
++#include "graphics.h"
+ int kmain(multiboot_info_t *info) {
+     
+     video_init(25, 80);
+-- 
+2.43.0
+

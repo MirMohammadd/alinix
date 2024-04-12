@@ -1,0 +1,27 @@
+From 8e2b38af83d84f6635b4a0f7d02d76333b9e2cad Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 21:49:06 -0400
+Subject: [PATCH 292/493] Minor patch
+
+---
+ Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 6a1114d..5bc9192 100644
+--- a/Makefile
++++ b/Makefile
+@@ -27,8 +27,8 @@ INCLUDEDIRS := kernelz/include
+ INCLUDEDIRSLIB := lib/include
+ QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../qemuTrace.txt -d cpu_reset #-readconfig qemu-usb-config.cfg -drive if=none,id=stick,file=disk.img -device usb-storage,bus=ehci.0,drive=stick
+ 
+-G++PARAMS := -m32 -g -D HEISENOSKERNEL -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -std=c++20 -lstdc++ -fPIC -T linker.ld 
+-GCCPARAMS := -m32 -g -D HEISENOSKERNEL -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -ffreestanding -fno-builtin -Wno-unknown-pragmas -lstdc++ -fPIC -T linker.ld
++G++PARAMS := -m32 -g -D HEISENOS -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -std=c++20 -lstdc++ -fPIC -T linker.ld 
++GCCPARAMS := -m32 -g -D HEISENOS -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -ffreestanding -fno-builtin -Wno-unknown-pragmas -lstdc++ -fPIC -T linker.ld
+ ASPARAMS := --32
+ LDPARAMS := -m32 -no-pie
+ 
+-- 
+2.43.0
+

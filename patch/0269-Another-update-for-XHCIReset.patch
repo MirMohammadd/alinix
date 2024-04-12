@@ -1,0 +1,23 @@
+From 7a929c6789637c166c13a36a81806ad351227172 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 18:51:44 -0400
+Subject: [PATCH 269/493] Another update for XHCIReset
+
+---
+ kernelz/src/core/usb3.cpp | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/kernelz/src/core/usb3.cpp b/kernelz/src/core/usb3.cpp
+index 31f673b..1ba677a 100644
+--- a/kernelz/src/core/usb3.cpp
++++ b/kernelz/src/core/usb3.cpp
+@@ -45,4 +45,6 @@ using namespace LIBHeisenKernel;
+ 
+ void XHCIReset(USBDevice *dev){
+     dev->op_regs->op_usbsts |= (1 << 1);
++	while ((dev->op_regs->op_usbcmd & (1 << 1)));
++	while ((dev->op_regs->op_usbsts & (1 << 11)));
+ }
+-- 
+2.43.0
+

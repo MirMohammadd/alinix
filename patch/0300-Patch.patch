@@ -1,0 +1,35 @@
+From 98582ef4b3e23f7012fcc6e615722086511daa43 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 22:20:31 -0400
+Subject: [PATCH 300/493] Patch
+
+---
+ kernelz/src/boot/loader.s | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/kernelz/src/boot/loader.s b/kernelz/src/boot/loader.s
+index ad4d7a0..757ab7d 100644
+--- a/kernelz/src/boot/loader.s
++++ b/kernelz/src/boot/loader.s
+@@ -14,6 +14,7 @@
+ .set KERNEL_PAGE_NUMBER, (KERNEL_VIRTUAL_BASE >> 22)
+ 
+ .section .bootstrap_stack, "aw", @nobits
++    .align 16  
+ stack_bottom:
+     .skip 16384 
+ .global stack_top
+@@ -35,10 +36,6 @@ BootPageDirectory:
+         .long 0
+     .endr
+ 
+-.global _kernel_virtual_base
+-_kernel_virtual_base:
+-    .long KERNEL_VIRTUAL_BASE
+-
+ .section .text
+     .align 4
+ .global _entrypoint
+-- 
+2.43.0
+

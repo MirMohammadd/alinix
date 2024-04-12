@@ -1,0 +1,49 @@
+From f708f2675a94c69f2488d20786d9341e4d1f0814 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 20:04:04 -0400
+Subject: [PATCH 206/493] Minor patch
+
+---
+ .github/workflows/tests.yml |  2 +-
+ Makefile                    | 12 ++++++------
+ 2 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
+index f784259..21f9cc9 100644
+--- a/.github/workflows/tests.yml
++++ b/.github/workflows/tests.yml
+@@ -33,4 +33,4 @@ jobs:
+     - name: Build project
+       run: |
+         nasm -f elf32 -O0 kernelz/src/core/cpuhelper.asm -o kernelz/obj/core/cpuhelper.o
+-        make run # Replace 'make' with your build command
++        make qemu # Replace 'make' with your build command
+diff --git a/Makefile b/Makefile
+index 96b661a..3b6c696 100644
+--- a/Makefile
++++ b/Makefile
+@@ -74,15 +74,15 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
+ ####################################
+ #NASM assembly files
+ ####################################
+-$/(KRNLOBJDIR)/%.o: $(LOADERFILE)/%.s
+-	mkdir -p $(@D)
+-	nasm -f elf32 $< -o $@
++# $/(KRNLOBJDIR)/%.o: $(LOADERFILE)/%.s
++# 	mkdir -p $(@D)
++# 	nasm -f elf32 $< -o $@
+ 
+ 
+ 
+-# $/(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
+-# 	mkdir -p $(@D)
+-# 	nasm -f elf32 -O0 $< -o $@ 2>/dev/null || true
++$/(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
++	mkdir -p $(@D)
++	nasm -f elf32 -O0 $< -o $@ 2>/dev/null || true
+ 
+ 
+ 
+-- 
+2.43.0
+

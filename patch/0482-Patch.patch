@@ -1,0 +1,45 @@
+From 54ff605a90a99d0d6249e2ac5acb1396fd7113a3 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 18:25:04 -0400
+Subject: [PATCH 482/493] Patch
+
+---
+ apps/chess/board.h | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/apps/chess/board.h b/apps/chess/board.h
+index 1f8a04c..78bf24e 100644
+--- a/apps/chess/board.h
++++ b/apps/chess/board.h
+@@ -86,6 +86,28 @@ namespace LIBHeisenKernel{
+ 
+         uint64_t stack[StackSize];
+     };
++
++    /**
++     * @brief Useful functions
++    */
++
++    extern bool board_is_ok         (const board_t * board);
++
++    extern void board_clear         (board_t * board);
++    extern void board_copy          (board_t * dst, const board_t * src);
++
++    extern void board_init_list     (board_t * board);
++
++    extern bool board_is_legal      (const board_t * board);
++    extern bool board_is_check      (const board_t * board);
++    extern bool board_is_mate       (const board_t * board);
++    extern bool board_is_stalemate  (board_t * board);
++
++    extern bool board_is_repetition (const board_t * board);
++
++    extern int  board_material      (const board_t * board);
++    extern int  board_opening       (const board_t * board);
++    extern int  board_endgame       (const board_t * board);
+ };
+ 
+ 
+-- 
+2.43.0
+

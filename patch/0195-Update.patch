@@ -1,0 +1,83 @@
+From 2768bd7a101707a16e42e39a45d8d85043cfbe83 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 18:41:41 -0400
+Subject: [PATCH 195/493] Update
+
+---
+ kernelz/obj/system/tasking/userspace.o   |  0
+ kernelz/src/system/tasking/userspace.asm | 53 ++++++++++++++----------
+ 2 files changed, 32 insertions(+), 21 deletions(-)
+ create mode 100644 kernelz/obj/system/tasking/userspace.o
+
+diff --git a/kernelz/obj/system/tasking/userspace.o b/kernelz/obj/system/tasking/userspace.o
+new file mode 100644
+index 0000000..e69de29
+diff --git a/kernelz/src/system/tasking/userspace.asm b/kernelz/src/system/tasking/userspace.asm
+index 48607c1..6a0e1c1 100644
+--- a/kernelz/src/system/tasking/userspace.asm
++++ b/kernelz/src/system/tasking/userspace.asm
+@@ -1,28 +1,39 @@
+-GLOBAL enter_usermode
+ enter_usermode:
+-   ;push ebp
+-   mov ebp, esp
+-   cli
++    ; Save RBP and RSP
++    push rbp
++    mov rbp, rsp
+ 
+-   mov ax, 0x20 | 3
+-   mov ds, ax
+-   mov es, ax
+-   mov fs, ax
+-   mov gs, ax
++    ; Disable interrupts
++    cli
+ 
+-   push 0x20 | 3   ; push ss3
++    ; Load data segment descriptor (0x23 for user mode)
++    mov ax, 0x23
++    mov ds, ax
++    mov es, ax
++    mov fs, ax
++    mov gs, ax
+ 
+-   mov ecx, [ebp+8]
+-   push ecx ; push esp3
++    ; Push stack segment selector (0x23 for user mode)
++    push 0x23
+ 
+-   pushf  ; push flags onto stack
+-   pop eax ; pop into eax
+-   or eax, [ebp+12] ; Copy EFLAGS from arg 3
+-   push eax ; push eflags
+-   push 0x18 | 3 ; push CS, requested priv. level = 3
++    ; Load new stack pointer
++    mov rcx, [rbp + 8]
++    mov rsp, rcx
+ 
+-   xor eax, eax  ; Clear eax
+-   mov eax, [ebp+4] ; Load new IP into eax
+-   push eax ; Push EIP onto stack
++    ; Push flags onto stack
++    pushfq
++    pop rax
+ 
+-   iret
+\ No newline at end of file
++    ; OR EFLAGS from arg 3
++    or rax, [rbp + 16]
++    push rax
++
++    ; Push code segment selector (0x1B for user mode)
++    push 0x1B
++
++    ; Load new instruction pointer
++    mov rax, [rbp + 16]
++    push rax
++
++    ; Return to user mode
++    iretq
+-- 
+2.43.0
+

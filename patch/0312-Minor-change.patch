@@ -1,0 +1,25 @@
+From 69d08e5a1680a7547a42c96438589a0770421078 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 23:37:40 -0400
+Subject: [PATCH 312/493] Minor change
+
+---
+ kernelz/src/core/exceptions.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernelz/src/core/exceptions.cpp b/kernelz/src/core/exceptions.cpp
+index fac54cb..edc2345 100644
+--- a/kernelz/src/core/exceptions.cpp
++++ b/kernelz/src/core/exceptions.cpp
+@@ -56,7 +56,7 @@ uint32_t Exceptions::PageFault(uint32_t esp)
+     InterruptDescriptorTable::DisableInterrupts();
+ 
+     uint32_t errorAddress;
+-    asm volatile("mov %%cr2, %0" : "=r" (errorAddress));
++    asm volatile("movq %%cr2, %0" : "=r" (errorAddress));
+ 
+     CPUState* regs = (CPUState*)esp;
+ 
+-- 
+2.43.0
+

@@ -1,0 +1,43 @@
+From b079d23ba5308d6f57ab7c34457dee1abde7a774 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sat, 6 Apr 2024 00:28:34 -0400
+Subject: [PATCH 333/493] Patch
+
+---
+ Makefile                           | 6 +++---
+ kernelz/src/core/virtualmemory.cpp | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index eccddc4..4be1f0b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -27,9 +27,9 @@ INCLUDEDIRS := kernelz/include
+ INCLUDEDIRSLIB := lib/include
+ QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../qemuTrace.txt -d cpu_reset #-readconfig qemu-usb-config.cfg -drive if=none,id=stick,file=disk.img -device usb-storage,bus=ehci.0,drive=stick
+ 
+-G++PARAMS := -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -Wno-write-strings -fpermissive -Wno-unknown-pragmas -std=c++20 -lstdc++ -fPIC  
+-GCCPARAMS := -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -ffreestanding -fno-builtin -Wno-unknown-pragmas -lstdc++ -fPIC 
+-ASPARAMS := -f elf32
++G++PARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -Wno-write-strings -fpermissive -Wno-unknown-pragmas -std=c++20 -lstdc++ -fPIC  
++GCCPARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -ffreestanding -fno-builtin -Wno-unknown-pragmas -lstdc++ -fPIC 
++ASPARAMS := -f elf32 
+ LDPARAMS := -no-pie
+ 
+ KRNLSRCDIR := kernelz/src
+diff --git a/kernelz/src/core/virtualmemory.cpp b/kernelz/src/core/virtualmemory.cpp
+index 4d1ad4f..bc9111a 100644
+--- a/kernelz/src/core/virtualmemory.cpp
++++ b/kernelz/src/core/virtualmemory.cpp
+@@ -10,7 +10,7 @@ using namespace HeisenOs::system;
+ void VirtualMemoryManager::ReloadCR3()
+ {
+     asm volatile("movl	%cr3,%eax");
+-	asm volatile("movl	%eax,%cr3");
++    asm volatile("movl	%eax,%cr3");
+ }
+ 
+ 
+-- 
+2.43.0
+

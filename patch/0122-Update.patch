@@ -1,0 +1,25 @@
+From 4b11a031d1086d1a64a69884f92843f8ebdc4295 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 20:26:15 -0400
+Subject: [PATCH 122/493] Update
+
+---
+ .github/workflows/test.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index 8ffeb63..e985fef 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -8,7 +8,7 @@ on:
+ 
+ jobs:
+   build:
+-    runs-on: macos-latest  # Specify the operating system you're using
++    runs-on: macos-10.15  # Specify the operating system you're using
+ 
+     steps:
+       - name: Checkout Repository
+-- 
+2.43.0
+

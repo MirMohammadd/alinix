@@ -1,0 +1,22 @@
+From 680bbd083fa99d1506a47380e857d3f5aeb9773a Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 21:20:15 -0400
+Subject: [PATCH 137/493] Minor update
+
+---
+ .github/workflows/tests.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
+index 650a4d3..1bade1e 100644
+--- a/.github/workflows/tests.yml
++++ b/.github/workflows/tests.yml
+@@ -30,4 +30,4 @@ jobs:
+       run: export PATH="$PATH:/path/to/i686-elf-gcc-directory" # Replace with the actual path to i686-elf-gcc directory
+ 
+     - name: Build project
+-      run: make all # Replace 'make build' with your build command
++      run: make run # Replace 'make build' with your build command
+-- 
+2.43.0
+

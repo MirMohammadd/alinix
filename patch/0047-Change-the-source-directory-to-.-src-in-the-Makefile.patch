@@ -1,0 +1,291 @@
+From 69e984309615451b89e795fe25b9790955d84c15 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 14:53:25 -0400
+Subject: [PATCH 047/493]  Change the source directory to "./src" in the
+ Makefile
+
+The source directory in the Makefile was changed from "src" to "./src". The other configurations and variables remain the same.
+---
+ Makefile                   | 204 +++++++------------------------------
+ kernel/src/Makefile        |   4 +-
+ kernel/src/makefile.config |   9 ++
+ makefile.config            |   9 ++
+ 4 files changed, 58 insertions(+), 168 deletions(-)
+ create mode 100644 kernel/src/makefile.config
+ create mode 100644 makefile.config
+
+diff --git a/Makefile b/Makefile
+index 612133d..efefc2f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,178 +1,50 @@
+-# Please set your kernel preference versions..
+-# Enjoy your self :)
+-# Osiris at osiris@Devils.com
++CONFIG = makefile.config
++include ${CONFIG}
+ 
+-NAME = DreamOS
+-VERSION = 0
+-PATCHLEVEL = 3
+-EXTRAVERSION = -trunk
+-MEMORY = LEGACY
+-GENDIR = generated
+-include Makefile.am
++INCLUDEDIRS := include
++DEBUG := -g
+ 
+-ifeq ($(shell which sudo),)
+-	SU = su -c
+-else
+-	SU = sudo bash -c
+-endif
++GCCPARAMS := -m32 $(DEBUG) -I $(INCLUDEDIRS) $(OPTIMIZE_FLAGS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
++ASPARAMS := --32
+ 
+-CFLAGS = -nostdlib\
+-	-nostdinc\
+-	-g\
+-	-fomit-frame-pointer\
+-	-fno-builtin\
+-	-fno-stack-protector\
+-	-Wall\
+-	-Werror\
+-	-march=i686\
+-	-m32\
+-	-std=gnu99\
+-	-I./src/include\
+-	-I./src/include/io\
+-	-I./src/include/drivers\
+-	-I./src/include/libc\
+-	-I./src/include/hardware\
+-	-I./src/include/system\
+-	-I./src/include/shell\
+-	-I./src/include/misc\
+-	-I./src/include/fs\
+-	-I./src/include/sys\
+-	-DBOCHS_DEBUG\
+-	-D$(MEMORY)
++SRCDIR := kernel/src
++OBJDIR := obj
+ 
+-OBJ = $(GENDIR)/kernel.o\
+-	$(GENDIR)/io/video.o\
+-	$(GENDIR)/drivers/keyboard.o\
+-	$(GENDIR)/drivers/mouse.o\
+-	$(GENDIR)/drivers/fdc.o\
+-	$(GENDIR)/drivers/vesa.o\
+-	$(GENDIR)/fs/vfs.o\
+-	$(GENDIR)/fs/fcntl.o\
+-	$(GENDIR)/fs/initrd.o\
+-	$(GENDIR)/fs/unistd.o\
+-	$(GENDIR)/libc/ctype.o\
+-	$(GENDIR)/libc/string.o\
+-	$(GENDIR)/libc/vsprintf.o\
+-	$(GENDIR)/io/io.o\
+-	$(GENDIR)/libc/stdio.o\
+-	$(GENDIR)/hardware/cpuid.o\
+-	$(GENDIR)/hardware/pic8259.o\
+-	$(GENDIR)/misc/clock.o\
+-	$(GENDIR)/misc/bitops.o\
+-	$(GENDIR)/misc/debug.o \
+-	$(GENDIR)/system/gdt.o\
+-	$(GENDIR)/system/idt.o\
+-	$(GENDIR)/system/handlers.o\
+-	$(GENDIR)/system/syscall.o\
+-	$(GENDIR)/system/elf.o\
+-	$(GENDIR)/system/panic.o\
+-	$(GENDIR)/system/vm.o\
+-	$(GENDIR)/system/paging.o\
+-	$(GENDIR)/system/kheap.o\
+-	$(GENDIR)/system/scheduler.o\
+-	$(GENDIR)/system/thread.o\
+-	$(GENDIR)/system/thread_asm.o\
+-	$(GENDIR)/hardware/8253.o\
+-	$(GENDIR)/shell/commands.o\
+-	$(GENDIR)/shell/testing.o\
+-	$(GENDIR)/shell/user_shell.o\
+-	$(GENDIR)/shell/shell.o\
+-	$(GENDIR)/sys/utsname.o\
+-	$(GENDIR)/sys/dirent.o\
+-	$(GENDIR)/sys/stat.o
+-$(GENDIR)/dreamos.img: $(GENDIR)/bl.img $(GENDIR)/kernel.bin
+-	cp $(GENDIR)/kernel.bin $(GENDIR)/dreamos.img
++SRCFILES := $(shell find $(SRCDIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm \)) #Find all the files that end with .cpp/.s/.asm
++OBJFILES := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(SRCFILES)))) #Replace the .cpp/.s/.asm extension with .o
++OBJFILES := $(subst $(SRCDIR),$(OBJDIR),$(OBJFILES)) #Replace the "src" part with "obj"
+ 
+-$(GENDIR)/bl.img : src/multicatcher.s
+-	mkdir -p "$(@D)"
+-	$(ASM) -f elf ./src/multicatcher.s -o ./$(GENDIR)/bl.img
+ 
+-$(GENDIR)/kernel.bin: $(OBJ)
+-	$(LD) -melf_i386 -static --oformat elf32-i386 --output=./$(GENDIR)/kernel.bin --script=src/kernel.lds ./$(GENDIR)/bl.img $(OBJ) -Ttext 0x100000 -Map ./$(GENDIR)/kernel.map
+-	make -f utils/Makefile
++####################################
++#C++ source files
++####################################
++$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
++	mkdir -p $(@D)
++	i686-elf-g++ $(GCCPARAMS) -c -o $@ $<
+ 
+-$(GENDIR)/kernel.o: src/kernel.c
+-$(GENDIR)/fs/vfs.o: src/fs/vfs.c
+-$(GENDIR)/fs/fcntl.o: src/fs/fcntl.c
+-$(GENDIR)/fs/initrd.o: src/fs/initrd.c
+-$(GENDIR)/fs/unistd.o: src/fs/unistd.c
+-$(GENDIR)/io/video.o: src/io/video.c
+-$(GENDIR)/io/io.o: src/io/io.c
+-$(GENDIR)/hardware/pic8259.o: src/hardware/pic8259.c
+-$(GENDIR)/hardware/cpuid.o: src/hardware/cpuid.c
+-$(GENDIR)/hardware/keyboard.o: src/hardware/keyboard.c
+-$(GENDIR)/libc/stdio.o: src/libc/stdio.c
+-$(GENDIR)/libc/ctype.o: src/libc/ctype.c
+-$(GENDIR)/libc/string.o: src/libc/string.c
+-$(GENDIR)/libc/string.o: src/libc/vsprintf.c
+-$(GENDIR)/mem/paging.o: src/system/paging.c
+-$(GENDIR)/mem/vm.o: src/system/vm.c
+-$(GENDIR)/mem/kheap.o: src/system/kheap.c
+-$(GENDIR)/misc/clock.o: src/misc/clock.c
+-$(GENDIR)/misc/bitops.o: src/misc/bitops.c
+-$(GENDIR)/misc/debug.o: src/misc/debug.c
+-$(GENDIR)/drivers/keyboard.o: src/drivers/keyboard.c
+-$(GENDIR)/drivers/mouse.o: src/drivers/mouse.c
+-$(GENDIR)/drivers/fdc.o: src/drivers/fdc.c
+-$(GENDIR)/drivers/vesa.o: src/drivers/vesa.c
++####################################
++#GAS assembly files
++####################################
++$(OBJDIR)/%.o: $(SRCDIR)/%.s
++	mkdir -p $(@D)
++	i686-elf-as $(ASPARAMS) -o $@ $<
+ 
+-$(GENDIR)/system/gdt.o: src/system/gdt.c
+-$(GENDIR)/system/idt.o: src/system/idt.c
+-$(GENDIR)/system/handlers.o: src/system/handlers.c
+-$(GENDIR)/system/syscall.o: src/system/syscall.c
+-$(GENDIR)/system/elf.o: src/system/panic.c
+-$(GENDIR)/system/panic.o: src/system/elf.c
+-$(GENDIR)/system/scheduler.o: src/system/scheduler.c
+-$(GENDIR)/system/thread.o: src/system/thread.c
+-$(GENDIR)/system/thread_asm.o: src/system/thread_asm.s
+-	nasm -f elf -g -F stabs src/system/thread_asm.s -o $(GENDIR)/system/thread_asm.o
++####################################
++#NASM assembly files
++####################################
++$(OBJDIR)/%.o: $(SRCDIR)/%.asm
++	mkdir -p $(@D)
++	nasm -f elf32 -O0 $< -o $@
+ 
+-$(GENDIR)/hardware/8253.o: src/hardware/8253.c
+-$(GENDIR)/shell/shell.o: src/shell/shell.c
+-$(GENDIR)/shell/commands.o: src/shell/commands.c
+-$(GENDIR)/shell/testing.o: src/shell/testing.c
+-$(GENDIR)/shell/user_shell.o: src/shell/user_shell.c
+-$(GENDIR)/sys/utsname.o: src/sys/utsname.c
+-$(GENDIR)/sys/dirent.o: src/sys/dirent.c
+-$(GENDIR)/sys/stat.o: src/sys/stat.c
+-
+-utils:
+-	make -f utils/Makefile
+-
+-filesystem:
+-	mkdir -p boot/os
+-	$(SU) "mount -o loop boot/grub.img boot/os && cp initfs boot/os/initfs && umount boot/os"
+-
+-img:
+-	$(SU) "mount -o loop boot/grub.img boot/os && cp $(GENDIR)/dreamos.img boot/os/boot/grub/ && umount boot/os"
+-
+-vers:
+-	 sed -i -e "/^#define VERSION/s/\".*\"/\"$(VERSION)\"/" src/include/version.h
+-	 sed -i -e "/^#define PATCHLEVEL/s/\".*\"/\"$(PATCHLEVEL)\"/" src/include/version.h
+-	 sed -i -e "/^#define EXTRAVERSION/s/\".*\"/\"$(EXTRAVERSION)\"/" src/include/version.h
+-	 sed -i -e "/^#define NAME/s/\".*\"/\"$(NAME)\"/" src/include/version.h
+-	 sed -i -e "/^#define REV_NUM/s/\".*\"/\""-h`git log --pretty=format:"%h" -1`"\"/" src/include/version.h
+-
+-.PHONY: clean install iso-image qemu
++libcactusos.a: $(OBJFILES)
++	i686-elf-ar r libcactusos.a $(OBJFILES)
+ 
++.PHONY: clean filelist
+ clean:
+-	rm -rf $(GENDIR)
+-	rm -f $(OBJ)
+-	rm -rf utils/initfscp
+-
+-install:
+-	mkfs.ext2 /dev/fd0
+-	dd if=boot/grub.img of=/dev/fd0
+-
+-iso-image:
+-	./utils/eltorito_gen.sh
+-
+-qemu: bin/dreamos.img
+-	dd if=/dev/zero bs=$(shell let bs=1474560 -$(shell stat --format=%s $(GENDIR)/dreamos.img); echo $$bs) count=1 2>/dev/null | cat $(GENDIR)/dreamos.img - > $(GENDIR)/dreamos_padded.img
+-
+-it:
+-	cp src/include/lng/it.h src/include/use.h
+-
+-en:
+-	cp src/include/lng/en.h src/include/use.h
++	rm -rf $(OBJDIR) libcactusos.a
+ 
++filelist:
++	@echo "Source Files:"
++	@echo -$(SRCFILES)
++	@echo "Object Files:"
++	@echo -$(OBJFILES)
+diff --git a/kernel/src/Makefile b/kernel/src/Makefile
+index 0e151b7..a53a89c 100644
+--- a/kernel/src/Makefile
++++ b/kernel/src/Makefile
+@@ -1,4 +1,4 @@
+-CONFIG = ../makefile.config
++CONFIG = makefile.config
+ include ${CONFIG}
+ 
+ INCLUDEDIRS := include
+@@ -7,7 +7,7 @@ DEBUG := -g
+ GCCPARAMS := -m32 $(DEBUG) -I $(INCLUDEDIRS) $(OPTIMIZE_FLAGS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
+ ASPARAMS := --32
+ 
+-SRCDIR := src
++SRCDIR := ./src
+ OBJDIR := obj
+ 
+ SRCFILES := $(shell find $(SRCDIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm \)) #Find all the files that end with .cpp/.s/.asm
+diff --git a/kernel/src/makefile.config b/kernel/src/makefile.config
+new file mode 100644
+index 0000000..aeabd33
+--- /dev/null
++++ b/kernel/src/makefile.config
+@@ -0,0 +1,9 @@
++#OPTIMIZE_FLAGS := -O0 -msse2
++
++#OPTIMIZE_FLAGS := -O0 -msse2
++
++#OPTIMIZE_FLAGS := -O1 -msse2
++
++#OPTIMIZE_FLAGS := -O2 -msse2
++
++OPTIMIZE_FLAGS := -O3 -msse2
+\ No newline at end of file
+diff --git a/makefile.config b/makefile.config
+new file mode 100644
+index 0000000..aeabd33
+--- /dev/null
++++ b/makefile.config
+@@ -0,0 +1,9 @@
++#OPTIMIZE_FLAGS := -O0 -msse2
++
++#OPTIMIZE_FLAGS := -O0 -msse2
++
++#OPTIMIZE_FLAGS := -O1 -msse2
++
++#OPTIMIZE_FLAGS := -O2 -msse2
++
++OPTIMIZE_FLAGS := -O3 -msse2
+\ No newline at end of file
+-- 
+2.43.0
+

@@ -1,0 +1,25 @@
+From 7a600bcb6beac7c733418fabad867fea473f3118 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 00:03:05 -0400
+Subject: [PATCH 107/493] Patch
+
+---
+ kernelz/include/common/print.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernelz/include/common/print.h b/kernelz/include/common/print.h
+index 1b009df..6d7433b 100644
+--- a/kernelz/include/common/print.h
++++ b/kernelz/include/common/print.h
+@@ -5,7 +5,7 @@
+ #include <common/convert.h>
+ #include <system/bootconsole.h>
+ 
+-namespace CactusOS
++namespace HeisenOs
+ {
+     namespace common
+     {
+-- 
+2.43.0
+

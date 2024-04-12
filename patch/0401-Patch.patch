@@ -1,0 +1,151 @@
+From 6c3449a052990d8e4476342ba5aa3631b5acea1c Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 7 Apr 2024 17:28:41 -0400
+Subject: [PATCH 401/493] Patch
+
+---
+ kernel/gui/Makefile |   4 ++--
+ kernel/src/Makefile |  50 --------------------------------------------
+ lib/libcactusos.a   | Bin 1326072 -> 1326072 bytes
+ qemu-usb-config.cfg |  37 ++++++++++++++++++++++++++++++++
+ 4 files changed, 39 insertions(+), 52 deletions(-)
+ delete mode 100644 kernel/src/Makefile
+ create mode 100644 qemu-usb-config.cfg
+
+diff --git a/kernel/gui/Makefile b/kernel/gui/Makefile
+index e8499ac..8919104 100644
+--- a/kernel/gui/Makefile
++++ b/kernel/gui/Makefile
+@@ -1,2 +1,2 @@
+-all:
+-	$(CC) $(CFLAGS) window.c graphics.c
+\ No newline at end of file
++# all:
++# 	$(CC) $(CFLAGS) window.c graphics.c
+\ No newline at end of file
+diff --git a/kernel/src/Makefile b/kernel/src/Makefile
+deleted file mode 100644
+index 79dce22..0000000
+--- a/kernel/src/Makefile
++++ /dev/null
+@@ -1,50 +0,0 @@
+-# CONFIG = makefile.config
+-# include ${CONFIG}
+-
+-# INCLUDEDIRS := include
+-# DEBUG := -g
+-
+-# GCCPARAMS := -m32 $(DEBUG) -I $(INCLUDEDIRS) $(OPTIMIZE_FLAGS) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
+-# ASPARAMS := --32
+-
+-# SRCDIR := ./src
+-# OBJDIR := obj
+-
+-# SRCFILES := $(shell find $(SRCDIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm \)) #Find all the files that end with .cpp/.s/.asm
+-# OBJFILES := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(SRCFILES)))) #Replace the .cpp/.s/.asm extension with .o
+-# OBJFILES := $(subst $(SRCDIR),$(OBJDIR),$(OBJFILES)) #Replace the "src" part with "obj"
+-
+-
+-# ####################################
+-# #C++ source files
+-# ####################################
+-# $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+-# 	mkdir -p $(@D)
+-# 	i686-elf-g++ $(GCCPARAMS) -c -o $@ $<
+-
+-# ####################################
+-# #GAS assembly files
+-# ####################################
+-# $(OBJDIR)/%.o: $(SRCDIR)/%.s
+-# 	mkdir -p $(@D)
+-# 	i686-elf-as $(ASPARAMS) -o $@ $<
+-
+-# ####################################
+-# #NASM assembly files
+-# ####################################
+-# $(OBJDIR)/%.o: $(SRCDIR)/%.asm
+-# 	mkdir -p $(@D)
+-# 	nasm -f elf32 -O0 $< -o $@
+-
+-# libcactusos.a: $(OBJFILES)
+-# 	i686-elf-ar r libcactusos.a $(OBJFILES)
+-
+-# .PHONY: clean filelist
+-# clean:
+-# 	rm -rf $(OBJDIR) libcactusos.a
+-
+-# filelist:
+-# 	@echo "Source Files:"
+-# 	@echo -$(SRCFILES)
+-# 	@echo "Object Files:"
+-# 	@echo -$(OBJFILES)
+diff --git a/lib/libcactusos.a b/lib/libcactusos.a
+index 24a42036b242ebe6d89edc90ddef12992a16e418..37086f1c1c332eea233fb4fc60e397a41c9fc956 100644
+GIT binary patch
+delta 611
+zcmezIJ>bXpfC+LeriK>g8<i3qK@5}0eQU%v&vCpajo|gfN(n=F>u!o~K3H(l8qC|=
+zw`K=3LRG?sWk@`QEeM|Y=7-x)Dnj(EyP0DOW^I?_XS~1%W=_BNm`!{;ryQdz7laR#
+z65pPw!MK(m#5V;wsolVWal3&9)4L?F5LipQ<!mM(W(HywAZFceIh##a6ryF_O^NMI
+z8`vU@L0q%#KpS4fgPD_oe%Sudnf;&<g1fhj{iHsa3vtTAW$c})5RG~~92wt{q&6~h
+z@^V9T_N@`$ev^;WR{<iuuasMSyQ4m*>vK3?V*4U7t~vMM+9kF}edUTtfN2-oej${*
+zOaLMc_H$wycO=-)X4`?rIf%hkwoCMIZ<pxdc?Hot9VjcYUG6PU3dC@52+cXoyM4}S
+zzO-hLF7xR?1A$8X`L|30^FjV@fBTSs``d>Cv0xvWZ}+<?81fgQ8XN_CuL<2uf$+h;
+u*=Q|n$OPBD{jaTXr4B?I?AnQ0!i+sIX^G|Qz6pav+Z^PY?I$!v41@qSZ`D5l
+
+delta 611
+zcmezIJ>bXpfC+LeCZ@&)8<i3qnN3WMrf<{~5#Kz=@tQP@C$YIVR#F(K$jD;yx|`yg
+z4;GxX2J<%et=Yj05${_gwmD(LG9;eD76eax^TX{Y6(M@o-OMosv$o6eGhW~WGpFBs
+z%qG5_Q;yM<3&ICViEq!;U|h=&=1&G1-)>;RxZS{l>0J^?$P%oj-EuY)5HkZY3lOtz
+zx17zUD+-nex>RC&(+0K(V=#9+(1sWBFd6af51rW$8X>rQ%h*rqgSil=EL_IknF`UU
+z$HS5F9Z6~<Gbb-ML}%X`@$EPHIDHi$()&ue#kV`^bGkkU@{J9q1Njo$7m0Drxd-6`
+zoglG2>MK`F0+<i-)b<OZ++_j~X|SIY)3_r+el|AP4%F@-23OfG(Zju6qKD@dL^H&2
+zxwkwi5W~SCH0Lz$_Bp5d(wgB0N^F<&=if33VhS+s+TT9p-~RTYKrF~dKs)?y3WofJ
+zs0K&D-fKcPQy_e>Z#G&B8#2LlZ~tp6T&V+*2D^4*mM~)vOj=_3x^Kdu&^9&zd+mg#
+Hh=C9Quv62s
+
+diff --git a/qemu-usb-config.cfg b/qemu-usb-config.cfg
+new file mode 100644
+index 0000000..a0e9b96
+--- /dev/null
++++ b/qemu-usb-config.cfg
+@@ -0,0 +1,37 @@
++###########################################################################
++#
++# You can pass this file directly to qemu using the -readconfig
++# command line switch.
++#
++# This config file creates a EHCI adapter with companion UHCI
++# controllers as multifunction device in PCI slot "1d".
++#
++# Specify "bus=ehci.0" when creating usb devices to hook them up
++# there.
++#
++
++[device "ehci"]
++  driver = "ich9-usb-ehci1"
++  addr = "1d.7"
++  multifunction = "on"
++
++[device "uhci-1"]
++  driver = "ich9-usb-uhci1"
++  addr = "1d.0"
++  multifunction = "on"
++  masterbus = "ehci.0"
++  firstport = "0"
++
++[device "uhci-2"]
++  driver = "ich9-usb-uhci2"
++  addr = "1d.1"
++  multifunction = "on"
++  masterbus = "ehci.0"
++  firstport = "2"
++
++[device "uhci-3"]
++  driver = "ich9-usb-uhci3"
++  addr = "1d.2"
++  multifunction = "on"
++  masterbus = "ehci.0"
++  firstport = "4"
+-- 
+2.43.0
+

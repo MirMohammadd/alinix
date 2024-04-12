@@ -1,0 +1,22 @@
+From ab04da0602da0f30d5c014825a48f7a6c37c37a2 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 17:33:06 -0400
+Subject: [PATCH 068/493] CI/CD update
+
+---
+ .github/workflows/test.yml | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index dce3582..567ecb6 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -24,3 +24,5 @@ jobs:
+         run: |
+           cd kernel
+           make
++          cd arch/x86-pc
++          make
+-- 
+2.43.0
+

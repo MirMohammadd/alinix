@@ -1,0 +1,43 @@
+From 4568e3d2b9e400536d023e3821fdc2569007f06f Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 4 Apr 2024 18:29:46 -0400
+Subject: [PATCH 253/493] Minor update
+
+---
+ lib/include/hardware/ata.hpp |  1 +
+ lib/src/hardware/drive.cpp   | 10 ++++++++++
+ 2 files changed, 11 insertions(+)
+
+diff --git a/lib/include/hardware/ata.hpp b/lib/include/hardware/ata.hpp
+index c63561a..34ebf88 100644
+--- a/lib/include/hardware/ata.hpp
++++ b/lib/include/hardware/ata.hpp
+@@ -16,6 +16,7 @@
+ #include <types.h>
+ uint64_t ata_identify_drive(uint8_t drive);
+ 
++double getDriveSize(uint8_t driveInBytes);
+ 
+ 
+ #endif 
+\ No newline at end of file
+diff --git a/lib/src/hardware/drive.cpp b/lib/src/hardware/drive.cpp
+index a39d5dd..e4c95ed 100644
+--- a/lib/src/hardware/drive.cpp
++++ b/lib/src/hardware/drive.cpp
+@@ -1,2 +1,12 @@
+ #include <hardware/ata.hpp>
++#include <types.h>
++
++using namespace LIBHeisenKernel;
++
++double getDriveSize(int drive)
++{
++    uint64_t size = (double)ata_identify_drive(drive);
++    double mega_bytes = size/1024* 1024;
++    return mega_bytes;
++}
+ 
+-- 
+2.43.0
+

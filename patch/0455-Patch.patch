@@ -1,0 +1,38 @@
+From 77006d346c272a61b8be149ddf4d303d84afe5e2 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 10 Apr 2024 17:31:13 -0400
+Subject: [PATCH 455/493] Patch
+
+---
+ apps/welcome/welcome.cpp | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/apps/welcome/welcome.cpp b/apps/welcome/welcome.cpp
+index cf8e2ba..9aee2f5 100644
+--- a/apps/welcome/welcome.cpp
++++ b/apps/welcome/welcome.cpp
+@@ -30,6 +30,8 @@ static const char multi_line_string[] =
+ static void helpButtonCallback(void *sender,MouseButtonArgs args);
+ static void exitButtonCallback(void *sender,MouseButtonArgs args);
+ 
++
++
+ int main(){
+     GUI::SetDefaultFont();
+ 
+@@ -45,4 +47,11 @@ int main(){
+     helpMoreOptions->x = 1;
+     helpMoreOptions->y = 2;
+     // helpMoreOptions->MouseClick += HelpMoreOptionsCallback;
++}
++
++void exitButtonCallback(void *sender,MouseButtonArgs args){
++    /**
++     * @brief This should be the sys exit call after user click on the close button
++    */
++    DoSyscall(SYSCALL_EXIT);
+ }
+\ No newline at end of file
+-- 
+2.43.0
+

@@ -1,0 +1,30 @@
+From bae0c1442745c2e531d0e3ff141dc0c96806b343 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 23:45:39 -0400
+Subject: [PATCH 315/493] Patch
+
+---
+ kernelz/linker.ld | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/kernelz/linker.ld b/kernelz/linker.ld
+index 00e57a0..45ccc67 100644
+--- a/kernelz/linker.ld
++++ b/kernelz/linker.ld
+@@ -1,5 +1,5 @@
+ OUTPUT_FORMAT(binary)
+-OUTPUT_ARCH(i386:x86-64)  
++OUTPUT_ARCH(i386:x86-64)   
+ 
+ ENTRY(_entrypoint)
+ 
+@@ -57,4 +57,4 @@ SECTIONS
+     /DISCARD/ : { *(.fini_array*) *(.comment) }
+ 
+     _kernel_end = .;
+-}
++}
+\ No newline at end of file
+-- 
+2.43.0
+

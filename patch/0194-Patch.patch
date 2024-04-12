@@ -1,0 +1,29 @@
+From e6ed67e20b694ea5b3d4d17ffcec871717e8df0c Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 18:32:16 -0400
+Subject: [PATCH 194/493] Patch
+
+---
+ kernelz/obj/system/virtual8086/VM8086Helper.o | Bin 0 -> 672 bytes
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 kernelz/obj/system/virtual8086/VM8086Helper.o
+
+diff --git a/kernelz/obj/system/virtual8086/VM8086Helper.o b/kernelz/obj/system/virtual8086/VM8086Helper.o
+new file mode 100644
+index 0000000000000000000000000000000000000000..5ecef02281dde88028b3cd7a3631699af64cafe3
+GIT binary patch
+literal 672
+zcmb7BJxc>Y5Pg>~twKZ)(<Iti-HAv@AtI3k18O5^>*<{slHA3;HJHjPJ+8@LQ2&IL
+zg^kty82><YCijs=uyA1Z&3iNRc3~ge#~n@6kcNgl77RE@8oP7cLJ_%i^k2xHoTX%|
+zLgZ9&s3i3gVP4TMX>L>D?7^`@slH@NjVWmb%3^}-S*29{HfZUNv@}w`l$Yx-RXoEF
+zYdJqG7yNLo<cIsqeuP@N{t7=JJs>?GJz#zI^znwH&k{y0ykiutid-~f3Pdw<)usI)
+zp?kNU6w<t+YBG#5=IO<Mp!&W7zP{Bl{;3uT>zSzGg6fXK^{fUeG{5(Y^B?Ra8ux9g
+zS>s@izAYSkV0hx%@Ft$LhsL-k<h?m)ZZ{jo`3b|JYuUQ#4MB8H&ZH?Mx{ho%;#0R=
+ZVz7E%zw6w%S<x2471>(bvErK-=MSQuRRjP4
+
+literal 0
+HcmV?d00001
+
+-- 
+2.43.0
+

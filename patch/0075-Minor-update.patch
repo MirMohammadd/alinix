@@ -1,0 +1,29 @@
+From d1a04c36c1834c52a81f2cc992bbe14370a4e415 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 17:46:20 -0400
+Subject: [PATCH 075/493] Minor update
+
+---
+ kernel/arch/x86-pc/makefile.config | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+ create mode 100644 kernel/arch/x86-pc/makefile.config
+
+diff --git a/kernel/arch/x86-pc/makefile.config b/kernel/arch/x86-pc/makefile.config
+new file mode 100644
+index 0000000..aeabd33
+--- /dev/null
++++ b/kernel/arch/x86-pc/makefile.config
+@@ -0,0 +1,9 @@
++#OPTIMIZE_FLAGS := -O0 -msse2
++
++#OPTIMIZE_FLAGS := -O0 -msse2
++
++#OPTIMIZE_FLAGS := -O1 -msse2
++
++#OPTIMIZE_FLAGS := -O2 -msse2
++
++OPTIMIZE_FLAGS := -O3 -msse2
+\ No newline at end of file
+-- 
+2.43.0
+

@@ -1,0 +1,40 @@
+From b5675d0a044cd27537b0cbeb8b29acadcd4c6969 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 10 Apr 2024 21:29:41 -0400
+Subject: [PATCH 459/493] Minor patch
+
+---
+ apps/welcome/welcome.cpp | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/apps/welcome/welcome.cpp b/apps/welcome/welcome.cpp
+index 46d4a3a..6078cff 100644
+--- a/apps/welcome/welcome.cpp
++++ b/apps/welcome/welcome.cpp
+@@ -55,6 +55,13 @@ int main(){
+     shutdownAndReboot->y = 50;
+     shutdownAndReboot->x = 1;
+     shutdownAndReboot->MouseClick += rebootSystemAndSayGoodBye;
++
++    Button* exit = new Button("Exit");
++    exit->width = 150 - 2;
++    exit->height = 47;
++    exit->x = 1;
++    exit->y = 100;
++    exit->MouseClick += exitButtonCallback;
+     // helpMoreOptions->MouseClick += HelpMoreOptionsCallback;
+ }
+ 
+@@ -66,5 +73,8 @@ static void exitButtonCallback(void *sender,MouseButtonArgs args){
+ }
+ 
+ static void rebootSystemAndSayGoodBye(void *sender,MouseButtonArgs args){
++    /**
++     * @brief This should be the sys reboot call after user click on the close button
++    */
+     DoSyscall(SYSCALL_REBOOT);
+ }
+\ No newline at end of file
+-- 
+2.43.0
+

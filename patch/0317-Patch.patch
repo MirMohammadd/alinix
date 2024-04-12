@@ -1,0 +1,23 @@
+From 9591359b566085baa37d5e30bf9dd47f74431a89 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 23:50:20 -0400
+Subject: [PATCH 317/493] Patch
+
+---
+ kernelz/linker.ld | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernelz/linker.ld b/kernelz/linker.ld
+index fe13500..37b9d5e 100644
+--- a/kernelz/linker.ld
++++ b/kernelz/linker.ld
+@@ -1,5 +1,5 @@
+ OUTPUT_FORMAT(binary)
+-OUTPUT_ARCH(x86-64)
++OUTPUT_ARCH(i386:x86-64)
+ 
+ ENTRY(_entrypoint)
+ 
+-- 
+2.43.0
+

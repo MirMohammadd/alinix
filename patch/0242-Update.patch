@@ -1,0 +1,25 @@
+From eb9b5b7ba4f59d7acb194267526ccc2d288d0756 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 22:12:02 -0400
+Subject: [PATCH 242/493] Update
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 7672b6a..1acb5b7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -77,7 +77,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
+ 
+ 
+ CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
+-	ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
++	gcc -fno-pie $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
+ CactusOS.iso: CactusOS.bin
+ 	cd lib/ && $(MAKE)
+ 	cd apps/ && $(MAKE)
+-- 
+2.43.0
+

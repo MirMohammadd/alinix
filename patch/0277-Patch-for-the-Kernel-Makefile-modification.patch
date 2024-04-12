@@ -1,0 +1,36 @@
+From 2e9f10c366405070d703e39e75aa62a3c9713b4e Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 21:05:08 -0400
+Subject: [PATCH 277/493] Patch for the Kernel Makefile modification
+
+---
+ lib/include/xhci.h | 13 -------------
+ 1 file changed, 13 deletions(-)
+
+diff --git a/lib/include/xhci.h b/lib/include/xhci.h
+index 50516e1..01204bc 100644
+--- a/lib/include/xhci.h
++++ b/lib/include/xhci.h
+@@ -18,19 +18,6 @@ typedef struct _xhci_doorbell_ {
+ }xhci_doorbell_regs_t;
+ #pragma pack(pop)
+ 
+-#pragma pack(push,1)
+-typedef struct _xhci_cap_regs_ {
+-	uint8_t cap_caplen_version;
+-	uint8_t reserved;
+-	uint16_t hci_version;
+-	uint32_t cap_hcsparams1;
+-	uint32_t cap_hcsparams2;
+-	uint32_t cap_hcsparams3;
+-	uint32_t cap_hccparams1;
+-	uint32_t cap_dboff;
+-	uint32_t cap_hccparams2;
+-}xhci_cap_regs_t;
+-#pragma pack(pop)
+ 
+ #pragma pack(push,1)
+ typedef struct _xhci_cap_regs_ {
+-- 
+2.43.0
+

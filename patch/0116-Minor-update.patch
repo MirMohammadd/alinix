@@ -1,0 +1,25 @@
+From 6a320a07846029ea3250602b715677c8eea38375 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 19:43:09 -0400
+Subject: [PATCH 116/493] Minor update
+
+---
+ .github/workflows/test.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index d4f933e..8075f08 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -27,7 +27,7 @@ jobs:
+           # ./i686-elf-tools.sh
+           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+           brew install git wget bzip2 xz unzip nasm python@3 xorriso mtools gcc@11 bison flex gmp mpfr texinfo
+-          python2 -m pip install -r kernel/requirements.txt
++          python3 -m pip install -r kernel/requirements.txt
+           brew tap nativeos/i686-elf-toolchain
+           brew install i686-elf-binutils i686-elf-gcc i686-elf-newlib
+ 
+-- 
+2.43.0
+

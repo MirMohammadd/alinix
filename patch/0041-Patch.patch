@@ -1,25 +1,477 @@
-From d153efaee3d4e3d0e41dfa44051a1ee347b6c469 Mon Sep 17 00:00:00 2001
+From d5b6dd2cb109dd2c6303ece304c584effa8dee6c Mon Sep 17 00:00:00 2001
 From: Heisenberg <alimirmohammad.1386@gmail.com>
-Date: Sun, 31 Mar 2024 21:58:01 -0400
-Subject: [PATCH 41/50] Patch
+Date: Mon, 1 Apr 2024 14:22:29 -0400
+Subject: [PATCH 041/493] Patch
 
 ---
- kernel/Makefile | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/include/gui/contextheap.hpp      |  23 +++
+ kernel/include/gui/directgui.hpp        |  35 ++++
+ kernel/include/gui/fonts/fontparser.hpp |  27 +++
+ kernel/include/heap.hpp                 |  47 +++++
+ kernel/include/ipc.hpp                  |  50 ++++++
+ kernel/src/gui/widgets/gui.cc           | 230 ++++++++++++++++++++++++
+ 6 files changed, 412 insertions(+)
+ create mode 100644 kernel/include/gui/contextheap.hpp
+ create mode 100644 kernel/include/gui/directgui.hpp
+ create mode 100644 kernel/include/gui/fonts/fontparser.hpp
+ create mode 100644 kernel/include/heap.hpp
+ create mode 100644 kernel/include/ipc.hpp
+ create mode 100644 kernel/src/gui/widgets/gui.cc
 
-diff --git a/kernel/Makefile b/kernel/Makefile
-index 376d27f..d065f55 100644
---- a/kernel/Makefile
-+++ b/kernel/Makefile
-@@ -35,6 +35,8 @@ OBJECTS = $(BOOTLOADER_PATH)/multiboot.o        \
- 	colorforth/editor.o                     \
- 	colorforth/compiler.o                   \
- 	arch/x86-pc/startup.o                   \
-+	io/video.o								\
+diff --git a/kernel/include/gui/contextheap.hpp b/kernel/include/gui/contextheap.hpp
+new file mode 100644
+index 0000000..22f2c49
+--- /dev/null
++++ b/kernel/include/gui/contextheap.hpp
+@@ -0,0 +1,23 @@
++#ifndef __LIBCACTUSOS__GUI__CONTEXTHEAP_H
++#define __LIBCACTUSOS__GUI__CONTEXTHEAP_H
 +
- 
- KERNEL          = $(BUILD_PATH)/roentgenium.elf
- MULTIBOOT_IMAGE	= $(BUILD_PATH)/heisen.iso
++#include <types.hpp>
++
++namespace LIBHeisenKernel
++{
++    //Class that provides functions for allocating memory space for contexts.
++    //Note: Memory region is not allocated, just a block that is reserved after allocating.
++    class ContextHeap
++    {
++    public:
++        static void Init();
++        //Allocate a area of memory, blocks is in units per 4096 bytes
++        static uint32_t AllocateArea(uint32_t blocks);
++        //Free area of memory
++        static void FreeArea(uint32_t address, uint32_t blocks);
++        //Get amount of memory used as factor [0-1]
++        static double MemoryUsage();
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/include/gui/directgui.hpp b/kernel/include/gui/directgui.hpp
+new file mode 100644
+index 0000000..d5cd07c
+--- /dev/null
++++ b/kernel/include/gui/directgui.hpp
+@@ -0,0 +1,35 @@
++#ifndef __CACTUSOSLIB__GUI__DIRECTGUI_H
++#define __CACTUSOSLIB__GUI__DIRECTGUI_H
++
++#include <types.hpp>
++#include <gui/canvas.hpp>
++
++namespace LIBHeisenKernel
++{
++    class DirectGUI
++    {
++    public:
++        static bool RequestFramebuffer();
++        static Canvas* GetCanvas();
++
++        static void SetPixel(int x, int y, uint32_t color);
++        static uint32_t GetPixel(int x, int y);
++
++        static void Clear();
++        static void Clear(uint32_t color);
++        static void DrawHorizontalLine(uint32_t color, int dx, int x1, int y1);
++        static void DrawVerticalLine(uint32_t color, int dx, int x1, int y1);
++        static void DrawLine(uint32_t color, int x1, int y1, int x2, int y2);
++        static void DrawDiagonalLine(uint32_t color, int dx, int dy, int x1, int y1);
++        static void DrawRect(uint32_t color, int x, int y, int width, int height);
++        static void DrawFillRect(uint32_t color, int x_start, int y_start, int width, int height);
++        static void DrawCircle(uint32_t color, int x_center, int y_center, int radius);
++        static void DrawFillCircle(uint32_t color, int x_center, int y_center, int radius);
++        static void DrawEllipse(uint32_t color, int x_center, int y_center, int x_radius, int y_radius);
++
++        static void DrawChar(char character, int x, int y, uint32_t color);
++        static void DrawString(char* string, int x, int y, uint32_t color);
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/include/gui/fonts/fontparser.hpp b/kernel/include/gui/fonts/fontparser.hpp
+new file mode 100644
+index 0000000..daab1f5
+--- /dev/null
++++ b/kernel/include/gui/fonts/fontparser.hpp
+@@ -0,0 +1,27 @@
++#ifndef __LIBCACTUSOS__GUI__FONTS__FONTPARSER_H
++#define __LIBCACTUSOS__GUI__FONTS__FONTPARSER_H
++
++#include <types.hpp>
++#include <gui/fonts/font.hpp>
++
++namespace LIBHeisenKernel
++{
++    // Header of a CactusOS Font File (CFF)
++    struct CFFHeader
++    {
++        uint32_t Magic;                     // Magic number containing 0xCFF
++        uint8_t  Version;                   // Version of this font file, propably 1
++        uint16_t FontSize;                  // Size of font in dots
++        uint32_t FontNameOffset;            // Offset in file data where font name is stored
++
++        uint32_t CharacterOffsets[127-32];  // Table which contains offsets to the data for each character
++    } __attribute__((packed));
++
++    class FontParser
++    {
++    public:
++        static Font* FromFile(char* filename);
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/include/heap.hpp b/kernel/include/heap.hpp
+new file mode 100644
+index 0000000..789dfdf
+--- /dev/null
++++ b/kernel/include/heap.hpp
+@@ -0,0 +1,47 @@
++#ifndef __CACTUSOSLIB__HEAP_H
++#define __CACTUSOSLIB__HEAP_H
++
++#include <types.hpp>
++
++namespace LIBHeisenKernel
++{
++    #ifndef align_up
++    #define align_up(num, align) \
++        (((num) + ((align) - 1)) & ~((align) - 1))
++    #endif
++
++    uint32_t pageRoundUp(uint32_t address);
++    uint32_t pageRoundDown(uint32_t address);
++
++    #define HEAP_INCREASE_SIZE 10_MB
++
++    struct MemoryHeader
++    {
++        MemoryHeader* next;
++        MemoryHeader* prev;
++        bool allocated;
++        uint32_t size;
++    } __attribute__((packed));
++
++    class UserHeap
++    {
++    private:
++        static uint32_t startAddress;
++        static uint32_t endAddress;
++        static uint32_t maxAddress;
++
++        static MemoryHeader* firstHeader;
++
++    public:
++        static void Initialize();
++        static void PrintMemoryLayout();
++
++        static void* Malloc(uint32_t size);
++        static void Free(void* ptr);
++
++        static void* alignedMalloc(uint32_t size, uint32_t align);
++        static void allignedFree(void* ptr);
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/include/ipc.hpp b/kernel/include/ipc.hpp
+new file mode 100644
+index 0000000..880f582
+--- /dev/null
++++ b/kernel/include/ipc.hpp
+@@ -0,0 +1,50 @@
++#ifndef __LIBCACTUSOS__IPC_H
++#define __LIBCACTUSOS__IPC_H
++
++namespace LIBHeisenKernel
++{
++    enum IPCMessageType : int
++    {
++        None = 0,
++        GUIRequest = 1,
++        GUIEvent = 2
++    };
++
++    struct IPCMessage
++    {
++        int source; // Who has sended this message?
++        int dest;   // Who is it for
++        
++        int type; // What type of message is it?
++
++        // Arguments
++        unsigned int arg1;
++        unsigned int arg2;
++        unsigned int arg3;
++        unsigned int arg4;
++        unsigned int arg5;
++        unsigned int arg6;
++    };
++
++    /**
++     * Send a message to a other process
++    */
++    int IPCSend(int dest, int type = IPCMessageType::None, unsigned int arg1 = 0, unsigned int arg2 = 0, unsigned int arg3 = 0, unsigned int arg4 = 0, unsigned int arg5 = 0, unsigned int arg6 = 0);
++    /**
++     * Send a message to a other process
++    */
++    int IPCSend(IPCMessage message);
++
++    /**
++     * How many messages are ready for receiving?
++    */
++    int IPCAvailable();
++
++    /**
++     * Receive a single IPCMessage, blocks if none availible
++     * FromID: Only receive a message from specified process
++    */
++    IPCMessage ICPReceive(int fromID = -1, int* errOut = 0, int type = -1);
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/src/gui/widgets/gui.cc b/kernel/src/gui/widgets/gui.cc
+new file mode 100644
+index 0000000..0c22147
+--- /dev/null
++++ b/kernel/src/gui/widgets/gui.cc
+@@ -0,0 +1,230 @@
++#include <gui/gui.hpp>
++#include <ipc.hpp>
++#include <heap.hpp>
++#include <syscall.hpp>
++#include <log.hpp>
++#include <proc.hpp>
++#include <time.hpp>
++#include <gui/contextinfo.hpp>
++#include <gui/contextheap.hpp>
++#include <gui/directgui.hpp>
++#include <gui/widgets/window.hpp>
++#include <gui/fonts/fontparser.hpp>
++
++using namespace LIBHeisenKernel;
++
++int GUI::Width = 0;
++int GUI::Height = 0;
++
++List<Context*>* GUI::contextList = 0;
++int GUI::compositorPID = 3;
++Font* GUI::defaultFont = 0;
++
++void GUI::Initialize()
++{
++    GUI::defaultFont = 0;
++    GUI::contextList = new List<Context*>();
++    ContextHeap::Init();
++
++    if(DoSyscall(SYSCALL_GET_SCREEN_PROPERTIES, (uint32_t)&GUI::Width, (uint32_t)&GUI::Height) == 0)
++        Log(Error, "Error while requesting screen info");
++}
++
++void GUI::SetDefaultFont(const char* filename)
++{
++    GUI::defaultFont = FontParser::FromFile((char*)filename);
++}
++
++void GUI::CleanUp()
++{
++    if(contextList != 0)
++    {
++        for(Context* c : *contextList)
++        {
++            c->CloseContext();
++            delete c;
++        }
++        contextList->Clear();
++    }
++}
++
++void GUI::ProcessEvents()
++{
++    /*
++    +--------+--------------------+
++    | guiEvent Message           |
++    +--------+--------------------+
++    | type   | IPC_TYPE_GUI_EVENT |
++    | source |   Message source   |
++    | dest   |     That is us     |
++    | arg1   | Type of gui event  |
++    | arg2/6 |  Depends on event  |
++    +--------+--------------------+
++    */
++
++    IPCMessage guiEvent = ICPReceive(compositorPID, 0, IPCMessageType::GUIEvent);
++    //Print("GUI: Got event from compositor type=%d\n", guiEvent.arg1);
++    
++    int guiEventType = guiEvent.arg1;
++    if(guiEventType == GUIEvents::MouseDown)
++    {
++        Context* targetControl = FindTargetContext((int)guiEvent.arg2, (int)guiEvent.arg3);
++        if(targetControl == 0)
++            return;
++
++        //Print("Sending Mousedown to context %x\n", (uint32_t)targetControl);
++        targetControl->OnMouseDown(guiEvent.arg2 - targetControl->sharedContextInfo->x, guiEvent.arg3 - targetControl->sharedContextInfo->y, guiEvent.arg4);
++    }
++    else if(guiEventType == GUIEvents::MouseUp)
++    {
++        Context* targetControl = FindTargetContext((int)guiEvent.arg2, (int)guiEvent.arg3);
++        if(targetControl == 0)
++            return;
++
++        //Print("Sending Mouseup to context %x\n", (uint32_t)targetControl);
++        targetControl->OnMouseUp(guiEvent.arg2 - targetControl->sharedContextInfo->x, guiEvent.arg3 - targetControl->sharedContextInfo->y, guiEvent.arg4);
++    }
++    else if(guiEventType == GUIEvents::MouseMove)
++    {
++        int prevX = guiEvent.arg2;
++        int prevY = guiEvent.arg3;
++        int curX = guiEvent.arg4;
++        int curY = guiEvent.arg5;
++
++        Context* prevTargetControl = FindTargetContext(prevX, prevY);
++        Context* newTargetControl = FindTargetContext(curX, curY);
++        
++        if(prevTargetControl != 0)
++            prevTargetControl->OnMouseMove(prevX - prevTargetControl->sharedContextInfo->x, prevY - prevTargetControl->sharedContextInfo->y, curX - prevTargetControl->sharedContextInfo->x, curY - prevTargetControl->sharedContextInfo->y);
++    
++        if(newTargetControl != 0 && newTargetControl != prevTargetControl)
++            newTargetControl->OnMouseMove(prevX - newTargetControl->sharedContextInfo->x, prevY - newTargetControl->sharedContextInfo->y, curX - newTargetControl->sharedContextInfo->x, curY - newTargetControl->sharedContextInfo->y);
++    }
++    else if(guiEventType == GUIEvents::Keypress)
++    {
++        // Find context that is currently focused and where the key should be send to.
++        // TODO: Find a faster way for this, should be possible.
++        for(int i = 0; i < contextList->size(); i++)
++        {
++            Context* c = contextList->GetAt(i);
++            if(c->sharedContextInfo == 0)
++                continue;
++
++            if(c->sharedContextInfo->id == (int)guiEvent.arg4)
++            {
++                KEYPACKET_FLAGS args = (KEYPACKET_FLAGS)guiEvent.arg3;
++                if(args & Pressed)
++                    c->OnKeyDown((uint8_t)guiEvent.arg2, args);
++                else
++                    c->OnKeyUp((uint8_t)guiEvent.arg2, args);
++                break; // Quit loop
++            }
++        }
++    }
++    else if(guiEventType == GUIEvents::MouseScroll)
++    {
++        for(int i = 0; i < contextList->size(); i++) {
++            Context* c = contextList->GetAt(i);
++            if(c->sharedContextInfo == 0)
++                continue;
++
++            if(c->sharedContextInfo->id == guiEvent.arg2) {
++                c->OnScroll(guiEvent.arg3, guiEvent.arg4 - c->sharedContextInfo->x, guiEvent.arg5 - c->sharedContextInfo->y);
++                break; // Quit loop
++            }
++        }
++    }
++    /*
++    else if(guiEventType == EVENT_TYPE_RESIZE)
++    {
++        for(int i = 0; i < contextList->size(); i++) {
++            Context* c = contextList->GetAt(i);
++            if(c->sharedContextInfo == 0)
++                continue;
++
++            if(c->sharedContextInfo->id == guiEvent.arg2) {
++                c->OnResize(Rectangle(guiEvent.arg3, guiEvent.arg4, guiEvent.arg5, guiEvent.arg6));
++                break; // Quit loop
++            }
++        }
++    }
++    */
++}
++
++void GUI::DrawGUI()
++{
++    for(Context* c : *contextList)
++        c->DrawGUI();
++}
++
++Context* GUI::FindTargetContext(int mouseX, int mouseY)
++{
++    if(contextList == 0)
++        return 0;
++    
++    for(int i = 0; i < contextList->size(); i++)
++    {
++        Context* c = contextList->GetAt(i);
++        if(c->sharedContextInfo == 0)
++            continue;
++
++        if(mouseX >= c->sharedContextInfo->x && mouseX <= c->sharedContextInfo->x + (int32_t)c->sharedContextInfo->width)
++            if(mouseY >= c->sharedContextInfo->y && mouseY <= c->sharedContextInfo->y + (int32_t)c->sharedContextInfo->height)
++                return c;
++    }
++    return 0;
++}
++
++Context* GUI::RequestContext(int width, int height, int x, int y)
++{
++    uint32_t contextAddress = ContextHeap::AllocateArea(pageRoundUp(GUI::Width * GUI::Height * 4 + CONTEXT_INFO_SIZE) / 0x1000);
++    if(IPCSend(compositorPID, IPCMessageType::GUIRequest, GUICommunction::REQUEST_CONTEXT, contextAddress, width, height, x, y) != SYSCALL_RET_SUCCES)
++        return 0;
++
++    // Wait for response from server
++    IPCMessage response = ICPReceive(compositorPID, 0, IPCMessageType::GUIRequest);
++    if(response.arg1 == 1) {
++        // Create context struct
++        Context* ret = new Context(contextAddress + CONTEXT_INFO_SIZE, width, height);
++        ret->sharedContextInfo = (ContextInfo*)contextAddress;
++
++        // Add it to our list
++        contextList->push_front(ret);
++
++        return ret;
++    }
++    
++    return 0;
++}
++
++void AsyncGUILoop()
++{
++    while (1)
++    {
++        GUI::DrawGUI();
++        if(IPCAvailable())
++            GUI::ProcessEvents();
++        else
++            Process::Yield();
++    }
++}
++
++void GUI::MakeAsync()
++{
++    Print("Creating GUI thread\n");
++    Process::CreateThread(AsyncGUILoop, false);
++}
++
++bool GUI::HasItems()
++{
++    return (contextList->size() > 0);
++}
++
++Window* GUI::GetControlWindow(Control* control)
++{
++    Control* tmp = control;
++    while(tmp->parent != 0)
++        tmp = tmp->parent;
++    
++    return (Window*)tmp;
++}
+\ No newline at end of file
 -- 
 2.43.0
 

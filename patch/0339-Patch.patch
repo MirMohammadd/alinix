@@ -1,0 +1,51 @@
+From 56c841d9b3b6fa8b17692565381552c368055848 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sat, 6 Apr 2024 00:42:48 -0400
+Subject: [PATCH 339/493] Patch
+
+---
+ Makefile                     | 2 +-
+ kernelz/src/core/idthelper.s | 7 +++----
+ 2 files changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 1280edb..5646e50 100644
+--- a/Makefile
++++ b/Makefile
+@@ -80,7 +80,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
+ ####################################
+ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
+ 	mkdir -p $(@D)
+-	nasm -f elf32 $< -o $@
++	nasm --32 -f elf32 $< -o $@
+ 
+ CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
+ 	ld -fno-pie -fno-common $(LDPARAMS) -Wl,--unresolved-symbols=ignore-all -T kernelz/linker.ld -o CactusOS.bin $(KRNLOBJS)
+diff --git a/kernelz/src/core/idthelper.s b/kernelz/src/core/idthelper.s
+index 835ad08..d107a5a 100644
+--- a/kernelz/src/core/idthelper.s
++++ b/kernelz/src/core/idthelper.s
+@@ -1,17 +1,16 @@
+ .macro HandleException num
+     HandleException\num:
+-        pushl $0    
++        pushl $\num
+         jmp interrupthandler
+ .endm
+ 
+ .macro HandleInterruptRequest num
+     HandleInterruptRequest\num:
+-        pushl $0    
+-        pushl $\num + 0x20   
++        pushl $0
++        pushl $\num + 0x20
+         jmp interrupthandler
+ .endm
+ 
+-
+ HandleException 0
+ HandleException 1
+ HandleException 2
+-- 
+2.43.0
+

@@ -1,0 +1,27 @@
+From c6176e4945262f7c2a448ea7b6db569fd853f640 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 23:27:15 -0400
+Subject: [PATCH 189/493] Update
+
+---
+ Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 7a5c267..5f0faa9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -31,8 +31,8 @@ GCCPARAMS := -m32 -g -D CACTUSOSKERNELz -I $(INCLUDEDIRS) -Wall -fno-omit-frame-
+ ASPARAMS := 
+ LDPARAMS := -m32 elf_i386
+ 
+-KRNLSRCDIR := /kernelz/src
+-KRNLOBJDIR := /kernelz/obj
++KRNLSRCDIR := kernelz/src
++KRNLOBJDIR := kernelz/obj
+ 
+ KRNLFILES := $(shell find $(KRNLSRCDIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) #Find all the files that end with .cpp/.s/.asm/.c
+ KRNLOBJS := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(KRNLFILES))))) #Replace the .cpp/.s/.asm/.c extension with .o
+-- 
+2.43.0
+

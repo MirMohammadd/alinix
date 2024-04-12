@@ -1,0 +1,16 @@
+From 1f7b6521fb70a68eb171a9a39ed65e6b838e0b3d Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 17:58:04 -0400
+Subject: [PATCH 078/493] Minor update
+
+---
+ kernel/arch/x86-pc/kernel/obj/test.o | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 kernel/arch/x86-pc/kernel/obj/test.o
+
+diff --git a/kernel/arch/x86-pc/kernel/obj/test.o b/kernel/arch/x86-pc/kernel/obj/test.o
+new file mode 100644
+index 0000000..e69de29
+-- 
+2.43.0
+

@@ -1,0 +1,46 @@
+From a987d40874be50ddc8f93f51eb48d92199b0d338 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 20:05:59 -0400
+Subject: [PATCH 492/493] Minor update
+
+---
+ apps/chess/piece.cpp | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+diff --git a/apps/chess/piece.cpp b/apps/chess/piece.cpp
+index 1ae719d..9b88625 100644
+--- a/apps/chess/piece.cpp
++++ b/apps/chess/piece.cpp
+@@ -59,6 +59,29 @@ namespace LIBHeisenKernel
+             for (piece12 = 0; piece12 < 12; piece12++) {
+                 PieceTo12[PieceFrom12[piece12]] = piece12;
+             }
++
++            for (piece = 0; piece < PieceNb; piece++) PieceOrder[piece] = -1;
++
++            for (piece12 = 0; piece12 < 12; piece12++) {
++                PieceOrder[PieceFrom12[piece12]] = piece12 >> 1;
++            }
++
++            // PieceInc[]
++
++            for (piece = 0; piece < PieceNb; piece++) {
++                PieceInc[piece] = NULL;
++                 }
++        PieceInc[WhiteKnight256] = KnightInc;
++        PieceInc[WhiteBishop256] = BishopInc;
++        PieceInc[WhiteRook256]   = RookInc;
++        PieceInc[WhiteQueen256]  = QueenInc;
++        PieceInc[WhiteKing256]   = KingInc;
++
++        PieceInc[BlackKnight256] = KnightInc;
++        PieceInc[BlackBishop256] = BishopInc;
++        PieceInc[BlackRook256]   = RookInc;
++        PieceInc[BlackQueen256]  = QueenInc;
++        PieceInc[BlackKing256]   = KingInc;
+         }
+ 
+     };
+-- 
+2.43.0
+

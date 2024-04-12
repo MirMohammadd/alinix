@@ -1,0 +1,25 @@
+From b00b901b4f0814738c8e64ac51616d95199ffdbe Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 21:34:06 -0400
+Subject: [PATCH 288/493] Another minor patch to fix linker into the CI/CD
+
+---
+ kernelz/linker.ld | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/kernelz/linker.ld b/kernelz/linker.ld
+index 589a5cb..7fc96f4 100644
+--- a/kernelz/linker.ld
++++ b/kernelz/linker.ld
+@@ -41,6 +41,8 @@ SECTIONS
+         *(___x86.get_pc_thunk.ax)
+         *(___x86.get_pc_thunk.bx)
+         *(__GLOBAL_OFFSET_TABLE_)
++        *(operator new*)
++        *(operator delete*)
+     }
+ 
+     /DISCARD/ : { *(.fini_array*) *(.comment) }
+-- 
+2.43.0
+

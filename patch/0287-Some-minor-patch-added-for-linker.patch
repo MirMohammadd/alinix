@@ -1,0 +1,34 @@
+From e3a87e04967487785cc86cb074dfdb213d910362 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 21:32:04 -0400
+Subject: [PATCH 287/493] Some minor patch added for linker
+
+---
+ kernelz/linker.ld | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/kernelz/linker.ld b/kernelz/linker.ld
+index 272fe57..589a5cb 100644
+--- a/kernelz/linker.ld
++++ b/kernelz/linker.ld
+@@ -37,11 +37,13 @@ SECTIONS
+         *(.data*)
+     }
+ 
++    /DISCARD/ : {
++        *(___x86.get_pc_thunk.ax)
++        *(___x86.get_pc_thunk.bx)
++        *(__GLOBAL_OFFSET_TABLE_)
++    }
++
+     /DISCARD/ : { *(.fini_array*) *(.comment) }
+ 
+     _kernel_end = .;
+-
+-    /DISCARD/ : {
+-        *(UNDEFINED)
+-    }
+ }
+-- 
+2.43.0
+

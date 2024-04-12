@@ -1,0 +1,25 @@
+From 341a48d2a0fe8580757d84164bff1842b77aaa8b Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 15:25:48 -0400
+Subject: [PATCH 053/493] Patch
+
+---
+ kernel/arch/x86-pc/startup.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.c
+index ebb2f3d..7df48e5 100644
+--- a/kernel/arch/x86-pc/startup.c
++++ b/kernel/arch/x86-pc/startup.c
+@@ -21,7 +21,7 @@
+ #include <io/console.h>
+ #include <colorforth/colorforth.h>
+ #include <arch/x86-pc/io/video.h>
+-#include <../include/gui/widgets/button.hpp>
++#include <button.hpp>
+ 
+ /**
+  * The kernel entry point. All starts from here!
+-- 
+2.43.0
+

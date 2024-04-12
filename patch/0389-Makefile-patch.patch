@@ -1,0 +1,45 @@
+From 5ba4e3e4597b0fb9cb8454f278d77c612ced42cb Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sat, 6 Apr 2024 16:20:41 -0400
+Subject: [PATCH 389/493] Makefile patch
+
+---
+ Makefile | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 61f474c..3121b07 100644
+--- a/Makefile
++++ b/Makefile
+@@ -25,6 +25,7 @@
+ VERSION = 1
+ PATCHLEVEL = 4
+ SUBLEVEL = 0
++EXTRAVERSION = -rc2
+ 
+ INCLUDEDIRS := kernelz/include
+ INCLUDEZ = libz/include
+@@ -80,6 +81,12 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
+ 	mkdir -p $(@D)
+ 	nasm -f elf32 -O0 $< -o $@
+ 
++####################################
++#State the kernel version
++KERNELVERSION := $(VERSION)$(if $(PATCHLEVEL),.$(PATCHLEVEL)$(if $(SUBLEVEL),.$(SUBLEVEL)))$(EXTRAVERSION)
++export VERSION PATCHLEVEL SUBLEVEL KERNELRELEASE KERNELVERSION
++####################################
++
+ 
+ 
+ CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
+@@ -165,4 +172,4 @@ filelist:
+ 	@echo -$(KRNLOBJS)
+ 
+ version:
+-	@echo $(VERSION)
+\ No newline at end of file
++	@echo $(KERNELVERSION)
+\ No newline at end of file
+-- 
+2.43.0
+

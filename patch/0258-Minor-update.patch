@@ -1,0 +1,43 @@
+From 979096615fb9246211889a08158dff014cffc7fb Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 17:32:39 -0400
+Subject: [PATCH 258/493] Minor update
+
+---
+ Makefile                   | 7 +++++++
+ apps/settings/settings.cpp | 1 -
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 8635a75..4d9c0fe 100644
+--- a/Makefile
++++ b/Makefile
+@@ -39,6 +39,13 @@ KRNLOBJS := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsu
+ KRNLOBJS := $(subst $(KRNLSRCDIR),$(KRNLOBJDIR),$(KRNLOBJS)) #Replace the kernelz/src part with kernelz/obj
+ 
+ 
++####################################
++# Dailog interface config 
++DIALOG := dialog
++
++
++
++####################################
+ ####################################
+ #C++ source files
+ ####################################
+diff --git a/apps/settings/settings.cpp b/apps/settings/settings.cpp
+index f1402c0..bb83ede 100644
+--- a/apps/settings/settings.cpp
++++ b/apps/settings/settings.cpp
+@@ -17,7 +17,6 @@ char* path = "B:\\settings.jpg";
+ void CapacityDriveCallback(void* sender, MouseButtonArgs args){
+     double size = getDriveSize(0);
+     Print("Drive Size: %f\n", size);
+-
+ }
+ 
+ void SystemArgumentsCallBack(void* sender, MouseButtonArgs args){
+-- 
+2.43.0
+

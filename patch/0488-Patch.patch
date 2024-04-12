@@ -1,0 +1,55 @@
+From fde46bcb80d1e81f66176a0e0c5263a449e5c6f1 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 19:35:39 -0400
+Subject: [PATCH 488/493] Patch
+
+---
+ apps/chess/option.cpp | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
+
+diff --git a/apps/chess/option.cpp b/apps/chess/option.cpp
+index 63cd6e3..45a04e5 100644
+--- a/apps/chess/option.cpp
++++ b/apps/chess/option.cpp
+@@ -1,5 +1,6 @@
+ #include "option.hpp"
+ #include "protocol.h"
++#include <assert.h>
+ #include <types.h>
+ 
+ 
+@@ -74,5 +75,30 @@ namespace LIBHeisenKernel{
+             }
+         }
+ 
++        void option_list(){
++            option_t *opt;
++
++            for (opt = &Option[0];opt->val != NULL;opt++){
++                if (opt->declare){
++         if (opt->extra != NULL && *opt->extra != '\0') {
++            send("option name %s type %s default %s %s",opt->var,opt->type,opt->val,opt->extra);
++         } else {
++            send("option name %s type %s default %s",opt->var,opt->type,opt->val);
++                }
++            }
++        }
++
++        bool option_set(const char var[],const char val[]){
++            option_t * opt;
++            assert(var!= NULL);
++            assert(val!= NULL);
++            opt = option_find(var);
++            if (opt == NULL){
++                return false;
++            }
++            opt->val = val;
++            return true;
++        }
++
+     };
+ };
+\ No newline at end of file
+-- 
+2.43.0
+

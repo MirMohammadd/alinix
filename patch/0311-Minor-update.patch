@@ -1,0 +1,27 @@
+From 70ffcbe70a26b1df82911ea8d74958199414a432 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 23:35:46 -0400
+Subject: [PATCH 311/493] Minor update
+
+---
+ kernelz/src/core/virtualmemory.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/kernelz/src/core/virtualmemory.cpp b/kernelz/src/core/virtualmemory.cpp
+index 4d1ad4f..83ffbc6 100644
+--- a/kernelz/src/core/virtualmemory.cpp
++++ b/kernelz/src/core/virtualmemory.cpp
+@@ -9,8 +9,8 @@ using namespace HeisenOs::system;
+ 
+ void VirtualMemoryManager::ReloadCR3()
+ {
+-    asm volatile("movl	%cr3,%eax");
+-	asm volatile("movl	%eax,%cr3");
++    asm volatile("movq	%cr3,%eax");
++	asm volatile("movq	%eax,%cr3");
+ }
+ 
+ 
+-- 
+2.43.0
+

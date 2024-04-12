@@ -1,0 +1,23 @@
+From 692b4bbddef93ec1867060a260c4eba4b8b48485 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 7 Apr 2024 21:44:18 -0400
+Subject: [PATCH 410/493] Patch
+
+---
+ .github/workflows/tests.yml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
+index ee4bb68..412ef9c 100644
+--- a/.github/workflows/tests.yml
++++ b/.github/workflows/tests.yml
+@@ -31,5 +31,6 @@ jobs:
+       run: brew install i686-elf-gcc
+     - name: Build project
+       run: |
++        brew install bchunk
+         # nasm -f elf32 -O0 kernelz/src/core/cpuhelper.asm -o kernelz/obj/core/cpuhelper.o
+         make qemu
+-- 
+2.43.0
+

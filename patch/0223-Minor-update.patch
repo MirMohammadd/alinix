@@ -1,0 +1,46 @@
+From 434b60588bda03a17f8d151c0a1fb5e4ea4a87ac Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 20:53:12 -0400
+Subject: [PATCH 223/493] Minor update
+
+---
+ kernelz/src/system/tasking/userspace.asm | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/kernelz/src/system/tasking/userspace.asm b/kernelz/src/system/tasking/userspace.asm
+index c4efe59..b9bef5b 100644
+--- a/kernelz/src/system/tasking/userspace.asm
++++ b/kernelz/src/system/tasking/userspace.asm
+@@ -1,3 +1,7 @@
++section .text
++
++global enter_usermode
++
+ enter_usermode:
+     push rbp
+     mov rbp, rsp
+@@ -12,18 +16,18 @@ enter_usermode:
+ 
+     push 0x23
+ 
+-    mov rcx, [rbp + 8]
++    mov rcx, [rbp + 8]      
+     mov rsp, rcx
+ 
+     pushfq
+     pop rax
+ 
+-    or rax, [rbp + 16]
++    or rax, [rbp + 16]     
+     push rax
+ 
+     push 0x1B
+ 
+-    mov rax, [rbp + 16]
++    mov rax, [rbp + 16]     
+     push rax
+ 
+     iretq
+-- 
+2.43.0
+

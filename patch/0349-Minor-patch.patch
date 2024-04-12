@@ -1,0 +1,34 @@
+From 828740e474b53a8d08a9b7f12c33c20530aea835 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sat, 6 Apr 2024 12:55:14 -0400
+Subject: [PATCH 349/493] Minor patch
+
+---
+ Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 2f85f2a..182a147 100644
+--- a/Makefile
++++ b/Makefile
+@@ -29,7 +29,7 @@ QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../q
+ 
+ G++PARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -Wno-write-strings -fpermissive -Wno-unknown-pragmas -std=c++20 -lstdc++ -fPIC  
+ GCCPARAMS := -m32 -g -D CACTUSOSKERNEL -I $(INCLUDEDIRS) -I$(INCLUDEDIRSLIB) -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -ffreestanding -fno-builtin -Wno-unknown-pragmas -lstdc++ -fPIC 
+-ASPARAMS := 
++ASPARAMS := -f bin
+ LDPARAMS := -no-pie
+ 
+ KRNLSRCDIR := kernelz/src
+@@ -80,7 +80,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
+ ####################################
+ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
+ 	mkdir -p $(@D)
+-	as --32 $< -o $@
++	nasm --32 $< -o $@
+ 
+ CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
+ 	ld -fno-pie -fno-common $(LDPARAMS) -Wl,--unresolved-symbols=ignore-all -T kernelz/linker.ld -o CactusOS.bin $(KRNLOBJS)
+-- 
+2.43.0
+

@@ -1,0 +1,39 @@
+From 0110a85174d8202b7e1259f475a0f64898793f8d Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 18:18:50 -0400
+Subject: [PATCH 479/493] Update
+
+---
+ apps/chess/board.h | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/apps/chess/board.h b/apps/chess/board.h
+index 2183b5e..e03a9d0 100644
+--- a/apps/chess/board.h
++++ b/apps/chess/board.h
+@@ -5,6 +5,9 @@
+ #include "piece.h"
+ #include "square.h"
+ 
++using namespace LIBHeisenKernel::Chess::engine;
++using namespace LIBHeisenKernel::engine;
++
+ 
+ namespace LIBHeisenKernel{
+     namespace engine{
+@@ -36,6 +39,12 @@ namespace LIBHeisenKernel{
+         const int FlagsBlackQueenCastle = 1 << 3;
+ 
+         const int StackSize = 4096;
++
++        /**
++         * @brief Some useful macros
++        */
++
++        #define KING_POS(board,colour) ((board)->piece[colour][0])
+         
+ 
+     };
+-- 
+2.43.0
+

@@ -1,0 +1,63 @@
+From f91df7de2cddfefee0eeabaef096776f0133761c Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 9 Apr 2024 22:45:58 -0400
+Subject: [PATCH 448/493] Update for docs
+
+---
+ kernelz/include/common/list.h             | 6 ++++++
+ kernelz/include/common/memoryoperations.h | 7 +++++++
+ 2 files changed, 13 insertions(+)
+
+diff --git a/kernelz/include/common/list.h b/kernelz/include/common/list.h
+index f72c597..87e4df8 100644
+--- a/kernelz/include/common/list.h
++++ b/kernelz/include/common/list.h
+@@ -3,10 +3,16 @@
+ 
+ #include <system/tasking/lock.h>
+ 
++/**
++ * @brief A simple doubly linked list implementation.
++*/
++
+ namespace HeisenOs
+ {
+     namespace common
+     {
++        // ----------------------------------------------------------------
++        // Just rely on the listnode struct and the template defined.
+         template <typename T>
+         struct ListNode
+         {
+diff --git a/kernelz/include/common/memoryoperations.h b/kernelz/include/common/memoryoperations.h
+index 021df32..0489fd7 100644
+--- a/kernelz/include/common/memoryoperations.h
++++ b/kernelz/include/common/memoryoperations.h
+@@ -3,6 +3,10 @@
+ 
+ #include <common/types.h>
+ 
++
++/**
++ * @brief Reads a byte from memory and perform memory management acts.
++*/
+ namespace HeisenOs
+ {
+     namespace common
+@@ -13,10 +17,13 @@ namespace HeisenOs
+         class MemoryOperations
+         {
+         public:
++        // ---------------------------------------------------------------------------
++        // static functions for memory operations
+             static void* memmove(void* dstptr, const void* srcptr, uint32_t size);
+             static int memcmp(const void* aptr, const void* bptr, uint32_t size);
+             static void* memset(void* bufptr, char value, uint32_t size);
+             static void* memcpy(void* dstptr, const void* srcptr, uint32_t size);
++        // ---------------------------------------------------------------------------
+         };
+     }
+ }
+-- 
+2.43.0
+

@@ -1,0 +1,67 @@
+From 1d6d55af060a9307f2b76cf104435df6aee2d186 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 23:05:42 -0400
+Subject: [PATCH 027/493] Minor update
+
+---
+ .github/workflows/test.yml       | 2 +-
+ kernel/arch/x86-pc/io/keyboard.h | 2 ++
+ kernel/colorforth/editor.c       | 9 +++++++++
+ 3 files changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index fd0cb37..4a52d78 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -3,7 +3,7 @@ name: HiesenKernel
+ on:
+   push:
+     branches:
+-      - main  # Adjust branch name as needed
++      - Caps  # Adjust branch name as needed
+ 
+ jobs:
+   build:
+diff --git a/kernel/arch/x86-pc/io/keyboard.h b/kernel/arch/x86-pc/io/keyboard.h
+index 1599e55..6c5090c 100644
+--- a/kernel/arch/x86-pc/io/keyboard.h
++++ b/kernel/arch/x86-pc/io/keyboard.h
+@@ -87,5 +87,7 @@ void keyboard_setup(struct console *term);
+ 
+ char keyboard_get_keymap(uchar_t i);
+ 
++char keyboard_special_caps_keys(char key);
++
+ 
+ #endif // _KEYBOARD_H_
+diff --git a/kernel/colorforth/editor.c b/kernel/colorforth/editor.c
+index 993bb37..5c1d560 100644
+--- a/kernel/colorforth/editor.c
++++ b/kernel/colorforth/editor.c
+@@ -91,7 +91,12 @@ handle_input(uchar_t scancode)
+ 	static bool_t escape = FALSE;
+ 	static uint8_t i = 0;
+ 	static char word[32];
++	static bool_t capsLock = FALSE;
+ 
++	if (scancode == capsLock){
++		capsLock = TRUE;
++		return;
++	}
+ 	if (scancode == KEY_ESCAPE)
+ 	{
+ 		escape = TRUE;
+@@ -155,6 +160,10 @@ handle_input(uchar_t scancode)
+ 		}
+ 	}
+ 
++	if (capsLock){
++		return keyboard_special_caps_keys(scancode);
++	}
++
+ 	switch(scancode)
+ 	{
+ 
+-- 
+2.43.0
+

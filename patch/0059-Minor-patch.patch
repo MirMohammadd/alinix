@@ -1,0 +1,241 @@
+From fd97a7f781f19906117bc35498f6595adfc1ed75 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 15:40:53 -0400
+Subject: [PATCH 059/493] Minor patch
+
+---
+ kernel/arch/x86-pc/{include => gui}/common/types.hpp          | 0
+ kernel/arch/x86-pc/{include => gui}/convert.hpp               | 0
+ kernel/arch/x86-pc/{include => gui}/gui/canvas.hpp            | 0
+ kernel/arch/x86-pc/{include => gui}/gui/colors.hpp            | 0
+ kernel/arch/x86-pc/{include => gui}/gui/context.hpp           | 0
+ kernel/arch/x86-pc/{include => gui}/gui/contextheap.hpp       | 0
+ kernel/arch/x86-pc/{include => gui}/gui/contextinfo.hpp       | 0
+ kernel/arch/x86-pc/{include => gui}/gui/directgui.hpp         | 0
+ kernel/arch/x86-pc/{include => gui}/gui/events.hpp            | 0
+ kernel/arch/x86-pc/{include => gui}/gui/fonts/control.hpp     | 0
+ kernel/arch/x86-pc/{include => gui}/gui/fonts/events.hpp      | 0
+ kernel/arch/x86-pc/{include => gui}/gui/fonts/font.hpp        | 0
+ kernel/arch/x86-pc/{include => gui}/gui/fonts/fontparser.hpp  | 0
+ kernel/arch/x86-pc/{include => gui}/gui/gui.hpp               | 0
+ kernel/arch/x86-pc/{include => gui}/gui/property.hpp          | 0
+ kernel/arch/x86-pc/{include => gui}/gui/rect.hpp              | 0
+ kernel/arch/x86-pc/{include => gui}/gui/widgets/button.hpp    | 0
+ kernel/arch/x86-pc/{include => gui}/gui/widgets/control.hpp   | 0
+ kernel/arch/x86-pc/{include => gui}/gui/widgets/label.hpp     | 0
+ kernel/arch/x86-pc/{include => gui}/gui/widgets/scrollbar.hpp | 0
+ kernel/arch/x86-pc/{include => gui}/gui/widgets/window.hpp    | 0
+ kernel/arch/x86-pc/{include => gui}/heap.hpp                  | 0
+ kernel/arch/x86-pc/{include => gui}/ipc.hpp                   | 0
+ kernel/arch/x86-pc/{include => gui}/list.hpp                  | 0
+ kernel/arch/x86-pc/{include => gui}/log.hpp                   | 0
+ kernel/arch/x86-pc/{include => gui}/math.hpp                  | 0
+ kernel/arch/x86-pc/{include => gui}/new.hpp                   | 0
+ kernel/arch/x86-pc/{include => gui}/proc.hpp                  | 0
+ kernel/arch/x86-pc/{include => gui}/shared.hpp                | 0
+ kernel/arch/x86-pc/{include => gui}/string.hpp                | 0
+ kernel/arch/x86-pc/{include => gui}/syscall.hpp               | 0
+ kernel/arch/x86-pc/{include => gui}/systeminfo.hpp            | 0
+ kernel/arch/x86-pc/{include => gui}/time.hpp                  | 0
+ kernel/arch/x86-pc/{include => gui}/types.hpp                 | 0
+ kernel/arch/x86-pc/{include => gui}/vector.hpp                | 0
+ kernel/arch/x86-pc/{include => gui}/vfs.hpp                   | 0
+ kernel/arch/x86-pc/startup.c                                  | 2 +-
+ 37 files changed, 1 insertion(+), 1 deletion(-)
+ rename kernel/arch/x86-pc/{include => gui}/common/types.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/convert.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/gui/canvas.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/gui/colors.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/gui/context.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/gui/contextheap.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/gui/contextinfo.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/gui/directgui.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/gui/events.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/gui/fonts/control.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/gui/fonts/events.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/gui/fonts/font.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/gui/fonts/fontparser.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/gui/gui.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/gui/property.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/gui/rect.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/gui/widgets/button.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/gui/widgets/control.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/gui/widgets/label.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/gui/widgets/scrollbar.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/gui/widgets/window.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/heap.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/ipc.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/list.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/log.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/math.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/new.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/proc.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/shared.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/string.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/syscall.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/systeminfo.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/time.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/types.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/vector.hpp (100%)
+ rename kernel/arch/x86-pc/{include => gui}/vfs.hpp (100%)
+
+diff --git a/kernel/arch/x86-pc/include/common/types.hpp b/kernel/arch/x86-pc/gui/common/types.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/common/types.hpp
+rename to kernel/arch/x86-pc/gui/common/types.hpp
+diff --git a/kernel/arch/x86-pc/include/convert.hpp b/kernel/arch/x86-pc/gui/convert.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/convert.hpp
+rename to kernel/arch/x86-pc/gui/convert.hpp
+diff --git a/kernel/arch/x86-pc/include/gui/canvas.hpp b/kernel/arch/x86-pc/gui/gui/canvas.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/gui/canvas.hpp
+rename to kernel/arch/x86-pc/gui/gui/canvas.hpp
+diff --git a/kernel/arch/x86-pc/include/gui/colors.hpp b/kernel/arch/x86-pc/gui/gui/colors.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/gui/colors.hpp
+rename to kernel/arch/x86-pc/gui/gui/colors.hpp
+diff --git a/kernel/arch/x86-pc/include/gui/context.hpp b/kernel/arch/x86-pc/gui/gui/context.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/gui/context.hpp
+rename to kernel/arch/x86-pc/gui/gui/context.hpp
+diff --git a/kernel/arch/x86-pc/include/gui/contextheap.hpp b/kernel/arch/x86-pc/gui/gui/contextheap.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/gui/contextheap.hpp
+rename to kernel/arch/x86-pc/gui/gui/contextheap.hpp
+diff --git a/kernel/arch/x86-pc/include/gui/contextinfo.hpp b/kernel/arch/x86-pc/gui/gui/contextinfo.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/gui/contextinfo.hpp
+rename to kernel/arch/x86-pc/gui/gui/contextinfo.hpp
+diff --git a/kernel/arch/x86-pc/include/gui/directgui.hpp b/kernel/arch/x86-pc/gui/gui/directgui.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/gui/directgui.hpp
+rename to kernel/arch/x86-pc/gui/gui/directgui.hpp
+diff --git a/kernel/arch/x86-pc/include/gui/events.hpp b/kernel/arch/x86-pc/gui/gui/events.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/gui/events.hpp
+rename to kernel/arch/x86-pc/gui/gui/events.hpp
+diff --git a/kernel/arch/x86-pc/include/gui/fonts/control.hpp b/kernel/arch/x86-pc/gui/gui/fonts/control.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/gui/fonts/control.hpp
+rename to kernel/arch/x86-pc/gui/gui/fonts/control.hpp
+diff --git a/kernel/arch/x86-pc/include/gui/fonts/events.hpp b/kernel/arch/x86-pc/gui/gui/fonts/events.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/gui/fonts/events.hpp
+rename to kernel/arch/x86-pc/gui/gui/fonts/events.hpp
+diff --git a/kernel/arch/x86-pc/include/gui/fonts/font.hpp b/kernel/arch/x86-pc/gui/gui/fonts/font.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/gui/fonts/font.hpp
+rename to kernel/arch/x86-pc/gui/gui/fonts/font.hpp
+diff --git a/kernel/arch/x86-pc/include/gui/fonts/fontparser.hpp b/kernel/arch/x86-pc/gui/gui/fonts/fontparser.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/gui/fonts/fontparser.hpp
+rename to kernel/arch/x86-pc/gui/gui/fonts/fontparser.hpp
+diff --git a/kernel/arch/x86-pc/include/gui/gui.hpp b/kernel/arch/x86-pc/gui/gui/gui.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/gui/gui.hpp
+rename to kernel/arch/x86-pc/gui/gui/gui.hpp
+diff --git a/kernel/arch/x86-pc/include/gui/property.hpp b/kernel/arch/x86-pc/gui/gui/property.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/gui/property.hpp
+rename to kernel/arch/x86-pc/gui/gui/property.hpp
+diff --git a/kernel/arch/x86-pc/include/gui/rect.hpp b/kernel/arch/x86-pc/gui/gui/rect.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/gui/rect.hpp
+rename to kernel/arch/x86-pc/gui/gui/rect.hpp
+diff --git a/kernel/arch/x86-pc/include/gui/widgets/button.hpp b/kernel/arch/x86-pc/gui/gui/widgets/button.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/gui/widgets/button.hpp
+rename to kernel/arch/x86-pc/gui/gui/widgets/button.hpp
+diff --git a/kernel/arch/x86-pc/include/gui/widgets/control.hpp b/kernel/arch/x86-pc/gui/gui/widgets/control.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/gui/widgets/control.hpp
+rename to kernel/arch/x86-pc/gui/gui/widgets/control.hpp
+diff --git a/kernel/arch/x86-pc/include/gui/widgets/label.hpp b/kernel/arch/x86-pc/gui/gui/widgets/label.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/gui/widgets/label.hpp
+rename to kernel/arch/x86-pc/gui/gui/widgets/label.hpp
+diff --git a/kernel/arch/x86-pc/include/gui/widgets/scrollbar.hpp b/kernel/arch/x86-pc/gui/gui/widgets/scrollbar.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/gui/widgets/scrollbar.hpp
+rename to kernel/arch/x86-pc/gui/gui/widgets/scrollbar.hpp
+diff --git a/kernel/arch/x86-pc/include/gui/widgets/window.hpp b/kernel/arch/x86-pc/gui/gui/widgets/window.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/gui/widgets/window.hpp
+rename to kernel/arch/x86-pc/gui/gui/widgets/window.hpp
+diff --git a/kernel/arch/x86-pc/include/heap.hpp b/kernel/arch/x86-pc/gui/heap.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/heap.hpp
+rename to kernel/arch/x86-pc/gui/heap.hpp
+diff --git a/kernel/arch/x86-pc/include/ipc.hpp b/kernel/arch/x86-pc/gui/ipc.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/ipc.hpp
+rename to kernel/arch/x86-pc/gui/ipc.hpp
+diff --git a/kernel/arch/x86-pc/include/list.hpp b/kernel/arch/x86-pc/gui/list.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/list.hpp
+rename to kernel/arch/x86-pc/gui/list.hpp
+diff --git a/kernel/arch/x86-pc/include/log.hpp b/kernel/arch/x86-pc/gui/log.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/log.hpp
+rename to kernel/arch/x86-pc/gui/log.hpp
+diff --git a/kernel/arch/x86-pc/include/math.hpp b/kernel/arch/x86-pc/gui/math.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/math.hpp
+rename to kernel/arch/x86-pc/gui/math.hpp
+diff --git a/kernel/arch/x86-pc/include/new.hpp b/kernel/arch/x86-pc/gui/new.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/new.hpp
+rename to kernel/arch/x86-pc/gui/new.hpp
+diff --git a/kernel/arch/x86-pc/include/proc.hpp b/kernel/arch/x86-pc/gui/proc.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/proc.hpp
+rename to kernel/arch/x86-pc/gui/proc.hpp
+diff --git a/kernel/arch/x86-pc/include/shared.hpp b/kernel/arch/x86-pc/gui/shared.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/shared.hpp
+rename to kernel/arch/x86-pc/gui/shared.hpp
+diff --git a/kernel/arch/x86-pc/include/string.hpp b/kernel/arch/x86-pc/gui/string.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/string.hpp
+rename to kernel/arch/x86-pc/gui/string.hpp
+diff --git a/kernel/arch/x86-pc/include/syscall.hpp b/kernel/arch/x86-pc/gui/syscall.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/syscall.hpp
+rename to kernel/arch/x86-pc/gui/syscall.hpp
+diff --git a/kernel/arch/x86-pc/include/systeminfo.hpp b/kernel/arch/x86-pc/gui/systeminfo.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/systeminfo.hpp
+rename to kernel/arch/x86-pc/gui/systeminfo.hpp
+diff --git a/kernel/arch/x86-pc/include/time.hpp b/kernel/arch/x86-pc/gui/time.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/time.hpp
+rename to kernel/arch/x86-pc/gui/time.hpp
+diff --git a/kernel/arch/x86-pc/include/types.hpp b/kernel/arch/x86-pc/gui/types.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/types.hpp
+rename to kernel/arch/x86-pc/gui/types.hpp
+diff --git a/kernel/arch/x86-pc/include/vector.hpp b/kernel/arch/x86-pc/gui/vector.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/vector.hpp
+rename to kernel/arch/x86-pc/gui/vector.hpp
+diff --git a/kernel/arch/x86-pc/include/vfs.hpp b/kernel/arch/x86-pc/gui/vfs.hpp
+similarity index 100%
+rename from kernel/arch/x86-pc/include/vfs.hpp
+rename to kernel/arch/x86-pc/gui/vfs.hpp
+diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.c
+index 21fb708..82e90aa 100644
+--- a/kernel/arch/x86-pc/startup.c
++++ b/kernel/arch/x86-pc/startup.c
+@@ -21,7 +21,7 @@
+ #include <io/console.h>
+ #include <colorforth/colorforth.h>
+ #include <arch/x86-pc/io/video.h>
+-#include <button.hpp>
++#include <arch/x86-pc/gui/gui/widgets/button.hpp>
+ 
+ 
+ /**
+-- 
+2.43.0
+

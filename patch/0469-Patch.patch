@@ -1,0 +1,78 @@
+From 660cac1dfc662adc7738664f37e24d7e24841f59 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 17:54:24 -0400
+Subject: [PATCH 469/493] Patch
+
+---
+ apps/chess/colour.h | 32 ++++++++++++++++++++++++++++++++
+ apps/chess/square.h | 17 +++++++++++++++++
+ 2 files changed, 49 insertions(+)
+ create mode 100644 apps/chess/colour.h
+ create mode 100644 apps/chess/square.h
+
+diff --git a/apps/chess/colour.h b/apps/chess/colour.h
+new file mode 100644
+index 0000000..f6d97a7
+--- /dev/null
++++ b/apps/chess/colour.h
+@@ -0,0 +1,32 @@
++#ifndef HEISEN_KERNEL_CHESS_GAME_COLOUR_H
++#define HEISEN_KERNEL_CHESS_GAME_COLOUR_H
++
++namespace engine {
++
++// constants
++
++const int ColourNone = -1;
++const int White = 0;
++const int Black = 1;
++const int ColourNb = 2;
++
++const int WhiteFlag = 1 << White;
++const int BlackFlag = 1 << Black;
++
++}  // namespace engine
++
++// macros
++
++#define COLOUR_IS_OK(colour)    (((colour)&~1)==0)
++
++#define COLOUR_IS_WHITE(colour) ((colour)==White)
++#define COLOUR_IS_BLACK(colour) ((colour)!=White)
++
++#define COLOUR_IS(piece,colour) (FLAG_IS((piece),COLOUR_FLAG(colour)))
++#define FLAG_IS(piece,flag)     (((piece)&(flag))!=0)
++
++#define COLOUR_OPP(colour)      ((colour)^(White^Black))
++#define COLOUR_FLAG(colour)     ((colour)+1)
++
++
++#endif // HEISEN_KERNEL_CHESS_GAME_COLOUR_H
+\ No newline at end of file
+diff --git a/apps/chess/square.h b/apps/chess/square.h
+new file mode 100644
+index 0000000..9b4430b
+--- /dev/null
++++ b/apps/chess/square.h
+@@ -0,0 +1,17 @@
++#ifndef _HEISEN_SQUARE_LIB_APPS_CHESS_GAMES_H
++#define _HEISEN_SQUARE_LIB_APPS_CHESS_GAMES_H
++
++#include "colour.h"
++
++namespace LIBHeisenKernel{
++    namespace engine{
++        /**
++         * @brief Constants are defined here
++        */
++
++        const int FieldNb = 16;
++        const int RandNb = 16;
++    };
++};
++
++#endif // _HEISEN_SQUARE_LIB_APPS_CHESS_GAMES_H
+\ No newline at end of file
+-- 
+2.43.0
+

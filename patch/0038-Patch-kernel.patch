@@ -1,0 +1,419 @@
+From 11112efe3c3f32ef85ea76649f59216e6a6a6406 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 14:06:09 -0400
+Subject: [PATCH 038/493] Patch kernel
+
+---
+ kernel/include/gui/events.hpp            | 187 +++++++++++++++++++++++
+ kernel/include/gui/widgets/scrollbar.hpp |  67 ++++++++
+ kernel/include/math.hpp                  |  53 +++++++
+ kernel/include/types.hpp                 |   1 -
+ kernel/src/gui/gui.c                     |   0
+ kernel/src/gui/widgets/scrollbar.cc      |  47 ++++++
+ 6 files changed, 354 insertions(+), 1 deletion(-)
+ create mode 100644 kernel/include/gui/events.hpp
+ create mode 100644 kernel/include/gui/widgets/scrollbar.hpp
+ create mode 100644 kernel/include/math.hpp
+ create mode 100644 kernel/src/gui/gui.c
+ create mode 100644 kernel/src/gui/widgets/scrollbar.cc
+
+diff --git a/kernel/include/gui/events.hpp b/kernel/include/gui/events.hpp
+new file mode 100644
+index 0000000..cc1a0ff
+--- /dev/null
++++ b/kernel/include/gui/events.hpp
+@@ -0,0 +1,187 @@
++#ifndef __LIBHeisenKernel__GUI__EVENTS_H
++#define __LIBHeisenKernel__GUI__EVENTS_H
++
++#include <list.hpp>
++#include <gui/widgets/control.hpp>
++#include <shared.hpp>
++
++namespace LIBHeisenKernel
++{
++    // A class that defines a callback function 
++    template<typename ArgumentType>
++    class IEventCallback
++    {
++    public:
++        virtual void Invoke(void*, ArgumentType) {}
++    };
++
++    // A callback that is a class method
++    template<typename T, typename ArgumentType>
++    class MethodCallback : public IEventCallback<ArgumentType>
++    {
++    private:
++        T* instance;
++        void (T::*function)(void* s, ArgumentType arg);
++    public:
++        // Create a new callback based on a member function
++        MethodCallback(T* instance, void (T::*function)(void* s, ArgumentType arg))
++        : instance(instance), function(function) 
++        {}
++
++        virtual void Invoke(void* s, ArgumentType arg) override
++        {
++            (instance->*function)(s, arg); 
++        }
++    };
++
++    // A callback that is a static function
++    template<typename ArgumentType>
++    class StaticFunctionCallback : public IEventCallback<ArgumentType>
++    {
++    private:
++        void (*func_)(void*, ArgumentType);
++    
++    public:
++        StaticFunctionCallback(void (*func)(void*, ArgumentType))
++        : func_(func)
++        {}
++        
++        virtual void Invoke(void* s, ArgumentType a)
++        {
++            return (*func_)(s, a);
++        }
++    };
++
++    // A class that manages a list of multipile callback for a specific event
++    template<typename ArgumentType>
++    class EventHandlerList
++    {
++    private:
++	    List<IEventCallback<ArgumentType>*> Callbacks;
++    public:
++        EventHandlerList() {}
++        ~EventHandlerList() {}
++
++        void AddHandler(IEventCallback<ArgumentType>* action)
++        {
++            Callbacks.push_back(action);
++        }
++	    void RemoveHandler(IEventCallback<ArgumentType>* action)
++        {
++            Callbacks.Remove(action);
++            delete action;
++        }
++	    void Invoke(void* sender, ArgumentType arg)
++        {
++            for (IEventCallback<ArgumentType>* action : Callbacks)
++                action->Invoke(sender, arg);
++        }
++
++        void operator+= (IEventCallback<ArgumentType>* action)
++        {
++            AddHandler(action);
++        }
++        void operator+= (void (*func)(void*, ArgumentType))
++        {
++            AddHandler(new StaticFunctionCallback<ArgumentType>(func));
++        }
++        void operator-= (IEventCallback<ArgumentType>* action)
++        {
++            RemoveHandler(action);
++        }
++    };
++
++    ////////////////////
++    // Argument macro implementations
++    ////////////////////
++    #define CREATE_ARGUMENT_CLASS0(name) \
++        class name \
++        { \
++        public: \
++            name() {} \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS1(name, t1, var1) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            name(t1 var1) \
++            { \
++                this->var1 = var1; \
++            } \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS2(name, t1, var1, t2, var2) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            t2 var2; \
++            name(t1 var1, t2 var2) \
++            { \
++                this->var1 = var1; \
++                this->var2 = var2; \
++            } \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS3(name, t1, var1, t2, var2, t3, var3) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            t2 var2; \
++            t3 var3; \
++            name(t1 var1, t2 var2, t3 var3) \
++            { \
++                this->var1 = var1; \
++                this->var2 = var2; \
++                this->var3 = var3; \
++            } \
++        }; \
++    
++    #define CREATE_ARGUMENT_CLASS4(name, t1, var1, t2, var2, t3, var3, t4, var4) \
++        class name \
++        { \
++        public: \
++            t1 var1; \
++            t2 var2; \
++            t3 var3; \
++            t4 var4; \
++            name(t1 var1, t2 var2, t3 var3, t4 var4) \
++            { \
++                this->var1 = var1; \
++                this->var2 = var2; \
++                this->var3 = var3; \
++                this->var4 = var4; \
++            } \
++        }; \
++
++    ///////////
++    // Argument classes for keypress or mouse events, more will be added later
++    ///////////
++    CREATE_ARGUMENT_CLASS4(MouseMoveArgs, int, prevX, int, prevY, int, newX, int, newY)
++    CREATE_ARGUMENT_CLASS3(MouseButtonArgs, int, x, int, y, int, button)
++    CREATE_ARGUMENT_CLASS2(KeypressArgs, uint8_t, key, KEYPACKET_FLAGS, modifiers)
++    CREATE_ARGUMENT_CLASS3(MouseScrollArgs, int, delta, int, x, int, y);
++
++    /**
++     * An object that hosts multiple gui events
++     */
++    class EventObject
++    {
++    public:
++        EventHandlerList<MouseButtonArgs> MouseDown;
++        EventHandlerList<MouseButtonArgs> MouseUp;
++        EventHandlerList<MouseButtonArgs> MouseClick;
++        EventHandlerList<KeypressArgs> KeyDown;
++        EventHandlerList<KeypressArgs> KeyUp;
++        EventHandlerList<MouseScrollArgs> MouseScroll;
++
++        EventObject()
++        : MouseDown(), MouseUp(), MouseClick(), KeyDown(), KeyUp(), MouseScroll()
++        {        }
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/include/gui/widgets/scrollbar.hpp b/kernel/include/gui/widgets/scrollbar.hpp
+new file mode 100644
+index 0000000..dbfd6df
+--- /dev/null
++++ b/kernel/include/gui/widgets/scrollbar.hpp
+@@ -0,0 +1,67 @@
++#ifndef __LIBHeisenKernel__GUI__SCROLLBAR_H
++#define __LIBHeisenKernel__GUI__SCROLLBAR_H
++
++#include <gui/widgets/control.hpp>
++#include <gui/property.hpp>
++#include <gui/events.hpp>
++#include <gui/colors.hpp>
++
++namespace LIBHeisenKernel
++{
++    // Different type of scrollbars
++    enum ScrollBarType
++    {
++        Horizontal,
++        Vertical
++    };
++
++    #define SCROLLBAR_DEFAULT_WIDTH  100
++    #define SCROLLBAR_DEFAULT_HEIGHT 20
++
++    // Represents an item where the user can drag a square to scroll something for example
++    // Childs are not drawn for logic reasons
++    class ScrollBar : public Control
++    {
++    public:
++        // Type of this scrollbar
++        GUIProperty<ScrollBarType> type = GUIProperty<ScrollBarType>(this, Vertical);
++        
++        // Minumum value, can be < 0
++        GUIProperty<int> minValue = GUIProperty<int>(this, 0);
++        
++        // Maximum value
++        GUIProperty<int> maxValue = GUIProperty<int>(this, 100);
++        
++        // Current value, usually changed by cursor
++        GUIProperty<int> value = GUIProperty<int>(this, 0);
++        
++        // Size of field where user can drag with the mouse in pixels
++        GUIProperty<int> dragSize = GUIProperty<int>(this, 20);
++
++        // Color of dragbar
++        GUIProperty<uint32_t> dragColor = GUIProperty<uint32_t>(this, 0xFF444444);
++
++        // The impact of the scrollbar on the value parameter
++        GUIProperty<double> scrollFactor = GUIProperty<double>(this, 2.0);
++    public:
++        // Create new scrollbar of some type
++        ScrollBar(ScrollBarType type, int min = 0, int max = 100, int dragSize = 20);
++
++        // Draw this scrollbar
++        void DrawTo(Canvas* context, int x_abs, int y_abs) override;
++
++        // Called when user scrolls mouse
++        void OnScroll(int32_t deltaZ, int x_abs, int y_abs) override;
++
++        // Called when mouse is down on this control
++        void OnMouseDown(int x_abs, int y_abs, uint8_t button) override;
++
++        // Called when mouse is up this control
++        void OnMouseUp(int x_abs, int y_abs, uint8_t button) override;
++
++        // Called when mouse is moved this control
++        void OnMouseMove(int prevX_abs, int prevY_abs, int newX_abs, int newY_abs) override;
++    };
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/include/math.hpp b/kernel/include/math.hpp
+new file mode 100644
+index 0000000..c46ad34
+--- /dev/null
++++ b/kernel/include/math.hpp
+@@ -0,0 +1,53 @@
++#ifndef __HEISEN__MATH_H
++#define __HEISEN__MATH_H
++
++#include <types.hpp>
++
++namespace LIBHeisenKernel
++{
++    #define MATH_PI 3.14159265358979323846
++
++    struct MXCSR_StatusRegister
++    {
++        uint8_t InvalidOperationFlag : 1;
++        uint8_t DenormalFlag : 1;
++        uint8_t DevideByZeroFlag : 1;
++        uint8_t OverflowFlag : 1;
++        uint8_t UnderflowFlag : 1;
++        uint8_t PrecisionFlag : 1;
++        uint8_t DemormalsAreZeros : 1;
++        uint8_t InvalidOperationMask : 1;
++        uint8_t DenormalOperationMask : 1;
++        uint8_t DevideByZeroMask : 1;
++        uint8_t OverflowMask : 1;
++        uint8_t UnderflowMask : 1;
++        uint8_t PrecisionMask : 1;
++        uint8_t RoundingControl : 2;
++        uint8_t FlushToZero : 1;
++        uint16_t Reserved;
++    } __attribute__((packed));
++
++    class Math
++    {
++    public:
++        static void EnableFPU();
++
++        static long Abs(long v);
++        static double fAbs(double x);
++        static long Sign(long v);
++        static double sin(double x);
++        static double cos(double x);
++
++        static long Max (long a, long b);
++        static long Min (long a, long b);
++        static long Constrain(long x, long a, long b);
++        static long Map(long x, long in_min, long in_max, long out_min, long out_max);
++
++        static float fMod(float a, float b);
++        static double floor(double x);
++        static double sqrt(double n);
++
++        static double Round(double n, uint32_t digits);
++    };
++}
++#endif
+\ No newline at end of file
+diff --git a/kernel/include/types.hpp b/kernel/include/types.hpp
+index 15d2247..5df1ec7 100644
+--- a/kernel/include/types.hpp
++++ b/kernel/include/types.hpp
+@@ -1,7 +1,6 @@
+ #ifndef _HEISEN_KERNEL_INCLUDE_KERNEL_H
+ #define _HEISEN_KERNEL_INCLUDE_KERNEL_H
+ 
+-
+ namespace LIBHeisenKernel
+ {
+     #define STATIC_ASSERT(condition) typedef char p__LINE__[ (condition) ? 1 : -1];
+diff --git a/kernel/src/gui/gui.c b/kernel/src/gui/gui.c
+new file mode 100644
+index 0000000..e69de29
+diff --git a/kernel/src/gui/widgets/scrollbar.cc b/kernel/src/gui/widgets/scrollbar.cc
+new file mode 100644
+index 0000000..979484c
+--- /dev/null
++++ b/kernel/src/gui/widgets/scrollbar.cc
+@@ -0,0 +1,47 @@
++#include <gui/widgets/scrollbar.hpp>
++#include <math.h>
++
++using namespace LIBHeisenKernel;
++
++ScrollBar::ScrollBar(ScrollBarType type, int min, int max, int dragSize)
++: Control(type == Horizontal ? SCROLLBAR_DEFAULT_WIDTH : SCROLLBAR_DEFAULT_HEIGHT, type == Vertical ? SCROLLBAR_DEFAULT_WIDTH : SCROLLBAR_DEFAULT_HEIGHT)
++{ }
++
++void ScrollBar::DrawTo(Canvas* context, int x_abs, int y_abs)
++{
++    Rectangle visual = Control::GetParentsBounds(x_abs, y_abs);
++    if(visual.Area() == 0)
++        return; // No need to draw something if it isn't going to be visible anyway
++
++    // Calculate percentage of completion
++    double factor = (double)Math::Constrain(this->value, this->minValue, this->maxValue) / (double)(this->maxValue - this->minValue);
++
++    context->DrawFillRect(this->backColor, visual.x, visual.y, visual.width, visual.height);
++    if(this->type == Horizontal)
++        context->DrawFillRect(this->dragColor, visual.x + (double)(this->width - this->dragSize) * factor, visual.y, this->dragSize, this->height);
++    else
++        context->DrawFillRect(this->dragColor, visual.x, visual.y + (double)(this->height - this->dragSize) * factor, this->width, this->dragSize);
++
++    context->DrawRect(this->borderColor, visual.x, visual.y, visual.width, visual.height);
++}
++
++void ScrollBar::OnScroll(int32_t deltaZ, int x_abs, int y_abs)
++{
++    this->value = Math::Constrain(this->value + ((double)deltaZ * this->scrollFactor), this->minValue, this->maxValue);
++}
++
++
++void ScrollBar::OnMouseDown(int x_abs, int y_abs, uint8_t button)
++{
++    
++}
++
++void ScrollBar::OnMouseUp(int x_abs, int y_abs, uint8_t button)
++{
++
++}
++
++void ScrollBar::OnMouseMove(int prevX_abs, int prevY_abs, int newX_abs, int newY_abs)
++{
++
++}
+\ No newline at end of file
+-- 
+2.43.0
+

@@ -1,0 +1,24 @@
+From 7a5f7c2e67192feb0482f7b74e5775b5b55b9622 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 22:47:42 -0400
+Subject: [PATCH 176/493] Updates
+
+---
+ kernelz/src/core/idthelper.s | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/kernelz/src/core/idthelper.s b/kernelz/src/core/idthelper.s
+index 9e2385d..97f8aed 100644
+--- a/kernelz/src/core/idthelper.s
++++ b/kernelz/src/core/idthelper.s
+@@ -5,6 +5,7 @@
+         jmp interrupthandler
+ .endm
+ 
++; Define macros for interrupt handling
+ .macro HandleInterruptRequest num
+     HandleInterruptRequest\num:
+         pushl $0
+-- 
+2.43.0
+

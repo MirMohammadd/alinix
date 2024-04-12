@@ -1,0 +1,35 @@
+From 5c57a2ef7ae7890b2c89316b230088247f87f90a Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 20:48:39 -0400
+Subject: [PATCH 221/493] Minor patch
+
+---
+ kernelz/src/system/tasking/atomic.s | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/kernelz/src/system/tasking/atomic.s b/kernelz/src/system/tasking/atomic.s
+index c25e3b1..5a5852f 100644
+--- a/kernelz/src/system/tasking/atomic.s
++++ b/kernelz/src/system/tasking/atomic.s
+@@ -1,9 +1,9 @@
+ .globl TestAndSet
+ TestAndSet:
+-    mov 4(%esp), %eax  ; get new_value into %eax
+-    mov 8(%esp), %edx  ; get lock_pointer into %edx
+-    lock                ; next instruction is locked
+-    xchgl %eax, (%edx)  ; swap %eax with what is stored in (%edx)                       
+-                        ; ... and don't let any other CPU touch that
+-                        ; ... memory location while you're swapping
+-    ret                 ; return the old value that's in %eax
+\ No newline at end of file
++    mov 4(%esp), %eax  
++    mov 8(%esp), %edx  
++    lock                
++    xchgl %eax, (%edx)    
++                        
++                        
++    ret                 
+\ No newline at end of file
+-- 
+2.43.0
+

@@ -1,0 +1,25 @@
+From 5b8c8dd66a793fac3ea7aec116b9a1e9293519bc Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 22:03:05 -0400
+Subject: [PATCH 239/493] Patch
+
+---
+ kernelz/include/common/types.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernelz/include/common/types.h b/kernelz/include/common/types.h
+index 8d4c194..de03dc0 100644
+--- a/kernelz/include/common/types.h
++++ b/kernelz/include/common/types.h
+@@ -61,6 +61,6 @@ namespace HeisenOs
+     {
+         return no * (1024_MB);
+     }
+-}
++};
+ 
+ #endif
+\ No newline at end of file
+-- 
+2.43.0
+

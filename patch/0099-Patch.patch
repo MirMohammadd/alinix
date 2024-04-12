@@ -1,0 +1,236 @@
+From e61389addb4c257dbd4ce794ec6f12df651e164f Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 20:07:16 -0400
+Subject: [PATCH 099/493] Patch
+
+---
+ apps/compositor/compositor.cc      | 16 ++++++++++++++++
+ apps/compositor/compositor.hpp     | 16 ++++++++++++++++
+ apps/compositor/contextmanager.cc  | 16 ++++++++++++++++
+ apps/compositor/contextmanager.hpp | 16 ++++++++++++++++
+ apps/compositor/cursor.hpp         | 16 ++++++++++++++++
+ apps/compositor/debugger.cc        | 16 ++++++++++++++++
+ apps/compositor/debugger.hpp       | 16 ++++++++++++++++
+ apps/compositor/main.cc            | 16 ++++++++++++++++
+ apps/compositor/scancodes.cc       | 16 ++++++++++++++++
+ 9 files changed, 144 insertions(+)
+
+diff --git a/apps/compositor/compositor.cc b/apps/compositor/compositor.cc
+index 7f2ac85..d9dde87 100644
+--- a/apps/compositor/compositor.cc
++++ b/apps/compositor/compositor.cc
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file compositor.cc
++
++ */
+ #include "compositor.hpp"
+ #include "cursor.hpp"
+ 
+diff --git a/apps/compositor/compositor.hpp b/apps/compositor/compositor.hpp
+index 5a44463..2ad95f3 100644
+--- a/apps/compositor/compositor.hpp
++++ b/apps/compositor/compositor.hpp
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file compositor.hpp
++
++ */
+ #ifndef __COMPISTOR_H
+ #define __COMPISTOR_H
+ 
+diff --git a/apps/compositor/contextmanager.cc b/apps/compositor/contextmanager.cc
+index 06e5a2e..9f10bee 100644
+--- a/apps/compositor/contextmanager.cc
++++ b/apps/compositor/contextmanager.cc
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file contextmanager.cc
++
++ */
+ #include "contextmanager.hpp"
+ 
+ using namespace LIBHeisenKernel;
+diff --git a/apps/compositor/contextmanager.hpp b/apps/compositor/contextmanager.hpp
+index 770a370..2916169 100644
+--- a/apps/compositor/contextmanager.hpp
++++ b/apps/compositor/contextmanager.hpp
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file contextmanager.hpp
++
++ */
+ #ifndef __CONTEXTMANAGER_H
+ #define __CONTEXTMANAGER_H
+ 
+diff --git a/apps/compositor/cursor.hpp b/apps/compositor/cursor.hpp
+index 24d2180..90fed4e 100644
+--- a/apps/compositor/cursor.hpp
++++ b/apps/compositor/cursor.hpp
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file cursor.hpp
++
++ */
+ #ifndef _CURSOR_H
+ #define _CURSOR_H
+ 
+diff --git a/apps/compositor/debugger.cc b/apps/compositor/debugger.cc
+index ce9bafe..4c310c5 100644
+--- a/apps/compositor/debugger.cc
++++ b/apps/compositor/debugger.cc
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file debugger.cc
++
++ */
+ #include "debugger.hpp"
+ #include <convert.hpp>
+ #include <time.hpp>
+diff --git a/apps/compositor/debugger.hpp b/apps/compositor/debugger.hpp
+index 1287602..8a27004 100644
+--- a/apps/compositor/debugger.hpp
++++ b/apps/compositor/debugger.hpp
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file debugger.hpp
++
++ */
+ #ifndef __DEBUGGER_H
+ #define __DEBUGGER_H
+ 
+diff --git a/apps/compositor/main.cc b/apps/compositor/main.cc
+index cb4e0e7..08adc52 100644
+--- a/apps/compositor/main.cc
++++ b/apps/compositor/main.cc
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file main.cc
++
++ */
+ #include <new.hpp>
+ #include <log.hpp>
+ #include <time.hpp>
+diff --git a/apps/compositor/scancodes.cc b/apps/compositor/scancodes.cc
+index 20f0751..2f9e5c9 100644
+--- a/apps/compositor/scancodes.cc
++++ b/apps/compositor/scancodes.cc
+@@ -1,3 +1,19 @@
++/**
++ * MIT License
++ *
++ * Copyright (c) 2024 Heisenberg
++ *
++ * Permission is hereby granted, free of charge, to any person obtaining a copy
++ * of this software and associated documentation files (the "Software"), to deal
++ * in the Software without restriction, including without limitation the rights
++ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
++ * copies of the Software, and to permit persons to whom the Software is
++ * furnished to do so, subject to the following conditions:
++ *
++ * @author Heisenberg
++ * @file scancodes.cc
++
++ */
+ #include <types.hpp>
+ #include <shared.hpp>
+ 
+-- 
+2.43.0
+

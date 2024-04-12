@@ -1,0 +1,26 @@
+From 526a792bfa336eae271df6614734e57ae4837c98 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 21:37:00 -0400
+Subject: [PATCH 148/493] Minor update
+
+---
+ lib/include/systeminfo.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/lib/include/systeminfo.h b/lib/include/systeminfo.h
+index cf628ea..a0d3e25 100644
+--- a/lib/include/systeminfo.h
++++ b/lib/include/systeminfo.h
+@@ -4,7 +4,8 @@
+ #ifdef CACTUSOSKERNEL
+ #include <common/types.h>
+ #else
+-#include <types.h>
++// #include <types.h>
++#include "types.h"
+ #endif
+ 
+ namespace LIBHeisenKernel
+-- 
+2.43.0
+

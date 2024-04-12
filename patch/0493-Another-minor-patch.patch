@@ -1,0 +1,45 @@
+From dbd34ca7b690f061586235c87acb7c1d3374c58c Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 20:10:02 -0400
+Subject: [PATCH 493/493] Another minor patch
+
+---
+ apps/chess/piece.cpp | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
+
+diff --git a/apps/chess/piece.cpp b/apps/chess/piece.cpp
+index 9b88625..9ad3b80 100644
+--- a/apps/chess/piece.cpp
++++ b/apps/chess/piece.cpp
+@@ -1,5 +1,6 @@
+ #include "colour.h"
+ #include "piece.h"
++#include <assert.h>
+ 
+ namespace LIBHeisenKernel
+ {
+@@ -84,5 +85,20 @@ namespace LIBHeisenKernel
+         PieceInc[BlackKing256]   = KingInc;
+         }
+ 
++        bool piece_is_ok(int piece){
++            if (piece <0 || piece >= PieceNb) return false;
++
++            if (PieceTo12[piece] < 0) return false;
++
++            return true;
++        }
++
++        int piece_from_12(int piece12){
++            assert( piece12 >= 0 && piece12 < 12 );
++            return PieceFrom12[piece12];
++        }
++
++        
++
+     };
+ };
+\ No newline at end of file
+-- 
+2.43.0
+

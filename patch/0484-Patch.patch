@@ -1,0 +1,68 @@
+From 81ecfc898c6e14c630d52db3948b4c3d898c9144 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 18:46:12 -0400
+Subject: [PATCH 484/493] Patch
+
+---
+ apps/chess/pawn.h   | 32 ++++++++++++++++++++++++++++++++
+ lib/include/types.h |  4 ++++
+ 2 files changed, 36 insertions(+)
+ create mode 100644 apps/chess/pawn.h
+
+diff --git a/apps/chess/pawn.h b/apps/chess/pawn.h
+new file mode 100644
+index 0000000..930ab49
+--- /dev/null
++++ b/apps/chess/pawn.h
+@@ -0,0 +1,32 @@
++#ifndef _HEISEN_KERNEL_APPS_HEADER_H_
++#define _HEISEN_KERNEL_APPS_HEADER_H_
++
++#include "board.h"
++#include "colour.h"
++#include <types.h>
++
++using namespace LIBHeisenKernel;
++
++namespace LIBHeisenKernel{
++    /**
++     * @brief Defining some useful macros
++    */
++    #define BIT(n)       (BitEQ[n])
++
++    #define BIT_FIRST(b) (BitFirst[b])
++    #define BIT_LAST(b)  (BitLast[b])
++    #define BIT_COUNT(b) (BitCount[b])
++    namespace engine{
++        struct pawn_info_t{
++            uint32_t lock;
++            sint16_t opening;
++            sint16_t endgame;
++            uint8_t flags[ColorNb];
++            uint8_t passes_bits[ColorNb];
++            uint8_t single_file[ColorNb];
++            uint16_t pad;
++        };
++    };
++};
++
++#endif /*_HEISEN_KERNEL_APPS_HEADER_H_*/
+\ No newline at end of file
+diff --git a/lib/include/types.h b/lib/include/types.h
+index e45ff28..664afcf 100644
+--- a/lib/include/types.h
++++ b/lib/include/types.h
+@@ -20,6 +20,10 @@ namespace LIBHeisenKernel
+     typedef unsigned char byte_t;
+     typedef unsigned int dword_t;
+     typedef long unsigned int word_t;
++    typedef signed short sint16_t;
++    typedef signed char sint8_t;
++    typedef unsigned int sint32_t;
++    typedef signed long long int sint64_t;
+ 
+ 
+     constexpr uint32_t operator"" _KB(unsigned long long no)
+-- 
+2.43.0
+

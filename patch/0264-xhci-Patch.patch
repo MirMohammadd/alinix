@@ -1,0 +1,33 @@
+From 3bdb06745f6e9a987661eb4a91fa2ed8bf84d27c Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 18:27:08 -0400
+Subject: [PATCH 264/493] xhci Patch
+
+---
+ lib/include/xhci.h | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/lib/include/xhci.h b/lib/include/xhci.h
+index 2e85b3a..a8f995d 100644
+--- a/lib/include/xhci.h
++++ b/lib/include/xhci.h
+@@ -45,4 +45,15 @@ typedef struct _xhci_cap_regs_ {
+ 	uint32_t cap_hccparams2;
+ }xhci_cap_regs_t;
+ #pragma pack(pop)
++
++#pragma pack(push,1)
++typedef struct _xhci_ex_cap_ {
++	uint32_t id : 8;
++	uint32_t next : 8;
++	uint32_t controller_bios_semaphore : 1;
++	uint32_t rsvd : 7;
++	uint32_t controller_os_sem : 1;
++	uint32_t rsvd2 : 7;
++}xhci_ext_cap_t;
++#pragma pack(pop)
+ #endif
+\ No newline at end of file
+-- 
+2.43.0
+

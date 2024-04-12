@@ -1,0 +1,49 @@
+From 366895d832d4b1a8494cf05d6537731962161196 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 4 Apr 2024 17:32:10 -0400
+Subject: [PATCH 246/493] Minor update
+
+---
+ apps/settings/settings.cpp | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
+
+diff --git a/apps/settings/settings.cpp b/apps/settings/settings.cpp
+index 093763f..278f1dc 100644
+--- a/apps/settings/settings.cpp
++++ b/apps/settings/settings.cpp
+@@ -2,6 +2,7 @@
+ #include <gui/widgets/button.h>
+ #include <gui/widgets/label.h>
+ #include <gui/directgui.h>
++#include <gui/widgets/control.h>
+ 
+ 
+ using namespace LIBHeisenKernel;
+@@ -9,10 +10,18 @@ using namespace LIBHeisenKernel;
+ 
+ int main(){
+     GUI::SetDefaultFont();
+-    Context* mainScreen = GUI::RequestContext(160, 160, GUI::Width-160, 0);
+-    if(mainScreen == 0)
+-        return -1;
++    Window* mainWindow = new Window(800, 600, 0, 0);
++    mainWindow->titleString = "Settings";
++    mainWindow->backColor = 0xFF150534;
+ 
+-    DirectGUI::DrawString("Settings",3,14,0xFF000000);
+-    
++    Button* SystemButton = new Button("System");
++    SystemButton->width = 130 -2;
++    SystemButton->height = 47;
++    SystemButton->x = 1;
++    SystemButton->y = 2;
++    SystemButton->MouseClick += SystemButtonCallback;
++}
++
++void SystemButtonCallback(void* sender, MouseButtonArgs arg){
++    DoSyscall(SYSCALL_SHUTDOWN);
+ }
+\ No newline at end of file
+-- 
+2.43.0
+

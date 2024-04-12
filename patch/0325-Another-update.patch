@@ -1,0 +1,25 @@
+From b939a4b3f1049b4419360d9f14c91082d5b26a6a Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sat, 6 Apr 2024 00:08:40 -0400
+Subject: [PATCH 325/493] Another update
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 5c85838..455c9b5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -85,7 +85,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
+ 
+ 
+ CactusOS.bin: kernelz/linker.ld $(KRNLOBJS)
+-	ld -m elf_x86_64 -o CactusOS.bin -T kernelz/linker.ld $(KRNLOBJS)
++	gcc -fno-pie -fno-common $(LDPARAMS) -Wl,--unresolved-symbols=ignore-all -T kernelz/linker.ld -o CactusOS.bin $(KRNLOBJS)
+ CactusOS.iso: CactusOS.bin
+ 	cd lib/ && $(MAKE)
+ 	cd apps/ && $(MAKE)
+-- 
+2.43.0
+

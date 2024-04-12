@@ -1,0 +1,36 @@
+From 545fb61d8d9705e1cea87c8855e5163a4834ad04 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 11 Apr 2024 16:54:09 -0400
+Subject: [PATCH 465/493] Update
+
+---
+ lib/include/gui/colors.h | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/lib/include/gui/colors.h b/lib/include/gui/colors.h
+index 8a8a6d3..b8a8cbd 100644
+--- a/lib/include/gui/colors.h
++++ b/lib/include/gui/colors.h
+@@ -26,6 +26,19 @@ namespace LIBHeisenKernel
+         const int BlackFlag = 1 << Black;
+     
+         };
++    
++    // Some useful macros
++
++    #define COLOR_IS_OK(colour) (((colour)&~1)==0)
++
++    #define COLOUR_IS_WHITE(colour) ((colour)==White)
++    #define COLOUR_IS_BLACK(colour) ((colour)!=White)
++
++    #define COLOUR_IS(piece,colour) (FLAG_IS((piece),COLOUR_FLAG(colour)))
++    #define FLAG_IS(piece,flag)     (((piece)&(flag))!=0)
++
++    #define COLOUR_OPP(colour)      ((colour)^(White^Black))
++    #define COLOUR_FLAG(colour)     ((colour)+1)
+     };
+     // Union describing a ARGB color in the following format:
+     // 0xAARRGGBB
+-- 
+2.43.0
+

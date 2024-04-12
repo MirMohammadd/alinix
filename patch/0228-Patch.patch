@@ -1,0 +1,24 @@
+From 620d081085527c846c20038af5e69e3070c1a4fb Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 21:09:36 -0400
+Subject: [PATCH 228/493] Patch
+
+---
+ Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Makefile b/Makefile
+index 6b1220f..5ccf04b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -23,6 +23,7 @@
+ # pci-ohci
+ #######################
+ 
++
+ INCLUDEDIRS := kernelz/include
+ QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../qemuTrace.txt -d cpu_reset #-readconfig qemu-usb-config.cfg -drive if=none,id=stick,file=disk.img -device usb-storage,bus=ehci.0,drive=stick
+ 
+-- 
+2.43.0
+

@@ -1,0 +1,33 @@
+From a4c362174547452f45f3c13a2b9955b36984669a Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 18:07:21 -0400
+Subject: [PATCH 260/493] Updated the USB
+
+---
+ lib/include/usb3.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/lib/include/usb3.h b/lib/include/usb3.h
+index c5df380..9523fc1 100644
+--- a/lib/include/usb3.h
++++ b/lib/include/usb3.h
+@@ -8,7 +8,7 @@
+ #define true 1
+ #define false 0
+ 
+-typedef enum { FALSE=0, TRUE } bool_t;
++typedef enum { false=0, true } bool_t;
+ #endif
+ 
+ #if defined(__cplusplus)
+@@ -30,6 +30,7 @@ namespace LIBHeisenKernel{
+ 
+ typedef struct {
+     bool initialised;
++    bool is_csz_64;
+ };
+ 
+ #endif
+-- 
+2.43.0
+

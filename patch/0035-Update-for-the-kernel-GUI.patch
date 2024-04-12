@@ -1,0 +1,214 @@
+From c8eef273a6fe3b050e0c4879d9ecd44112b00fd9 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 13:43:36 -0400
+Subject: [PATCH 035/493] Update for the kernel GUI
+
+---
+ kernel/include/gui/rect.hpp |  81 ++++++++++++++++++++++++++++
+ kernel/include/shared.hpp   | 104 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 185 insertions(+)
+ create mode 100644 kernel/include/gui/rect.hpp
+ create mode 100644 kernel/include/shared.hpp
+
+diff --git a/kernel/include/gui/rect.hpp b/kernel/include/gui/rect.hpp
+new file mode 100644
+index 0000000..15b4978
+--- /dev/null
++++ b/kernel/include/gui/rect.hpp
+@@ -0,0 +1,81 @@
++#ifndef _HEISEN_KERNEL_RECT_H
++#define _HEISEN_KERNEL_RECT_H
++//. LIBHeisenKernel
++
++#include <types.hpp>
++#include <list.hpp>
++
++namespace LIBHeisenKernel
++{
++    /**
++     * A class that describes a rectangular shape
++    */
++    class Rectangle
++    {
++    public:
++        /**
++         * The width of this rectangle
++        */
++        int width;
++        /**
++         * The height of this rectangle
++        */
++        int height;
++        /**
++         * The x coördinate of this rectangle
++        */
++        int x;
++        /**
++         * The y coördinate of this rectangle
++        */
++        int y;
++
++        /**
++         * Create a new instance of the Rectangle Class
++        */
++        Rectangle(int w, int h, int x = 0, int y = 0);
++        
++        /**
++         * Create a new instance of the Rectangle Class
++        */
++        Rectangle();
++
++        /**
++         * Get the area of this rectangle
++         * Basically just width * height
++         */
++        int Area();
++
++        /**
++         * Get the intersection rectangle between this one and the target 
++         * Results holds the intersected rect
++         * Returns true for a intersection
++        */
++        bool Intersect(Rectangle other, Rectangle* result);
++
++        /**
++         * Does this rect contain the given point?
++        */
++        bool Contains(int x, int y);
++
++        /**
++         * Explode this rect into a list of contiguous rects
++        */
++        List<Rectangle>* Split(Rectangle cuttingRect, List<Rectangle>* output = 0);
++
++        /**
++         * Insert this rectangle into the clip list, splitting all existing rectangles against it to prevent overlap 
++        */
++        void PushToClipList(List<Rectangle>* targetList);
++
++        bool operator==(const Rectangle& right)
++        {
++            return (this->width == right.width && this->height == right.height && this->x == right.x && this->y == right.y);
++        }
++
++        // Return a rectangle of size 0, like Rectangle(0, 0, 0, 0)
++        static Rectangle Zero();
++    };
++}
++
++#endif // _HEISEN_KERNEL_RECT_H
+\ No newline at end of file
+diff --git a/kernel/include/shared.hpp b/kernel/include/shared.hpp
+new file mode 100644
+index 0000000..edac6c9
+--- /dev/null
++++ b/kernel/include/shared.hpp
+@@ -0,0 +1,104 @@
++#ifndef _HEISEN_SHARED_HPP
++#define _HEISEN_SHARED_HPP
++
++#include <types.hpp>
++
++namespace LIBHeisenKernel
++{
++    #define VFS_NAME_LENGTH 255
++
++    // Holds data about a specific process, data is readonly
++    struct ProcessInfo
++    {
++        // PID of process
++        int id;
++        // Which syscall interface does this process use?
++        int syscallID;
++        // The amount of threads of this process
++        int threads;
++        // Virtual memory used by heap
++        unsigned int heapMemory;
++        // Is this a ring 3 process?
++        bool isUserspace;
++        // Is process currently blocked (main thread only)
++        bool blocked;
++        // Filename of process excecutable
++        char fileName[32];
++    };
++
++    // Info about a item represent on the disk
++    struct VFSEntry
++    {
++        uint32_t size;  // Size of the entry in bytes
++        bool isDir;     // Is this item a directory or not?
++        struct
++        {
++            uint8_t sec;
++            uint8_t min;
++            uint8_t hour;
++        } creationTime; // Time file was created
++        struct
++        {
++            uint8_t day;
++            uint8_t month;
++            uint16_t year;
++        } creationDate; // Date time was created
++        char name[VFS_NAME_LENGTH]; // Name of the file 
++        // TODO: Is there a better way for buffering this?
++    };
++
++    #define KEYPACKET_START 0xFF
++    enum KEYPACKET_FLAGS {
++        NoFlags = 0,
++        Pressed = (1<<0),
++        CapsLock = (1<<1),
++        NumLock = (1<<2),
++        LeftShift = (1<<3),
++        RightShift = (1<<4),
++        LeftControl = (1<<5),
++        RightControl = (1<<6),
++        Alt = (1<<7)
++    };
++
++    inline KEYPACKET_FLAGS operator|(KEYPACKET_FLAGS a, KEYPACKET_FLAGS b)
++    {
++        return static_cast<KEYPACKET_FLAGS>(static_cast<int>(a) | static_cast<int>(b));
++    }
++
++    // Keys not present in ascii table but used by CactusOS and applications
++    enum SpecialKeys : uint8_t {
++        EscapeKey = 27,
++
++        // Start of custom
++        CapsLockKey = 128,
++        NumLockKey,
++        LeftShiftKey,
++        RightShiftKey,
++        LeftControlKey,
++        RightControlKey,
++        AltKey,
++
++        F1Key,
++        F2Key,
++        F3Key,
++        F4Key,
++        F5Key,
++        F6Key,
++        F7Key,
++        F8Key,
++        F9Key,
++        F10Key,
++        F11Key,
++        F12Key
++    };
++
++    // Packet containing info on Keypress event
++    struct KeypressPacket
++    {
++        uint8_t startByte; //Start of packet
++        uint8_t keyCode; //keycode in integer format
++        KEYPACKET_FLAGS flags; //Button state flags
++    } __attribute__((packed));
++}
++
++#endif // _HEISEN_SHARED_HPP
+\ No newline at end of file
+-- 
+2.43.0
+

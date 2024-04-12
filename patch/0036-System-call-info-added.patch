@@ -1,0 +1,479 @@
+From ee3a0a98fabb0ca20e50c8020a3f1b8d37776cd5 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 13:52:30 -0400
+Subject: [PATCH 036/493] System call info added
+
+---
+ kernel/include/common/types.hpp   |  66 +++++++++++++++++
+ kernel/include/gui/canvas.hpp     |  47 ++++++++++++
+ kernel/include/gui/fonts/font.hpp |  21 ++++++
+ kernel/include/gui/property.hpp   |  80 +++++++++++++++++++++
+ kernel/include/syscall.hpp        | 115 ++++++++++++++++++++++++++++++
+ kernel/include/systeminfo.hpp     |  85 ++++++++++++++++++++++
+ 6 files changed, 414 insertions(+)
+ create mode 100644 kernel/include/common/types.hpp
+ create mode 100644 kernel/include/gui/canvas.hpp
+ create mode 100644 kernel/include/gui/fonts/font.hpp
+ create mode 100644 kernel/include/gui/property.hpp
+ create mode 100644 kernel/include/syscall.hpp
+ create mode 100644 kernel/include/systeminfo.hpp
+
+diff --git a/kernel/include/common/types.hpp b/kernel/include/common/types.hpp
+new file mode 100644
+index 0000000..6f181a6
+--- /dev/null
++++ b/kernel/include/common/types.hpp
+@@ -0,0 +1,66 @@
++#ifndef HEISEN__COMMON__TYPES_H
++#define HEISEN__COMMON__TYPES_H
++
++namespace LIBHeisenKernel
++{
++    namespace common
++    {
++        typedef char                        int8_t;
++        typedef unsigned char               uint8_t;
++        typedef short                       int16_t;
++        typedef unsigned short              uint16_t;
++        typedef int                         int32_t;
++        typedef unsigned int                uint32_t;
++        typedef long long int               int64_t;
++        typedef unsigned long long int      uint64_t;
++        typedef unsigned long long          uintptr_t;
++
++        constexpr uint64_t divide64(uint64_t n, uint32_t base, uint32_t* r = 0)
++        {
++            uint64_t rem = n;
++            uint64_t b = base;
++            uint64_t res = 0, d = 1;
++            uint32_t high = rem >> 32;
++
++            /* Reduce the thing a bit first */
++            if (high >= base) {
++                    high /= base;
++                    res = (uint64_t) high << 32;
++                    rem -= (uint64_t) (high*base) << 32;
++            }
++
++            while ((int64_t)b > 0 && b < rem) {
++                    b = b+b;
++                    d = d+d;
++            }
++
++            do {
++                    if (rem >= b) {
++                            rem -= b;
++                            res += d;
++                    }
++                    b >>= 1;
++                    d >>= 1;
++            } while (d);
++
++            if(r)
++                *r = rem;
++            
++            return res;
++        }
++    }
++    constexpr common::uint32_t operator"" _KB(unsigned long long no)
++    {
++        return no * 1024;
++    }
++    constexpr common::uint32_t operator"" _MB(unsigned long long no)
++    {
++        return no * (1024_KB);
++    }
++    constexpr common::uint32_t operator"" _GB(unsigned long long no)
++    {
++        return no * (1024_MB);
++    }
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/include/gui/canvas.hpp b/kernel/include/gui/canvas.hpp
+new file mode 100644
+index 0000000..4ff2fc9
+--- /dev/null
++++ b/kernel/include/gui/canvas.hpp
+@@ -0,0 +1,47 @@
++#ifndef _HEISEN_KERNEL_CANVAS_HPP
++#define _HEISEN_KERNEL_CANVAS_HPP
++
++// LIBHeisenKernel
++
++#include <gui/fonts/font.hpp>
++#include <types.hpp>
++
++
++
++namespace LIBHeisenKernel
++{
++    class Canvas
++    {
++    private:
++        void DrawCircleHelper(int x, int y, int radius, uint32_t corner, uint32_t color);
++        void FillCircleHelper(int x, int y, int radius, uint32_t corner, int delta, uint32_t color);
++    public:
++        void* bufferPointer;
++        int Width;
++        int Height;
++
++        Canvas(void* buffer, int w, int h);
++
++        void SetPixel(int x, int y, uint32_t color);
++        uint32_t GetPixel(int x, int y);
++
++        void Clear();
++        void Clear(uint32_t color);
++        void DrawHorizontalLine(uint32_t color, int dx, int x1, int y1);
++        void DrawVerticalLine(uint32_t color, int dx, int x1, int y1);
++        void DrawLine(uint32_t color, int x1, int y1, int x2, int y2);
++        void DrawDiagonalLine(uint32_t color, int dx, int dy, int x1, int y1);
++        void DrawRect(uint32_t color, int x, int y, int width, int height);
++        void DrawRoundedRect(uint32_t color, int x, int y, int width, int height, int radius);
++        void DrawFillRoundedRect(uint32_t color, int x, int y, int width, int height, int radius);
++        void DrawFillRect(uint32_t color, int x_start, int y_start, int width, int height);
++        void DrawCircle(uint32_t color, int x_center, int y_center, int radius);
++        void DrawFillCircle(uint32_t color, int x_center, int y_center, int radius);
++        void DrawEllipse(uint32_t color, int x_center, int y_center, int x_radius, int y_radius);
++
++        void DrawString(Font* font, char* string, int x, int y, uint32_t color);
++    };
++}
++
++
++#endif // _HEISEN_KERNEL_CANVAS_HPP
+\ No newline at end of file
+diff --git a/kernel/include/gui/fonts/font.hpp b/kernel/include/gui/fonts/font.hpp
+new file mode 100644
+index 0000000..fbd5fc0
+--- /dev/null
++++ b/kernel/include/gui/fonts/font.hpp
+@@ -0,0 +1,21 @@
++#ifndef _HEISEN_KERNEL_FONT_HPP
++#define _HEISEN_KERNEL_FONT_HPP
++
++#include <types.hpp>
++
++//LIBHeisenKernel 
++
++namespace LIBHeisenKernel
++{
++    struct Font
++    {
++        uint8_t* data           = 0; // Raw font data including header
++        char* name              = 0; // Name of this font, stored inside data buffer
++        int size                = 0; // Size of this font in points
++        uint32_t* offsetTable   = 0; // Offsets for each character data sorted by character
++
++        void BoundingBox(char* str, int* retW, int* retH);
++    };
++}
++
++#endif // _HEISEN_KERNEL_FONT_HPP
+\ No newline at end of file
+diff --git a/kernel/include/gui/property.hpp b/kernel/include/gui/property.hpp
+new file mode 100644
+index 0000000..12fe725
+--- /dev/null
++++ b/kernel/include/gui/property.hpp
+@@ -0,0 +1,80 @@
++#ifndef _HEISEN_PROPERTY_HPP 
++#define _HEISEN_PROPERTY_HPP
++
++
++#include <types.hpp>
++
++// LIBHeisenKernel
++
++namespace LIBHeisenKernel
++{
++    class Control;
++
++    template <typename>
++    class EventHandlerList;
++
++    // Function to force a control to update its GUI
++    // We need this because if we place it in the template we get a lot of warnings
++    // This a nice way to fix it
++    void UpdateGUIPropertyTargetGUI(Control* target);
++
++    // Property that is used to declare a gui specific variable
++    // When this property changes the gui needs to be repainted
++    template <typename T>
++    class GUIProperty
++    {
++    friend class Control;
++    protected:
++        // Value of this property
++        T value;
++
++        // Which control is the owner of this property
++        Control* parent = 0;
++    public:
++        // Called when value of this property is changed
++        // Make sure this does not create an infinite loop!
++        EventHandlerList<T> onChanged;
++    public:
++        // Create new property with default value and pointer to parent control
++        GUIProperty(Control* p, T def) { this->parent = p; this->value = def; }
++
++        // Deconstructor
++        ~GUIProperty() { }
++
++        
++        // Assignment operator
++        GUIProperty& operator=(T newVal)
++        {
++            this->value = newVal;
++            this->onChanged.Invoke(this, this->value);
++            UpdateGUIPropertyTargetGUI(this->parent);
++            return *this;
++        }
++
++        // Increase operator
++        GUIProperty& operator+=(T newVal)
++        {
++            this->value += newVal;
++            this->onChanged.Invoke(this, this->value);
++            UpdateGUIPropertyTargetGUI(this->parent);
++            return *this;
++        }
++
++        // Decrease operator
++        GUIProperty& operator-=(T newVal)
++        {
++            this->value -= newVal;
++            this->onChanged.Invoke(this, this->value);
++            UpdateGUIPropertyTargetGUI(this->parent);
++            return *this;
++        }
++
++        // Get operator, used for value feedback
++        operator T() const
++        {
++            return this->value;
++        }
++    };        
++}
++
++#endif // _HEISEN_PROPERTY_HPP
+\ No newline at end of file
+diff --git a/kernel/include/syscall.hpp b/kernel/include/syscall.hpp
+new file mode 100644
+index 0000000..41250d1
+--- /dev/null
++++ b/kernel/include/syscall.hpp
+@@ -0,0 +1,115 @@
++#ifndef _HEISEN_KERNEL_SYSCALL_HPP 
++#define _HEISEN_KERNEL_SYSCALL_HPP
++
++// LIBHeisenKernel
++
++namespace LIBHeisenKernel
++{
++    #define SYSCALL_RET_SUCCES 1
++    #define SYSCALL_RET_ERROR 0
++    #define PROC_ARG_LEN_MAX 100
++
++    enum Systemcalls {
++        SYSCALL_EXIT = 0, // Tells kernel that procces is done and can be removed
++
++        /////////////
++        // Logging
++        /////////////
++    
++        SYSCALL_LOG,
++        SYSCALL_PRINT,
++
++        /////////////
++        // VFS
++        /////////////
++
++        SYSCALL_FILE_EXISTS,
++        SYSCALL_DIR_EXISTS,
++        SYSCALL_GET_FILESIZE,
++        SYSCALL_READ_FILE,
++        SYSCALL_WRITE_FILE,
++        SYSCALL_CREATE_FILE,
++        SYSCALL_CREATE_DIRECTORY,
++        SYSCALL_EJECT_DISK,
++
++        //////////////
++        // GUI
++        //////////////
++        
++        SYSCALL_GUI_GETLFB,
++        SYSCALL_GET_SCREEN_PROPERTIES,
++
++        //////////////
++        // Memory
++        //////////////
++
++        SYSCALL_GET_HEAP_START,
++        SYSCALL_GET_HEAP_END,
++        SYSCALL_SET_HEAP_SIZE,
++        SYSCALL_CREATE_SHARED_MEM,
++        SYSCALL_REMOVE_SHARED_MEM,
++        SYSCALL_MAP_SYSINFO,
++
++        //////////////
++        // Scheduler
++        //////////////
++
++        SYSCALL_RUN_PROC,
++        SYSCALL_SLEEP_MS,
++        SYSCALL_START_THREAD,
++        SYSCALL_YIELD,
++        SYSCALL_PROC_EXIST,
++        SYSCALL_UNBLOCK,
++        SYSCALL_SET_SCHEDULER,
++        SYSCALL_GET_ARGUMENTS,
++
++        //////////////
++        // IPC
++        //////////////
++
++        SYSCALL_IPC_SEND,
++        SYSCALL_IPC_RECEIVE,
++        SYSCALL_IPC_AVAILABLE,
++
++        //////////////
++        // Clock
++        //////////////
++
++        SYSCALL_GET_TICKS,
++        SYSCALL_GET_DATETIME,
++
++        //////////////
++        // Power
++        //////////////
++
++        SYSCALL_SHUTDOWN,
++        SYSCALL_REBOOT,
++
++        //////////////
++        // STDIO
++        //////////////
++
++        SYSCALL_READ_STDIO,
++        SYSCALL_WRITE_STDIO,
++        SYSCALL_REDIRECT_STDIO,
++        SYSCALL_STDIO_AVAILABLE,
++
++        //////////////
++        // Listings
++        //////////////
++
++        SYSCALL_BEGIN_LISTING,
++        SYSCALL_LISTING_ENTRY,
++        SYSCALL_END_LISTING,
++        SYSCALL_GET_SYSINFO_VALUE,
++
++        //////////////
++        // Other
++        //////////////
++        SYSCALL_SET_CACTUSOS_LIB = 0xFFFF,
++    };
++
++    int DoSyscall(unsigned int intNum, unsigned int arg1 = 0, unsigned int arg2 = 0, unsigned int arg3 = 0, unsigned int arg4 = 0, unsigned int arg5 = 0);
++}
++
++#endif // _HEISEN_KERNEL_SYSCALL_HPP
+\ No newline at end of file
+diff --git a/kernel/include/systeminfo.hpp b/kernel/include/systeminfo.hpp
+new file mode 100644
+index 0000000..5938364
+--- /dev/null
++++ b/kernel/include/systeminfo.hpp
+@@ -0,0 +1,85 @@
++#ifndef __HEISEN__SYSTEMINFO_H
++#define __HEISEN__SYSTEMINFO_H
++
++#ifdef OSKERNEL
++#include <common/types.hpp>
++#else
++#include <types.hpp>
++#endif
++
++namespace LIBHeisenKernel
++{
++    #define SYSTEM_INFO_ADDR 0xBFFEE000
++
++    enum SIPropertyIdentifier
++    {
++        String,
++        Index
++    };
++
++    class SIPropertyProvider
++    {
++    public:
++        char* id = 0;
++        int index = 0;
++        SIPropertyIdentifier type = String;
++
++        SIPropertyProvider* parent = 0;
++    public:
++        SIPropertyProvider(char* property);
++        SIPropertyProvider(int index);
++
++        // Collection functions
++
++        // Get Count of items present in this collection
++        int size();
++
++        // Get specific property of collection
++        SIPropertyProvider operator[](const int index);
++        SIPropertyProvider operator[](const char* element);
++
++        template<typename T>
++        T receiveValue(const bool getsize) const;
++
++        template<typename T>
++        T receiveBuffer() const;
++
++        // We are a property ourself
++        operator int() const;       // Receive this property as integer
++        operator bool() const;      // Receive this property as boolean
++        operator double() const;    // Receive this property as double
++        operator char*() const;     // Receive this property as string
++        operator uint64_t() const;  // Receive this property as unsigned long
++        operator uint32_t() const;  // Receive this property as unsigned int
++        operator uint16_t() const;  // Receive this property as unsigned word
++        operator uint8_t() const;  // Receive this property as unsigned char
++    } __attribute__((packed));
++
++    // A class for managing all information known about the current system
++    // With this a application can monitor the system
++    class SystemInfo
++    {
++    public:
++        // All properties of the current system
++        // Things like connected disks and usbdevices
++        static SIPropertyProvider Properties;
++
++        // Request System info to be mapped into address space
++        // Addres is SYSTEM_INFO_ADDR which is 2 pages below user-stack
++        static bool RequestSystemInfo();
++    };
++
++    // This struct can be shared between the kernel and userspace processes
++    struct SharedSystemInfo
++    {
++        unsigned int MouseX;
++        unsigned int MouseY;
++        signed int   MouseZ;
++
++        bool MouseLeftButton;
++        bool MouseRightButton;
++        bool MouseMiddleButton;
++    } __attribute__((packed));
++}
++
++#endif
+\ No newline at end of file
+-- 
+2.43.0
+

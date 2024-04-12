@@ -1,0 +1,31 @@
+From e43b93e1123dab991cdac8b895d69dff0a1bcc66 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sat, 6 Apr 2024 00:31:07 -0400
+Subject: [PATCH 334/493] Minor patch
+
+---
+ kernelz/src/system/tasking/atomic.s | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
+
+diff --git a/kernelz/src/system/tasking/atomic.s b/kernelz/src/system/tasking/atomic.s
+index 5a5852f..51419e0 100644
+--- a/kernelz/src/system/tasking/atomic.s
++++ b/kernelz/src/system/tasking/atomic.s
+@@ -1,9 +1,6 @@
+ .globl TestAndSet
+ TestAndSet:
+-    mov 4(%esp), %eax  
+-    mov 8(%esp), %edx  
+-    lock                
+-    xchgl %eax, (%edx)    
+-                        
+-                        
+-    ret                 
+\ No newline at end of file
++    mov 4(%esp), %eax
++    mov 8(%esp), %edx
++    lock xchgl %eax, (%edx)
++    ret
+-- 
+2.43.0
+

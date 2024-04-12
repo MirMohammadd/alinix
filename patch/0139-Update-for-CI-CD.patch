@@ -1,0 +1,25 @@
+From 9c84b218458ae4a66a89cc5be20fbe81cf5793e3 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 21:23:41 -0400
+Subject: [PATCH 139/493] Update for CI/CD
+
+---
+ .github/workflows/tests.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
+index 78ceb2b..a6ff2c9 100644
+--- a/.github/workflows/tests.yml
++++ b/.github/workflows/tests.yml
+@@ -28,7 +28,7 @@ jobs:
+ 
+     - name: Set PATH for i686-elf-gcc and i686-elf-g++
+       run: |
+-        export PATH="$PATH:/path/to/i686-elf-gcc-directory/bin:/path/to/i686-elf-g++-directory/bin" # Replace with the actual paths to i686-elf-gcc and i686-elf-g++ directories
++        export PATH="$PATH:/usr/bin:/usr/local/bin:/path/to/i686-elf-gcc-directory/bin:/path/to/i686-elf-g++-directory/bin" # Replace with the actual paths to i686-elf-gcc and i686-elf-g++ directories
+ 
+     - name: Build project
+       run: make run # Replace 'make build' with your build command
+-- 
+2.43.0
+

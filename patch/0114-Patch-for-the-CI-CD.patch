@@ -1,0 +1,46 @@
+From 1c53fbbbf5795fcb362609ea9ee9a8e2e02c603d Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 19:40:14 -0400
+Subject: [PATCH 114/493] Patch for the CI/CD
+
+---
+ .github/workflows/test.yml | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
+
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+index abdd134..e2f49cb 100644
+--- a/.github/workflows/test.yml
++++ b/.github/workflows/test.yml
+@@ -16,15 +16,21 @@ jobs:
+ 
+       - name: Install Dependencies
+         run: |
+-          sudo apt-get update
+-          sudo apt-get install -y build-essential git wget bzip2 xz-utils unzip help2man libtool-bin nasm python2 python3 python-pip grub-common xorriso mtools  build-essential build-essential gcc-multilib g++-multilib build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo  
++          # sudo apt-get update
++          # sudo apt-get install -y build-essential git wget bzip2 xz-utils unzip help2man libtool-bin nasm python2 python3 python-pip grub-common xorriso mtools  build-essential build-essential gcc-multilib g++-multilib build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo build-essential bison flex libgmp3-dev libmpc-dev libmpfr-dev texinfo  
++          # python2 -m pip install -r kernel/requirements.txt
++          # docker run -it -v "/home/admin:/root" --rm lordmilko/i686-elf-tools
++          # docker run -it -v "/home/admin:/root" --rm lordmilko/i686-elf-tools -gv 9.2.0 -bv 2.34 -dv 9.1
++          # sudo -s
++          # wget https://raw.githubusercontent.com/lordmilko/i686-elf-tools/master/i686-elf-tools.sh
++          # chmod +x ./i686-elf-tools.sh
++          # ./i686-elf-tools.sh
++          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
++          brew install git wget bzip2 xz unzip nasm python@2 python@3 xorriso mtools gcc@11 bison flex gmp mpfr texinfo
+           python2 -m pip install -r kernel/requirements.txt
+-          docker run -it -v "/home/admin:/root" --rm lordmilko/i686-elf-tools
+-          docker run -it -v "/home/admin:/root" --rm lordmilko/i686-elf-tools -gv 9.2.0 -bv 2.34 -dv 9.1
+-          sudo -s
+-          wget https://raw.githubusercontent.com/lordmilko/i686-elf-tools/master/i686-elf-tools.sh
+-          chmod +x ./i686-elf-tools.sh
+-          ./i686-elf-tools.sh
++          brew tap nativeos/i686-elf-toolchain
++          brew install i686-elf-binutils i686-elf-gcc i686-elf-newlib
++
+ 
+ 
+ 
+-- 
+2.43.0
+

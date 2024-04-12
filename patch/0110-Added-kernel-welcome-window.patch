@@ -1,0 +1,22 @@
+From 9a3e6fdfba4698454a0bb869eac435dba4e7de7f Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 18:36:00 -0400
+Subject: [PATCH 110/493] Added kernel welcome window
+
+---
+ isofiles/desktop/items.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/isofiles/desktop/items.txt b/isofiles/desktop/items.txt
+index 640fecf..cf84ae6 100644
+--- a/isofiles/desktop/items.txt
++++ b/isofiles/desktop/items.txt
+@@ -8,3 +8,4 @@ This file is parsed by the desktop application on startup
+ "Power Manager" file="B:\apps\powermanager.bin" icon="B:\desktop\power.png"
+ "Mines" file="B:\apps\mines.bin" icon="B:\desktop\mine.png"
+ "Browser" file="B:\apps\browser.bin" icon="B:\desktop\explorer.png"
++"Welcome file="B:\apps\browser.bin" icon="B:\desktop\explorer.png"
+\ No newline at end of file
+-- 
+2.43.0
+

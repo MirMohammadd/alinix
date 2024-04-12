@@ -1,0 +1,27 @@
+From 2eb613b7d2bcde25c30c0f36ba79c6aed16f28d0 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 21:21:29 -0400
+Subject: [PATCH 283/493] Another minor update
+
+---
+ kernelz/linker.ld | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/kernelz/linker.ld b/kernelz/linker.ld
+index c89b4ac..52f5d21 100644
+--- a/kernelz/linker.ld
++++ b/kernelz/linker.ld
+@@ -40,4 +40,8 @@ SECTIONS
+   /DISCARD/ : { *(.fini_array*) *(.comment) }
+ 
+   _kernel_end = .;
+-}
+\ No newline at end of file
++
++  /DISCARD/ : {
++    *(UNDEFINED)
++  }
++}
+-- 
+2.43.0
+

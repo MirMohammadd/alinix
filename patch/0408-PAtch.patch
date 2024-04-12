@@ -1,0 +1,27 @@
+From 9f0f068f7b6a2ffa2df40ca2b81cbc22145cae5c Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 7 Apr 2024 21:38:51 -0400
+Subject: [PATCH 408/493] PAtch
+
+---
+ .github/workflows/tests.yml | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
+index bfa6605..4adee90 100644
+--- a/.github/workflows/tests.yml
++++ b/.github/workflows/tests.yml
+@@ -23,10 +23,6 @@ jobs:
+     - name: Install make
+       run: brew install make
+ 
+-    - name: Clone i686-elf-gcc repository
+-      run: git clone https://github.com/nativeos/homebrew-i686-elf-gcc /usr/local/Homebrew/Library/Taps/nativeos/homebrew-i686-elf-gcc
+-    - name: Install i686-elf-gcc
+-      run: brew tap nativeos/i686-elf-gcc && brew install i686-elf-gcc
+ 
+     - name: Install i686-elf-gcc
+       run: brew install i686-elf-gcc
+-- 
+2.43.0
+

@@ -1,0 +1,43 @@
+From 9f3e486677096d42fc0331c3cbed191b5c326b2e Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 21:03:20 -0400
+Subject: [PATCH 127/493] My patch
+
+---
+ .travis.yml | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
+ create mode 100644 .travis.yml
+
+diff --git a/.travis.yml b/.travis.yml
+new file mode 100644
+index 0000000..d133ccb
+--- /dev/null
++++ b/.travis.yml
+@@ -0,0 +1,24 @@
++language: c
++
++matrix:
++  include:
++    - os: linux
++      dist: xenial
++      compiler: gcc
++      addons:
++        apt:
++          packages:
++            - gcc-multilib
++            - qemu
++            - qemu-system-x86
++            - nasm
++            - xorriso
++            - grub-common
++            - grub-pc-bin
++            - mtools
++            - make
++            - gcc-i686-linux-gnu
++            - binutils-i686-linux-gnu
++
++script:
++  - make  # Replace 'make build' with your build command
+-- 
+2.43.0
+

@@ -1,0 +1,25 @@
+From 556d669b90d73b0633d946c39495e06807e9a568 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 10 Apr 2024 17:38:47 -0400
+Subject: [PATCH 457/493] Update
+
+---
+ apps/welcome/welcome.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/apps/welcome/welcome.cpp b/apps/welcome/welcome.cpp
+index 1b10e60..956dd0c 100644
+--- a/apps/welcome/welcome.cpp
++++ b/apps/welcome/welcome.cpp
+@@ -48,7 +48,7 @@ int main(){
+     helpMoreOptions->height = 47;
+     helpMoreOptions->x = 1;
+     helpMoreOptions->y = 2;
+-
++    // Implement shutdown and reboot button here.
+     Button* shutdownAndReboot = new Button("Reboot and shutdown (recommended)");
+     shutdownAndReboot->width = 300 - 2;
+     shutdownAndReboot->height = 49;
+-- 
+2.43.0
+

@@ -1,0 +1,91 @@
+From 17a3e2f4f486794486b16591a74f5ed828f0ba1f Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sun, 31 Mar 2024 22:54:19 -0400
+Subject: [PATCH 024/493] Minor patch
+
+---
+ kernel/arch/x86-pc/io/keyboard.c | 56 ++++++++++++++++++++++++++++++++
+ kernel/arch/x86-pc/io/keyboard.h |  3 ++
+ 2 files changed, 59 insertions(+)
+
+diff --git a/kernel/arch/x86-pc/io/keyboard.c b/kernel/arch/x86-pc/io/keyboard.c
+index b535b7d..9e36159 100644
+--- a/kernel/arch/x86-pc/io/keyboard.c
++++ b/kernel/arch/x86-pc/io/keyboard.c
+@@ -152,3 +152,59 @@ void keyboard_setup(struct console *term)
+ 	terminal = term;
+ 	x86_irq_set_routine(IRQ_KEYBOARD, keyboard_interrupt_handler);
+ }
++
++char keyboard_special_caps_keys(char key){
++	switch (key){
++			case 'a':
++				return "A";
++			case 'b':
++				return "B";
++			case 'c':
++				return "C";
++			case 'd':
++				return "D";
++			case 'e':
++				return "E";
++			case 'f':
++				return "F";
++			case 'g':
++				return "G";
++			case 'h':
++				return "H";
++			case 'i':
++				return "I";
++			case 'j':
++				return "J";
++			case  'k':
++				return "K";
++			case 'l':
++				return  "L";
++			case 'm':
++				return  "M";
++			case  'n':
++				return   "N";
++			case 'o':
++				return   "O";
++			case 'p':
++				return "P";
++			case 'q':
++				return "Q";
++			case  'r':
++				return "R";
++			case  's':
++				return "S";
++			case  't':
++				return  "T";
++			case  'u':
++				return  "U";
++			case 'v':
++				return "V";
++			case  'w':
++				return "W";
++			case  'x' : return "X";
++
++			case 'y': return  "Y";
++
++			case 'z':return "Z";
++		}
++	}
+diff --git a/kernel/arch/x86-pc/io/keyboard.h b/kernel/arch/x86-pc/io/keyboard.h
+index 984279a..1599e55 100644
+--- a/kernel/arch/x86-pc/io/keyboard.h
++++ b/kernel/arch/x86-pc/io/keyboard.h
+@@ -69,6 +69,9 @@
+ #define KEY_PAGE_UP	0x49
+ #define KEY_PAGE_DOWN	0x51
+ 
++#define CAPS_LOCK 0x3A
++
++
+ #define BACKSPACE 14
+ #define ESCAPE 1
+ #define PAGEUP 73
+-- 
+2.43.0
+

@@ -1,0 +1,115 @@
+From cb47a7339c227a43c080c08d35b721f601089545 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Fri, 5 Apr 2024 20:53:03 -0400
+Subject: [PATCH 274/493] Added more I/O ports for the kernel
+
+---
+ lib/include/drivers/usb/include.hpp |  9 ++++++++
+ lib/include/ports.hpp               | 14 ++++++++++++
+ lib/src/drivers/test.c              |  0
+ lib/src/drivers/usb/ehci.cpp        |  8 +++++++
+ lib/src/ports.cpp                   | 34 +++++++++++++++++++++++++++++
+ 5 files changed, 65 insertions(+)
+ create mode 100644 lib/include/drivers/usb/include.hpp
+ create mode 100644 lib/include/ports.hpp
+ create mode 100644 lib/src/drivers/test.c
+ create mode 100644 lib/src/drivers/usb/ehci.cpp
+ create mode 100644 lib/src/ports.cpp
+
+diff --git a/lib/include/drivers/usb/include.hpp b/lib/include/drivers/usb/include.hpp
+new file mode 100644
+index 0000000..07a8f55
+--- /dev/null
++++ b/lib/include/drivers/usb/include.hpp
+@@ -0,0 +1,9 @@
++#pragma once
++
++#include "main.hpp"
++#include "uhci.hpp"
++#include "ohci.hpp"
++#include "ehci.hpp"
++#include "usb_human_interface_device.hpp"
++#include "usb_mass_storage.hpp"
++#include "usb_hub.hpp"
+\ No newline at end of file
+diff --git a/lib/include/ports.hpp b/lib/include/ports.hpp
+new file mode 100644
+index 0000000..a140528
+--- /dev/null
++++ b/lib/include/ports.hpp
+@@ -0,0 +1,14 @@
++#pragma once
++
++#include "types.h"
++
++#ifdef __cplusplus
++using namespace LIBHeisenKernel;
++#endif
++
++void mmio_outb(dword_t base, byte_t value);
++void mmio_outw(dword_t base, word_t value);
++void mmio_outd(dword_t base, dword_t value);
++byte_t mmio_inb(dword_t base);
++word_t mmio_inw(dword_t base);
++dword_t mmio_ind(dword_t base);
+diff --git a/lib/src/drivers/test.c b/lib/src/drivers/test.c
+new file mode 100644
+index 0000000..e69de29
+diff --git a/lib/src/drivers/usb/ehci.cpp b/lib/src/drivers/usb/ehci.cpp
+new file mode 100644
+index 0000000..45f0e3f
+--- /dev/null
++++ b/lib/src/drivers/usb/ehci.cpp
+@@ -0,0 +1,8 @@
++#include <ehci.hpp>
++#include <types.h>
++
++using namespace LIBHeisenKernel;
++
++void initalize_ehci_controller(byte_t controller_number){
++    dword_t 
++}
+\ No newline at end of file
+diff --git a/lib/src/ports.cpp b/lib/src/ports.cpp
+new file mode 100644
+index 0000000..90fe9ba
+--- /dev/null
++++ b/lib/src/ports.cpp
+@@ -0,0 +1,34 @@
++#include <ports.hpp>
++#include <types.h>
++
++using namespace LIBHeisenKernel;
++
++dword_t mmio_ind(dword_t base){
++    dword_t *mem = (dword_t*)(base);
++    return *mem;
++}
++
++void mmio_outb(dword_t base, byte_t value) {
++ byte_t *mem = (byte_t *) (base);
++ *mem = value;
++}
++
++void mmio_outw(dword_t base, word_t value) {
++ word_t *mem = (word_t *) (base);
++ *mem = value;
++}
++
++void mmio_outd(dword_t base, dword_t value) {
++ dword_t *mem = (dword_t *) (base);
++ *mem = value;
++}
++
++byte_t mmio_inb(dword_t base) {
++ byte_t *mem = (byte_t *) (base);
++ return *mem;
++}
++
++word_t mmio_inw(dword_t base) {
++ word_t *mem = (word_t *) (base);
++ return *mem;
++}
+-- 
+2.43.0
+

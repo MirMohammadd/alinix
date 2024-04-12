@@ -1,0 +1,24 @@
+From 6dc43aa411c6bc2dd9fe2b13fe5965c65404a76a Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Sat, 6 Apr 2024 00:04:48 -0400
+Subject: [PATCH 324/493] Minor patch
+
+---
+ kernelz/linker.ld | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/kernelz/linker.ld b/kernelz/linker.ld
+index 7da645c..ea67ca0 100644
+--- a/kernelz/linker.ld
++++ b/kernelz/linker.ld
+@@ -51,7 +51,6 @@ SECTIONS
+         *(UND*)
+         *(HeisenOs::core::pageRoundUp*)
+         *(HeisenOs::core::pageRoundDown*)
+-        .err "Ignore _GLOBAL_OFFSET_TABLE_"
+     }
+ 
+     /DISCARD/ : { *(.fini_array*) *(.comment) }
+-- 
+2.43.0
+

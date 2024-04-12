@@ -1,0 +1,34 @@
+From dba55afcc6489e6d1df5d40498fe5f08790e358e Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 22:56:48 -0400
+Subject: [PATCH 178/493] Patch
+
+---
+ Makefile | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index f1bad28..e0ece8e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -65,7 +65,7 @@ $(KRNLOBJDIR)/gdb/i386-stub.o: $(KRNLSRCDIR)/gdb/i386-stub.c
+ ####################################
+ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
+ 	mkdir -p $(@D)
+-	nasm  -f elf32 $< -o $@
++	nasm  -f --no-error elf32 $< -o $@
+ 
+ # $(ASPARAMS)
+ 
+@@ -74,7 +74,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
+ ####################################
+ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
+ 	mkdir -p $(@D)
+-	nasm -f elf32 -O0 $< -o $@
++	nasm -f --no-error elf32 -O0 $< -o $@
+ 
+ 
+ 
+-- 
+2.43.0
+

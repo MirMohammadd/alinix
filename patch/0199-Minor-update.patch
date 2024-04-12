@@ -1,0 +1,22 @@
+From 6d8bcce6af0b75cd2426fee4fef310899c00805f Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Wed, 3 Apr 2024 19:09:25 -0400
+Subject: [PATCH 199/493] Minor update
+
+---
+ .github/workflows/tests.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
+index f784259..0afd10d 100644
+--- a/.github/workflows/tests.yml
++++ b/.github/workflows/tests.yml
+@@ -33,4 +33,4 @@ jobs:
+     - name: Build project
+       run: |
+         nasm -f elf32 -O0 kernelz/src/core/cpuhelper.asm -o kernelz/obj/core/cpuhelper.o
+-        make run # Replace 'make' with your build command
++        make CactusOS # Replace 'make' with your build command
+-- 
+2.43.0
+

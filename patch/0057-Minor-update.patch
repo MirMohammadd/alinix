@@ -1,0 +1,25 @@
+From ac4ea1cbc9f42db6d86d3e53bf0d05c922f476cd Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 15:33:06 -0400
+Subject: [PATCH 057/493] Minor update
+
+---
+ kernel/arch/x86-pc/startup.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/kernel/arch/x86-pc/startup.c b/kernel/arch/x86-pc/startup.c
+index a5d70cc..85d1b6d 100644
+--- a/kernel/arch/x86-pc/startup.c
++++ b/kernel/arch/x86-pc/startup.c
+@@ -21,7 +21,7 @@
+ #include <io/console.h>
+ #include <colorforth/colorforth.h>
+ #include <arch/x86-pc/io/video.h>
+-#include <kernel/include/gui/widgets/button.hpp>
++#include "../../kernel/include/gui/widgets/button.hpp"
+ 
+ 
+ /**
+-- 
+2.43.0
+

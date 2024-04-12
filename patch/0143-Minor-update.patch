@@ -1,0 +1,22 @@
+From 0d565f03d793f6bb5e5d76346e1b930c2503606d Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 2 Apr 2024 21:27:49 -0400
+Subject: [PATCH 143/493] Minor update
+
+---
+ .github/workflows/tests.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/tests.yml b/.github/workflows/tests.yml
+index 9817d01..f784259 100644
+--- a/.github/workflows/tests.yml
++++ b/.github/workflows/tests.yml
+@@ -33,4 +33,4 @@ jobs:
+     - name: Build project
+       run: |
+         nasm -f elf32 -O0 kernelz/src/core/cpuhelper.asm -o kernelz/obj/core/cpuhelper.o
+-        make # Replace 'make' with your build command
++        make run # Replace 'make' with your build command
+-- 
+2.43.0
+

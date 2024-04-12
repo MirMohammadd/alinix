@@ -1,0 +1,42 @@
+From 7e49485ffaa7db0316da574c24f8be6a604140d8 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Tue, 9 Apr 2024 22:51:28 -0400
+Subject: [PATCH 451/493] Updates
+
+---
+ kernelz/include/common/types.h | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/kernelz/include/common/types.h b/kernelz/include/common/types.h
+index c3cb965..608e4a8 100644
+--- a/kernelz/include/common/types.h
++++ b/kernelz/include/common/types.h
+@@ -1,10 +1,16 @@
+ #ifndef CACTUSOS__COMMON__TYPES_H
+ #define CACTUSOS__COMMON__TYPES_H
+ 
++/**
++ * @brief Common types for HeisenOs
++*/
++
+ namespace HeisenOs
+ {
+     namespace common
+     {
++    //------------------------------------------------------------------------
++    // Basic types defined here
+         typedef char                        int8_t;
+         typedef unsigned char               uint8_t;
+         typedef short                       int16_t;
+@@ -66,6 +72,7 @@ namespace HeisenOs
+     {
+         return no * (1024_MB);
+     }
++    // -----------------------------------------------------------------------
+ }
+ 
+ #endif
+\ No newline at end of file
+-- 
+2.43.0
+

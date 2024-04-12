@@ -1,0 +1,105 @@
+From 8caee4258fd3ccb59707cb7104fda71ef31a5881 Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Mon, 1 Apr 2024 14:30:11 -0400
+Subject: [PATCH 044/493] Minor update
+
+---
+ kernel/include/vfs.hpp             | 35 +++++++++++++++++++++++++
+ kernel/src/gui/fonts/fontparser.cc | 41 ++++++++++++++++++++++++++++++
+ 2 files changed, 76 insertions(+)
+ create mode 100644 kernel/include/vfs.hpp
+ create mode 100644 kernel/src/gui/fonts/fontparser.cc
+
+diff --git a/kernel/include/vfs.hpp b/kernel/include/vfs.hpp
+new file mode 100644
+index 0000000..49cfa65
+--- /dev/null
++++ b/kernel/include/vfs.hpp
+@@ -0,0 +1,35 @@
++#ifndef __CACTUSOSLIB__VFS_H
++#define __CACTUSOSLIB__VFS_H
++
++#include <types.hpp>
++#include <list.hpp>
++#include <shared.hpp>
++
++namespace LIBHeisenKernel
++{
++    // Read file contents into buffer
++    int ReadFile(char* filename, uint8_t* buffer, uint32_t offset = 0, uint32_t len = -1);
++    // Write buffer to file, file will be created when create equals true
++    int WriteFile(char* filename, uint8_t* buffer, uint32_t len, bool create = true);
++
++    // Check if file exist
++    bool FileExists(char* filename);
++    // Check if directory exist
++    bool DirectoryExists(char* filename);
++
++    // Create a file at the filepath
++    int CreateFile(char* path);
++    // Create a new directory
++    int CreateDirectory(char* path);
++
++    // Get size of specified file in bytes
++    uint32_t GetFileSize(char* filename);
++
++    // Get list of files/directories in specified path
++    List<VFSEntry> DirectoryListing(char* path);
++
++    // Request to eject a specific disk (only works for CD's at the moment, TODO: usb as well?)
++    bool EjectDisk(char* path);
++}
++
++#endif
+\ No newline at end of file
+diff --git a/kernel/src/gui/fonts/fontparser.cc b/kernel/src/gui/fonts/fontparser.cc
+new file mode 100644
+index 0000000..fcec990
+--- /dev/null
++++ b/kernel/src/gui/fonts/fontparser.cc
+@@ -0,0 +1,41 @@
++#include <gui/fonts/fontparser.hpp>
++#include <vfs.hpp>
++#include <string.hpp>
++#include <log.hpp>
++
++
++using namespace LIBHeisenKernel;
++
++Font* FontParser::FromFile(char* filename)
++{
++    if(FileExists(filename) == false)
++        return 0;
++
++    uint32_t fileSize = GetFileSize(filename);
++    if((int)fileSize == -1)
++        return 0;
++
++    uint8_t* filebuffer = new uint8_t[fileSize];
++    if(ReadFile(filename, filebuffer) != 0) {
++        delete filebuffer;
++        return 0;
++    }
++
++
++    // Place CFF header over buffer
++    CFFHeader* header = (CFFHeader*)filebuffer;
++    if(header->Magic != 0xCFF || header->Version != 1) {
++        delete filebuffer;
++        return 0;
++    }
++    
++    Print("Parsing font %s, size = %d Points\n", (char*)(filebuffer + header->FontNameOffset), header->FontSize);
++    
++    Font* result = new Font();
++    result->data = filebuffer;
++    result->name = (char*)(filebuffer + header->FontNameOffset);
++    result->offsetTable = header->CharacterOffsets;
++    result->size = header->FontSize;
++
++    return result;
++}
+\ No newline at end of file
+-- 
+2.43.0
+

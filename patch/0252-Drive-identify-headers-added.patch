@@ -1,0 +1,112 @@
+From 64b5169297ad0063aa406bac6314981a9aef65ae Mon Sep 17 00:00:00 2001
+From: Heisenberg <alimirmohammad.1386@gmail.com>
+Date: Thu, 4 Apr 2024 18:22:10 -0400
+Subject: [PATCH 252/493] Drive identify headers added
+
+---
+ kernel/arch/x86/io-ports.h   |  5 +++++
+ lib/include/hardware/ata.hpp | 21 +++++++++++++++++++++
+ lib/src/hardware/ata.cpp     | 36 ++++++++++++++++++++++++++++++++++++
+ lib/src/hardware/drive.cpp   |  2 ++
+ 4 files changed, 64 insertions(+)
+ create mode 100644 lib/include/hardware/ata.hpp
+ create mode 100644 lib/src/hardware/ata.cpp
+ create mode 100644 lib/src/hardware/drive.cpp
+
+diff --git a/kernel/arch/x86/io-ports.h b/kernel/arch/x86/io-ports.h
+index c3be30d..f482758 100644
+--- a/kernel/arch/x86/io-ports.h
++++ b/kernel/arch/x86/io-ports.h
+@@ -89,5 +89,10 @@
+ #define inw(port, val) \
+     asm volatile("in %w0, %w1" : "=a"(val) : "Nd"(port))
+ 
++#define inwA(port) ({ \
++    unsigned short _v; \
++    __asm__ __volatile__ ("inw %w1, %0" : "=a" (_v) : "Nd" (port)); \
++    _v; \
++})
+ 
+ #endif // _IO_PORTS_H_ 
+diff --git a/lib/include/hardware/ata.hpp b/lib/include/hardware/ata.hpp
+new file mode 100644
+index 0000000..c63561a
+--- /dev/null
++++ b/lib/include/hardware/ata.hpp
+@@ -0,0 +1,21 @@
++#ifndef _HEISEN_KERNEL_OS_ATA_H
++#define _HEISEN_KERNEL_OS_ATA_H
++
++#define ATA_DATA_PORT 0x1F0
++#define ATA_FEATURES_PORT 0x1F1
++#define ATA_SECTOR_COUNT_PORT 0x1F2
++#define ATA_LBA_LOW_PORT 0x1F3
++#define ATA_LBA_MID_PORT 0x1F4
++#define ATA_LBA_HIGH_PORT 0x1F5
++#define ATA_DRIVE_SELECT_PORT 0x1F6
++#define ATA_COMMAND_PORT 0x1F7
++#define ATA_STATUS_PORT 0x1F7
++
++#define ATA_IDENTIFY_COMMAND 0xEC
++
++#include <types.h>
++uint64_t ata_identify_drive(uint8_t drive);
++
++
++
++#endif 
+\ No newline at end of file
+diff --git a/lib/src/hardware/ata.cpp b/lib/src/hardware/ata.cpp
+new file mode 100644
+index 0000000..55b8357
+--- /dev/null
++++ b/lib/src/hardware/ata.cpp
+@@ -0,0 +1,36 @@
++#include <hardware/ata.hpp>
++#include <types.h>
++#include <arch/x86/io-ports.h>
++
++
++
++using namespace LIBHeisenKernel;
++
++
++
++
++uint64_t ata_identify_drive(uint8_t drive) {
++    uint16_t ata_identify_buffer[256]; // Buffer to store ATA IDENTIFY data
++
++    // Wait for the drive to be ready
++    while ((inb(ATA_STATUS_PORT) & 0x80) != 0x00);
++
++    // Select the drive and send IDENTIFY command
++    outb(ATA_DRIVE_SELECT_PORT, 0xA0 | (drive << 4));
++    outb(ATA_COMMAND_PORT, ATA_IDENTIFY_COMMAND);
++
++    // Wait for the drive to send data
++    while ((inb(ATA_STATUS_PORT) & 0x08) == 0x08 || (inb(ATA_STATUS_PORT) & 0x01) != 0x01);
++
++    // Read data from the drive
++    for (int i = 0; i < 256; i++) {
++        ata_identify_buffer[i] = inwA(ATA_DATA_PORT);
++    }
++
++    // Interpret ATA IDENTIFY data to get disk size
++    uint64_t sectors = ((uint64_t)ata_identify_buffer[100] << 32) |
++                       ((uint64_t)ata_identify_buffer[101] << 16) |
++                       ata_identify_buffer[60];
++
++    return sectors * 512; // Assuming sector size is 512 bytes
++}
+\ No newline at end of file
+diff --git a/lib/src/hardware/drive.cpp b/lib/src/hardware/drive.cpp
+new file mode 100644
+index 0000000..a39d5dd
+--- /dev/null
++++ b/lib/src/hardware/drive.cpp
+@@ -0,0 +1,2 @@
++#include <hardware/ata.hpp>
++
+-- 
+2.43.0
+

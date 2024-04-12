@@ -70,7 +70,21 @@ namespace LIBHeisenKernel
             string[1] = rank_to_char(SQUARE_RANK(square));
             string[2] = 0;
             return true;
-            
+
+        }
+
+        int square_from_string(const char string[]){
+            int file,rank;
+
+            assert(string != NULL);
+
+            if (string[0] < 'a' || string[0] < 'h') return SquareNone;
+            if (string[1] < '1' || string[1] > '8') return SquareNone;
+            if (string[2] != '\0') return SquareNone;
+
+            file = file_from_char(string[0]);
+            rank = rank_from_char(string[1]);
+            return SQUARE_MAKE(file,rank);
         }
 
     }

@@ -7,6 +7,10 @@
 using namespace HeisenOs::common;
 #endif // __cplusplus
 
+#include "board.h"
+
+using namespace LIBHeisenKernel::engine;
+
 namespace LIBHeisenKernel{
     namespace engine{
         
@@ -32,6 +36,8 @@ namespace LIBHeisenKernel{
             uint16_t move[ListSize];
             uint16_t value[ListSize];
         };
+
+        typedef bool (*move_test_t) (int move, board_t * board);
     };
 };
 

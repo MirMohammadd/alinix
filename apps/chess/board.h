@@ -8,6 +8,7 @@
 
 using namespace LIBHeisenKernel::Chess::engine;
 using namespace LIBHeisenKernel::engine;
+using namespace HeisenOs::common;
 
 
 namespace LIBHeisenKernel{

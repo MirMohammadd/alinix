@@ -11,6 +11,7 @@
 
 using namespace LIBHeisenKernel::Chess::engine;
 using namespace HeisenOs::common;
+using namespace LIBHeisenKernel::engine;
 
 namespace LIBHeisenKernel{
     namespace engine{

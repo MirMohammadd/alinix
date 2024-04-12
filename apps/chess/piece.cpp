@@ -59,6 +59,29 @@ namespace LIBHeisenKernel
             for (piece12 = 0; piece12 < 12; piece12++) {
                 PieceTo12[PieceFrom12[piece12]] = piece12;
             }
+
+            for (piece = 0; piece < PieceNb; piece++) PieceOrder[piece] = -1;
+
+            for (piece12 = 0; piece12 < 12; piece12++) {
+                PieceOrder[PieceFrom12[piece12]] = piece12 >> 1;
+            }
+
+            // PieceInc[]
+
+            for (piece = 0; piece < PieceNb; piece++) {
+                PieceInc[piece] = NULL;
+                 }
+        PieceInc[WhiteKnight256] = KnightInc;
+        PieceInc[WhiteBishop256] = BishopInc;
+        PieceInc[WhiteRook256]   = RookInc;
+        PieceInc[WhiteQueen256]  = QueenInc;
+        PieceInc[WhiteKing256]   = KingInc;
+
+        PieceInc[BlackKnight256] = KnightInc;
+        PieceInc[BlackBishop256] = BishopInc;
+        PieceInc[BlackRook256]   = RookInc;
+        PieceInc[BlackQueen256]  = QueenInc;
+        PieceInc[BlackKing256]   = KingInc;
         }
 
     };

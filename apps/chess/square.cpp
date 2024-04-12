@@ -44,6 +44,16 @@ namespace LIBHeisenKernel
         return FileA + (c - 'a');
         }
 
+        int rank_from_char(int c) {
+        assert(c>='1'&&c<='8');
+        return Rank1 + (c - '1');
+        }
+
+        int file_to_char(int file){
+            assert(file >=FileA && file <= FileH);
+            return file - FileA + 'a';
+        }
+
     }
 
 

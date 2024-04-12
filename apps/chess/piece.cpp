@@ -98,7 +98,6 @@ namespace LIBHeisenKernel
             return PieceFrom12[piece12];
         }
 
-        
 
     };
 };

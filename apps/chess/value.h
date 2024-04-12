@@ -34,6 +34,21 @@ namespace LIBHeisenKernel{
          * @brief variables
         */
         extern int ValuePiece[PieceNb];
+
+        /**
+         * @brief functions goes here
+        */
+        extern void value_init       ();
+
+        extern bool value_is_ok      (int value);
+        extern bool range_is_ok      (int min, int max);
+
+        extern bool value_is_mate    (int value);
+
+        extern int  value_to_trans   (int value, int height);
+        extern int  value_from_trans (int value, int height);
+
+        extern int  value_to_mate    (int value);
     }
 };
 

@@ -27,6 +27,11 @@ namespace LIBHeisenKernel
                 static const int MovePromoteBishop = MoveCastle | (1 << 12);
                 static const int MovePromoteRook   = MovePromote | (2 << 12);
                 static const int MovePromoteQueen  = MovePromote | (3 << 12);
+                /////////////////////////////////////////
+
+                static const int MoveAllFlags = 0xF << 12;
+                // static const char NullMoveString[] = "null"; // "0000" in UCI
+                
         };
     }
 }

@@ -1,7 +1,7 @@
 #include "colour.h"
 #include "piece.h"
 #include <assert.h>
-#include "square.h"
+
 
 using namespace LIBHeisenKernel::engine;
 using namespace engine;
@@ -102,9 +102,6 @@ namespace LIBHeisenKernel
             return PieceFrom12[piece12];
         }
 
-        int rank_to_char(int rank){
-            assert( rank >= 0 && rank < 8 );
-            return '1' + (rank- Rank1);
-        }
+
     };
 };

@@ -31,8 +31,19 @@ namespace LIBHeisenKernel
                 for (x = -7;x <=7;x++){
                     delta = y*16+x;
                     assert(delta_is_ok(delta));
+
+                    dist = 0;
+
+                    tmp = x;
+                    if (tmp < 0) tmp = -tmp;
+                    if (tmp > dist) dist = tmp;
                     
-                    
+                    tmp = y;
+                    if (tmp < 0) tmp = -tmp;
+                    if (tmp > dist) dist = tmp;
+
+                    Distance[DeltaOffset+delta] = dist;
+
                 }
             }
         }

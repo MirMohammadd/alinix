@@ -59,6 +59,12 @@ namespace LIBHeisenKernel
             return '1' + (rank- Rank1);
         }
 
+        bool square_to_string(int square,char string[],int size){
+            assert(SQUARE_IS_OK(square));
+            assert(string != NULL);
+            assert (size > 0);
+        }
+
     }
 
 

@@ -82,6 +82,34 @@ namespace LIBHeisenKernel{
                         break;
                 }
                 c = fen[++pos];
+                if (c != ' ') my_fatal("board_from_fen(): bad FEN (pos=%d)\n",pos);
+                c = fen[++pos];
+
+                board->flags = FlagsNone;
+
+                if (c == '-'){
+                    c = fen[++pos];
+                }else {
+                if (c == 'K') {
+                if (board->square[E1] == WK && board->square[H1] == WR) board->flags |= FlagsWhiteKingCastle;
+                    c = fen[++pos];
+                }
+
+                if (c == 'Q') {
+                    if (board->square[E1] == WK && board->square[A1] == WR) board->flags |= FlagsWhiteQueenCastle;
+                    c = fen[++pos];
+                }
+
+                if (c == 'k') {
+                    if (board->square[E8] == BK && board->square[H8] == BR) board->flags |= FlagsBlackKingCastle;
+                    c = fen[++pos];
+                }
+
+                if (c == 'q') {
+                    if (board->square[E8] == BK && board->square[A8] == BR) board->flags |= FlagsBlackQueenCastle;
+                    c = fen[++pos];
+                }
+                }
             }
         }
     };

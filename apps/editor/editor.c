@@ -125,3 +125,8 @@ int getWindowSize(int ifd, int ofd, int *rows, int *cols){
 failed:
     return -1;
 }
+
+int is_separator(int c){
+    return c == '\0' || isspace(c) || strchr(",.()+-/*=~%[];",c) != NULL;
+    
+}

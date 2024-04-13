@@ -1,4 +1,5 @@
 #include <cstdlib> // for abs()
+#include <assert.h>
 
 #include "attack.h"
 #include "board.h"
@@ -204,8 +205,15 @@ static bool bishop_can_attack  (const board_t * board, int to, int colour);
             int eval;
             int wb, bb;
 
-            
-            
+
+            assert(board != NULL);
+            assert(board_is_legal(board));
+            assert(!board_is_check(board));
+
+            opening = 0;
+            endgame = 0;
+
+            // material_get_info(mat_info,board);
         }
 
 }}

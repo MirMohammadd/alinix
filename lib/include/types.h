@@ -24,6 +24,7 @@ namespace LIBHeisenKernel
     typedef signed char sint8_t;
     typedef unsigned int sint32_t;
     typedef signed long long int sint64_t;
+    typedef	long	time_t;
 
 
     constexpr uint32_t operator"" _KB(unsigned long long no)
@@ -54,6 +55,7 @@ typedef unsigned long long int      uint64_t;
 typedef unsigned char byte_t;
 typedef unsigned int dword_t;
 typedef long unsigned int word_t;
+typedef	long	time_t;
 
 #endif
 

@@ -127,6 +127,7 @@ namespace LIBHeisenKernel
 
         extern int  piece_to_char   (int piece);
         extern int  piece_from_char (int c);
+        extern bool piece_is_ok     (int piece);
 
     };
 }

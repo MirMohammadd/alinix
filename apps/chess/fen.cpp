@@ -111,6 +111,150 @@ namespace LIBHeisenKernel{
                 }
                 }
             }
+
+
+   if (c != ' ') my_fatal("board_from_fen(): bad FEN (pos=%d)\n",pos);
+   c = fen[++pos];
+
+   if (c == '-') { // no en-passant
+
+      sq = SquareNone;
+      c = fen[++pos];
+
+   } else {
+
+      if (c < 'a' || c > 'h') my_fatal("board_from_fen(): bad FEN (pos=%d)\n",pos);
+      file = file_from_char(c);
+      c = fen[++pos];
+
+      if (c != (COLOUR_IS_WHITE(board->turn) ? '6' : '3')) my_fatal("board_from_fen(): bad FEN (pos=%d)\n",pos);
+      rank = rank_from_char(c);
+      c = fen[++pos];
+
+      sq = SQUARE_MAKE(file,rank);
+      pawn = SQUARE_EP_DUAL(sq);
+
+      if (board->square[sq] != Empty
+       || board->square[pawn] != PAWN_MAKE(COLOUR_OPP(board->turn))
+       || (board->square[pawn-1] != PAWN_MAKE(board->turn)
+        && board->square[pawn+1] != PAWN_MAKE(board->turn))) {
+         sq = SquareNone;
+      }
+   }
+
+   board->ep_square = sq;
+
+   // halfmove clock
+
+   board->ply_nb = 0;
+
+   if (c != ' ') {
+      if (!Strict) goto update;
+      my_fatal("board_from_fen(): bad FEN (pos=%d)\n",pos);
+   }
+   c = fen[++pos];
+
+   if (!isdigit(c)) {
+      if (!Strict) goto update;
+      my_fatal("board_from_fen(): bad FEN (pos=%d)\n",pos);
+   }
+
+   board->ply_nb = atoi(&fen[pos]);
+
+   // board update
+
+update:
+   board_init_list(board);
+}
+
+// board_to_fen()
+
+bool board_to_fen(const board_t * board, char fen[], int size) {
+
+   int pos;
+   int file, rank;
+   int sq, piece;
+   int c;
+   int len;
+
+   assert(board!=NULL);
+   assert(fen!=NULL);
+   assert(size>=92);
+
+   // init
+
+   if (size < 92) return false;
+
+   pos = 0;
+
+   // piece placement
+
+   for (rank = Rank8; rank >= Rank1; rank--) {
+
+      for (file = FileA; file <= FileH;) {
+
+         sq = SQUARE_MAKE(file,rank);
+         piece = board->square[sq];
+         assert(piece==Empty||piece_is_ok(piece));
+
+         if (piece == Empty) {
+
+            len = 0;
+            for (; file <= FileH && board->square[SQUARE_MAKE(file,rank)] == Empty; file++) {
+               len++;
+            }
+
+            assert(len>=1&&len<=8);
+            c = '0' + len;
+
+         } else {
+
+            c = piece_to_char(piece);
+            file++;
+         }
+
+         fen[pos++] = c;
+      }
+
+      fen[pos++] = '/';
+   }
+
+   fen[pos-1] = ' '; // HACK: remove the last '/'
+
+   // active colour
+
+   fen[pos++] = (COLOUR_IS_WHITE(board->turn)) ? 'w' : 'b';
+   fen[pos++] = ' ';
+
+   // castling
+
+   if (board->flags == FlagsNone) {
+      fen[pos++] = '-';
+   } else {
+      if ((board->flags & FlagsWhiteKingCastle)  != 0) fen[pos++] = 'K';
+      if ((board->flags & FlagsWhiteQueenCastle) != 0) fen[pos++] = 'Q';
+      if ((board->flags & FlagsBlackKingCastle)  != 0) fen[pos++] = 'k';
+      if ((board->flags & FlagsBlackQueenCastle) != 0) fen[pos++] = 'q';
+   }
+
+   fen[pos++] = ' ';
+
+   // en-passant
+
+   if (board->ep_square == SquareNone) {
+      fen[pos++] = '-';
+   } else {
+      square_to_string(board->ep_square,&fen[pos],3);
+      pos += 2;
+   }
+
+   fen[pos++] = ' ';
+
+   // halfmove clock
+
+   sprintf(&fen[pos],"%d 1",board->ply_nb);
+
+   return true;
         }
     };
 };

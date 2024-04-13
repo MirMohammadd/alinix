@@ -46,6 +46,16 @@ namespace LIBHeisenKernel
 
         #define HL_HIGHLIGHT_STRINGS (1<<0)
         #define HL_HIGHLIGHT_NUMBERS (1<<1)
+        #define KILO_QUERY_LEN 256
+        #define KILO_QUIT_TIMES 3
+
+        // #define FIND_RESTORE_HL do { \
+        //     if (saved_hl) { \
+        //         memcpy(E.row[saved_hl_line].hl,saved_hl, E.row[saved_hl_line].rsize); \
+        //         free(saved_hl); \
+        //         saved_hl = NULL; \
+        //     } \
+        // } while (0)
 
         /**
          * @brief Defining the structures here
@@ -119,7 +129,66 @@ namespace LIBHeisenKernel
         PAGE_UP,
         PAGE_DOWN
     };
-    }
+
+        void editorSetStatusMessage(const char *fmt, ...);
+        struct editorSyntax HLDB[] = {
+            {
+                /* C / C++ */
+                C_HL_extensions,
+                C_HL_keywords,
+                "//","/*","*/",
+                HL_HIGHLIGHT_STRINGS | HL_HIGHLIGHT_NUMBERS
+            }
+        };
+        #define HLDB_ENTRIES (sizeof(HLDB)/sizeof(HLDB[0]))
+        
+
+        static struct termios orig_termios;
+        struct abuf {
+        char *b;
+        int len;
+        };
+
+#define ABUF_INIT {NULL,0}
+
+        void disableRawMode(int fd);
+        void editorAtExit(void);
+        int enableRawMode(int fd);
+        int editorReadKey(int fd);
+        int getCursorPosition(int ifd, int ofd, int *rows, int *cols);
+        int getWindowSize(int ifd, int ofd, int *rows, int *cols);
+        int is_separator(int c);
+        int editorRowHasOpenComment(erow *row);
+        void editorUpdateSyntax(erow *row);
+        int editorSyntaxToColor(int hl);
+        void editorSelectSyntaxHighlight(char *filename);
+        void editorUpdateRow(erow *row);
+        void editorInsertRow(int at, char *s, size_t len);
+        void editorFreeRow(erow *row);
+        void editorDelRow(int at);
+        char *editorRowsToString(int *buflen) ;
+        void editorRowInsertChar(erow *row, int at, int c);
+        void editorRowAppendString(erow *row, char *s, size_t len);
+        void editorRowDelChar(erow *row, int at);
+        void editorInsertChar(int c);
+        void editorInsertNewline(void);
+        void editorDelChar();
+        int editorOpen(char *filename);
+        int editorSave(void);
+        void abAppend(struct abuf *ab, const char *s, int len);
+        void abFree(struct abuf *ab);
+        void editorRefreshScreen(void);
+        void editorSetStatusMessage(const char *fmt, ...);
+        void editorFind(int fd);
+        void editorMoveCursor(int key);
+        void editorProcessKeypress(int fd);
+        int editorFileWasModified(void) ;
+        void updateWindowSize(void);
+        void handleSigWinCh(int unused __attribute__((unused)));
+        void initEditor(void);
+        int main(int argc, char **argv);
+
+
 }
 
 #endif /* !_ALINIX_KERNEL_EDITOR_H */

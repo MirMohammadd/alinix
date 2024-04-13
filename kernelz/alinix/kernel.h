@@ -1,0 +1,5 @@
+#ifndef _ALINIX_KERNEL_KERNEL_H__
+#define _ALINIX_KERNEL_KERNEL_H__
+
+
+#endif /*_ALINIX_KERNEL_KERNEL_H__*/

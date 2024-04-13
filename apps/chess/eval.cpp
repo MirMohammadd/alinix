@@ -149,5 +149,63 @@ static bool bishop_can_attack  (const board_t * board, int to, int colour);
                     MobUnit[Color][piece] = 0;
                 }
             }
+
+               MobUnit[White][Empty] = MobMove;
+
+                MobUnit[White][BP] = MobAttack;
+                MobUnit[White][BN] = MobAttack;
+                MobUnit[White][BB] = MobAttack;
+                MobUnit[White][BR] = MobAttack;
+                MobUnit[White][BQ] = MobAttack;
+                MobUnit[White][BK] = MobAttack;
+
+                MobUnit[White][WP] = MobDefense;
+                MobUnit[White][WN] = MobDefense;
+                MobUnit[White][WB] = MobDefense;
+                MobUnit[White][WR] = MobDefense;
+                MobUnit[White][WQ] = MobDefense;
+                MobUnit[White][WK] = MobDefense;
+
+                MobUnit[Black][Empty] = MobMove;
+
+                MobUnit[Black][WP] = MobAttack;
+                MobUnit[Black][WN] = MobAttack;
+                MobUnit[Black][WB] = MobAttack;
+                MobUnit[Black][WR] = MobAttack;
+                MobUnit[Black][WQ] = MobAttack;
+                MobUnit[Black][WK] = MobAttack;
+
+                MobUnit[Black][BP] = MobDefense;
+                MobUnit[Black][BN] = MobDefense;
+                MobUnit[Black][BB] = MobDefense;
+                MobUnit[Black][BR] = MobDefense;
+                MobUnit[Black][BQ] = MobDefense;
+                MobUnit[Black][BK] = MobDefense;
+
+                for (piece = 0;piece < PieceNb;piece++){
+                    KingAttackUnit[piece] = 0;
+                }
+                KingAttackUnit[WN] = 1;
+                KingAttackUnit[WB] = 1;
+                KingAttackUnit[WR] = 2;
+                KingAttackUnit[WQ] = 4;
+
+                KingAttackUnit[BN] = 1;
+                KingAttackUnit[BB] = 1;
+                KingAttackUnit[BR] = 2;
+                KingAttackUnit[BQ] = 4;
         }
+        int eval(const board_t* board){
+            int opening,endgame;
+            material_info_t mat_info[1];
+            pawn_info_t pawn_info[1];
+            int mul[ColourNb];
+            int phase;
+            int eval;
+            int wb, bb;
+
+            
+            
+        }
+
 }}

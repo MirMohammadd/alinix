@@ -20,6 +20,10 @@ namespace HeisenOs
         typedef long long int               int64_t;
         typedef unsigned long long int      uint64_t;
         typedef unsigned long long          uintptr_t;
+        typedef signed char               sint8_t;
+        typedef signed short              sint16_t;
+        typedef signed int               sint32_t;
+        typedef signed long long int      sint64_t
         #if !defined(__cplusplus)
         #define bool unsigned char
         #define true 1

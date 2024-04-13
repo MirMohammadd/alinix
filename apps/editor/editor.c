@@ -87,4 +87,8 @@ int getCursorPosition(int ifd, int ofd, int *rows, int *cols){
         if (buf[i] == 'R') break;
         i++;
     }
+    buf[i] = '\0';
+    if (buf[0] != ESC || buf[1] != '[') return -1;
+    if (sscanf(buf+2,"%d;%d",rows,cols) != 2) return -1;
+    return 0;
 }

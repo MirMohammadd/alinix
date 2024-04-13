@@ -12,6 +12,7 @@ namespace LIBHeisenKernel
         double elapsed_cpu;
         bool running;
         };
+    extern void   my_fatal              (const char format[], ...);
     }
 }
 

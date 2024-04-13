@@ -73,8 +73,16 @@ namespace LIBHeisenKernel{
                 switch(c){
                     case 'w':
                         board->turn = White;
-
+                        break;
+                    case 'b':
+                        board->turn = Black;
+                        break;
+                    default:
+                        my_fatal("board_from_fen(): bad FEN (pos=%d)\n",pos);
+                        break;
                 }
+                c = fen[++pos];
+            }
         }
     };
-}};
+};

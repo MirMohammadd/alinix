@@ -54,9 +54,21 @@ namespace LIBHeisenKernel{
                     }else {
                         piece = piece_from_char(c);
                         if (piece == PieceNone256) my_fatal("board_from_fen(): bad FEN (pos=%d)\n",pos);
-                        
+
+                        board->square[SQUARE_MAKE(file,rank)] = piece;
+                        file++;
                     }
+
+                    c = fen[++pos];
                 }
+                if (rank > Rank1){
+                    if (c != '/') my_fatal("board_from_fen(): bad FEN (pos=%d)\n",pos);
+                    c = fen[++pos];
+                }
+
+                // Activate color
+                if (c != ' ') my_fatal("board_from_fen(): bad FEN (pos=%d)\n",pos);
+                
         }
     };
 }};

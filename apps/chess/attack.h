@@ -24,7 +24,37 @@ namespace LIBHeisenKernel{
 
         #define ATTACK_IN_CHECK(attack)           ((attack)->dn!=0)
 
-        
+        /**
+         * @brief Defining the data types
+         * 
+        */
+        struct attack_t{
+            int dn;
+            int ds[2+1];
+            int di[2+1];
+        };
+        /**
+         * @brief Defining the variables
+        */
+        extern int DeltaIncLine[DeltaNb];
+        extern int DeltaIncAll[DeltaNb];
+
+        extern int DeltaMask[DeltaNb];
+        extern int IncMask[IncNb];
+        /**
+         * @brief Functions are defined here
+        */
+        extern void attack_init();
+        extern bool is_attacked   (const board_t * board, int to, int colour);
+        extern bool line_is_empty (const board_t * board, int from, int to);
+
+        extern bool is_pinned     (const board_t * board, int square, int colour);
+
+        extern bool attack_is_ok  (const attack_t * attack);
+        extern void attack_set    (attack_t * attack, const board_t * board);
+
+        extern bool piece_attack_king (const board_t * board, int piece, int from, int king);
+
     }
 }
 

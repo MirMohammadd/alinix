@@ -5,7 +5,7 @@ LIBINCLUDE := ../lib/include
 LIBDIR := ../lib
 LIBFILE := ../lib/libcactusos.a
 DEBUG := -g
-LIBDRIVEINCLUDE = ../alinix/include
+LIBDRIVEINCLUDE = ../include
 
 
 G++PARAMS := -m32 $(DEBUG) -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) -I $(LIBDRIVEINCLUDE) -I ../kernel/include -Wall -I ../lib/include -fno-omit-frame-pointer -I ../libdrive/include -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas

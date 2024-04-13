@@ -11,3 +11,16 @@ void disableRawMode(int fd){
 void editorAtExit(void){
     disableRawMode(STDIN_FILENO);
 }
+
+int enableRawMode(int fd){
+    struct termios raw;
+
+    if (E.rawmode) return 0;
+    if (tcsetattr(fd,TCSAFLUSH,&raw) < 0) goto fatal;
+    E.rawmode = 1;
+    return 0;
+
+    fatal:
+        errno = ENOTTY;
+        return -1;
+}

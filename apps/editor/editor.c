@@ -75,3 +75,16 @@ int editorReadKey(int fd){
         }
     }
 }
+
+int getCursorPosition(int ifd, int ofd, int *rows, int *cols){
+    char buf[32];
+    unsigned int i  = 0;
+
+    if (write(ofd,"\x1b[6n",4) != 4) return -1;
+
+    while (i < sizeof(buf)-1){
+        if (read(ifd,buf+i,1) != 1) break;
+        if (buf[i] == 'R') break;
+        i++;
+    }
+}

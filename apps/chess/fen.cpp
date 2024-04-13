@@ -13,6 +13,7 @@
 using namespace LIBHeisenKernel;
 using namespace LIBHeisenKernel::engine;
 using namespace HeisenOs::common;
+using namespace LIBHeisenKernel::Chess::engine;
 
 namespace LIBHeisenKernel{
     namespace engine{
@@ -68,7 +69,12 @@ namespace LIBHeisenKernel{
 
                 // Activate color
                 if (c != ' ') my_fatal("board_from_fen(): bad FEN (pos=%d)\n",pos);
-                
+                c = fen[++pos];
+                switch(c){
+                    case 'w':
+                        board->turn = White;
+
+                }
         }
     };
 }};

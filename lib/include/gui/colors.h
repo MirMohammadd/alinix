@@ -15,15 +15,15 @@ namespace LIBHeisenKernel
 
         namespace engine{
         // Constants
-        const int ColorNone = -1;
+            const int ColorNone = -1;
 
-        const int White = 0;
-        const int Black = 1;
+            const int White = 0;
+            const int Black = 1;
 
-        const int ColorNb = 2;
+            const int ColorNb = 2;
 
-        const int WhiteFlag = 1 << White;
-        const int BlackFlag = 1 << Black;
+            const int WhiteFlag = 1 << White;
+            const int BlackFlag = 1 << Black;
     
         };
     

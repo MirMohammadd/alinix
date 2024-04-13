@@ -1,6 +1,9 @@
 #ifndef HEISEN_KERNEL_CHESS_GAME_COLOUR_H
 #define HEISEN_KERNEL_CHESS_GAME_COLOUR_H
 
+
+namespace LIBHeisenKernel {
+    
 namespace engine {
 
 // constants
@@ -27,6 +30,6 @@ const int BlackFlag = 1 << Black;
 
 #define COLOUR_OPP(colour)      ((colour)^(White^Black))
 #define COLOUR_FLAG(colour)     ((colour)+1)
-
+}
 
 #endif // HEISEN_KERNEL_CHESS_GAME_COLOUR_H

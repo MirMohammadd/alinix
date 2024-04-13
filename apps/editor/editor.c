@@ -24,3 +24,12 @@ int enableRawMode(int fd){
         errno = ENOTTY;
         return -1;
 }
+
+int editorReadKey(int fd){
+    int nread;
+    char c,seq[3];
+    while ((nread = read(fd,&c,1) == 0))
+    if (nread == -1) exit(1); // TODO Change here with goto statement
+    
+
+}

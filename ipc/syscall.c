@@ -11,11 +11,14 @@
  * furnished to do so, subject to the following conditions:
  *
  * @author Heisenberg
- * @file kernel.h
+ * @file syscall.c
 
  */
-#ifndef _ALINIX_KERNEL_KERNEL_H__
-#define _ALINIX_KERNEL_KERNEL_H__
+#include <alinix/syscall.h>
 
-
-#endif /*_ALINIX_KERNEL_KERNEL_H__*/
+void DoSyscall(unsigned int intNum, unsigned int arg1, unsigned int arg2, unsigned int arg3, unsigned int arg4, unsigned int arg5)
+{
+    int a;
+    asm volatile("int $0x80" : "=a" (a) : "0" (intNum), "b" ((int)arg1), "c" ((int)arg2), "d" ((int)arg3), "S" ((int)arg4), "D" ((int)arg5));
+    return a;
+}

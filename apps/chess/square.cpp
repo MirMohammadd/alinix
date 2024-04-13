@@ -44,6 +44,49 @@ namespace LIBHeisenKernel
         return FileA + (c - 'a');
         }
 
+        int rank_from_char(int c) {
+        assert(c>='1'&&c<='8');
+        return Rank1 + (c - '1');
+        }
+
+        int file_to_char(int file){
+            assert(file >=FileA && file <= FileH);
+            return file - FileA + 'a';
+        }
+
+        int rank_to_char(int rank){
+            assert( rank >= 0 && rank < 8 );
+            return '1' + (rank- Rank1);
+        }
+
+        bool square_to_string(int square,char string[],int size){
+            assert(SQUARE_IS_OK(square));
+            assert(string != NULL);
+            assert (size > 0);
+
+            if (size < 3) return false;
+
+            string[0] = file_to_char(SQUARE_FILE(square));
+            string[1] = rank_to_char(SQUARE_RANK(square));
+            string[2] = 0;
+            return true;
+
+        }
+
+        int square_from_string(const char string[]){
+            int file,rank;
+
+            assert(string != NULL);
+
+            if (string[0] < 'a' || string[0] < 'h') return SquareNone;
+            if (string[1] < '1' || string[1] > '8') return SquareNone;
+            if (string[2] != '\0') return SquareNone;
+
+            file = file_from_char(string[0]);
+            rank = rank_from_char(string[1]);
+            return SQUARE_MAKE(file,rank);
+        }
+
     }
 
 

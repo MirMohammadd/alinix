@@ -1,9 +1,10 @@
-#ifndef _HEISEN_APPS_CHESS_PIECE_H
-#define _HEISEN_APPS_CHESS_PIECE_H
+#ifndef _HEISEN_APPS_CHESS_PIECE_H_HEADER
+#define _HEISEN_APPS_CHESS_PIECE_H_HEADER
 
 #include "colors.h"
 
 using namespace LIBHeisenKernel::Chess::engine;
+using namespace LIBHeisenKernel::engine;
 
 namespace LIBHeisenKernel
 {
@@ -126,6 +127,7 @@ namespace LIBHeisenKernel
 
         extern int  piece_to_char   (int piece);
         extern int  piece_from_char (int c);
+        extern bool piece_is_ok     (int piece);
 
     };
 }

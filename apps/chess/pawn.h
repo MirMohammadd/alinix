@@ -1,5 +1,5 @@
-#ifndef _HEISEN_KERNEL_APPS_HEADER_H_
-#define _HEISEN_KERNEL_APPS_HEADER_H_
+#ifndef _HEISEN_KERNEL_APPS_HEADER_H_PAWN_HEADER_H
+#define _HEISEN_KERNEL_APPS_HEADER_H_PAWN_HEADER_H
 
 #include "board.h"
 #include "colour.h"

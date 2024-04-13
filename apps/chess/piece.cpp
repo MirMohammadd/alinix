@@ -2,6 +2,10 @@
 #include "piece.h"
 #include <assert.h>
 
+
+using namespace LIBHeisenKernel::engine;
+using namespace engine;
+
 namespace LIBHeisenKernel
 {
     namespace engine
@@ -98,7 +102,6 @@ namespace LIBHeisenKernel
             return PieceFrom12[piece12];
         }
 
-        
 
     };
 };

@@ -26,6 +26,10 @@ namespace HeisenOs
         #define false 0
         #endif
 
+        #ifndef NULL
+        #define NULL ((void*)0)
+        #endif
+
         constexpr uint64_t divide64(uint64_t n, uint32_t base, uint32_t* r = 0)
         {
             uint64_t rem = n;

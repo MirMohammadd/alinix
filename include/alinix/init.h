@@ -21,6 +21,10 @@
 #include <alinix/types.h>
 
 
+
+
 bool Initialize();
+CommandBlockWrapper SCSIPrepareCommandBlock(uint8_t command, int length, uint64_t lba, int sectors);
+
 
 #endif /*_ALINIX_INIT_H*/

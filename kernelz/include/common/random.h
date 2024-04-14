@@ -1,6 +1,6 @@
 #ifndef __CACTUSOS__COMMON__RANDOM_H
 #define __CACTUSOS__COMMON__RANDOM_H
-
+ 
 #include <common/types.h>
 
 namespace HeisenOs

@@ -25,12 +25,14 @@ static bool writeToSerial;
 
 static void Scroll();
 
+#define VGA_WIDTH 80
+#define VGA_HEIGHT 25
+
 uint8_t ForegroundColor;
 uint8_t BackgroundColor;
 
 void Init(bool enableSerial) ;
 
-void Write(char c) ;
 
 void Write(char* str) ;
 

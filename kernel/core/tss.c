@@ -33,4 +33,9 @@ void TSS_Install(uint32_t idx, uint32_t kernelSS, uint32_t kernelESP){
 
     GGetDescriptor(idx, base, base + sizeof (struct TSSEntry), 0xE9, 0);
 
+    /////////////
+    // Init TSS
+    memset ((void*) &tss, 0, sizeof (struct TSSEntry));
+
+
 }

@@ -11,26 +11,14 @@
  * furnished to do so, subject to the following conditions:
  *
  * @author Heisenberg
- * @file log.h
+ * @file serialport.h
 
  */
-#ifndef __ALINIX__LOG_H
-#define __ALINIX__LOG_H
+#ifndef _ALINIX_KERNEL_SERIAL_PORT_H__
+#define _ALINIX_KERNEL_SERIAL_PORT_H__
 
-#include <alinix/types.h>
+int SerialSendReady();
 
-#define LOG_SHOW_MS 1
+void Write(char a);
 
-
-//? Use typedef?
-enum LogLevel
-{
-    Info,
-    Warning,
-    Error
-};
-
-void Log(enum LogLevel level, const char* __restrict__ format, ...);
-void Print(const char* data, uint32_t length);
-
-#endif /*__ALINIX__LOG_H*/
+#endif 

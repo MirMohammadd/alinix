@@ -23,5 +23,9 @@ char Write(char a);
 
 char WriteStr(char * str);
 
+bool Initialized = false;
+
+bool gdbEnabled = false;
+
 
 #endif 

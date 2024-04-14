@@ -165,7 +165,7 @@ size_t memcmp(const void *mem1, const void *mem2, size_t n)
     }
   }
   return 0;
-}
+} 
 
 // Allocate memory
 void *malloc(size_t size)

@@ -17,6 +17,9 @@
 #ifndef __ALINIX_SYS_CALL_HEADER_H_
 #define __ALINIX_SYS_CALL_HEADER_H_
 
+#define SYSCALL_MEM_ALLOCATE            0x0000
+
+
 enum Systemcalls {
         SYSCALL_EXIT = 0, // Tells kernel that procces is done and can be removed
 

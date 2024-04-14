@@ -33,6 +33,8 @@ typedef signed char               sint8_t;
 typedef signed short              sint16_t;
 typedef signed int               sint32_t;
 typedef signed long long int      sint64_t;
+//! This might run into problem (size_t)
+typedef unsigned long int size_t;
 #if !defined(__cplusplus)
 //TODO Fix here
 typedef enum  {false = 0, true = 1} bool;

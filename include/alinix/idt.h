@@ -19,6 +19,11 @@
 
 #include <alinix/types.h>
 
+#define IDT_ENTRY_SIZE 256
+#define IDT_PRESENT 0x80
+#define IDT_INTERRUPT 0xE
+#define IDT_INTERRUPT_OFFSET 0x20
+
 struct IDTEntry
 {
     uint16_t handlerLowBits;

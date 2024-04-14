@@ -1,4 +1,7 @@
 /**
+ * @author Ali Mirmohammad
+ * @file tss.h
+ * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
  ** This file is part of AliNix.
 
 **AliNix is free software: you can redistribute it and/or modify
@@ -14,16 +17,14 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+#ifndef __ALINIX_KERNEL_CORE_TSS_H
+#define __ALINIX_KERNEL_CORE_TSS_H
 
+#include <alinix/types.h>
 
-#ifndef TSS_H
-#define TSS_H
-
-#include <types.h>
-
-
-typedef struct tss {
-    uint32_t prev_tss;
+// Define the TSS structure
+struct TSSEntry {
+    uint32_t prevTss;
     uint32_t esp0;
     uint32_t ss0;
     uint32_t esp1;
@@ -47,11 +48,9 @@ typedef struct tss {
     uint32_t ds;
     uint32_t fs;
     uint32_t gs;
-    uint32_t ldtr;
+    uint32_t ldt;
+    uint16_t trap;
     uint16_t iomap;
-} __attribute__((__packed__)) tss_t;
+};
 
-void flush_tss();
-void install_tss();
-void set_esp0(uint32_t esp);
-#endif
+#endif // __ALINIX_KERNEL_CORE_TSS_H

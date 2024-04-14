@@ -1,4 +1,4 @@
-# Makefile of HeisenOs project, Linked under the MIT license
+# Makefile of Alinix kernel
 ##########
 # .s files are GAS assembly
 # .asm files are nasm assembly

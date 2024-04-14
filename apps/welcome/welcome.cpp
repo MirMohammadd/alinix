@@ -20,7 +20,7 @@ const int numOfMines = 16;
 
 
 static const char multi_line_string[] = 
-"Heisen Os , licensed under MIT license, written by Heisenberg and intended to provide utility for personal use\n"
+"Heisen Os, written by Heisenberg and intended to provide utility for personal use\n"
 "\nIt is recommended to reboot your system after installing Os.\n"
 "\nOr you can just continue using it.\n";
 

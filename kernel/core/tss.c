@@ -1,4 +1,7 @@
 /**
+ * @author Ali Mirmohammad
+ * @file tss.c
+ * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
  ** This file is part of AliNix.
 
 **AliNix is free software: you can redistribute it and/or modify
@@ -15,21 +18,19 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef __ALINIX_KERNEL_CONVERT_HEADER_H
-#define __ALINIX_KERNEL_CONVERT_HEADER_H
+#include <alinix/core/tss.h>
+#include <alinix/tss.h>
+#include <alinix/enums.h>
+#include <alinix/memory.h>
+#include <alinix/gdt.h>
 
-#include <alinix/types.h>
+static struct TSSEntry tss;
 
-int isspace(char c);
+void TSS_Install(uint32_t idx, uint32_t kernelSS, uint32_t kernelESP){
+    memset(&tss,0,sizeof(struct TSSEntry));
 
-char* IntToString(int n);
+    uint32_t base = (uint32_t)&tss;
 
-char*IntToString32(uint32_t n);
+    GGetDescriptor(idx, base, base + sizeof (struct TSSEntry), 0xE9, 0);
 
-char* IntToHexString(uint8_t w);
-
-int StringToInt(char* string);
-
-uint32_t HexToInt(char* string);
-
-#endif /*__ALINIX_KERNEL_CONVERT_HEADER_H*/
+}

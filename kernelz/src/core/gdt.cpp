@@ -12,7 +12,7 @@ GDTPointer gdtPointer;
 extern "C" void gdt_flush(uint32_t);
 
 /*/////////////////
-// Public functions
+// Public functions 
 /*/////////////////
 void GlobalDescriptorTable::SetDescriptor(int number, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran)
 {

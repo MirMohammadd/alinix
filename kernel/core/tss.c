@@ -21,5 +21,16 @@
 #include <alinix/core/tss.h>
 #include <alinix/tss.h>
 #include <alinix/enums.h>
+#include <alinix/memory.h>
+#include <alinix/gdt.h>
 
 static struct TSSEntry tss;
+
+void TSS_Install(uint32_t idx, uint32_t kernelSS, uint32_t kernelESP){
+    memset(&tss,0,sizeof(struct TSSEntry));
+
+    uint32_t base = (uint32_t)&tss;
+
+    GGetDescriptor(idx, base, base + sizeof (struct TSSEntry), 0xE9, 0);
+
+}

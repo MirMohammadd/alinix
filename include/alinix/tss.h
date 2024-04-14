@@ -28,7 +28,7 @@ void TSS_Install(uint32_t idx, uint32_t kernelSS, uint32_t kernelESP);
 
 void TSS_SetStack(uint32_t kernelSS, uint32_t kernelESP);
 
-TSSEntry* TSS_GetCurrent();
+struct TSSEntry* TSS_GetCurrent();
 
 
 #endif /*__ALINIX_KERNEL_TSS_H*/

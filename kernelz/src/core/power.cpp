@@ -46,7 +46,7 @@ struct FACP
     uint32_t* PM1b_CNT_BLK;
     uint8_t unneded4[89 - 72];
     uint8_t PM1_CNT_LEN;
-};
+}; 
 
 // check if the given address has a valid header
 unsigned int* acpiCheckRSDPtr(unsigned int* ptr)

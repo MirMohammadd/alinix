@@ -11,34 +11,17 @@
  * furnished to do so, subject to the following conditions:
  *
  * @author Heisenberg
- * @file enums.h
+ * @file system.h
 
  */
-#ifndef __ALINIX_KERNEL_ENUMS_HEADER_H
-#define __ALINIX_KERNEL_ENUMS_HEADER_H
 
-typedef enum priority{
-    /*A class that defined a proccess priority*/
-    LOWEST = -150,
-    LOWER = -50,
-    LOW = -10,
-    NORMAL = 0,
-    HIGH = 10,
-    HIGHER = 50,
-    HIGHEST = 150
-}priority_t;
+#include <alinix/enums.h>
 
-enum ScreenMode
-{
-    TextMode,
-    GraphicsMode
-};
+ScreenMode screenMode = ScreenMode::TextMode;
 
-enum PowerRequest
-{
-    None,
-    Shutdown,
-    Reboot
-};
+#ifndef __ALINIX_KERNEL_SYSTEM_HEADER_H
+#define __ALINIX_KERNEL_SYSTEM_HEADER_H
 
-#endif /*__ALINIX_KERNEL_ENUMS_HEADER_H*/
+
+
+#endif /*__ALINIX_KERNEL_SYSTEM_HEADER_H*/

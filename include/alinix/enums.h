@@ -41,18 +41,26 @@ enum PowerRequest
     Reboot
 };
 
-enum EndpointDirection : int
+enum EndpointDirection 
 {
     Out,
     In
 };
 
-enum EndpointType : int
+enum EndpointType 
 {
     Control,
     Isochronous,
     Bulk,
     Interrupt
+};
+
+enum COMPort
+{
+    COM1 = 0x3F8,
+    COM2 = 0x2F8,
+    COM3 = 0x3E8,
+    COM4 = 0x2E8
 };
 
 #endif /*__ALINIX_KERNEL_ENUMS_HEADER_H*/

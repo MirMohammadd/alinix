@@ -19,6 +19,9 @@
 
 int SerialSendReady();
 
-void Write(char a);
+char Write(char a);
+
+char WriteStr(char * str);
+
 
 #endif 

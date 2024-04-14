@@ -37,5 +37,11 @@ void TSS_Install(uint32_t idx, uint32_t kernelSS, uint32_t kernelESP){
     // Init TSS
     memset ((void*) &tss, 0, sizeof (struct TSSEntry));
 
+    tss.ss0 = kernelSS;
+	tss.esp0 = kernelESP;
+	tss.iomap = sizeof(struct TSSEntry);
+
+    flush_tss();
+
 
 }

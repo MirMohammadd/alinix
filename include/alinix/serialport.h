@@ -19,11 +19,11 @@
 
 #include <alinix/enums.h>
 
-int SerialSendReady();
+int SerialportSerialSendReady();
 
-char Write(char a);
+char SerialportWrite(char a);
 
-char WriteStr(char * str);
+char SerialportWriteStr(char * str);
 
 bool Initialized = false;
 

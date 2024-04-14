@@ -35,7 +35,7 @@ typedef signed int               sint32_t;
 typedef signed long long int      sint64_t;
 #if !defined(__cplusplus)
 //TODO Fix here
-#define bool unsigned char
+typedef enum  {false = 0, true = 1} bool;
 #define true 1
 #define false 0
 #endif

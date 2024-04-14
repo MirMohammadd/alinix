@@ -41,4 +41,18 @@ enum PowerRequest
     Reboot
 };
 
+enum EndpointDirection : int
+{
+    Out,
+    In
+};
+
+enum EndpointType : int
+{
+    Control,
+    Isochronous,
+    Bulk,
+    Interrupt
+};
+
 #endif /*__ALINIX_KERNEL_ENUMS_HEADER_H*/

@@ -19,11 +19,12 @@
 #define _ALINIX_INIT_H
 
 #include <alinix/types.h>
+#include <alinix/physicalmemory.h>
 
 
 
 
-bool Initialize();
+static void Initialize();
 CommandBlockWrapper SCSIPrepareCommandBlock(uint8_t command, int length, uint64_t lba, int sectors);
 bool ResetRecovery();
 bool SCSIRequest(CommandBlockWrapper* request, uint8_t* dataPointer, int dataLength);

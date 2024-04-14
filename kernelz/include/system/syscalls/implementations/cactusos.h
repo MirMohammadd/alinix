@@ -4,7 +4,7 @@
 #include <core/registers.h>
 
 namespace HeisenOs
-{
+{ 
     namespace system
     {
         class CactusOSSyscalls

@@ -27,6 +27,7 @@ int MemoryOperations::memcmp(const void* aptr, const void* bptr, uint32_t size)
 	}
 	return 0;
 }
+
 void* MemoryOperations::memset(void* bufptr, char value, uint32_t size)
 {
     unsigned char* buf = (unsigned char*) bufptr;

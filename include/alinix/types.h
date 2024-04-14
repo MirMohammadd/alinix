@@ -46,7 +46,7 @@ typedef enum  {false = 0, true = 1} bool;
 #define NULL ALINIX_NULL
 #endif
 
-#if !defined(ALINIX_NULL_CPP_NULL_PTR) && defined(__cplusplus)
+#if !defined(ALINIX_NULL_CPP_NULL_PTR) && defined(__cplusplus) && !defined(NULL)
 #define  ALINIX_NULL_CPP_NULL ALINIX_NULL_CPP_NULL_PTR
 
 #endif /*ALINIX_NULL_CPP_NULL_PTR*/

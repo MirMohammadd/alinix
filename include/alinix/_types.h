@@ -21,6 +21,7 @@
 
 #ifdef __cplusplus
 #define ALINIX_NULL_CPP_NULL_PTR (*(void ))
+#define ALINIX_NULL nullptr
 
 #else 
 #define ALINIX_NULL (*(void ))

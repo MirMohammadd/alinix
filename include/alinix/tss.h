@@ -20,4 +20,12 @@
 #ifndef __ALINIX_KERNEL_TSS_H
 #define __ALINIX_KERNEL_TSS_H
 
+#include <alinix/memory.h>
+#include <alinix/types.h>
+
+void TSS_Install(uint32_t idx, uint32_t kernelSS, uint32_t kernelESP);
+
+void TSS_SetStack(uint32_t kernelSS, uint32_t kernelESP);
+
+
 #endif /*__ALINIX_KERNEL_TSS_H*/

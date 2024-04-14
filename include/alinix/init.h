@@ -25,6 +25,11 @@
 
 bool Initialize();
 CommandBlockWrapper SCSIPrepareCommandBlock(uint8_t command, int length, uint64_t lba, int sectors);
+bool ResetRecovery();
+bool SCSIRequest(CommandBlockWrapper* request, uint8_t* dataPointer, int dataLength);
+void DeInitialize();
+char ReadSector(uint32_t lba, uint8_t* buf);
+char WriteSector(uint32_t lba, uint8_t* buf);
 
 
 #endif /*_ALINIX_INIT_H*/

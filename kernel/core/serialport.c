@@ -60,3 +60,8 @@ void SerialportInit(enum COMPort port)
 
     Initialized = true;
 }
+
+int SerialportSerialReceiveReady()
+{
+    return inportb(PortAddress + 5) & 1;
+}

@@ -1,6 +1,9 @@
 #ifndef __ALINIX_KERNEL_APM_H
 #define __ALINIX_KERNEL_APM_H
 
+#include <alinix/system/component.h>
+#include <alinix/types.h>
+
 
 #define APM_SIGNATURE           0x504D //"PM"
 #define APM_ALL_DEVICE          ((uint16_t) 0x0001)
@@ -39,4 +42,35 @@
 #define APM_FUNC_SET_RESUME_RING                    0x12
 #define APM_FUNC_SET_TIMER_BASED_REQ                0x13
 #define APM_FUNC_OEM   
+
+
+char* GetComponentName(SystemComponent* component) {
+    return component->Name;
+}
+
+char* GetComponentDescription(SystemComponent* component) {
+    return component->Description;
+}
+
+typedef struct APMController {
+    SystemComponent base;
+    int Enabled;
+} APMController;
+
+APMController* APMController_create() {
+    APMController* controller = (APMController*)malloc(sizeof(APMController));
+    controller->base = *SystemComponent_create(NULL, NULL);
+    controller->Enabled = 0;
+    return controller;
+}
+
+void CheckAndHandleEvents(APMController* controller);
+
+void SetPowerState(APMController* controller, unsigned short device, unsigned char state);
+
+void DisableResumeTimer(APMController* controller) ;
+
+void DisableRingIndicator(APMController* controller);
+
+
 #endif // 

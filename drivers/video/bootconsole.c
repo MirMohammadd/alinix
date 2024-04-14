@@ -26,5 +26,8 @@ void Scroll(){
 }
 
 void Init(bool enableSerial){
-
+    writeToSerial = enableSerial;
+    if (enableSerial){
+        
+    }
 }

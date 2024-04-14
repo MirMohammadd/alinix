@@ -17,6 +17,8 @@
 #ifndef _ALINIX_KERNEL_SERIAL_PORT_H__
 #define _ALINIX_KERNEL_SERIAL_PORT_H__
 
+#include <alinix/enums.h>
+
 int SerialSendReady();
 
 char Write(char a);
@@ -26,6 +28,8 @@ char WriteStr(char * str);
 bool Initialized = false;
 
 bool gdbEnabled = false;
+
+void SerialportInit(enum COMPort port);
 
 
 #endif 

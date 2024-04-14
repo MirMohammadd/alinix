@@ -49,5 +49,18 @@ typedef signed long long int      sint64_t;
 
 #endif /*ALINIX_NULL_CPP_NULL_PTR*/
 
+/*Defining the operators for the File system measures*/
+uint32_t KB(unsigned long long no) {
+    return no * 1024;
+}
+
+uint32_t MB(unsigned long long no) {
+    return no * KB(1024);
+}
+
+uint32_t GB(unsigned long long no) {
+    return no * MB(1024);
+}
+
 
 #endif /*__ALINIX_KERNEL__TYPES_H_HEADER_*/

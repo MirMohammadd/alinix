@@ -62,4 +62,10 @@ enum COMPort {
     COM4 = 0x2E8
 };
 
+typedef enum {
+    DISK_TYPE_UNKNOWN,
+    DISK_TYPE_HDD,
+    DISK_TYPE_SSD
+} DiskType;
+
 #endif /*__ALINIX_KERNEL_ENUMS_HEADER_H*/

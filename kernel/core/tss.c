@@ -45,3 +45,8 @@ void TSS_Install(uint32_t idx, uint32_t kernelSS, uint32_t kernelESP){
 
 
 }
+
+void TSS_SetStack(uint32_t kernelSS, uint32_t kernelESP){
+    tss.ss0 = kernelSS;
+    tss.esp0 = kernelESP;
+}

@@ -20,6 +20,9 @@
 
 /*Parameters should be pointer type*/
 static inline void cpuid(uint32_t reg, uint32_t *eax, uint32_t *ebx, uint32_t *ecx, uint32_t *edx){
+    /**
+     * @warning Do not set this function in any header files, this function is STATIC!!!
+    */
     asm volatile("cpuid"
     : "=a" (*eax), "=b" (*ebx), "=c" (*ecx), "=d" (*edx)
     : "0" (reg));
@@ -34,6 +37,9 @@ void PrintCpuVendor(){
 }
 
 void enableCpuFeatures(){
+    /**
+     * @brief  Check CPU features
+    */
     uint32_t eax, ebx, ecx, edx;
 
     cpuid(0x01, &eax, &ebx, &ecx, &edx);

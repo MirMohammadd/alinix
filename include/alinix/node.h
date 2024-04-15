@@ -3,7 +3,7 @@
 #include <alinix/interruptmanager.h>
 
 typedef struct Node {
-    InterruptHandler* data;
+    void (*handler)(uint8_t);
     struct Node* next;
 } Node;
 
@@ -12,19 +12,12 @@ typedef struct List {
     Node* tail;
 } List;
 
-List* createList() {
-    List* list = (List*)malloc(sizeof(List));
-    list->head = NULL;
-    list->tail = NULL;
-    return list;
-}
-
-void addNode(List* list, InterruptHandler* handler) {
+void List_push(List* list, void (*handler)(uint8_t)) {
     Node* newNode = (Node*)malloc(sizeof(Node));
-    newNode->data = handler;
+    newNode->handler = handler;
     newNode->next = NULL;
 
-    if (list->head == NULL) {
+    if (list->tail == NULL) {
         list->head = newNode;
         list->tail = newNode;
     } else {
@@ -33,10 +26,15 @@ void addNode(List* list, InterruptHandler* handler) {
     }
 }
 
-void AddHandler(List** interruptCallbacks, InterruptHandler* handler, uint8_t interrupt) {
+List* interruptCallbacks[256] = {NULL};
+
+
+void AddHandler(uint8_t interrupt, void (*handler)(uint8_t)) {
     if (interruptCallbacks[interrupt] == NULL) {
-        interruptCallbacks[interrupt] = createList();
+        interruptCallbacks[interrupt] = (List*)malloc(sizeof(List));
+        interruptCallbacks[interrupt]->head = NULL;
+        interruptCallbacks[interrupt]->tail = NULL;
     }
 
-    addNode(interruptCallbacks[interrupt], handler);
+    List_push(interruptCallbacks[interrupt], handler);
 }

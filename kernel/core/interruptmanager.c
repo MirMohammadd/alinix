@@ -17,6 +17,3 @@
 
 #include <alinix/interruptmanager.h>
 
-void InterruptHandler(uint8_t interruptNumber){
-    AddHandler(this, interruptNumber);
-}

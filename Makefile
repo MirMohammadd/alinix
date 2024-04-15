@@ -1,4 +1,5 @@
 # Makefile of Alinix kernel
+# inspired by https://github.com/Remco123/CactusOS
 ##########
 # .s files are GAS assembly
 # .asm files are nasm assembly

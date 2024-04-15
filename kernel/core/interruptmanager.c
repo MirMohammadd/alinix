@@ -14,3 +14,9 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+#include <alinix/interruptmanager.h>
+
+void InterruptHandler(uint8_t interruptNumber){
+    AddHandler(this, interruptNumber);
+}

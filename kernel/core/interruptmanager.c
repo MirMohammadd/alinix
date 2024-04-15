@@ -15,5 +15,4 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
-#include <alinix/interruptmanager.h>
-
+#include <alinix/node.h>

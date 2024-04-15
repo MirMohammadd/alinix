@@ -32,3 +32,31 @@ void PrintCpuVendor(){
     Write("CPU Vendor:");
     Write(vendor);
 }
+
+void enableCpuFeatures(){
+    uint32_t eax, ebx, ecx, edx;
+
+    cpuid(0x01, &eax, &ebx, &ecx, &edx);
+
+    if (edx & EDX_SSE2) { 
+        WriteLine("CPU Has SSE2");
+
+        EnableSSE();
+    }
+    else
+    {
+        WriteLine("Error: CPU has no SSE2. This is needed");
+
+        while(1);
+    }
+
+    if(edx & EDX_FXSR) {
+        WriteLine("CPU Has FXSR");
+    }
+    else
+    {
+        WriteLine("Error: CPU has no FXSR. This is needed");
+
+        while(1);
+    }
+}

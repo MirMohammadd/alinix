@@ -14,17 +14,3 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
-
-#ifndef ALINIX_INTERRUPTMANAGER_H
-#define ALINIX_INTERRUPTMANAGER_H
-
-#include <alinix/types.h>
-
-
-void InterruptHandler(uint8_t interruptNumber);
-
-uint32_t HandleInterrupt(uint8_t interrupt, uint32_t esp);
-
-uint32_t HandleInterrupt(uint32_t esp);
-
-#endif // ALINIX_INTERRUPTMANAGER_H

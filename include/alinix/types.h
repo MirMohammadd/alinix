@@ -47,6 +47,12 @@ typedef enum  {false = 0, true = 1} bool;
 #define NULL ALINIX_NULL
 #endif
 
+int strlen(const char* str);
+bool strcmp(const char* strA, const char* strB);
+bool strncmp(const char* s1, const char* s2, int n);
+int IndexOf(const char* str, char c, uint32_t skip);
+bool Contains(const char* str, char c);
+
 #if !defined(ALINIX_NULL_CPP_NULL_PTR) && defined(__cplusplus) && !defined(NULL)
 #define  ALINIX_NULL_CPP_NULL ALINIX_NULL_CPP_NULL_PTR
 
@@ -83,7 +89,7 @@ typedef struct {
     void* controller; // Which controller is controlling this disk device
     uint32_t controllerIndex; // The real number for the disk on the controller
     char* identifier; // Disk Identifier
-    DiskType type; // Type of disk
+    struct DiskType type; // Type of disk
     uint64_t size; // Size of disk in bytes
     uint32_t numBlocks; // Number of data blocks
     uint32_t blockSize; // Size of one block of data

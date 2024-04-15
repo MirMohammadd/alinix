@@ -26,6 +26,10 @@ struct GDTPointer gdtPointer;
 
 void GSetDescriptor(int number, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran)
 {
+    /**
+     * @brief Init the GDT here
+     * @warning  You must call this function before using other functions in this module
+    */
     gdtEntries[number].base_low    = (base & 0xFFFF);
     gdtEntries[number].base_middle = (base >> 16) & 0xFF;
     gdtEntries[number].base_high   = (base >> 24) & 0xFF;

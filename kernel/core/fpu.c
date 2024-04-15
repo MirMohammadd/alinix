@@ -31,17 +31,22 @@ void Enable(){
 	////////////
     struct FPUControlWord cw;
 	memset(&cw, 0, sizeof(struct FPUControlWord));
-
+	/////////////////////
+	// Exceptions Masks //
+	/////////////////////
+	// Invalid Operation (InvOp), Divide By Zero (DivZero), Overflow (Overflow), Underflow (Underflow), Precision
 	cw.InvalidOperand = 1;
 	cw.DenormalOperand = 1;
 	cw.ZeroDevide = 1;
 	cw.Overflow = 1;
 	cw.Underflow = 1;
 	cw.Precision = 1;
-
+	///////////////////////
+	//? Changed here?
 	cw.PrecisionControl = 0b11;
 	cw.RoundingControl = 0b00;
 	cw.InfinityControl = 0;
 
 	asm volatile("fldcw %0" :: "m"(cw));
+	//  Check if FPU was enabled before calling this function
 }

@@ -49,12 +49,19 @@ uint32_t DivideByZero(uint32_t esp){
 } 
 
 uint32_t PageFault(uint32_t esp){
+    /**
+     * @brief  This function is called when there is a page fault
+    */
     ForegroundColor = VGA_COLOR_BROWN;
 
     DisableInterrupts();
+    // Disable all the interrupts
 
     uint32_t errorAddress;
+    //////////////////////////////////////////////////////
     asm volatile("mov %%cr2, %0" : "=r" (errorAddress));
+    /* The CR2 register contains the address that caused an exception.*/
+    //////////////////////////////////////////////////////
 
     struct CPUState* regs = (struct CPUState*)esp;
 
@@ -88,7 +95,8 @@ uint32_t PageFault(uint32_t esp){
         Write(" No ");
     else
         Write(" Yes ");
-    
+    //////////////////////////////////
+    //? Uncomment this?
     // if(scheduler != 0 && scheduler->CurrentProcess() != 0 && scheduler->CurrentProcess()->fileName != 0) {
     //     Write(" Process: ");
     //     WriteLine(scheduler->CurrentProcess()->fileName);
@@ -106,5 +114,5 @@ uint32_t PageFault(uint32_t esp){
 
     ShowStacktrace(esp);
     Panic();
-    return esp; // We don't get here
+    return esp; // Shouldn't get here
 }

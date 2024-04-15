@@ -69,4 +69,19 @@ typedef enum {
     DISK_TYPE_SSD
 } DiskType;
 
+enum ThreadState
+{
+    Blocked,
+    Ready,
+    Stopped,
+    Started
+};
+
+enum BlockedState
+{
+    Unkown,
+    SleepMS,
+    ReceiveIPC
+};
+
 #endif /*__ALINIX_KERNEL_ENUMS_HEADER_H*/

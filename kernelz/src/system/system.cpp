@@ -148,7 +148,7 @@ void System::Start()
 
     System::ProcStandardOut = new StandardOutSteam();
     Log(Info, "System Initialized");
-}
+} 
 void System::Panic()
 {
     Log(Error, "-------------------------------");

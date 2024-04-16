@@ -19,7 +19,6 @@
 #define __ALINIX_KERNEL_PORT_H
 
 #include <alinix/types.h>
-#define insl(port, buffer, count) asm volatile("cld; rep; insl" :: "D" (buffer), "d" (port), "c" (count))
 
 inline unsigned char inportb (unsigned short _port);
 

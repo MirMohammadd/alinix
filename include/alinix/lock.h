@@ -2,7 +2,5 @@
 #define __ALINIX_KERNEL_LOCK_H
 
 
-void Lock(){
-    asm ("pause");
-}
+void Lock();
 #endif

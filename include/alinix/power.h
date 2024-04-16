@@ -18,8 +18,8 @@
 #ifndef __ALINIX_KERNEL_HEADER_H
 #define __ALINIX_KERNEL_HEADER_H
 
-static void Initialize();
-static void Reboot();
-static void Poweroff();
+void Initialize();
+void Reboot();
+void Poweroff();
 
 #endif /* __ALINIX_KERNEL_HEADER_H */

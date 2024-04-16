@@ -2,7 +2,7 @@
 #define __CACTUSOS__SYSTEM__VFS__VFSMANAGER_H
 
 #include <system/vfs/virtualfilesystem.h>
-
+ 
 namespace HeisenOs
 {
     namespace system

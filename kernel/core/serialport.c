@@ -53,12 +53,12 @@ int SerialportSerialSendReady()
 
 
 
-char SerialportRead()
-{
-    while (SerialReceiveReady() == 0);
+// char SerialportRead()
+// {
+//     while (SerialReceiveReady() == 0);
 
-    return inportb(PortAddress);
-}
+//     return inportb(PortAddress);
+// }
 
 void SerialportInit(enum COMPort port)
 {

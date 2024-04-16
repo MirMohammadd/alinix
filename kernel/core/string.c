@@ -73,7 +73,6 @@ char* Uppercase(char* str){
 	}
     return str;
 }
-
 char* Lowercase(char* str)
 {
     int len = strlen(str);
@@ -87,21 +86,7 @@ char* Lowercase(char* str)
     return str;
 }
 
-char Uppercase(char c)
-{
-    if (c >= 97 && c <= 122)
-		return c - 32;
-    
-    return c;
-}
 
-char Lowercase(char c)
-{
-	if (c >= 65 && c <= 90)
-		return c + 32;
-    
-    return c;
-}
 
 char* strcpy(char *s1, const char *s2)
 {

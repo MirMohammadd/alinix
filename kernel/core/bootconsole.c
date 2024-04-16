@@ -101,10 +101,7 @@ void WriteLine(char* str)
     Write(str);
     Write("\n");
 }
-void WriteLine()
-{
-    Write("\n");
-}
+
 void Clear()
 {
     for(int y = 0; y < VGA_HEIGHT; y++)

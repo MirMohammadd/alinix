@@ -120,3 +120,7 @@ uint32_t PageFault(uint32_t esp){
 ShowStacktrace(uint32_t esp){
     /*Keep Here empty*/
 }
+
+void DisablePagefaultAutoFix(){
+    
+}

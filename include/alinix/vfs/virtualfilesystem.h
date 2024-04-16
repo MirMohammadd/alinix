@@ -26,6 +26,8 @@
 #include <alinix/memory.h>
 #include <alinix/ulib.h>
 
+#define PATH_SEPERATOR_C '\\' //Path Seperator as char
+#define PATH_SEPERATOR_S "\\" //Path Seperator as string
 
 
 typedef struct VirtualFileSystem {
@@ -55,9 +57,9 @@ bool Initialize();
 ///////////// 
     
 // Read file contents into buffer
-int ReadFile(const char* filename, uint8_t* buffer, uint32_t offset = 0, uint32_t len = -1);
+int ReadFile(const char* filename, uint8_t* buffer, uint32_t offset, uint32_t len);
 // Write buffer to file, file will be created when create equals true
-int WriteFile(const char* filename, uint8_t* buffer, uint32_t len, bool create = true);
+int WriteFile(const char* filename, uint8_t* buffer, uint32_t len, bool create);
 
 // Check if file exist
 bool FileExists(const char* filename);

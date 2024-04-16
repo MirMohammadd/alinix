@@ -39,7 +39,8 @@ enum PowerRequest
 {
     None,
     Shutdown,
-    Reboot
+    RebootR
+    // TODO Change here to reboot maybe
 };
 
 enum EndpointDirection 

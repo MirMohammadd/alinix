@@ -21,7 +21,7 @@
 #include <alinix/types.h>
 
 void memset(void* bufptr, char value, uint32_t size);
-void memcpy(void* dstptr, const void* srcptr, uint32_t size);
+void* memcpy(void* dstptr, const void* srcptr, uint32_t size);
 int memcmp(const void* aptr, const void* bptr, uint32_t size);
 void * memmove(void* dstptr, const void* srcptr, uint32_t size);
 

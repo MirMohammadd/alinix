@@ -40,10 +40,22 @@ Init(enum COMPort port)
     Initialized = true;
 }
 
+int SerialSendReady()
+{
+    return inportb(PortAddress + 5) & 0x20;
+}
+
 void SerialportWriteStr(char* str){
     for(int i = 0; str[i] != '\0'; ++i){
         SerialportWrite(str[i]);
     }
+}
+
+void SerialportWrite(char a)
+{
+    while (SerialSendReady() == 0);
+
+    outportb(PortAddress, a);
 }
 
 int SerialportSerialSendReady()

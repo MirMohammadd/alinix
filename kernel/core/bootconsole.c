@@ -50,12 +50,12 @@ void Init(bool enableSerial)
     }
 }
 
-void Write(char c)
-{
-    static char* str = " ";
-    str[0] = c;
-    Write(str);
-}
+// void Write(char c)
+// {
+//     static char* str = " ";
+//     str[0] = c;
+//     Write(str);
+// }
 
 void Write(char* str)
 {

@@ -32,5 +32,8 @@ bool gdbEnabled = false;
 
 void SerialportInit(enum COMPort port);
 
+void Writestr(char* s);
+
+
 
 #endif 

@@ -91,3 +91,9 @@ int SerialportSerialReceiveReady()
 {
     return inportb(PortAddress + 5) & 1;
 }
+
+WriteStr(char* str)
+{
+    for(int i = 0; str[i] != '\0'; ++i)
+        Write(str[i]);
+}

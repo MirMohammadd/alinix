@@ -113,16 +113,7 @@ struct FAT32_BPB
     uint16_t    BootSignature;
 } __attribute__((packed));
 
-struct FAT32_FSInfo
-{
-    uint32_t    signature1;
-    uint8_t     reserved1[480];
-    uint32_t    signature2;
-    uint32_t    lastFreeCluster;
-    uint32_t    startSearchCluster;
-    uint8_t     reserved2[12];
-    uint32_t    signature3;
-} __attribute__((packed));
+
 
 struct DirectoryEntry
 {

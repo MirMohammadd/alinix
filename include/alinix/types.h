@@ -40,8 +40,6 @@ typedef unsigned long int size_t;
 #if !defined(__cplusplus)
 //TODO Fix here
 typedef enum  {false = 0, true = 1} bool;
-#define true 1
-#define false 0
 #endif
 
 #ifndef NULL

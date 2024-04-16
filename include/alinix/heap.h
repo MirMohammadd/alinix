@@ -15,8 +15,8 @@ uint32_t pageRoundDown(uint32_t address);
 
 struct MemoryHeader
 {
-    MemoryHeader* next;
-    MemoryHeader* prev;
+    struct MemoryHeader* next;
+    struct MemoryHeader* prev;
     bool allocated;
     uint32_t size;
 } __attribute__((packed));

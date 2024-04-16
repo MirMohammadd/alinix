@@ -26,7 +26,6 @@ char SerialportWrite(char a);
 
 void SerialportWriteStr(char * str);
 
-bool Initialized = false;
 
 bool gdbEnabled = false;
 

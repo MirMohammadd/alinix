@@ -171,7 +171,7 @@ bool VFSManager::FileExists(const char* path)
         return Filesystems->GetAt(disk)->FileExists(path + idSize + 2);
     else
         return false;
-}
+} 
 
 bool VFSManager::DirectoryExists(const char* path)
 {

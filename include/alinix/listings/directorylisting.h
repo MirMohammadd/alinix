@@ -23,9 +23,9 @@
 #define __ALINIX_KERNEL_DIRECTORY_LISTING_H
 
 
-int BeginListing(Thread* thread, uint32_t pathPtr);
+int BeginListing(struct Thread* thread, uint32_t pathPtr);
 
-int GetEntry(Thread* thread, int entry, uint32_t bufPtr);
-void EndListing(Thread* thread);
+int GetEntry(struct Thread* thread, int entry, uint32_t bufPtr);
+void EndListing(struct Thread* thread);
 
 #endif /*__ALINIX_KERNEL_DIRECTORY_LISTING_H*/

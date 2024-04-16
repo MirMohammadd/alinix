@@ -24,7 +24,7 @@ int SerialportSerialSendReady();
 
 char SerialportWrite(char a);
 
-char SerialportWriteStr(char * str);
+void SerialportWriteStr(char * str);
 
 bool Initialized = false;
 

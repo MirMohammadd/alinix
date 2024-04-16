@@ -7,9 +7,9 @@ StringToInt(char* string)
     unsigned int digit;
     int sign;
 
-    while (IsSpace(*string)) {
-        string += 1;
-    }
+    // while (IsSpace(*string)) {
+    //     string += 1;
+    // }
 
     /*
     * Check for a sign.

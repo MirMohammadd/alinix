@@ -52,12 +52,7 @@ int SerialportSerialSendReady()
     return inportb(PortAddress + 5) & 0x20;
 }
 
-char SerialportRead()
-{
-    while (SerialReceiveReady() == 0);
 
-    return inportb(PortAddress);
-}
 
 char SerialportRead()
 {

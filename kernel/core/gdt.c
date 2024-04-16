@@ -41,7 +41,7 @@ void GSetDescriptor(int number, uint32_t base, uint32_t limit, uint8_t access, u
     gdtEntries[number].access      = access;
 }
 
-struct GDTEntry* GetDescriptor(int number)
+struct GDTEntry* GGetDescriptor(int number)
 {
     return &gdtEntries[number];
 }
@@ -59,4 +59,17 @@ void Init()
     // TSS descriptor will be loaded by the TSS class
 
     gdt_flush((uint32_t)&gdtPointer);
+}
+
+void SetDescriptor(int number, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran)
+{
+    gdtEntries[number].base_low    = (base & 0xFFFF);
+    gdtEntries[number].base_middle = (base >> 16) & 0xFF;
+    gdtEntries[number].base_high   = (base >> 24) & 0xFF;
+
+    gdtEntries[number].limit_low   = (limit & 0xFFFF);
+    gdtEntries[number].granularity = (limit >> 16) & 0x0F;
+
+    gdtEntries[number].granularity |= gran & 0xF0;
+    gdtEntries[number].access      = access;
 }

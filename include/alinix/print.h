@@ -5,5 +5,6 @@
 #include <alinix/bootconsole.h>
 
 void printfHex(uint8_t key);
+void printfHex32(uint32_t key);
 
 #endif

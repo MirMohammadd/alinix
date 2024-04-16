@@ -9,3 +9,11 @@ void printfHex(uint8_t key){
     foo[1] = hex[key & 0xF];
     Write(foo);
 }
+
+void printfHex32(uint32_t key)
+{
+    printfHex((key >> 24) & 0xFF);
+    printfHex((key >> 16) & 0xFF);
+    printfHex((key >> 8) & 0xFF);
+    printfHex(key & 0xFF);
+}

@@ -140,7 +140,7 @@ int acpiEnable(void)
                 if ((inportw((unsigned int)PM1a_CNT) & SCI_EN) == 1)
                     break;
                 
-                pit->Sleep(10);
+                
             }
             if (PM1b_CNT != 0)
                 for (; i < 300; i++ )
@@ -148,7 +148,7 @@ int acpiEnable(void)
                     if ((inportw((unsigned int) PM1b_CNT) & SCI_EN) == 1)
                         break;
                     
-                    pit->Sleep(10);
+                    
                 }
             if (i < 300) {
                 Log(Info, "Enabled ACPI");
@@ -280,10 +280,10 @@ void Initialize()
 
 void Poweroff()
 {
-    if(apm->Enabled) {
-        Log(Info, "Shutdown via APM");
-        apm->SetPowerState(APM_ALL_DEVICE, APM_POWER_OFF);
-    }
+    // if(apm->Enabled) {
+    //     Log(Info, "Shutdown via APM");
+    //     apm->SetPowerState(APM_ALL_DEVICE, APM_POWER_OFF);
+    // }
     
     // Else try ACPI
 
@@ -307,14 +307,14 @@ void Poweroff()
     for(int i = 5; i >= 0; i--)
     {
         Log(Info, "%d", i);
-        pit->Sleep(1000);
+        // pit->Sleep(1000);
     }
-    Power::Reboot();
+    Reboot();
 }
 
-void Power::Reboot()
+void Reboot()
 {
-    InterruptDescriptorTable::DisableInterrupts();
+    DisableInterrupts();
 
     /* flush the keyboard controller */
     unsigned temp;

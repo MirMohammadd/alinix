@@ -116,3 +116,7 @@ uint32_t PageFault(uint32_t esp){
     Panic();
     return esp; // Shouldn't get here
 }
+
+ShowStacktrace(uint32_t esp){
+    /*Keep Here empty*/
+}

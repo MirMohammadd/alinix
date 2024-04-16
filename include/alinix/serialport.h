@@ -22,7 +22,7 @@
 
 int SerialportSerialSendReady();
 
-char SerialportWrite(char a);
+void SerialportWrite(char a);
 
 void SerialportWriteStr(char * str);
 

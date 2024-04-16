@@ -18,7 +18,7 @@
 
 #include <alinix/enums.h>
 
-ScreenMode screenMode = ScreenMode::TextMode;
+enum ScreenMode screenMode = TextMode;
 
 #ifndef __ALINIX_KERNEL_SYSTEM_HEADER_H
 #define __ALINIX_KERNEL_SYSTEM_HEADER_H

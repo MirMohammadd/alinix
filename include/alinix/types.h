@@ -15,7 +15,7 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef __ALINIX_KERNEL__TYPES_H_HEADER
+#ifndef __ALINIX_KERNEL__TYPES_H_HEADER_
 #define __ALINIX_KERNEL__TYPES_H_HEADER_
 
 #include "_types.h"
@@ -39,7 +39,8 @@ typedef signed long long int      sint64_t;
 typedef unsigned long int size_t;
 #if !defined(__cplusplus)
 //TODO Fix here
-typedef enum  {false = 0, true = 1} bool;
+// typedef enum  {false = 0, true = 1} bool;
+#include <stdbool.h>
 #endif
 
 #ifndef NULL

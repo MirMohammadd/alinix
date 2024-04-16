@@ -19,6 +19,7 @@
 #define __ALINIX_KERNEL__TYPES_H_HEADER_
 
 #include "_types.h"
+#include <alinix/enums.h>
 
 
 typedef char                        int8_t;
@@ -44,12 +45,12 @@ typedef enum  {false = 0, true = 1} bool;
 #endif
 
 #ifndef NULL
-#define NULL ALINIX_NULL
+#define NULL (void *)0
 #endif
 
 int strlen(const char* str);
-bool strcmp(const char* strA, const char* strB);
-bool strncmp(const char* s1, const char* s2, int n);
+// bool strcmp(const char* strA, const char* strB);
+// bool strncmp(const char* s1, const char* s2, int n);
 int IndexOf(const char* str, char c, uint32_t skip);
 bool Contains(const char* str, char c);
 
@@ -89,7 +90,7 @@ typedef struct {
     void* controller; // Which controller is controlling this disk device
     uint32_t controllerIndex; // The real number for the disk on the controller
     char* identifier; // Disk Identifier
-    struct DiskType type; // Type of disk
+    DiskType type; // Type of disk
     uint64_t size; // Size of disk in bytes
     uint32_t numBlocks; // Number of data blocks
     uint32_t blockSize; // Size of one block of data

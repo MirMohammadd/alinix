@@ -2,12 +2,13 @@
 #define __ALINIX_KERNEL_DISK_H
 
 #include <alinix/types.h>
+#include <alinix/ulib.h>
 
-typedef enum {
-    DISK_TYPE_UNKNOWN,
-    DISK_TYPE_HDD,
-    DISK_TYPE_SSD
-} DiskType;
+// typedef enum {
+//     DISK_TYPE_UNKNOWN,
+//     DISK_TYPE_HDD,
+//     DISK_TYPE_SSD
+// } DiskType;
 
 // typedef struct {
 //     void* controller; // Which controller is controlling this disk device

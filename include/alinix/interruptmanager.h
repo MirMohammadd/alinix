@@ -23,7 +23,7 @@
 
 void InterruptHandler(uint8_t interruptNumber);
 
-uint32_t HandleInterrupt(uint8_t interrupt, uint32_t esp);
+// uint32_t HandleInterrupt(uint8_t interrupt, uint32_t esp);
 
 uint32_t HandleInterrupt(uint32_t esp);
 

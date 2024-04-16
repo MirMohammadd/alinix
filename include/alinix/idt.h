@@ -83,13 +83,13 @@ void HandleException0x11();
 void HandleException0x12();
 void HandleException0x13();
 
-static void SetDescriptor(uint32_t number,  void (*handler)(), int accesLevel = 0);
+void SetDescriptor(uint32_t number,  void (*handler)(), int accesLevel);
 
-static uint32_t HandleInterrupt(struct CPUState* state);
-static void Install();
+uint32_t HandleInterrupt(struct CPUState* state);
+void Install();
 
-static void EnableInterrupts();
-static void DisableInterrupts();
-static bool AreEnabled();
+void EnableInterrupts();
+void DisableInterrupts();
+bool AreEnabled();
 
 #endif /*__ALINIX_KERNEL_IDT_H*/

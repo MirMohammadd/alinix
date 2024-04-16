@@ -11,8 +11,6 @@ int IndexOf(const char* str, char c, uint32_t skip);
 
 char* Uppercase(char* str);
 char* Lowercase(char* str);
-char Uppercase(char c);
-char Lowercase(char c);
 char* strcpy(char *s1, const char *s2);
 char* strncpy(char *s1, const char *s2, unsigned int n);
 

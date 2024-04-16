@@ -23,4 +23,6 @@ static void SetDescriptor(int number, uint32_t base, uint32_t limit, uint8_t acc
 static struct GDTEntry* GetDescriptor(int number);
 static void Init();
 
+void SetDescriptor(int number, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran);
+
 #endif /*__ALINIX_KERNEL_GDT_H*/

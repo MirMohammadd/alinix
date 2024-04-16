@@ -3,17 +3,17 @@
 
 #include <alinix/types.h>
 
-static int strlen(const char* str);
-static bool strcmp(const char* strA, const char* strB);
-static bool strncmp(const char* s1, const char* s2, int n);
-static int IndexOf(const char* str, char c, uint32_t skip);
-// static bool Contains(const char* str, char c);
+int strlen(const char* str);
+bool strcmp(const char* strA, const char* strB);
+bool strncmp(const char* s1, const char* s2, int n);
+int IndexOf(const char* str, char c, uint32_t skip);
+// bool Contains(const char* str, char c);
 
-static char* Uppercase(char* str);
-static char* Lowercase(char* str);
-static char Uppercase(char c);
-static char Lowercase(char c);
-static char* strcpy(char *s1, const char *s2);
-static char* strncpy(char *s1, const char *s2, unsigned int n);
+char* Uppercase(char* str);
+char* Lowercase(char* str);
+char Uppercase(char c);
+char Lowercase(char c);
+char* strcpy(char *s1, const char *s2);
+char* strncpy(char *s1, const char *s2, unsigned int n);
 
 #endif /*__ALINIX_KERNEL_STRING_H*/

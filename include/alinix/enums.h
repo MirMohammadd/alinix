@@ -29,7 +29,7 @@ typedef enum priority{
     HIGHEST = 150
 }priority_t;
 
-enum ScreenMode
+enum ScreenMode_t
 {
     TextMode,
     GraphicsMode

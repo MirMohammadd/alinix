@@ -12,3 +12,7 @@ mapVirtualToPhysical(void* physAddress, void* virtAddress, bool kernel, bool wri
 
     invlpg(virtAddress);
 }
+void* GetPageForAddress(uint32_t virtualAddress, bool shouldCreate, bool readWrite, bool userPages)
+{
+
+}

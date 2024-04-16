@@ -74,4 +74,6 @@ static inline void invlpg(void* addr)
     asm volatile("invlpg (%0)" ::"r" (addr) : "memory");
 }
 
+void* GetPageForAddress(uint32_t virtualAddress, bool shouldCreate, bool readWrite, bool userPages);
+
 #endif

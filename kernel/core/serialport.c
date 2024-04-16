@@ -24,7 +24,6 @@
 #include <alinix/serialport.h>
 
 enum COMPort PortAddress = COM1;
-bool Initialized = false;
 
 Init(enum COMPort port)
 {

@@ -19,6 +19,7 @@
 */
 #include <alinix/types.h>
 #include <alinix/interruptmanager.h>
+#include <alinix/ulib.h>
 
 typedef struct Node {
     void (*handler)(uint8_t);

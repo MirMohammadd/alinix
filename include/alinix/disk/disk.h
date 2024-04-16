@@ -9,15 +9,15 @@ typedef enum {
     DISK_TYPE_SSD
 } DiskType;
 
-typedef struct {
-    void* controller; // Which controller is controlling this disk device
-    uint32_t controllerIndex; // The real number for the disk on the controller
-    char* identifier; // Disk Identifier
-    DiskType type; // Type of disk
-    uint64_t size; // Size of disk in bytes
-    uint32_t numBlocks; // Number of data blocks
-    uint32_t blockSize; // Size of one block of data
-} Disk;
+// typedef struct {
+//     void* controller; // Which controller is controlling this disk device
+//     uint32_t controllerIndex; // The real number for the disk on the controller
+//     char* identifier; // Disk Identifier
+//     DiskType type; // Type of disk
+//     uint64_t size; // Size of disk in bytes
+//     uint32_t numBlocks; // Number of data blocks
+//     uint32_t blockSize; // Size of one block of data
+// } Disk;
 
 Disk* Disk_create(uint32_t controllerIndex, void* controller, DiskType type, uint64_t size, uint32_t blocks, uint32_t blocksize) {
     Disk* disk = (Disk*)malloc(sizeof(Disk));

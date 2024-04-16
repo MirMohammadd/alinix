@@ -124,3 +124,7 @@ ShowStacktrace(uint32_t esp){
 void DisablePagefaultAutoFix(){
     
 }
+
+void EnablePagefaultAutoFix(){
+    
+}

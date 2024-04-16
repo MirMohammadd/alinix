@@ -22,7 +22,7 @@
 
 static int XOffset;
 static int YOffset;
-static bool writeToSerial;
+bool writeToSerial = false;
 
 static void Scroll();
 

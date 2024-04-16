@@ -39,7 +39,6 @@ void Write(char* str) ;
 
 void WriteLine(char* str);
 
-void WriteLine() ;
 
 void Clear();
 

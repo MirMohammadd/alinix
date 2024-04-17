@@ -44,7 +44,7 @@ ASPARAMS := --32
 LDPARAMS := -m elf_i386
 
 KRNLSRCDIR := kernel
-KRNLOBJDIR := kernelz/obj
+KRNLOBJDIR := kernel/obj
 
 KRNLFILES := $(shell find $(KRNLSRCDIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) #Find all the files that end with .cpp/.s/.asm/.c
 KRNLOBJS := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(KRNLFILES))))) #Replace the .cpp/.s/.asm/.c extension with .o

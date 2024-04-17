@@ -1,4 +1,7 @@
 /**
+ * @author Ali Mirmohammad
+ * @file physicalmemory.h
+ * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
  ** This file is part of AliNix.
 
 **AliNix is free software: you can redistribute it and/or modify

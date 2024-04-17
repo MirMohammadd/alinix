@@ -62,25 +62,15 @@
 
 
 
-char* GetComponentName(SystemComponent* component) {
-    return component->Name;
-}
+char* GetComponentName(SystemComponent* component);
 
-char* GetComponentDescription(SystemComponent* component) {
-    return component->Description;
-}
-
+char* GetComponentDescription(SystemComponent* component) ;
 typedef struct APMController {
     SystemComponent base;
     int Enabled;
 } APMController;
 
-APMController* APMController_create() {
-    APMController* controller = (APMController*)malloc(sizeof(APMController));
-    controller->base = *SystemComponent_create(NULL, NULL);
-    controller->Enabled = 0;
-    return controller;
-}
+APMController* APMController_create();
 
 void CheckAndHandleEvents(APMController* controller);
 

@@ -22,11 +22,11 @@
 
 #ifdef __cplusplus
 #define ALINIX_NULL_CPP_NULL_PTR (*(void ))
-#define ALINIX_NULL nullptr
 
 #else 
-#define ALINIX_NULL (*(void ))
+
 
 #endif  /* __cplusplus */
 
+#define ALINIX_NULL nullptr
 #endif /*__ALINIX_KERNEL_TYPES_H_HEADER_*/

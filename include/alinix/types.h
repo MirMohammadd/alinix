@@ -15,10 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef __ALINIX_KERNEL__TYPES_H_HEADER
+#ifndef __ALINIX_KERNEL__TYPES_H_HEADER_
 #define __ALINIX_KERNEL__TYPES_H_HEADER_
 
 #include "_types.h"
+#include <alinix/enums.h>
 
 
 typedef char                        int8_t;
@@ -34,22 +35,23 @@ typedef signed char               sint8_t;
 typedef signed short              sint16_t;
 typedef signed int               sint32_t;
 typedef signed long long int      sint64_t;
+typedef unsigned int            paddr_t;
+typedef	unsigned int	uint;		/* Sys V compatibility */
 //! This might run into problem (size_t)
 typedef unsigned long int size_t;
 #if !defined(__cplusplus)
 //TODO Fix here
-typedef enum  {false = 0, true = 1} bool;
-#define true 1
-#define false 0
+// typedef enum  {false = 0, true = 1} bool;
+#include <stdbool.h>
 #endif
 
 #ifndef NULL
-#define NULL ALINIX_NULL
+#define NULL (void *)0
 #endif
 
 int strlen(const char* str);
-bool strcmp(const char* strA, const char* strB);
-bool strncmp(const char* s1, const char* s2, int n);
+// bool strcmp(const char* strA, const char* strB);
+// bool strncmp(const char* s1, const char* s2, int n);
 int IndexOf(const char* str, char c, uint32_t skip);
 bool Contains(const char* str, char c);
 
@@ -59,17 +61,17 @@ bool Contains(const char* str, char c);
 #endif /*ALINIX_NULL_CPP_NULL_PTR*/
 
 /*Defining the operators for the File system measures*/
-uint32_t KB(unsigned long long no) {
-    return no * 1024;
-}
+// uint32_t KB(unsigned long long no) {
+//     return no * 1024;
+// }
 
-uint32_t MB(unsigned long long no) {
-    return no * KB(1024);
-}
+// uint32_t MB(unsigned long long no) {
+//     return no * KB(1024);
+// }
 
-uint32_t GB(unsigned long long no) {
-    return no * MB(1024);
-}
+// uint32_t GB(unsigned long long no) {
+//     return no * MB(1024);
+// }
 
 
 ////////////////////////////////////////
@@ -89,7 +91,7 @@ typedef struct {
     void* controller; // Which controller is controlling this disk device
     uint32_t controllerIndex; // The real number for the disk on the controller
     char* identifier; // Disk Identifier
-    struct DiskType type; // Type of disk
+    DiskType type; // Type of disk
     uint64_t size; // Size of disk in bytes
     uint32_t numBlocks; // Number of data blocks
     uint32_t blockSize; // Size of one block of data

@@ -23,6 +23,15 @@
 #define BLOCK_SIZE 4_KB
 #define BLOCKS_PER_BYTE 8 //Every byte describes 8 blocks
 
+#define	TAILQ_REMOVE(head, elm, field) do {				\
+	if (((elm)->field.tqe_next) != NULL)				\
+		(elm)->field.tqe_next->field.tqe_prev = 		\
+		    (elm)->field.tqe_prev;				\
+	else								\
+		(head)->tqh_last = (elm)->field.tqe_prev;		\
+	*(elm)->field.tqe_prev = (elm)->field.tqe_next;			\
+} while (/*CONSTCOND*/0)
+
 typedef struct multiboot_memory_map {
     unsigned int size;
     unsigned long base_addr_low;

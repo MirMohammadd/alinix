@@ -29,7 +29,7 @@ typedef enum priority{
     HIGHEST = 150
 }priority_t;
 
-enum ScreenMode
+enum ScreenMode_t
 {
     TextMode,
     GraphicsMode
@@ -39,7 +39,8 @@ enum PowerRequest
 {
     None,
     Shutdown,
-    Reboot
+    RebootR
+    // TODO Change here to reboot maybe
 };
 
 enum EndpointDirection 

@@ -22,15 +22,17 @@
 
 int SerialportSerialSendReady();
 
-char SerialportWrite(char a);
+void SerialportWrite(char a);
 
-char SerialportWriteStr(char * str);
+void SerialportWriteStr(char * str);
 
-bool Initialized = false;
+// bool Initialized = false;
 
-bool gdbEnabled = false;
 
 void SerialportInit(enum COMPort port);
+
+void Writestr(char* s);
+
 
 
 #endif 

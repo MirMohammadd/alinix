@@ -21,6 +21,13 @@
 #include <alinix/types.h>
 #include <alinix/system.h>
 #include <alinix/serialport.h>
+#include <alinix/enums.h>
+bool gdbEnabled = false;
+bool Initialized = false;
+
+
+enum ScreenMode_t screenMode = TextMode;
+
 
 void Print(const char* data, uint32_t length) {
     /* Send data through serial port */

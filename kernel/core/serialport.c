@@ -22,11 +22,11 @@
 #include <alinix/enums.h>
 #include <alinix/port.h>
 #include <alinix/serialport.h>
+bool ConsoleInitialized;
 
 enum COMPort PortAddress = COM1;
-bool Initialized = false;
 
-Init(enum COMPort port)
+void Init(enum COMPort port)
 {
     PortAddress = port;
 
@@ -38,7 +38,12 @@ Init(enum COMPort port)
     outportb(PortAddress + 2, 0xC7);    // Enable FIFO, clear them, with 14-byte threshold
     outportb(PortAddress + 4, 0x0B);    // IRQs enabled, RTS/DSR set
 
-    Initialized = true;
+    ConsoleInitialized = true;
+}
+
+int SerialSendReady()
+{
+    return inportb(PortAddress + 5) & 0x20;
 }
 
 void SerialportWriteStr(char* str){
@@ -47,24 +52,26 @@ void SerialportWriteStr(char* str){
     }
 }
 
+void SerialportWrite(char a)
+{
+    while (SerialSendReady() == 0);
+
+    outportb(PortAddress, a);
+}
+
 int SerialportSerialSendReady()
 {
     return inportb(PortAddress + 5) & 0x20;
 }
 
-char SerialportRead()
-{
-    while (SerialReceiveReady() == 0);
 
-    return inportb(PortAddress);
-}
 
-char SerialportRead()
-{
-    while (SerialReceiveReady() == 0);
+// char SerialportRead()
+// {
+//     while (SerialReceiveReady() == 0);
 
-    return inportb(PortAddress);
-}
+//     return inportb(PortAddress);
+// }
 
 void SerialportInit(enum COMPort port)
 {
@@ -78,10 +85,16 @@ void SerialportInit(enum COMPort port)
     outportb(PortAddress + 2, 0xC7);    // Enable FIFO, clear them, with 14-byte threshold
     outportb(PortAddress + 4, 0x0B);    // IRQs enabled, RTS/DSR set
 
-    Initialized = true;
+    ConsoleInitialized = true;
 }
 
 int SerialportSerialReceiveReady()
 {
     return inportb(PortAddress + 5) & 1;
+}
+
+WriteStr(char* str)
+{
+    for(int i = 0; str[i] != '\0'; ++i)
+        Write(str[i]);
 }

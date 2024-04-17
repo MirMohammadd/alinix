@@ -19,8 +19,9 @@ struct GDTPointer
     uint32_t base;                // The address of the first gdt_entry_t struct.
 } __attribute__((packed));
 
-static void SetDescriptor(int number, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran);
-static struct GDTEntry* GetDescriptor(int number);
-static void Init();
+void GdtSetDescriptor(int number, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran);
+struct GDTEntry* GetDescriptor(int number);
+void GdtInit();
+
 
 #endif /*__ALINIX_KERNEL_GDT_H*/

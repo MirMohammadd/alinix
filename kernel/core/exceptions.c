@@ -28,9 +28,10 @@
 ////////////////////////////////////////////////////
 //Global  Variables
 bool autoFixPagefaults = false;
+uint8_t ExcForegroundColor;
 
 uint32_t DivideByZero(uint32_t esp){
-    ForegroundColor = VGA_COLOR_RED;   
+    ExcForegroundColor = VGA_COLOR_RED;   
     WriteLine("Zero division Error");
 
     // Disable all the interrupts
@@ -52,7 +53,7 @@ uint32_t PageFault(uint32_t esp){
     /**
      * @brief  This function is called when there is a page fault
     */
-    ForegroundColor = VGA_COLOR_BROWN;
+    ExcForegroundColor = VGA_COLOR_BROWN;
 
     DisableInterrupts();
     // Disable all the interrupts
@@ -115,4 +116,16 @@ uint32_t PageFault(uint32_t esp){
     ShowStacktrace(esp);
     Panic();
     return esp; // Shouldn't get here
+}
+
+ShowStacktrace(uint32_t esp){
+    /*Keep Here empty*/
+}
+
+void DisablePagefaultAutoFix(){
+    
+}
+
+void EnablePagefaultAutoFix(){
+    
 }

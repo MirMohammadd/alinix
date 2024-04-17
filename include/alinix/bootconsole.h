@@ -20,26 +20,25 @@
 
 #include <alinix/types.h>
 
-static int XOffset;
-static int YOffset;
-static bool writeToSerial;
+// int XOffset;
+// int YOffset;
+// bool writeToSerial = false;
 
-static void Scroll();
+void Scroll();
 
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25
 
-uint8_t ForegroundColor;
-uint8_t BackgroundColor;
+// uint8_t ForegroundColor;
+// uint8_t BackgroundColor;
 
-void Init(bool enableSerial) ;
+void ConsoleInit(bool enableSerial) ;
 
 
 void Write(char* str) ;
 
 void WriteLine(char* str);
 
-void WriteLine() ;
 
 void Clear();
 

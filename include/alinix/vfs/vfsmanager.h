@@ -23,6 +23,7 @@
 
 #include <alinix/disk/disk.h>
 #include <alinix/vfs/virtualfilesystem.h>
+#include <alinix/fs/fat.h>
 
 int bootPartitionID = -1;
 void Mount(VirtualFileSystem* vfs);

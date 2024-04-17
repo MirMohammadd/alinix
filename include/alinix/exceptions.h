@@ -20,7 +20,7 @@
 
 #include <alinix/types.h>
 
-uint16_t DivideByZero(uint32_t esp);
+uint32_t DivideByZero(uint32_t esp);
 uint32_t GeneralProtectionFault(uint32_t esp);
 uint32_t PageFault(uint32_t esp);
 uint32_t TrapException(uint32_t esp);

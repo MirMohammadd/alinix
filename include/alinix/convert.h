@@ -20,7 +20,7 @@
 
 #include <alinix/types.h>
 
-int isspace(char c);
+int isSpace(char c);
 
 char* IntToString(int n);
 

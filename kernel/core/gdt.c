@@ -51,17 +51,17 @@ void GdtInit()
     gdtPointer.limit = (sizeof(struct GDTEntry) * 6) - 1;
     gdtPointer.base = (uint32_t)&gdtEntries;
 
-    SetDescriptor(0, 0, 0, 0, 0);                // Null segment
-    SetDescriptor(1, 0, 0xFFFFFFFF, 0x9A, 0xCF); // Code segment
-    SetDescriptor(2, 0, 0xFFFFFFFF, 0x92, 0xCF); // Data segment
-    SetDescriptor(3, 0, 0xFFFFFFFF, 0xFA, 0xCF); // User mode code segment
-    SetDescriptor(4, 0, 0xFFFFFFFF, 0xF2, 0xCF); // User mode data segment
+    GdtSetDescriptor(0, 0, 0, 0, 0);                // Null segment
+    GdtSetDescriptor(1, 0, 0xFFFFFFFF, 0x9A, 0xCF); // Code segment
+    GdtSetDescriptor(2, 0, 0xFFFFFFFF, 0x92, 0xCF); // Data segment
+    GdtSetDescriptor(3, 0, 0xFFFFFFFF, 0xFA, 0xCF); // User mode code segment
+    GdtSetDescriptor(4, 0, 0xFFFFFFFF, 0xF2, 0xCF); // User mode data segment
     // TSS descriptor will be loaded by the TSS class
 
     gdt_flush((uint32_t)&gdtPointer);
 }
 
-void SetDescriptor(int number, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran)
+void GdtSetDescriptor(int number, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran)
 {
     gdtEntries[number].base_low    = (base & 0xFFFF);
     gdtEntries[number].base_middle = (base >> 16) & 0xFF;

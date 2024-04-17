@@ -26,7 +26,7 @@
 struct IDTEntry idtEntries[IDT_ENTRY_SIZE];
 struct IDTPointer idtPointer;
 
-SetDescriptor(uint32_t number, void (*handler)(), int accesLevel){
+IdtSetDescriptor(uint32_t number, void (*handler)(), int accesLevel){
     uint32_t callerBase = (uint32_t)handler;
     idtEntries[number].handlerLowBits = (uint16_t)(callerBase & 0xFFFF);
     idtEntries[number].handlerHighBits = (uint16_t)((callerBase >> 16) & 0xFFFF);
@@ -42,48 +42,48 @@ void Install(){
     memset((void*)&idtEntries[0], 0, sizeof(struct IDTEntry) * IDT_ENTRY_SIZE - 1);
 
     for(int i = 0; i < IDT_ENTRY_SIZE; i++)
-        SetDescriptor(i, IgnoreInterrupt,1);
+        IdtSetDescriptor(i, IgnoreInterrupt,1);
 
-    SetDescriptor(0x00, HandleException0x00,1);
-    SetDescriptor(0x01, HandleException0x01,1);
-    SetDescriptor(0x02, HandleException0x02,1);
-    SetDescriptor(0x03, HandleException0x03,1);
-    SetDescriptor(0x04, HandleException0x04,1);
-    SetDescriptor(0x05, HandleException0x05,1);
-    SetDescriptor(0x06, HandleException0x06,1);
-    SetDescriptor(0x07, HandleException0x07,1);
-    SetDescriptor(0x08, HandleException0x08,1);
-    SetDescriptor(0x09, HandleException0x09,1);
-    SetDescriptor(0x0A, HandleException0x0A,1);
-    SetDescriptor(0x0B, HandleException0x0B,1);
-    SetDescriptor(0x0C, HandleException0x0C,1);
-    SetDescriptor(0x0D, HandleException0x0D,1);
-    SetDescriptor(0x0E, HandleException0x0E,1);
-    SetDescriptor(0x0F, HandleException0x0F,1);
-    SetDescriptor(0x10, HandleException0x10,1);
-    SetDescriptor(0x11, HandleException0x11,1);
-    SetDescriptor(0x12, HandleException0x12,1);
-    SetDescriptor(0x13, HandleException0x13,1);
+    IdtSetDescriptor(0x00, HandleException0x00,1);
+    IdtSetDescriptor(0x01, HandleException0x01,1);
+    IdtSetDescriptor(0x02, HandleException0x02,1);
+    IdtSetDescriptor(0x03, HandleException0x03,1);
+    IdtSetDescriptor(0x04, HandleException0x04,1);
+    IdtSetDescriptor(0x05, HandleException0x05,1);
+    IdtSetDescriptor(0x06, HandleException0x06,1);
+    IdtSetDescriptor(0x07, HandleException0x07,1);
+    IdtSetDescriptor(0x08, HandleException0x08,1);
+    IdtSetDescriptor(0x09, HandleException0x09,1);
+    IdtSetDescriptor(0x0A, HandleException0x0A,1);
+    IdtSetDescriptor(0x0B, HandleException0x0B,1);
+    IdtSetDescriptor(0x0C, HandleException0x0C,1);
+    IdtSetDescriptor(0x0D, HandleException0x0D,1);
+    IdtSetDescriptor(0x0E, HandleException0x0E,1);
+    IdtSetDescriptor(0x0F, HandleException0x0F,1);
+    IdtSetDescriptor(0x10, HandleException0x10,1);
+    IdtSetDescriptor(0x11, HandleException0x11,1);
+    IdtSetDescriptor(0x12, HandleException0x12,1);
+    IdtSetDescriptor(0x13, HandleException0x13,1);
 
-    SetDescriptor(IDT_INTERRUPT_OFFSET + 0x00, HandleInterruptRequest0x00,1);
-    SetDescriptor(IDT_INTERRUPT_OFFSET + 0x01, HandleInterruptRequest0x01,1);
-    SetDescriptor(IDT_INTERRUPT_OFFSET + 0x02, HandleInterruptRequest0x02,1);
-    SetDescriptor(IDT_INTERRUPT_OFFSET + 0x03, HandleInterruptRequest0x03,1);
-    SetDescriptor(IDT_INTERRUPT_OFFSET + 0x04, HandleInterruptRequest0x04,1);
-    SetDescriptor(IDT_INTERRUPT_OFFSET + 0x05, HandleInterruptRequest0x05,1);
-    SetDescriptor(IDT_INTERRUPT_OFFSET + 0x06, HandleInterruptRequest0x06,1);
-    SetDescriptor(IDT_INTERRUPT_OFFSET + 0x07, HandleInterruptRequest0x07,1);
-    SetDescriptor(IDT_INTERRUPT_OFFSET + 0x08, HandleInterruptRequest0x08,1);
-    SetDescriptor(IDT_INTERRUPT_OFFSET + 0x09, HandleInterruptRequest0x09,1);
-    SetDescriptor(IDT_INTERRUPT_OFFSET + 0x0A, HandleInterruptRequest0x0A,1);
-    SetDescriptor(IDT_INTERRUPT_OFFSET + 0x0B, HandleInterruptRequest0x0B,1);
-    SetDescriptor(IDT_INTERRUPT_OFFSET + 0x0C, HandleInterruptRequest0x0C,1);
-    SetDescriptor(IDT_INTERRUPT_OFFSET + 0x0D, HandleInterruptRequest0x0D,1);
-    SetDescriptor(IDT_INTERRUPT_OFFSET + 0x0E, HandleInterruptRequest0x0E,1);
-    SetDescriptor(IDT_INTERRUPT_OFFSET + 0x0F, HandleInterruptRequest0x0F,1);
+    IdtSetDescriptor(IDT_INTERRUPT_OFFSET + 0x00, HandleInterruptRequest0x00,1);
+    IdtSetDescriptor(IDT_INTERRUPT_OFFSET + 0x01, HandleInterruptRequest0x01,1);
+    IdtSetDescriptor(IDT_INTERRUPT_OFFSET + 0x02, HandleInterruptRequest0x02,1);
+    IdtSetDescriptor(IDT_INTERRUPT_OFFSET + 0x03, HandleInterruptRequest0x03,1);
+    IdtSetDescriptor(IDT_INTERRUPT_OFFSET + 0x04, HandleInterruptRequest0x04,1);
+    IdtSetDescriptor(IDT_INTERRUPT_OFFSET + 0x05, HandleInterruptRequest0x05,1);
+    IdtSetDescriptor(IDT_INTERRUPT_OFFSET + 0x06, HandleInterruptRequest0x06,1);
+    IdtSetDescriptor(IDT_INTERRUPT_OFFSET + 0x07, HandleInterruptRequest0x07,1);
+    IdtSetDescriptor(IDT_INTERRUPT_OFFSET + 0x08, HandleInterruptRequest0x08,1);
+    IdtSetDescriptor(IDT_INTERRUPT_OFFSET + 0x09, HandleInterruptRequest0x09,1);
+    IdtSetDescriptor(IDT_INTERRUPT_OFFSET + 0x0A, HandleInterruptRequest0x0A,1);
+    IdtSetDescriptor(IDT_INTERRUPT_OFFSET + 0x0B, HandleInterruptRequest0x0B,1);
+    IdtSetDescriptor(IDT_INTERRUPT_OFFSET + 0x0C, HandleInterruptRequest0x0C,1);
+    IdtSetDescriptor(IDT_INTERRUPT_OFFSET + 0x0D, HandleInterruptRequest0x0D,1);
+    IdtSetDescriptor(IDT_INTERRUPT_OFFSET + 0x0E, HandleInterruptRequest0x0E,1);
+    IdtSetDescriptor(IDT_INTERRUPT_OFFSET + 0x0F, HandleInterruptRequest0x0F,1);
 
-    SetDescriptor((IDT_INTERRUPT_OFFSET + 0xDD), HandleInterruptRequest0xDD,1);
-    SetDescriptor(0x80, HandleInterruptRequest0x60, 3);
+    IdtSetDescriptor((IDT_INTERRUPT_OFFSET + 0xDD), HandleInterruptRequest0xDD,1);
+    IdtSetDescriptor(0x80, HandleInterruptRequest0x60, 3);
 
     // Remap the PIC
     outportb(0x20, 0x11);

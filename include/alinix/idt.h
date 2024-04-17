@@ -83,7 +83,7 @@ void HandleException0x11();
 void HandleException0x12();
 void HandleException0x13();
 
-void SetDescriptor(uint32_t number,  void (*handler)(), int accesLevel);
+void IdtSetDescriptor(uint32_t number,  void (*handler)(), int accesLevel);
 
 uint32_t HandleInterrupt(struct CPUState* state);
 void Install();

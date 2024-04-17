@@ -33,9 +33,12 @@ private:
     void DrawCircleHelper(int x, int y, int radius, uint32_t corner, uint32_t color);
     void FillCircleHelper(int x, int y, int radius, uint32_t corner, int delta, uint32_t color);
 public:
+    ////////////////////////////
+    //!NOTE: These properties should be only added if it is a c++ class, otherwise, has to be declared as local variable.
     void* bufferPointer;
     int Width;
     int Height;
+    ////////////////////////////
 
     Canvas(void* buffer, int w, int h);
 

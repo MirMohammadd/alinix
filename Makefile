@@ -1,5 +1,4 @@
-# Makefile of Alinix kernel
-# inspired by https://github.com/Remco123/CactusOS
+# Makefile of Alinix kernelm licensed under GNU affero GPL
 ##########
 # .s files are GAS assembly
 # .asm files are nasm assembly
@@ -86,3 +85,8 @@ HeisenOs.bin: kernel/linker.ld $(KRNLOBJS)
 
 HeisenOs.iso: HeisenOs.bin
 	bchunk HeisenOs.bin HeisenOs.cue HeisenOs
+
+.PHONY: clean
+
+clean:
+	rm -rf $(KRNLOBJDIR) HeisenOs.bin HeisenOs01.iso

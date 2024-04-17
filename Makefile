@@ -87,6 +87,10 @@ Alinix.iso: Alinix.bin
 	bchunk Alinix.bin Alinix.cue Alinix
 
 all : Alinix.iso
+
+menuconfig: $(shell chmod +x dialog.sh && ./dialog.sh)
+
+
 .PHONY: clean
 
 clean:

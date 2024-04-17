@@ -87,7 +87,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 
 
 
-HeisenOs.bin: kernel/linker.ld $(KRNLOBJS)
+#`1: kernel/linker.ld $(KRNLOBJS)
 	i686-elf-ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
 
 HeisenOs.iso: HeisenOs.bin

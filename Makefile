@@ -48,7 +48,7 @@ KRNLOBJDIR := kernel/obj
 
 KRNLFILES := $(shell find $(KRNLSRCDIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) #Find all the files that end with .cpp/.s/.asm/.c
 KRNLOBJS := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(KRNLFILES))))) #Replace the .cpp/.s/.asm/.c extension with .o
-KRNLOBJS := $(subst $(KRNLSRCDIR),$(KRNLOBJDIR),$(KRNLOBJS)) #Replace the kernelz/src part with kernelz/obj
+KRNLOBJS := $(subst $(KRNLSRCDIR),$(KRNLOBJDIR),$(KRNLOBJS)) #Replace the kernel/src part with kernel/obj
 
 
 ####################################
@@ -142,7 +142,7 @@ kdbg: HeisenOs.iso
 grub-core:
 	grub-mkimage -o isofiles/setup/core.img -O i386-pc -p="(hd0,msdos1)/boot/grub" --config=grubcore.cfg -v configfile biosdisk part_msdos fat normal multiboot echo
 
-# Only rebuild LIBCactusOS and the apps without recompiling the kernelz
+# Only rebuild LIBCactusOS and the apps without recompiling the kernel
 fastApps:
 	rm -rf isofiles/apps/*.bin
 	cd lib/ && $(MAKE) clean && $(MAKE)

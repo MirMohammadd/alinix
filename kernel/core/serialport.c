@@ -22,6 +22,7 @@
 #include <alinix/enums.h>
 #include <alinix/port.h>
 #include <alinix/serialport.h>
+bool ConsoleInitialized;
 
 enum COMPort PortAddress = COM1;
 
@@ -37,7 +38,7 @@ void Init(enum COMPort port)
     outportb(PortAddress + 2, 0xC7);    // Enable FIFO, clear them, with 14-byte threshold
     outportb(PortAddress + 4, 0x0B);    // IRQs enabled, RTS/DSR set
 
-    Initialized = true;
+    ConsoleInitialized = true;
 }
 
 int SerialSendReady()
@@ -84,7 +85,7 @@ void SerialportInit(enum COMPort port)
     outportb(PortAddress + 2, 0xC7);    // Enable FIFO, clear them, with 14-byte threshold
     outportb(PortAddress + 4, 0x0B);    // IRQs enabled, RTS/DSR set
 
-    Initialized = true;
+    ConsoleInitialized = true;
 }
 
 int SerialportSerialReceiveReady()

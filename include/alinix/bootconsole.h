@@ -22,15 +22,15 @@
 
 int XOffset;
 int YOffset;
-bool writeToSerial = false;
+// bool writeToSerial = false;
 
 void Scroll();
 
 #define VGA_WIDTH 80
 #define VGA_HEIGHT 25
 
-uint8_t ForegroundColor;
-uint8_t BackgroundColor;
+// uint8_t ForegroundColor;
+// uint8_t BackgroundColor;
 
 void ConsoleInit(bool enableSerial) ;
 

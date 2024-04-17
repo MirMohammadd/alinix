@@ -25,7 +25,7 @@
 
 enum COMPort PortAddress = COM1;
 
-Init(enum COMPort port)
+void Init(enum COMPort port)
 {
     PortAddress = port;
 

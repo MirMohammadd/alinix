@@ -4,8 +4,7 @@
 
 #include <alinix/types.h>
 
-void* BootPageDirectory;
-
+// void* BootPageDirectory;
 enum PAGE_ENTRY_SIZE
 {
     FOUR_KB = 0,

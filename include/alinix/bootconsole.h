@@ -20,8 +20,8 @@
 
 #include <alinix/types.h>
 
-int XOffset;
-int YOffset;
+// int XOffset;
+// int YOffset;
 // bool writeToSerial = false;
 
 void Scroll();

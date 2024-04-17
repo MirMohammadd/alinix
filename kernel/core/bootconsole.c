@@ -7,8 +7,8 @@ int XOffset = 0;
 int YOffset = 0;
 uint8_t BackgroundColor = VGA_COLOR_BLACK; //Default console background color
 uint8_t ForegroundColor = VGA_COLOR_WHITE; //Default console foreground color
-// bool writeToSerial = false;
-
+// bool BootConsoleWriteToSerial = false;
+bool BootConsoleWriteToSerial;
 /*/////////////////
 // Variables
 /*/////////////////
@@ -42,7 +42,7 @@ void Scroll()
 /*/////////////////
 void ConsoleInit(bool enableSerial)
 {
-    writeToSerial = enableSerial;
+    BootConsoleWriteToSerial = enableSerial;
     if(enableSerial)
     {
         Init(COM1);
@@ -59,7 +59,7 @@ void ConsoleInit(bool enableSerial)
 
 void Write(char* str)
 {
-    if (writeToSerial)
+    if (BootConsoleWriteToSerial)
         WriteStr(str);
 
     for(int i = 0; str[i] != '\0'; ++i)

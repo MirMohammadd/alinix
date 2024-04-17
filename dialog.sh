@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Function to compile the kernel
-compile_kernel() {
+compile_kernel_all() {
     # Add your kernel compilation commands here
-    echo "$(make qemu >/dev/null 2>&1)"
+    echo "$(make all >/dev/null 2>&1)"
 }
 
 # Function to clean the work directory
@@ -13,7 +13,7 @@ clean_work() {
 }
 
 run_qemu(){
-    echo "$(make qemu >/dev/null 2>&1)"
+    echo "$(qemu-system-x86_64 -cdrom Alinix01.iso >/dev/null 2>&1)"
 }
 
 # Main function displaying dialog interface
@@ -32,7 +32,7 @@ main() {
 
         case "$choice" in
             1)
-                compile_kernel
+                compile_kernel_all
                 ;;
             2)
                 clean_work

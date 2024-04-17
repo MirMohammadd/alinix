@@ -22,6 +22,9 @@
 #include <alinix/system.h>
 #include <alinix/serialport.h>
 #include <alinix/enums.h>
+bool gdbEnabled = false;
+bool Initialized = false;
+
 
 enum ScreenMode_t screenMode = TextMode;
 

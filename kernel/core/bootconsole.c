@@ -40,7 +40,7 @@ void Scroll()
 /*/////////////////
 // Public functions
 /*/////////////////
-void Init(bool enableSerial)
+void ConsoleInit(bool enableSerial)
 {
     writeToSerial = enableSerial;
     if(enableSerial)

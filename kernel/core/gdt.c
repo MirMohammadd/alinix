@@ -46,7 +46,7 @@ struct GDTEntry* GGetDescriptor(int number)
     return &gdtEntries[number];
 }
 
-void Init()
+void GdtInit()
 {
     gdtPointer.limit = (sizeof(struct GDTEntry) * 6) - 1;
     gdtPointer.base = (uint32_t)&gdtEntries;

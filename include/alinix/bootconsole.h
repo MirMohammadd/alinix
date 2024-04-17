@@ -32,7 +32,7 @@ void Scroll();
 uint8_t ForegroundColor;
 uint8_t BackgroundColor;
 
-void Init(bool enableSerial) ;
+void ConsoleInit(bool enableSerial) ;
 
 
 void Write(char* str) ;

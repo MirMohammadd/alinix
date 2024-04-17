@@ -80,14 +80,14 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 	mkdir -p $(@D)
 	nasm -f elf32 -O0 $< -o $@
 
-HeisenOs.bin: kernel/linker.ld $(KRNLOBJS)
+Alinix.bin: kernel/linker.ld $(KRNLOBJS)
 	i686-elf-ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
 
-HeisenOs.iso: HeisenOs.bin
-	bchunk HeisenOs.bin HeisenOs.cue HeisenOs
+Alinix.iso: Alinix.bin
+	bchunk Alinix.bin Alinix.cue Alinix
 
-all : HeisenOs.iso
+all : Alinix.iso
 .PHONY: clean
 
 clean:
-	rm -rf $(KRNLOBJDIR) HeisenOs.bin HeisenOs01.iso
+	rm -rf $(KRNLOBJDIR) Alinix.bin Alinix01.iso

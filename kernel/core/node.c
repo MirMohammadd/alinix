@@ -1,6 +1,6 @@
 /**
  * @author Ali Mirmohammad
- * @file rtc.h
+ * @file node.c
  * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
  ** This file is part of AliNix.
 
@@ -17,22 +17,34 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
-#include <alinix/types.h>
-#include <alinix/interruptmanager.h>
-#include <alinix/ulib.h>
 
-typedef struct Node {
-    void (*handler)(uint8_t);
-    struct Node* next;
-} Node;
+#include <alinix/node.h>
 
-typedef struct List {
-    Node* head;
-    Node* tail;
-} List;
-
-void List_push(List* list, void (*handler)(uint8_t)) ;
+List* interruptCallbacks[256] = {NULL};
 
 
+void List_push(List* list, void (*handler)(uint8_t)) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->handler = handler;
+    newNode->next = NULL;
 
-void AddHandler(uint8_t interrupt, void (*handler)(uint8_t));
+    if (list->tail == NULL) {
+        list->head = newNode;
+        list->tail = newNode;
+    } else {
+        list->tail->next = newNode;
+        list->tail = newNode;
+    }
+}
+
+
+
+void AddHandler(uint8_t interrupt, void (*handler)(uint8_t)) {
+    if (interruptCallbacks[interrupt] == NULL) {
+        interruptCallbacks[interrupt] = (List*)malloc(sizeof(List));
+        interruptCallbacks[interrupt]->head = NULL;
+        interruptCallbacks[interrupt]->tail = NULL;
+    }
+
+    List_push(interruptCallbacks[interrupt], handler);
+}

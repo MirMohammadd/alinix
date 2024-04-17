@@ -86,6 +86,7 @@ HeisenOs.bin: kernel/linker.ld $(KRNLOBJS)
 HeisenOs.iso: HeisenOs.bin
 	bchunk HeisenOs.bin HeisenOs.cue HeisenOs
 
+all : HeisenOs.iso
 .PHONY: clean
 
 clean:

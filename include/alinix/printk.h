@@ -21,6 +21,10 @@
 #include <alinix/types.h>
 #include <alinix/system.h>
 #include <alinix/serialport.h>
+#include <alinix/enums.h>
+
+enum ScreenMode_t screenMode = TextMode;
+
 
 void Print(const char* data, uint32_t length) {
     /* Send data through serial port */

@@ -21,7 +21,6 @@
 #define __ALINIX_KERNEL_SYSTEM_HEADER_H
 
 
-enum ScreenMode_t screenMode = TextMode;
 
 
 

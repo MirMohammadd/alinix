@@ -1,6 +1,6 @@
 /**
  * @author Ali Mirmohammad
- * @file rtc.h
+ * @file power.h
  * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
  ** This file is part of AliNix.
 

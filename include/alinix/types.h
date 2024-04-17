@@ -39,6 +39,7 @@ typedef signed int               sint32_t;
 typedef signed long long int      sint64_t;
 typedef unsigned int            paddr_t;
 typedef	unsigned int	uint;		/* Sys V compatibility */
+typedef unsigned char byte_t; // For  backward compatibility
 //! This might run into problem (size_t)
 typedef unsigned long int size_t;
 #if !defined(__cplusplus)

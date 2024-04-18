@@ -16,8 +16,7 @@
 */
 #include <alinix/gui/fonts/font.h>
 
-void BoundingBox(const char* string, int* retW, int* retH, const void* data, const int* offsetTable)
-{
+void BoundingBox(const char* string, int* retW, int* retH, const void* data, const int* offsetTable){
     if(string == NULL || retW == NULL || retH == NULL)
         return; // Error with arguments
 

@@ -19,6 +19,7 @@
 #include <alinix/memory.h>
 #include <alinix/string.h>
 #include <alinix/multiboot.h>
+#include <alinix/system.h>
 multiboot_info_t* mbi = 0;
 
 
@@ -29,7 +30,7 @@ uint32_t _kernel_end;
 uint32_t _kernel_virtual_base;
 uint32_t stack_top;
 
-bool gdbEnabled;
+// bool gdbEnabled;
 
 typedef void (*constructor)();
 constructor start_ctors;

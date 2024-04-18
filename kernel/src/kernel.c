@@ -25,6 +25,7 @@ multiboot_info_t* mbi = 0;
 
 /// @brief //////
 // Basic global vars for kernel
+//! These variables should be static
 static uint32_t _kernel_base;
 static uint32_t _kernel_end;
 static uint32_t  _kernel_virtual_base;

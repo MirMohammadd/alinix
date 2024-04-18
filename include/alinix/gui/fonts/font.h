@@ -10,7 +10,7 @@ struct Font
     uint32_t* offsetTable   ; // Offsets for each character data sorted by character
 
 };
-void BoundingBox(char* str, int* retW, int* retH);
+void BoundingBox(const char* string, int* retW, int* retH, const void* data, const int* offsetTable)
 
 
 #endif /*__ALINIX_KERNEL_FONT_H*/

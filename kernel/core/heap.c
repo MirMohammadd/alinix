@@ -54,3 +54,28 @@ void* alignedMalloc(uint32_t size, uint32_t align)
     }
     return ptr;
 }
+
+void Free(void* ptr)
+{
+    struct MemoryHeader* chunk = (struct MemoryHeader*)((uint32_t)ptr - sizeof(struct MemoryHeader));
+    
+    chunk -> allocated = false;
+    
+    if(chunk->prev != 0 && !chunk->prev->allocated)
+    {
+        chunk->prev->next = chunk->next;
+        chunk->prev->size += chunk->size + sizeof(struct MemoryHeader);
+        if(chunk->next != 0)
+            chunk->next->prev = chunk->prev;
+        
+        chunk = chunk->prev;
+    }
+    
+    if(chunk->next != 0 && !chunk->next->allocated)
+    {
+        chunk->size += chunk->next->size + sizeof(struct MemoryHeader);
+        chunk->next = chunk->next->next;
+        if(chunk->next != 0)
+            chunk->next->prev = chunk;
+    }
+}

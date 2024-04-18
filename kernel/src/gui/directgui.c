@@ -24,6 +24,7 @@
 #include <alinix/syscall.h>
 #include <alinix/memory.h>
 #include <alinix/ulib.h>
+#include <alinix/gui/fonts/font.h>
 
 
 Canvas* base = 0;

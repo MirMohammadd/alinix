@@ -22,14 +22,15 @@
 #define _ALINIX_KERNEL_MEMORY_H
 
 #include <alinix/types.h>
+#include <alinix/bytes.h>
 
 void memset(void* bufptr, char value, uint32_t size);
 void* memcpy(void* dstptr, const void* srcptr, uint32_t size);
 int memcmp(const void* aptr, const void* bptr, uint32_t size);
 void * memmove(void* dstptr, const void* srcptr, uint32_t size);
 
-#define phys2virt(x) ((x) + 3_GB)
-#define virt2phys(x) ((x) - 3_GB)
+#define phys2virt(x) ((x) + THREE_GB)
+#define virt2phys(x) ((x) - THREE_GB)
 
 
 #endif /*_ALINIX_KERNEL_MEMORY_H*/

@@ -28,7 +28,7 @@ multiboot_info_t* mbi = 0;
 uint32_t _kernel_base;
 uint32_t _kernel_end;
 uint32_t _kernel_virtual_base;
-uint32_t stack_top;
+// uint32_t stack_top;
 
 // bool gdbEnabled;
 

@@ -1,0 +1,7 @@
+#ifndef _ALINIX_KERNEL_BITES_H
+#define _ALINIX_KERNEL_BITES_H
+
+#define FOUR_KB (4 * 1024)
+
+
+#endif /*_ALINIX_KERNEL_BITES_H*/

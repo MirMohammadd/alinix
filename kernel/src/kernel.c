@@ -15,6 +15,18 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+#include <alinix/types.h>
+#include <alinix/memory.h>
+#include <alinix/string.h>
+
+/// @brief //////
+// Basic global vars for kernel
+uint32_t _kernel_base;
+uint32_t _kernel_end;
+uint32_t _kernel_virtual_base;
+uint32_t stack_top;
+
+bool gdbEnabled;
 
 typedef void (*constructor)();
 constructor start_ctors;
@@ -26,5 +38,18 @@ void callConstructors()
 }
 
 int kernelMain(){
+    uint32_t kernel_base = (uint32_t) &_kernel_base;
+    uint32_t kernel_end = (uint32_t) &_kernel_end;
+    uint32_t kernel_size = kernel_end - kernel_base;
+
+
+    const char* args = (const char*)phys2virt(mbi->cmdline);
+    if (strcmp(args, "gdb")){
+        gdbEnabled = true;
+    }
+
+    /////////////////////
+    // This should always return 0
     return 0;
+    //////////////////////
 }

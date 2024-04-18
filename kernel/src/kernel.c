@@ -43,6 +43,9 @@ void callConstructors()
 }
 
 int kernelMain(){
+    /**
+     * @brief Main  function for Kernel Entry Point, implementing all the final actions here
+    */
     uint32_t kernel_base = (uint32_t) &_kernel_base;
     uint32_t kernel_end = (uint32_t) &_kernel_end;
     uint32_t kernel_size = kernel_end - kernel_base;

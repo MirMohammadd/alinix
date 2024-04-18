@@ -69,6 +69,9 @@ typedef struct {
     int Height;
 } Canvas;
 
+static void* bufferPointer;
+static int Width;
+static int Height;
 Canvas* Canvas_Create(void* buffer, int w, int h);
 
 void Canvas_SetPixel(Canvas* canvas, int x, int y, uint32_t color);
@@ -91,6 +94,7 @@ void Canvas_DrawEllipse(Canvas* canvas, uint32_t color, int x_center, int y_cent
 void Canvas_DrawString(Canvas* canvas, struct Font* font, char* string, int x, int y, uint32_t color);
 
 void Canvas_Destroy(Canvas* canvas);
+
 #endif /*__cplusplus*/
 
 #endif /*__ALINIX_KERNEL_GUI_CANVAS_H*/

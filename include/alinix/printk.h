@@ -30,7 +30,7 @@
 // bool Initialized = false;
 
 
-enum ScreenMode_t screenMode = TextMode;
+static enum  ScreenMode_t screenMode = TextMode;
 
 
 void Print(const char* data, uint32_t length);

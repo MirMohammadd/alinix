@@ -88,7 +88,7 @@ void Canvas_DrawCircle(Canvas* canvas, uint32_t color, int x_center, int y_cente
 void Canvas_DrawFillCircle(Canvas* canvas, uint32_t color, int x_center, int y_center, int radius);
 void Canvas_DrawEllipse(Canvas* canvas, uint32_t color, int x_center, int y_center, int x_radius, int y_radius);
 
-void Canvas_DrawString(Canvas* canvas, Font* font, char* string, int x, int y, uint32_t color);
+void Canvas_DrawString(Canvas* canvas, struct Font* font, char* string, int x, int y, uint32_t color);
 
 void Canvas_Destroy(Canvas* canvas);
 #endif /*__cplusplus*/

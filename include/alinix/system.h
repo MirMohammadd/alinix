@@ -23,7 +23,8 @@
 #ifndef __ALINIX_KERNEL_SYSTEM_HEADER_H
 #define __ALINIX_KERNEL_SYSTEM_HEADER_H
 
-
+bool gdbEnabled;
+bool Initialized;
 #define SYSTEM_INFO_ADDR 0xBFFEE000
 
 

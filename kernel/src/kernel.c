@@ -18,6 +18,9 @@
 #include <alinix/types.h>
 #include <alinix/memory.h>
 #include <alinix/string.h>
+#include <alinix/multiboot.h>
+multiboot_info_t* mbi = 0;
+
 
 /// @brief //////
 // Basic global vars for kernel

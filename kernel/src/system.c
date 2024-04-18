@@ -1,7 +1,4 @@
 /**
- * @author Ali Mirmohammad
- * @file memory.h
- * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
  ** This file is part of AliNix.
 
 **AliNix is free software: you can redistribute it and/or modify
@@ -17,20 +14,5 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+#include <alinix/multiboot.h>
 
-#ifndef _ALINIX_KERNEL_MEMORY_H
-#define _ALINIX_KERNEL_MEMORY_H
-
-#include <alinix/types.h>
-#include <alinix/bytes.h>
-
-void memset(void* bufptr, char value, uint32_t size);
-void* memcpy(void* dstptr, const void* srcptr, uint32_t size);
-int memcmp(const void* aptr, const void* bptr, uint32_t size);
-void * memmove(void* dstptr, const void* srcptr, uint32_t size);
-
-#define phys2virt(x) ((x) + THREE_GB)
-#define virt2phys(x) ((x) - THREE_GB)
-
-
-#endif /*_ALINIX_KERNEL_MEMORY_H*/

@@ -19,11 +19,14 @@
 */
 
 
-#include <alinix/enums.h>
 #ifndef __ALINIX_KERNEL_SYSTEM_HEADER_H
 #define __ALINIX_KERNEL_SYSTEM_HEADER_H
 
+#include <alinix/enums.h>
+#include <alinix/types.h>
 
+static bool gdbEnabled;
+static bool Initialized;
 #define SYSTEM_INFO_ADDR 0xBFFEE000
 
 

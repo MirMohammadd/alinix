@@ -25,25 +25,14 @@
 #include <alinix/system.h>
 #include <alinix/serialport.h>
 #include <alinix/enums.h>
-bool gdbEnabled = false;
-bool Initialized = false;
+#include <alinix/system.h>
+// bool gdbEnabled = false;
+// bool Initialized = false;
 
 
-enum ScreenMode_t screenMode = TextMode;
+static enum  ScreenMode_t screenMode = TextMode;
 
 
-void Print(const char* data, uint32_t length) {
-    /* Send data through serial port */
-    if(screenMode == TextMode)
-    {
-        for (uint32_t i = 0; i < length; i++)
-            Write(data[i]);
-    }
-    else if(Initialized && (gdbEnabled == false))
-    {
-        for (uint32_t i = 0; i < length; i++)
-            Write(data[i]);
-    }
-}
+void Print(const char* data, uint32_t length);
 
 #endif

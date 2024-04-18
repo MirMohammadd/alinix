@@ -63,28 +63,34 @@ public:
 };
 
 #else 
+typedef struct {
+    void* bufferPointer;
+    int Width;
+    int Height;
+} Canvas;
 
-void DrawCircleHelper(int x, int y, int radius, uint32_t corner, uint32_t color);
-void FillCircleHelper(int x, int y, int radius, uint32_t corner, int delta, uint32_t color);
+Canvas* Canvas_Create(void* buffer, int w, int h);
 
-void SetPixel(int x, int y, uint32_t color);
-uint32_t GetPixel(int x, int y);
+void Canvas_SetPixel(Canvas* canvas, int x, int y, uint32_t color);
+uint32_t Canvas_GetPixel(Canvas* canvas, int x, int y);
 
-void Clear();
-void Clear(uint32_t color);
-void DrawHorizontalLine(uint32_t color, int dx, int x1, int y1);
-void DrawVerticalLine(uint32_t color, int dx, int x1, int y1);
-void DrawLine(uint32_t color, int x1, int y1, int x2, int y2);
-void DrawDiagonalLine(uint32_t color, int dx, int dy, int x1, int y1);
-void DrawRect(uint32_t color, int x, int y, int width, int height);
-void DrawRoundedRect(uint32_t color, int x, int y, int width, int height, int radius);
-void DrawFillRoundedRect(uint32_t color, int x, int y, int width, int height, int radius);
-void DrawFillRect(uint32_t color, int x_start, int y_start, int width, int height);
-void DrawCircle(uint32_t color, int x_center, int y_center, int radius);
-void DrawFillCircle(uint32_t color, int x_center, int y_center, int radius);
-void DrawEllipse(uint32_t color, int x_center, int y_center, int x_radius, int y_radius);
+void Canvas_Clear(Canvas* canvas);
+void Canvas_ClearColor(Canvas* canvas, uint32_t color);
+void Canvas_DrawHorizontalLine(Canvas* canvas, uint32_t color, int dx, int x1, int y1);
+void Canvas_DrawVerticalLine(Canvas* canvas, uint32_t color, int dx, int x1, int y1);
+void Canvas_DrawLine(Canvas* canvas, uint32_t color, int x1, int y1, int x2, int y2);
+void Canvas_DrawDiagonalLine(Canvas* canvas, uint32_t color, int dx, int dy, int x1, int y1);
+void Canvas_DrawRect(Canvas* canvas, uint32_t color, int x, int y, int width, int height);
+void Canvas_DrawRoundedRect(Canvas* canvas, uint32_t color, int x, int y, int width, int height, int radius);
+void Canvas_DrawFillRoundedRect(Canvas* canvas, uint32_t color, int x, int y, int width, int height, int radius);
+void Canvas_DrawFillRect(Canvas* canvas, uint32_t color, int x_start, int y_start, int width, int height);
+void Canvas_DrawCircle(Canvas* canvas, uint32_t color, int x_center, int y_center, int radius);
+void Canvas_DrawFillCircle(Canvas* canvas, uint32_t color, int x_center, int y_center, int radius);
+void Canvas_DrawEllipse(Canvas* canvas, uint32_t color, int x_center, int y_center, int x_radius, int y_radius);
 
-void DrawString(Font* font, char* string, int x, int y, uint32_t color);
+void Canvas_DrawString(Canvas* canvas, Font* font, char* string, int x, int y, uint32_t color);
+
+void Canvas_Destroy(Canvas* canvas);
 #endif /*__cplusplus*/
 
 #endif /*__ALINIX_KERNEL_GUI_CANVAS_H*/

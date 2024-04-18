@@ -10,6 +10,10 @@
 
 uint32_t pageRoundUp(uint32_t address);
 uint32_t pageRoundDown(uint32_t address);
+void* UserHeapMalloc(uint32_t size);
+void* alignedMalloc(uint32_t size, uint32_t align);
+void allignedFree(void* ptr);
+void Free(void *ptr);
 
 #define HEAP_INCREASE_SIZE 10_MB
 

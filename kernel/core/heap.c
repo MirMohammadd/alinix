@@ -1,4 +1,6 @@
 #include <alinix/heap.h>
+#include <alinix/memory.h>
+//? Use Malloc in heap.h or  memory.h ???
 
 bool CheckForErrors()
 {
@@ -43,7 +45,7 @@ void* alignedMalloc(uint32_t size, uint32_t align)
     {
         uint32_t hdr_size = sizeof(uint16_t) + (align - 1);
 
-        void* p = Malloc(size + hdr_size);
+        void* p = malloc(size + hdr_size);
 
         if(p)
         {

@@ -25,6 +25,9 @@
 #include <alinix/memory.h>
 #include <alinix/ulib.h>
 #include <alinix/gui/fonts/font.h>
+#include <alinix/system.h>
+#include <alinix/gui/gui.h>
+#include <alinix/bytes.h>
 
 
 Canvas* base = 0;
@@ -33,7 +36,9 @@ uint8_t directGUIFont[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 
 bool RequestFramebuffer(){
     Log(Info,"Requesting the new frame buffer...");
-    bool ret = DoSyscall(SYSCALL_GUI_GETLFB, addr);
+    uint32_t addr = SYSTEM_INFO_ADDR /* System Info Area */ - pageRoundUp(Width * Height * 4) /* Space needed for FB */ - FOUR_KB /* 1 page margin */;
+
+    bool ret = DoSyscall(SYSCALL_GUI_GETLFB, addr, &base, sizeof(addr), 0, 0);
 
     if (ret){
         base = malloc(sizeof(Canvas));

@@ -185,3 +185,18 @@ void DrawFillRect(uint32_t color, int x_start, int y_start, int width, int heigh
         DrawLine(color, x_start, y, x_start + width, y);
     }
 }
+
+void DrawRoundedRect(uint32_t color, int x, int y, int width, int height, int radius)
+{
+    // Draw the four lines
+    DrawHorizontalLine(color, width - 2 * radius, x + radius, y);               // Top
+    DrawHorizontalLine(color, width - 2 * radius, x + radius, y + height - 1);  // Bottom
+    DrawVerticalLine(color, height - 2 * radius, x, y + radius);                // Left
+    DrawVerticalLine(color, height - 2 * radius, x + width - 1, y + radius);    // Right
+ 
+    // Draw the four corners
+    DrawCircleHelper(x + radius, y + radius, radius, 1, color);
+    DrawCircleHelper(x + width - radius - 1, y + radius, radius, 2, color);
+    DrawCircleHelper(x + width - radius - 1, y + height - radius - 1, radius, 4, color);
+    DrawCircleHelper(x + radius, y + height - radius - 1, radius, 8, color);
+}

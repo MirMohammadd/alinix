@@ -90,4 +90,30 @@ struct HID_DATA {
     int    phy_max;             // Physical Max
 };
 
+
+static const uint8_t *report_desc;              // Store Report Descriptor
+static int    report_desc_size;             // Size of Report Descriptor
+static int    pos;                          // Store current pos in descriptor
+static uint8_t  item;                         // Store current Item
+static uint32_t value;                        // Store current Value
+
+static struct HID_DATA data;                  // Store current environment
+
+static int    offset_table[MAX_REPORT][3];  // Store ID, type & offset of report
+static int    report_count;                 // Store Report Count
+static int    count;                        // Store local report count
+
+static uint16_t u_page;                       // Global UPage
+static struct HID_NODE usage_table[USAGE_TAB_SIZE]; // Usage stack
+static int    usage_size;                   // Design number of usage used
+static int    usage_min;
+static int    usage_max;
+
+static int    cnt_object;                   // Count objects in Report Descriptor
+static int    cnt_report;                   // Count reports in Report Descriptor
+static bool Parse(struct HID_DATA* data);
+static void Reset();
+static bool FindObject(struct HID_DATA* data);
+static int* GetReportOffset(const uint8_t report_id, const uint8_t report_type);
+
 #endif /*__ALINIX_KERNEL_SYSTEM_DRIVERS_HID_PARSER_H*/

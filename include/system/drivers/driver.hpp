@@ -5,6 +5,8 @@
 #include <alinix/types.h>
 #endif /* !__cplusplus */
 
+#include <system/drivers/usb/usbdevice.h>
+
 #ifdef __cplusplus
 extern "C"{
 #endif // __cplusplus

@@ -9,7 +9,6 @@ extern "C"{
 #include <system/drivers/driver.hpp>
 
 
-
 #ifdef __cplusplus
 }
 #endif /* !__cplusplus */

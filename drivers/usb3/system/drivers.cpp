@@ -13,5 +13,3 @@ class Driver
 
         virtual bool Initialize();
     };
-
-extern 

@@ -1,25 +1,21 @@
 #ifndef __ALINIX_KERNEL_SYSTEM_DRIVERS_HPP
 #define __ALINIX_KERNEL_SYSTEM_DRIVERS_HPP
 
+#ifndef __cplusplus
+#include <alinix/types.h>
+#endif /* !__cplusplus */
 
 #ifdef __cplusplus
 extern "C"{
 #endif // __cplusplus
 
 typedef struct Driver Driver;
-// class Driver
-//     {
-//     private:
-//         char* Name;
-//         char* Description;
-//     public:
-//         Driver(char* name = 0, char* description = 0);
 
-//         char* GetDriverName();
-//         char* GetDriverDescription();
 
-//         virtual bool Initialize();
-//     };
+static char* GetDriverName();
+static char* GetDriverDescription();
+
+static bool Initialize();
 
 #ifdef __cplusplus
 }

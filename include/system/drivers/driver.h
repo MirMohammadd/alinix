@@ -8,4 +8,6 @@ char* GetDriverDescription();
 
 bool Initialize();
 
+
+
 #endif /*__ALINIX_KERNEL_SYSTEM_DRIVER_H*/

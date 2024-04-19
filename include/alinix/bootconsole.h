@@ -40,7 +40,7 @@ void Write(char* str) ;
 void WriteLine(char* str);
 
 
-void Clear();
+void ConsoleClear();
 
 void SetX(int x);
 

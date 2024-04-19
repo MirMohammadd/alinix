@@ -102,7 +102,7 @@ void WriteLine(char* str)
     Write("\n");
 }
 
-void Clear()
+void ConsoleClear()
 {
     for(int y = 0; y < VGA_HEIGHT; y++)
         for(int x = 0; x < VGA_WIDTH; x++) {

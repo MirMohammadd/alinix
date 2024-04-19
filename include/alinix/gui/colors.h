@@ -1,6 +1,6 @@
 /**
  * @author Ali Mirmohammad
- * @file textgui.h
+ * @file colors.h
  * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
  ** This file is part of AliNix.
 
@@ -17,19 +17,27 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
-#ifndef __ALINIX_KERNEL_TEXTGUI_H
-#define __ALINIX_KERNEL_TEXTGUI_H
+#ifndef __ALINIX_KERNEL_GUI_COLORS_H
+#define __ALINIX_KERNEL_GUI_COLORS_H
 
-#include <alinix/bootconsole.h>
-#include <alinix/enums.h>
 #include <alinix/types.h>
 
 
-#define TEXT_COLOR VGA_COLOR_WHITE
+typedef union Color4Tag
+{
+    uint32_t c;
+    struct ColorComponents
+    {
+        uint8_t b;
+        uint8_t g;
+        uint8_t r;
+        uint8_t a;
+    } argb;
+} Color4;
 
-void DisableCursor();
-void SetPixel(int x, int y, char color,uint16_t character, char background);
-void ClearScreen(char color );
-void StatusBar(char* text, int percentage);
-void TextDrawString(char* text, int x, int y, char color, char background);
-#endif /*__ALINIX_KERNEL_TEXTGUI_H*/
+
+static const uint32_t Transparent = 0x00000000;
+
+
+const uint32_t AlphaBlend(uint32_t color1, uint32_t color2);
+#endif /*__ALINIX_KERNEL_GUI_COLORS_H*/

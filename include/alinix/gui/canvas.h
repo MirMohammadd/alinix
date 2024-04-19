@@ -59,7 +59,7 @@ public:
     void DrawFillCircle(uint32_t color, int x_center, int y_center, int radius);
     void DrawEllipse(uint32_t color, int x_center, int y_center, int x_radius, int y_radius);
 
-    void DrawString(Font* font, char* string, int x, int y, uint32_t color);
+    // void DrawString(Font* font, char* string, int x, int y, uint32_t color);
 };
 
 #else 
@@ -114,6 +114,9 @@ void DrawFillRect(uint32_t color, int x_start, int y_start, int width, int heigh
 
 void DrawRoundedRect(uint32_t color, int x, int y, int width, int height, int radius);
 void DrawRect(uint32_t color, int x, int y, int width, int height);
+
+void DrawString(struct Font* font, char* string, int x, int y, uint32_t color);
+
 #endif /*__cplusplus*/
 
 #endif /*__ALINIX_KERNEL_GUI_CANVAS_H*/

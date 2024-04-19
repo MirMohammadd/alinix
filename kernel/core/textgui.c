@@ -59,7 +59,7 @@ void StatusBar(char* text, int percentage)
     
     SetPixel(startX + barWidth, VGA_HEIGHT - 1, VGA_COLOR_BLACK, ']', VGA_COLOR_LIGHT_GREY);
 }
-void DrawString(char* text, int x, int y, char color, char background)
+void TextDrawString(char* text, int x, int y, char color, char background)
 {
     int px = x;
     int py = y;

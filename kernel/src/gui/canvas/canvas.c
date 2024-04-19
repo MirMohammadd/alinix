@@ -1,7 +1,29 @@
+/**
+ * @author Ali Mirmohammad
+ * @file canvas.c
+ * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
+ ** This file is part of AliNix.
+
+**AliNix is free software: you can redistribute it and/or modify
+**it under the terms of the GNU Affero General Public License as published by
+**the Free Software Foundation, either version 3 of the License, or
+**(at your option) any later version.
+
+**AliNix is distributed in the hope that it will be useful,
+**but WITHOUT ANY WARRANTY; without even the implied warranty of
+**MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+**GNU Affero General Public License for more details.
+
+**You should have received a copy of the GNU Affero General Public License
+**along with AliNix. If not, see <https://www.gnu.org/licenses/>.
+*/
 #include <alinix/gui/canvas.h>
 #include <alinix/types.h>
 #include <alinix/math.h>
 #include <alinix/memory.h>
+#include <alinix/gui/colors.h>
+#include <alinix/gui/fonts/font.h>
+
 
 void Canvas_SetPixel(int x, int y, uint32_t color){
 *(uint32_t*)((uint32_t)bufferPointer + (y * Width * 4 + x * 4)) = color;
@@ -229,4 +251,58 @@ void DrawRect(uint32_t color, int x, int y, int width, int height)
 
     /* Draw a line between C and D */
     DrawLine(color, xc, yc, xd, yd);
+}
+
+void DrawString(struct Font* font, char* string, int x, int y, uint32_t color)
+{
+    if(font == 0 || string == 0 || color == Transparent)
+        return;
+    
+    int xOffset = x;
+    int yOffset = y;
+    while(*string)
+    {
+        // Get the character we need to draw for this string
+        char c = *string++;
+
+        // Check for newline
+        if(c == '\n') {
+            xOffset = x;
+
+            // Add the height of the space character. TODO: Update this!
+            yOffset += ((uint8_t*)(font->data + font->offsetTable[0]))[1];
+            continue;
+        }
+
+        // Load data for this char from the font
+        const uint8_t* charData = (uint8_t*)(font->data + font->offsetTable[(int)c - 32]);
+        const uint8_t width = charData[0];
+        const uint8_t height = charData[1];
+
+        // Loop through the complete bitmap and draw the character
+        for(uint8_t px = 0; px < width; px++) {
+            for(uint8_t py = 0; py < height; py++) {
+                // Can be any value between 0 and 255
+                uint8_t d = charData[py * width + px + 2];
+                
+                // This pixel does not need to be drawn
+                if(d == 0)
+                    continue;
+
+                // This is a full color pixel
+                if(d == 255)
+                    SetPixel(px + xOffset, py + yOffset, color);
+                // We need to blend this pixel with the background
+                else {
+                    Color4 realColor;
+                    realColor.c = color;
+                    realColor.argb.a = d; // Adjust the alpha component of the color. TODO: Also support full transparent text drawing in the future!
+
+                    SetPixel(px + xOffset, py + yOffset, AlphaBlend(Canvas_GetPixel(px + xOffset, py + yOffset), realColor.c));
+                }  
+            }
+        }
+
+        xOffset += width;
+    }
 }

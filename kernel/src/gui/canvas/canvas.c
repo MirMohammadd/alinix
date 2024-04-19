@@ -163,10 +163,10 @@ void DrawCircleHelper(int x, int y, int radius, uint32_t corner, uint32_t color)
     }
 }
 
-void Clear()
-{
-    memset((void*)bufferPointer, 0, Width*Height*4);
-}
+// void Clear()
+// {
+//     memset((void*)bufferPointer, 0, Width*Height*4);
+// }
 
 void DrawFillRoundedRect(uint32_t color, int x, int y, int width, int height, int radius)
 {

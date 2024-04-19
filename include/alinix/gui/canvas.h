@@ -106,7 +106,7 @@ void DrawHorizontalLine(uint32_t color, int dx, int x1, int y1);
 
 void FillCircleHelper(int x, int y, int radius, uint32_t corner, int delta, uint32_t color);
 void DrawCircleHelper(int x, int y, int radius, uint32_t corner, uint32_t color);
-void Clear();
+// void Clear();
 
 void DrawFillRoundedRect(uint32_t color, int x, int y, int width, int height, int radius);
 

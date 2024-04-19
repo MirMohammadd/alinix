@@ -97,6 +97,8 @@ void Canvas_DrawString(Canvas* canvas, struct Font* font, char* string, int x, i
 
 void Canvas_Destroy(Canvas* canvas);
 
+void DrawLine(uint32_t color, int x1, int y1, int x2, int y2);
+
 #endif /*__cplusplus*/
 
 #endif /*__ALINIX_KERNEL_GUI_CANVAS_H*/

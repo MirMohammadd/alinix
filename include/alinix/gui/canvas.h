@@ -108,6 +108,11 @@ void FillCircleHelper(int x, int y, int radius, uint32_t corner, int delta, uint
 void DrawCircleHelper(int x, int y, int radius, uint32_t corner, uint32_t color);
 void Clear();
 
+void DrawFillRoundedRect(uint32_t color, int x, int y, int width, int height, int radius);
+
+void DrawFillRect(uint32_t color, int x_start, int y_start, int width, int height);
+
+
 #endif /*__cplusplus*/
 
 #endif /*__ALINIX_KERNEL_GUI_CANVAS_H*/

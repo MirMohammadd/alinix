@@ -167,3 +167,21 @@ void Clear()
 {
     memset((void*)bufferPointer, 0, Width*Height*4);
 }
+
+void DrawFillRoundedRect(uint32_t color, int x, int y, int width, int height, int radius)
+{
+    // Draw the body
+    DrawFillRect(color, x + radius, y, width - 2 * radius + 1, height);
+ 
+    // Draw the four corners
+    FillCircleHelper(x + width - radius - 1, y + radius, radius, 1, height - 2 * radius - 1, color);
+    FillCircleHelper(x + radius, y + radius, radius, 2, height - 2 * radius - 1, color);
+}
+
+void DrawFillRect(uint32_t color, int x_start, int y_start, int width, int height)
+{
+    for (int y = y_start; y < y_start + height; y++)
+    {
+        DrawLine(color, x_start, y, x_start + width, y);
+    }
+}

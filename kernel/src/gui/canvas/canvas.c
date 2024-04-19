@@ -125,3 +125,39 @@ void FillCircleHelper(int x, int y, int radius, uint32_t corner, int delta, uint
         }
     }
 }
+
+void DrawCircleHelper(int x, int y, int radius, uint32_t corner, uint32_t color)
+{
+    int f = 1 - radius;
+    int ddF_x = 1;
+    int ddF_y = -2 * radius;
+    int i = 0;
+    int j = radius;
+ 
+    while (i < j) {
+        if (f >= 0) {
+            j--;
+            ddF_y += 2;
+            f += ddF_y;
+        }
+        i++;
+        ddF_x += 2;
+        f += ddF_x;
+        if (corner & 0x4) {
+            SetPixel(x + i, y + j, color);
+            SetPixel(x + j, y + i, color);
+        }
+        if (corner & 0x2) {
+            SetPixel(x + i, y - j, color);
+            SetPixel(x + j, y - i, color);
+        }
+        if (corner & 0x8) {
+            SetPixel(x - j, y + i, color);
+            SetPixel(x - i, y + j, color);
+        }
+        if (corner & 0x1) {
+            SetPixel(x - j, y - i, color);
+            SetPixel(x - i, y - j, color);
+        }
+    }
+}

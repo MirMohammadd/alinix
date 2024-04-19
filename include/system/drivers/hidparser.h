@@ -13,6 +13,8 @@ enum HID_USAGE {
     NOTHING = 0xFF
 };
 
+// Defining the useful macros for parsing data from USB report descriptor
+
 #define BUTTON_LEFT    0
 #define BUTTON_RIGHT   1
 #define BUTTON_MIDDLE  2

@@ -96,3 +96,32 @@ void DrawHorizontalLine(uint32_t color, int dx, int x1, int y1)
     for (int i = 0; i < dx; i++)
         SetPixel(x1 + i, y1, color);
 }
+
+void FillCircleHelper(int x, int y, int radius, uint32_t corner, int delta, uint32_t color)
+{
+    int f = 1 - radius;
+    int ddF_x = 1;
+    int ddF_y = -2 * radius;
+    int i = 0;
+    int j = radius;
+ 
+    while (i < j) {
+        if (f >= 0) {
+            j--;
+            ddF_y += 2;
+            f += ddF_y;
+        }
+        i++;
+        ddF_x += 2;
+        f += ddF_x;
+ 
+        if (corner & 0x1) {
+            DrawVerticalLine(color, 2 * j + 1 + delta, x + i, y - j);
+            DrawVerticalLine(color, 2 * i + 1 + delta, x + j, y - i);
+        }
+        if (corner & 0x2) {
+            DrawVerticalLine(color, 2 * j + 1 + delta, x - i, y - j);
+            DrawVerticalLine(color, 2 * i + 1 + delta, x - j, y - i);
+        }
+    }
+}

@@ -101,7 +101,10 @@ void DrawLine(uint32_t color, int x1, int y1, int x2, int y2);
 
 void DrawDiagonalLine(uint32_t color, int dx, int dy, int x1, int y1);
 void DrawVerticalLine(uint32_t color, int dy, int x1, int y1);
-void DrawHorizontalLine(uint32_t color, int dx, int x1, int y1)
+void DrawHorizontalLine(uint32_t color, int dx, int x1, int y1);
+
+
+void FillCircleHelper(int x, int y, int radius, uint32_t corner, int delta, uint32_t color);
 #endif /*__cplusplus*/
 
 #endif /*__ALINIX_KERNEL_GUI_CANVAS_H*/

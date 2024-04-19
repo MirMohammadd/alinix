@@ -31,5 +31,5 @@ void DisableCursor();
 void SetPixel(int x, int y, char color,uint16_t character, char background);
 void ClearScreen(char color );
 void StatusBar(char* text, int percentage);
-// void DrawString(char* text, int x, int y, char color , char background );
+void TextDrawString(char* text, int x, int y, char color, char background);
 #endif /*__ALINIX_KERNEL_TEXTGUI_H*/

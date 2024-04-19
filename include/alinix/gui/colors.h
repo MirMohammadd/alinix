@@ -38,4 +38,6 @@ typedef union Color4Tag
 
 static const uint32_t Transparent = 0x00000000;
 
+
+const uint32_t AlphaBlend(uint32_t color1, uint32_t color2);
 #endif /*__ALINIX_KERNEL_GUI_COLORS_H*/

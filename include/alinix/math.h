@@ -21,5 +21,6 @@
 #define __ALINIX_KERNEL_MATH_H
 
 long Abs(long v);
+long Sign(long v);
 
 #endif 

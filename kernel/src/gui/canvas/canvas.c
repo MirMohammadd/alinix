@@ -200,3 +200,33 @@ void DrawRoundedRect(uint32_t color, int x, int y, int width, int height, int ra
     DrawCircleHelper(x + width - radius - 1, y + height - radius - 1, radius, 4, color);
     DrawCircleHelper(x + radius, y + height - radius - 1, radius, 8, color);
 }
+
+void DrawRect(uint32_t color, int x, int y, int width, int height)
+{
+    int xa = x;
+    int ya = y;
+
+    /* The vertex B has the same y coordinate of A but x is moved of width pixels */
+    int xb = x + width;
+    int yb = y;
+
+    /* The vertex C has the same x coordiate of A but this time is y that is moved of height pixels */
+    int xc = x;
+    int yc = y + height;
+
+    /* The Vertex D has x moved of width pixels and y moved of height pixels */
+    int xd = x + width;
+    int yd = y + height;
+
+    /* Draw a line betwen A and B */
+    DrawLine(color, xa, ya, xb, yb);
+
+    /* Draw a line between A and C */
+    DrawLine(color, xa, ya, xc, yc);
+
+    /* Draw a line between B and D */
+    DrawLine(color, xb, yb, xd, yd + 1);
+
+    /* Draw a line between C and D */
+    DrawLine(color, xc, yc, xd, yd);
+}

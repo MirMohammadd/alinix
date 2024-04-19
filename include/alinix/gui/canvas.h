@@ -112,8 +112,8 @@ void DrawFillRoundedRect(uint32_t color, int x, int y, int width, int height, in
 
 void DrawFillRect(uint32_t color, int x_start, int y_start, int width, int height);
 
-DrawRoundedRect(uint32_t color, int x, int y, int width, int height, int radius);
-
+void DrawRoundedRect(uint32_t color, int x, int y, int width, int height, int radius);
+void DrawRect(uint32_t color, int x, int y, int width, int height);
 #endif /*__cplusplus*/
 
 #endif /*__ALINIX_KERNEL_GUI_CANVAS_H*/

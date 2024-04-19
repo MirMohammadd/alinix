@@ -298,7 +298,7 @@ void DrawString(struct Font* font, char* string, int x, int y, uint32_t color)
                     realColor.c = color;
                     realColor.argb.a = d; // Adjust the alpha component of the color. TODO: Also support full transparent text drawing in the future!
 
-                    SetPixel(px + xOffset, py + yOffset, AlphaBlend(GetPixel(px + xOffset, py + yOffset), realColor.c));
+                    SetPixel(px + xOffset, py + yOffset, AlphaBlend(Canvas_GetPixel(px + xOffset, py + yOffset), realColor.c));
                 }  
             }
         }

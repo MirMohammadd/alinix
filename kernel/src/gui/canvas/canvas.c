@@ -1,6 +1,7 @@
 #include <alinix/gui/canvas.h>
 #include <alinix/types.h>
 #include <alinix/math.h>
+#include <alinix/memory.h>
 
 void Canvas_SetPixel(int x, int y, uint32_t color){
 *(uint32_t*)((uint32_t)bufferPointer + (y * Width * 4 + x * 4)) = color;
@@ -160,4 +161,9 @@ void DrawCircleHelper(int x, int y, int radius, uint32_t corner, uint32_t color)
             SetPixel(x - i, y - j, color);
         }
     }
+}
+
+void Clear()
+{
+    memset((void*)bufferPointer, 0, Width*Height*4);
 }

@@ -20,7 +20,15 @@
 #ifndef __ALINIX_KERNEL_MATH_H
 #define __ALINIX_KERNEL_MATH_H
 
+
+#define MATH_PI 3.14159265358979323846
+
+
 long Abs(long v);
 long Sign(long v);
+
+long sine(double x);
+double cosine(double x);
+double tangent(double x);
 
 #endif 

@@ -306,3 +306,10 @@ void DrawString(struct Font* font, char* string, int x, int y, uint32_t color)
         xOffset += width;
     }
 }
+
+void Clear(uint32_t color)
+{
+    uint32_t* buf = (uint32_t*)bufferPointer;       
+    for(uint32_t index = 0; index < (uint32_t)(Width*Height); index++)
+        buf[index] = color;
+}

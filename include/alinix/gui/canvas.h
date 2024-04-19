@@ -117,6 +117,7 @@ void DrawRect(uint32_t color, int x, int y, int width, int height);
 
 void DrawString(struct Font* font, char* string, int x, int y, uint32_t color);
 
+void Clear(uint32_t color);
 #endif /*__cplusplus*/
 
 #endif /*__ALINIX_KERNEL_GUI_CANVAS_H*/

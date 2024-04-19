@@ -74,8 +74,10 @@ static int Width;
 static int Height;
 Canvas* Canvas_Create(void* buffer, int w, int h);
 
-void Canvas_SetPixel(Canvas* canvas, int x, int y, uint32_t color);
-uint32_t Canvas_GetPixel(Canvas* canvas, int x, int y);
+// void Canvas_SetPixel(Canvas* canvas, int x, int y, uint32_t color);
+void Canvas_SetPixel(int x, int y, uint32_t color);
+// uint32_t Canvas_GetPixel(Canvas* canvas, int x, int y);
+uint32_t Canvas_GetPixel(int x, int y);
 
 void Canvas_Clear(Canvas* canvas);
 void Canvas_ClearColor(Canvas* canvas, uint32_t color);

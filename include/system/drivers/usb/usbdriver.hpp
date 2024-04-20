@@ -2,7 +2,9 @@
 #define __ALINIX_KERNEL_USB_DRIVER_SYSTEM_HPP
 
 
+#include <system/drivers/driver.h>
 #include <system/drivers/driver.hpp>
+#include <system/drivers/usb/usbdevice.hpp>
 
 
         typedef struct InterruptTransfer InterruptTransfer_t;

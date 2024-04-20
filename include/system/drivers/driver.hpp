@@ -10,6 +10,8 @@
 #include <system/drivers/usb/usbdevice.h>
 #include <system/drivers/usb/usbdevice.hpp>
 
+typedef USBDevice USBDevice;
+
 class Driver
     {
     private:

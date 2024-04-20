@@ -10,8 +10,7 @@
 
 typedef struct InterruptTransfer InterruptTransfer_t;
 
-class USBDevice; // Forward declaration of USBDevice class
-
+class USBDriver;
 class USBDriver : public Driver {
 public:
     // Constructor

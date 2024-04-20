@@ -15,6 +15,7 @@ class Driver
         char* Name;
         char* Description;
     public:
+        static USBDevice* device; // Pointer to USBDevice
         Driver(char* name = 0, char* description = 0);
 
         char* GetDriverName();

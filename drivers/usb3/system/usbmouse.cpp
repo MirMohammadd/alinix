@@ -7,8 +7,11 @@
 
 #include <system/drivers/usb/usbmouse.hpp>
 #include <system/drivers/usb/usbdevice.hpp>
+#include <system/drivers/usb/usbendpoint.hpp>
 #include <alinix/memory.h>
 #include <alinix/systeminfo.h>
+#include <alinix/stream.hpp>
+#include <alinix/system.hpp>
 
 
 

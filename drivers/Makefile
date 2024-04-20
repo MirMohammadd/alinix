@@ -1,3 +1,5 @@
+# Alinix Kernel Project, Licenced under GNU affero GPL, see file LICENSE for more information
+
 CONFIG = ../makefile.config
 include ${CONFIG}
 

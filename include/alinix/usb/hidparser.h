@@ -99,5 +99,9 @@ struct HID_DATA {
 
 typedef HIDParser HIDParser;
 
+HIDParser* HIDParserCreate();
+void HIDParserDestroy(HIDParser* parser);
+
+
 
 #endif /*__ALINIX_KERNEL_INCLUDE_USB_HID_PARSER_H*/

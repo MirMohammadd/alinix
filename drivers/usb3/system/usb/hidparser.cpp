@@ -1,19 +1,14 @@
-#include <system/usb/hideparser.h>
-#include <common/memoryoperations.h>
-#include <system/log.h>
-
-using namespace HeisenOs;
-using namespace HeisenOs::common;
-using namespace HeisenOs::system;
+#include <system/drivers/hidparser.hpp>
+#include <alinix/memory.h>
+#include <alinix/log.h>
 
 #define HID_SHOW_INFO 0
-
 char spaces_buff[33];
 char* spaces(unsigned cnt) {
     if (cnt > 32)
         return "**";
 
-    MemoryOperations::memset(spaces_buff, ' ', 32);
+    memset(spaces_buff, ' ', 32);
     spaces_buff[cnt] = 0;
     return spaces_buff;
 }
@@ -130,7 +125,7 @@ bool HIDParser::Parse(struct HID_DATA* data)
             if (HID_SHOW_INFO) Log(Info, "\n %02X ", this->report_desc[this->pos]);
             this->item = this->report_desc[this->pos++];
             this->value = 0;
-            MemoryOperations::memcpy(&this->value, &this->report_desc[this->pos], item_size[this->item & SIZE_MASK]);
+            memcpy(&this->value, &this->report_desc[this->pos], item_size[this->item & SIZE_MASK]);
             if (HID_SHOW_INFO) {
                 for (int t=0; t<4; t++) {
                     if (t < item_size[this->item & SIZE_MASK])
@@ -272,7 +267,7 @@ bool HIDParser::Parse(struct HID_DATA* data)
                 //Log(Info, "\n this->data.offset = %d", this->data.offset);
                 
                 // Get Object in pData
-                MemoryOperations::memcpy(data, &this->data, sizeof(struct HID_DATA));
+                memcpy(data, &this->data, sizeof(struct HID_DATA));
                 
                 // Increment Report Offset
                 *this->GetReportOffset(this->data.report_id, (uint8_t) (this->item & ITEM_MASK)) += this->data.size;
@@ -369,10 +364,10 @@ void HIDParser::Reset()
     this->usage_size = 0;
     this->usage_min = -1;
     this->usage_max = -1;
-    MemoryOperations::memset(this->usage_table, 0, sizeof(struct HID_NODE) * USAGE_TAB_SIZE);
+    memset(this->usage_table, 0, sizeof(struct HID_NODE) * USAGE_TAB_SIZE);
     
-    MemoryOperations::memset(this->offset_table, 0, MAX_REPORT * 3 * sizeof(int));
-    MemoryOperations::memset(&this->data, 0, sizeof(struct HID_DATA));
+    memset(this->offset_table, 0, MAX_REPORT * 3 * sizeof(int));
+    memset(&this->data, 0, sizeof(struct HID_DATA));
     
     this->data.report_id = 1; // we must give it a non-zero value or the parser doesn't work
 }
@@ -382,22 +377,22 @@ bool HIDParser::FindObject(struct HID_DATA* data)
     struct HID_DATA found_data;
     this->Reset();
     while (this->Parse(&found_data)) {
-        if ((data->path.size > 0) && (found_data.type == data->type) && MemoryOperations::memcmp(found_data.path.node, data->path.node, data->path.size * sizeof(struct HID_NODE)) == 0) 
+        if ((data->path.size > 0) && (found_data.type == data->type) && memcmp(found_data.path.node, data->path.node, data->path.size * sizeof(struct HID_NODE)) == 0) 
         {
-            MemoryOperations::memcpy(data, &found_data, sizeof(struct HID_DATA));
+            memcpy(data, &found_data, sizeof(struct HID_DATA));
             data->report_count = this->report_count;
             return true;
         }
         // Found by ReportID/Offset
         else if ((found_data.report_id == data->report_id) && (found_data.type == data->type) && (found_data.offset == data->offset)) {
-            MemoryOperations::memcpy(data, &found_data, sizeof(struct HID_DATA));
+            memcpy(data, &found_data, sizeof(struct HID_DATA));
             data->report_count = this->report_count;
             return true;
         }
     }
     return false;
 }
-int* HIDParser::GetReportOffset(const common::uint8_t report_id, const common::uint8_t report_type)
+int* HIDParser::GetReportOffset(const uint8_t report_id, const uint8_t report_type)
 {
     int pos = 0;
     while ((pos < MAX_REPORT) && (this->offset_table[pos][0] != 0)) {

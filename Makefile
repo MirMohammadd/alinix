@@ -81,6 +81,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 	nasm -f elf32 -O0 $< -o $@
 
 Alinix.bin: kernel/linker.ld $(KRNLOBJS)
+	cd drivers && $(MAKE)
 	i686-elf-ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
 
 Alinix.iso: Alinix.bin
@@ -88,7 +89,7 @@ Alinix.iso: Alinix.bin
 
 all : Alinix.iso
 
-menuconfig: $(shell chmod +x dialog.sh && ./dialog.sh)
+# menuconfig: $(shell chmod +x dialog.sh && ./dialog.sh)
 
 
 .PHONY: clean

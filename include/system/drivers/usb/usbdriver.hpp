@@ -12,9 +12,9 @@
         {
         public:
             // Which device is this driver for
-            USBDevice* device;
+            class USBDevice* device;
         public:
-            USBDriver(USBDevice* dev, char* driverName);
+            USBDriver(class USBDevice* dev, char* driverName);
             virtual ~USBDriver();
 
             // De-Active this driver from the system

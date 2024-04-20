@@ -3,7 +3,6 @@
 
 
 #include <system/drivers/driver.h>
-#include <system/usb/usbdevice.h>
 #include <system/drivers/driver.hpp>
 
 

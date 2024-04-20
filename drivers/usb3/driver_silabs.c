@@ -320,6 +320,9 @@
 //     .write = silabs_write,
 //     .purge = silabs_purge,
 // 	.set_dtr_rts = silabs_set_dtr_rts,
+
+
+
 //     .read_data_process = NULL,
 // };
 

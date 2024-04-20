@@ -29,57 +29,43 @@ typedef struct InterruptTransfer
 
     void* qh;
     int endpoint;
-} InterruptTransfer_t;
+} InterruptTransfer;
 
-// class USBController;
-class USBDevice{
-    public:
-        uint8_t portNum = 0;
-        uint8_t devAddress = 0;
-    // Which controller is this device attached to?
-        USBController* controller = 0;
-    // The name of this device present in the string descriptor
-        char* deviceName = 0;
-        // Class code of this device
-        uint16_t classID = 0;
-        // Sub-Class code of this device
-        uint16_t subclassID = 0;
-        // Protocol used
-        uint16_t protocol = 0;
-        // Vendor ID of device
-        uint16_t vendorID = 0;
-        // Product ID of device
-        uint16_t productID = 0;
+class USBController;
 
-        // Driver associated with this device, 0 if none found
-        USBDevice* driver = 0;
+class USBDevice {
+public:
+    uint8_t portNum = 0;
+    uint8_t devAddress = 0;
+    USBController* controller = nullptr;
+    char* deviceName = nullptr;
+    uint16_t classID = 0;
+    uint16_t subclassID = 0;
+    uint16_t protocol = 0;
+    uint16_t vendorID = 0;
+    uint16_t productID = 0;
+    USBController* driver = nullptr;
 
-        //// Properties per controller
-        struct UHCIProperties
-        {
-            bool lowSpeedDevice;
-            int maxPacketSize;
-        } uhciProperties;
-        struct OHCIProperties
-        {
-            int desc_mps;
-            bool ls_device;
-        } ohciProperties;
+    struct UHCIProperties {
+        bool lowSpeedDevice;
+        int maxPacketSize;
+    } uhciProperties;
 
-        // List of all endpoints of device
+    struct OHCIProperties {
+        int desc_mps;
+        bool ls_device;
+    } ohciProperties;
 
-        // Pointer to HID descriptor found in interface
-        // Only valid for mouse or keyboard
-        uint8_t* hidDescriptor = 0;
-    
-    public:
-        USBDevice();
-        ~USBDevice();
+    uint8_t* hidDescriptor = nullptr;
 
-        bool AssignDriver();
+public:
+    USBDevice();
+    ~USBDevice();
 
-            // Called when device is unplugged from system
-        void OnUnplugged();
+    bool AssignDriver();
+
+    void OnUnplugged();
 };
+
 
 #endif /*__ALINIX_KERNEL_USB_CONTROLLER_SYSTEM_HPP*/

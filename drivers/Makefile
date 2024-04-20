@@ -21,11 +21,13 @@ APPOUT := ../isofiles/drivers
 .PHONY: all clean
 
 all: linker.ld $(LIBFILE) $(OBJFILES)
-	for app in $(USB_DIR) ; do \
-		echo building $$app.bin to $(APPOUT)/$$app.bin; \
-    	i686-elf-ld $(LDPARAMS) -T $< -o $(APPOUT)/$$app.bin $$app/*.o -L$(LIBDIR) --library=cactusos; \
-		nm -a $(APPOUT)/$$app.bin | sort -d > $(APPOUT)/$$app.sym; \
+	for app in $(OBJFILES) ; do \
+		app_name=$$(basename $$app .o); \
+		echo building $$app_name.bin to $(APPOUT)/$$app_name.bin; \
+		i686-elf-ld $(LDPARAMS) -T $< -o $(APPOUT)/$$app_name.bin $$app -L$(LIBDIR) --library=cactusos; \
+		nm -a $(APPOUT)/$$app_name.bin | sort -d > $(APPOUT)/$$app_name.sym; \
 	done
+
 
 clean:
 	rm -rf $(OBJFILES) $(LIBFILE)

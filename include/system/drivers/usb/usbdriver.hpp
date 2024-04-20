@@ -23,7 +23,7 @@ public:
     // Other member functions
     virtual void DeInitialize();
     virtual bool HandleInterruptPacket(InterruptTransfer* transfer);
-    static USBDevice* device; // Pointer to USBDevice
+    // static USBDevice* device; // Pointer to USBDevice
 };
 
 

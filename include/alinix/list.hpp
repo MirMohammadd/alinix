@@ -1,5 +1,12 @@
 #ifndef __ALINIX_KERNEL_LISTS_HPP
 #define __ALINIX_KERNEL_LISTS_HPP
+
+#ifndef __cplusplus
+#error "This file must be compiled with C++"
+#endif
+
+
+
 template <typename T>
 struct ListNode
 {

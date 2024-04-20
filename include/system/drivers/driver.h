@@ -3,10 +3,10 @@
 
 #include <alinix/types.h>
 
-char* GetDriverName();
-char* GetDriverDescription();
+static char* GetDriverName();
+static char* GetDriverDescription();
 
-bool Initialize();
+static bool Initialize();
 
 
 

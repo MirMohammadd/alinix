@@ -8,7 +8,7 @@
 #include <alinix/list.hpp>
 
 
-typedef  InterruptTransfer InterruptTransfer ;
+// typedef  InterruptTransfer InterruptTransfer ;
 
 
 class USBDriver;

@@ -3,7 +3,6 @@ include ${CONFIG}
 
 LIBINCLUDE := ../lib/include
 LIBDIR := ../lib
-LIBFILE := ../lib/libcactusos.a
 DEBUG := -g
 LIBDRIVEINCLUDE = ../libdrive/include
 
@@ -20,21 +19,21 @@ APPOUT := ../isofiles/drivers
 
 .PHONY: all clean
 
-all: linker.ld $(LIBFILE) $(OBJFILES)
+all: linker.ld $(OBJFILES)
+	mkdir -p $(APPOUT)  # Create the output directory if it doesn't exist
 	for app in $(OBJFILES) ; do \
 		app_name=$$(basename $$app .o); \
-		echo building $$app_name.bin to $(APPOUT)/$$app_name.bin; \
-		i686-elf-ld $(LDPARAMS) -T $< -o $(APPOUT)/$$app_name.bin $$app -L$(LIBDIR) --library=cactusos; \
-		nm -a $(APPOUT)/$$app_name.bin | sort -d > $(APPOUT)/$$app_name.sym; \
+		app_bin=$(APPOUT)/$$app_name.bin; \
+		app_dir=$$(dirname $$app_bin); \
+		mkdir -p $$app_dir; \
+		echo building $$app_name.bin to $$app_bin; \
+		i686-elf-ld $(LDPARAMS) -T $< -o $$app_bin $$app -L$(LIBDIR); \
+		nm -a $$app_bin | sort -d > $(APPOUT)/$$app_name.sym; \
 	done
 
 
 clean:
-	rm -rf $(OBJFILES) $(LIBFILE)
-
-# Build libcactusos.a with makefile in the LIBDIR
-$(LIBFILE):
-	cd $(LIBDIR) && $(MAKE)
+	rm -rf $(OBJFILES)
 
 %.o: %.cpp
 	mkdir -p $(@D)

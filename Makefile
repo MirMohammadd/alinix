@@ -89,7 +89,7 @@ Alinix.iso: Alinix.bin
 
 all : Alinix.iso
 
-menuconfig: $(shell chmod +x dialog.sh && ./dialog.sh)
+# menuconfig: $(shell chmod +x dialog.sh && ./dialog.sh)
 
 
 .PHONY: clean

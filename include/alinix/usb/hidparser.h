@@ -97,7 +97,7 @@ struct HID_DATA {
 
 
 
-typedef HIDParser HIDParser;
+// typedef HIDParser HIDParser;
 
 HIDParser* HIDParserCreate();
 void HIDParserDestroy(HIDParser* parser);

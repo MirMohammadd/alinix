@@ -6,6 +6,8 @@
 #endif
 
 
+#include <alinix/lock.hpp>
+
 
 template <typename T>
 struct ListNode
@@ -42,7 +44,7 @@ public:
 private:
     ListNode<T>* head_;
     ListNode<T>* tail_;
-    system::MutexLock lock;
+    MutexLock lock;
 
     int size_;
 

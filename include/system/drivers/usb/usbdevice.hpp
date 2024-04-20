@@ -31,7 +31,7 @@ typedef struct InterruptTransfer
     int endpoint;
 } InterruptTransfer_t;
 
-class USBController;
+// class USBController;
 class USBDevice{
     public:
         uint8_t portNum = 0;

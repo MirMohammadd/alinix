@@ -13,6 +13,7 @@
 #include <alinix/stream.hpp>
 #include <alinix/enums.h>
 #include <alinix/system.h>
+#include <alinix/components/graphicdevice.hpp>
 
 #define DEFAULT_SCREEN_WIDTH 1024
 #define DEFAULT_SCREEN_HEIGHT 768
@@ -59,7 +60,7 @@ public:
     // static DMAController* dma;
     // static Virtual8086Manager* vm86Manager;
     // static Virtual8086Monitor* vm86Monitor;
-    // static GraphicsDevice* gfxDevice;
+    static GraphicsDevice* gfxDevice;
     // static EDID* edid;
     // static PCIController* pci;
     // static drivers::DriverManager* driverManager;

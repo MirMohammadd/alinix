@@ -10,20 +10,20 @@
 
 // typedef struct InterruptTransfer InterruptTransfer_t;
 
-// class USBDriver : public Driver
-// {
-// public:
-//     // Constructor
-//     USBDriver(USBDevice* dev, char* driverName);
+class USBDriver : public Driver
+{
+public:
+    // Constructor
+    USBDriver(USBDevice* dev, char* driverName);
  
-//     // Destructor
-//     virtual ~USBDriver();
+    // Destructor
+    virtual ~USBDriver();
 
-//     // Other member functions
-//     virtual void DeInitialize();
-//     virtual bool HandleInterruptPacket(InterruptTransfer_t* transfer);
-//     static USBDevice* device; // Pointer to USBDevice
-// };
+    // Other member functions
+    virtual void DeInitialize();
+    virtual bool HandleInterruptPacket(InterruptTransfer_t* transfer);
+    static USBDevice* device; // Pointer to USBDevice
+};
 
 
 

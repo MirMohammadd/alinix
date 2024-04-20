@@ -27,3 +27,7 @@ class HIDParser{
             bool FindObject(struct HID_DATA* data);
             int* GetReportOffset(const uint8_t report_id, const uint8_t report_type);        
 };
+
+extern "C" HIDParser* HIDParser_Parse(struct HID_DATA* data){
+    return reinterpret_cast<HIDParser*>(new HIDParser());
+}

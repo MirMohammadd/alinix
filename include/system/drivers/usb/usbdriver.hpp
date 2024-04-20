@@ -21,7 +21,7 @@ public:
 
     // Other member functions
     void DeInitialize();
-    bool HandleInterruptPacket(InterruptTransfer_t* transfer);
+    bool HandleInterruptPacket(struct InterruptTransfer* transfer);
     // static USBDevice* device; // Pointer to USBDevice
 };
 

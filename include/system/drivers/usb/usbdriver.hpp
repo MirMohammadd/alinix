@@ -2,7 +2,6 @@
 #define __ALINIX_KERNEL_USB_DRIVER_SYSTEM_HPP
 
 
-#include <system/drivers/driver.h>
 #include <system/drivers/driver.hpp>
 
 

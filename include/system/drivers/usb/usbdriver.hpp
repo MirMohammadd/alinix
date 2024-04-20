@@ -10,6 +10,7 @@
 
 typedef struct InterruptTransfer InterruptTransfer_t;
 
+
 class USBDriver;
 class USBDriver : public Driver {
 public:

@@ -1,7 +1,9 @@
 #ifndef __ALINIX_KERNEL_LISTS_HPP
 #define __ALINIX_KERNEL_LISTS_HPP
 
-
+#ifndef __cplusplus
+#error "This file must be compiled with C++"
+#endif
 
 
 #include <alinix/lock.hpp>
@@ -17,17 +19,6 @@ struct ListNode
     ListNode<T>* next;
     ListNode<T>* prev;
 };
-
-
-
-extern "C"{
-    typedef void* ListHandle;
-
-    ListHandle CreateList();
-    void DeleteList(ListHandle list);
-    void AddToList(ListHandle list, void* item);
-    void RemoveFromList(ListHandle list, void* item);
-}
 
 
 template <typename T>
@@ -230,11 +221,6 @@ for(int i = 0; i < size_; i++)
 if(GetAt(i) == e)
     return i;
 return -1;
-}
-
-
-extern "C"{
-    typedef void* ListHandle;
 }
 
 #endif /*__ALINIX_KERNEL_LISTS_HPP*/

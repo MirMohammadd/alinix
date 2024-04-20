@@ -104,6 +104,10 @@ public:
     
     // Get maximum of Logical unit numbers, Only for Mass Storage Devices!
     int GetMaxLuns(USBDevice* device);
+
+    public:
+        uint8_t* hidDescriptor = 0;
+
 };
 
 #endif /*__ALINIX_KERNEL_USB_CONTROLLER_SYSTEM_HPP*/

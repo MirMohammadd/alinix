@@ -32,22 +32,22 @@ enum USBControllerType
     xHCI
 };
 
-typedef struct InterruptTransfer
-{
-    uint8_t* bufferPointer;
-    uint32_t bufferPhys;
-    int bufferLen;
+// typedef struct InterruptTransfer
+// {
+//     uint8_t* bufferPointer;
+//     uint32_t bufferPhys;
+//     int bufferLen;
 
-    USBDriver* handler;
-    int queueIndex;
+//     USBDriver* handler;
+//     int queueIndex;
 
-    uint32_t tdPhys;
-    void* td;
-    int numTd;
+//     uint32_t tdPhys;
+//     void* td;
+//     int numTd;
 
-    void* qh;
-    int endpoint;
-} InterruptTransfer_t;
+//     void* qh;
+//     int endpoint;
+// } InterruptTransfer_t;
 
 class USBDevice;
 class USBController

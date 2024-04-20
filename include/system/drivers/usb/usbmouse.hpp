@@ -14,7 +14,9 @@ private:
     struct HID_DATA hidX;
     struct HID_DATA hidY;
     struct HID_DATA hidZ;
-    USBMouse* device;
+    uint8_t* device;
+    uint8_t* hidDescriptor = 0;
+
 
     int InInterruptEndpoint = -1;
 public:

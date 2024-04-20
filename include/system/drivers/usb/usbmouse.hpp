@@ -21,13 +21,13 @@ public:
     USBMouse(USBDevice* dev);
     
     // Called when device is plugged into system
-    bool Initialize() override;
+    bool Initialize();
 
     // Called when device is unplugged from system
-    void DeInitialize() override;
+    void DeInitialize();
 
     // Called by USB driver when we receive a interrupt packet
-    bool HandleInterruptPacket(InterruptTransfer* transfer) override;
+    bool HandleInterruptPacket(InterruptTransfer* transfer);
 };
 
 #endif /*__ALINIX_KERNEL_SYSTEM_DRIVERS_USB_USB_MOUSE_HPP*/

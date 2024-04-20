@@ -103,5 +103,9 @@ HIDParser* HIDParserCreate();
 void HIDParserDestroy(HIDParser* parser);
 
 
+bool HIDParser_Parse(struct HID_DATA* data);
+void HIDParser_Reset();
+bool HIDParser_FindObject(struct HID_DATA* data);
+int* HIDParser_GetReportOffset(const uint8_t report_id, const uint8_t report_type);  
 
 #endif /*__ALINIX_KERNEL_INCLUDE_USB_HID_PARSER_H*/

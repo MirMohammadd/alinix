@@ -1,18 +1,15 @@
 // #include <system/drivers/usb/usbmouse.h>
-#include <system/drivers/usb/usbdefs.h>
-#include <system/log.h>
-#include <system/system.h>
-#include <system/usb/hidparser.h>
+// #include <system/drivers/usb/usbdefs.h>
+// #include <system/log.h>
+// #include <system/system.h>
+// #include <system/usb/hidparser.h>
 
 
 #include <system/drivers/usb/usbmouse.hpp>
 #include <system/drivers/usb/usbdevice.hpp>
+#include <alinix/memory.h>
 
-using namespace HeisenOs;
-using namespace HeisenOs::common;
-using namespace HeisenOs::core;
-using namespace HeisenOs::system;
-using namespace HeisenOs::system::drivers;
+
 
 USBMouse::USBMouse(USBDevice* dev)
 : USBDriver(dev, "USB HID Mouse")
@@ -20,7 +17,7 @@ USBMouse::USBMouse(USBDevice* dev)
 
 bool USBMouse::GetHIDProperty(struct HID_DATA* target, uint8_t* buffer, int bufLen, HID_USAGE item)
 {
-    MemoryOperations::memset(target, 0, sizeof(struct HID_DATA));
+    memset(target, 0, sizeof(struct HID_DATA));
     target->type = ITEM_INPUT;
     target->path.node[0].u_page = HID_PAGE_USAGE::GEN_DESKTOP;
     target->path.node[0].usage = HID_USAGE::MOUSE;

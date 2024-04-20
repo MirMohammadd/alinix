@@ -8,7 +8,7 @@
 #include <alinix/list.hpp>
 
 
-typedef struct InterruptTransfer InterruptTransfer_t;
+// typedef struct InterruptTransfer InterruptTransfer_t;
 
 
 class USBDriver;

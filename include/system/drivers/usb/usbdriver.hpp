@@ -24,7 +24,7 @@ public:
     virtual bool HandleInterruptPacket(InterruptTransfer_t* transfer);
 
 public:
-    USBDevice* device; // Pointer to USBDevice
+    static USBDevice* device; // Pointer to USBDevice
 };
 
 

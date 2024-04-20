@@ -4,11 +4,13 @@
 
 #ifndef __cplusplus
 # error "This file must be compiled with C++"
+
 #endif /*__cplusplus*/
 
 #include <alinix/systeminfo.h>
 #include <alinix/print.h>
 #include <alinix/printk.h>
+#include <alinix/stream.hpp>
 
 #define DEFAULT_SCREEN_WIDTH 1024
 #define DEFAULT_SCREEN_HEIGHT 768
@@ -76,7 +78,7 @@ public:
     // static SymbolDebugger* kernelDebugger;
     // #if BOCHS_GFX_HACK
     static bool isBochs; //are we running inside bochs
-    #endif
+    // #endif
 
     #if ENABLE_ADV_DEBUG
     typedef struct

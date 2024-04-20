@@ -3,6 +3,20 @@
 
 #include <alinix/types.h>
 
+#define DEV_TO_HOST     0x80
+#define HOST_TO_DEV     0x00
+#define REQ_TYPE_STNDRD 0x00
+#define REQ_TYPE_CLASS  0x20
+#define REQ_TYPE_VENDOR 0x40
+#define REQ_TYPE_RESV   0x60
+#define RECPT_DEVICE    0x00
+#define RECPT_INTERFACE 0x01
+#define RECPT_ENDPOINT  0x02
+#define RECPT_OTHER     0x03
+#define STDRD_GET_REQUEST   (DEV_TO_HOST | REQ_TYPE_STNDRD | RECPT_DEVICE)
+#define STDRD_SET_REQUEST   (HOST_TO_DEV | REQ_TYPE_STNDRD | RECPT_DEVICE)
+#define STDRD_SET_INTERFACE (HOST_TO_DEV | REQ_TYPE_STNDRD | RECPT_INTERFACE)
+
 #define USB_TDRSTR      50   // reset on a root hub
 #define USB_TDRST       10   // minimum delay for a reset
 #define USB_TRHRSI      3   // No more than this between resets for root hubs

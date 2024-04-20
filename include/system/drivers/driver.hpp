@@ -8,6 +8,9 @@
 
 
 #include <system/drivers/usb/usbdevice.h>
+#include <system/drivers/usb/usbdevice.hpp>
+
+// typedef USBDevice USBDevice;
 
 class Driver
     {
@@ -15,6 +18,7 @@ class Driver
         char* Name;
         char* Description;
     public:
+        // static USBDevice* device; // Pointer to USBDevice
         Driver(char* name = 0, char* description = 0);
 
         char* GetDriverName();

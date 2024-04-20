@@ -11,23 +11,25 @@
 #include <alinix/print.h>
 #include <alinix/printk.h>
 #include <alinix/stream.hpp>
+#include <alinix/enums.h>
+#include <alinix/system.h>
 
 #define DEFAULT_SCREEN_WIDTH 1024
 #define DEFAULT_SCREEN_HEIGHT 768
 #define DEFAULT_SCREEN_BPP 32
 
-enum ScreenMode
-{
-    TextMode,
-    GraphicsMode
-};
+// enum ScreenMode
+// {
+//     TextMode,
+//     GraphicsMode
+// };
 
-enum PowerRequest
-{
-    None,
-    Shutdown,
-    Reboot
-};
+// enum PowerRequest
+// {
+//     None,
+//     Shutdown,
+//     Reboot
+// };
 
 /**
  * The default stream where processes data is send to.
@@ -68,7 +70,7 @@ public:
     // static APMController* apm;
     static SharedSystemInfo* systemInfo;
 
-    static ScreenMode screenMode;
+    // static ScreenMode screenMode;
     static bool gdbEnabled; //Is the gdb stub enabled?
     static bool setupMode; //Are we running the setup program?
     // static KeyboardManager* keyboardManager;

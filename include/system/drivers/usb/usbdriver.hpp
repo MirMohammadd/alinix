@@ -14,7 +14,7 @@
 class USBDriver {
 public:
     // Constructor
-    USBDriver(USBDevice* dev, char* driverName);
+    USBDriver(class USBDevice* dev, char* driverName);
  
     // Destructor
     ~USBDriver();

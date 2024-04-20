@@ -8,6 +8,7 @@
 
 
         typedef struct InterruptTransfer InterruptTransfer_t;
+class USBDevice;
 
 class USBDriver : public Driver
 {
@@ -25,6 +26,8 @@ public:
 private:
     USBDevice* device; // Pointer to USBDevice
 };
+
+
 
 
 #endif /*__ALINIX_KERNEL_USB_DRIVER_SYSTEM_HPP*/

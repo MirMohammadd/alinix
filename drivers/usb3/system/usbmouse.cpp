@@ -12,6 +12,7 @@
 #include <alinix/systeminfo.h>
 #include <alinix/stream.hpp>
 #include <alinix/system.hpp>
+#include <system/drivers/usb/usbdefs.hpp>
 
 
 

@@ -1,12 +1,8 @@
 #ifndef __CACTUSOS__SYSTEM__DRIVERS__USB__CONTROLLERS__XHCI_H
 #define __CACTUSOS__SYSTEM__DRIVERS__USB__CONTROLLERS__XHCI_H
 
-/*
- * xHCI Support is not working yet, at the moment it is to much work to support the controller.
- * Right now only the ohci,uhci and ehci are supported.
- * Perhaps in the future this implementation will be made to a working state as well
-*/
-/*
+
+
 #include <system/drivers/driver.h>
 #include <system/components/pci.h>
 #include <system/interruptmanager.h>

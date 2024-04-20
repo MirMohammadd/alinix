@@ -52,8 +52,6 @@ enum USBControllerType
 class USBDevice;
 class USBController
 {
-protected:
-    List<InterruptTransfer_t*> interrupTransfers;            
 public:
     // What type of controller is this
     USBControllerType type;

@@ -8,6 +8,7 @@
 
 
 #include <system/drivers/usb/usbdevice.h>
+#include <system/drivers/usb/usbdevice.hpp>
 
 class Driver
     {

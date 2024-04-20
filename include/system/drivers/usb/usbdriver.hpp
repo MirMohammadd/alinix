@@ -23,7 +23,7 @@ public:
     virtual void DeInitialize();
     virtual bool HandleInterruptPacket(InterruptTransfer_t* transfer);
 
-private:
+public:
     USBDevice* device; // Pointer to USBDevice
 };
 

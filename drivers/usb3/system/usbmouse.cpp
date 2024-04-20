@@ -13,6 +13,8 @@
 #include <alinix/stream.hpp>
 #include <alinix/system.hpp>
 #include <system/drivers/usb/usbdefs.hpp>
+#include <alinix/log.h>
+#include <alinix/system.h>
 
 
 

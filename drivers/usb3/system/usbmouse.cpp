@@ -95,7 +95,7 @@ bool USBMouse::Initialize()
 void USBMouse::DeInitialize()
 { } // Mouse does not have any requirements for unplugging
 
-bool USBMouse::HandleInterruptPacket(InterruptTransfer_t* transfer)
+bool USBMouse::HandleInterruptPacket(InterruptTransfer* transfer)
 {
     uint8_t* packet = transfer->bufferPointer;
     //Log(Info, "Received mouse packet! %d %d %d %d", packet[0], (int8_t)packet[1], (int8_t)packet[2], packet[3]);

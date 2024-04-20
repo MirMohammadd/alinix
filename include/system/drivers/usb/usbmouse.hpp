@@ -27,7 +27,7 @@ public:
     void DeInitialize() override;
 
     // Called by USB driver when we receive a interrupt packet
-    bool HandleInterruptPacket(InterruptTransfer_t* transfer) override;
+    bool HandleInterruptPacket(InterruptTransfer* transfer) override;
 };
 
 #endif /*__ALINIX_KERNEL_SYSTEM_DRIVERS_USB_USB_MOUSE_HPP*/

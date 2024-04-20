@@ -10,11 +10,13 @@
 
         class USBDriver : public Driver
         {
+            friend class USBDevice;
         public:
+
             // Which device is this driver for
-            class USBDevice* device;
+            USBDevice* device;
         public:
-            USBDriver(class USBDevice* dev, char* driverName);
+            USBDriver(USBDevice* dev, char* driverName);
             virtual ~USBDriver();
 
             // De-Active this driver from the system

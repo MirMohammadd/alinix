@@ -12,7 +12,7 @@
 
 
 class USBDriver;
-class USBDriver : public Driver {
+class USBDriver {
 public:
     // Constructor
     USBDriver(USBDevice* dev, char* driverName);

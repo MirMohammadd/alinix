@@ -29,7 +29,7 @@ typedef struct InterruptTransfer
 
     void* qh;
     int endpoint;
-} InterruptTransfer;
+} InterruptTransfer_t;
 
 class USBController;
 class USBDevice; // Forward declaration of USBDevice class

@@ -14,6 +14,7 @@ private:
     struct HID_DATA hidX;
     struct HID_DATA hidY;
     struct HID_DATA hidZ;
+    char* device;
 
     int InInterruptEndpoint = -1;
 public:

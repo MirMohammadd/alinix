@@ -5,10 +5,10 @@
 #include <system/drivers/driver.h>
 #include <system/drivers/driver.hpp>
 #include <system/drivers/usb/usbdevice.hpp>
+#include <alinix/list.hpp>
 
 
-        typedef struct InterruptTransfer InterruptTransfer_t;
-class USBDevice;
+typedef struct InterruptTransfer InterruptTransfer_t;
 
 class USBDriver : public Driver
 {

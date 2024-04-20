@@ -11,6 +11,8 @@
 
 #include <alinix/types.h>
 #include <system/drivers/usb/usbdriver.hpp>
+#include <system/drivers/usb/usbcontroller.hpp>
+
 
 typedef struct InterruptTransfer
 {

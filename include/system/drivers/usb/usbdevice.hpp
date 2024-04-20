@@ -32,6 +32,8 @@ typedef struct InterruptTransfer
 } InterruptTransfer;
 
 class USBController;
+class USBDevice; // Forward declaration of USBDevice class
+
 
 class USBDevice {
 public:

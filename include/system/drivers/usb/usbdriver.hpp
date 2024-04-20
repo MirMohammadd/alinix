@@ -10,8 +10,9 @@
 
 typedef struct InterruptTransfer InterruptTransfer_t;
 
-class USBDriver : public Driver
-{
+class USBDevice; // Forward declaration of USBDevice class
+
+class USBDriver : public Driver {
 public:
     // Constructor
     USBDriver(USBDevice* dev, char* driverName);
@@ -21,7 +22,7 @@ public:
 
     // Other member functions
     virtual void DeInitialize();
-    virtual bool HandleInterruptPacket(InterruptTransfer_t* transfer);
+    virtual bool HandleInterruptPacket(InterruptTransfer* transfer);
     static USBDevice* device; // Pointer to USBDevice
 };
 

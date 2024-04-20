@@ -3,19 +3,19 @@
 
 #include <alinix/types.h>
 
-enum EndpointDirection : int
-{
-    Out,
-    In
-};
+// enum EndpointDirection : int
+// {
+//     Out,
+//     In
+// };
 
-enum EndpointType : int
-{
-    Control,
-    Isochronous,
-    Bulk,
-    Interrupt
-};
+// enum EndpointType : int
+// {
+//     Control,
+//     Isochronous,
+//     Bulk,
+//     Interrupt
+// };
 
 // An easy interface for managing endpoints
 class USBEndpoint

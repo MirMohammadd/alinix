@@ -8,6 +8,7 @@
 #include <system/drivers/usb/usbmouse.hpp>
 #include <system/drivers/usb/usbdevice.hpp>
 #include <alinix/memory.h>
+#include <alinix/systeminfo.h>
 
 
 
@@ -94,9 +95,9 @@ bool USBMouse::HandleInterruptPacket(InterruptTransfer_t* transfer)
     //Log(Info, "Received mouse packet! %d %d %d %d", packet[0], (int8_t)packet[1], (int8_t)packet[2], packet[3]);
     
     // Process buttons first, this is the same (we assume) for all mouse devices
-    System::systemInfo->MouseLeftButton = packet[0] & (1<<0);
-    System::systemInfo->MouseRightButton = packet[0] & (1<<1);
-    System::systemInfo->MouseMiddleButton = packet[0] & (1<<2);
+    systemInfo->MouseLeftButton = packet[0] & (1<<0);
+    systemInfo->MouseRightButton = packet[0] & (1<<1);
+    systemInfo->MouseMiddleButton = packet[0] & (1<<2);
 
     int realX = 0;
     int realY = 0;
@@ -105,31 +106,31 @@ bool USBMouse::HandleInterruptPacket(InterruptTransfer_t* transfer)
     if(this->useCustomReport) {
         realX = (int8_t)(packet[this->hidX.offset / 8]);
         realY = (int8_t)(packet[this->hidY.offset / 8]);
-        System::systemInfo->MouseZ += (int8_t)(packet[this->hidZ.offset / 8]);
+        systemInfo->MouseZ += (int8_t)(packet[this->hidZ.offset / 8]);
     }
     else {
         realX = (int8_t)(packet[1]);
         realY = (int8_t)(packet[2]);
-        System::systemInfo->MouseZ += (int8_t)(packet[3]);
+        systemInfo->MouseZ += (int8_t)(packet[3]);
     }
 
     // Boundry checking for desktop
 
-    int newX = (System::systemInfo->MouseX + realX);
-    if((newX >= 0) && (newX < (int)System::gfxDevice->width))
-        System::systemInfo->MouseX = newX;
+    int newX = (systemInfo->MouseX + realX);
+    if((newX >= 0) && (newX < (int)gfxDevice->width))
+        systemInfo->MouseX = newX;
     else if(newX < 0)
-        System::systemInfo->MouseX = 0;
-    else if(newX >= (int)System::gfxDevice->width)
-        System::systemInfo->MouseX = System::gfxDevice->width - 1;
+        systemInfo->MouseX = 0;
+    else if(newX >= (int)gfxDevice->width)
+        systemInfo->MouseX = gfxDevice->width - 1;
     
-    int newY = (System::systemInfo->MouseY + realY);
-    if((newY >= 0) && (newY < (int)System::gfxDevice->height))
-        System::systemInfo->MouseY = newY;
+    int newY = (systemInfo->MouseY + realY);
+    if((newY >= 0) && (newY < (int)gfxDevice->height))
+        systemInfo->MouseY = newY;
     else if(newY < 0)
-        System::systemInfo->MouseY = 0;
-    else if(newY >= (int)System::gfxDevice->height)
-        System::systemInfo->MouseY = System::gfxDevice->height - 1;
+        systemInfo->MouseY = 0;
+    else if(newY >= (int)gfxDevice->height)
+        systemInfo->MouseY = gfxDevice->height - 1;
     
     return true; // Rescedule
 }

@@ -41,6 +41,7 @@ public:
     uint8_t devAddress = 0;
     USBController* controller = nullptr;
     char* deviceName = nullptr;
+    char* device;
     uint16_t classID = 0;
     uint16_t subclassID = 0;
     uint16_t protocol = 0;

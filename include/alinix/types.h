@@ -23,6 +23,10 @@
 #include "_types.h"
 #include <alinix/enums.h>
 
+#ifdef __cplusplus
+class USBDriver;
+#endif
+
 
 typedef char                        int8_t;
 typedef unsigned char               uint8_t;

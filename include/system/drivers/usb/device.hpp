@@ -4,6 +4,7 @@
 #include <alinix/types.h>
 #include "usbdevice.hpp"
 #include <alinix/list.hpp>
+#include "usbdriver.hpp"
 
 class USBDevice
 {

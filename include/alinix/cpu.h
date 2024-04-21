@@ -50,6 +50,7 @@ EXTERNAL VOID boot_hotplug_init(NO_ARGS);
 EXTERNAL VOID cpu_init(NO_ARGS);
 EXTERNAL VOID trap_init(NO_ARGS);
 EXTERNAL int register_cpu(struct cpu *cpu,int num);
+EXTERNAL struct device *get_cpu_device(POSITIVE cpu);
 
 
 #endif /*__ALINIX_KERNEL_CPU_H*/

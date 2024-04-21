@@ -11,18 +11,21 @@
 // typedef  InterruptTransfer InterruptTransfer ;
 
 
-class USBDriver {
+class USBDriver : public Driver
+{
 public:
-    // Constructor
+    // Which device is this driver for
+    USBDevice* device;
+public:
     USBDriver(USBDevice* dev, char* driverName);
- 
-    // Destructor
-    ~USBDriver();
+    virtual ~USBDriver();
 
-    // Other member functions
-    void DeInitialize();
-    bool HandleInterruptPacket(struct InterruptTransfer* transfer);
-    // static USBDevice* device; // Pointer to USBDevice
+    // De-Active this driver from the system
+    // Called when device is unplugged
+    virtual void DeInitialize();
+
+    // Called from USB Controller when a interrupt packet is received
+    virtual bool HandleInterruptPacket(InterruptTransfer_t* transfer);
 };
 
 

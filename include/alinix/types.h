@@ -101,4 +101,13 @@ typedef struct {
 } Disk;
 
 
+
+// Define data types for as macros here
+#define POSITIVE unsigned int
+#define NEGATIVE signed int
+#define NUMBER int 
+#define STRING char*
+#define REAL  double
+#define VOID void
+
 #endif /*__ALINIX_KERNEL__TYPES_H_HEADER_*/

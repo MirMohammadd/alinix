@@ -1,6 +1,6 @@
 /**
  * @author Ali Mirmohammad
- * @file driver.cpp
+ * @file usbkeyboard.cpp
  * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
  ** This file is part of AliNix.
 
@@ -17,10 +17,3 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
-#include <system/drivers/driver.hpp>
-
-Driver::Driver(char* name, char* description)
-{
-    this->Name = name;
-    this->Description = description;
-}

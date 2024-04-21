@@ -24,20 +24,20 @@
 */
 
 
-#ifndef __ALINIX_KERNEL_DISKUtil_HPP
-#define __ALINIX_KERNEL_DISKUtil_HPP
+#ifndef __ALINIX_KERNEL_DISK_HPP
+#define __ALINIX_KERNEL_DISK_HPP
 
 
 #include <alinix/types.h>
 
-class DiskUtilController;
+class DiskController;
 
 #include <alinix/enums.h>
 
 class DiskUtil
 {
 public:
-    DiskUtilController* controller;         // Which controller is controling this diskUtil device
+    DiskController* controller;         // Which controller is controling this diskUtil device
     uint32_t controllerIndex;   // The real number for the diskUtil on the controller
     char* identifier = 0;               // DiskUtil Identifier
     DiskType type;              // Type of diskUtil

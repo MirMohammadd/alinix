@@ -109,5 +109,6 @@ typedef struct {
 #define STRING char*
 #define REAL  double
 #define VOID void
+#define EXTERNAL extern
 
 #endif /*__ALINIX_KERNEL__TYPES_H_HEADER_*/

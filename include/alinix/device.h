@@ -14,24 +14,18 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+#ifndef __ALINIX_KERNEL_DEVICE_H
+#define __ALINIX_KERNEL_DEVICE_H
 
-#ifndef __ALINIX_KERNEL_CPU_H
-#define __ALINIX_KERNEL_CPU_H
 
 #include <alinix/types.h>
 
-#define EDX_SSE2 (1 << 26) // Streaming SIMD Extensions 2
-#define EDX_FXSR (1 << 24) // Can we use the fxsave/fxrstor instructions?
 
+struct device{
+    CONSTANT STRING *name;        
+    uint64_t base;
+    CONSTANT STRING vendor;   /* Vendor name */
+    CONSTANT STRING product;   /* Product name */
+};
 
-/*This function will print the CPU vendor*/
-void PrintCpuVendor();
-
-/*Initiate the CPU*/
-void enableCpuFeatures();
-
-
-EXTERNAL VOID x;
-
-
-#endif /*__ALINIX_KERNEL_CPU_H*/
+#endif /*__ALINIX_KERNEL_DEVICE_H*/

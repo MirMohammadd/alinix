@@ -110,5 +110,7 @@ typedef struct {
 #define REAL  double
 #define VOID void
 #define EXTERNAL extern
+#define PRIVATE static
+#define CONSTANT const
 
 #endif /*__ALINIX_KERNEL__TYPES_H_HEADER_*/

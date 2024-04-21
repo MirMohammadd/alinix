@@ -37,23 +37,17 @@ class DiskController;
 class DiskUtil
 {
 public:
-    DiskController* controller;         // Which controller is controlling this DiskUtil device
-    uint32_t controllerIndex;           // The real number for the DiskUtil on the controller
-    char* identifier = nullptr;         // DiskUtil Identifier
-    DiskType type;                      // Type of diskUtil
-    uint64_t size;                      // Size of DiskUtil in bytes
-    uint32_t numBlocks;                 // Number of data blocks
-    uint32_t blockSize;                 // Size of one block of data
-    USBDriver* handler;                 // Pointer to the USB driver
+    DiskController* controller;         // Which controller is controling this diskUtil device
+    uint32_t controllerIndex;   // The real number for the diskUtil on the controller
+    char* identifier = 0;               // DiskUtil Identifier
+    DiskType type;              // Type of diskUtil
+    uint64_t size;      // Size of diskUtil in bytes
+    uint32_t numBlocks; // Number of data blocks
+    uint32_t blockSize; // Size of one block of data
 
-    DiskUtil(uint32_t controllerIndex, DiskController* controller, DiskType type, uint64_t size, uint32_t blocks, uint32_t blocksize, USBDriver* usbDriver)
-        : controller(controller), controllerIndex(controllerIndex), type(type), size(size), numBlocks(blocks), blockSize(blocksize), handler(usbDriver)
-    {
-        // Initialize other members if needed
-    }
-
-    virtual char ReadSector(uint32_t lba, uint8_t* buf);
-
+    DiskUtil(uint32_t controllerIndex, DiskController* controller, DiskType type, uint64_t size, uint32_t blocks, uint32_t blocksize);
+    
+    virtual char ReadSector(uint32_t lba, uint8_t* buf);          
     virtual char WriteSector(uint32_t lba, uint8_t* buf);
 };
 

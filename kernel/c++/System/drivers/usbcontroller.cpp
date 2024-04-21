@@ -12,7 +12,7 @@
 USBController::USBController(USBControllerType usbType)
 {
     this->type = usbType;
-    this->interrupTransfers.Clear();
+    // this->interrupTransfers.Clear();
 }
 
 void USBController::Setup()

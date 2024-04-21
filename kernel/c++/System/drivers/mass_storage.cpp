@@ -25,5 +25,5 @@
 
 
 USBMassStorageDriver::USBMassStorageDriver(USBDevice* dev)
-: USBDriver(dev, "USB Mass Storage"), Disk(0, 0, USBDisk, 0, 0, 0)
+: USBDriver(dev, "USB Mass Storage"), DiskUtil(0, 0, USBDisk, 0, 0, 0)
 { }

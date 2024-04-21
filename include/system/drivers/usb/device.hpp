@@ -2,14 +2,15 @@
 #define __ALINIX_KERNEL_DEVICE_HPP
 
 #include <alinix/types.h>
-#include "usbdevice.hpp"
+#include <system/drivers/usb/usbdevice.hpp>
 #include <alinix/list.hpp>
-#include "usbdriver.hpp"
-#include "usbendpoint.hpp"
+#include <system/drivers/usb/usbdriver.hpp>
+#include <system/drivers/usb/usbendpoint.hpp>
 
 class USBDevice
 {
 public:
+
     // Port to which this device is attached to on the controller
     // This is the physical port and not a virtual address of some sort
     // The address is stored in the properties per controller

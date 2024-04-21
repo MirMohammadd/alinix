@@ -30,9 +30,9 @@
 
 #include <alinix/types.h>
 
-class DiskController;
 
 #include <alinix/enums.h>
+#include <alinix/diskctrl.hpp>
 
 class DiskUtil
 {

@@ -19,7 +19,6 @@
 */
 #include <alinix/types.h>
 #include <system/drivers/driver.h>
-#include <system/drivers/usb/usbdriver.h>
 #include <alinix/log.h>
 #include <alinix/enums.h>
 #include <alinix/ctrl.h>

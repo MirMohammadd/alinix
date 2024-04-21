@@ -20,7 +20,6 @@
 #include <alinix/types.h>
 #include <system/drivers/driver.h>
 #include <alinix/log.h>
-#include <alinix/enums.h>
 #include <alinix/ctrl.h>
 
 // USBDriver::~USBDriver()

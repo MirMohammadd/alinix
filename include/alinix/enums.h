@@ -78,12 +78,7 @@ enum ThreadState
     Started
 };
 
-enum LogLevel
-{
-    Info,
-    Warning,
-    Error
-};
+
 
 enum BlockedState
 {

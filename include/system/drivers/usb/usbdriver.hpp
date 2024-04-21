@@ -9,6 +9,7 @@
 #include <system/drivers/usb/usbcontroller.hpp>
 
 class USBDevice;
+class Driver;
 // typedef  InterruptTransfer InterruptTransfer ;
 
 class USBDriver : public Driver {

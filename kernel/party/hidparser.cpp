@@ -31,3 +31,7 @@
 // extern "C" HIDParser* HIDParser_Parse(struct HID_DATA* data){
 //     return reinterpret_cast<HIDParser*>(new HIDParser());
 // }
+
+int main(){
+    return 0;
+}

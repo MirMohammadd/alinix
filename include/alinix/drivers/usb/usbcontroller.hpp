@@ -2,7 +2,7 @@
 #define __ALINIX_KERNEL_DRIVERS_USB_USB_CONTROLLER_HPP
 
 #include <alinix/types.h>
-#include <alinix/c++/list.hpp>
+#include <alinix/list.hpp>
 
 namespace alinix{
     namespace drivers{

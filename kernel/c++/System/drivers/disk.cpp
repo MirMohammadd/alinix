@@ -9,3 +9,24 @@ DiskUtil::DiskUtil(uint32_t controllerIndex, DiskController* controller, DiskTyp
     this->blockSize = blocksize;
     this->numBlocks = blocks;
 }
+
+char DiskUtil::ReadSector(uint32_t lba, uint8_t* buf)
+{
+    #if ENABLE_ADV_DEBUG
+    System::statistics.diskReadOp += 1;
+    #endif
+
+    if(this->controller != 0)
+        return this->controller->ReadSector(this->controllerIndex, lba, buf);
+    return 1;
+}
+char DiskUtil::WriteSector(uint32_t lba, uint8_t* buf)
+{
+    #if ENABLE_ADV_DEBUG
+    System::statistics.diskWriteOp += 1;
+    #endif
+
+    if(this->controller != 0)
+        return this->controller->WriteSector(this->controllerIndex, lba, buf);
+    return 1;
+}

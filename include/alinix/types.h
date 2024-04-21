@@ -23,10 +23,6 @@
 #include "_types.h"
 #include <alinix/enums.h>
 
-#ifdef __cplusplus
-class USBDriver;
-#endif
-
 
 typedef char                        int8_t;
 typedef unsigned char               uint8_t;
@@ -103,33 +99,6 @@ typedef struct {
     uint32_t numBlocks; // Number of data blocks
     uint32_t blockSize; // Size of one block of data
 } Disk;
-
-#ifdef __cplusplus
-typedef struct InterruptTransfer
-        {
-            uint8_t* bufferPointer;
-            uint32_t bufferPhys;
-            int bufferLen;
-
-            USBDriver* handler;
-            int queueIndex;
-
-            uint32_t tdPhys;
-            void* td;
-            int numTd;
-
-            void* qh;
-            int endpoint;
-} InterruptTransfer_t;
-#endif
-
-
-//////////////////////////////////////////////
-/**
- * @brief Here are Some macro-defined types
-*/
-
-#define VOID void
 
 
 #endif /*__ALINIX_KERNEL__TYPES_H_HEADER_*/

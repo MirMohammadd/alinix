@@ -26,5 +26,5 @@
 
 
 USBMassStorageDriver::USBMassStorageDriver(USBDevice* dev)
-    : USBDriver(dev, "USB Mass Storage"), DiskUtil(dev->GetControllerIndex(), dev->GetController(), USBDisk, dev->GetSize(), dev->GetNumBlocks(), dev->GetBlockSize(), /* Pass a valid USBDriver pointer here */)
+: USBDriver(dev, "USB Mass Storage"), DiskUtil(0, 0, USBDisk, 0, 0, 0)
 { }

@@ -24,6 +24,7 @@
 #include <alinix/types.h>
 #include <alinix/lock.hpp>
 #include <system/drivers/usb/usbdriver.hpp>
+#include <alinix/disk.hpp>
 
 
 

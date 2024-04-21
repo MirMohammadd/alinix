@@ -113,5 +113,6 @@ typedef struct {
 #define PRIVATE static
 #define CONSTANT const
 #define NO_ARGS void
+#define NO_RETURN VOID
 
 #endif /*__ALINIX_KERNEL__TYPES_H_HEADER_*/

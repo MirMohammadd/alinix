@@ -1,6 +1,6 @@
 /**
  * @author Ali Mirmohammad
- * @file usbdriver.cpp
+ * @file usbdriver.c
  * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
  ** This file is part of AliNix.
 
@@ -18,27 +18,23 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 #include <alinix/types.h>
-#include <system/drivers/driver.hpp>
-#include <system/drivers/usb/usbdriver.hpp>
+#include <system/drivers/driver.h>
+#include <system/drivers/usb/usbdriver.h>
 #include <alinix/log.h>
+#include <alinix/enums.h>
+#include <alinix/ctrl.h>
 
-// USBDriver::USBDriver(USBDevice* dev, char* driverName)
-// : Driver(driverName)
+// USBDriver::~USBDriver()
 // {
-//     // this->device = dev;
+//     Log(Error, "Virtual function called directly %s:%d", __FILE__, __LINE__);
 // }
 
-USBDriver::~USBDriver()
+void USBDriver_DeInitialize()
 {
     Log(Error, "Virtual function called directly %s:%d", __FILE__, __LINE__);
 }
 
-void USBDriver::DeInitialize()
-{
-    Log(Error, "Virtual function called directly %s:%d", __FILE__, __LINE__);
-}
-
-bool USBDriver::HandleInterruptPacket(InterruptTransfer_t* transfer)
+bool USBDriver_HandleInterruptPacket(InterruptTransfer_t* transfer)
 {
     Log(Error, "Virtual function called directly %s:%d", __FILE__, __LINE__);
     return false;

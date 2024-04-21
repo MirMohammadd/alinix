@@ -6,6 +6,7 @@
 #include <system/drivers/driver.hpp>
 #include <system/drivers/usb/usbdevice.hpp>
 #include <alinix/list.hpp>
+#include <system/drivers/usb/usbcontroller.hpp>
 
 
 // typedef  InterruptTransfer InterruptTransfer ;

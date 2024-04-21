@@ -13,6 +13,7 @@
 
 class USBDriver {
 public:
+    uint8_t device;
     // Constructor
     USBDriver(class USBDevice* dev, char* driverName);
  

@@ -99,6 +99,22 @@ typedef struct {
     uint32_t numBlocks; // Number of data blocks
     uint32_t blockSize; // Size of one block of data
 } Disk;
+typedef struct InterruptTransfer
+        {
+            uint8_t* bufferPointer;
+            uint32_t bufferPhys;
+            int bufferLen;
+
+            USBDriver* handler;
+            int queueIndex;
+
+            uint32_t tdPhys;
+            void* td;
+            int numTd;
+
+            void* qh;
+            int endpoint;
+} InterruptTransfer_t;
 
 
 

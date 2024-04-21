@@ -37,22 +37,22 @@ bool USBMouse::Initialize()
         return false;
 
     // Find Interrupt Endpoint
-    for(USBEndpoint* ep : this->device->endpoints) {
-        if(ep->type == alinix::usb::Interrupt) { // Interrupt Endpoint
-            if(ep->dir == alinix::usb::EndpointDirection::In) { // In
-                this->InInterruptEndpoint = ep->endpointNumber;
-                break;
-            }
-        }
-    }
+    // for(USBEndpoint* ep : this->device->endpoints) {
+    //     if(ep->type == alinix::usb::Interrupt) { // Interrupt Endpoint
+    //         if(ep->dir == alinix::usb::EndpointDirection::In) { // In
+    //             this->InInterruptEndpoint = ep->endpointNumber;
+    //             break;
+    //         }
+    //     }
+    // }
 
     // Check if endpoint is found
     if(this->InInterruptEndpoint == -1)
         return false;
 
     // Send set-idle request to device
-    if(!this->device->controller->ControlOut(this->device, 0, HOST_TO_DEV | REQ_TYPE_CLASS | RECPT_INTERFACE, HID_REQUEST_SET_IDLE))
-        Log(Warning, "USBMouse not reacting to SetIdle request");
+    // if(!this->device->controller->ControlOut(this->device, 0, HOST_TO_DEV | REQ_TYPE_CLASS | RECPT_INTERFACE, HID_REQUEST_SET_IDLE))
+        // Log(Warning, "USBMouse not reacting to SetIdle request");
     
     // Get length of HID report from Interface HID Descriptor
     uint16_t reportDescriptorLength = *(uint16_t*)(this->device->hidDescriptor + sizeof(IF_HID_DESC) + 1);
@@ -61,8 +61,8 @@ bool USBMouse::Initialize()
 
     // Receive Report Descriptor
     uint8_t* reportDescriptorBuffer = new uint8_t[reportDescriptorLength];
-    if(!this->device->controller->ControlIn(this->device, reportDescriptorBuffer, reportDescriptorLength, DEV_TO_HOST | REQ_TYPE_STNDRD | RECPT_INTERFACE, GET_DESCRIPTOR, 0x22))
-        return false;
+    // if(!this->device->controller->ControlIn(this->device, reportDescriptorBuffer, reportDescriptorLength, DEV_TO_HOST | REQ_TYPE_STNDRD | RECPT_INTERFACE, GET_DESCRIPTOR, 0x22))
+    //     return false;
     
     // Extract data returned from descriptor
     bool b1 = GetHIDProperty(&this->hidX, reportDescriptorBuffer, reportDescriptorLength, HID_USAGE::POINTER_X);
@@ -74,11 +74,11 @@ bool USBMouse::Initialize()
         this->useCustomReport = true;
 
     // Send SET_PROTOCOL request to device
-    if(!this->device->controller->ControlOut(this->device, 0, HOST_TO_DEV | REQ_TYPE_CLASS | RECPT_INTERFACE, HID_REQUEST_SET_PROTOCOL, 0, this->useCustomReport ? 1 : 0))
-        return false;
+    // if(!this->device->controller->ControlOut(this->device, 0, HOST_TO_DEV | REQ_TYPE_CLASS | RECPT_INTERFACE, HID_REQUEST_SET_PROTOCOL, 0, this->useCustomReport ? 1 : 0))
+        // return false;
 
     // Start recieving interrupt packets from device
-    this->device->controller->InterruptIn(this->device, 4, this->InInterruptEndpoint);
+    // this->device->controller->InterruptIn(this->device, 4, this->InInterruptEndpoint);
 
     return true;
 }

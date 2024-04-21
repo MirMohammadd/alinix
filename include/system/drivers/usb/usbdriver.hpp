@@ -11,8 +11,7 @@
 class USBDevice;
 // typedef  InterruptTransfer InterruptTransfer ;
 
-class USBDriver : public Driver
-{
+class USBDriver : public Driver {
 public:
     // Which device is this driver for
     USBDevice* device;

@@ -43,16 +43,7 @@
 #define CBW_SIGNATURE 0x43425355
 #define CSW_SIGNATURE 0x53425355
 
-typedef struct 
-{
-    uint32_t signature;     // USBC in hexadecimal, acting as magic number
-    uint32_t tag;           // Signature
-    uint32_t transferLen;   // Number of bytes to transfer excluding size of CBW
-    uint8_t flags;          // 7: 0=Out 1=In, 6:0=Reserved
-    uint8_t lun;            // 7:4 Reserved, 3:0 Logical Unit Number
-    uint8_t cmdLen;         // Length of command in next field [1-16]
-    uint8_t command[16];    // Command Data
-} __attribute__((packed)) CommandBlockWrapper;
+
 
 typedef struct
 {

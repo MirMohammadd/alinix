@@ -22,8 +22,10 @@
 #include <system/drivers/usb/usbdefs.hpp>
 #include <alinix/enums.h>
 #include <alinix/disk.hpp>
+#include <alinix/types.h>
 
 
 USBMassStorageDriver::USBMassStorageDriver(USBDevice* dev)
-: USBDriver(dev, "USB Mass Storage"), DiskUtil(0, 0, USBDisk, 0, 0, 0)
+: USBDriver(dev, "USB Mass Storage"), DiskUtil(uint32_t controllerIndex, DiskController* controller, DiskType type, uint64_t size, uint32_t blocks, uint32_t blocksize, USBDriver* usbDriver)
+
 { }

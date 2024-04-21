@@ -42,5 +42,14 @@ struct cpu{
     struct device dev;
 };
 
+//////////////////////
+// Defining the cpu info structure which contains all information about the CPU
+
+EXTERNAL VOID boot_cpu_init(NO_ARGS);
+EXTERNAL VOID boot_hotplug_init(NO_ARGS);
+EXTERNAL VOID cpu_init(NO_ARGS);
+EXTERNAL VOID trap_init(NO_ARGS);
+EXTERNAL int register_cpu(struct cpu *cpu,int num);
+
 
 #endif /*__ALINIX_KERNEL_CPU_H*/

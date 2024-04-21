@@ -11,7 +11,6 @@
 
 // typedef  InterruptTransfer InterruptTransfer ;
 
-
 class USBDriver : public Driver
 {
 public:

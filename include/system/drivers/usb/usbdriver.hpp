@@ -9,7 +9,21 @@
 #include <system/drivers/usb/usbcontroller.hpp>
 
 class USBDevice;
-class Driver;
+class Driver
+    {
+    private:
+        char* Name;
+        char* Description;
+    public:
+        // static USBDevice* device; // Pointer to USBDevice
+        Driver(char* name = 0, char* description = 0);
+
+        char* GetDriverName();
+        char* GetDriverDescription();
+
+        virtual bool Initialize();
+    };
+
 // typedef  InterruptTransfer InterruptTransfer ;
 
 class USBDriver : public Driver {

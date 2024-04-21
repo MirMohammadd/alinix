@@ -17,7 +17,7 @@
 
 class USBDevice;
 class USBDriver;
-
+#include "usbdriver.hpp"
 
 
 

@@ -45,7 +45,7 @@ public:
     uint32_t numBlocks; // Number of data blocks
     uint32_t blockSize; // Size of one block of data
 
-    DiskUtil(uint32_t controllerIndex, DiskUtilController* controller, DiskType type, uint64_t size, uint32_t blocks, uint32_t blocksize);
+    DiskUtil(uint32_t controllerIndex, DiskController* controller, DiskType type, uint64_t size, uint32_t blocks, uint32_t blocksize);
     
     virtual char ReadSector(uint32_t lba, uint8_t* buf);          
     virtual char WriteSector(uint32_t lba, uint8_t* buf);

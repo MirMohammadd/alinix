@@ -30,6 +30,7 @@ all: $(APPOUT) linker.ld $(OBJFILES)
 		echo building $$app_name.bin to $$app_bin; \
 		i686-elf-ld $(LDPARAMS) -T linker.ld -o $$app_bin $$app -L$(LIBDIR); \
 		nm -a $$app_bin | sort -d > $(APPOUT)/$$app_name.sym; \
+		cd usb3 && make 
 	done
 
 

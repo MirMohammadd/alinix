@@ -112,5 +112,6 @@ typedef struct {
 #define EXTERNAL extern
 #define PRIVATE static
 #define CONSTANT const
+#define NO_ARGS void
 
 #endif /*__ALINIX_KERNEL__TYPES_H_HEADER_*/

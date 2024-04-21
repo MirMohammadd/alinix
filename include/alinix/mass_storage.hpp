@@ -135,7 +135,7 @@ typedef struct
     uint8_t specific[3];
 } __attribute__((packed)) RequestSenseBlock;
 
-class USBMassStorageDriver : public USBDriver, public Disk
+class USBMassStorageDriver : public USBDriver, public DiskUtil
 {
 private:
     int bulkInEP = 0;   // Endpoint number of bulk in

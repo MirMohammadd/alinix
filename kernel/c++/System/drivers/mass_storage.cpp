@@ -24,7 +24,8 @@
 #include <alinix/disk.hpp>
 #include <alinix/types.h>
 
+// TODO : Add support for USB Mass Storage
 
-USBMassStorageDriver::USBMassStorageDriver(USBDevice* dev)
-: USBDriver(dev, "USB Mass Storage"), DiskUtil(0, 0, USBDisk, 0, 0, 0)
-{ }
+// USBMassStorageDriver::USBMassStorageDriver(USBDevice* dev)
+// : USBDriver(dev, "USB Mass Storage"), DiskUtil(0, 0, USBDisk, 0, 0, 0)
+// { }

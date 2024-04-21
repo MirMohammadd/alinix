@@ -16,6 +16,7 @@
 #include "device.hpp"
 
 class USBDevice;
+class USBDriver;
 
 typedef struct InterruptTransfer
 {

@@ -101,4 +101,14 @@ typedef struct {
 } Disk;
 
 
+
+
+//////////////////////////////////////////////
+/**
+ * @brief Here are Some macro-defined types
+*/
+
+#define VOID void
+
+
 #endif /*__ALINIX_KERNEL__TYPES_H_HEADER_*/

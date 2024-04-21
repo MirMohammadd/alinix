@@ -103,6 +103,8 @@ typedef struct {
     uint32_t numBlocks; // Number of data blocks
     uint32_t blockSize; // Size of one block of data
 } Disk;
+
+#ifdef __cplusplus
 typedef struct InterruptTransfer
         {
             uint8_t* bufferPointer;
@@ -119,8 +121,7 @@ typedef struct InterruptTransfer
             void* qh;
             int endpoint;
 } InterruptTransfer_t;
-
-
+#endif
 
 
 //////////////////////////////////////////////

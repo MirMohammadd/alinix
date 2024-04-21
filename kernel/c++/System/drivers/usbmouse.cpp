@@ -4,8 +4,10 @@
 #include <alinix/log.h>
 #include <alinix/system.hpp>
 #include <system/drivers/usb/usbdefs.hpp>
+#include <system/drivers/usb/usbdevice.hpp>
 
 using namespace alinix::usb;
+
 
 USBMouse::USBMouse(USBDevice* dev)
 : USBDriver(dev, "USB HID Mouse")

@@ -2,6 +2,7 @@
 #define __ALINIX_KERNEL_DRIVER_INCLUDED_USB_DRIVER_HPP
 
 #include "driver.hpp"
+#include <system/drivers/usb/usbdevice.hpp>
 
 using namespace alinix;
 

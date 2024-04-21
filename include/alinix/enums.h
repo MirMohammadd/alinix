@@ -57,14 +57,6 @@ enum EndpointType
     Interrupt
 };
 
-enum DiskTypeUtil
-{
-    HardDisk,
-    USBDisk,
-    Floppy,
-    CDROM
-};
-
 enum COMPort {
     COM1 = 0x3F8,
     COM2 = 0x2F8,

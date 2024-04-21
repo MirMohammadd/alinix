@@ -21,16 +21,16 @@ APPOUT := ../isofiles/drivers
 
 .PHONY: all clean
 
-all: $(APPOUT) linker.ld $(OBJFILES)
-	for app in $(OBJFILES) ; do \
-		app_name=$$(basename $$app .o); \
-		app_bin=$(APPOUT)/$$app_name.bin; \
+all: $(OBJS)
+	$(foreach obj, $(OBJS), \
+		app_name=$$(basename $(obj) .o); \
+		app_bin=$(BINDIR)/$$app_name.bin; \
 		app_dir=$$(dirname $$app_bin); \
 		mkdir -p $$app_dir; \
 		echo building $$app_name.bin to $$app_bin; \
-		i686-elf-ld $(LDPARAMS) -T linker.ld -o $$app_bin $$app -L$(LIBDIR); \
-		nm -a $$app_bin | sort -d > $(APPOUT)/$$app_name.sym; \
-	done
+		i686-elf-ld $(LDPARAMS) -T linker.ld -o $$app_bin $(obj) -L$(LIBDIR); \
+		nm -a $$app_bin | sort -d > $(BINDIR)/$$app_name.sym; \
+	)
 
 
 clean:

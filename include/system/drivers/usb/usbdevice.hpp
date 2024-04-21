@@ -13,6 +13,7 @@
 #include <system/drivers/usb/usbdriver.hpp>
 #include <system/drivers/usb/usbcontroller.hpp>
 
+class USBDriver;
 
 typedef struct InterruptTransfer
 {

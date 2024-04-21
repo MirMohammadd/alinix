@@ -6,6 +6,7 @@
 #include <system/drivers/usb/usbdriver.hpp>
 #include <system/drivers/usb/usbdevice.hpp>
 #include <alinix/list.hpp>
+#include <alinix/drivers/usb/usbcontroller.hpp>
 
 // typedef struct InterruptTransfer
 // {
@@ -109,5 +110,7 @@ public:
         uint8_t* hidDescriptor = 0;
 
 };
+
+
 
 #endif /*__ALINIX_KERNEL_USB_CONTROLLER_SYSTEM_HPP*/

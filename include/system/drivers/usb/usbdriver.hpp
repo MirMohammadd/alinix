@@ -8,7 +8,7 @@
 #include <alinix/list.hpp>
 #include <system/drivers/usb/usbcontroller.hpp>
 
-
+class USBDevice;
 // typedef  InterruptTransfer InterruptTransfer ;
 
 class USBDriver : public Driver

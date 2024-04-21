@@ -5,6 +5,7 @@
 #include "usbdevice.hpp"
 #include <alinix/list.hpp>
 #include "usbdriver.hpp"
+#include "usbendpoint.hpp"
 
 class USBDevice
 {

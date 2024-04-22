@@ -49,7 +49,7 @@ EXTERNAL VOID boot_cpu_init(NO_ARGS);
 EXTERNAL VOID boot_hotplug_init(NO_ARGS);
 EXTERNAL VOID cpu_init(NO_ARGS);
 EXTERNAL VOID trap_init(NO_ARGS);
-EXTERNAL int register_cpu(struct cpu *cpu,int num);
+EXTERNAL NUMBER register_cpu(struct cpu *cpu,int num);
 EXTERNAL struct device *get_cpu_device(POSITIVE cpu);
 EXTERNAL bool cpu_is_hotplfuggable(POSITIVE cpu);
 EXTERNAL bool arch_match_cpu_phys_id(NUMBER cpu,uint64_t phys_id);

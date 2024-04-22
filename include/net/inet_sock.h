@@ -23,4 +23,9 @@ struct ip_options{
 };
 
 
+struct ip_options_rcu {
+	struct rcu_head rcu;
+	struct ip_options opt;
+};
+
 #endif 

@@ -115,4 +115,12 @@ typedef struct {
 #define NO_ARGS void
 #define NO_RETURN VOID
 
+
+/////////////////////
+struct callback_head {
+	struct callback_head *next;
+	void (*func)(struct callback_head *head);
+} __attribute__((aligned(sizeof(void *))));
+#define rcu_head callback_head
+
 #endif /*__ALINIX_KERNEL__TYPES_H_HEADER_*/

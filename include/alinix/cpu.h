@@ -54,6 +54,11 @@ EXTERNAL struct device *get_cpu_device(POSITIVE cpu);
 EXTERNAL bool cpu_is_hotplfuggable(POSITIVE cpu);
 EXTERNAL bool arch_match_cpu_phys_id(NUMBER cpu,uint64_t phys_id);
 EXTERNAL bool arch_find_n_match_cpu_physical_id(struct device_node *cpun,NUMBER cpu,POSITIVE thread);
+EXTERNAL NUMBER cpu_add_dev_attr(struct device_attribute *attr);
+EXTERNAL VOID cpu_remove_dev_attr(struct device_attribute *attr);
+
+
+
 
 
 #endif /*__ALINIX_KERNEL_CPU_H*/

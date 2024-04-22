@@ -114,5 +114,17 @@ typedef struct {
 #define CONSTANT const
 #define NO_ARGS void
 #define NO_RETURN VOID
+#define __always_inline inline
+#define __ksym __attribute__((section(".ksyms")))
+
+
+
+/////////////////////
+struct callback_head {
+	struct callback_head *next;
+	void (*func)(struct callback_head *head);
+} __attribute__((aligned(sizeof(void *))));
+#define rcu_head callback_head
+
 
 #endif /*__ALINIX_KERNEL__TYPES_H_HEADER_*/

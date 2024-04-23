@@ -50,4 +50,28 @@ static inline bool is_local_ether_addr(const uint8_t *addr){
     return 0x02 & addr[0];
 }
 
+
+static inline bool is_broadcast_ether_addr(const uint8_t *addr)
+{
+	return (*(const uint16_t *)(addr + 0) &
+		*(const uint16_t *)(addr + 2) &
+		*(const uint16_t *)(addr + 4)) == 0xffff;
+}
+
+static inline bool is_unicast_ether_addr(const uint8_t *addr)
+{
+	return !is_multicast_ether_addr(addr);
+}
+
+
+static inline bool is_valid_ether_addr(const uint8_t *addr)
+{
+	/* FF:FF:FF:FF:FF:FF is a multicast address so we don't need to
+	 * explicitly check for it here. */
+	return !is_multicast_ether_addr(addr) && !is_zero_ether_addr(addr);
+}
+
+
+
+
 #endif // __ALINIX_KERNEL_ETHER_DEVICE_H

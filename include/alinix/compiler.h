@@ -36,4 +36,12 @@
 
 #endif
 
+
+/* Compiler hints for packing structures */
+#define PACK_STRUCT_FIELD(x) x
+#define PACK_STRUCT_STRUCT __attribute__((packed))
+#define PACK_STRUCT_BEGIN
+#define PACK_STRUCT_END
+
+
 #endif /*__ALINIX_KERNEL_COMPILER_H*/

@@ -1,6 +1,12 @@
 #ifndef __ALINIX_KERNEL_SOCKETS_H_NET
 #define __ALINIX_KERNEL_SOCKETS_H_NET
 
+
+
+/**
+ * @ref https://github.com/quiet/quiet-lwip/blob/master/include/lwip/lwip/sockets.h#L294
+ * 
+*/
 #ifndef FD_SET
   #undef  FD_SETSIZE
   /* Make FD_SETSIZE match NUM_SOCKETS in socket.c */

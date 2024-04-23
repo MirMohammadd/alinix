@@ -4,6 +4,7 @@
 #include <alinix/types.h>
 #include <alinix/compiler.h>
 #include <net/ip_addr.h>
+#include <net/ip.h>
 
 
 #ifdef __cplusplus
@@ -31,6 +32,34 @@ struct udp_pcb;
 typedef void (*udp_recv_fn)(void *arg, struct udp_pcb *pcb, struct pbuf *p,
     ip_addr_t *addr, uint16_t port);
 
+
+struct udp_pcb {
+/* Common members of all PCB types */
+  IP_PCB;
+
+/* Protocol specific PCB members */
+
+  struct udp_pcb *next;
+
+  uint8_t flags;
+  /** ports are in host byte order */
+  uint16_t local_port, remote_port;
+
+#if LWIP_IGMP
+  /** outgoing network interface for multicast packets */
+  ip_addr_t multicast_ip;
+#endif /* LWIP_IGMP */
+
+#if LWIP_UDPLITE
+  /** used for UDP_LITE only */
+  uint16_t chksum_len_rx, chksum_len_tx;
+#endif /* LWIP_UDPLITE */
+
+  /** receive callback function */
+  udp_recv_fn recv;
+  /** user-supplied argument for the recv callback */
+  void *recv_arg;  
+};
 
 #ifdef __cplusplus
 }

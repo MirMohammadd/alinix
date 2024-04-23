@@ -1,6 +1,7 @@
 #include <alinix/types.h>
 #include <net/ip.h>
 #include <net/udp.h>
+#include <net/netif.h>
 
 /* 169.254.0.0 */
 #define AUTOIP_NET         0xA9FE0000

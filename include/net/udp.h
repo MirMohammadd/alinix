@@ -52,7 +52,6 @@ typedef void (*udp_recv_fn)(void *arg, struct udp_pcb *pcb, struct pbuf *p,
 
 struct udp_pcb {
 /* Common members of all PCB types */
-  IP_PCB;
 
 /* Protocol specific PCB members */
 

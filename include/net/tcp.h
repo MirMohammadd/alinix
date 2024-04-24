@@ -82,7 +82,7 @@ typedef err_t (*tcp_connected_fn)(void *arg, struct tcp_pcb *tpcb, err_t err);
 
 struct tcp_pcb_listen {  
 /* Common members of all PCB types */
-  IP_PCB;
+  // IP_PCB;
 /* Protocol specific PCB members */
 //   TCP_PCB_COMMON(struct tcp_pcb_listen);
 

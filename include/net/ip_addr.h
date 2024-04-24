@@ -43,6 +43,9 @@
 #define ip4_addr4_16(ipaddr) ((uint16_t)ip4_addr4(ipaddr))
 
 
+#define ip_addr_copy(dest, src) ((dest).addr = (src).addr)
+
+
 PACK_STRUCT_BEGIN
 struct ip_addr_packed {
   PACK_STRUCT_FIELD(uint32_t addr);

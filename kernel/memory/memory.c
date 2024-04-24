@@ -61,7 +61,7 @@ void* memcpy(void* dstptr, const void* srcptr, uint32_t size){
 	return dstptr;
 }
 
-void free(){
+void free(void *ptr){
 	
 }
 

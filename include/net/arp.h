@@ -1,0 +1,6 @@
+#ifndef __ALINIX_KERNEL_NET_INCLUDED_ARP_H
+#define __ALINIX_KERNEL_NET_INCLUDED_ARP_H
+
+#define ARP_REQUEST 1
+
+#endif

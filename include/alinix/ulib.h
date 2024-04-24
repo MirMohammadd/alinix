@@ -23,6 +23,8 @@
 #include <alinix/types.h>
 
 void *malloc(size_t size);
-void free(void *ptr);
+#include <alinix/memory.h>
+
+
 
 #endif /* __ALINIX_KERNEL_ULIB_H */

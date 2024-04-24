@@ -4,7 +4,9 @@
 
 #include <alinix/types.h>
 
-uint16_t lwip_htons(uint16_t x);
+
+
+uint16_t __always_inline lwip_htons(uint16_t x);
 uint16_t lwip_ntohs(uint16_t x);
 // uint32_t lwip_htonl(uint32_t x);
 #define lwip_htonl(x) (x)

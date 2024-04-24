@@ -79,187 +79,158 @@ typedef void (*netif_status_callback_fn)(struct netif *netif);
 
 
 
-struct netif {
-  /** pointer to next in linked list */
-  struct netif *next;
+// struct netif {
+//   /** pointer to next in linked list */
+//   struct netif *next;
 
-  /** IP address configuration in network byte order */
-  ip_addr_t ip_addr;
-  ip_addr_t netmask;
-  ip_addr_t gw;
+//   /** IP address configuration in network byte order */
+//   ip_addr_t ip_addr;
+//   ip_addr_t netmask;
+//   ip_addr_t gw;
 
-  /** This function is called by the network device driver
-   *  to pass a packet up the TCP/IP stack. */
-  netif_input_fn input;
-  /** This function is called by the IP module when it wants
-   *  to send a packet on the interface. This function typically
-   *  first resolves the hardware address, then sends the packet. */
-  netif_output_fn output;
-  /** This function is called by the ARP module when it wants
-   *  to send a packet on the interface. This function outputs
-   *  the pbuf as-is on the link medium. */
-  netif_linkoutput_fn linkoutput;
-#if LWIP_NETIF_STATUS_CALLBACK
-  /** This function is called when the netif state is set to up or down
-   */
-  netif_status_callback_fn status_callback;
-#endif /* LWIP_NETIF_STATUS_CALLBACK */
-#if LWIP_NETIF_LINK_CALLBACK
-  /** This function is called when the netif link is set to up or down
-   */
-  netif_status_callback_fn link_callback;
-#endif /* LWIP_NETIF_LINK_CALLBACK */
-#if LWIP_NETIF_REMOVE_CALLBACK
-  /** This function is called when the netif has been removed */
-  netif_status_callback_fn remove_callback;
-#endif /* LWIP_NETIF_REMOVE_CALLBACK */
-  /** This field can be set by the device driver and could point
-   *  to state information for the device. */
-  void *state;
-  /** the DHCP client state information for this netif */
-  struct dhcp *dhcp;
-  /** the AutoIP client state information for this netif */
-  struct autoip *autoip;
-#if LWIP_NETIF_HOSTNAME
-  /* the hostname for this netif, NULL is a valid value */
-  char*  hostname;
-#endif /* LWIP_NETIF_HOSTNAME */
-  /** maximum transfer unit (in bytes) */
-  uint16_t mtu;
-  /** number of bytes used in hwaddr */
-  uint8_t hwaddr_len;
-  /** link level hardware address of this interface */
-  uint8_t hwaddr[NETIF_MAX_HWADDR_LEN];
-  /** flags (see NETIF_FLAG_ above) */
-  uint8_t flags;
-  /** descriptive abbreviation */
-  char name[2];
-  /** number of this interface */
-  uint8_t num;
-#if LWIP_SNMP
-  /** link type (from "snmp_ifType" enum from snmp.h) */
-  uint8_t link_type;
-  /** (estimate) link speed */
-  uint32_t link_speed;
-  /** timestamp at last change made (up/down) */
-  uint32_t ts;
-  /** counters */
-  uint32_t ifinoctets;
-  uint32_t ifinucastpkts;
-  uint32_t ifinnucastpkts;
-  uint32_t ifindiscards;
-  uint32_t ifoutoctets;
-  uint32_t ifoutucastpkts;
-  uint32_t ifoutnucastpkts;
-  uint32_t ifoutdiscards;
-#endif /* LWIP_SNMP */
-#if LWIP_IGMP
-  /** This function could be called to add or delete a entry in the multicast
-      filter table of the ethernet MAC.*/
-  netif_igmp_mac_filter_fn igmp_mac_filter;
-#endif /* LWIP_IGMP */
-#if LWIP_NETIF_HWADDRHINT
-  uint8_t *addr_hint;
-#endif /* LWIP_NETIF_HWADDRHINT */
-#if ENABLE_LOOPBACK
-  /* List of packets to be queued for ourselves. */
-  struct pbuf *loop_first;
-  struct pbuf *loop_last;
-#if LWIP_LOOPBACK_MAX_PBUFS
-  uint16_t loop_cnt_current;
-#endif /* LWIP_LOOPBACK_MAX_PBUFS */
-#endif /* ENABLE_LOOPBACK */
-};
+//   /** This function is called by the network device driver
+//    *  to pass a packet up the TCP/IP stack. */
+//   netif_input_fn input;
+//   /** This function is called by the IP module when it wants
+//    *  to send a packet on the interface. This function typically
+//    *  first resolves the hardware address, then sends the packet. */
+//   netif_output_fn output;
+//   /** This function is called by the ARP module when it wants
+//    *  to send a packet on the interface. This function outputs
+//    *  the pbuf as-is on the link medium. */
+//   netif_linkoutput_fn linkoutput;
+// #if LWIP_NETIF_STATUS_CALLBACK
+//   /** This function is called when the netif state is set to up or down
+//    */
+//   netif_status_callback_fn status_callback;
+// #endif /* LWIP_NETIF_STATUS_CALLBACK */
+// #if LWIP_NETIF_LINK_CALLBACK
+//   /** This function is called when the netif link is set to up or down
+//    */
+//   netif_status_callback_fn link_callback;
+// #endif /* LWIP_NETIF_LINK_CALLBACK */
+// #if LWIP_NETIF_REMOVE_CALLBACK
+//   /** This function is called when the netif has been removed */
+//   netif_status_callback_fn remove_callback;
+// #endif /* LWIP_NETIF_REMOVE_CALLBACK */
+//   /** This field can be set by the device driver and could point
+//    *  to state information for the device. */
+//   void *state;
+//   /** the DHCP client state information for this netif */
+//   struct dhcp *dhcp;
+//   /** the AutoIP client state information for this netif */
+//   struct autoip *autoip;
+//   /* the hostname for this netif, NULL is a valid value */
+//   char*  hostname;
+//   /** maximum transfer unit (in bytes) */
+//   uint16_t mtu;
+//   /** number of bytes used in hwaddr */
+//   uint8_t hwaddr_len;
+//   /** link level hardware address of this interface */
+//   uint8_t hwaddr[NETIF_MAX_HWADDR_LEN];
+//   /** flags (see NETIF_FLAG_ above) */
+//   uint8_t flags;
+//   /** descriptive abbreviation */
+//   char name[2];
+//   /** number of this interface */
+//   uint8_t num;
+//   /** link type (from "snmp_ifType" enum from snmp.h) */
+//   uint8_t link_type;
+//   /** (estimate) link speed */
+//   uint32_t link_speed;
+//   /** timestamp at last change made (up/down) */
+//   uint32_t ts;
+//   /** counters */
+//   uint32_t ifinoctets;
+//   uint32_t ifinucastpkts;
+//   uint32_t ifinnucastpkts;
+//   uint32_t ifindiscards;
+//   uint32_t ifoutoctets;
+//   uint32_t ifoutucastpkts;
+//   uint32_t ifoutnucastpkts;
+//   uint32_t ifoutdiscards;
+//   /** This function could be called to add or delete a entry in the multicast
+//       filter table of the ethernet MAC.*/
+//   netif_igmp_mac_filter_fn igmp_mac_filter;
+//   uint8_t *addr_hint;
+//   /* List of packets to be queued for ourselves. */
+//   struct pbuf *loop_first;
+//   struct pbuf *loop_last;
+//   uint16_t loop_cnt_current;
+// #endif /* LWIP_LOOPBACK_MAX_PBUFS */
+// #endif /* ENABLE_LOOPBACK */
+// };
 
 
-#if LWIP_SNMP
-#define NETIF_INIT_SNMP(netif, type, speed) \
-  /* use "snmp_ifType" enum from snmp.h for "type", snmp_ifType_ethernet_csmacd by example */ \
-  (netif)->link_type = (type);    \
-  /* your link speed here (units: bits per second) */  \
-  (netif)->link_speed = (speed);  \
-  (netif)->ts = 0;              \
-  (netif)->ifinoctets = 0;      \
-  (netif)->ifinucastpkts = 0;   \
-  (netif)->ifinnucastpkts = 0;  \
-  (netif)->ifindiscards = 0;    \
-  (netif)->ifoutoctets = 0;     \
-  (netif)->ifoutucastpkts = 0;  \
-  (netif)->ifoutnucastpkts = 0; \
-  (netif)->ifoutdiscards = 0
-#else /* LWIP_SNMP */
-#define NETIF_INIT_SNMP(netif, type, speed)
-#endif /* LWIP_SNMP */
+// #define NETIF_INIT_SNMP(netif, type, speed) \
+//   /* use "snmp_ifType" enum from snmp.h for "type", snmp_ifType_ethernet_csmacd by example */ \
+//   (netif)->link_type = (type);    \
+//   /* your link speed here (units: bits per second) */  \
+//   (netif)->link_speed = (speed);  \
+//   (netif)->ts = 0;              \
+//   (netif)->ifinoctets = 0;      \
+//   (netif)->ifinucastpkts = 0;   \
+//   (netif)->ifinnucastpkts = 0;  \
+//   (netif)->ifindiscards = 0;    \
+//   (netif)->ifoutoctets = 0;     \
+//   (netif)->ifoutucastpkts = 0;  \
+//   (netif)->ifoutnucastpkts = 0; \
+//   (netif)->ifoutdiscards = 0
+// #define NETIF_INIT_SNMP(netif, type, speed)
 
 
-extern struct netif *netif_list;
-/** The default network interface. */
-extern struct netif *netif_default;
+// extern struct netif *netif_list;
+// /** The default network interface. */
+// extern struct netif *netif_default;
 
 
-void netif_init(void);
+// void netif_init(void);
 
-struct netif *netif_add(struct netif *netif, ip_addr_t *ipaddr, ip_addr_t *netmask,
-      ip_addr_t *gw, void *state, netif_init_fn init, netif_input_fn input);
+// struct netif *netif_add(struct netif *netif, ip_addr_t *ipaddr, ip_addr_t *netmask,
+//       ip_addr_t *gw, void *state, netif_init_fn init, netif_input_fn input);
 
-void
-netif_set_addr(struct netif *netif, ip_addr_t *ipaddr, ip_addr_t *netmask,
-      ip_addr_t *gw);
-void netif_remove(struct netif * netif);
+// void
+// netif_set_addr(struct netif *netif, ip_addr_t *ipaddr, ip_addr_t *netmask,
+//       ip_addr_t *gw);
+// void netif_remove(struct netif * netif);
 
-struct netif *netif_find(char *name);
+// struct netif *netif_find(char *name);
 
-void netif_set_default(struct netif *netif);
+// void netif_set_default(struct netif *netif);
 
-void netif_set_ipaddr(struct netif *netif, ip_addr_t *ipaddr);
-void netif_set_netmask(struct netif *netif, ip_addr_t *netmask);
-void netif_set_gw(struct netif *netif, ip_addr_t *gw);
+// void netif_set_ipaddr(struct netif *netif, ip_addr_t *ipaddr);
+// void netif_set_netmask(struct netif *netif, ip_addr_t *netmask);
+// void netif_set_gw(struct netif *netif, ip_addr_t *gw);
 
-void netif_set_up(struct netif *netif);
-void netif_set_down(struct netif *netif);
-/** Ask if an interface is up */
-#define netif_is_up(netif) (((netif)->flags & NETIF_FLAG_UP) ? (uint8_t)1 : (uint8_t)0)
+// void netif_set_up(struct netif *netif);
+// void netif_set_down(struct netif *netif);
+// /** Ask if an interface is up */
+// #define netif_is_up(netif) (((netif)->flags & NETIF_FLAG_UP) ? (uint8_t)1 : (uint8_t)0)
 
-#if LWIP_NETIF_STATUS_CALLBACK
-void netif_set_status_callback(struct netif *netif, netif_status_callback_fn status_callback);
-#endif /* LWIP_NETIF_STATUS_CALLBACK */
-#if LWIP_NETIF_REMOVE_CALLBACK
-void netif_set_remove_callback(struct netif *netif, netif_status_callback_fn remove_callback);
-#endif /* LWIP_NETIF_REMOVE_CALLBACK */
+// void netif_set_status_callback(struct netif *netif, netif_status_callback_fn status_callback);
+// void netif_set_remove_callback(struct netif *netif, netif_status_callback_fn remove_callback);
 
-void netif_set_link_up(struct netif *netif);
-void netif_set_link_down(struct netif *netif);
-/** Ask if a link is up */ 
-#define netif_is_link_up(netif) (((netif)->flags & NETIF_FLAG_LINK_UP) ? (uint8_t)1 : (uint8_t)0)
+// void netif_set_link_up(struct netif *netif);
+// void netif_set_link_down(struct netif *netif);
+// /** Ask if a link is up */ 
+// #define netif_is_link_up(netif) (((netif)->flags & NETIF_FLAG_LINK_UP) ? (uint8_t)1 : (uint8_t)0)
 
-#if LWIP_NETIF_LINK_CALLBACK
-void netif_set_link_callback(struct netif *netif, netif_status_callback_fn link_callback);
-#endif /* LWIP_NETIF_LINK_CALLBACK */
+// void netif_set_link_callback(struct netif *netif, netif_status_callback_fn link_callback);
 
-#if LWIP_NETIF_HOSTNAME
-#define netif_set_hostname(netif, name) do { if((netif) != NULL) { (netif)->hostname = name; }}while(0)
-#define netif_get_hostname(netif) (((netif) != NULL) ? ((netif)->hostname) : NULL)
-#endif /* LWIP_NETIF_HOSTNAME */
+// #if LWIP_NETIF_HOSTNAME
+// #define netif_set_hostname(netif, name) do { if((netif) != NULL) { (netif)->hostname = name; }}while(0)
+// #define netif_get_hostname(netif) (((netif) != NULL) ? ((netif)->hostname) : NULL)
+// #endif /* LWIP_NETIF_HOSTNAME */
 
-#if LWIP_IGMP
-#define netif_set_igmp_mac_filter(netif, function) do { if((netif) != NULL) { (netif)->igmp_mac_filter = function; }}while(0)
-#define netif_get_igmp_mac_filter(netif) (((netif) != NULL) ? ((netif)->igmp_mac_filter) : NULL)
-#endif /* LWIP_IGMP */
+// #define netif_set_igmp_mac_filter(netif, function) do { if((netif) != NULL) { (netif)->igmp_mac_filter = function; }}while(0)
+// #define netif_get_igmp_mac_filter(netif) (((netif) != NULL) ? ((netif)->igmp_mac_filter) : NULL)
 
 
-#if ENABLE_LOOPBACK
-err_t netif_loop_output(struct netif *netif, struct pbuf *p, ip_addr_t *dest_ip);
-void netif_poll(struct netif *netif);
-#if !LWIP_NETIF_LOOPBACK_MULTITHREADING
-void netif_poll_all(void);
-#endif /* !LWIP_NETIF_LOOPBACK_MULTITHREADING */
-#endif /* ENABLE_LOOPBACK */
+// err_t netif_loop_output(struct netif *netif, struct pbuf *p, ip_addr_t *dest_ip);
+// void netif_poll(struct netif *netif);
+// void netif_poll_all(void);
 
-#if LWIP_NETIF_HWADDRHINT
-#define NETIF_SET_HWADDRHINT(netif, hint) ((netif)->addr_hint = (hint))
-#else /* LWIP_NETIF_HWADDRHINT */
-#define NETIF_SET_HWADDRHINT(netif, hint)
-#endif /* LWIP_NETIF_HWADDRHINT */
+// #define NETIF_SET_HWADDRHINT(netif, hint) ((netif)->addr_hint = (hint))
 
 
 

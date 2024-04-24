@@ -110,7 +110,7 @@ dhcp_handle_nak(struct netif *netif)
 {
   struct dhcp *dhcp = netif->dhcp;
   LWIP_DEBUGF(DHCP_DEBUG | LWIP_DBG_TRACE, ("dhcp_handle_nak(netif=%p) %c%c%"U16_F"\n", 
-    (void*)netif, netif->name[0], netif->name[1], (u16_t)netif->num));
+    (void*)netif, netif->name[0], netif->name[1], (uint16_t)netif->num));
   /* Set the interface down since the address must no longer be used, as per RFC2131 */
   netif_set_down(netif);
   /* remove IP address from interface */
@@ -122,3 +122,26 @@ dhcp_handle_nak(struct netif *netif)
   /* We can immediately restart discovery */
   dhcp_discover(netif);
 }
+
+
+static void
+dhcp_check(struct netif *netif)
+{
+  struct dhcp *dhcp = netif->dhcp;
+  err_t result;
+  uint16_t msecs;
+  LWIP_DEBUGF(DHCP_DEBUG | LWIP_DBG_TRACE, ("dhcp_check(netif=%p) %c%c\n", (void *)netif, (s16_t)netif->name[0],
+    (s16_t)netif->name[1]));
+  dhcp_set_state(dhcp, DHCP_CHECKING);
+  /* create an ARP query for the offered IP address, expecting that no host
+     responds, as the IP address should not be in use. */
+  result = etharp_query(netif, &dhcp->offered_ip_addr, NULL);
+  if (result != ERR_OK) {
+    LWIP_DEBUGF(DHCP_DEBUG | LWIP_DBG_TRACE | LWIP_DBG_LEVEL_WARNING, ("dhcp_check: could not perform ARP query\n"));
+  }
+  dhcp->tries++;
+  msecs = 500;
+  dhcp->request_timeout = (msecs + DHCP_FINE_TIMER_MSECS - 1) / DHCP_FINE_TIMER_MSECS;
+  LWIP_DEBUGF(DHCP_DEBUG | LWIP_DBG_TRACE | LWIP_DBG_STATE, ("dhcp_check(): set request timeout %"U16_F" msecs\n", msecs));
+}
+

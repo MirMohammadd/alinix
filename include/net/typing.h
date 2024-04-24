@@ -2,6 +2,7 @@
 #define __ALINIX_KERNEL_NET_TYPING_H
 
 #include <net/ip_addr.h>
+#include <net/err.h>
 
 struct ip_addr {
   uint32_t addr;

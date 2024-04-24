@@ -25,4 +25,7 @@
 void *malloc(size_t size);
 void free(void *ptr);
 
+#define mem_free free
+
+
 #endif /* __ALINIX_KERNEL_ULIB_H */

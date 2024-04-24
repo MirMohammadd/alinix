@@ -59,6 +59,6 @@ typedef enum {
 
 
 struct pbuf *pbuf_alloc(pbuf_layer l, uint16_t length, pbuf_type type);
-
+uint8_t pbuf_free(struct pbuf *p);
 
 #endif	/* __ALINIX_KERNEL_PBUF_HEADER_NET_INCLUDED_H */

@@ -123,10 +123,8 @@ struct netif {
   /** This field can be set by the device driver and could point
    *  to state information for the device. */
   void *state;
-#if LWIP_DHCP
   /** the DHCP client state information for this netif */
   struct dhcp *dhcp;
-#endif /* LWIP_DHCP */
   /** the AutoIP client state information for this netif */
   struct autoip *autoip;
 #if LWIP_NETIF_HOSTNAME

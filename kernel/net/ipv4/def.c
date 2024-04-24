@@ -1,4 +1,5 @@
 #include <alinix/types.h>
+#include <net/def.h>
 
 uint16_t
 lwip_htons(uint16_t n)

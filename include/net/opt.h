@@ -2,6 +2,7 @@
 #define __ALINIX_KERNEL_NET_OPT_H
 
 #include <net/def.h>
+#include <alinix/memory.h>
 
 
 /**

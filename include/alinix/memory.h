@@ -25,6 +25,7 @@
 #include <alinix/bytes.h>
 #include <alinix/ulib.h>
 #include <net/opt.h>
+#include <net/pbuf.h>
 
 void memset(void* bufptr, char value, uint32_t size);
 void* memcpy(void* dstptr, const void* srcptr, uint32_t size);
@@ -46,5 +47,13 @@ void *memp_malloc(memp_t type);
 #ifndef LWIP_MEM_ALIGN_SIZE
 #define LWIP_MEM_ALIGN_SIZE(size) (((size) + MEM_ALIGNMENT - 1) & ~(MEM_ALIGNMENT-1))
 #endif
+
+
+const uint16_t memp_sizes[MEMP_MAX] = {
+#define LWIP_MEMPOOL(name,num,size,desc)  LWIP_MEM_ALIGN_SIZE(size),
+};
+
+
+#define memp_malloc(type)     mem_malloc(memp_sizes[type])
 
 #endif /*_ALINIX_KERNEL_MEMORY_H*/

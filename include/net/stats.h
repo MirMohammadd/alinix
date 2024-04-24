@@ -2,6 +2,7 @@
 #define __ALINIX_KERNEL_NET_INCLUDED_H_STATS
 
 #include <alinix/types.h>
+#include <alinix/memory.h>
 #define STAT_COUNTER     uint16_t
 
 struct stats_proto {
@@ -19,6 +20,86 @@ struct stats_proto {
   STAT_COUNTER cachehit;
 };
 
+struct stats_mem {
+#ifdef LWIP_DEBUG
+  const char *name;
+#endif /* LWIP_DEBUG */
+  mem_size_t avail;
+  mem_size_t used;
+  mem_size_t max;
+  STAT_COUNTER err;
+  STAT_COUNTER illegal;
+};
+
+struct stats_syselem {
+  STAT_COUNTER used;
+  STAT_COUNTER max;
+  STAT_COUNTER err;
+};
+
+struct stats_sys {
+  struct stats_syselem sem;
+  struct stats_syselem mutex;
+  struct stats_syselem mbox;
+};
+
+
+
+struct stats_ {
+#if LINK_STATS
+  struct stats_proto link;
+#endif
+#if ETHARP_STATS
+  struct stats_proto etharp;
+#endif
+#if IPFRAG_STATS
+  struct stats_proto ip_frag;
+#endif
+#if IP_STATS
+  struct stats_proto ip;
+#endif
+#if ICMP_STATS
+  struct stats_proto icmp;
+#endif
+#if IGMP_STATS
+  struct stats_igmp igmp;
+#endif
+#if UDP_STATS
+  struct stats_proto udp;
+#endif
+#if TCP_STATS
+  struct stats_proto tcp;
+#endif
+#if MEM_STATS
+  struct stats_mem mem;
+#endif
+#if MEMP_STATS
+  struct stats_mem memp[MEMP_MAX];
+#endif
+#if SYS_STATS
+  struct stats_sys sys;
+#endif
+};
+
 struct stats_proto etharp;
+
+#define stats_display_proto(return_type, function_name, ...) \
+    return_type function_name(__VA_ARGS__)
+
+
+#define STATS_INC(x) ++lwip_stats.x
+#define STATS_DEC(x) --lwip_stats.x
+#define STATS_INC_USED(x, y) do { lwip_stats.x.used += y; \
+                                if (lwip_stats.x.max < lwip_stats.x.used) { \
+                                    lwip_stats.x.max = lwip_stats.x.used; \
+                                } \
+                             } while(0)
+#define stats_init()
+#define STATS_INC(x)
+#define STATS_DEC(x)
+#define STATS_INC_USED(x)
+
+#define ETHARP_STATS_INC(x) STATS_INC(x)
+#define ETHARP_STATS_DISPLAY() stats_display_proto(&lwip_stats.etharp, "ETHARP")
 
 #endif

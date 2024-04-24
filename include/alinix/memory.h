@@ -56,4 +56,7 @@ const uint16_t memp_sizes[MEMP_MAX] = {
 
 #define memp_malloc(type)     mem_malloc(memp_sizes[type])
 
+typedef uint16_t mem_size_t;
+
+
 #endif /*_ALINIX_KERNEL_MEMORY_H*/

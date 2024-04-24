@@ -61,6 +61,14 @@ static err_t autoip_bind(struct netif *netif);
 
 /* start sending probes for llipaddr */
 static void autoip_start_probing(struct netif *netif);
+static err_t
+autoip_arp_announce(struct netif *netif)
+{
+  return etharp_raw(netif, (struct eth_addr *)netif->hwaddr, &ethbroadcast,
+    (struct eth_addr *)netif->hwaddr, &netif->autoip->llipaddr, &ethzero,
+    &netif->autoip->llipaddr, ARP_REQUEST);
+}
+
 
 err_t 
 __autoip_start(struct netif *netif){

@@ -21,6 +21,22 @@
 #include <alinix/types.h>
 #include <alinix/compiler.h>
 
+struct ip_addr {
+  uint32_t addr;
+};
+
+PACK_STRUCT_BEGIN
+struct ip_addr_packed {
+  PACK_STRUCT_FIELD(uint32_t addr);
+} PACK_STRUCT_STRUCT;
+PACK_STRUCT_END
+
+
+// This should be defined on the top
+typedef struct ip_addr ip_addr_t;
+typedef struct ip_addr_packed ip_addr_p_t;
+
+
 
 /** 255.255.255.255 */
 #define IPADDR_NONE         ((uint32_t)0xffffffffUL)
@@ -65,21 +81,11 @@ struct ip_pcb {
 
 
 
-PACK_STRUCT_BEGIN
-struct ip_addr_packed {
-  PACK_STRUCT_FIELD(uint32_t addr);
-} PACK_STRUCT_STRUCT;
-PACK_STRUCT_END
-
-// This should be defined on the top
-typedef struct ip_addr ip_addr_t;
-typedef struct ip_addr_packed ip_addr_p_t;
 
 
 
-struct ip_addr {
-  uint32_t addr;
-};
+
+
 
 extern const ip_addr_t ip_addr_any;
 extern const ip_addr_t ip_addr_broadcast

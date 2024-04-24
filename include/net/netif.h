@@ -25,6 +25,7 @@
 // #include <net/err.h>
 #include <net/ip_addr.h>
 #include <alinix/ip.h>
+#include <net/err.h>
 
 
 

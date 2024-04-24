@@ -18,6 +18,8 @@
 #include <net/opt.h>
 #include <net/etharp.h>
 #include <net/tcp.h>
+#include <net/tcp_impl.h>
+
 
 #define NETIF_STATUS_CALLBACK(n)
 

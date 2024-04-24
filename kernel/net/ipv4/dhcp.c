@@ -22,6 +22,7 @@
 #include <alinix/if_arp.h>
 
 #include <net/dhcp.h>
+#include <net/debug.h>
 
 
 /** DHCP_OPTION_MAX_MSG_SIZE is set to the MTU
@@ -145,3 +146,25 @@ dhcp_check(struct netif *netif)
   LWIP_DEBUGF(DHCP_DEBUG | LWIP_DBG_TRACE | LWIP_DBG_STATE, ("dhcp_check(): set request timeout %"U16_F" msecs\n", msecs));
 }
 
+static void
+dhcp_handle_offer(struct netif *netif)
+{
+  struct dhcp *dhcp = netif->dhcp;
+  LWIP_DEBUGF(DHCP_DEBUG | LWIP_DBG_TRACE, ("dhcp_handle_offer(netif=%p) %c%c%"U16_F"\n",
+    (void*)netif, netif->name[0], netif->name[1], (uint16_t)netif->num));
+  /* obtain the server address */
+  if (dhcp_option_given(dhcp, DHCP_OPTION_IDX_SERVER_ID)) {
+    ip4_addr_set_u32(&dhcp->server_ip_addr, htonl(dhcp_get_option_value(dhcp, DHCP_OPTION_IDX_SERVER_ID)));
+    LWIP_DEBUGF(DHCP_DEBUG | LWIP_DBG_STATE, ("dhcp_handle_offer(): server 0x%08"X32_F"\n",
+      ip4_addr_get_u32(&dhcp->server_ip_addr)));
+    /* remember offered address */
+    ip_addr_copy(dhcp->offered_ip_addr, dhcp->msg_in->yiaddr);
+    LWIP_DEBUGF(DHCP_DEBUG | LWIP_DBG_STATE, ("dhcp_handle_offer(): offer for 0x%08"X32_F"\n",
+      ip4_addr_get_u32(&dhcp->offered_ip_addr)));
+
+    dhcp_select(netif);
+  } else {
+    LWIP_DEBUGF(DHCP_DEBUG | LWIP_DBG_TRACE | LWIP_DBG_LEVEL_SERIOUS,
+      ("dhcp_handle_offer(netif=%p) did not get server ID!\n", (void*)netif));
+  }
+}

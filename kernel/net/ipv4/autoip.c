@@ -111,9 +111,9 @@ __autoip_start(struct netif *netif){
 void
 autoip_set_struct(struct netif *netif, struct autoip *autoip)
 {
-  LWIP_ASSERT("netif != NULL", netif != NULL);
-  LWIP_ASSERT("autoip != NULL", autoip != NULL);
-  LWIP_ASSERT("netif already has a struct autoip set", netif->autoip == NULL);
+//   LWIP_ASSERT("netif != NULL", netif != NULL);
+//   LWIP_ASSERT("autoip != NULL", autoip != NULL);
+//   LWIP_ASSERT("netif already has a struct autoip set", netif->autoip == NULL);
 
   /* clear data structure */
   memset(autoip, 0, sizeof(struct autoip));

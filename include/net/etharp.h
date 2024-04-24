@@ -7,6 +7,16 @@
 #define ETHARP_HWADDR_LEN     6
 #endif
 
+
+#define ETHTYPE_ARP       0x0806U
+#define ETHTYPE_IP        0x0800U
+#define ETHTYPE_VLAN      0x8100U
+#define ETHTYPE_PPPOEDISC 0x8863U  /* PPP Over Ethernet Discovery Stage */
+#define ETHTYPE_PPPOE     0x8864U  /* PPP Over Ethernet Session Stage */
+
+#define SIZEOF_ETHARP_HDR 28
+#define SIZEOF_ETHARP_PACKET (SIZEOF_ETH_HDR + SIZEOF_ETHARP_HDR)
+
 extern const struct eth_addr ethbroadcast, ethzero;
 
 

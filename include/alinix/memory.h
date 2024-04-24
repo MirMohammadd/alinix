@@ -23,6 +23,7 @@
 
 #include <alinix/types.h>
 #include <alinix/bytes.h>
+#include <alinix/ulib.h>
 
 void memset(void* bufptr, char value, uint32_t size);
 void* memcpy(void* dstptr, const void* srcptr, uint32_t size);
@@ -36,7 +37,9 @@ void * memmove(void* dstptr, const void* srcptr, uint32_t size);
 
 
 void *memp_malloc(memp_t type);
-
+#ifndef mem_malloc
+#define mem_malloc malloc
+#endif
 
 
 #endif /*_ALINIX_KERNEL_MEMORY_H*/

@@ -19,7 +19,15 @@ const struct eth_addr ethbroadcast = {{0xff,0xff,0xff,0xff,0xff,0xff}};
 const struct eth_addr ethzero = {{0,0,0,0,0,0}};
 
 
-
+enum etharp_state {
+  ETHARP_STATE_EMPTY = 0,
+  ETHARP_STATE_PENDING,
+  ETHARP_STATE_STABLE,
+  ETHARP_STATE_STABLE_REREQUESTING
+#if ETHARP_SUPPORT_STATIC_ENTRIES
+  ,ETHARP_STATE_STATIC
+#endif /* ETHARP_SUPPORT_STATIC_ENTRIES */
+};
 /** Clean up ARP table entries */
 static void
 etharp_free_entry(int i)
@@ -45,15 +53,7 @@ etharp_free_entry(int i)
 }
 
 
-enum etharp_state {
-  ETHARP_STATE_EMPTY = 0,
-  ETHARP_STATE_PENDING,
-  ETHARP_STATE_STABLE,
-  ETHARP_STATE_STABLE_REREQUESTING
-#if ETHARP_SUPPORT_STATIC_ENTRIES
-  ,ETHARP_STATE_STATIC
-#endif /* ETHARP_SUPPORT_STATIC_ENTRIES */
-};
+
 
 struct etharp_entry {
 #if ARP_QUEUEING
@@ -71,6 +71,8 @@ struct etharp_entry {
 };
 
 static struct etharp_entry arp_table[ARP_TABLE_SIZE];
+
+
 
 
 void etharp_cleanup_netif(struct netif *netif)

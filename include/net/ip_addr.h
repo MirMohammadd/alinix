@@ -30,5 +30,18 @@ PACK_STRUCT_END
 #define ip_addr_set_zero(ipaddr)      ((ipaddr)->addr = 0)
 
 
+#ifndef IPADDR2_COPY
+#define IPADDR2_COPY(dest, src) SMEMCPY(dest, src, sizeof(ip_addr_t))
+#endif
+
+
+
+#define PP_HTONS(x) ((((x) & 0xff) << 8) | (((x) & 0xff00) >> 8))
+#define PP_NTOHS(x) PP_HTONS(x)
+#define PP_HTONL(x) ((((x) & 0xff) << 24) | \
+                     (((x) & 0xff00) << 8) | \
+                     (((x) & 0xff0000UL) >> 8) | \
+                     (((x) & 0xff000000UL) >> 24))
+#define PP_NTOHL(x) PP_HTONL(x)
 
 #endif /*__ALINIX_KERNEL_IP_ADDR_NET_H*/

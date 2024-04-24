@@ -21,6 +21,7 @@
 #include <net/ip_addr.h>
 #include <net/auto_ip.h>
 #include <alinix/types.h>
+#include <alinix/ip.h>
 
 
 

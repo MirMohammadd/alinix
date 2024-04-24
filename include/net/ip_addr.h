@@ -26,4 +26,8 @@ struct ip_addr2 {
 PACK_STRUCT_END
 
 
+#define ip_addr_set_zero(ipaddr)      ((ipaddr)->addr = 0)
+
+
+
 #endif /*__ALINIX_KERNEL_IP_ADDR_NET_H*/

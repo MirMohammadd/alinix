@@ -35,4 +35,8 @@ void * memmove(void* dstptr, const void* srcptr, uint32_t size);
 
 
 
+void *memp_malloc(memp_t type);
+
+
+
 #endif /*_ALINIX_KERNEL_MEMORY_H*/

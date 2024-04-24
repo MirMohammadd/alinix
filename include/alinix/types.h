@@ -128,4 +128,10 @@ struct callback_head {
 #define rcu_head callback_head
 
 
+typedef enum {
+#define LWIP_MEMPOOL(name,num,size,desc)  MEMP_##name,
+  MEMP_MAX
+} memp_t;
+
+
 #endif /*__ALINIX_KERNEL__TYPES_H_HEADER_*/

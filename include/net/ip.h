@@ -21,8 +21,9 @@
 #include <net/ip_addr.h>
 
 
-struct ip_addr_t;
 #define IP_PCB \
+  struct ip_pcb;
+  typedef struct ip_addr_t;
   /* ip addresses in network byte order */ \
   ip_addr_t local_ip; \
   ip_addr_t remote_ip; \

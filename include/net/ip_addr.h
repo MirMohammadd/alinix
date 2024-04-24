@@ -13,10 +13,11 @@ struct ip_addr {
   uint32_t addr;
 };
 
+extern const ip_addr_t ip_addr_any;
+extern const ip_addr_t ip_addr_broadcast
 #define IP_ADDR_ANY         ((ip_addr_t *)&ip_addr_any)
 #define IP_ADDR_BROADCAST   ((ip_addr_t *)&ip_addr_broadcast)
-extern const ip_addr_t ip_addr_any;
-extern const ip_addr_t ip_addr_broadcast;
+;
 
 
 PACK_STRUCT_BEGIN

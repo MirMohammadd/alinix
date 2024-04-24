@@ -23,7 +23,9 @@
 #include <alinix/types.h>
 #include <alinix/ip.h>
 
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /** Function prototype for netif status- or link-callback functions. */
 typedef void (*netif_status_callback_fn)(struct netif *netif);
@@ -33,9 +35,7 @@ typedef err_t (*netif_igmp_mac_filter_fn)(struct netif *netif,
 
 #define ENABLE_LOOPBACK (LWIP_NETIF_LOOPBACK || LWIP_HAVE_LOOPIF)
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+
 
 
 #define netif_is_up(netif) (((netif)->flags & NETIF_FLAG_UP) ? (uint8_t)1 : (uint8_t)0)

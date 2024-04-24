@@ -5,6 +5,7 @@
 #include <net/debug.h>
 #include <net/pbuf.h>
 #include <net/stats.h>
+#include <net/netif.h>
 
 
 #define ARP_MAXPENDING 2

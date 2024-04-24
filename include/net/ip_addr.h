@@ -19,4 +19,11 @@ extern const ip_addr_t ip_addr_any;
 extern const ip_addr_t ip_addr_broadcast;
 
 
+PACK_STRUCT_BEGIN
+struct ip_addr2 {
+  PACK_STRUCT_FIELD(uint16_t addrw[2]);
+} PACK_STRUCT_STRUCT;
+PACK_STRUCT_END
+
+
 #endif /*__ALINIX_KERNEL_IP_ADDR_NET_H*/

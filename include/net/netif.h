@@ -102,6 +102,7 @@ struct netif {
 
   uint8_t flags;
   struct dhcp *dhcp;
+  uint16_t mtu;
 
 };
 

@@ -19,6 +19,7 @@
 
 
 #include <alinix/types.h>
+#include <alinix/ip.h>
 #include <alinix/compiler.h>
 
 struct ip_addr {

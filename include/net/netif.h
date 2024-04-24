@@ -99,6 +99,8 @@ struct netif {
   uint8_t hwaddr[NETIF_MAX_HWADDR_LEN];
   struct autoip *autoip;
 
+  uint8_t flags;
+
 };
 
 

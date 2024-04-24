@@ -1,9 +1,13 @@
 #include <alinix/types.h>
+#include <alinix/compiler.h>
 #include <net/ip.h>
 #include <net/udp.h>
 #include <net/netif.h>
 #include <net/auto_ip.h>
 #include <net/opt.h>
+#include <net/arp.h>
+#include <net/ip_addr.h>
+
 
 
 /* 169.254.0.0 */
@@ -104,4 +108,40 @@ autoip_handle_arp_conflict(struct netif *netif)
     /* TODO: close all TCP sessions */
     autoip_restart(netif);
   }
+}
+
+static void
+autoip_create_addr(struct netif *netif, ip_addr_t *ipaddr)
+{
+  /* Here we create an IP-Address out of range 169.254.1.0 to 169.254.254.255
+   * compliant to RFC 3927 Section 2.1
+   * We have 254 * 256 possibilities */
+
+  uint32_t addr = ntohl(LWIP_AUTOIP_CREATE_SEED_ADDR(netif));
+  addr += netif->autoip->tried_llipaddr;
+  addr = AUTOIP_NET | (addr & 0xffff);
+  /* Now, 169.254.0.0 <= addr <= 169.254.255.255 */ 
+
+  if (addr < AUTOIP_RANGE_START) {
+    addr += AUTOIP_RANGE_END - AUTOIP_RANGE_START + 1;
+  }
+  if (addr > AUTOIP_RANGE_END) {
+    addr -= AUTOIP_RANGE_END - AUTOIP_RANGE_START + 1;
+  }
+  LWIP_ASSERT("AUTOIP address not in range", (addr >= AUTOIP_RANGE_START) &&
+    (addr <= AUTOIP_RANGE_END));
+  ip4_addr_set_u32(ipaddr, htonl(addr));
+  
+  LWIP_DEBUGF(AUTOIP_DEBUG | LWIP_DBG_TRACE | LWIP_DBG_STATE,
+    ("autoip_create_addr(): tried_llipaddr=%"U16_F", %"U16_F".%"U16_F".%"U16_F".%"U16_F"\n",
+    (u16_t)(netif->autoip->tried_llipaddr), ip4_addr1_16(ipaddr), ip4_addr2_16(ipaddr),
+    ip4_addr3_16(ipaddr), ip4_addr4_16(ipaddr)));
+}
+
+static err_t
+autoip_arp_probe(struct netif *netif)
+{
+  return etharp_raw(netif, (struct eth_addr *)netif->hwaddr, &ethbroadcast,
+    (struct eth_addr *)netif->hwaddr, IP_ADDR_ANY, &ethzero,
+    &netif->autoip->llipaddr, ARP_REQUEST);
 }

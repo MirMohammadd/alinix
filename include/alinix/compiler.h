@@ -43,5 +43,14 @@
 #define PACK_STRUCT_BEGIN
 #define PACK_STRUCT_END
 
+#ifdef LWIP_UNIX_EMPTY_ASSERT
+#define LWIP_PLATFORM_ASSERT(x)
+#else
+#define LWIP_PLATFORM_ASSERT(x) do {printf("Assertion \"%s\" failed at line %d in %s\n", \
+                                     x, __LINE__, __FILE__); fflush(NULL); abort();} while(0)
+#endif
+
+#define LWIP_RAND() ((u32_t)rand())
+
 
 #endif /*__ALINIX_KERNEL_COMPILER_H*/

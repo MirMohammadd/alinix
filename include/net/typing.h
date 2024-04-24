@@ -8,7 +8,7 @@ struct ip_addr {
 };
 
 struct ip_addr_packed {
-  PACK_STRUCT_FIELD(uint32_t addr);
+  uint32_t addr;
 } PACK_STRUCT_STRUCT;
 
 

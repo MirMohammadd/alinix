@@ -1,6 +1,9 @@
 #include <net/netif.h>
 #include <net/opt.h>
 
+#define NETIF_STATUS_CALLBACK(n)
+
+
 void netif_set_down(struct netif *netif)
 {
   if (netif->flags & NETIF_FLAG_UP) {

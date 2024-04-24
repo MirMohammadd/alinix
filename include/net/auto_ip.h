@@ -32,7 +32,8 @@ struct autoip
   uint8_t tried_llipaddr;      /* total number of probed/used Link Local IP-Addresses */
 };
 
-err_t autoip_start(struct netif *netif);
+err_t 
+autoip_start(struct netif *netif);
 
 
 #endif // __ALINIX_KERNEL_NET_AUTO_IP_H

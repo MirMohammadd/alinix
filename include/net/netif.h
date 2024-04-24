@@ -22,6 +22,7 @@
 #include <net/auto_ip.h>
 #include <alinix/types.h>
 #include <alinix/ip.h>
+#include <net/err.h>
 
 #ifdef __cplusplus
 extern "C" {

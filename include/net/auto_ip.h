@@ -14,7 +14,10 @@
 #define MAX_CONFLICTS            10  /*          (max conflicts before rate limiting)   */
 #define RATE_LIMIT_INTERVAL      60  /* seconds  (delay between successive attempts)    */
 #define DEFEND_INTERVAL          10  /* seconds  (min. wait between defensive ARPs)  */
-
+#define AUTOIP_STATE_OFF         0
+#define AUTOIP_STATE_PROBING     1
+#define AUTOIP_STATE_ANNOUNCING  2
+#define AUTOIP_STATE_BOUND       3
 
 #define AUTOIP_TMR_INTERVAL      100
 #define AUTOIP_TICKS_PER_SECOND (1000 / AUTOIP_TMR_INTERVAL)

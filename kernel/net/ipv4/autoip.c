@@ -8,6 +8,8 @@
 #include <net/arp.h>
 #include <net/ip_addr.h>
 #include <net/etharp.h>
+#include <alinix/memory.h>
+#include <net/err.h>
 
 
 
@@ -58,6 +60,53 @@ static err_t autoip_bind(struct netif *netif);
 /* start sending probes for llipaddr */
 static void autoip_start_probing(struct netif *netif);
 
+err_t
+autoip_start(struct netif *netif)
+{
+  struct autoip *autoip = netif->autoip;
+  err_t result = ERR_OK;
+
+  if (netif_is_up(netif)) {
+    netif_set_down(netif);
+  }
+
+  /* Set IP-Address, Netmask and Gateway to 0 to make sure that
+   * ARP Packets are formed correctly
+   */
+  ip_addr_set_zero(&netif->ip_addr);
+  ip_addr_set_zero(&netif->netmask);
+  ip_addr_set_zero(&netif->gw);
+
+  LWIP_DEBUGF(AUTOIP_DEBUG | LWIP_DBG_TRACE | LWIP_DBG_STATE,
+    ("autoip_start(netif=%p) %c%c%"U16_F"\n", (void*)netif, netif->name[0],
+    netif->name[1], (u16_t)netif->num));
+  if (autoip == NULL) {
+    /* no AutoIP client attached yet? */
+    LWIP_DEBUGF(AUTOIP_DEBUG | LWIP_DBG_TRACE,
+      ("autoip_start(): starting new AUTOIP client\n"));
+    autoip = (struct autoip *)mem_malloc(sizeof(struct autoip));
+    if (autoip == NULL) {
+      LWIP_DEBUGF(AUTOIP_DEBUG | LWIP_DBG_TRACE,
+        ("autoip_start(): could not allocate autoip\n"));
+      return ERR_MEM;
+    }
+    memset(autoip, 0, sizeof(struct autoip));
+    /* store this AutoIP client in the netif */
+    netif->autoip = autoip;
+    LWIP_DEBUGF(AUTOIP_DEBUG | LWIP_DBG_TRACE, ("autoip_start(): allocated autoip"));
+  } else {
+    autoip->state = AUTOIP_STATE_OFF;
+    autoip->ttw = 0;
+    autoip->sent_num = 0;
+    ip_addr_set_zero(&autoip->llipaddr);
+    autoip->lastconflict = 0;
+  }
+
+  autoip_create_addr(netif, &(autoip->llipaddr));
+  autoip_start_probing(netif);
+
+  return result;
+}
 
 
 void

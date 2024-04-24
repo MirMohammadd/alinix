@@ -49,9 +49,7 @@ void *memp_malloc(memp_t type);
 #endif
 
 
-const uint16_t memp_sizes[MEMP_MAX] = {
-#define LWIP_MEMPOOL(name,num,size,desc)  LWIP_MEM_ALIGN_SIZE(size),
-};
+
 
 
 #define memp_malloc(type)     mem_malloc(memp_sizes[type])

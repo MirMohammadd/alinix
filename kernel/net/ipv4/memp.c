@@ -2,6 +2,7 @@
 #include <alinix/compiler.h>
 #include <net/opt.h>
 #include <net/stats.h>
+#include <net/memp.h>
 
 #define MEMP_SIZE           0
 
@@ -49,3 +50,7 @@ memp_free(memp_t type, void *mem)
 #endif /* MEMP_SANITY_CHECK */
 
 }
+
+const uint16_t memp_sizes[MEMP_MAX] = {
+#define LWIP_MEMPOOL(name,num,size,desc)  LWIP_MEM_ALIGN_SIZE(size),
+};

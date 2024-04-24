@@ -31,6 +31,8 @@ void * memmove(void* dstptr, const void* srcptr, uint32_t size);
 
 #define phys2virt(x) ((x) + THREE_GB)
 #define virt2phys(x) ((x) - THREE_GB)
+#define LWIP_PBUF_MEMPOOL(name, num, payload, desc) LWIP_MEMPOOL(name, num, (MEMP_ALIGN_SIZE(sizeof(struct pbuf)) + MEMP_ALIGN_SIZE(payload)), desc)
+
 
 
 #endif /*_ALINIX_KERNEL_MEMORY_H*/

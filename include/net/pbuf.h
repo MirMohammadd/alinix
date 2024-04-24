@@ -11,6 +11,11 @@ typedef enum {
 } pbuf_layer;
 
 
+#define LWIP_SUPPORT_CUSTOM_PBUF (IP_FRAG && !IP_FRAG_USES_STATIC_BUF && !LWIP_NETIF_TX_SINGLE_PBUF)
+
+#define PBUF_TRANSPORT_HLEN 20
+#define PBUF_IP_HLEN        20
+
 struct pbuf {
   /** next pbuf in singly linked pbuf chain */
   struct pbuf *next;

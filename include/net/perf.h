@@ -2,7 +2,7 @@
 #define __ALINIX_KERNEL_NET_PERF_H
 
 
-void perf_print(unsigned long c1l, unsigned long c1h,
+inline void perf_print(unsigned long c1l, unsigned long c1h,
 		unsigned long c2l, unsigned long c2h,
 		char *key);
 

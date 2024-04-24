@@ -6,11 +6,27 @@
 #include <net/pbuf.h>
 #include <net/stats.h>
 #include <net/netif.h>
+#include <net/opt.h>
 
 
 #define ARP_MAXPENDING 2
 
 #define HWTYPE_ETHERNET 1
+
+static struct etharp_entry arp_table[ARP_TABLE_SIZE];
+
+
+void etharp_cleanup_netif(struct netif *netif)
+{
+  uint8_t i;
+
+  for (i = 0; i < ARP_TABLE_SIZE; ++i) {
+    uint8_t state = arp_table[i].state;
+    if ((state != ETHARP_STATE_EMPTY) && (arp_table[i].netif == netif)) {
+      etharp_free_entry(i);
+    }
+  }
+}
 
 
 err_t

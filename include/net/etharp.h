@@ -4,6 +4,7 @@
 #include <alinix/compiler.h>
 #include <alinix/types.h>
 #include <net/ip_addr.h>
+#include <net/netif.h>
 #ifndef ETHARP_HWADDR_LEN
 #define ETHARP_HWADDR_LEN     6
 #endif
@@ -64,5 +65,8 @@ PACK_STRUCT_END
 #ifndef ETHADDR16_COPY
 #define ETHADDR16_COPY(src, dst)  SMEMCPY(src, dst, ETHARP_HWADDR_LEN)
 #endif
+
+void etharp_cleanup_netif(struct netif *netif);
+
 
 #endif // __ALINIX_KERNEL_ETH_ARP_H_NET

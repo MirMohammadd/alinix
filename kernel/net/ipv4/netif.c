@@ -1,5 +1,6 @@
 #include <net/netif.h>
 #include <net/opt.h>
+#include <net/etharp.h>
 
 #define NETIF_STATUS_CALLBACK(n)
 

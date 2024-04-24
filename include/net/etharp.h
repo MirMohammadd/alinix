@@ -10,7 +10,7 @@
 
 
 
-
+#define SIZEOF_ETH_HDR (14 + ETH_PAD_SIZE)
 
 
 #define ETHTYPE_ARP       0x0806U

@@ -18,6 +18,9 @@
 const struct eth_addr ethbroadcast = {{0xff,0xff,0xff,0xff,0xff,0xff}};
 const struct eth_addr ethzero = {{0,0,0,0,0,0}};
 
+static struct etharp_entry arp_table[ARP_TABLE_SIZE];
+
+
 
 enum etharp_state {
   ETHARP_STATE_EMPTY = 0,
@@ -70,7 +73,6 @@ struct etharp_entry {
   uint8_t ctime;
 };
 
-static struct etharp_entry arp_table[ARP_TABLE_SIZE];
 
 
 

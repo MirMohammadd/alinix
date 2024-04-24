@@ -20,8 +20,6 @@
 //////////////////////////////////
 // Ip headers should be included here
 #include <net/ip.h>
-#include <net/ipv4.h>
-#include <net/ipv6.h>
 #include <net/auto_ip.h>
 #include <net/ip_addr.h>
 #include <net/ip_frag.h>

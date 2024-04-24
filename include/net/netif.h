@@ -28,6 +28,7 @@
 #include <net/err.h>
 #include <net/typing.h>
 #include <net/auto_ip.h>
+#include <net/dhcp.h>
 
 
 
@@ -100,6 +101,7 @@ struct netif {
   struct autoip *autoip;
 
   uint8_t flags;
+  struct dhcp *dhcp;
 
 };
 

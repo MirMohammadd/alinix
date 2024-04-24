@@ -13,6 +13,13 @@
 
 #define HWTYPE_ETHERNET 1
 
+
+
+const struct eth_addr ethbroadcast = {{0xff,0xff,0xff,0xff,0xff,0xff}};
+const struct eth_addr ethzero = {{0,0,0,0,0,0}};
+
+
+
 /** Clean up ARP table entries */
 static void
 etharp_free_entry(int i)

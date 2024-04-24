@@ -11,6 +11,7 @@
 #include <alinix/memory.h>
 #include <net/err.h>
 #include <net/def.h>
+#include <net/inet.h>
 #include <alinix/stdarg.h>
 
 

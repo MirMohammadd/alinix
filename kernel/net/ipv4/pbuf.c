@@ -42,7 +42,7 @@ pbuf_alloc(pbuf_layer layer, uint16_t length, pbuf_type type)
   switch (type) {
   case PBUF_POOL:
     /* allocate head of pbuf chain into p */
-    p = (struct pbuf *)memp_malloc(MEMP_PBUF_POOL);
+    p = (struct pbuf *)memp_malloc(MEM_DEBUG);
     LWIP_DEBUGF(PBUF_DEBUG | LWIP_DBG_TRACE, ("pbuf_alloc: allocated pbuf %p\n", (void *)p));
     if (p == NULL) {
       PBUF_POOL_IS_EMPTY();
@@ -75,7 +75,7 @@ pbuf_alloc(pbuf_layer layer, uint16_t length, pbuf_type type)
     rem_len = length - p->len;
     /* any remaining pbufs to be allocated? */
     while (rem_len > 0) {
-      q = (struct pbuf *)memp_malloc(MEMP_PBUF_POOL);
+      q = (struct pbuf *)memp_malloc(MEMP_DEBUG);
       if (q == NULL) {
         PBUF_POOL_IS_EMPTY();
         /* free chain so far allocated */
@@ -129,7 +129,7 @@ pbuf_alloc(pbuf_layer layer, uint16_t length, pbuf_type type)
   /* pbuf references existing (externally allocated) RAM payload? */
   case PBUF_REF:
     /* only allocate memory for the pbuf structure */
-    p = (struct pbuf *)memp_malloc(MEMP_PBUF);
+    p = (struct pbuf *)memp_malloc(MEM_DEBUG);
     if (p == NULL) {
       LWIP_DEBUGF(PBUF_DEBUG | LWIP_DBG_LEVEL_SERIOUS,
                   ("pbuf_alloc: Could not allocate MEMP_PBUF for PBUF_%s.\n",

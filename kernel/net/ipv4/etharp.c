@@ -9,6 +9,7 @@
 #include <net/opt.h>
 #include <net/ip_frag.h>
 #include <alinix/ulib.h>
+#include <net/def.h>
 
 
 #define ARP_MAXPENDING 2

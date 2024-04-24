@@ -51,7 +51,6 @@ static void
 etharp_free_entry(int i)
 {
   /* remove from SNMP ARP index tree */
-  snmp_delete_arpidx_tree(arp_table[i].netif, &arp_table[i].ipaddr);
   /* and empty packet queue */
   if (arp_table[i].q != NULL) {
     /* remove all queued packets */

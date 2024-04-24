@@ -71,6 +71,34 @@ autoip_arp_announce(struct netif *netif)
 }
 
 
+static void
+autoip_start_probing(struct netif *netif)
+{
+  struct autoip *autoip = netif->autoip;
+
+  autoip->state = AUTOIP_STATE_PROBING;
+  autoip->sent_num = 0;
+  LWIP_DEBUGF(AUTOIP_DEBUG | LWIP_DBG_TRACE | LWIP_DBG_STATE,
+     ("autoip_start_probing(): changing state to PROBING: %"U16_F".%"U16_F".%"U16_F".%"U16_F"\n",
+      ip4_addr1_16(&netif->autoip->llipaddr), ip4_addr2_16(&netif->autoip->llipaddr),
+      ip4_addr3_16(&netif->autoip->llipaddr), ip4_addr4_16(&netif->autoip->llipaddr)));
+
+  /* time to wait to first probe, this is randomly
+   * choosen out of 0 to PROBE_WAIT seconds.
+   * compliant to RFC 3927 Section 2.2.1
+   */
+  autoip->ttw = (uint16_t)(LWIP_AUTOIP_RAND(netif) % (PROBE_WAIT * AUTOIP_TICKS_PER_SECOND));
+
+  /*
+   * if we tried more then MAX_CONFLICTS we must limit our rate for
+   * accquiring and probing address
+   * compliant to RFC 3927 Section 2.2.1
+   */
+  if (autoip->tried_llipaddr > MAX_CONFLICTS) {
+    autoip->ttw = RATE_LIMIT_INTERVAL * AUTOIP_TICKS_PER_SECOND;
+  }
+}
+
 err_t 
 __autoip_start(struct netif *netif){
   struct autoip *autoip = netif->autoip;

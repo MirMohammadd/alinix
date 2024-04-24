@@ -26,6 +26,7 @@
 #include <net/ip_addr.h>
 #include <alinix/ip.h>
 #include <net/err.h>
+#include <net/typing.h>
 
 
 
@@ -194,18 +195,6 @@ struct netif {
 extern struct netif *netif_list;
 /** The default network interface. */
 extern struct netif *netif_default;
-
-
-typedef err_t (*netif_init_fn)(struct netif *netif);
-
-typedef err_t (*netif_input_fn)(struct pbuf *p, struct netif *inp);
-
-typedef err_t (*netif_output_fn)(struct netif *netif, struct pbuf *p,
-       ip_addr_t *ipaddr);
-
-
-typedef err_t (*netif_linkoutput_fn)(struct netif *netif, struct pbuf *p);
-/** Function prototype for netif status- or link-callback functions. */
 
 
 void netif_init(void);

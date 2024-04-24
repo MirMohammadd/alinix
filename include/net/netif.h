@@ -3,6 +3,7 @@
 
 #include <net/err.h>
 #include <net/ip_addr.h>
+#include <net/auto_ip.h>
 
 
 #define ENABLE_LOOPBACK (LWIP_NETIF_LOOPBACK || LWIP_HAVE_LOOPIF)
@@ -102,10 +103,8 @@ struct netif {
   /** the DHCP client state information for this netif */
   struct dhcp *dhcp;
 #endif /* LWIP_DHCP */
-#if LWIP_AUTOIP
   /** the AutoIP client state information for this netif */
   struct autoip *autoip;
-#endif
 #if LWIP_NETIF_HOSTNAME
   /* the hostname for this netif, NULL is a valid value */
   char*  hostname;

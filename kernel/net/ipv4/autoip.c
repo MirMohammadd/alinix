@@ -2,6 +2,9 @@
 #include <net/ip.h>
 #include <net/udp.h>
 #include <net/netif.h>
+#include <net/auto_ip.h>
+#include <net/opt.h>
+
 
 /* 169.254.0.0 */
 #define AUTOIP_NET         0xA9FE0000
@@ -52,4 +55,53 @@ static void autoip_start_probing(struct netif *netif);
 
 
 
+void
+autoip_set_struct(struct netif *netif, struct autoip *autoip)
+{
+  LWIP_ASSERT("netif != NULL", netif != NULL);
+  LWIP_ASSERT("autoip != NULL", autoip != NULL);
+  LWIP_ASSERT("netif already has a struct autoip set", netif->autoip == NULL);
 
+  /* clear data structure */
+  memset(autoip, 0, sizeof(struct autoip));
+  /* autoip->state = AUTOIP_STATE_OFF; */
+  netif->autoip = autoip;
+}
+
+PRIVATE VOID
+autoip_restart(struct netif *netif)
+{
+  netif->autoip->tried_llipaddr++;
+  autoip_start(netif);
+}
+
+
+PRIVATE VOID
+autoip_handle_arp_conflict(struct netif *netif)
+{
+  /* Somehow detect if we are defending or retreating */
+  unsigned char defend = 1; /* tbd */
+
+  if (defend) {
+    if (netif->autoip->lastconflict > 0) {
+      /* retreat, there was a conflicting ARP in the last
+       * DEFEND_INTERVAL seconds
+       */
+      LWIP_DEBUGF(AUTOIP_DEBUG | LWIP_DBG_TRACE | LWIP_DBG_STATE,
+        ("autoip_handle_arp_conflict(): we are defending, but in DEFEND_INTERVAL, retreating\n"));
+
+      /* TODO: close all TCP sessions */
+      autoip_restart(netif);
+    } else {
+      LWIP_DEBUGF(AUTOIP_DEBUG | LWIP_DBG_TRACE | LWIP_DBG_STATE,
+        ("autoip_handle_arp_conflict(): we are defend, send ARP Announce\n"));
+      autoip_arp_announce(netif);
+      netif->autoip->lastconflict = DEFEND_INTERVAL * AUTOIP_TICKS_PER_SECOND;
+    }
+  } else {
+    LWIP_DEBUGF(AUTOIP_DEBUG | LWIP_DBG_TRACE | LWIP_DBG_STATE,
+      ("autoip_handle_arp_conflict(): we do not defend, retreating\n"));
+    /* TODO: close all TCP sessions */
+    autoip_restart(netif);
+  }
+}

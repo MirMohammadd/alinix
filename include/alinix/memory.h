@@ -37,11 +37,13 @@ void * memmove(void* dstptr, const void* srcptr, uint32_t size);
 #define LWIP_PBUF_MEMPOOL(name, num, payload, desc) LWIP_MEMPOOL(name, num, (MEMP_ALIGN_SIZE(sizeof(struct pbuf)) + MEMP_ALIGN_SIZE(payload)), desc)
 
 
+#ifndef memp_malloc
+#define memp_malloc malloc
+#endif // memp_malloc
 
-void *memp_malloc(memp_t type);
 #ifndef mem_malloc
 #define mem_malloc malloc
-#endif
+#endif // mem_malloc
 
 
 #ifndef LWIP_MEM_ALIGN_SIZE

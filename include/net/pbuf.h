@@ -44,4 +44,15 @@ struct pbuf {
   uint16_t ref;
 };
 
+typedef enum {
+  PBUF_RAM, /* pbuf data is stored in RAM */
+  PBUF_ROM, /* pbuf data is stored in ROM */
+  PBUF_REF, /* pbuf comes from the pbuf pool */
+  PBUF_POOL /* pbuf payload refers to RAM */
+} pbuf_type;
+
+
+struct pbuf *pbuf_alloc(pbuf_layer l, uint16_t length, pbuf_type type);
+
+
 #endif	/* __ALINIX_KERNEL_PBUF_HEADER_NET_INCLUDED_H */

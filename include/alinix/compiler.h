@@ -51,7 +51,7 @@
                                      x, __LINE__, __FILE__);} while(0)
 #endif
 
-#define LWIP_RAND() ((u32_t)rand())
+#define LWIP_RAND() ((uint32_t)rand())
 
 
 

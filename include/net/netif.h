@@ -65,8 +65,6 @@ typedef err_t (*netif_output_fn)(struct netif *netif, struct pbuf *p,
 
 typedef err_t (*netif_linkoutput_fn)(struct netif *netif, struct pbuf *p);
 /** Function prototype for netif status- or link-callback functions. */
-typedef void (*netif_status_callback_fn)(struct netif *netif);
-/** Function prototype for netif igmp_mac_filter functions */
 
 
 

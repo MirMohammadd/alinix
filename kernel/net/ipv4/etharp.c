@@ -13,6 +13,30 @@
 
 #define HWTYPE_ETHERNET 1
 
+/** Clean up ARP table entries */
+static void
+etharp_free_entry(int i)
+{
+  /* remove from SNMP ARP index tree */
+  snmp_delete_arpidx_tree(arp_table[i].netif, &arp_table[i].ipaddr);
+  /* and empty packet queue */
+  if (arp_table[i].q != NULL) {
+    /* remove all queued packets */
+    LWIP_DEBUGF(ETHARP_DEBUG, ("etharp_free_entry: freeing entry %"U16_F", packet queue %p.\n", (u16_t)i, (void *)(arp_table[i].q)));
+    free_etharp_q(arp_table[i].q);
+    arp_table[i].q = NULL;
+  }
+  /* recycle entry for re-use */
+  arp_table[i].state = ETHARP_STATE_EMPTY;
+#ifdef LWIP_DEBUG
+  /* for debugging, clean out the complete entry */
+  arp_table[i].ctime = 0;
+  arp_table[i].netif = NULL;
+  ip_addr_set_zero(&arp_table[i].ipaddr);
+  arp_table[i].ethaddr = ethzero;
+#endif /* LWIP_DEBUG */
+}
+
 
 enum etharp_state {
   ETHARP_STATE_EMPTY = 0,

@@ -21,21 +21,8 @@
 #include <alinix/types.h>
 #include <alinix/ip.h>
 #include <alinix/compiler.h>
+#include <net/typing.h>
 
-struct ip_addr {
-  uint32_t addr;
-};
-
-PACK_STRUCT_BEGIN
-struct ip_addr_packed {
-  PACK_STRUCT_FIELD(uint32_t addr);
-} PACK_STRUCT_STRUCT;
-PACK_STRUCT_END
-
-
-// This should be defined on the top
-typedef struct ip_addr ip_addr_t;
-typedef struct ip_addr_packed ip_addr_p_t;
 
 
 

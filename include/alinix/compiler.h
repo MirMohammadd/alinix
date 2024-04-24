@@ -17,6 +17,7 @@
 #ifndef __ALINIX_KERNEL_COMPILER_H
 #define __ALINIX_KERNEL_COMPILER_H
 
+#include <alinix/types.h>
 
 
 /**

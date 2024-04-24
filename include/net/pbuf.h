@@ -15,6 +15,7 @@ typedef enum {
 
 #define PBUF_TRANSPORT_HLEN 20
 #define PBUF_IP_HLEN        20
+#define PBUF_FLAG_IS_CUSTOM 0x02U
 
 struct pbuf {
   /** next pbuf in singly linked pbuf chain */

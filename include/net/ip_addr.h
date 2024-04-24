@@ -5,6 +5,16 @@
 #include <alinix/types.h>
 #include <alinix/compiler.h>
 
+
+/** 255.255.255.255 */
+#define IPADDR_NONE         ((uint32_t)0xffffffffUL)
+/** 127.0.0.1 */
+#define IPADDR_LOOPBACK     ((uint32_t)0x7f000001UL)
+/** 0.0.0.0 */
+#define IPADDR_ANY          ((uint32_t)0x00000000UL)
+/** 255.255.255.255 */
+#define IPADDR_BROADCAST    ((uint32_t)0xffffffffUL)
+
 // This should be defined on the top
 typedef struct ip_addr ip_addr_t;
 

@@ -60,7 +60,7 @@ static err_t autoip_bind(struct netif *netif);
 /* start sending probes for llipaddr */
 static void autoip_start_probing(struct netif *netif);
 
-err_t
+err_t 
 autoip_start(struct netif *netif)
 {
   struct autoip *autoip = netif->autoip;

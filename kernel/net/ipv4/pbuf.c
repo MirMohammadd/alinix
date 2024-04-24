@@ -3,6 +3,7 @@
 #include <net/opt.h>
 #include <net/debug.h>
 #include <alinix/memory.h>
+#include <alinix/compiler.h>
 
 struct pbuf *
 pbuf_alloc(pbuf_layer layer, uint16_t length, pbuf_type type)

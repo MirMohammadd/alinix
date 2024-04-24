@@ -53,4 +53,8 @@
 #define LWIP_RAND() ((u32_t)rand())
 
 
+
+typedef uintptr_t  mem_ptr_t;
+
+
 #endif /*__ALINIX_KERNEL_COMPILER_H*/

@@ -10,6 +10,7 @@
 #include <net/etharp.h>
 #include <alinix/memory.h>
 #include <net/err.h>
+#include <net/def.h>
 
 
 

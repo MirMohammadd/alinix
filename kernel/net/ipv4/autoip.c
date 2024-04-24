@@ -7,6 +7,7 @@
 #include <net/opt.h>
 #include <net/arp.h>
 #include <net/ip_addr.h>
+#include <net/etharp.h>
 
 
 

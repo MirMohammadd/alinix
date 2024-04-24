@@ -19,10 +19,12 @@
 
 #include <net/opt.h>
 #include <net/udp.h>
+#include <net/ip_addr.h>
+#include <net/netif.h>
 
 #include <alinix/types.h>
 #include <alinix/compiler.h>
-#include <net/ip_addr.h>
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -86,6 +88,23 @@ struct dhcp_msg
   PACK_STRUCT_FIELD(uint8_t options[DHCP_OPTIONS_LEN]);
 } PACK_STRUCT_STRUCT;
 PACK_STRUCT_END
+
+
+void dhcp_set_struct(struct netif *netif, struct dhcp *dhcp);
+#define dhcp_remove_struct(netif) do {(netif)->dhcp = NULL;} while (0)
+void dhcp_cleanup(struct netif *netif);
+/** start DHCP configuration */
+err_t dhcp_start(struct netif *netif);
+/** enforce early lease renewal (not needed normally)*/
+err_t dhcp_renew(struct netif *netif);
+/** release the DHCP lease, usually called before dhcp_stop()*/
+err_t dhcp_release(struct netif *netif);
+/** stop DHCP configuration */
+void dhcp_stop(struct netif *netif);
+/** inform server of our manual IP address */
+void dhcp_inform(struct netif *netif);
+/** Handle a possible change in the network configuration */
+void dhcp_network_changed(struct netif *netif);
 
 #ifdef __cplusplus
 }

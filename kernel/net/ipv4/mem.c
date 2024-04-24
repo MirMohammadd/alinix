@@ -1,4 +1,5 @@
 #include <alinix/types.h>
+#include <net/mem.h>
 
 struct memp_malloc_helper
 {

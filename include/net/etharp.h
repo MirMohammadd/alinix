@@ -57,4 +57,10 @@ struct eth_hdr {
 } PACK_STRUCT_STRUCT;
 PACK_STRUCT_END
 
+
+
+#ifndef ETHADDR16_COPY
+#define ETHADDR16_COPY(src, dst)  SMEMCPY(src, dst, ETHARP_HWADDR_LEN)
+#endif
+
 #endif // __ALINIX_KERNEL_ETH_ARP_H_NET

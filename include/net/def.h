@@ -19,11 +19,6 @@ uint32_t lwip_ntohl(uint32_t x);
 
 
 
-uint32_t __always_inline
-lwip_ntohl(uint32_t n)
-{
-  return lwip_htonl(n);
-}
 
 
 

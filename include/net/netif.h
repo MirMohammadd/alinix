@@ -24,9 +24,6 @@
 #include <alinix/ip.h>
 #include <net/err.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 
 /** Function prototype for netif status- or link-callback functions. */
@@ -274,8 +271,6 @@ void netif_poll_all(void);
 
 
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif

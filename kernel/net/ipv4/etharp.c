@@ -11,6 +11,9 @@
 #include <alinix/ulib.h>
 #include <net/def.h>
 
+struct stats_proto etharp;
+
+
 
 #define ARP_MAXPENDING 2
 

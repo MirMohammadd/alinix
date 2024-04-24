@@ -81,7 +81,6 @@ struct stats_ {
 #endif
 };
 
-struct stats_proto etharp;
 
 #define stats_display_proto(return_type, function_name, ...) \
     return_type function_name(__VA_ARGS__)

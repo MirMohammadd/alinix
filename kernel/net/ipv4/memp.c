@@ -3,6 +3,7 @@
 #include <net/opt.h>
 #include <net/stats.h>
 #include <net/memp.h>
+#include <alinix/memory.h>
 
 #define MEMP_SIZE           0
 

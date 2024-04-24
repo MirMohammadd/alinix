@@ -27,6 +27,7 @@
 #include <alinix/ip.h>
 #include <net/err.h>
 #include <net/typing.h>
+#include <net/auto_ip.h>
 
 
 
@@ -95,6 +96,9 @@ struct netif {
    *  to send a packet on the interface. This function outputs
    *  the pbuf as-is on the link medium. */
   netif_linkoutput_fn linkoutput;
+  uint8_t hwaddr[NETIF_MAX_HWADDR_LEN];
+  struct autoip *autoip;
+
 };
 
 

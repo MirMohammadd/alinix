@@ -13,16 +13,9 @@ lwip_ntohl(uint32_t n)
 }
 
 
-#if BYTE_ORDER == BIG_ENDIAN
-#define lwip_htons(x) (x)
-#define lwip_ntohs(x) (x)
-#define lwip_htonl(x) (x)
-#define lwip_ntohl(x) (x)
-#define PP_HTONS(x) (x)
-#define PP_NTOHS(x) (x)
-#define PP_HTONL(x) (x)
-#define PP_NTOHL(x) (x)
-#else /* BYTE_ORDER != BIG_ENDIAN */
+
+
+
 #if LWIP_PLATFORM_BYTESWAP
 #define lwip_htons(x) LWIP_PLATFORM_HTONS(x)
 #define lwip_ntohs(x) LWIP_PLATFORM_HTONS(x)

@@ -23,7 +23,7 @@
 #include <alinix/types.h>
 
 void *malloc(size_t size);
-void free(void *ptr);
+#include <alinix/memory.h>
 
 #define mem_free free
 

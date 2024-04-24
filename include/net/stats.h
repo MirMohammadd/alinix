@@ -49,9 +49,9 @@ struct stats_ {
 #if LINK_STATS
   struct stats_proto link;
 #endif
-#if ETHARP_STATS
-  struct stats_proto etharp;
-#endif
+// #if ETHARP_STATS
+//   struct stats_proto etharp;
+// #endif
 #if IPFRAG_STATS
   struct stats_proto ip_frag;
 #endif

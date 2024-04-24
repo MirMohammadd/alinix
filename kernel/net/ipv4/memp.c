@@ -4,6 +4,7 @@
 #include <net/stats.h>
 #include <net/memp.h>
 #include <alinix/memory.h>
+#include <alinix/ulib.h>
 
 #define MEMP_SIZE           0
 

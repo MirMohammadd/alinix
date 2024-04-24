@@ -25,7 +25,6 @@
 void *malloc(size_t size);
 #include <alinix/memory.h>
 
-#define mem_free free
 
 
 #endif /* __ALINIX_KERNEL_ULIB_H */

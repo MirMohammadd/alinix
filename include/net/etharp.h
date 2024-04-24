@@ -22,7 +22,6 @@
 #define SIZEOF_ETHARP_HDR 28
 #define SIZEOF_ETHARP_PACKET (SIZEOF_ETH_HDR + SIZEOF_ETHARP_HDR)
 
-extern const struct eth_addr ethbroadcast, ethzero;
 
 
 PACK_STRUCT_BEGIN
@@ -30,6 +29,9 @@ struct eth_addr {
   PACK_STRUCT_FIELD(uint8_t addr[ETHARP_HWADDR_LEN]);
 } PACK_STRUCT_STRUCT;
 PACK_STRUCT_END
+
+extern const struct eth_addr ethbroadcast, ethzero;
+
 
 
 PACK_STRUCT_BEGIN

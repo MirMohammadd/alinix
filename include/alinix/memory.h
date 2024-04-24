@@ -52,7 +52,6 @@ void *memp_malloc(memp_t type);
 
 
 
-#define memp_malloc(type)     mem_malloc(memp_sizes[type])
 
 typedef uint16_t mem_size_t;
 

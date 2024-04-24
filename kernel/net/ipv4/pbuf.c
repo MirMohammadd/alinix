@@ -66,7 +66,7 @@ pbuf_free(struct pbuf *p){
       {
         /* is this a pbuf from the pool? */
         if (type == PBUF_POOL) {
-          memp_free(MEMP_DEBUG p);
+          ;
         /* is this a ROM or RAM referencing pbuf? */
         }else if (type == PBUF_ROM || type == PBUF_REF) {
           memp_free(MEM_DEBUG, p);

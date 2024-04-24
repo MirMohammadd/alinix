@@ -9,6 +9,31 @@
 #define SIZEOF_STRUCT_PBUF        LWIP_MEM_ALIGN_SIZE(sizeof(struct pbuf))
 
 
+#define PBUF_POOL_IS_EMPTY() pbuf_pool_is_empty()
+volatile uint8_t pbuf_free_ooseq_pending;
+
+static void
+pbuf_pool_is_empty(void)
+{
+#ifndef PBUF_POOL_FREE_OOSEQ_QUEUE_CALL
+  pbuf_free_ooseq_pending = 1;
+#else /* PBUF_POOL_FREE_OOSEQ_QUEUE_CALL */
+  uint8_t queued;
+  SYS_ARCH_DECL_PROTECT(old_level);
+  SYS_ARCH_PROTECT(old_level);
+  queued = pbuf_free_ooseq_pending;
+  pbuf_free_ooseq_pending = 1;
+  SYS_ARCH_UNPROTECT(old_level);
+
+  if(!queued) {
+    /* queue a call to pbuf_free_ooseq if not already queued */
+    PBUF_POOL_FREE_OOSEQ_QUEUE_CALL();
+  }
+#endif /* PBUF_POOL_FREE_OOSEQ_QUEUE_CALL */
+}
+
+
+
 struct pbuf *
 pbuf_alloc(pbuf_layer layer, uint16_t length, pbuf_type type)
 {

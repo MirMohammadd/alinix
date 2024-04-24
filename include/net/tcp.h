@@ -5,21 +5,108 @@
 #include <alinix/ip.h>
 
 
+/** Function prototype for tcp accept callback functions. Called when a new
+ * connection can be accepted on a listening pcb.
+ *
+ * @param arg Additional argument to pass to the callback function (@see tcp_arg())
+ * @param newpcb The new connection pcb
+ * @param err An error code if there has been an error accepting.
+ *            Only return ERR_ABRT if you have called tcp_abort from within the
+ *            callback function!
+ */
+typedef err_t (*tcp_accept_fn)(void *arg, struct tcp_pcb *newpcb, err_t err);
+
+/** Function prototype for tcp receive callback functions. Called when data has
+ * been received.
+ *
+ * @param arg Additional argument to pass to the callback function (@see tcp_arg())
+ * @param tpcb The connection pcb which received data
+ * @param p The received data (or NULL when the connection has been closed!)
+ * @param err An error code if there has been an error receiving
+ *            Only return ERR_ABRT if you have called tcp_abort from within the
+ *            callback function!
+ */
+typedef err_t (*tcp_recv_fn)(void *arg, struct tcp_pcb *tpcb,
+                             struct pbuf *p, err_t err);
+
+/** Function prototype for tcp sent callback functions. Called when sent data has
+ * been acknowledged by the remote side. Use it to free corresponding resources.
+ * This also means that the pcb has now space available to send new data.
+ *
+ * @param arg Additional argument to pass to the callback function (@see tcp_arg())
+ * @param tpcb The connection pcb for which data has been acknowledged
+ * @param len The amount of bytes acknowledged
+ * @return ERR_OK: try to send some data by calling tcp_output
+ *            Only return ERR_ABRT if you have called tcp_abort from within the
+ *            callback function!
+ */
+typedef err_t (*tcp_sent_fn)(void *arg, struct tcp_pcb *tpcb,
+                              uint16_t len);
+
+/** Function prototype for tcp poll callback functions. Called periodically as
+ * specified by @see tcp_poll.
+ *
+ * @param arg Additional argument to pass to the callback function (@see tcp_arg())
+ * @param tpcb tcp pcb
+ * @return ERR_OK: try to send some data by calling tcp_output
+ *            Only return ERR_ABRT if you have called tcp_abort from within the
+ *            callback function!
+ */
+typedef err_t (*tcp_poll_fn)(void *arg, struct tcp_pcb *tpcb);
+
+/** Function prototype for tcp error callback functions. Called when the pcb
+ * receives a RST or is unexpectedly closed for any other reason.
+ *
+ * @note The corresponding pcb is already freed when this callback is called!
+ *
+ * @param arg Additional argument to pass to the callback function (@see tcp_arg())
+ * @param err Error code to indicate why the pcb has been closed
+ *            ERR_ABRT: aborted through tcp_abort or by a TCP timer
+ *            ERR_RST: the connection was reset by the remote host
+ */
+typedef void  (*tcp_err_fn)(void *arg, err_t err);
+
+/** Function prototype for tcp connected callback functions. Called when a pcb
+ * is connected to the remote side after initiating a connection attempt by
+ * calling tcp_connect().
+ *
+ * @param arg Additional argument to pass to the callback function (@see tcp_arg())
+ * @param tpcb The connection pcb which is connected
+ * @param err An unused error code, always ERR_OK currently ;-) TODO!
+ *            Only return ERR_ABRT if you have called tcp_abort from within the
+ *            callback function!
+ *
+ * @note When a connection attempt fails, the error callback is currently called!
+ */
+typedef err_t (*tcp_connected_fn)(void *arg, struct tcp_pcb *tpcb, err_t err);
+
+struct tcp_pcb_listen {  
+/* Common members of all PCB types */
+  IP_PCB;
+/* Protocol specific PCB members */
+//   TCP_PCB_COMMON(struct tcp_pcb_listen);
+
+#if TCP_LISTEN_BACKLOG
+  uint8_t backlog;
+  uint8_t accepts_pending;
+#endif /* TCP_LISTEN_BACKLOG */
+};
+
 #define TCP_PCB_COMMON(type) \
   type *next; /* for the linked list */ \
   void *callback_arg; \
   /* the accept callback for listen- and normal pcbs, if LWIP_CALLBACK_API */ \
   DEF_ACCEPT_CALLBACK \
   enum tcp_state state; /* TCP state */ \
-  u8_t prio; \
+  uint8_t prio; \
   /* ports are in host byte order */ \
-  u16_t local_port
+  uint16_t local_port
 
 struct tcp_pcb {
 /** common PCB members */
   IP_PCB;
 /** protocol specific PCB members */
-  TCP_PCB_COMMON(struct tcp_pcb);
+//   TCP_PCB_COMMON(struct tcp_pcb);
 
   /* ports are in host byte order */
   uint16_t remote_port;

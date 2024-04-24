@@ -6,7 +6,8 @@
 
 uint16_t lwip_htons(uint16_t x);
 uint16_t lwip_ntohs(uint16_t x);
-uint32_t lwip_htonl(uint32_t x);
+// uint32_t lwip_htonl(uint32_t x);
+#define lwip_htonl(x) (x)
 uint32_t lwip_ntohl(uint32_t x);
 
 

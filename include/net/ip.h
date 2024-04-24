@@ -20,6 +20,8 @@
 #include <alinix/types.h>
 #include <net/ip_addr.h>
 
+
+struct ip_addr_t;
 #define IP_PCB \
   /* ip addresses in network byte order */ \
   ip_addr_t local_ip; \

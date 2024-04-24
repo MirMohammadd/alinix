@@ -31,4 +31,7 @@
 #include <alinix/compiler.h>
 //////////////////////////////////
 
+#define SOF_BROADCAST     0x20U  /* permit to send and to receive broadcast messages (see IP_SOF_BROADCAST option) */
+
+
 #endif /*__ALINIX_KERNEL_IP_H*/

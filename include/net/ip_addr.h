@@ -19,6 +19,8 @@ extern const ip_addr_t ip_addr_broadcast
 #define IP_ADDR_BROADCAST   ((ip_addr_t *)&ip_addr_broadcast)
 ;
 
+#define ip4_addr_set_u32(dest_ipaddr, src_u32) ((dest_ipaddr)->addr = (src_u32))
+
 
 PACK_STRUCT_BEGIN
 struct ip_addr2 {

@@ -18,6 +18,21 @@
 const struct eth_addr ethbroadcast = {{0xff,0xff,0xff,0xff,0xff,0xff}};
 const struct eth_addr ethzero = {{0,0,0,0,0,0}};
 
+struct etharp_entry {
+#if ARP_QUEUEING
+  /** Pointer to queue of pending outgoing packets on this ARP entry. */
+  struct etharp_q_entry *q;
+#else /* ARP_QUEUEING */
+  /** Pointer to a single pending outgoing packet on this ARP entry. */
+  struct pbuf *q;
+#endif /* ARP_QUEUEING */
+  ip_addr_t ipaddr;
+  struct netif *netif;
+  struct eth_addr ethaddr;
+  uint8_t state;
+  uint8_t ctime;
+};
+
 static struct etharp_entry arp_table[ARP_TABLE_SIZE];
 
 
@@ -58,20 +73,7 @@ etharp_free_entry(int i)
 
 
 
-struct etharp_entry {
-#if ARP_QUEUEING
-  /** Pointer to queue of pending outgoing packets on this ARP entry. */
-  struct etharp_q_entry *q;
-#else /* ARP_QUEUEING */
-  /** Pointer to a single pending outgoing packet on this ARP entry. */
-  struct pbuf *q;
-#endif /* ARP_QUEUEING */
-  ip_addr_t ipaddr;
-  struct netif *netif;
-  struct eth_addr ethaddr;
-  uint8_t state;
-  uint8_t ctime;
-};
+
 
 
 

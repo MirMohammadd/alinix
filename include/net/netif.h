@@ -17,12 +17,13 @@
 #ifndef __ALINIX_KERNEL_NET_NETIF_H
 #define __ALINIX_KERNEL_NET_NETIF_H
 
-#include <net/err.h>
+// #include <net/err.h>
+// #include <net/ip_addr.h>
+// #include <net/auto_ip.h>
+// #include <alinix/types.h>
+// #include <alinix/ip.h>
+// #include <net/err.h>
 #include <net/ip_addr.h>
-#include <net/auto_ip.h>
-#include <alinix/types.h>
-#include <alinix/ip.h>
-#include <net/err.h>
 
 
 

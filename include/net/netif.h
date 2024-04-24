@@ -75,6 +75,28 @@ typedef void (*netif_status_callback_fn)(struct netif *netif);
 #define NETIF_FLAG_IGMP         0x80U
 
 
+struct netif {
+  /** pointer to next in linked list */
+  struct netif *next;
+
+  /** IP address configuration in network byte order */
+  ip_addr_t ip_addr;
+  ip_addr_t netmask;
+  ip_addr_t gw;
+
+  /** This function is called by the network device driver
+   *  to pass a packet up the TCP/IP stack. */
+  netif_input_fn input;
+  /** This function is called by the IP module when it wants
+   *  to send a packet on the interface. This function typically
+   *  first resolves the hardware address, then sends the packet. */
+  netif_output_fn output;
+  /** This function is called by the ARP module when it wants
+   *  to send a packet on the interface. This function outputs
+   *  the pbuf as-is on the link medium. */
+  netif_linkoutput_fn linkoutput;
+};
+
 
 
 

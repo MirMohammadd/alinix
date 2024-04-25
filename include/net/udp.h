@@ -22,6 +22,7 @@
 #include <net/ip_addr.h>
 #include <net/ip.h>
 #include <net/err.h>
+#include <net/typing.h>
 
 
 #ifdef __cplusplus
@@ -31,10 +32,10 @@ extern "C"{
 
 #define UPD_HELEN 8
 struct udp_hdr {
-  PACK_STRUCT_FIELD(uint16_t src);
-  PACK_STRUCT_FIELD(uint16_t dest);  /* src/dest UDP ports */
-  PACK_STRUCT_FIELD(uint16_t len);
-  PACK_STRUCT_FIELD(uint16_t chksum);
+  uint16_t src;
+  uint16_t dest;  /* src/dest UDP ports */
+  uint16_t len;
+  uint16_t chksum;
 } PACK_STRUCT_STRUCT;
 
 

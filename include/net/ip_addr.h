@@ -82,11 +82,10 @@ extern const ip_addr_t ip_addr_broadcast
 #define ip4_addr_set_u32(dest_ipaddr, src_u32) ((dest_ipaddr)->addr = (src_u32))
 
 
-PACK_STRUCT_BEGIN
+
 struct ip_addr2 {
-  PACK_STRUCT_FIELD(uint16_t addrw[2]);
+  uint16_t addrw[2];
 } PACK_STRUCT_STRUCT;
-PACK_STRUCT_END
 
 
 #define ip_addr_set_zero(ipaddr)      ((ipaddr)->addr = 0)
@@ -105,5 +104,24 @@ PACK_STRUCT_END
                      (((x) & 0xff0000UL) >> 8) | \
                      (((x) & 0xff000000UL) >> 24))
 #define PP_NTOHL(x) PP_HTONL(x)
+
+
+
+
+
+struct ip_addr {
+  uint32_t addr;
+};
+
+
+struct ip_addr_packed {
+  uint32_t addr;
+} PACK_STRUCT_STRUCT;
+
+
+/** ip_addr_t uses a struct for convenience only, so that the same defines can
+ * operate both on ip_addr_t as well as on ip_addr_p_t. */
+typedef struct ip_addr ip_addr_t;
+typedef struct ip_addr_packed ip_addr_p_t;
 
 #endif /*__ALINIX_KERNEL_IP_ADDR_NET_H*/

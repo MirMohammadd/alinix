@@ -55,4 +55,24 @@ struct tcp_seg {
       (errf)((arg),(err));                                     \
   } while (0)
 
+
+#define TCP_RMV(pcbs, npcb)                        \
+  do {                                             \
+    if(*(pcbs) == (npcb)) {                        \
+      (*(pcbs)) = (*pcbs)->next;                   \
+    }                                              \
+    else {                                         \
+      for(tcp_tmp_pcb = *pcbs;                     \
+          tcp_tmp_pcb != NULL;                     \
+          tcp_tmp_pcb = tcp_tmp_pcb->next) {       \
+        if(tcp_tmp_pcb->next == (npcb)) {          \
+          tcp_tmp_pcb->next = (npcb)->next;        \
+          break;                                   \
+        }                                          \
+      }                                            \
+    }                                              \
+    (npcb)->next = NULL;                           \
+  } while(0)
+
+
 #endif

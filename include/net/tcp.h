@@ -97,7 +97,7 @@ struct tcp_pcb_listen {
 
 #define TCP_PCB_COMMON(type) \
   type *next; /* for the linked list */ \
-  void *callback_arg; \
+  // void *callback_arg; \
   /* the accept callback for listen- and normal pcbs, if LWIP_CALLBACK_API */ \
   DEF_ACCEPT_CALLBACK \
   enum tcp_state state; /* TCP state */ \

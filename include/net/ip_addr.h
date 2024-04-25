@@ -55,6 +55,11 @@
 uint8_t ip4_addr_isbroadcast(uint32_t addr, const struct netif *netif);
 
 
+#define ip_addr_netcmp(addr1, addr2, mask) (((addr1)->addr & \
+                                              (mask)->addr) == \
+                                             ((addr2)->addr & \
+                                              (mask)->addr))
+
 #define ip_addr_copy(dest, src) ((dest).addr = (src).addr)
 
 

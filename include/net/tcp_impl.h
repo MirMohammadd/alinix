@@ -16,4 +16,13 @@ union tcp_listen_pcbs_t { /* List of all TCP PCBs in LISTEN state. */
   struct tcp_pcb_listen *listen_pcbs; 
   struct tcp_pcb *pcbs;
 };
+
+
+#define TCP_PCB_REMOVE_ACTIVE(pcb)                 \
+  do {                                             \
+    tcp_pcb_remove(&tcp_active_pcbs, pcb);         \
+    tcp_active_pcbs_changed = 1;                   \
+  } while (0)
+
+
 #endif

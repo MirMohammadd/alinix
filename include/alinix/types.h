@@ -20,7 +20,7 @@
 #ifndef __ALINIX_KERNEL__TYPES_H_HEADER_
 #define __ALINIX_KERNEL__TYPES_H_HEADER_
 
-#include "_types.h"
+#include <alinix/_types.h>
 #include <alinix/enums.h>
 #include <net/ip_addr.h>
 

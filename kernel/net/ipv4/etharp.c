@@ -27,6 +27,7 @@
 #include <alinix/ulib.h>
 #include <net/def.h>
 #include <net/arp.h>
+#include <alinix/arch.h>
 
 struct stats_proto etharp;
 

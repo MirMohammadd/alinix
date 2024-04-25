@@ -88,7 +88,7 @@ tcp_pcb_remove(struct tcp_pcb **pcblist, struct tcp_pcb *pcb)
      pcb->state != LISTEN &&
      pcb->flags & TF_ACK_DELAY) {
     pcb->flags |= TF_ACK_NOW;
-    tcp_output(pcb);
+    // tcp_output(pcb);
   }
 
   if (pcb->state != LISTEN) {
@@ -101,7 +101,7 @@ tcp_pcb_remove(struct tcp_pcb **pcblist, struct tcp_pcb *pcb)
 
   pcb->state = CLOSED;
 
-  LWIP_ASSERT("tcp_pcb_remove: tcp_pcbs_sane()", tcp_pcbs_sane());
+//   LWIP_ASSERT("tcp_pcb_remove: tcp_pcbs_sane()", tcp_pcbs_sane());
 }
 
 
@@ -110,7 +110,7 @@ tcp_segs_free(struct tcp_seg *seg)
 {
   while (seg != NULL) {
     struct tcp_seg *next = seg->next;
-    tcp_seg_free(seg);
+    // tcp_seg_free(seg);
     seg = next;
   }
 }

@@ -247,6 +247,21 @@ etharp_query(struct netif *netif, ip_addr_t *ipaddr, struct pbuf *q)
     }
   }
 
+static err_t
+etharp_send_ip(struct netif *netif, struct pbuf *p, struct eth_addr *src, struct eth_addr *dst)
+{
+  struct eth_hdr *ethhdr = (struct eth_hdr *)p->payload;
+
+  LWIP_ASSERT("netif->hwaddr_len must be the same as ETHARP_HWADDR_LEN for etharp!",
+              (netif->hwaddr_len == ETHARP_HWADDR_LEN));
+  ETHADDR32_COPY(&ethhdr->dest, dst);
+  ETHADDR16_COPY(&ethhdr->src, src);
+  ethhdr->type = PP_HTONS(ETHTYPE_IP);
+  LWIP_DEBUGF(ETHARP_DEBUG | LWIP_DBG_TRACE, ("etharp_send_ip: sending packet %p\n", (void *)p));
+  /* send the packet */
+  return netif->linkoutput(netif, p);
+}
+
   /* packet given? */
   LWIP_ASSERT("q != NULL", q != NULL);
   /* stable entry? */

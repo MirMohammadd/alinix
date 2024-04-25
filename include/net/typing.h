@@ -3,6 +3,7 @@
 
 #include <net/ip_addr.h>
 #include <net/err.h>
+#include <alinix/compiler.h>
 
 struct ip_addr {
   uint32_t addr;

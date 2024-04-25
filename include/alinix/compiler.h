@@ -18,7 +18,7 @@
 #define __ALINIX_KERNEL_COMPILER_H
 
 #include <alinix/types.h>
-
+#include <net/typing.h>
 
 /**
  * @brief Define the compiler  macro to mark something as deprecated.

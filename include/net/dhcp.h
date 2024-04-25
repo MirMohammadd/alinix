@@ -127,7 +127,7 @@ err_t dhcp_release(struct netif *netif);
 /** stop DHCP configuration */
 void dhcp_stop(struct netif *netif);
 /** inform server of our manual IP address */
-static void dhcp_inform(struct netif *netif);
+void dhcp_inform(struct netif *netif);
 /** Handle a possible change in the network configuration */
 void dhcp_network_changed(struct netif *netif);
 

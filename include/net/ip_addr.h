@@ -34,6 +34,11 @@
 #define IPADDR_ANY          ((uint32_t)0x00000000UL)
 /** 255.255.255.255 */
 
+#define ip_addr_set_any(ipaddr)       ((ipaddr)->addr = IPADDR_ANY)
+
+#define ip_addr_get_network(target, host, netmask) ((target)->addr = ((host)->addr) & ((netmask)->addr))
+
+
 #define ip4_addr_get_u32(src_ipaddr) ((src_ipaddr)->addr)
 /* Get one byte from the 4-byte address */
 #define ip4_addr1(ipaddr) (((uint8_t*)(ipaddr))[0])

@@ -129,9 +129,7 @@ static void dhcp_option(struct dhcp *dhcp, uint8_t option_type, uint8_t option_l
 static void dhcp_option_byte(struct dhcp *dhcp, uint8_t value);
 static void dhcp_option_short(struct dhcp *dhcp, uint16_t value);
 static void dhcp_option_long(struct dhcp *dhcp, uint32_t value);
-#if LWIP_NETIF_HOSTNAME
 static void dhcp_option_hostname(struct dhcp *dhcp, struct netif *netif);
-#endif /* LWIP_NETIF_HOSTNAME */
 /* always add the DHCP options trailer to end and pad */
 static void dhcp_option_trailer(struct dhcp *dhcp);
 

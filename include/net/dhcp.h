@@ -25,7 +25,7 @@
 #include <alinix/types.h>
 #include <alinix/compiler.h>
 #include <net/typing.h>
-
+#include <alinix/ip.h>
 
 #ifdef __cplusplus
 extern "C" {

@@ -3,6 +3,7 @@
 #include <alinix/types.h>
 #include <net/err.h>
 #include <net/ip_addr.h>
+#include <net/def.h>
 
 uint8_t tcp_active_pcbs_changed;
 
@@ -78,7 +79,7 @@ tcp_abandon(struct tcp_pcb *pcb, int reset)
 void
 tcp_pcb_remove(struct tcp_pcb **pcblist, struct tcp_pcb *pcb)
 {
-  TCP_RMV(pcblist, pcb);
+//   TCP_RMV(pcblist, pcb);
 
   tcp_pcb_purge(pcb);
   
@@ -111,5 +112,67 @@ tcp_segs_free(struct tcp_seg *seg)
     struct tcp_seg *next = seg->next;
     tcp_seg_free(seg);
     seg = next;
+  }
+}
+
+void
+tcp_pcb_purge(struct tcp_pcb *pcb)
+{
+  if (pcb->state != CLOSED &&
+     pcb->state != TIME_WAIT &&
+     pcb->state != LISTEN) {
+
+    LWIP_DEBUGF(TCP_DEBUG, ("tcp_pcb_purge\n"));
+
+#if TCP_LISTEN_BACKLOG
+    if (pcb->state == SYN_RCVD) {
+      /* Need to find the corresponding listen_pcb and decrease its accepts_pending */
+      struct tcp_pcb_listen *lpcb;
+      LWIP_ASSERT("tcp_pcb_purge: pcb->state == SYN_RCVD but tcp_listen_pcbs is NULL",
+        tcp_listen_pcbs.listen_pcbs != NULL);
+      for (lpcb = tcp_listen_pcbs.listen_pcbs; lpcb != NULL; lpcb = lpcb->next) {
+        if ((lpcb->local_port == pcb->local_port) &&
+            (ip_addr_isany(&lpcb->local_ip) ||
+             ip_addr_cmp(&pcb->local_ip, &lpcb->local_ip))) {
+            /* port and address of the listen pcb match the timed-out pcb */
+            LWIP_ASSERT("tcp_pcb_purge: listen pcb does not have accepts pending",
+              lpcb->accepts_pending > 0);
+            lpcb->accepts_pending--;
+            break;
+          }
+      }
+    }
+#endif /* TCP_LISTEN_BACKLOG */
+
+
+    if (pcb->refused_data != NULL) {
+      LWIP_DEBUGF(TCP_DEBUG, ("tcp_pcb_purge: data left on ->refused_data\n"));
+      pbuf_free(pcb->refused_data);
+      pcb->refused_data = NULL;
+    }
+    if (pcb->unsent != NULL) {
+      LWIP_DEBUGF(TCP_DEBUG, ("tcp_pcb_purge: not all data sent\n"));
+    }
+    if (pcb->unacked != NULL) {
+      LWIP_DEBUGF(TCP_DEBUG, ("tcp_pcb_purge: data left on ->unacked\n"));
+    }
+#if TCP_QUEUE_OOSEQ
+    if (pcb->ooseq != NULL) {
+      LWIP_DEBUGF(TCP_DEBUG, ("tcp_pcb_purge: data left on ->ooseq\n"));
+    }
+    tcp_segs_free(pcb->ooseq);
+    pcb->ooseq = NULL;
+#endif /* TCP_QUEUE_OOSEQ */
+
+    /* Stop the retransmission timer as it will expect data on unacked
+       queue if it fires */
+    pcb->rtime = -1;
+
+    tcp_segs_free(pcb->unsent);
+    tcp_segs_free(pcb->unacked);
+    pcb->unacked = pcb->unsent = NULL;
+#if TCP_OVERSIZE
+    pcb->unsent_oversize = 0;
+#endif /* TCP_OVERSIZE */
   }
 }

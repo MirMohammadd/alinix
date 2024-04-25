@@ -1216,7 +1216,6 @@ dhcp_option_long(struct dhcp *dhcp, uint32_t value)
   dhcp->msg_out->options[dhcp->options_out_len++] = (uint8_t)((value & 0x000000ffUL));
 }
 
-#if LWIP_NETIF_HOSTNAME
 static void
 dhcp_option_hostname(struct dhcp *dhcp, struct netif *netif)
 {
@@ -1237,7 +1236,6 @@ dhcp_option_hostname(struct dhcp *dhcp, struct netif *netif)
     }
   }
 }
-#endif /* LWIP_NETIF_HOSTNAME */
 
 /**
  * Extract the DHCP message and the DHCP options.

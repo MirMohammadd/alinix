@@ -89,6 +89,8 @@ struct netif {
   ip_addr_t gw;
   uint8_t hwaddr_len;
 
+  char* hostname;
+
 
   /** This function is called by the network device driver
    *  to pass a packet up the TCP/IP stack. */

@@ -52,7 +52,7 @@ tcp_abandon(struct tcp_pcb *pcb, int reset)
 #if LWIP_CALLBACK_API
     errf = pcb->errf;
 #endif /* LWIP_CALLBACK_API */
-    errf_arg = pcb->callback_arg;
+    // errf_arg = pcb->callback_arg;
     TCP_PCB_REMOVE_ACTIVE(pcb);
     if (pcb->unacked != NULL) {
       tcp_segs_free(pcb->unacked);

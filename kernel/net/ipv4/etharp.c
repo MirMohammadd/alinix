@@ -418,3 +418,142 @@ etharp_request(struct netif *netif, ip_addr_t *ipaddr)
                     (struct eth_addr *)netif->hwaddr, &netif->ip_addr, &ethzero,
                     ipaddr, ARP_REQUEST);
 }
+
+static sint8_t
+etharp_find_entry(ip_addr_t *ipaddr, uint8_t flags)
+{
+  sint8_t old_pending = ARP_TABLE_SIZE, old_stable = ARP_TABLE_SIZE;
+  sint8_t empty = ARP_TABLE_SIZE;
+  uint8_t i = 0, age_pending = 0, age_stable = 0;
+  /* oldest entry with packets on queue */
+  sint8_t old_queue = ARP_TABLE_SIZE;
+  /* its age */
+  uint8_t age_queue = 0;
+
+  /**
+   * a) do a search through the cache, remember candidates
+   * b) select candidate entry
+   * c) create new entry
+   */
+
+  /* a) in a single search sweep, do all of this
+   * 1) remember the first empty entry (if any)
+   * 2) remember the oldest stable entry (if any)
+   * 3) remember the oldest pending entry without queued packets (if any)
+   * 4) remember the oldest pending entry with queued packets (if any)
+   * 5) search for a matching IP entry, either pending or stable
+   *    until 5 matches, or all entries are searched for.
+   */
+
+  for (i = 0; i < ARP_TABLE_SIZE; ++i) {
+    uint8_t state = arp_table[i].state;
+    /* no empty entry found yet and now we do find one? */
+    if ((empty == ARP_TABLE_SIZE) && (state == ETHARP_STATE_EMPTY)) {
+      LWIP_DEBUGF(ETHARP_DEBUG, ("etharp_find_entry: found empty entry %"U16_F"\n", (u16_t)i));
+      /* remember first empty entry */
+      empty = i;
+    } else if (state != ETHARP_STATE_EMPTY) {
+      LWIP_ASSERT("state == ETHARP_STATE_PENDING || state >= ETHARP_STATE_STABLE",
+        state == ETHARP_STATE_PENDING || state >= ETHARP_STATE_STABLE);
+      /* if given, does IP address match IP address in ARP entry? */
+      if (ipaddr && ip_addr_cmp(ipaddr, &arp_table[i].ipaddr)) {
+        LWIP_DEBUGF(ETHARP_DEBUG | LWIP_DBG_TRACE, ("etharp_find_entry: found matching entry %"U16_F"\n", (u16_t)i));
+        /* found exact IP address match, simply bail out */
+        return i;
+      }
+      /* pending entry? */
+      if (state == ETHARP_STATE_PENDING) {
+        /* pending with queued packets? */
+        if (arp_table[i].q != NULL) {
+          if (arp_table[i].ctime >= age_queue) {
+            old_queue = i;
+            age_queue = arp_table[i].ctime;
+          }
+        } else
+        /* pending without queued packets? */
+        {
+          if (arp_table[i].ctime >= age_pending) {
+            old_pending = i;
+            age_pending = arp_table[i].ctime;
+          }
+        }
+      /* stable entry? */
+      } else if (state >= ETHARP_STATE_STABLE) {
+#if ETHARP_SUPPORT_STATIC_ENTRIES
+        /* don't record old_stable for static entries since they never expire */
+        if (state < ETHARP_STATE_STATIC)
+#endif /* ETHARP_SUPPORT_STATIC_ENTRIES */
+        {
+          /* remember entry with oldest stable entry in oldest, its age in maxtime */
+          if (arp_table[i].ctime >= age_stable) {
+            old_stable = i;
+            age_stable = arp_table[i].ctime;
+          }
+        }
+      }
+    }
+  }
+  /* { we have no match } => try to create a new entry */
+   
+  /* don't create new entry, only search? */
+  if (((flags & ETHARP_FLAG_FIND_ONLY) != 0) ||
+      /* or no empty entry found and not allowed to recycle? */
+      ((empty == ARP_TABLE_SIZE) && ((flags & ETHARP_FLAG_TRY_HARD) == 0))) {
+    LWIP_DEBUGF(ETHARP_DEBUG | LWIP_DBG_TRACE, ("etharp_find_entry: no empty entry found and not allowed to recycle\n"));
+    return (sint8_t)ERR_MEM;
+  }
+  
+  /* b) choose the least destructive entry to recycle:
+   * 1) empty entry
+   * 2) oldest stable entry
+   * 3) oldest pending entry without queued packets
+   * 4) oldest pending entry with queued packets
+   * 
+   * { ETHARP_FLAG_TRY_HARD is set at this point }
+   */ 
+
+  /* 1) empty entry available? */
+  if (empty < ARP_TABLE_SIZE) {
+    i = empty;
+    LWIP_DEBUGF(ETHARP_DEBUG | LWIP_DBG_TRACE, ("etharp_find_entry: selecting empty entry %"U16_F"\n", (u16_t)i));
+  } else {
+    /* 2) found recyclable stable entry? */
+    if (old_stable < ARP_TABLE_SIZE) {
+      /* recycle oldest stable*/
+      i = old_stable;
+      LWIP_DEBUGF(ETHARP_DEBUG | LWIP_DBG_TRACE, ("etharp_find_entry: selecting oldest stable entry %"U16_F"\n", (u16_t)i));
+      /* no queued packets should exist on stable entries */
+      LWIP_ASSERT("arp_table[i].q == NULL", arp_table[i].q == NULL);
+    /* 3) found recyclable pending entry without queued packets? */
+    } else if (old_pending < ARP_TABLE_SIZE) {
+      /* recycle oldest pending */
+      i = old_pending;
+      LWIP_DEBUGF(ETHARP_DEBUG | LWIP_DBG_TRACE, ("etharp_find_entry: selecting oldest pending entry %"U16_F" (without queue)\n", (u16_t)i));
+    /* 4) found recyclable pending entry with queued packets? */
+    } else if (old_queue < ARP_TABLE_SIZE) {
+      /* recycle oldest pending (queued packets are free in etharp_free_entry) */
+      i = old_queue;
+      LWIP_DEBUGF(ETHARP_DEBUG | LWIP_DBG_TRACE, ("etharp_find_entry: selecting oldest pending entry %"U16_F", freeing packet queue %p\n", (u16_t)i, (void *)(arp_table[i].q)));
+      /* no empty or recyclable entries found */
+    } else {
+      LWIP_DEBUGF(ETHARP_DEBUG | LWIP_DBG_TRACE, ("etharp_find_entry: no empty or recyclable entries found\n"));
+      return (sint8_t)ERR_MEM;
+    }
+
+    /* { empty or recyclable entry found } */
+    LWIP_ASSERT("i < ARP_TABLE_SIZE", i < ARP_TABLE_SIZE);
+    etharp_free_entry(i);
+  }
+
+  LWIP_ASSERT("i < ARP_TABLE_SIZE", i < ARP_TABLE_SIZE);
+  LWIP_ASSERT("arp_table[i].state == ETHARP_STATE_EMPTY",
+    arp_table[i].state == ETHARP_STATE_EMPTY);
+
+  /* IP address given? */
+  if (ipaddr != NULL) {
+    /* set IP address */
+    ip_addr_copy(arp_table[i].ipaddr, *ipaddr);
+  }
+  arp_table[i].ctime = 0;
+  return (err_t)i;
+}

@@ -188,6 +188,150 @@ etharp_raw(struct netif *netif, const struct eth_addr *ethsrc_addr,
   return result;
 }
 
+#define ETHARP_FLAG_TRY_HARD     1
+#define ETHARP_FLAG_FIND_ONLY    2
+
+err_t
+etharp_query(struct netif *netif, ip_addr_t *ipaddr, struct pbuf *q)
+{
+  struct eth_addr * srcaddr = (struct eth_addr *)netif->hwaddr;
+  err_t result = ERR_MEM;
+  sint8_t i; /* ARP entry index */
+
+  /* non-unicast address? */
+  if (ip_addr_isbroadcast(ipaddr, netif) ||
+      ip_addr_ismulticast(ipaddr) ||
+      ip_addr_isany(ipaddr)) {
+    LWIP_DEBUGF(ETHARP_DEBUG | LWIP_DBG_TRACE, ("etharp_query: will not add non-unicast IP address to ARP cache\n"));
+    return ERR_ARG;
+  }
+
+  /* find entry in ARP cache, ask to create entry if queueing packet */
+  i = etharp_find_entry(ipaddr, ETHARP_FLAG_TRY_HARD);
+
+  /* could not find or create entry? */
+  if (i < 0) {
+    LWIP_DEBUGF(ETHARP_DEBUG | LWIP_DBG_TRACE, ("etharp_query: could not create ARP entry\n"));
+    if (q) {
+      LWIP_DEBUGF(ETHARP_DEBUG | LWIP_DBG_TRACE, ("etharp_query: packet dropped\n"));
+      ETHARP_STATS_INC(etharp.memerr);
+    }
+    return (err_t)i;
+  }
+
+  /* mark a fresh entry as pending (we just sent a request) */
+  if (arp_table[i].state == ETHARP_STATE_EMPTY) {
+    arp_table[i].state = ETHARP_STATE_PENDING;
+  }
+
+  /* { i is either a STABLE or (new or existing) PENDING entry } */
+  LWIP_ASSERT("arp_table[i].state == PENDING or STABLE",
+  ((arp_table[i].state == ETHARP_STATE_PENDING) ||
+   (arp_table[i].state >= ETHARP_STATE_STABLE)));
+
+  /* do we have a pending entry? or an implicit query request? */
+  if ((arp_table[i].state == ETHARP_STATE_PENDING) || (q == NULL)) {
+    /* try to resolve it; send out ARP request */
+    result = etharp_request(netif, ipaddr);
+    if (result != ERR_OK) {
+      /* ARP request couldn't be sent */
+      /* We don't re-send arp request in etharp_tmr, but we still queue packets,
+         since this failure could be temporary, and the next packet calling
+         etharp_query again could lead to sending the queued packets. */
+    }
+    if (q == NULL) {
+      return result;
+    }
+  }
+
+  /* packet given? */
+  LWIP_ASSERT("q != NULL", q != NULL);
+  /* stable entry? */
+  if (arp_table[i].state >= ETHARP_STATE_STABLE) {
+    /* we have a valid IP->Ethernet address mapping */
+    ETHARP_SET_HINT(netif, i);
+    /* send the packet */
+    result = etharp_send_ip(netif, q, srcaddr, &(arp_table[i].ethaddr));
+  /* pending entry? (either just created or already pending */
+  } else if (arp_table[i].state == ETHARP_STATE_PENDING) {
+    /* entry is still pending, queue the given packet 'q' */
+    struct pbuf *p;
+    int copy_needed = 0;
+    /* IF q includes a PBUF_REF, PBUF_POOL or PBUF_RAM, we have no choice but
+     * to copy the whole queue into a new PBUF_RAM (see bug #11400) 
+     * PBUF_ROMs can be left as they are, since ROM must not get changed. */
+    p = q;
+    while (p) {
+      LWIP_ASSERT("no packet queues allowed!", (p->len != p->tot_len) || (p->next == 0));
+      if(p->type != PBUF_ROM) {
+        copy_needed = 1;
+        break;
+      }
+      p = p->next;
+    }
+    if(copy_needed) {
+      /* copy the whole packet into new pbufs */
+      p = pbuf_alloc(PBUF_RAW, p->tot_len, PBUF_RAM);
+      if(p != NULL) {
+        if (pbuf_copy(p, q) != ERR_OK) {
+          pbuf_free(p);
+          p = NULL;
+        }
+      }
+    } else {
+      /* referencing the old pbuf is enough */
+      p = q;
+      pbuf_ref(p);
+    }
+    /* packet could be taken over? */
+    if (p != NULL) {
+      /* queue packet ... */
+#if ARP_QUEUEING
+      struct etharp_q_entry *new_entry;
+      /* allocate a new arp queue entry */
+      new_entry = (struct etharp_q_entry *)memp_malloc(MEMP_ARP_QUEUE);
+      if (new_entry != NULL) {
+        new_entry->next = 0;
+        new_entry->p = p;
+        if(arp_table[i].q != NULL) {
+          /* queue was already existent, append the new entry to the end */
+          struct etharp_q_entry *r;
+          r = arp_table[i].q;
+          while (r->next != NULL) {
+            r = r->next;
+          }
+          r->next = new_entry;
+        } else {
+          /* queue did not exist, first item in queue */
+          arp_table[i].q = new_entry;
+        }
+        LWIP_DEBUGF(ETHARP_DEBUG | LWIP_DBG_TRACE, ("etharp_query: queued packet %p on ARP entry %"S16_F"\n", (void *)q, (s16_t)i));
+        result = ERR_OK;
+      } else {
+        /* the pool MEMP_ARP_QUEUE is empty */
+        pbuf_free(p);
+        LWIP_DEBUGF(ETHARP_DEBUG | LWIP_DBG_TRACE, ("etharp_query: could not queue a copy of PBUF_REF packet %p (out of memory)\n", (void *)q));
+        result = ERR_MEM;
+      }
+#else /* ARP_QUEUEING */
+      /* always queue one packet per ARP request only, freeing a previously queued packet */
+      if (arp_table[i].q != NULL) {
+        LWIP_DEBUGF(ETHARP_DEBUG | LWIP_DBG_TRACE, ("etharp_query: dropped previously queued packet %p for ARP entry %"S16_F"\n", (void *)q, (s16_t)i));
+        pbuf_free(arp_table[i].q);
+      }
+      arp_table[i].q = p;
+      result = ERR_OK;
+      LWIP_DEBUGF(ETHARP_DEBUG | LWIP_DBG_TRACE, ("etharp_query: queued packet %p on ARP entry %"S16_F"\n", (void *)q, (s16_t)i));
+#endif /* ARP_QUEUEING */
+    } else {
+      ETHARP_STATS_INC(etharp.memerr);
+      LWIP_DEBUGF(ETHARP_DEBUG | LWIP_DBG_TRACE, ("etharp_query: could not queue a copy of PBUF_REF packet %p (out of memory)\n", (void *)q));
+      result = ERR_MEM;
+    }
+  }
+  return result;
+}
+
 uint8_t
 pbuf_free(struct pbuf *p)
 {

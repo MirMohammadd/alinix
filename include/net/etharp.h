@@ -49,6 +49,7 @@ PACK_STRUCT_END
 
 extern const struct eth_addr ethbroadcast, ethzero;
 
+err_t etharp_query(struct netif *netif, ip_addr_t *ipaddr, struct pbuf *q);
 
 
 PACK_STRUCT_BEGIN

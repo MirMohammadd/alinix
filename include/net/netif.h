@@ -29,6 +29,7 @@
 #include <net/typing.h>
 #include <net/auto_ip.h>
 #include <net/dhcp.h>
+#include <alinix/types.h>
 
 
 

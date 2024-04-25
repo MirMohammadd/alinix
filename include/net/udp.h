@@ -44,11 +44,6 @@ struct udp_hdr {
 #define UDP_FLAGS_CONNECTED      0x04U
 #define UDP_FLAGS_MULTICAST_LOOP 0x08U
 
-struct udp_pcb;
-
-
-typedef void (*udp_recv_fn)(void *arg, struct udp_pcb *pcb, struct pbuf *p,ip_addr_t *addr, uint16_t port);
-
 struct udp_pcb {
 /* Common members of all PCB types */
 
@@ -81,6 +76,11 @@ struct udp_pcb {
   /** user-supplied argument for the recv callback */
   void *recv_arg;  
 };
+
+
+typedef void (*udp_recv_fn)(void *arg, struct udp_pcb *pcb, struct pbuf *p,ip_addr_t *addr, uint16_t port);
+
+
 
 extern struct udp_pcb *udp_pcbs;
 

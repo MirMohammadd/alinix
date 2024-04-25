@@ -22,6 +22,7 @@
 
 #include <alinix/_types.h>
 #include <alinix/enums.h>
+#include <net/ip_addr.h>
 
 
 typedef char                        int8_t;

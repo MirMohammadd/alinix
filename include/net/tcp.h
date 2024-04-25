@@ -82,7 +82,6 @@ typedef void  (*tcp_err_fn)(void *arg, err_t err);
 typedef err_t (*tcp_connected_fn)(void *arg, struct tcp_pcb *tpcb, err_t err);
 
 struct tcp_pcb_listen {  
-  ip_addr_t  local_ip;     
   int * next;    
   ip_addr_t  local_ip; 
 /* Common members of all PCB types */

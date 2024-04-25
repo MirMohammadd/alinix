@@ -262,3 +262,41 @@ pbuf_realloc(struct pbuf *p, uint16_t new_len)
   q->next = NULL;
 
 }
+
+uint16_t
+pbuf_copy_partial(struct pbuf *buf, void *dataptr, uint16_t len, uint16_t offset)
+{
+  struct pbuf *p;
+  uint16_t left;
+  uint16_t buf_copy_len;
+  uint16_t copied_total = 0;
+
+  LWIP_ERROR("pbuf_copy_partial: invalid buf", (buf != NULL), return 0;);
+  LWIP_ERROR("pbuf_copy_partial: invalid dataptr", (dataptr != NULL), return 0;);
+
+  left = 0;
+
+  if((buf == NULL) || (dataptr == NULL)) {
+    return 0;
+  }
+
+  /* Note some systems use byte copy if dataptr or one of the pbuf payload pointers are unaligned. */
+  for(p = buf; len != 0 && p != NULL; p = p->next) {
+    if ((offset != 0) && (offset >= p->len)) {
+      /* don't copy from this buffer -> on to the next */
+      offset -= p->len;
+    } else {
+      /* copy from this buffer. maybe only partially. */
+      buf_copy_len = p->len - offset;
+      if (buf_copy_len > len)
+          buf_copy_len = len;
+      /* copy the necessary parts of the buffer */
+      MEMCPY(&((char*)dataptr)[left], &((char*)p->payload)[offset], buf_copy_len);
+      copied_total += buf_copy_len;
+      left += buf_copy_len;
+      len -= buf_copy_len;
+      offset = 0;
+    }
+  }
+  return copied_total;
+}

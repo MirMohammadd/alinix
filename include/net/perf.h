@@ -29,4 +29,8 @@
 #define PERF_STOP(x)   __asm__(".byte 0x0f, 0x31" : "=a" (__c2l), "=d" (__c2h)); \
                        }
 void pbuf_realloc(struct pbuf *p, uint16_t size); 
+
+uint16_t pbuf_copy_partial(struct pbuf *p, void *dataptr, uint16_t len, uint16_t offset);
+
+
 #endif

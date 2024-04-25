@@ -8,6 +8,8 @@
 
 void netif_set_gw(struct netif *netif, ip_addr_t *gw);
 
+struct udp_pcb *udp_pcbs;
+
 err_t
 udp_sendto_if(struct udp_pcb *pcb, struct pbuf *p,
   ip_addr_t *dst_ip, uint16_t dst_port, struct netif *netif);

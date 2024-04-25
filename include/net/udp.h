@@ -99,10 +99,7 @@ err_t            udp_send       (struct udp_pcb *pcb, struct pbuf *p);
 
 
 #if LWIP_CHECKSUM_ON_COPY
-err_t            udp_sendto_if_chksum(struct udp_pcb *pcb, struct pbuf *p,
-                                 ip_addr_t *dst_ip, u16_t dst_port,
-                                 struct netif *netif, uint8_t have_chksum,
-                                 u16_t chksum);
+
 err_t            udp_sendto_chksum(struct udp_pcb *pcb, struct pbuf *p,
                                  ip_addr_t *dst_ip, u16_t dst_port,
                                  uint8_t have_chksum, u16_t chksum);

@@ -88,7 +88,8 @@ struct ip_addr2 {
 } __attribute__((packed));
 
 
-#define ip_addr_set_zero(ipaddr)      do { (ipaddr)->addr = 0; } while(0)
+// #define ip_addr_set_zero(ipaddr)      do { (ipaddr)->addr = 0; } while(0)
+#define ip_addr_set_zero(ipaddr)     (ipaddr)->addr = 0; 
 
 
 #ifndef IPADDR2_COPY

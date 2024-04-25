@@ -34,7 +34,7 @@
 #define IPADDR_ANY          ((uint32_t)0x00000000UL)
 /** 255.255.255.255 */
 
-
+#define ip4_addr_get_u32(src_ipaddr) ((src_ipaddr)->addr)
 /* Get one byte from the 4-byte address */
 #define ip4_addr1(ipaddr) (((uint8_t*)(ipaddr))[0])
 #define ip4_addr2(ipaddr) (((uint8_t*)(ipaddr))[1])

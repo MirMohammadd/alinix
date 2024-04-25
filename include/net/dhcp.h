@@ -114,7 +114,6 @@ struct dhcp_msg
 #endif
   // PACK_STRUCT_FIELD(uint8_t options[DHCP_OPTIONS_LEN]);
 } PACK_STRUCT_STRUCT;
-PACK_STRUCT_END
 
 
 

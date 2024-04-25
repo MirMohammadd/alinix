@@ -66,7 +66,7 @@ struct dhcp
 
   struct pbuf *p_out; /* pbuf of outcoming msg */
   struct dhcp_msg *msg_out; /* outgoing msg */
-  uint16_t options_out_len; /* outgoing msg options length */
+  struct dhcp *options_out_len; /* outgoing msg options length */
   uint16_t request_timeout; /* #ticks with period DHCP_FINE_TIMER_SECS for request timeout */
   uint16_t t1_timeout;  /* #ticks with period DHCP_COARSE_TIMER_SECS for renewal time */
   uint16_t t2_timeout;  /* #ticks with period DHCP_COARSE_TIMER_SECS for rebind time */

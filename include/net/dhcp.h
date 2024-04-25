@@ -69,17 +69,17 @@ struct dhcp
   uint16_t request_timeout; /* #ticks with period DHCP_FINE_TIMER_SECS for request timeout */
   uint16_t t1_timeout;  /* #ticks with period DHCP_COARSE_TIMER_SECS for renewal time */
   uint16_t t2_timeout;  /* #ticks with period DHCP_COARSE_TIMER_SECS for rebind time */
-  struct ip_addr server_ip_addr; /* dhcp server address that offered this lease */
-  struct ip_addr offered_ip_addr;
-  struct ip_addr offered_sn_mask;
-  struct ip_addr offered_gw_addr;
+  ip_addr_t server_ip_addr; /* dhcp server address that offered this lease */
+  ip_addr_t offered_ip_addr;
+  ip_addr_t offered_sn_mask;
+  ip_addr_t offered_gw_addr;
  
   uint32_t offered_t0_lease; /* lease period (in seconds) */
   uint32_t offered_t1_renew; /* recommended renew time (usually 50% of lease period) */
   uint32_t offered_t2_rebind; /* recommended rebind time (usually 66% of lease period)  */
   /* @todo: LWIP_DHCP_BOOTP_FILE configuration option?
      integrate with possible TFTP-client for booting? */
-  struct ip_addr offered_si_addr;
+  ip_addr_t offered_si_addr;
   char boot_file_name[DHCP_FILE_LEN];
 
 };

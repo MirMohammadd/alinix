@@ -5,6 +5,7 @@
 #include <net/err.h>
 #include <alinix/compiler.h>
 #include <alinix/ip.h>
+#include <alinix/types.h>
 
 // Define the structures
 

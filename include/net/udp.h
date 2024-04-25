@@ -47,9 +47,7 @@ struct udp_hdr {
 struct udp_pcb;
 
 
-typedef void (*udp_recv_fn)(void *arg, struct udp_pcb *pcb, struct pbuf *p,
-    ip_addr_t *addr, uint16_t port);
-
+typedef void (*udp_recv_fn)(void *arg, struct udp_pcb *pcb, struct pbuf *p,ip_addr_t *addr, uint16_t port);
 
 struct udp_pcb {
 /* Common members of all PCB types */

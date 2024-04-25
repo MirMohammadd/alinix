@@ -34,5 +34,12 @@
 #define IP_PCB_ADDRHINT ;uint8_t addr_hint
 #define ip_set_option(pcb, opt)   ((pcb)->so_options |= (opt))
 
+#define snmp_insert_iprteidx_tree(dflt, ni)
+#define ip_addr_set(dest, src) ((dest)->addr = \
+                                    ((src) == NULL ? 0 : \
+                                    (src)->addr))
+
+#define snmp_delete_iprteidx_tree(dflt, ni)
+
 
 #endif /*__ALINIX_KERNEL_IP_H*/

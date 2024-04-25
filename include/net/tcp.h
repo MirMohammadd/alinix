@@ -104,7 +104,7 @@ struct tcp_pcb_listen {
 
 struct tcp_pcb {
 /** common PCB members */
-  IP_PCB;
+  // IP_PCB;
 /** protocol specific PCB members */
 //   TCP_PCB_COMMON(struct tcp_pcb);
 

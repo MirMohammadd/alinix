@@ -81,6 +81,8 @@ struct dhcp
      integrate with possible TFTP-client for booting? */
   ip_addr_t offered_si_addr;
   char boot_file_name[DHCP_FILE_LEN];
+
+  uint8_t hwaddr_len;
 };
 
 struct dhcp_msg

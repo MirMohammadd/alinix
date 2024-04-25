@@ -48,4 +48,10 @@ struct tcp_seg {
 };
 
 
+#define TCP_EVENT_ERR(errf,arg,err)                            \
+  do {                                                         \
+    if((errf) != NULL)                                         \
+      (errf)((arg),(err));                                     \
+  } while (0)
+
 #endif

@@ -113,7 +113,7 @@ struct dhcp_msg
 #  define DHCP_OPTIONS_LEN DHCP_MIN_OPTIONS_LEN
 #endif
   // PACK_STRUCT_FIELD(uint8_t options[DHCP_OPTIONS_LEN]);
-} PACK_STRUCT_STRUCT;
+} __attribute__((packed));
 
 
 

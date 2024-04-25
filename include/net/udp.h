@@ -39,7 +39,7 @@ struct udp_hdr {
   uint16_t dest;  /* src/dest UDP ports */
   uint16_t len;
   uint16_t chksum;
-} PACK_STRUCT_STRUCT;
+} __attribute__((packed));
 
 
 #define UDP_FLAGS_NOCHKSUM       0x01U

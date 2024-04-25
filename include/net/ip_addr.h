@@ -85,7 +85,7 @@ extern const ip_addr_t ip_addr_broadcast
 
 struct ip_addr2 {
   uint16_t addrw[2];
-} PACK_STRUCT_STRUCT;
+} __attribute__((packed));
 
 
 #define ip_addr_set_zero(ipaddr)      ((ipaddr)->addr = 0)

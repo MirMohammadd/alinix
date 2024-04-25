@@ -46,7 +46,7 @@ err_t etharp_request(struct netif *netif, ip_addr_t *ipaddr);
 PACK_STRUCT_BEGIN
 struct eth_addr {
   PACK_STRUCT_FIELD(uint8_t addr[ETHARP_HWADDR_LEN]);
-} PACK_STRUCT_STRUCT;
+} __attribute__((packed));
 PACK_STRUCT_END
 
 extern const struct eth_addr ethbroadcast, ethzero;
@@ -66,7 +66,7 @@ struct etharp_hdr {
   PACK_STRUCT_FIELD(struct ip_addr2 sipaddr);
   PACK_STRUCT_FIELD(struct eth_addr dhwaddr);
   PACK_STRUCT_FIELD(struct ip_addr2 dipaddr);
-} PACK_STRUCT_STRUCT;
+} __attribute__((packed));
 PACK_STRUCT_END
 
 struct eth_hdr {
@@ -76,7 +76,7 @@ struct eth_hdr {
   PACK_STRUCT_FIELD(struct eth_addr dest);
   PACK_STRUCT_FIELD(struct eth_addr src);
   PACK_STRUCT_FIELD(uint16_t type);
-} PACK_STRUCT_STRUCT;
+} __attribute__((packed));
 PACK_STRUCT_END
 
 

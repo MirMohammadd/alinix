@@ -23,6 +23,7 @@
 #include <net/ip.h>
 #include <net/err.h>
 #include <net/typing.h>
+#include <alinix/ip.h>
 
 typedef void (*udp_recv_fn)(void *arg, struct udp_pcb *pcb, struct pbuf *p,ip_addr_t *addr, uint16_t port);
 

@@ -4,5 +4,7 @@
 
 #define LWIP_UNUSED_ARG(x) (void)x
 #define snmp_delete_udpidx_tree(pcb)
+#define snmp_delete_ipaddridx_tree(ni)
+
 
 #endif

@@ -109,10 +109,12 @@ struct tcp_pcb {
 /** common PCB members */
   // IP_PCB;
 /** protocol specific PCB members */
-//   TCP_PCB_COMMON(struct tcp_pcb);
+  struct tcp_pcb callback_arg;
 
   /* ports are in host byte order */
   uint16_t remote_port;
+
+  uint8_t state;
   
   uint8_t flags;
   ip_addr_t local_ip;

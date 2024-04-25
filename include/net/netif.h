@@ -210,7 +210,7 @@ struct netif {
 // #define NETIF_INIT_SNMP(netif, type, speed)
 
 
-// extern struct netif *netif_list;
+extern struct netif *netif_list;
 // /** The default network interface. */
 // extern struct netif *netif_default;
 

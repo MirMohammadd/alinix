@@ -20,6 +20,7 @@
 #include <alinix/memory.h>
 #include <alinix/ip.h>
 #include <alinix/if_arp.h>
+#include <alinix/arch.h>
 
 #include <net/dhcp.h>
 #include <net/debug.h>

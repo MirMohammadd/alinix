@@ -48,7 +48,7 @@ struct udp_pcb;
 
 
 typedef void (*udp_recv_fn)(void *arg, struct udp_pcb *pcb, struct pbuf *p,
-    ip_addr_t *addr, uint16_t port);
+    struct ip_addr *addr, uint16_t port);
 
 
 struct udp_pcb {

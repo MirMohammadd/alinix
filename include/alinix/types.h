@@ -44,8 +44,9 @@ typedef unsigned char byte_t; // For  backward compatibility
 typedef unsigned long int size_t;
 #if !defined(__cplusplus)
 //TODO Fix here
-// typedef enum  {false = 0, true = 1} bool;
-#include <stdbool.h>
+typedef enum  {false = 0, true = 1} bool;
+// #include <stdbool.h>
+//?++<<<include <stdbool.h>
 #endif
 
 #ifndef NULL

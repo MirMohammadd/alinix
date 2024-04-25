@@ -3,6 +3,7 @@
 
 #include <alinix/types.h>
 #include <net/tcp.h>
+#include <net/ip_addr.h>
 
 extern union tcp_listen_pcbs_t tcp_listen_pcbs;
 

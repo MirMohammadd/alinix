@@ -22,6 +22,7 @@
 #include <alinix/ip.h>
 #include <alinix/compiler.h>
 #include <net/typing.h>
+#include <net/def.h>
 
 
 
@@ -68,6 +69,7 @@ uint8_t ip4_addr_isbroadcast(uint32_t addr, const struct netif *netif);
 
 
 
+#define ip_addr_ismulticast(addr1) (((addr1)->addr & PP_HTONL(0xf0000000UL)) == PP_HTONL(0xe0000000UL))
 
 
 

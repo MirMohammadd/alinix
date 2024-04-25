@@ -57,6 +57,8 @@ struct udp_pcb {
 
   struct udp_pcb *next;
 
+  unsigned char ttl[4];
+
   uint8_t flags;
   /** ports are in host byte order */
   uint16_t local_port, remote_port;

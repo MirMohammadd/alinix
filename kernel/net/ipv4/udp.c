@@ -3,6 +3,7 @@
 #include <alinix/ip.h>
 #include <net/udp.h>
 #include <net/opt.h>
+#include <alinix/memory.h>
 #include <net/netif.h>
 
 err_t
@@ -51,4 +52,21 @@ netif_set_gw(struct netif *netif, ip_addr_t *gw)
     ip4_addr2_16(&netif->gw),
     ip4_addr3_16(&netif->gw),
     ip4_addr4_16(&netif->gw)));
+}
+
+struct udp_pcb *
+udp_new(void)
+{
+  struct udp_pcb *pcb;
+  pcb = (struct udp_pcb *)memp_malloc(MEM_DEBUG);
+  /* could allocate UDP PCB? */
+  if (pcb != NULL) {
+    /* UDP Lite: by initializing to all zeroes, chksum_len is set to 0
+     * which means checksum is generated over the whole datagram per default
+     * (recommended as default by RFC 3828). */
+    /* initialize PCB to all zeroes */
+    memset(pcb, 0, sizeof(struct udp_pcb));
+    pcb->ttl = UDP_TTL;
+  }
+  return pcb;
 }

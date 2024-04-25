@@ -51,6 +51,8 @@
 #define ip4_addr2_16(ipaddr) ((uint16_t)ip4_addr2(ipaddr))
 #define ip4_addr3_16(ipaddr) ((uint16_t)ip4_addr3(ipaddr))
 #define ip4_addr4_16(ipaddr) ((uint16_t)ip4_addr4(ipaddr))
+#define ip_addr_isbroadcast(ipaddr, netif) ip4_addr_isbroadcast((ipaddr)->addr, (netif))
+uint8_t ip4_addr_isbroadcast(uint32_t addr, const struct netif *netif);
 
 
 #define ip_addr_copy(dest, src) ((dest).addr = (src).addr)

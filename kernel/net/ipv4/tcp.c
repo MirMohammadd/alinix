@@ -2,6 +2,7 @@
 #include <net/tcp_impl.h>
 #include <alinix/types.h>
 #include <net/err.h>
+#include <net/ip_addr.h>
 
 struct tcp_pcb *tcp_tw_pcbs;
 

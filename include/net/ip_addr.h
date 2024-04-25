@@ -109,18 +109,6 @@ struct ip_addr2 {
 
 
 
-struct ip_addr {
-  uint32_t addr;
-};
-
-
-struct ip_addr_packed {
-  uint32_t addr;
-} PACK_STRUCT_STRUCT;
-
-
-/** ip_addr_t uses a struct for convenience only, so that the same defines can
- * operate both on ip_addr_t as well as on ip_addr_p_t. */
 
 
 #endif /*__ALINIX_KERNEL_IP_ADDR_NET_H*/

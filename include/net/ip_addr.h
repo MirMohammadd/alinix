@@ -37,6 +37,7 @@
 #define ip_addr_set_any(ipaddr)       ((ipaddr)->addr = IPADDR_ANY)
 
 #define ip_addr_get_network(target, host, netmask) ((target)->addr = ((host)->addr) & ((netmask)->addr))
+#define ip_addr_cmp(addr1, addr2) ((addr1)->addr == (addr2)->addr)
 
 
 #define ip4_addr_get_u32(src_ipaddr) ((src_ipaddr)->addr)

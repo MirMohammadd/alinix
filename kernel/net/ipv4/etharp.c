@@ -42,7 +42,7 @@ struct stats_proto etharp;
 
 const struct eth_addr ethbroadcast = {{0xff,0xff,0xff,0xff,0xff,0xff}};
 const struct eth_addr ethzero = {{0,0,0,0,0,0}};
-
+static sint8_t etharp_find_entry(ip_addr_t *ipaddr, uint8_t flags);
 struct etharp_entry {
 #if ARP_QUEUEING
   /** Pointer to queue of pending outgoing packets on this ARP entry. */

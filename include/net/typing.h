@@ -5,16 +5,16 @@
 #include <net/err.h>
 #include <alinix/compiler.h>
 
+// Define the structures
 struct ip_addr {
-  uint32_t addr;
+    uint32_t addr;
 };
 
 struct ip_addr_packed {
-  uint32_t addr;
-} PACK_STRUCT_STRUCT;
+    uint32_t addr;
+};
 
-
-// This should be defined on the top
+// Define the typedefs
 typedef struct ip_addr ip_addr_t;
 typedef struct ip_addr_packed ip_addr_p_t;
 

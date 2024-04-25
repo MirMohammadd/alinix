@@ -48,7 +48,7 @@ struct udp_pcb;
 
 
 typedef void (*udp_recv_fn)(void *arg, struct udp_pcb *pcb, struct pbuf *p,
-    struct ip_addr *addr, uint16_t port);
+    ip_addr_t *addr, uint16_t port);
 
 
 struct udp_pcb {
@@ -58,8 +58,8 @@ struct udp_pcb {
   // ip_addr_t local_ip;
   struct udp_pcb *next;
 
-  struct ip_addr local_ip;
-  struct ip_addr remote_ip;
+  ip_addr_t local_ip;
+  ip_addr_t remote_ip;
 
   unsigned char ttl[4];
 

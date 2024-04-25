@@ -3,6 +3,7 @@
 #include <alinix/ip.h>
 #include <net/udp.h>
 #include <net/opt.h>
+#include <net/netif.h>
 
 err_t
 udp_sendto_if(struct udp_pcb *pcb, struct pbuf *p,
@@ -37,4 +38,17 @@ udp_remove(struct udp_pcb *pcb)
     }
   }
   memp_free(MEMP_DEBUG, pcb);
+}
+
+
+void
+netif_set_gw(struct netif *netif, ip_addr_t *gw)
+{
+  ip_addr_set(&(netif->gw), gw);
+  LWIP_DEBUGF(NETIF_DEBUG | LWIP_DBG_TRACE | LWIP_DBG_STATE, ("netif: GW address of interface %c%c set to %"U16_F".%"U16_F".%"U16_F".%"U16_F"\n",
+    netif->name[0], netif->name[1],
+    ip4_addr1_16(&netif->gw),
+    ip4_addr2_16(&netif->gw),
+    ip4_addr3_16(&netif->gw),
+    ip4_addr4_16(&netif->gw)));
 }

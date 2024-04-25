@@ -30,6 +30,8 @@
 #include <net/auto_ip.h>
 #include <net/dhcp.h>
 
+void netif_set_gw(struct netif *netif, ip_addr_t *gw);
+
 
 
 /** Function prototype for netif status- or link-callback functions. */

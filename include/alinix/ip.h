@@ -32,7 +32,7 @@
 #define SOF_BROADCAST     0x20U  /* permit to send and to receive broadcast messages (see IP_SOF_BROADCAST option) */
 
 #define IP_PCB_ADDRHINT ;uint8_t addr_hint
-
+#define ip_set_option(pcb, opt)   ((pcb)->so_options |= (opt))
 
 
 #endif /*__ALINIX_KERNEL_IP_H*/

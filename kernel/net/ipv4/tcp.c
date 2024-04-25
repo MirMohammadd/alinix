@@ -4,6 +4,8 @@
 #include <net/err.h>
 #include <net/ip_addr.h>
 
+uint8_t tcp_active_pcbs_changed;
+
 struct tcp_pcb *tcp_tw_pcbs;
 
 enum tcp_state {

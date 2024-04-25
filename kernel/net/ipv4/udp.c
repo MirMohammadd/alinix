@@ -5,6 +5,7 @@
 #include <net/opt.h>
 #include <alinix/memory.h>
 #include <net/netif.h>
+#include <alinix/arch.h>
 
 void netif_set_gw(struct netif *netif, ip_addr_t *gw);
 

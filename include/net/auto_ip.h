@@ -20,6 +20,7 @@
 #include <alinix/types.h>
 #include <net/ip_addr.h>
 #include <net/netif.h>
+#include <net/typing.h>
 
 #define PROBE_WAIT               1   /* second   (initial random delay)                 */
 #define PROBE_MIN                1   /* second   (minimum delay till repeated probe)    */

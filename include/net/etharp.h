@@ -27,6 +27,7 @@
 
 #define etharp_gratuitous(netif) etharp_request((netif), &(netif)->ip_addr)
 
+err_t etharp_request(struct netif *netif, ip_addr_t *ipaddr);
 
 #define SIZEOF_ETH_HDR (14 + ETH_PAD_SIZE)
 

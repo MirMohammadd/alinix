@@ -178,7 +178,7 @@ etharp_raw(struct netif *netif, const struct eth_addr *ethsrc_addr,
 
   ethhdr->type = PP_HTONS(ETHTYPE_ARP);
   /* send ARP query */
-  result = netif->linkoutput(netif, p);
+  // result = netif->linkoutput(netif, p);
   ETHARP_STATS_INC(etharp.xmit);
   /* free ARP query packet */
   pbuf_free(p);

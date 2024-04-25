@@ -25,6 +25,7 @@
 #include <net/perf.h>
 #include <net/debug.h>
 #include <net/err.h>
+#include <net/pbuf.h>
 
 #define PBUF_POOL_BUFSIZE_ALIGNED LWIP_MEM_ALIGN_SIZE(PBUF_POOL_BUFSIZE)
 #define SIZEOF_STRUCT_PBUF        LWIP_MEM_ALIGN_SIZE(sizeof(struct pbuf))
@@ -356,4 +357,13 @@ pbuf_copy(struct pbuf *p_to, struct pbuf *p_from)
   } while (p_from);
   LWIP_DEBUGF(PBUF_DEBUG | LWIP_DBG_TRACE, ("pbuf_copy: end of chain reached.\n"));
   return ERR_OK;
+}
+
+void
+pbuf_ref(struct pbuf *p)
+{
+  /* pbuf given? */
+  if (p != NULL) {
+    ++(p->ref);
+  }
 }

@@ -66,7 +66,6 @@ udp_new(void)
      * (recommended as default by RFC 3828). */
     /* initialize PCB to all zeroes */
     memset(pcb, 0, sizeof(struct udp_pcb));
-    pcb->ttl = UDP_TTL;
   }
   return pcb;
 }

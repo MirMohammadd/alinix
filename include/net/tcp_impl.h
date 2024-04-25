@@ -4,6 +4,8 @@
 #include <alinix/types.h>
 #include <net/tcp.h>
 
+extern union tcp_listen_pcbs_t tcp_listen_pcbs;
+
 extern uint8_t tcp_active_pcbs_changed;
 extern struct tcp_pcb *tcp_active_pcbs;  /* List of all TCP PCBs that are in a
               state in which they accept or send

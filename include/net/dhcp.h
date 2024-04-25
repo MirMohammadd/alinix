@@ -24,6 +24,7 @@
 
 #include <alinix/types.h>
 #include <alinix/compiler.h>
+#include <net/typing.h>
 
 
 #ifdef __cplusplus

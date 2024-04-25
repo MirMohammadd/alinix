@@ -3,6 +3,7 @@
 
 #include <alinix/types.h>
 #include <alinix/ip.h>
+#include <net/typing.h>
 
 
 /** Function prototype for tcp accept callback functions. Called when a new
@@ -81,6 +82,7 @@ typedef void  (*tcp_err_fn)(void *arg, err_t err);
 typedef err_t (*tcp_connected_fn)(void *arg, struct tcp_pcb *tpcb, err_t err);
 
 struct tcp_pcb_listen {  
+  ip_addr_t  local_ip; /**< IP address of the
 /* Common members of all PCB types */
   // IP_PCB;
 /* Protocol specific PCB members */

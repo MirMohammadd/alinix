@@ -72,3 +72,31 @@ tcp_abandon(struct tcp_pcb *pcb, int reset)
     TCP_EVENT_ERR(errf, errf_arg, ERR_ABRT);
   }
 }
+
+void
+tcp_pcb_remove(struct tcp_pcb **pcblist, struct tcp_pcb *pcb)
+{
+  TCP_RMV(pcblist, pcb);
+
+  tcp_pcb_purge(pcb);
+  
+  /* if there is an outstanding delayed ACKs, send it */
+  if (pcb->state != TIME_WAIT &&
+     pcb->state != LISTEN &&
+     pcb->flags & TF_ACK_DELAY) {
+    pcb->flags |= TF_ACK_NOW;
+    tcp_output(pcb);
+  }
+
+  if (pcb->state != LISTEN) {
+    LWIP_ASSERT("unsent segments leaking", pcb->unsent == NULL);
+    LWIP_ASSERT("unacked segments leaking", pcb->unacked == NULL);
+#if TCP_QUEUE_OOSEQ
+    LWIP_ASSERT("ooseq segments leaking", pcb->ooseq == NULL);
+#endif /* TCP_QUEUE_OOSEQ */
+  }
+
+  pcb->state = CLOSED;
+
+  LWIP_ASSERT("tcp_pcb_remove: tcp_pcbs_sane()", tcp_pcbs_sane());
+}

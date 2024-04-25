@@ -25,6 +25,7 @@
 #define ETHARP_HWADDR_LEN     6
 #endif
 
+#define etharp_gratuitous(netif) etharp_request((netif), &(netif)->ip_addr)
 
 
 #define SIZEOF_ETH_HDR (14 + ETH_PAD_SIZE)

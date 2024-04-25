@@ -26,6 +26,7 @@
 #include <net/ip_frag.h>
 #include <alinix/ulib.h>
 #include <net/def.h>
+#include <net/arp.h>
 
 struct stats_proto etharp;
 
@@ -406,4 +407,13 @@ pbuf_free(struct pbuf *p)
   PERF_STOP("pbuf_free");
   /* return number of de-allocated pbufs */
   return count;
+}
+
+err_t
+etharp_request(struct netif *netif, ip_addr_t *ipaddr)
+{
+  LWIP_DEBUGF(ETHARP_DEBUG | LWIP_DBG_TRACE, ("etharp_request: sending ARP request.\n"));
+  return etharp_raw(netif, (struct eth_addr *)netif->hwaddr, &ethbroadcast,
+                    (struct eth_addr *)netif->hwaddr, &netif->ip_addr, &ethzero,
+                    ipaddr, ARP_REQUEST);
 }

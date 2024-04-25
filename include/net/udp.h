@@ -88,9 +88,9 @@ err_t            udp_connect    (struct udp_pcb *pcb, ip_addr_t *ipaddr,
 void             udp_disconnect (struct udp_pcb *pcb);
 void             udp_recv       (struct udp_pcb *pcb, udp_recv_fn recv,
                                  void *recv_arg);
-err_t            udp_sendto_if  (struct udp_pcb *pcb, struct pbuf *p,
-                                 ip_addr_t *dst_ip, uint16_t dst_port,
-                                 struct netif *netif);
+err_t
+udp_sendto_if(struct udp_pcb *pcb, struct pbuf *p,
+  ip_addr_t *dst_ip, uint16_t dst_port, struct netif *netif);
 err_t            udp_sendto     (struct udp_pcb *pcb, struct pbuf *p,
                                  ip_addr_t *dst_ip, uint16_t dst_port);
 err_t            udp_send       (struct udp_pcb *pcb, struct pbuf *p);
@@ -101,10 +101,10 @@ err_t            udp_send       (struct udp_pcb *pcb, struct pbuf *p);
 #if LWIP_CHECKSUM_ON_COPY
 
 err_t            udp_sendto_chksum(struct udp_pcb *pcb, struct pbuf *p,
-                                 ip_addr_t *dst_ip, u16_t dst_port,
-                                 uint8_t have_chksum, u16_t chksum);
+                                 ip_addr_t *dst_ip, uint16_t dst_port,
+                                 uint8_t have_chksum, uint16_t chksum);
 err_t            udp_send_chksum(struct udp_pcb *pcb, struct pbuf *p,
-                                 uint8_t have_chksum, u16_t chksum);
+                                 uint8_t have_chksum, uint16_t chksum);
 #endif /* LWIP_CHECKSUM_ON_COPY */
 
 #define          udp_flags(pcb) ((pcb)->flags)

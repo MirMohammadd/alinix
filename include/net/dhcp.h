@@ -102,6 +102,7 @@ struct dhcp_msg
   uint8_t sname[DHCP_SNAME_LEN];
   uint8_t file[DHCP_FILE_LEN];
   uint32_t cookie;
+  uint16_t options;
 #define DHCP_MIN_OPTIONS_LEN 68U
 /** make sure user does not configure this too small */
 #if ((defined(DHCP_OPTIONS_LEN)) && (DHCP_OPTIONS_LEN < DHCP_MIN_OPTIONS_LEN))

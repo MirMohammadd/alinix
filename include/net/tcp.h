@@ -113,6 +113,7 @@ struct tcp_pcb {
   
   uint8_t flags;
   ip_addr_t local_ip;
+  uint8_t next;
 #define TF_ACK_DELAY   ((uint8_t)0x01U)   /* Delayed ACK. */
 #define TF_ACK_NOW     ((uint8_t)0x02U)   /* Immediate ACK. */
 #define TF_INFR        ((uint8_t)0x04U)   /* In fast recovery. */

@@ -20,6 +20,8 @@
 #include <net/tcp.h>
 #include <net/tcp_impl.h>
 
+struct tcp_listen_pcbs;
+
 
 #define NETIF_STATUS_CALLBACK(n)
 

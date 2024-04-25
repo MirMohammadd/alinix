@@ -25,7 +25,7 @@
 
 
 
-
+#define ip_addr_isany(addr1) ((addr1) == NULL || (addr1)->addr == IPADDR_ANY)
 /** 255.255.255.255 */
 #define IPADDR_NONE         ((uint32_t)0xffffffffUL)
 /** 127.0.0.1 */

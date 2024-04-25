@@ -23,6 +23,10 @@
 #include <net/mem.h>
 #include <net/ip_frag.h>
 #include <net/perf.h>
+#include <net/debug.h>
+#include <net/err.h>
+#include <net/pbuf.h>
+
 
 #define PBUF_POOL_BUFSIZE_ALIGNED LWIP_MEM_ALIGN_SIZE(PBUF_POOL_BUFSIZE)
 #define SIZEOF_STRUCT_PBUF        LWIP_MEM_ALIGN_SIZE(sizeof(struct pbuf))
@@ -200,4 +204,167 @@ pbuf_alloc(pbuf_layer layer, uint16_t length, pbuf_type type)
   p->flags = 0;
   LWIP_DEBUGF(PBUF_DEBUG | LWIP_DBG_TRACE, ("pbuf_alloc(length=%"U16_F") == %p\n", length, (void *)p));
   return p;
+}
+
+void
+pbuf_realloc(struct pbuf *p, uint16_t new_len)
+{
+  struct pbuf *q;
+  uint16_t rem_len; /* remaining length */
+  sint32_t grow;
+
+  LWIP_ASSERT("pbuf_realloc: p != NULL", p != NULL);
+  LWIP_ASSERT("pbuf_realloc: sane p->type", p->type == PBUF_POOL ||
+              p->type == PBUF_ROM ||
+              p->type == PBUF_RAM ||
+              p->type == PBUF_REF);
+
+  /* desired length larger than current length? */
+  if (new_len >= p->tot_len) {
+    /* enlarging not yet supported */
+    return;
+  }
+
+  /* the pbuf chain grows by (new_len - p->tot_len) bytes
+   * (which may be negative in case of shrinking) */
+  grow = new_len - p->tot_len;
+
+  /* first, step over any pbufs that should remain in the chain */
+  rem_len = new_len;
+  q = p;
+  /* should this pbuf be kept? */
+  while (rem_len > q->len) {
+    /* decrease remaining length by pbuf length */
+    rem_len -= q->len;
+    /* decrease total length indicator */
+    LWIP_ASSERT("grow < max_uint16_t", grow < 0xffff);
+    q->tot_len += (uint16_t)grow;
+    /* proceed to next pbuf in chain */
+    q = q->next;
+    LWIP_ASSERT("pbuf_realloc: q != NULL", q != NULL);
+  }
+  /* we have now reached the new last pbuf (in q) */
+  /* rem_len == desired length for pbuf q */
+
+  /* shrink allocated memory for PBUF_RAM */
+  /* (other types merely adjust their length fields */
+  if ((q->type == PBUF_RAM) && (rem_len != q->len)) {
+    /* reallocate and adjust the length of the pbuf that will be split */
+    q = (struct pbuf *)mem_trim(q, (uint16_t)((uint8_t *)q->payload - (uint8_t *)q) + rem_len);
+    LWIP_ASSERT("mem_trim returned q == NULL", q != NULL);
+  }
+  /* adjust length fields for new last pbuf */
+  q->len = rem_len;
+  q->tot_len = q->len;
+
+  /* any remaining pbufs in chain? */
+  if (q->next != NULL) {
+    /* free remaining pbufs in chain */
+    pbuf_free(q->next);
+  }
+  /* q is last packet in chain */
+  q->next = NULL;
+
+}
+
+uint16_t
+pbuf_copy_partial(struct pbuf *buf, void *dataptr, uint16_t len, uint16_t offset)
+{
+  struct pbuf *p;
+  uint16_t left;
+  uint16_t buf_copy_len;
+  uint16_t copied_total = 0;
+
+  LWIP_ERROR("pbuf_copy_partial: invalid buf", (buf != NULL), return 0;);
+  LWIP_ERROR("pbuf_copy_partial: invalid dataptr", (dataptr != NULL), return 0;);
+
+  left = 0;
+
+  if((buf == NULL) || (dataptr == NULL)) {
+    return 0;
+  }
+
+  /* Note some systems use byte copy if dataptr or one of the pbuf payload pointers are unaligned. */
+  for(p = buf; len != 0 && p != NULL; p = p->next) {
+    if ((offset != 0) && (offset >= p->len)) {
+      /* don't copy from this buffer -> on to the next */
+      offset -= p->len;
+    } else {
+      /* copy from this buffer. maybe only partially. */
+      buf_copy_len = p->len - offset;
+      if (buf_copy_len > len)
+          buf_copy_len = len;
+      /* copy the necessary parts of the buffer */
+      MEMCPY(&((char*)dataptr)[left], &((char*)p->payload)[offset], buf_copy_len);
+      copied_total += buf_copy_len;
+      left += buf_copy_len;
+      len -= buf_copy_len;
+      offset = 0;
+    }
+  }
+  return copied_total;
+}
+
+err_t
+pbuf_copy(struct pbuf *p_to, struct pbuf *p_from)
+{
+  uint16_t offset_to=0, offset_from=0, len;
+
+  LWIP_DEBUGF(PBUF_DEBUG | LWIP_DBG_TRACE, ("pbuf_copy(%p, %p)\n",
+    (void*)p_to, (void*)p_from));
+
+  /* is the target big enough to hold the source? */
+  LWIP_ERROR("pbuf_copy: target not big enough to hold source", ((p_to != NULL) &&
+             (p_from != NULL) && (p_to->tot_len >= p_from->tot_len)), return ERR_ARG;);
+
+  /* iterate through pbuf chain */
+  do
+  {
+    /* copy one part of the original chain */
+    if ((p_to->len - offset_to) >= (p_from->len - offset_from)) {
+      /* complete current p_from fits into current p_to */
+      len = p_from->len - offset_from;
+    } else {
+      /* current p_from does not fit into current p_to */
+      len = p_to->len - offset_to;
+    }
+    MEMCPY((uint8_t*)p_to->payload + offset_to, (uint8_t*)p_from->payload + offset_from, len);
+    offset_to += len;
+    offset_from += len;
+    LWIP_ASSERT("offset_to <= p_to->len", offset_to <= p_to->len);
+    LWIP_ASSERT("offset_from <= p_from->len", offset_from <= p_from->len);
+    if (offset_from >= p_from->len) {
+      /* on to next p_from (if any) */
+      offset_from = 0;
+      p_from = p_from->next;
+    }
+    if (offset_to == p_to->len) {
+      /* on to next p_to (if any) */
+      offset_to = 0;
+      p_to = p_to->next;
+      LWIP_ERROR("p_to != NULL", (p_to != NULL) || (p_from == NULL) , return ERR_ARG;);
+    }
+
+    if((p_from != NULL) && (p_from->len == p_from->tot_len)) {
+      /* don't copy more than one packet! */
+      LWIP_ERROR("pbuf_copy() does not allow packet queues!\n",
+                 (p_from->next == NULL), return ERR_VAL;);
+    }
+    if((p_to != NULL) && (p_to->len == p_to->tot_len)) {
+      /* don't copy more than one packet! */
+      LWIP_ERROR("pbuf_copy() does not allow packet queues!\n",
+                  (p_to->next == NULL), return ERR_VAL;);
+    }
+  } while (p_from);
+  LWIP_DEBUGF(PBUF_DEBUG | LWIP_DBG_TRACE, ("pbuf_copy: end of chain reached.\n"));
+  return ERR_OK;
+}
+
+void
+pbuf_ref(struct pbuf *p)
+{
+  /* pbuf given? */
+  if (p != NULL) {
+    ++(p->ref);
+  }
 }

@@ -22,7 +22,11 @@
 #include <net/ip_addr.h>
 #include <net/ip.h>
 #include <net/err.h>
+#include <net/typing.h>
+#include <alinix/ip.h>
+#include <net/ip_def.h>
 
+typedef void (*udp_recv_fn)(void *arg, struct udp_pcb *pcb, struct pbuf *p,ip_addr_t *addr, uint16_t port);
 
 #ifdef __cplusplus
 extern "C"{
@@ -31,11 +35,11 @@ extern "C"{
 
 #define UPD_HELEN 8
 struct udp_hdr {
-  PACK_STRUCT_FIELD(uint16_t src);
-  PACK_STRUCT_FIELD(uint16_t dest);  /* src/dest UDP ports */
-  PACK_STRUCT_FIELD(uint16_t len);
-  PACK_STRUCT_FIELD(uint16_t chksum);
-} PACK_STRUCT_STRUCT;
+  uint16_t src;
+  uint16_t dest;  /* src/dest UDP ports */
+  uint16_t len;
+  uint16_t chksum;
+} __attribute__((packed));
 
 
 #define UDP_FLAGS_NOCHKSUM       0x01U
@@ -43,24 +47,22 @@ struct udp_hdr {
 #define UDP_FLAGS_CONNECTED      0x04U
 #define UDP_FLAGS_MULTICAST_LOOP 0x08U
 
-struct udp_pcb;
-
-
-typedef void (*udp_recv_fn)(void *arg, struct udp_pcb *pcb, struct pbuf *p,
-    ip_addr_t *addr, uint16_t port);
-
-
 struct udp_pcb {
 /* Common members of all PCB types */
-  IP_PCB;
 
 /* Protocol specific PCB members */
-
+  // ip_addr_t local_ip;
   struct udp_pcb *next;
+
+  ip_addr_t local_ip;
+  ip_addr_t remote_ip;
+
+  unsigned char ttl[4];
 
   uint8_t flags;
   /** ports are in host byte order */
   uint16_t local_port, remote_port;
+  uint8_t so_options;      
 
 #if LWIP_IGMP
   /** outgoing network interface for multicast packets */
@@ -78,6 +80,10 @@ struct udp_pcb {
   void *recv_arg;  
 };
 
+
+
+
+
 extern struct udp_pcb *udp_pcbs;
 
 
@@ -89,9 +95,7 @@ err_t            udp_connect    (struct udp_pcb *pcb, ip_addr_t *ipaddr,
 void             udp_disconnect (struct udp_pcb *pcb);
 void             udp_recv       (struct udp_pcb *pcb, udp_recv_fn recv,
                                  void *recv_arg);
-err_t            udp_sendto_if  (struct udp_pcb *pcb, struct pbuf *p,
-                                 ip_addr_t *dst_ip, uint16_t dst_port,
-                                 struct netif *netif);
+
 err_t            udp_sendto     (struct udp_pcb *pcb, struct pbuf *p,
                                  ip_addr_t *dst_ip, uint16_t dst_port);
 err_t            udp_send       (struct udp_pcb *pcb, struct pbuf *p);
@@ -100,15 +104,12 @@ err_t            udp_send       (struct udp_pcb *pcb, struct pbuf *p);
 
 
 #if LWIP_CHECKSUM_ON_COPY
-err_t            udp_sendto_if_chksum(struct udp_pcb *pcb, struct pbuf *p,
-                                 ip_addr_t *dst_ip, u16_t dst_port,
-                                 struct netif *netif, uint8_t have_chksum,
-                                 u16_t chksum);
+
 err_t            udp_sendto_chksum(struct udp_pcb *pcb, struct pbuf *p,
-                                 ip_addr_t *dst_ip, u16_t dst_port,
-                                 uint8_t have_chksum, u16_t chksum);
+                                 ip_addr_t *dst_ip, uint16_t dst_port,
+                                 uint8_t have_chksum, uint16_t chksum);
 err_t            udp_send_chksum(struct udp_pcb *pcb, struct pbuf *p,
-                                 uint8_t have_chksum, u16_t chksum);
+                                 uint8_t have_chksum, uint16_t chksum);
 #endif /* LWIP_CHECKSUM_ON_COPY */
 
 #define          udp_flags(pcb) ((pcb)->flags)

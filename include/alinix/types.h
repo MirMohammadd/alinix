@@ -20,7 +20,7 @@
 #ifndef __ALINIX_KERNEL__TYPES_H_HEADER_
 #define __ALINIX_KERNEL__TYPES_H_HEADER_
 
-#include "_types.h"
+#include <alinix/_types.h>
 #include <alinix/enums.h>
 
 
@@ -44,13 +44,22 @@ typedef unsigned char byte_t; // For  backward compatibility
 typedef unsigned long int size_t;
 #if !defined(__cplusplus)
 //TODO Fix here
-// typedef enum  {false = 0, true = 1} bool;
-#include <stdbool.h>
+typedef enum  {false = 0, true = 1} bool;
+// #include <stdbool.h>
+//?++<<<include <stdbool.h>
 #endif
 
 #ifndef NULL
 #define NULL (void *)0
 #endif
+
+
+////////////////////
+/**
+ * @brief Networking types
+*/
+typedef struct ip_addr ip_addr_t;
+typedef struct ip_addr_packed ip_addr_p_t;
 
 int strlen(const char* str);
 // bool strcmp(const char* strA, const char* strB);

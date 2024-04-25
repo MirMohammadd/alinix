@@ -19,9 +19,14 @@
 
 
 #include <alinix/types.h>
+#include <alinix/ip.h>
 #include <alinix/compiler.h>
+#include <net/typing.h>
+#include <net/def.h>
 
 
+
+#define ip_addr_isany(addr1) ((addr1) == NULL || (addr1)->addr == IPADDR_ANY)
 /** 255.255.255.255 */
 #define IPADDR_NONE         ((uint32_t)0xffffffffUL)
 /** 127.0.0.1 */
@@ -29,15 +34,44 @@
 /** 0.0.0.0 */
 #define IPADDR_ANY          ((uint32_t)0x00000000UL)
 /** 255.255.255.255 */
+
+#define ip_addr_set_any(ipaddr)       ((ipaddr)->addr = IPADDR_ANY)
+
+#define ip_addr_get_network(target, host, netmask) ((target)->addr = ((host)->addr) & ((netmask)->addr))
+#define ip_addr_cmp(addr1, addr2) ((addr1)->addr == (addr2)->addr)
+
+
+#define ip4_addr_get_u32(src_ipaddr) ((src_ipaddr)->addr)
+/* Get one byte from the 4-byte address */
+#define ip4_addr1(ipaddr) (((uint8_t*)(ipaddr))[0])
+#define ip4_addr2(ipaddr) (((uint8_t*)(ipaddr))[1])
+#define ip4_addr3(ipaddr) (((uint8_t*)(ipaddr))[2])
+#define ip4_addr4(ipaddr) (((uint8_t*)(ipaddr))[3])
 #define IPADDR_BROADCAST    ((uint32_t)0xffffffffUL)
+#define ip4_addr1_16(ipaddr) ((uint16_t)ip4_addr1(ipaddr))
+#define ip4_addr2_16(ipaddr) ((uint16_t)ip4_addr2(ipaddr))
+#define ip4_addr3_16(ipaddr) ((uint16_t)ip4_addr3(ipaddr))
+#define ip4_addr4_16(ipaddr) ((uint16_t)ip4_addr4(ipaddr))
+#define ip_addr_isbroadcast(ipaddr, netif) ip4_addr_isbroadcast((ipaddr)->addr, (netif))
+uint8_t ip4_addr_isbroadcast(uint32_t addr, const struct netif *netif);
 
-// This should be defined on the top
-typedef struct ip_addr ip_addr_t;
+
+#define ip_addr_netcmp(addr1, addr2, mask) (((addr1)->addr & \
+                                              (mask)->addr) == \
+                                             ((addr2)->addr & \
+                                              (mask)->addr))
+
+#define ip_addr_copy(dest, src) ((dest).addr = (src).addr)
 
 
-struct ip_addr {
-  uint32_t addr;
-};
+
+
+
+
+
+#define ip_addr_ismulticast(addr1) (((addr1)->addr & PP_HTONL(0xf0000000UL)) == PP_HTONL(0xe0000000UL))
+
+
 
 extern const ip_addr_t ip_addr_any;
 extern const ip_addr_t ip_addr_broadcast
@@ -48,14 +82,14 @@ extern const ip_addr_t ip_addr_broadcast
 #define ip4_addr_set_u32(dest_ipaddr, src_u32) ((dest_ipaddr)->addr = (src_u32))
 
 
-PACK_STRUCT_BEGIN
+
 struct ip_addr2 {
-  PACK_STRUCT_FIELD(uint16_t addrw[2]);
-} PACK_STRUCT_STRUCT;
-PACK_STRUCT_END
+  uint16_t addrw[2];
+} __attribute__((packed));
 
 
-#define ip_addr_set_zero(ipaddr)      ((ipaddr)->addr = 0)
+// #define ip_addr_set_zero(ipaddr)      do { (ipaddr)->addr = 0; } while(0)
+#define ip_addr_set_zero(ipaddr)     
 
 
 #ifndef IPADDR2_COPY
@@ -71,5 +105,11 @@ PACK_STRUCT_END
                      (((x) & 0xff0000UL) >> 8) | \
                      (((x) & 0xff000000UL) >> 24))
 #define PP_NTOHL(x) PP_HTONL(x)
+
+
+
+
+
+
 
 #endif /*__ALINIX_KERNEL_IP_ADDR_NET_H*/

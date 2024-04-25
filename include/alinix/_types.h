@@ -15,8 +15,8 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef __ALINIX_KERNEL__TYPES_H_HEADER_
-#define __ALINIX_KERNEL__TYPES_H_HEADER_
+#ifndef ALINIX_KERNEL_DEMO_DEF_T_INCLUDED_H
+#define ALINIX_KERNEL_DEMO_DEF_T_INCLUDED_H
 
 #include <stdio.h>
 

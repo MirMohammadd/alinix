@@ -14,23 +14,18 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
-#ifndef __ALINIX_KERNEL_NET_PERF_H
-#define __ALINIX_KERNEL_NET_PERF_H
+#ifndef __ALINIX_KERNEL_NET_TYPING_H
+#define __ALINIX_KERNEL_NET_TYPING_H
 
+#include <net/ip_addr.h>
+#include <net/err.h>
+#include <alinix/compiler.h>
+#include <alinix/ip.h>
 #include <alinix/types.h>
-// void perf_print(unsigned long c1l, unsigned long c1h,
-// 		unsigned long c2l, unsigned long c2h,
-// 		char *key);
+
+// Define the structures
+
+/** Function prototype for netif status- or link-callback functions. */
 
 
-#define PERF_START  { \
-                         unsigned long __c1l, __c1h, __c2l, __c2h; \
-                         __asm__(".byte 0x0f, 0x31" : "=a" (__c1l), "=d" (__c1h))
-#define PERF_STOP(x)   __asm__(".byte 0x0f, 0x31" : "=a" (__c2l), "=d" (__c2h)); \
-                       }
-void pbuf_realloc(struct pbuf *p, uint16_t size); 
-
-uint16_t pbuf_copy_partial(struct pbuf *p, void *dataptr, uint16_t len, uint16_t offset);
-
-
-#endif
+#endif // __ALINIX_KERNEL_NET_TYPING_H

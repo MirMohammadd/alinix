@@ -32,7 +32,9 @@
 #define ERR_WOULDBLOCK -7    /* Operation would block.   */
 #define ERR_USE        -8    /* Address in use.          */
 #define ERR_ISCONN     -9    /* Already connected.       */
+#define ERR_ABRT       -10   /* Connection aborted.      */
 
+#define ERR_ARG        -14   /* Illegal argument.        */
 
 typedef sint8_t err_t;
 

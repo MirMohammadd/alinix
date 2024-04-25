@@ -17,7 +17,8 @@
 #ifndef __ALINIX_KERNEL_COMPILER_H
 #define __ALINIX_KERNEL_COMPILER_H
 
-
+#include <alinix/types.h>
+#include <net/typing.h>
 
 /**
  * @brief Define the compiler  macro to mark something as deprecated.
@@ -39,10 +40,9 @@
 
 /* Compiler hints for packing structures */
 #define PACK_STRUCT_FIELD(x) x
-#define PACK_STRUCT_STRUCT __attribute__((packed))
+// #define PACK_STRUCT_STRUCT __attribute__((packed))
 #define PACK_STRUCT_BEGIN
 #define PACK_STRUCT_END
-
 #ifdef LWIP_UNIX_EMPTY_ASSERT
 #define LWIP_PLATFORM_ASSERT(x)
 #else
@@ -50,7 +50,7 @@
                                      x, __LINE__, __FILE__);} while(0)
 #endif
 
-#define LWIP_RAND() ((u32_t)rand())
+#define LWIP_RAND() ((uint32_t)rand())
 
 
 

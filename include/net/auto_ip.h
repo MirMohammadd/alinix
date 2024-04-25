@@ -20,6 +20,7 @@
 #include <alinix/types.h>
 #include <net/ip_addr.h>
 #include <net/netif.h>
+#include <net/typing.h>
 
 #define PROBE_WAIT               1   /* second   (initial random delay)                 */
 #define PROBE_MIN                1   /* second   (minimum delay till repeated probe)    */
@@ -41,7 +42,8 @@
 
 struct autoip
 {
-  ip_addr_t llipaddr;       /* the currently selected, probed, announced or used LL IP-Address */
+  //? Change to uint 8_t when we support multiple netifs
+  uint64_t llipaddr;       /* the currently selected, probed, announced or used LL IP-Address */
   uint8_t state;               /* current AutoIP state machine state */
   uint8_t sent_num;            /* sent number of probes or announces, dependent on state */
   uint16_t ttw;                /* ticks to wait, tick is AUTOIP_TMR_INTERVAL long */

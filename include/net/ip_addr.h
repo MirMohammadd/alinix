@@ -89,7 +89,7 @@ struct ip_addr2 {
 
 
 // #define ip_addr_set_zero(ipaddr)      do { (ipaddr)->addr = 0; } while(0)
-#define ip_addr_set_zero(ipaddr)     (ipaddr)->addr = 0; 
+#define ip_addr_set_zero(ipaddr)     
 
 
 #ifndef IPADDR2_COPY

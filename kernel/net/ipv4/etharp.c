@@ -31,6 +31,7 @@
 
 struct stats_proto etharp;
 
+#define ETHARP_SET_HINT(netif, hint)  (etharp_cached_entry = (hint))
 
 
 #define ARP_MAXPENDING 2
@@ -251,7 +252,7 @@ etharp_query(struct netif *netif, ip_addr_t *ipaddr, struct pbuf *q)
   /* stable entry? */
   if (arp_table[i].state >= ETHARP_STATE_STABLE) {
     /* we have a valid IP->Ethernet address mapping */
-    ETHARP_SET_HINT(netif, i);
+    // ETHARP_SET_HINT(netif, i);
     /* send the packet */
     result = etharp_send_ip(netif, q, srcaddr, &(arp_table[i].ethaddr));
   /* pending entry? (either just created or already pending */

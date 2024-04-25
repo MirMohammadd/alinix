@@ -178,3 +178,12 @@ udp_connect(struct udp_pcb *pcb, ip_addr_t *ipaddr, uint16_t port)
   udp_pcbs = pcb;
   return ERR_OK;
 }
+
+
+void
+udp_recv(struct udp_pcb *pcb, udp_recv_fn recv, void *recv_arg)
+{
+  /* remember recv() callback and user data */
+  pcb->recv = recv;
+  pcb->recv_arg = recv_arg;
+}

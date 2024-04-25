@@ -24,6 +24,7 @@
 #include <net/err.h>
 #include <net/typing.h>
 
+typedef void (*udp_recv_fn)(void *arg, struct udp_pcb *pcb, struct pbuf *p,ip_addr_t *addr, uint16_t port);
 
 #ifdef __cplusplus
 extern "C"{
@@ -78,7 +79,6 @@ struct udp_pcb {
 };
 
 
-typedef void (*udp_recv_fn)(void *arg, struct udp_pcb *pcb, struct pbuf *p,ip_addr_t *addr, uint16_t port);
 
 
 

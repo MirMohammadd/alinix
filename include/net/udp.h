@@ -58,8 +58,8 @@ struct udp_pcb {
   // ip_addr_t local_ip;
   struct udp_pcb *next;
 
-  ip_addr_t local_ip;
-  ip_addr_t remote_ip;
+  struct ip_addr local_ip;
+  struct ip_addr remote_ip;
 
   unsigned char ttl[4];
 

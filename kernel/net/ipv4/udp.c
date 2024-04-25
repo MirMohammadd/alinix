@@ -143,3 +143,38 @@ udp_bind(struct udp_pcb *pcb, ip_addr_t *ipaddr, uint16_t port)
 //                pcb->local_port));
 //   return ERR_OK;
 }
+
+err_t
+udp_connect(struct udp_pcb *pcb, ip_addr_t *ipaddr, uint16_t port)
+{
+  struct udp_pcb *ipcb;
+
+  if (pcb->local_port == 0) {
+    err_t err = udp_bind(pcb, &pcb->local_ip, pcb->local_port);
+    if (err != ERR_OK) {
+      return err;
+    }
+  }
+
+  ip_addr_set(&pcb->remote_ip, ipaddr);
+  pcb->remote_port = port;
+  pcb->flags |= UDP_FLAGS_CONNECTED;
+/** TODO: this functionality belongs in upper layers */
+  LWIP_DEBUGF(UDP_DEBUG | LWIP_DBG_TRACE | LWIP_DBG_STATE,
+              ("udp_connect: connected to %"U16_F".%"U16_F".%"U16_F".%"U16_F",port %"U16_F"\n",
+               ip4_addr1_16(&pcb->local_ip), ip4_addr2_16(&pcb->local_ip),
+               ip4_addr3_16(&pcb->local_ip), ip4_addr4_16(&pcb->local_ip),
+               pcb->local_port));
+
+  /* Insert UDP PCB into the list of active UDP PCBs. */
+  for (ipcb = udp_pcbs; ipcb != NULL; ipcb = ipcb->next) {
+    if (pcb == ipcb) {
+      /* already on the list, just return */
+      return ERR_OK;
+    }
+  }
+  /* PCB not yet on the list, add PCB now */
+  pcb->next = udp_pcbs;
+  udp_pcbs = pcb;
+  return ERR_OK;
+}

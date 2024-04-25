@@ -24,6 +24,8 @@
 #define NETIF_STATUS_CALLBACK(n)
 
 
+struct netif *netif_list;
+
 void netif_set_down(struct netif *netif)
 {
   if (netif->flags & NETIF_FLAG_UP) {

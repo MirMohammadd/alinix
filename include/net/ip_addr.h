@@ -116,7 +116,7 @@ struct ip_addr {
 
 struct ip_addr_packed {
   uint32_t addr;
-} PACK_STRUCT_STRUCT;
+} ;
 
 
 /** ip_addr_t uses a struct for convenience only, so that the same defines can

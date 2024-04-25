@@ -54,7 +54,7 @@ struct udp_pcb {
 /* Common members of all PCB types */
 
 /* Protocol specific PCB members */
-
+  // ip_addr_t local_ip;
   struct udp_pcb *next;
 
   unsigned char ttl[4];

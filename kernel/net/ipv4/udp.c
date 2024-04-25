@@ -71,3 +71,75 @@ udp_new(void)
   }
   return pcb;
 }
+
+
+err_t
+udp_bind(struct udp_pcb *pcb, ip_addr_t *ipaddr, uint16_t port)
+{
+//   struct udp_pcb *ipcb;
+//   uint8_t rebind;
+
+//   LWIP_DEBUGF(UDP_DEBUG | LWIP_DBG_TRACE, ("udp_bind(ipaddr = "));
+//   ip_addr_debug_print(UDP_DEBUG, ipaddr);
+//   LWIP_DEBUGF(UDP_DEBUG | LWIP_DBG_TRACE, (", port = %"U16_F")\n", port));
+
+//   rebind = 0;
+//   /* Check for double bind and rebind of the same pcb */
+//   for (ipcb = udp_pcbs; ipcb != NULL; ipcb = ipcb->next) {
+//     /* is this UDP PCB already on active list? */
+//     if (pcb == ipcb) {
+//       /* pcb may occur at most once in active list */
+//       LWIP_ASSERT("rebind == 0", rebind == 0);
+//       /* pcb already in list, just rebind */
+//       rebind = 1;
+//     }
+
+//     /* By default, we don't allow to bind to a port that any other udp
+//        PCB is alread bound to, unless *all* PCBs with that port have tha
+//        REUSEADDR flag set. */
+// #if SO_REUSE
+//     else if (!ip_get_option(pcb, SOF_REUSEADDR) &&
+//              !ip_get_option(ipcb, SOF_REUSEADDR)) {
+// #else /* SO_REUSE */
+//     /* port matches that of PCB in list and REUSEADDR not set -> reject */
+//     else {
+// #endif /* SO_REUSE */
+//       if ((ipcb->local_port == port) &&
+//           /* IP address matches, or one is IP_ADDR_ANY? */
+//           (ip_addr_isany(&(ipcb->local_ip)) ||
+//            ip_addr_isany(ipaddr) ||
+//            ip_addr_cmp(&(ipcb->local_ip), ipaddr))) {
+//         /* other PCB already binds to this local IP and port */
+//         LWIP_DEBUGF(UDP_DEBUG,
+//                     ("udp_bind: local port %"U16_F" already bound by another pcb\n", port));
+//         return ERR_USE;
+//       }
+//     }
+//   }
+
+//   ip_addr_set(&pcb->local_ip, ipaddr);
+
+//   /* no port specified? */
+//   if (port == 0) {
+//     port = udp_new_port();
+//     if (port == 0) {
+//       /* no more ports available in local range */
+//       LWIP_DEBUGF(UDP_DEBUG, ("udp_bind: out of free UDP ports\n"));
+//       return ERR_USE;
+//     }
+//   }
+//   pcb->local_port = port;
+//   snmp_insert_udpidx_tree(pcb);
+//   /* pcb not active yet? */
+//   if (rebind == 0) {
+//     /* place the PCB on the active list if not already there */
+//     pcb->next = udp_pcbs;
+//     udp_pcbs = pcb;
+//   }
+//   LWIP_DEBUGF(UDP_DEBUG | LWIP_DBG_TRACE | LWIP_DBG_STATE,
+//               ("udp_bind: bound to %"U16_F".%"U16_F".%"U16_F".%"U16_F", port %"U16_F"\n",
+//                ip4_addr1_16(&pcb->local_ip), ip4_addr2_16(&pcb->local_ip),
+//                ip4_addr3_16(&pcb->local_ip), ip4_addr4_16(&pcb->local_ip),
+//                pcb->local_port));
+//   return ERR_OK;
+}

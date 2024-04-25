@@ -62,6 +62,7 @@ struct udp_pcb {
   uint8_t flags;
   /** ports are in host byte order */
   uint16_t local_port, remote_port;
+  uint8_t so_options;      
 
 #if LWIP_IGMP
   /** outgoing network interface for multicast packets */

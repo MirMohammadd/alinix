@@ -88,9 +88,7 @@ err_t            udp_connect    (struct udp_pcb *pcb, ip_addr_t *ipaddr,
 void             udp_disconnect (struct udp_pcb *pcb);
 void             udp_recv       (struct udp_pcb *pcb, udp_recv_fn recv,
                                  void *recv_arg);
-err_t
-udp_sendto_if(struct udp_pcb *pcb, struct pbuf *p,
-  ip_addr_t *dst_ip, uint16_t dst_port, struct netif *netif);
+
 err_t            udp_sendto     (struct udp_pcb *pcb, struct pbuf *p,
                                  ip_addr_t *dst_ip, uint16_t dst_port);
 err_t            udp_send       (struct udp_pcb *pcb, struct pbuf *p);

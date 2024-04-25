@@ -6,6 +6,10 @@
 
 err_t
 udp_sendto_if(struct udp_pcb *pcb, struct pbuf *p,
+  ip_addr_t *dst_ip, uint16_t dst_port, struct netif *netif);
+
+err_t
+udp_sendto_if(struct udp_pcb *pcb, struct pbuf *p,
   ip_addr_t *dst_ip, uint16_t dst_port, struct netif *netif)
 {
 // #if LWIP_CHECKSUM_ON_COPY

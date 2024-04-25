@@ -28,6 +28,7 @@
 #include <net/netif.h>
 
 
+
 void dhcp_set_struct(struct netif *netif, struct dhcp *dhcp);
 #define dhcp_remove_struct(netif) do {(netif)->dhcp = NULL;} while (0)
 void dhcp_cleanup(struct netif *netif);

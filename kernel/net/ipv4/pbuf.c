@@ -201,3 +201,64 @@ pbuf_alloc(pbuf_layer layer, uint16_t length, pbuf_type type)
   LWIP_DEBUGF(PBUF_DEBUG | LWIP_DBG_TRACE, ("pbuf_alloc(length=%"U16_F") == %p\n", length, (void *)p));
   return p;
 }
+
+void
+pbuf_realloc(struct pbuf *p, uint16_t new_len)
+{
+  struct pbuf *q;
+  uint16_t rem_len; /* remaining length */
+  sint32_t grow;
+
+  LWIP_ASSERT("pbuf_realloc: p != NULL", p != NULL);
+  LWIP_ASSERT("pbuf_realloc: sane p->type", p->type == PBUF_POOL ||
+              p->type == PBUF_ROM ||
+              p->type == PBUF_RAM ||
+              p->type == PBUF_REF);
+
+  /* desired length larger than current length? */
+  if (new_len >= p->tot_len) {
+    /* enlarging not yet supported */
+    return;
+  }
+
+  /* the pbuf chain grows by (new_len - p->tot_len) bytes
+   * (which may be negative in case of shrinking) */
+  grow = new_len - p->tot_len;
+
+  /* first, step over any pbufs that should remain in the chain */
+  rem_len = new_len;
+  q = p;
+  /* should this pbuf be kept? */
+  while (rem_len > q->len) {
+    /* decrease remaining length by pbuf length */
+    rem_len -= q->len;
+    /* decrease total length indicator */
+    LWIP_ASSERT("grow < max_uint16_t", grow < 0xffff);
+    q->tot_len += (uint16_t)grow;
+    /* proceed to next pbuf in chain */
+    q = q->next;
+    LWIP_ASSERT("pbuf_realloc: q != NULL", q != NULL);
+  }
+  /* we have now reached the new last pbuf (in q) */
+  /* rem_len == desired length for pbuf q */
+
+  /* shrink allocated memory for PBUF_RAM */
+  /* (other types merely adjust their length fields */
+  if ((q->type == PBUF_RAM) && (rem_len != q->len)) {
+    /* reallocate and adjust the length of the pbuf that will be split */
+    q = (struct pbuf *)mem_trim(q, (uint16_t)((uint8_t *)q->payload - (uint8_t *)q) + rem_len);
+    LWIP_ASSERT("mem_trim returned q == NULL", q != NULL);
+  }
+  /* adjust length fields for new last pbuf */
+  q->len = rem_len;
+  q->tot_len = q->len;
+
+  /* any remaining pbufs in chain? */
+  if (q->next != NULL) {
+    /* free remaining pbufs in chain */
+    pbuf_free(q->next);
+  }
+  /* q is last packet in chain */
+  q->next = NULL;
+
+}

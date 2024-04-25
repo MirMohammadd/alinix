@@ -1681,3 +1681,5 @@ dhcp_option_trailer(struct dhcp *dhcp)
     dhcp->msg_out->options[dhcp->options_out_len++] = 0;
   }
 }
+
+

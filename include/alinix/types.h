@@ -22,6 +22,7 @@
 
 #include "_types.h"
 #include <alinix/enums.h>
+#include <net/ip_addr.h>
 
 
 typedef char                        int8_t;
@@ -51,6 +52,14 @@ typedef unsigned long int size_t;
 #ifndef NULL
 #define NULL (void *)0
 #endif
+
+
+////////////////////
+/**
+ * @brief Networking types
+*/
+typedef struct ip_addr ip_addr_t;
+typedef struct ip_addr_packed ip_addr_p_t;
 
 int strlen(const char* str);
 // bool strcmp(const char* strA, const char* strB);

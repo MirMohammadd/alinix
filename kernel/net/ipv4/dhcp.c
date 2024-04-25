@@ -24,6 +24,7 @@
 #include <net/dhcp.h>
 #include <net/debug.h>
 #include <net/err.h>
+#include <net/netif.h>
 
 
 void dhcp_set_struct(struct netif *netif, struct dhcp *dhcp);

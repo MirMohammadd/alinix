@@ -21,7 +21,7 @@
 #include <net/tcp_impl.h>
 #include <alinix/ip.h>
 #include <alinix/arch.h>
-
+#include <net/def.h>
 
 #define NETIF_STATUS_CALLBACK(n)
 

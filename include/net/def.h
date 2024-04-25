@@ -46,7 +46,7 @@ uint32_t lwip_ntohl(uint32_t x);
 
 
 
-
+#define snmp_insert_ipaddridx_tree(ni)
 
 
 

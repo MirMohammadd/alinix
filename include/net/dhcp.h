@@ -87,21 +87,21 @@ struct dhcp
 
 struct dhcp_msg
 {
-  PACK_STRUCT_FIELD(uint8_t op);
-  PACK_STRUCT_FIELD(uint8_t htype);
-  PACK_STRUCT_FIELD(uint8_t hlen);
-  PACK_STRUCT_FIELD(uint8_t hops);
-  PACK_STRUCT_FIELD(uint32_t xid);
-  PACK_STRUCT_FIELD(uint16_t secs);
-  PACK_STRUCT_FIELD(uint16_t flags);
-  PACK_STRUCT_FIELD(ip_addr_p_t ciaddr);
-  PACK_STRUCT_FIELD(ip_addr_p_t yiaddr);
-  PACK_STRUCT_FIELD(ip_addr_p_t siaddr);
-  PACK_STRUCT_FIELD(ip_addr_p_t giaddr);
-  PACK_STRUCT_FIELD(uint8_t chaddr[DHCP_CHADDR_LEN]);
-  PACK_STRUCT_FIELD(uint8_t sname[DHCP_SNAME_LEN]);
-  PACK_STRUCT_FIELD(uint8_t file[DHCP_FILE_LEN]);
-  PACK_STRUCT_FIELD(uint32_t cookie);
+  uint8_t op;
+  uint8_t htype;
+  uint8_t hlen;
+  uint8_t hops;
+  uint32_t xid;
+  uint16_t secs;
+  uint16_t flags;
+  ip_addr_p_t ciaddr;
+  ip_addr_p_t yiaddr;
+  ip_addr_p_t siaddr;
+  ip_addr_p_t giaddr;
+  uint8_t chaddr[DHCP_CHADDR_LEN];
+  uint8_t sname[DHCP_SNAME_LEN];
+  uint8_t file[DHCP_FILE_LEN];
+  uint32_t cookie;
 #define DHCP_MIN_OPTIONS_LEN 68U
 /** make sure user does not configure this too small */
 #if ((defined(DHCP_OPTIONS_LEN)) && (DHCP_OPTIONS_LEN < DHCP_MIN_OPTIONS_LEN))
@@ -112,7 +112,7 @@ struct dhcp_msg
 /** set this to be sufficient for your options in outgoing DHCP msgs */
 #  define DHCP_OPTIONS_LEN DHCP_MIN_OPTIONS_LEN
 #endif
-  PACK_STRUCT_FIELD(uint8_t options[DHCP_OPTIONS_LEN]);
+  // PACK_STRUCT_FIELD(uint8_t options[DHCP_OPTIONS_LEN]);
 } PACK_STRUCT_STRUCT;
 PACK_STRUCT_END
 

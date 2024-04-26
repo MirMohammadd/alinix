@@ -42,12 +42,18 @@ typedef	unsigned int	uint;		/* Sys V compatibility */
 typedef unsigned char byte_t; // For  backward compatibility
 //! This might run into problem (size_t)
 typedef unsigned long int size_t;
+typedef size_t ssize_t;
+
 #if !defined(__cplusplus)
 //TODO Fix here
 typedef enum  {false = 0, true = 1} bool;
 // #include <stdbool.h>
 //?++<<<include <stdbool.h>
 #endif
+
+/////////////////////////
+// Defining the extra system types
+typedef uint16_t __le16;
 
 #ifndef NULL
 #define NULL (void *)0
@@ -71,19 +77,6 @@ bool Contains(const char* str, char c);
 #define  ALINIX_NULL_CPP_NULL ALINIX_NULL_CPP_NULL_PTR
 
 #endif /*ALINIX_NULL_CPP_NULL_PTR*/
-
-/*Defining the operators for the File system measures*/
-// uint32_t KB(unsigned long long no) {
-//     return no * 1024;
-// }
-
-// uint32_t MB(unsigned long long no) {
-//     return no * KB(1024);
-// }
-
-// uint32_t GB(unsigned long long no) {
-//     return no * MB(1024);
-// }
 
 
 ////////////////////////////////////////

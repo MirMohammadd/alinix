@@ -91,13 +91,13 @@ static inline bool TestBit(uint32_t bit) {
 static uint32_t FirstFree();
 static uint32_t FirstFreeSize(uint32_t size);
 
-static void Initialize(uint32_t size, uint32_t bitmap) {
+static inline void Initialize(uint32_t size, uint32_t bitmap) {
     memorySize = size;
     maximumBlocks = size / 4096;
     memoryArray = (uint32_t*)bitmap;
 }
 
-static void SetRegionFree(uint32_t base, uint32_t size) {
+static inline void SetRegionFree(uint32_t base, uint32_t size) {
     uint32_t start = base / 4096;
     uint32_t end = (base + size) / 4096;
     for (uint32_t i = start; i < end; i++) {
@@ -105,7 +105,7 @@ static void SetRegionFree(uint32_t base, uint32_t size) {
     }
 }
 
-static void SetRegionUsed(uint32_t base, uint32_t size) {
+static inline void SetRegionUsed(uint32_t base, uint32_t size) {
     uint32_t start = base / 4096;
     uint32_t end = (base + size) / 4096;
     for (uint32_t i = start; i < end; i++) {
@@ -113,7 +113,7 @@ static void SetRegionUsed(uint32_t base, uint32_t size) {
     }
 }
 
-static void ParseMemoryMap(const multiboot_info_t* mbi) {
+static inline void ParseMemoryMap(const multiboot_info_t* mbi) {
     uint32_t mmap_addr = mbi->mmap_addr;
     uint32_t mmap_length = mbi->mmap_length;
     while (mmap_length > 0) {
@@ -130,7 +130,7 @@ static void ParseMemoryMap(const multiboot_info_t* mbi) {
     }
 }
 
-static void* AllocateBlock() {
+static inline void* AllocateBlock() {
     uint32_t free = FirstFree();
     if (free == (uint32_t)-1) {
         return NULL;
@@ -140,14 +140,14 @@ static void* AllocateBlock() {
     return (void*)(free * 4096);
 }
 
-static void FreeBlock(void* ptr) {
+static inline void FreeBlock(void* ptr) {
     uint32_t address = (uint32_t)ptr;
     uint32_t block = address / 4096;
     UnsetBit(block);
     usedBlocks--;
 }
 
-static void* AllocateBlocks(uint32_t size) {
+static inline void* AllocateBlocks(uint32_t size) {
     uint32_t free = FirstFreeSize(size);
     if (free == (uint32_t)-1) {
         return NULL;
@@ -161,7 +161,7 @@ static void* AllocateBlocks(uint32_t size) {
     return (void*)(start * 4096);
 }
 
-static void FreeBlocks(void* ptr, uint32_t size) {
+static inline void FreeBlocksF(void* ptr, uint32_t size) {
     uint32_t address = (uint32_t)ptr;
     uint32_t start = address / 4096;
     uint32_t end = start + (size / 4096);
@@ -171,31 +171,31 @@ static void FreeBlocks(void* ptr, uint32_t size) {
     usedBlocks -= (size / 4096);
 }
 
-static uint32_t AmountOfMemory() {
+static inline uint32_t AmountOfMemory() {
     return memorySize;
 }
 
-static uint32_t UsedBlocks() {
+static inline uint32_t UsedBlocks() {
     return usedBlocks;
 }
 
-static uint32_t FreeBlocks() {
+static inline uint32_t FreeBlocks() {
     return maximumBlocks - usedBlocks;
 }
 
-static uint32_t TotalBlocks() {
+static inline uint32_t TotalBlocks() {
     return maximumBlocks;
 }
 
-static uint32_t GetBitmapSize() {
+static inline uint32_t GetBitmapSize() {
     return maximumBlocks / 32;
 }
 
-static uint32_t pageRoundUp(uint32_t address) {
+static inline uint32_t pageRoundUp(uint32_t address) {
     return (address + 4095) & ~4095;
 }
 
-static uint32_t pageRoundDown(uint32_t address) {
+static inline uint32_t pageRoundDown(uint32_t address) {
     return address & ~4095;
 }
 

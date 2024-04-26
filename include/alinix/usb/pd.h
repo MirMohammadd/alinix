@@ -4,6 +4,10 @@
 #ifdef __cplusplus
 extern "C" {
 #endif /*__cplusplus*/
+
+/**
+ * @ref https://github.com/torvalds/linux/blob/master/include/linux/usb/pd.h
+*/
 ///////////////////////////////
 /* USB PD Messages */
 enum pd_ctrl_msg_type {

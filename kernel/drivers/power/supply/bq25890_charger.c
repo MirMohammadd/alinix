@@ -69,8 +69,6 @@ struct bq25890_init_data{
     uint8_t sysvmin;
     uint8_t boostv;
     uint8_t boosti;
-    uint8_t boosti;
-    uint8_t ilim_en;
     uint8_t ilim_en;
     uint8_t rbatcomp;
     uint8_t vclampl; /* IBAT compensation voltage limit */

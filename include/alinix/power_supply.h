@@ -26,6 +26,7 @@
 #include <alinix/kconf.h>
 #include <uapi/asm/errno.h>
 #include <alinix/compiler_attributes.h>
+#include <alinix/types.h>
 
 enum power_supply_charge_behaviour {
 	POWER_SUPPLY_CHARGE_BEHAVIOUR_AUTO = 0,

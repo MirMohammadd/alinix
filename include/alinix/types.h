@@ -42,6 +42,8 @@ typedef	unsigned int	uint;		/* Sys V compatibility */
 typedef unsigned char byte_t; // For  backward compatibility
 //! This might run into problem (size_t)
 typedef unsigned long int size_t;
+typedef size_t ssize_t;
+
 #if !defined(__cplusplus)
 //TODO Fix here
 typedef enum  {false = 0, true = 1} bool;

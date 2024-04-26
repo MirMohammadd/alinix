@@ -49,6 +49,10 @@ typedef enum  {false = 0, true = 1} bool;
 //?++<<<include <stdbool.h>
 #endif
 
+/////////////////////////
+// Defining the extra system types
+typedef uint16_t __le16;
+
 #ifndef NULL
 #define NULL (void *)0
 #endif

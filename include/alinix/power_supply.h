@@ -1,6 +1,6 @@
 /**
  * @author Ali Mirmohammad
- * @file kernel.h
+ * @file power_supply.h
  * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
  ** This file is part of AliNix.
 
@@ -18,12 +18,28 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef _ALINIX_KERNEL_KERNEL_H__
-#define _ALINIX_KERNEL_KERNEL_H__
+#ifndef __ALINIX_KERNEL_POWER_SUPPLY_H
+#define __ALINIX_KERNEL_POWER_SUPPLY_H
 
-#include <alinix/enums.h>
-#include <alinix/syscall.h>
 #include <alinix/types.h>
-#include <alinix/init.h>
 
-#endif /*_ALINIX_KERNEL_KERNEL_H__*/
+
+struct power_supply_battery_ocv_table{
+    int ocv; // capacity
+    int capacity; // microvolt 
+};
+
+
+struct power_supply_resistance_temp_table {
+	int temp;	/* celsius */
+	int resistance;	/* internal resistance percent */
+};
+
+struct power_supply_vbat_ri_table {
+	int vbat_uv;	/* Battery voltage in microvolt */
+	int ri_uohm;	/* Internal resistance in microohm */
+};
+
+
+
+#endif /*__ALINIX_KERNEL_POWER_SUPPLY_H*/

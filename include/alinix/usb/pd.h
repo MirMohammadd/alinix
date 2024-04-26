@@ -5,6 +5,9 @@
 extern "C" {
 #endif /*__cplusplus*/
 
+
+#include <alinix/types.h>
+
 /**
  * @ref https://github.com/torvalds/linux/blob/master/include/linux/usb/pd.h
 */
@@ -100,6 +103,9 @@ enum pd_ext_msg_type {
         cpu_to_le16(PD_HEADER((type), (pwr), (data), (rev), (id), (cnt), (0)))
 
 
+PRIVATE __always_inline int pd_header_cnt(uint16_t header){
+    return (header >> PD_HEADER_CNT_SHIFT) & PD_HEADER_CNT_MASK;
+}
 
 
 ///////////////////////////////

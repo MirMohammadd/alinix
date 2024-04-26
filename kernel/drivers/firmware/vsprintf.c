@@ -42,6 +42,7 @@ do {				\
 	++pos;			\
 } while (0);
 
+size_t utf16s_utf8nlen(const uint16_t *s16, int maxlen);
 
 PRIVATE
 int get_int(const char **fmt, va_list *ap)

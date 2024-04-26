@@ -42,7 +42,7 @@ do {				\
 	++pos;			\
 } while (0);
 
-PRIVATE size_t utf16s_utf8nlen(const uint16_t *s16, int maxlen);
+PRIVATE unsigned long int utf16s_utf8nlen(const uint16_t *s16, int maxlen);
 
 PRIVATE
 int get_int(const char **fmt, va_list *ap)
@@ -101,14 +101,14 @@ int get_flags(const char **fmt){
 	} while (1);
 }
 
-int vsnprintf(char *buf, size_t size, const char *fmt, va_list ap){
+int vsnprintf(char *buf, unsigned long int size, const char *fmt, va_list ap){
     /*Maximum pace needed to print 64 bit number in octal*/
     char tmp[(sizeof(unsigned long long) * 8+2) / 3];
     char *tmp_end = &tmp[sizeof(tmp) / sizeof(tmp)[0]];
     long long num;
     int base;
     const char *s;
-    size_t len,pos;
+    unsigned long int len,pos;
     char sign;
     int flags;		/* flags to number() */
 
@@ -276,7 +276,7 @@ output:
 			while (len-- > 0) {
 				uint32_t c32 = utf16_to_utf32(&ws);
 				uint8_t *s8;
-				size_t clen;
+				unsigned long int clen;
 
 				if (c32 < 0x80) {
 					PUTC(c32);
@@ -323,9 +323,9 @@ fail:
 }
 
 PRIVATE
-size_t utf16s_utf8nlen(const uint16_t *s16,  int maxlen)
+unsigned long int utf16s_utf8nlen(const uint16_t *s16,  int maxlen)
 {
-	size_t len, clen;
+	unsigned long int len, clen;
 
 	for (len = 0; len < maxlen && *s16; len += clen) {
 		uint16_t c0 = *s16++;

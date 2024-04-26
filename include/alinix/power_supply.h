@@ -1,6 +1,7 @@
 /**
  * @author Ali Mirmohammad
  * @file power_supply.h
+ * @ref https://github.com/torvalds/linux/blob/master/include/linux/power_supply.h#L344
  * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
  ** This file is part of AliNix.
 
@@ -40,6 +41,10 @@ struct power_supply_vbat_ri_table {
 	int ri_uohm;	/* Internal resistance in microohm */
 };
 
-
+struct power_supply_maintenance_charge_table {
+	int charge_current_max_ua;
+	int charge_voltage_max_uv;
+	int charge_safety_timer_minutes;
+};
 
 #endif /*__ALINIX_KERNEL_POWER_SUPPLY_H*/

@@ -1,5 +1,6 @@
 #include <alinix/kernel.h>
 #include <alinix/regmap.h>
+#include <alinix/physicalmemory.h>
 
 /**
  * @ref https://github.com/torvalds/linux/blob/master/drivers/power/supply/bq25890_charger.c

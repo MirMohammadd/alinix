@@ -20,6 +20,6 @@ typedef char *va_list;
 
 
 int printf (const char *format, ...);
-
+int vsnprintf(char *buf,size_t size,const char* fmt,va_list ap);
 
 #endif

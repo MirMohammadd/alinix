@@ -20,3 +20,8 @@
 
 #include <alinix/types.h>
 #include <alinix/stdarg.h>
+
+int vsnprintf(char *buf,size_t size,const char* fmt,va_list ap){
+    /*Maximum pace needed to print 64 bit number in octal*/
+    int x;
+}

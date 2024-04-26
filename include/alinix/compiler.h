@@ -38,7 +38,6 @@
     #define USING_ELF_GCC_TOOLCHAIN_X86_64 1
 
 #endif
-#define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]) )
 
 
 /* Compiler hints for packing structures */

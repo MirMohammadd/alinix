@@ -22,6 +22,7 @@
 #include <alinix/stdarg.h>
 #include <alinix/compiler.h>
 #include <alinix/limits.h>
+#define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
 
 
 
@@ -100,7 +101,7 @@ int get_flags(const char **fmt){
 	} while (1);
 }
 
-int vsnprintf(char *buf,size_t size,const char* fmt,va_list ap){
+int vsnprintf(char *buf, size_t size, const char *fmt, va_list ap){
     /*Maximum pace needed to print 64 bit number in octal*/
     char tmp[(sizeof(unsigned long long) * 8+2) / 3];
     char *tmp_end = &tmp[ARRAY_SIZE[tmp]];

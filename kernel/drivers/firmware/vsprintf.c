@@ -322,7 +322,7 @@ fail:
 }
 
 PRIVATE
-size_t utf16s_utf8nlen(const short unsigned int *s16, long unsigned int maxlen)
+size_t utf16s_utf8nlen(const uint16_t *s16,  int maxlen)
 {
 	size_t len, clen;
 

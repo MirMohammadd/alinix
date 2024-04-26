@@ -179,7 +179,7 @@ static uint32_t UsedBlocks() {
     return usedBlocks;
 }
 
-static uint32_t FreeBlocksf() {
+static uint32_t FreeBlocks() {
     return maximumBlocks - usedBlocks;
 }
 

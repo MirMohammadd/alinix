@@ -12,7 +12,6 @@
  * These error numbers are intended to be MIPS ABI compatible
  */
 
-#include <asm-generic/errno-base.h>
 
 #define ENOMSG		35	/* No message of desired type */
 #define EIDRM		36	/* Identifier removed */

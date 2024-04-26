@@ -161,7 +161,7 @@ static void* AllocateBlocks(uint32_t size) {
     return (void*)(start * 4096);
 }
 
-static void FreeBlocks(void* ptr, uint32_t size) {
+static void FreeBlocksF(void* ptr, uint32_t size) {
     uint32_t address = (uint32_t)ptr;
     uint32_t start = address / 4096;
     uint32_t end = start + (size / 4096);

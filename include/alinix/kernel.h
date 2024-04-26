@@ -25,5 +25,6 @@
 #include <alinix/syscall.h>
 #include <alinix/types.h>
 #include <alinix/init.h>
+#include <alinix/power_supply.h>
 
 #endif /*_ALINIX_KERNEL_KERNEL_H__*/

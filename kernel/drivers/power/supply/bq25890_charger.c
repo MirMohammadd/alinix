@@ -86,3 +86,33 @@ struct bq25890_state{
     uint8_t bat_fault;
     uint8_t ntc_fault;
 };
+
+struct bq25890_device {
+	struct i2c_client *client;
+	struct device *dev;
+	struct power_supply *charger;
+	struct power_supply *secondary_chrg;
+	struct power_supply_desc desc;
+	char name[28]; /* "bq25890-charger-%d" */
+	int id;
+
+	struct usb_phy *usb_phy;
+	struct notifier_block usb_nb;
+	struct work_struct usb_work;
+	struct delayed_work pump_express_work;
+	unsigned long usb_event;
+
+	struct regmap *rmap;
+	struct regmap_field *rmap_fields[F_MAX_FIELDS];
+
+	bool skip_reset;
+	bool read_back_init_data;
+	bool force_hiz;
+	u32 pump_express_vbus_max;
+	u32 iinlim_percentage;
+	enum bq25890_chip_version chip_version;
+	struct bq25890_init_data init_data;
+	struct bq25890_state state;
+
+	struct mutex lock; /* protect state data */
+};

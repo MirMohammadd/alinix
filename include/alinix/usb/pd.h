@@ -96,6 +96,11 @@ enum pd_ext_msg_type {
 	 ((ext_hdr) ? PD_HEADER_EXT_HDR : 0))
 
 
+#define PD_HEADER_LE(type,pwr,data,rev,id,cnt) \
+        cpu_to_le16(PD_HEADER((type), (pwr), (data), (rev), (id), (cnt), (0)))
+
+
+
 
 ///////////////////////////////
 #ifdef __cplusplus

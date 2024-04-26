@@ -20,6 +20,8 @@
 #include <alinix/types.h>
 #include <net/typing.h>
 
+# define fallthrough                    __attribute__((__fallthrough__))
+
 /**
  * @brief Define the compiler  macro to mark something as deprecated.
 */

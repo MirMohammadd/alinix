@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * Abstract:
+ *      - Provide utility for the kernel enums
+*/
+
 #ifndef __ALINIX_KERNEL_ENUMS_HEADER_H
 #define __ALINIX_KERNEL_ENUMS_HEADER_H
 

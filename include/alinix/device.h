@@ -14,6 +14,14 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+
+/**
+ * Abstraction:
+ *      - Device  (CPU / GPU) utility
+*/
+
+
 #ifndef __ALINIX_KERNEL_DEVICE_H
 #define __ALINIX_KERNEL_DEVICE_H
 

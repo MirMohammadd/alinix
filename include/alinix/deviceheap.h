@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * Abstraction :
+ *      - Provide some utility for the device heap management.
+*/
+
 #ifndef __ALINIX_KERNEL_DEVICE_HEAP_H   
 #define __ALINIX_KERNEL_DEVICE_HEAP_H
 

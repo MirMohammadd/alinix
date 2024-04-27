@@ -26,10 +26,12 @@
 #define __ALINIX_KERNEL_DEVICE_H
 
 #include <alinix/types.h>
+#include <alinix/kobject.h>
 
 struct device_private;
 
 struct device{
+	struct kobject kobj;
     CONSTANT STRING *name;        
     uint64_t base;
     CONSTANT STRING vendor;   /* Vendor name */

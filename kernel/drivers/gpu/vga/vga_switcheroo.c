@@ -31,3 +31,8 @@ PRIVATE VOID vga_switcheroo_enable(NO_ARGS){
     
     priv->active = true;
 }
+
+
+int main(){
+    
+}

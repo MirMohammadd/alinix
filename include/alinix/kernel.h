@@ -26,6 +26,7 @@
 #include <alinix/types.h>
 #include <alinix/init.h>
 #include <alinix/power_supply.h>
+#include <alinix/device.h>
 
 struct kparam_string {
 	unsigned int maxlen;
@@ -57,5 +58,6 @@ struct kernel_param_ops {
 	/* Optional function to free kp->arg when module unloaded. */
 	void (*free)(void *arg);
 };
+
 
 #endif /*_ALINIX_KERNEL_KERNEL_H__*/

@@ -25,7 +25,6 @@
 #ifndef __ALINIX_KERNEL_DEVICE_H
 #define __ALINIX_KERNEL_DEVICE_H
 
-#include <alinix/drivers/usb/driver.hpp>
 #include <alinix/types.h>
 
 struct device_private;

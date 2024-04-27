@@ -23,6 +23,7 @@
 #include <alinix/compiler.h>
 #include <alinix/limits.h>
 #include <alinix/operator.h>
+#include <alinix/compiler_types.h>
 
 
 
@@ -42,6 +43,68 @@ do {				\
 		buf[pos] = (c);	\
 	++pos;			\
 } while (0);
+
+static
+void put_dec_full4(char *end, unsigned int r)
+{
+	int i;
+
+	for (i = 0; i < 3; i++) {
+		unsigned int q = (r * 0xccd) >> 15;
+		*--end = '0' + (r - q * 10);
+		r = q;
+	}
+	*--end = '0' + r;
+}
+
+
+static
+unsigned int put_dec_helper4(char *end, unsigned int x)
+{
+	unsigned int q = (x * 0x346DC5D7ULL) >> 43;
+
+	put_dec_full4(end, x - q * 10000);
+	return q;
+}
+
+static
+char *put_dec(char *end, unsigned long long n)
+{
+	unsigned int d3, d2, d1, q, h;
+	char *p = end;
+
+	d1  = ((unsigned int)n >> 16); /* implicit "& 0xffff" */
+	h   = (n >> 32);
+	d2  = (h      ) & 0xffff;
+	d3  = (h >> 16); /* implicit "& 0xffff" */
+
+	/* n = 2^48 d3 + 2^32 d2 + 2^16 d1 + d0
+	     = 281_4749_7671_0656 d3 + 42_9496_7296 d2 + 6_5536 d1 + d0 */
+	q = 656 * d3 + 7296 * d2 + 5536 * d1 + ((unsigned int)n & 0xffff);
+	q = put_dec_helper4(p, q);
+	p -= 4;
+
+	q += 7671 * d3 + 9496 * d2 + 6 * d1;
+	q = put_dec_helper4(p, q);
+	p -= 4;
+
+	q += 4749 * d3 + 42 * d2;
+	q = put_dec_helper4(p, q);
+	p -= 4;
+
+	q += 281 * d3;
+	q = put_dec_helper4(p, q);
+	p -= 4;
+
+	put_dec_full4(p, q);
+	p -= 4;
+
+	/* strip off the extra 0's we printed */
+	while (p < end && *p == '0')
+		++p;
+
+	return p;
+}
 
 PRIVATE size_t utf16s_utf8nlen(const uint16_t *s16, int maxlen);
 static

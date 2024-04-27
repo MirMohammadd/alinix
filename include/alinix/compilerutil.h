@@ -18,6 +18,8 @@
 #ifndef __ALINIX_KERNEL_COMPILER_UTIL_H
 #define __ALINIX_KERNEL_COMPILER_UTIL_H
 
-
+/**
+ * @warning Let this file be empty for now
+*/
 
 #endif /*__ALINIX_KERNEL_COMPILER_UTIL_H*/

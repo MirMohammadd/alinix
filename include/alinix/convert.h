@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * Abstraction
+ *      - Provide utility for converting number (hex,decimal,binary) to each other
+*/
+
 #ifndef __ALINIX_KERNEL_CONVERT_HEADER_H
 #define __ALINIX_KERNEL_CONVERT_HEADER_H
 

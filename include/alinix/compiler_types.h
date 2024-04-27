@@ -29,10 +29,12 @@ __attribute__((naked)) void unreachable(void) {
     asm volatile (
         "mov x0, #93\n"   // __NR_exit
         "mov x1, #0\n"    // status = 0
-        "svc #0\n"        // exit(0)
+        "mov x8, #93\n"   // syscall number for exit
+        "svc #0\n"        // syscall
         "b .\n"           // infinite loop to ensure function does not return
     );
 }
+
 
 #endif
 

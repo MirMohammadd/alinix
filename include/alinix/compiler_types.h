@@ -6,7 +6,7 @@
 #define __clobber_all "r0", "r1", "r2", "r3", "r4", "r5", "r6", "r7", "memory"
 #define __clobber_common "r0", "r1", "r2", "r3", "r4", "r5", "memory"
 
-
+#if defined(_M_IX86)
 __naked void unreachable(void)
 {
 	asm volatile ("					\
@@ -14,6 +14,26 @@ __naked void unreachable(void)
 	exit;						\
 "	::: __clobber_all);
 }
+#elif defined(_M_ARM64)
+__attribute__((naked)) void unreachable(void) {
+    asm volatile (
+        "mov x0, #93\n"   // __NR_exit
+        "mov x1, #0\n"    // status = 0
+        "svc #0\n"        // exit(0)
+        "b .\n"           // infinite loop to ensure function does not return
+    );
+}
 
+#else 
+__attribute__((naked)) void unreachable(void) {
+    asm volatile (
+        "mov x0, #93\n"   // __NR_exit
+        "mov x1, #0\n"    // status = 0
+        "svc #0\n"        // exit(0)
+        "b .\n"           // infinite loop to ensure function does not return
+    );
+}
+
+#endif
 
 #endif

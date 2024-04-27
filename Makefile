@@ -85,7 +85,14 @@ Alinix.bin: kernel/linker.ld $(KRNLOBJS)
 	i686-elf-ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
 
 Alinix.iso: Alinix.bin
-	bchunk Alinix.bin Alinix.cue Alinix
+	nm -a Alinix.bin | sort -d > isofiles/debug.sym
+	cp -r isofiles/. iso
+	mkdir iso/boot || true
+	mkdir iso/boot/grub || true
+	cp Alinix.bin iso/boot/Alinix.bin
+	cp grub.cfg iso/boot/grub/grub.cfg
+	hdiutil makehybrid -o Alinix.iso iso -iso -joliet
+	# rm -rf iso
 
 all : Alinix.iso
 

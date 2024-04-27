@@ -47,4 +47,15 @@ struct kernel_param {
 	};
 };
 
+struct kernel_param_ops {
+	/* How the ops should behave */
+	unsigned int flags;
+	/* Returns 0, or -errno.  arg is in kp->arg. */
+	int (*set)(const char *val, const struct kernel_param *kp);
+	/* Returns length written or -errno.  Buffer is 4k (ie. be short!) */
+	int (*get)(char *buffer, const struct kernel_param *kp);
+	/* Optional function to free kp->arg when module unloaded. */
+	void (*free)(void *arg);
+};
+
 #endif /*_ALINIX_KERNEL_KERNEL_H__*/

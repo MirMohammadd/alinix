@@ -38,8 +38,8 @@ typedef signed short              sint16_t;
 typedef signed int               sint32_t;
 typedef signed long long int      sint64_t;
 typedef unsigned int            paddr_t;
-typedef phys_addr_t resource_size_t;
 typedef uint32_t phys_addr_t;
+typedef phys_addr_t resource_size_t;
 typedef sint64_t ktime_t;
 typedef	unsigned int	uint;		/* Sys V compatibility */
 typedef unsigned char byte_t; // For  backward compatibility

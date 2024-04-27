@@ -25,9 +25,10 @@
 #ifndef __ALINIX_KERNEL_DEVICE_H
 #define __ALINIX_KERNEL_DEVICE_H
 
-
+#include <alinix/drivers/usb/driver.hpp>
 #include <alinix/types.h>
 
+struct device_private;
 
 struct device{
     CONSTANT STRING *name;        
@@ -35,6 +36,7 @@ struct device{
     CONSTANT STRING vendor;   /* Vendor name */
     CONSTANT STRING product;   /* Product name */
     struct dev_pm_domain	*pm_domain;
+    struct device_private	*p;
 };
 
 #endif /*__ALINIX_KERNEL_DEVICE_H*/

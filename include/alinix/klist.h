@@ -21,6 +21,13 @@ struct klist_node {
 	struct kref		n_ref;
 };
 
+struct klist {
+	uint16_t		k_lock;
+	struct list_head	k_list;
+	void			(*get)(struct klist_node *);
+	void			(*put)(struct klist_node *);
+} __attribute__ ((aligned (sizeof(void *))));
+
 extern int klist_node_attached(struct klist_node *n);
 
 #endif

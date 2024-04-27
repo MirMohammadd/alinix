@@ -40,4 +40,6 @@ struct dev_pm_domain {
 	int (*set_performance_state)(struct device *dev, unsigned int state);
 };
 
+static bool pm_ops_is_empty(const struct dev_pm_ops *ops);
+
 #endif

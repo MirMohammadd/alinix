@@ -22,6 +22,7 @@
 #include <alinix/stdarg.h>
 #include <alinix/compiler.h>
 #include <alinix/limits.h>
+#include <alinix/operator.h>
 
 
 
@@ -43,6 +44,115 @@ do {				\
 } while (0);
 
 PRIVATE size_t utf16s_utf8nlen(const uint16_t *s16, int maxlen);
+static
+char *number(char *end, unsigned long long num, int base, char locase)
+{
+	/*
+	 * locase = 0 or 0x20. ORing digits or letters with 'locase'
+	 * produces same digits or (maybe lowercased) letters
+	 */
+
+	/* we are called with base 8, 10 or 16, only, thus don't need "G..."  */
+	static const char digits[16] = "0123456789ABCDEF"; /* "GHIJKLMNOPQRSTUVWXYZ"; */
+
+	switch (base) {
+	case 10:
+		if (num != 0)
+			end = put_dec(end, num);
+		break;
+	case 8:
+		for (; num != 0; num >>= 3)
+			*--end = '0' + (num & 07);
+		break;
+	case 16:
+		for (; num != 0; num >>= 4)
+			*--end = digits[num & 0xf] | locase;
+		break;
+	default:
+		unreachable();
+	}
+
+	return end;
+}
+
+static
+uint32_t utf16_to_utf32(const uint16_t **s16)
+{
+	uint16_t c0, c1;
+
+	c0 = *(*s16)++;
+	/* not a surrogate */
+	if ((c0 & 0xf800) != 0xd800)
+		return c0;
+	/* invalid: low surrogate instead of high */
+	if (c0 & 0x0400)
+		return 0xfffd;
+	c1 = **s16;
+	/* invalid: missing low surrogate */
+	if ((c1 & 0xfc00) != 0xdc00)
+		return 0xfffd;
+	/* valid surrogate pair */
+	++(*s16);
+	return (0x10000 - (0xd800 << 10) - 0xdc00) + (c0 << 10) + c1;
+}
+
+static
+unsigned long long get_number(int sign, int qualifier, va_list *ap)
+{
+	if (sign) {
+		switch (qualifier) {
+		case 'L':
+			return va_arg(*ap, long long);
+		case 'l':
+			return va_arg(*ap, long);
+		case 'h':
+			return (short)va_arg(*ap, int);
+		case 'H':
+			return (signed char)va_arg(*ap, int);
+		default:
+			return va_arg(*ap, int);
+		};
+	} else {
+		switch (qualifier) {
+		case 'L':
+			return va_arg(*ap, unsigned long long);
+		case 'l':
+			return va_arg(*ap, unsigned long);
+		case 'h':
+			return (unsigned short)va_arg(*ap, int);
+		case 'H':
+			return (unsigned char)va_arg(*ap, int);
+		default:
+			return va_arg(*ap, unsigned int);
+		}
+	}
+}
+
+size_t strnlen(const char * s, size_t count)
+{
+	const char *sc;
+
+	for (sc = s; count-- && *sc != '\0'; ++sc)
+		/* nothing */;
+	return sc - s;
+}
+
+static inline int isdigit(int ch)
+{
+	return (ch >= '0') && (ch <= '9');
+}
+
+
+static
+int skip_atoi(const char **s)
+{
+	int i = 0;
+
+	while (isdigit(**s))
+		i = i * 10 + *((*s)++) - '0';
+	return i;
+}
+
 
 PRIVATE
 int get_int(const char **fmt, va_list *ap)

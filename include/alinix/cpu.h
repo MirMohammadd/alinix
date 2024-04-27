@@ -15,6 +15,13 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+
+/**
+ * Abstraction:
+ *      - Provides the CPU  architecture information.
+ *      - Macros related to the  CPU architecture are defined here.
+*/
+
 #ifndef __ALINIX_KERNEL_CPU_H
 #define __ALINIX_KERNEL_CPU_H
 

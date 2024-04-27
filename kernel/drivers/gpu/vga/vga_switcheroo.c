@@ -57,6 +57,18 @@ PRIVATE int register_client(struct pci_dev *pdev,
             
         struct vga_switcheroo_client *client;
         memset(client,GFP_KERNEL,sizeof(struct vga_switcheroo_client));
+        if (!client)
+            return -ENOMEM;
+            
+        // client->pwr_state = VGA_SWITCHEROO_ON;
+        client->pdev = pdev;
+        client->ops = ops;
+        client->id = id;
+        client->active = active;
+        client->driver_power_control = driver_power_control;
+        client->vga_dev = vga_dev;
+
+        return 0;
 }
 
 

@@ -76,7 +76,7 @@ int vga_switcheroo_register_client(struct pci_dev *pdev,
 				   const struct vga_switcheroo_client_ops *ops,
 				   bool driver_power_control){
             return register_client(pdev, ops, VGA_SWITCHEROO_UNKNOWN_ID, NULL,
-            pdev == vga_default_device(),
+            pdev == 1,
             driver_power_control);
             }
 

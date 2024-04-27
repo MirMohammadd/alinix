@@ -24,4 +24,8 @@ struct kobject {
 #endif
 };
 
+
+
+void kobject_put(struct kobject *kobj);
+
 #endif

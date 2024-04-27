@@ -4,5 +4,6 @@
 void pci_dev_put(struct pci_dev *dev)
 {
 	if (dev)
-		put_device(&dev->dev);
+        return; /* FIXME: Implement this */
+		// put_device(&dev->dev);
 }

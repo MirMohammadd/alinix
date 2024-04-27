@@ -14,6 +14,13 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * Purpose:
+ *      -Define the compiler help utilities 
+ *      -Define the used compiler
+*/
+
 #ifndef __ALINIX_KERNEL_COMPILER_H
 #define __ALINIX_KERNEL_COMPILER_H
 

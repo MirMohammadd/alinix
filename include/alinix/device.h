@@ -38,4 +38,15 @@ struct device{
     struct device_private	*p;
 };
 
+
+struct device_dma_parameters {
+	/*
+	 * a low level driver may set these to teach IOMMU code about
+	 * sg limitations.
+	 */
+	unsigned int max_segment_size;
+	unsigned int min_align_mask;
+	unsigned long segment_boundary_mask;
+};
+
 #endif /*__ALINIX_KERNEL_DEVICE_H*/

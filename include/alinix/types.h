@@ -135,5 +135,9 @@ typedef enum {
   MEMP_MAX
 } memp_t;
 
+typedef struct {
+	int counter;
+} atomic_t;
+
 
 #endif /*__ALINIX_KERNEL__TYPES_H_HEADER_*/

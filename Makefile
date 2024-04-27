@@ -85,8 +85,8 @@ Alinix.bin: kernel/linker.ld $(KRNLOBJS)
 	i686-elf-ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
 
 Alinix.iso: Alinix.bin
-	nm -a Alinix.bin | sort -d > isofiles/debug.sym
-	cp -r isofiles/. iso
+	nm -a Alinix.bin | sort -d > isofiles/debug.sym || true
+	cp -r isofiles/. iso || true
 	mkdir iso/boot || true
 	mkdir iso/boot/grub || true
 	cp Alinix.bin iso/boot/Alinix.bin

@@ -41,4 +41,7 @@ enum {
 static uint32_t binder_debug_mask = BINDER_DEBUG_USER_ERROR |
 	BINDER_DEBUG_FAILED_TRANSACTION | BINDER_DEBUG_DEAD_TRANSACTION;
 
-char* binder_devices_param = 
+// static int binder_set_stop_on_user_error(const char *val, const struct kernel_param *kp){
+//         int ret;
+
+// }

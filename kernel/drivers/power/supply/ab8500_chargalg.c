@@ -169,7 +169,7 @@ enum maxim_ret {
 };
 
 
-PRIVATE enum hrtimer_restart
-ab8500_chargalg_safety_timer_expired(struct hrtimer *timer){
-    
-}
+// PRIVATE enum hrtimer_restart
+// ab8500_chargalg_safety_timer_expired(struct hrtimer *timer){
+//     struct ab8500_chargalg *di = Contains
+// }

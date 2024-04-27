@@ -28,6 +28,8 @@
 #include <alinix/power_supply.h>
 #include <alinix/device.h>
 
+#define ENOMEM 12
+
 struct kparam_string {
 	unsigned int maxlen;
 	char *string;

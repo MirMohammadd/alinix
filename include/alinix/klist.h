@@ -7,9 +7,6 @@ typedef struct refcount_struct {
 	atomic_t refs;
 } refcount_t;
 
-typedef struct refcount_struct {
-	atomic_t refs;
-} refcount_t;
 
 struct kref {
 	refcount_t refcount;

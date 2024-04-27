@@ -1,7 +1,9 @@
 #ifndef __ALINIX_KERNEL_STD_ARG_H
 #define __ALINIX_KERNEL_STD_ARG_H
 
+#include <alinix/types.h>
 
+typedef __builtin_va_list va_list;
 typedef char *va_list;
 
 #define	STACKITEM	int
@@ -20,5 +22,6 @@ typedef char *va_list;
 
 
 int printf (const char *format, ...);
+int vsnprintf(char *buf,size_t size,const char* fmt,va_list ap);
 
 #endif

@@ -38,6 +38,7 @@ typedef signed short              sint16_t;
 typedef signed int               sint32_t;
 typedef signed long long int      sint64_t;
 typedef unsigned int            paddr_t;
+typedef sint64_t ktime_t;
 typedef	unsigned int	uint;		/* Sys V compatibility */
 typedef unsigned char byte_t; // For  backward compatibility
 //! This might run into problem (size_t)
@@ -133,6 +134,10 @@ typedef enum {
 #define LWIP_MEMPOOL(name,num,size,desc)  MEMP_##name,
   MEMP_MAX
 } memp_t;
+
+typedef struct {
+	int counter;
+} atomic_t;
 
 
 #endif /*__ALINIX_KERNEL__TYPES_H_HEADER_*/

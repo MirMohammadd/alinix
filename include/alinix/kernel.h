@@ -27,4 +27,35 @@
 #include <alinix/init.h>
 #include <alinix/power_supply.h>
 
+struct kparam_string {
+	unsigned int maxlen;
+	char *string;
+};
+
+
+struct kernel_param {
+	const char *name;
+	struct module *mod;
+	const struct kernel_param_ops *ops;
+	const uint16_t perm;
+	sint8_t level;
+	uint8_t flags;
+	union {
+		void *arg;
+		const struct kparam_string *str;
+		const struct kparam_array *arr;
+	};
+};
+
+struct kernel_param_ops {
+	/* How the ops should behave */
+	unsigned int flags;
+	/* Returns 0, or -errno.  arg is in kp->arg. */
+	int (*set)(const char *val, const struct kernel_param *kp);
+	/* Returns length written or -errno.  Buffer is 4k (ie. be short!) */
+	int (*get)(char *buffer, const struct kernel_param *kp);
+	/* Optional function to free kp->arg when module unloaded. */
+	void (*free)(void *arg);
+};
+
 #endif /*_ALINIX_KERNEL_KERNEL_H__*/

@@ -140,4 +140,10 @@ typedef struct {
 } atomic_t;
 
 
+
+struct list_head {
+	struct list_head *next, *prev;
+};
+
+
 #endif /*__ALINIX_KERNEL__TYPES_H_HEADER_*/

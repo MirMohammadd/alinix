@@ -169,4 +169,21 @@ void dim_park_tired(struct dim *dim);
 bool dim_calc_stats(struct dim_sample *start, struct dim_sample *end,
 		    struct dim_stats *curr_stats);
 
+
+
+PRIVATE __always_inline VOID dim_update_sample(uint16_t event_ctr,uint64_t packets,uint64_t bytes, struct dim_sample *s){
+	// s->time = ktime_get(); // TODO: Try uncomment this
+	s->pkt_ctr   = packets;
+	s->byte_ctr  = bytes;
+	s->event_ctr = event_ctr;
+}
+
+PRIVATE __always_inline VOID dim_update_sample_with_comps(uint16_t event_ctr, uint64_t packets, uint64_t bytes, uint64_t comps,
+			     struct dim_sample *s){
+	dim_update_sample(event_ctr, packets, bytes, s);
+	s->comp_ctr = comps;
+		}
+
+
+
 #endif /*__ALINIX_KERNEL_DIM_H*/

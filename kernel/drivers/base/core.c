@@ -2,6 +2,7 @@
 #include <alinix/pci.h>
 #include <alinix/kobject.h>
 
+
 static LIST_HEAD(deferred_sync);
 static unsigned int defer_sync_state_count = 1;
 static DEFINE_MUTEX(fwnode_link_lock);
@@ -15,5 +16,6 @@ void put_device(struct device *dev)
 {
 	/* might_sleep(); */
 	if (dev)
-		kobject_put(&dev->kobj);
+		// kobject_put(&dev->kobj);
+        return; // TODO: Fix here
 }

@@ -8,6 +8,7 @@
 
 #define IS_SIGNIFICANT_DIFF(val, ref) \
 	((ref) && (((100UL * abs((val) - (ref))) / (ref)) > 10))
-
+#define BIT_GAP(bits, end, start) ((((end) - (start)) + BIT_ULL(bits)) \
+		& (BIT_ULL(bits) - 1))
 
 #endif /*__ALINIX_KERNEL_DIM_H*/

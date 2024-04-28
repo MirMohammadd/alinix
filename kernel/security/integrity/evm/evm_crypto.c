@@ -39,6 +39,8 @@ static unsigned long evm_set_key_flags;
 
 static const char evm_hmac[] = "hmac(sha1)";
 
+extern int evm_initialized;
+
 int evm_set_key(void *key, size_t keylen){
 	int rc;
 

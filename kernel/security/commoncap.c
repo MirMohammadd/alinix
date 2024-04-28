@@ -17,6 +17,14 @@
 
 #include <alinix/kernel.h>
 #include <alinix/kern_levels.h>
+#include <alinix/security/commoncap.h>
+#include <alinix/time.h>
+#include <alinix/capability.h>
+
+
+/**
+ * @ref https://github.com/torvalds/linux/blob/master/security/commoncap.c
+*/
 
 static void warn_setuid_and_fcaps_mixed(const char *fname){
     static int warned;
@@ -28,3 +36,17 @@ static void warn_setuid_and_fcaps_mixed(const char *fname){
     }
 }
 
+
+/**
+ * cap_settime - Determine whether the current process may set the system clock
+ * @ts: The time to set
+ * @tz: The timezone to set
+ *
+ * Determine whether the current process may set the system clock and timezone
+ * information, returning 0 if permission granted, -ve if denied.
+ */
+int cap_settime(const struct timespec64 *ts,const struct timezone *tz){
+	if (!capable(CAP_SYS_TIME))
+		return -EPERM;
+	return 0;
+}

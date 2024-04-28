@@ -2,11 +2,27 @@
 #include <alinix/kernel.h>
 
 #include <alinix/string.h>
+
+#define TERMINAL_COMMAND_PORT 0x3D4
+#define TERMINAL_DATA_PORT 0x3D5
+
+const uint16_t WIDTH = 80;
+const uint16_t HEIGHT = 25;
+
+
 vga_entry_t* terminal = (vga_entry_t*)0xB8000;
 uint8_t color = 0;
 uint8_t background = 0;
 uint8_t foreground = 0;
 uint8_t x, y;
+
+void terminal_set_cursor_position(uint8_t x, uint8_t y){
+	uint16_t pos = y*WIDTH + x;
+	outb(TERMINAL_COMMAND_PORT, 14);
+	outb(TERMINAL_DATA_PORT, (pos >> 8) & 0x00FF);
+	outb(TERMINAL_COMMAND_PORT, 15);
+	outb(TERMINAL_DATA_PORT, pos & 0x00FF);
+}
 
 //store history and future for scrolling support
 vga_entry_t* history;

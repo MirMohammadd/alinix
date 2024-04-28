@@ -1,6 +1,7 @@
 #include <kernel/vga.h>
 #include <kernel/idt.h>
 #include <kernel/ports.h>
+#include <alinix/asm.h>
 
 extern void_callback_arg_t interruptHandlers[];
 

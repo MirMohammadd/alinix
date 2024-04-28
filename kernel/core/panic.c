@@ -22,6 +22,10 @@
 #include <alinix/log.h>
 #include <alinix/idt.h>
 #include <alinix/enums.h>
+#include <alinix/types.h>
+
+
+#define PANIC_BUFFER_SIZE 1024
 
 void Panic(){
     Log(Error, "-------------------------------");
@@ -32,4 +36,8 @@ void Panic(){
     while(1) {
         asm("hlt");
     }
+}
+
+void kernel_panic(const char *fmt, ...){
+
 }

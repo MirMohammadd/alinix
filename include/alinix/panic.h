@@ -23,5 +23,6 @@
 void Panic();
 void Start();
 
+void kernel_panic(const char *fmt, ...);
 
 #endif /*__ALINIX_KERNEL_PANIC_H*/

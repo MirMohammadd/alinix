@@ -23,6 +23,11 @@
 #include <alinix/idt.h>
 #include <alinix/enums.h>
 #include <alinix/types.h>
+#include <alinix/asm/processor.h>
+
+/**
+ * @ref https://github.com/torvalds/linux/blob/master/kernel/panic.c#L60
+*/
 
 
 #define PANIC_BUFFER_SIZE 1024
@@ -56,4 +61,8 @@ void kernel_panic(const char *fmt, ...){
     if (panic_on_warn){
         panic_on_warn = 0; // Set to false
     }
+    local_irq_disable();
+
+    old_cpu = PANIC_CPU_INVALID;
+    	// preempt_disable_notrace();
 }

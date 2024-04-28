@@ -20,6 +20,9 @@
 #ifndef __ALINIX_KERNEL_PANIC_H
 #define __ALINIX_KERNEL_PANIC_H
 
+
+#define PANIC_CPU_INVALID -1
+
 void Panic();
 void Start();
 

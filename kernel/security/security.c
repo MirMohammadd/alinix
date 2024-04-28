@@ -3,6 +3,7 @@
 #include <alinix/types.h>
 #include <alinix/lsm_hooks.h>
 #include <alinix/panic.h>
+#include <alinix/rculist.h>
 
 #define LSM_CONFIG_COUNT  32 /* Number of configuration options */
 

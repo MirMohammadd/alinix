@@ -52,6 +52,9 @@ void Panic(){
 }
 
 void kernel_panic(const char *fmt, ...){
+    Log(Error, "-------------------------------");
+    Log(Error, "--------- Kernel Halted -------");
+    Log(Error, "-------------------------------");
     static char buff_size[PANIC_BUFFER_SIZE];
     va_list args;
     long i, i_next = 0,len;

@@ -1,7 +1,4 @@
 /**
- * @author Ali Mirmohammad
- * @file math.h
- * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
  ** This file is part of AliNix.
 
 **AliNix is free software: you can redistribute it and/or modify
@@ -17,21 +14,19 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
-#ifndef __ALINIX_KERNEL_MATH_H
-#define __ALINIX_KERNEL_MATH_H
+
+#include <alinix/dim.h>
+#include <alinix/kernel.h>
 
 
-#define MATH_PI 3.14159265358979323846
-#define abs(x) ((x) < 0 ? -(x) : (x))
-
-
-
-long Abs(long v);
-long Sign(long v);
-
-long sine(double x);
-double cosine(double x);
-double tangent(double x);
-
-
-#endif 
+bool dim_on_top(struct dim *dim){
+    switch(dim->tune_state){
+	case DIM_PARKING_ON_TOP:
+	case DIM_PARKING_TIRED:
+		return true;
+	case DIM_GOING_RIGHT:
+		return (dim->steps_left > 1) && (dim->steps_right == 1);
+	default: /* DIM_GOING_LEFT */
+		return (dim->steps_right > 1) && (dim->steps_left == 1);
+    }
+}

@@ -37,5 +37,7 @@
 
 void display_set_register (uint16_t address, uint8_t value);
 void display_tcon_ctrl(uint8_t mask, uint8_t level);
+void display_model_initialise(NO_ARGS);
+void display_delay_ms (uint16_t delay_ms);
 
 #endif

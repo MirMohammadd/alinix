@@ -27,6 +27,14 @@
 
 #define PANIC_BUFFER_SIZE 1024
 
+static int pause_on_oops;
+static int pause_on_oops_flag;
+static DEFINE_SPINLOCK(pause_on_oops_lock);
+bool crash_kexec_post_notifiers;
+int panic_on_warn ;
+unsigned long panic_on_taint;
+bool panic_on_taint_nousertaint = false;
+
 void Panic(){
     Log(Error, "-------------------------------");
     Log(Error, "--------- Kernel Halted -------");
@@ -39,5 +47,13 @@ void Panic(){
 }
 
 void kernel_panic(const char *fmt, ...){
+    static char buff_size[PANIC_BUFFER_SIZE];
+    va_list args;
+    long i, i_next = 0,len;
+    int old_cpu, this_cpu;
+	bool _crash_kexec_post_notifiers = crash_kexec_post_notifiers;
 
+    if (panic_on_warn){
+        panic_on_warn = 0; // Set to false
+    }
 }

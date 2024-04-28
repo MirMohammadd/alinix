@@ -10,7 +10,7 @@
 #define DISPLAY_REGISTER_SELECT(state)		(state ? mPORTBSetBits(BIT_10) : mPORTBClearBits(BIT_10))		//0 = Command, 1 = Data
 #define	DISPLAY_RESET(state)				(state ? mPORTASetBits(BIT_10) : mPORTAClearBits(BIT_10))		//0 = Reset Controller
 
-#define	DISPLAY_WRITE_DATA(data)			PMDIN = data; while(PMMODEbits.BUSY)							//Write 16bit word to controller
+#define	DISPLAY_WRITE_DATA(data)									//Write 16bit word to controller
 
 //----------------------------------------------
 //----- DEFINE TARGET COMPILER & PROCESSOR -----

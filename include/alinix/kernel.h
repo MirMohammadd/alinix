@@ -30,6 +30,8 @@
 
 #define ENOMEM 12
 
+#define __init
+
 typedef struct{
 	char character;
 	uint8_t color;
@@ -80,4 +82,5 @@ void print(char* str,...);
 
 /////////////////////////////////
 #define printk print
+#define pr_notice print
 #endif /*_ALINIX_KERNEL_KERNEL_H__*/

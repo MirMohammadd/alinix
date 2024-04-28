@@ -1,0 +1,7 @@
+#ifndef __ALINIX_KERNEL_UAPI_GENERIC_ERR_R_H
+#define __ALINIX_KERNEL_UAPI_GENERIC_ERR_R_H
+
+#define EPERM 1
+#define EINVAL 22
+
+#endif

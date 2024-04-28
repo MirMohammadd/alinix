@@ -106,6 +106,9 @@ typedef struct {
     uint32_t blockSize; // Size of one block of data
 } Disk;
 
+typedef struct {
+  uint64_t val;
+}kernel_cap_t;
 
 
 // Define data types for as macros here

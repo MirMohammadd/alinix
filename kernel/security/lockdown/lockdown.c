@@ -125,9 +125,9 @@ static ssize_t lockdown_write(struct file *file, const char  *buf,
 	char *state;
 	int i, len, err = -EINVAL;
 
-	state = memdup_user_nul(buf, n);
+	state = strcpy(buf, n);
 	if (!state)
-		return PTR_ERR(state);
+		return state;
 
 	len = strlen(state);
 	if (len && state[len-1] == '\n') {

@@ -29,6 +29,23 @@
 		& (BIT_ULL(bits) - 1))
 
 
+struct dim_cq_moder{
+	uint8_t usec;
+	uint16_t pkts;
+	uint16_t comps;
+	uint8_t dim_cq_moder;
+};
+
+
+struct dim_sample{
+	ktime_t time;
+	uint32_t pkt_ctr;
+	uint32_t byte_ctr;
+	uint16_t event_ctr;
+	uint32_t comp_ctr;
+};
+
+
 
 
 #endif /*__ALINIX_KERNEL_DIM_H*/

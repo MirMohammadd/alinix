@@ -102,6 +102,9 @@ Alinix.iso: Alinix.bin
 
 all : Alinix.iso
 
+versionInfo:
+	@echo "Kernel Version: $(VERSION).$(PATCHLEVEL).$(SUBLEVEL)"
+
 # menuconfig: $(shell chmod +x dialog.sh && ./dialog.sh)
 
 

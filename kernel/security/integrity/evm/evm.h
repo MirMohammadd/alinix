@@ -62,7 +62,7 @@ extern struct list_head evm_config_xattrnames;
 struct evm_digest {
 	struct ima_digest_data hdr;
 	char digest[IMA_MAX_DIGEST_SIZE];
-} __packed;
+} ;
 
 int evm_protected_xattr(const char *req_xattr_name);
 

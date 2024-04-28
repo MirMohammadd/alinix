@@ -5,6 +5,7 @@
 #include <alinix/kernel.h>
 #include <alinix/security.h>
 #include <alinix/security/integrity.h>
+#include <alinix/decache.h>
 
 #define EVM_INIT_HMAC	0x0001
 #define EVM_INIT_X509	0x0002
@@ -47,5 +48,21 @@ struct evm_digest {
 	char digest[IMA_MAX_DIGEST_SIZE];
 } __packed;
 
+int evm_protected_xattr(const char *req_xattr_name);
 
+int evm_init_key(void);
+int evm_update_evmxattr(struct dentry *dentry,
+			const char *req_xattr_name,
+			const char *req_xattr_value,
+			size_t req_xattr_value_len);
+int evm_calc_hmac(struct dentry *dentry, const char *req_xattr_name,
+		  const char *req_xattr_value,
+		  size_t req_xattr_value_len, struct evm_digest *data);
+int evm_calc_hash(struct dentry *dentry, const char *req_xattr_name,
+		  const char *req_xattr_value,
+		  size_t req_xattr_value_len, char type,
+		  struct evm_digest *data);
+int evm_init_hmac(struct inode *inode, const struct xattr *xattrs,
+		  char *hmac_val);
+int evm_init_secfs(void);
 #endif

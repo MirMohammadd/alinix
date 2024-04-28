@@ -18,7 +18,9 @@
 #define __ALINIX_KERNEL_LIST_H
 
 #include <alinix/types.h>
-
+struct hlist_bl_node {
+	struct hlist_bl_node *next, **pprev;
+};
 struct list_head {
 	struct list_head *next, *prev;
 };

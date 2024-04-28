@@ -73,3 +73,10 @@ static int lockdown_is_locked_down(enum lockdown_reason what){
 }
     return 0;   
 }
+
+const struct lsm_id lockdown_lsmid = {
+    .name = "LockDown",
+    .id = LSM_ID_LOCKDOWN,
+};
+
+static int __init lockdown_lsm_init(void);

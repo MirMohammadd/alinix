@@ -19,6 +19,8 @@
 
 #include <alinix/types.h>
 
+#define LSM_ID_LOCKDOWN 108
+
 union security_list_options {
 	#define LSM_HOOK(RET, DEFAULT, NAME, ...) RET (*NAME)(__VA_ARGS__);
 	#undef LSM_HOOK

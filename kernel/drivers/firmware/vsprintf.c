@@ -131,8 +131,7 @@ char *number(char *end, unsigned long long num, int base, char locase)
 		for (; num != 0; num >>= 4)
 			*--end = digits[num & 0xf] | locase;
 		break;
-	default:
-		unreachable();
+		// unreachable();
 	}
 
 	return end;

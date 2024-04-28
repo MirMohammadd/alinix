@@ -147,4 +147,4 @@ const char* kbase_gpu_exception_name(uint32_t const exception_code){
 		break;
 	
     return e;
-}
+}}

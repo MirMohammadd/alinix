@@ -14,6 +14,12 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+
+/**
+ * @ref https://github.com/torvalds/linux/blob/master/include/linux/dim.h
+*/
+
 #ifndef __ALINIX_KERNEL_DIM_H
 #define __ALINIX_KERNEL_DIM_H
 
@@ -184,6 +190,65 @@ PRIVATE __always_inline VOID dim_update_sample_with_comps(uint16_t event_ctr, ui
 	s->comp_ctr = comps;
 		}
 
+
+
+/**
+ *	net_dim_get_rx_moderation - provide a CQ moderation object for the given RX profile
+ *	@cq_period_mode: CQ period mode
+ *	@ix: Profile index
+ */
+struct dim_cq_moder net_dim_get_rx_moderation(u8 cq_period_mode, int ix);
+
+/**
+ *	net_dim_get_def_rx_moderation - provide the default RX moderation
+ *	@cq_period_mode: CQ period mode
+ */
+struct dim_cq_moder net_dim_get_def_rx_moderation(u8 cq_period_mode);
+
+/**
+ *	net_dim_get_tx_moderation - provide a CQ moderation object for the given TX profile
+ *	@cq_period_mode: CQ period mode
+ *	@ix: Profile index
+ */
+struct dim_cq_moder net_dim_get_tx_moderation(u8 cq_period_mode, int ix);
+
+/**
+ *	net_dim_get_def_tx_moderation - provide the default TX moderation
+ *	@cq_period_mode: CQ period mode
+ */
+struct dim_cq_moder net_dim_get_def_tx_moderation(u8 cq_period_mode);
+
+/**
+ *	net_dim - main DIM algorithm entry point
+ *	@dim: DIM instance information
+ *	@end_sample: Current data measurement
+ *
+ * Called by the consumer.
+ * This is the main logic of the algorithm, where data is processed in order
+ * to decide on next required action.
+ */
+void net_dim(struct dim *dim, struct dim_sample end_sample);
+
+/* RDMA DIM */
+
+/*
+ * RDMA DIM profile:
+ * profile size must be of RDMA_DIM_PARAMS_NUM_PROFILES.
+ */
+#define RDMA_DIM_PARAMS_NUM_PROFILES 9
+#define RDMA_DIM_START_PROFILE 0
+
+/**
+ * rdma_dim - Runs the adaptive moderation.
+ * @dim: The moderation struct.
+ * @completions: The number of completions collected in this round.
+ *
+ * Each call to rdma_dim takes the latest amount of completions that
+ * have been collected and counts them as a new event.
+ * Once enough events have been collected the algorithm decides a new
+ * moderation level.
+ */
+void rdma_dim(struct dim *dim, u64 completions);
 
 
 #endif /*__ALINIX_KERNEL_DIM_H*/

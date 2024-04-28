@@ -30,4 +30,6 @@
  */
 #define __must_check                    __attribute__((__warn_unused_result__))
 
+#define ALIGNED_PACKED __packed __aligned(4)
+
 #endif /*__ALINIX_KERNEL_COMPILER_ATTRIBUTES_H*/

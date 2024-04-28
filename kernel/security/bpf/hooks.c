@@ -9,7 +9,7 @@
 
 static struct security_hook_list bpf_lsm_hooks[] = {
     #define LSM_HOOK(RET, DEFAULT, NAME, ...)  \
-    LSM_HOOK_INIT(NAME, bpf_lsm_##NAME),
+    // LSM_HOOK_INIT(NAME, bpf_lsm_##NAME);
     // LSM_HOOK_INIT(inode_free_security, bpf_inode_storage_free),
 	// LSM_HOOK_INIT(task_free, bpf_task_storage_free),
 }

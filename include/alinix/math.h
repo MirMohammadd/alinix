@@ -22,6 +22,8 @@
 
 
 #define MATH_PI 3.14159265358979323846
+#define abs(x) ((x) < 0 ? -(x) : (x))
+
 
 
 long Abs(long v);
@@ -30,5 +32,6 @@ long Sign(long v);
 long sine(double x);
 double cosine(double x);
 double tangent(double x);
+
 
 #endif 

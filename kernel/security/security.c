@@ -28,6 +28,7 @@ void security_add_hooks(struct security_hook_list *hooks, int count,
 
 PRIVATE bool  lsm_allowed(struct lms_info *lsm){
     if (!IS_ENABLED(lsm)){
-
+        return false;
     }
+    return true;
 }

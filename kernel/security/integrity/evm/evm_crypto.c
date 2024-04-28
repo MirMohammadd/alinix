@@ -22,6 +22,7 @@
 #include <alinix/memory.h>
 #include <alinix/ulib.h>
 #include <alinix/bitops.h>
+#include <alinix/list.h>
 
 #define EBUSY 16
 #define EINVAL 22

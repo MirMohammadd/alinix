@@ -3,6 +3,7 @@
 #include <alinix/kernel.h>
 
 #define	INSTRUCTION_CLOCK_FREQUENCY	80000000
+#define WORD_VAL uint32_t
 
 
 uint8_t tcon_value;
@@ -219,3 +220,59 @@ void display_delay_ms (uint16_t delay_ms){
     delay_ms--;
     }
 }
+
+void display_gpio_tcon(uint16_t index, uint16_t value)
+{
+    display_tcon_ctrl(0x01, 0);
+
+    // Index
+    display_tcon_ctrl(0x08, 0);
+    // display_tcon_write_byte(((WORD_VAL)).v[1]);
+    // display_tcon_write_byte(((WORD_VAL) ).v[0]);
+
+    display_tcon_ctrl(0x01, 1);
+    display_tcon_delay();
+    display_tcon_ctrl(0x01, 0);
+
+    // Data
+    display_tcon_ctrl(0x08, 1);
+    // display_tcon_write_byte(((WORD_VAL)).v[1]);
+    // display_tcon_write_byte(((WORD_VAL)).v[0]);
+    display_tcon_ctrl(0x01, 1);
+    display_tcon_delay();
+}
+
+
+void display_tcon_write_byte(uint8_t value)
+{
+    uint8_t    mask;
+
+    mask = 0x80;
+    while(mask)
+    {
+        display_tcon_ctrl(0x02, 0);
+        display_tcon_delay();
+        if(mask & value)
+        {
+            display_tcon_ctrl(0x04, 1);
+        }
+        else
+        {
+            display_tcon_ctrl(0x04, 0);
+        }
+
+        display_tcon_ctrl(0x02, 1);
+        mask >>= 1;
+    }
+}
+
+
+void display_tcon_delay(void)
+{
+    uint16_t timeOut;
+    
+    timeOut = 200;
+    while(timeOut--)
+    	;
+}
+

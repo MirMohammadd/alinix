@@ -19,10 +19,15 @@
 #include <alinix/kernel.h>
 #include <alinix/string.h>
 #include <alinix/lsm_hooks.h>
+#include <alinix/types.h>
+#include <alinix/stdio.h>
+#include <alinix/memory.h>
+#include <alinix/ulib.h>
+
 
 // Defining the lockdown  function here to avoid circular dependency between security.cpp
 static enum lockdown_reason kernel_locked_down;
-static enum lockdown_reason *lockdown_reasons;
+static const char* lockdown_reasons;
 
 static const enum lockdown_reason lockdown_levels[] = {LOCKDOWN_NONE,
 						 LOCKDOWN_INTEGRITY_MAX,
@@ -79,10 +84,65 @@ const struct lsm_id lockdown_lsmid = {
     .id = LSM_ID_LOCKDOWN,
 };
 
-static int __init lockdown_lsm_init(void);
+static int __init lockdown_lsm_init(void){
 
 #if defined(CONFIG_LOCK_DOWN_KERNEL_FORCE_INTEGRITY)
 	lock_kernel_down("Kernel configuration", LOCKDOWN_INTEGRITY_MAX);
 #elif defined(CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY)
 	lock_kernel_down("Kernel configuration", LOCKDOWN_CONFIDENTIALITY_MAX);
 #endif
+}
+
+
+static ssize_t lockdown_read(FILE *filp, char  *buf, size_t count,
+			     loff_t *ppos){
+
+        char temp[80];
+        int i, offset = 0;
+        for (i = 0; i < sizeof(lockdown_levels) / sizeof(lockdown_levels)[0]; i++){
+            enum lockdown_reason level = lockdown_levels[i];
+
+            if (lockdown_reasons[level]){
+                const char* label = lockdown_reasons[level];
+
+                if (kernel_locked_down == level)
+                    offset += printf(temp+offset, "[%s] ", label);
+                else
+                    offset += printf(temp+offset, "%s ", label);
+            }
+        }
+
+        if (offset > 0){
+            temp[offset-1] = '\n';
+        }
+
+        return temp; // TODO : FIX HERE
+}
+
+static ssize_t lockdown_write(struct file *file, const char  *buf,
+			      size_t n, loff_t *ppos)
+{
+	char *state;
+	int i, len, err = -EINVAL;
+
+	state = strcpy(buf, n);
+	if (!state)
+		return state;
+
+	len = strlen(state);
+	if (len && state[len-1] == '\n') {
+		state[len-1] = '\0';
+		len--;
+	}
+
+	for (i = 0; i < sizeof(lockdown_levels)/ sizeof(lockdown_levels)[0]; i++) {
+		enum lockdown_reason level = lockdown_levels[i];
+		const char *label = lockdown_reasons[level];
+
+		if (label && !strcmp(state, label))
+			err = lock_kernel_down("securityfs", level);
+	}
+
+	free(state);
+	return err ? err : n;
+}

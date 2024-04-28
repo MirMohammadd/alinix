@@ -50,6 +50,8 @@ __attribute__((naked)) void unreachable(void) {
 
 }
 
+# define __randomize_layout __attribute__((randomize_layout))
+
 
 #endif
 

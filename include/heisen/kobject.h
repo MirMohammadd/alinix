@@ -165,6 +165,7 @@ struct sock;
  * desired.
  */
 struct kset {
+	struct kobject kobj;
 	struct list_head list;
 	spinlock_t list_lock;
 	struct kobject kobj;

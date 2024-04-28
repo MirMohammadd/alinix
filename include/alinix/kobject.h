@@ -3,6 +3,15 @@
 
 
 #include <alinix/klist.h>
+#include <alinix/spinlock_types.h>
+#include <alinix/compiler_types.h>
+
+struct kset {
+	struct list_head list;
+	spinlock_t list_lock;
+	struct kobject kobj;
+	const struct kset_uevent_ops *uevent_ops;
+} __randomize_layout;
 
 struct kobject {
 	const char		*name;
@@ -25,6 +34,10 @@ struct kobject {
 };
 
 
+static inline void kset_put(struct kset *k)
+{
+	kobject_put(&k->kobj);
+}
 
 void kobject_put(struct kobject *kobj);
 

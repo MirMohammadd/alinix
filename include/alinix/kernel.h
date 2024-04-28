@@ -27,8 +27,10 @@
 #include <alinix/init.h>
 #include <alinix/power_supply.h>
 #include <alinix/device.h>
+#include <alinix/list.h>
 
 #define ENOMEM 12
+#define unlikely
 
 #define __init
 
@@ -85,4 +87,7 @@ void print(char* str,...);
 #define printk print
 #define pr_notice print
 #define WARN  pr_warn
+#define pr_err  printk
+
+
 #endif /*_ALINIX_KERNEL_KERNEL_H__*/

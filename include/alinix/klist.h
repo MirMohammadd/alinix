@@ -18,6 +18,7 @@
 #define __ALINIX_KERNEL_K_LIST_H
 
 #include <alinix/types.h>
+#include <alinix/list.h>
 
 typedef struct refcount_struct {
 	atomic_t refs;

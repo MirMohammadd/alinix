@@ -1,7 +1,7 @@
 #include <alinix/stdio.h>
 #include <alinix/kernel.h>
-
 #include <alinix/string.h>
+#include <alinix/asm.h>
 
 #define TERMINAL_COMMAND_PORT 0x3D4
 #define TERMINAL_DATA_PORT 0x3D5

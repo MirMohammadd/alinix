@@ -95,4 +95,23 @@ static ssize_t lockdown_read(FILE *filp, char  *buf, size_t count,
 			     loff_t *ppos){
 
         char temp[80];
-                 }
+        int i, offset = 0;
+        for (i = 0; i < sizeof(lockdown_levels) / sizeof(lockdown_levels)[0]; i++){
+            enum lockdown_reason level = lockdown_levels[i];
+
+            if (lockdown_reasons[level]){
+                const char* label = lockdown_reasons[level];
+
+                if (kernel_locked_down == level)
+                    offset += printf(temp+offset, "[%s] ", label);
+                else
+                    offset += printf(temp+offset, "%s ", label);
+            }
+        }
+
+        if (offset > 0){
+            temp[offset-1] = '\n';
+        }
+
+        return temp; // TODO : FIX HERE
+}

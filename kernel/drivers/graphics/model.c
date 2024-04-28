@@ -266,9 +266,9 @@ void display_write_pixel (uint16_t x_coord, uint16_t y_coord, uint32_t color)
 	#ifdef DISPLAY_BUS_INTERFACE_IS_BIG_ENDIAN
 		//color is 16 bit:- 5Red|6Green|5Blue (big endian bus to SSD1926)
 		input_color.Val = color;
-		output_color = (uint16_t)(input_color.v[0] & 0xff) >> 3;		//Blue
-		output_color |= (uint16_t)(input_color.v[1] & 0xfc) << 3;		//Green
-		output_color |= (uint16_t)(input_color.v[2] & 0xf8) << 8;		//Red
+		output_color = 0xff >> 3;		//Blue
+		output_color |=  3;		//Green
+		// output_color |= (uint16_t)(input_color.v[2] & 0xf8) << 8;		//Red
 	#else
 		//color is 16 bit:- 3GreenL|5Blue|5Red|3GreenH (little endian bus to SSD1926)
 		input_color.Val = color;

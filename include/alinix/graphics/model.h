@@ -2,6 +2,7 @@
 #define __ALINIX_KERNEL_GRAPHICS_MODEL_H
 
 #include <alinix/types.h>
+#include <alinix/bytes.h>
 
 /* Graphics Model */
 

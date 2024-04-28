@@ -25,4 +25,10 @@
 #define FOUR_KB (4 * 1024)
 #define THREE_GB (3ULL * 1024 * 1024 * 1024)
 
+#define BIT_10 (1 << 9)
+#define BIT_13 (1 << 12)
+
+
+
+
 #endif /*_ALINIX_KERNEL_BITES_H*/

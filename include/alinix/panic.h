@@ -20,8 +20,12 @@
 #ifndef __ALINIX_KERNEL_PANIC_H
 #define __ALINIX_KERNEL_PANIC_H
 
+
+#define PANIC_CPU_INVALID -1
+
 void Panic();
 void Start();
 
+void kernel_panic(const char *fmt, ...);
 
 #endif /*__ALINIX_KERNEL_PANIC_H*/

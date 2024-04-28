@@ -40,6 +40,7 @@ typedef signed long long int      sint64_t;
 typedef unsigned int            paddr_t;
 typedef char *va_list;
 typedef uint32_t phys_addr_t;
+typedef long long loff_t;
 typedef phys_addr_t resource_size_t;
 typedef sint64_t ktime_t;
 typedef	unsigned int	uint;		/* Sys V compatibility */

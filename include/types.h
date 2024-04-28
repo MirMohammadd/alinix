@@ -102,7 +102,7 @@ typedef __kernel_old_gid_t	old_gid_t;
 #endif /* CONFIG_UID16 */
 
 #if defined(__GNUC__)
-typedef __kernel_loff_t		loff_t;
+typedef long long	loff_t;
 #endif
 
 /*

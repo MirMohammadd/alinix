@@ -19,6 +19,8 @@
 #include <alinix/kernel.h>
 #include <alinix/string.h>
 #include <alinix/lsm_hooks.h>
+#include <alinix/types.h>
+#include <alinix/stdio.h>
 
 // Defining the lockdown  function here to avoid circular dependency between security.cpp
 static enum lockdown_reason kernel_locked_down;
@@ -79,10 +81,18 @@ const struct lsm_id lockdown_lsmid = {
     .id = LSM_ID_LOCKDOWN,
 };
 
-static int __init lockdown_lsm_init(void);
+static int __init lockdown_lsm_init(void){
 
 #if defined(CONFIG_LOCK_DOWN_KERNEL_FORCE_INTEGRITY)
 	lock_kernel_down("Kernel configuration", LOCKDOWN_INTEGRITY_MAX);
 #elif defined(CONFIG_LOCK_DOWN_KERNEL_FORCE_CONFIDENTIALITY)
 	lock_kernel_down("Kernel configuration", LOCKDOWN_CONFIDENTIALITY_MAX);
 #endif
+}
+
+
+static ssize_t lockdown_read(FILE *filp, char  *buf, size_t count,
+			     loff_t *ppos){
+
+        char temp[80];
+                 }

@@ -3,10 +3,10 @@
 
 
 
-int fprintf(FILE * file, const char *format, ...);
 
 typedef struct {
     char *dummy[1];
 }FILE;
+int fprintf(FILE * file, const char *format, ...);
 
 #endif /*__ALINIX_KERNEL_STDIO_H*/

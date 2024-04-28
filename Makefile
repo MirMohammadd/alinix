@@ -84,6 +84,8 @@ Alinix.bin: kernel/linker.ld $(KRNLOBJS)
 	cd drivers && $(MAKE) all
 	i686-elf-ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
 
+install : Alinix.bin
+
 Alinix.iso: Alinix.bin
 	nm -a Alinix.bin | sort -d > isofiles/debug.sym || true
 	cp -r isofiles/. iso || true

@@ -65,6 +65,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.c
 $(KRNLOBJDIR)/gdb/i386-stub.o: $(KRNLSRCDIR)/gdb/i386-stub.c
 	mkdir -p $(@D)
 	i686-elf-gcc $(GCCPARAMS) -fleading-underscore -c -o $@ $<
+	COMPILING$(@)
 
 ####################################
 #GAS assembly files

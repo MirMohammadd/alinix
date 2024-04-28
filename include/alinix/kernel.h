@@ -29,6 +29,7 @@
 #include <alinix/device.h>
 
 #define ENOMEM 12
+#define unlikely
 
 #define __init
 

@@ -6,6 +6,17 @@
 #include <alinix/spinlock_types.h>
 #include <alinix/compiler_types.h>
 
+enum kobject_action {
+	KOBJ_ADD,
+	KOBJ_REMOVE,
+	KOBJ_CHANGE,
+	KOBJ_MOVE,
+	KOBJ_ONLINE,
+	KOBJ_OFFLINE,
+	KOBJ_BIND,
+	KOBJ_UNBIND,
+};
+
 struct kset {
 	struct list_head list;
 	spinlock_t list_lock;
@@ -38,6 +49,8 @@ static inline void kset_put(struct kset *k)
 {
 	kobject_put(&k->kobj);
 }
+
+
 
 void kobject_put(struct kobject *kobj);
 

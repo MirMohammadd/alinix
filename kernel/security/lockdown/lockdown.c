@@ -27,7 +27,7 @@
 
 // Defining the lockdown  function here to avoid circular dependency between security.cpp
 static enum lockdown_reason kernel_locked_down;
-static enum lockdown_reason *lockdown_reasons;
+static const char* lockdown_reasons;
 
 static const enum lockdown_reason lockdown_levels[] = {LOCKDOWN_NONE,
 						 LOCKDOWN_INTEGRITY_MAX,

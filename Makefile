@@ -50,6 +50,7 @@ KRNLOBJS := $(patsubst $(KRNLSRCDIR)/%,$(KRNLOBJDIR)/%,$(patsubst %.cpp,%.o,$(pa
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.cpp
 	mkdir -p $(@D)
+	@echo "COMPILING $@"
 	i686-elf-g++ $(G++PARAMS) -c -o $@ $<
 
 ####################################
@@ -57,6 +58,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.cpp
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.c
 	mkdir -p $(@D)
+	@echo "COMPILING $@"
 	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
 
 ####################################
@@ -79,6 +81,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.s
 ####################################
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 	mkdir -p $(@D)
+	@echo "ASSEMBLING $@"
 	nasm -f elf32 -O0 $< -o $@
 
 Alinix.bin: kernel/linker.ld $(KRNLOBJS)

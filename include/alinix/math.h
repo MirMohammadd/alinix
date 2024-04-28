@@ -24,6 +24,8 @@
 #define MATH_PI 3.14159265358979323846
 #define abs(x) ((x) < 0 ? -(x) : (x))
 
+#define __KERNEL_DIV_ROUND_UP(n, d) (((n) + (d) - 1) / (d))
+#define DIV_ROUND_UP __KERNEL_DIV_ROUND_UP
 
 
 long Abs(long v);

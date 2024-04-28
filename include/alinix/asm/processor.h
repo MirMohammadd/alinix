@@ -3,7 +3,9 @@
 
 static inline void local_irq_disable(void)
 {
+	#ifdef __i386__
 	asm volatile("msr daifset, #3" : : : "memory");
+	#endif //  i386
 }
 
 

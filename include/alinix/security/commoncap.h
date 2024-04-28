@@ -3,4 +3,5 @@
 
 
 int cap_capable(int cap, unsigned int opts);
+// int cap_ptrace_access_check(struct task_struct *child, unsigned int mode);
 #endif

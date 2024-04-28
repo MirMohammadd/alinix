@@ -12,5 +12,10 @@
 
 #define _UL(x)		(_AC(x, UL))
 #define _ULL(x)		(_AC(x, ULL))
+#define UL(x) (_UL(x))
+
+#define ULL(x)		(_ULL(x))
+#define BIT_ULL(nr)		(ULL(1) << (nr))
+
 
 #endif /*__ALINIX_KERNEL_UAPI_CONST_H*/

@@ -46,7 +46,7 @@ __attribute__((naked)) void unreachable(void) {
 }
 
 #else 
-__attribute__((naked)) void unreachable(void) {
+__attribute__((naked)) void __unreachable(void) {
 
 }
 

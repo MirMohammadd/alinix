@@ -242,6 +242,86 @@ void display_gpio_tcon(uint16_t index, uint16_t value)
     display_tcon_delay();
 }
 
+void display_write_pixel (uint16_t x_coord, uint16_t y_coord, uint32_t color)
+{
+	uint32_t address = 1;
+	WORD_VAL w_temp;
+	struct DWORD_VAL input_color;
+	uint16_t output_color;
+	
+	//The driver always works with coordinate 0,0 in top left corner.
+	//This function converts the required coordinates to the display address and then writes the pixel.
+	//Adjust this function as requried for new screen models and orientations.
+	//
+	//SSD1926 with QVGA LCD
+	//color is 16 bit:- 5Red|6Green|5Blue
+	//Address 0 = top left corner.
+	//2 address locations per pixel
+
+	if (x_coord >= DISPLAY_WIDTH_PIXELS)
+		return;
+	if (y_coord >= DISPLAY_HEIGHT_PIXELS)
+		return;
+
+	#ifdef DISPLAY_BUS_INTERFACE_IS_BIG_ENDIAN
+		//color is 16 bit:- 5Red|6Green|5Blue (big endian bus to SSD1926)
+		input_color.Val = color;
+		output_color = 0xff >> 3;		//Blue
+		output_color |=  3;		//Green
+		// output_color |= (uint16_t)(input_color.v[2] & 0xf8) << 8;		//Red
+	#else
+		//color is 16 bit:- 3GreenL|5Blue|5Red|3GreenH (little endian bus to SSD1926)
+		input_color.Val = color;
+		output_color = (uint16_t)(input_color.v[0] & 0xf8) << 5;		//Blue
+		output_color |= (uint16_t)(input_color.v[1] & 0xe0) >> 5;		//Green bits 5:3
+		output_color |= (uint16_t)(input_color.v[1] & 0x1c) << 11;	//Green bits 2:0
+		output_color |= (uint16_t)(input_color.v[2] & 0xf8);			//Red
+	#endif
+
+
+	//----- DO X COORD -----
+	address += (x_coord << 1);
+
+	//----- DO Y COORD -----
+	address += ((uint32_t)y_coord * DISPLAY_WIDTH_PIXELS) << 1;
+
+	//----- SET ADDRESS -----
+	DISPLAY_REGISTER_SELECT(0);		//Select Command
+
+	#ifdef DISPLAY_BUS_INTERFACE_IS_BIG_ENDIAN
+		//Write M/R#, AB18:8 (SSD1926 in big endian mode)
+		//Bit15 represent the M/R#, Bit15 = 1 means memory access, Bit15 = 0 means register access.
+		//Bit14:11 = 0.
+		//Bit10:0 represent the the address AB18:8.
+		DISPLAY_WRITE_DATA(w_temp.Val);
+		
+		//Write AB7:0 | Mode_SL (SSD1926 in big endian mode)
+		//Bit15:8 represent the address AB7:0 and Bit7:0 represent Mode_SL.
+		//Mode_SL to select byte or word access during 16 bit mode. 0x00 means Byte access, 0x01 means word access.
+		DISPLAY_WRITE_DATA(w_temp.Val);
+	#else
+		//Write AB15:8, M/R#, AB18:16 (SSD1926 in little endian mode)
+		//Bit7 represent the M/R# (1 means memory access, 0 means register access)
+		//Bit6:3 = 0
+		//Bit2:0 | 15:8 represent the the address AB18:8
+		w_temp.v[1] = ((DWORD_VAL) address).v[1];
+		w_temp.v[0] = ((DWORD_VAL) address).v[2] | 0x80;
+		DISPLAY_WRITE_DATA(w_temp.Val);
+		
+		//Write Mode_SL | AB7:0 (SSD1926 in little endian mode)
+		//Bit7:0 represent the address AB7:0 and Bit15:8 represent Mode_SL (0x00 means Byte access, 0x01 means word access)
+		w_temp.v[1] = 0x01;
+		w_temp.v[0] = ((DWORD_VAL) address).v[0];
+		DISPLAY_WRITE_DATA(w_temp.Val);
+	#endif
+
+	DISPLAY_REGISTER_SELECT(1);		//Select Data
+	
+	//----- WRITE PIXEL -----
+	DISPLAY_WRITE_DATA(output_color);
+}
+	
+
 
 void display_tcon_write_byte(uint8_t value)
 {

@@ -1225,4 +1225,11 @@ void display_tcon_ctrl(uint8_t mask, uint8_t level);
 void display_model_initialise(NO_ARGS);
 void display_delay_ms (uint16_t delay_ms);
 
+
+struct DWORD_VAL{
+    uint64_t input_color;
+    uint64_t Val;
+    uint64_t v;
+};
+
 #endif

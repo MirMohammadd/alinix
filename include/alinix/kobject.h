@@ -6,6 +6,8 @@
 #include <alinix/spinlock_types.h>
 #include <alinix/compiler_types.h>
 
+
+
 enum kobject_action {
 	KOBJ_ADD,
 	KOBJ_REMOVE,
@@ -29,8 +31,6 @@ struct kobject {
 	struct list_head	entry;
 	struct kobject		*parent;
 	struct kset		*kset;
-	const struct kobj_type	*ktype;
-	struct kernfs_node	*sd; /* sysfs directory entry */
 	struct kref		kref;
 
 	unsigned int state_initialized:1;

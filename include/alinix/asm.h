@@ -3,11 +3,11 @@
 
 # define RET    bx      lr
 
-inline void outb(unsigned short _port, unsigned char _data) {
-    asm volatile("outb %1, %0"
-        :
-        : "dN"(_port), "a" (_data)
+#define outb( _port, _data)  \
+    asm volatile("outb %1, %0" \
+        : \
+        : "dN"(_port), "a" (_data) \
     );
-}
+
 
 #endif

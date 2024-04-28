@@ -85,6 +85,38 @@ void terminal_reset_scroll() {
 	}
 }
 
+
+void terminal_write_next_entry(vga_entry_t entry){
+	if(x == WIDTH){
+		x = 0;
+		y++;
+	}
+	if(y == HEIGHT){
+		terminal_scroll();
+	}
+	if(entry.character == '\n'){
+		x = 0;
+		y++;
+	}else if(entry.character == '\t'){
+		terminal_write_next_char(' ');
+		while(x % 7 != 0){
+			x++;
+			if(x >= 80){
+				x = 0;
+				y++;
+				if(y > 25){
+					terminal_scroll();
+				}
+			}
+		}
+	}else{
+		terminal_write_char_at(x, y, entry);
+		x++;
+	}
+	terminal_set_cursor_position(x, y);
+
+}
+
 // int fprintf(FILE * file, const char *format, ...)
 // {
 // 	va_list args;

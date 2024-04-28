@@ -72,5 +72,5 @@ void terminal_writeline(char* string);
 void terminal_scroll();
 void terminal_reset_scroll();
 void terminal_set_cursor_position(uint8_t x, uint8_t y);
-
+void terminal_write_next_entry(vga_entry_t entry);
 #endif /*_ALINIX_KERNEL_KERNEL_H__*/

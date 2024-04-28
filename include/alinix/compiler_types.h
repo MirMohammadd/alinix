@@ -26,6 +26,7 @@
 #define __naked __attribute__((naked))
 #define __clobber_all "r0", "r1", "r2", "r3", "r4", "r5", "r6", "r7", "memory"
 #define __clobber_common "r0", "r1", "r2", "r3", "r4", "r5", "memory"
+# define __force	__attribute__((force))
 
 #if defined(_M_IX86)
 __naked void unreachable(void)

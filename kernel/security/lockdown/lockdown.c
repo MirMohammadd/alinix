@@ -22,6 +22,7 @@
 #include <alinix/types.h>
 #include <alinix/stdio.h>
 
+
 // Defining the lockdown  function here to avoid circular dependency between security.cpp
 static enum lockdown_reason kernel_locked_down;
 static enum lockdown_reason *lockdown_reasons;
@@ -114,4 +115,32 @@ static ssize_t lockdown_read(FILE *filp, char  *buf, size_t count,
         }
 
         return temp; // TODO : FIX HERE
+}
+
+static ssize_t lockdown_write(struct file *file, const char  *buf,
+			      size_t n, loff_t *ppos)
+{
+	char *state;
+	int i, len, err = -EINVAL;
+
+	state = memdup_user_nul(buf, n);
+	if (IS_ERR(state))
+		return PTR_ERR(state);
+
+	len = strlen(state);
+	if (len && state[len-1] == '\n') {
+		state[len-1] = '\0';
+		len--;
+	}
+
+	for (i = 0; i < ARRAY_SIZE(lockdown_levels); i++) {
+		enum lockdown_reason level = lockdown_levels[i];
+		const char *label = lockdown_reasons[level];
+
+		if (label && !strcmp(state, label))
+			err = lock_kernel_down("securityfs", level);
+	}
+
+	free(state);
+	return err ? err : n;
 }

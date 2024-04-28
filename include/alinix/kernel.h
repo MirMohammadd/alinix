@@ -70,7 +70,7 @@ struct kernel_param_ops {
 vga_entry_t terminal_make_vga_entry(char c);
 void terminal_writeline(char* string);
 void terminal_scroll();
-
+void terminal_reset_scroll();
 void terminal_set_cursor_position(uint8_t x, uint8_t y);
 
 #endif /*_ALINIX_KERNEL_KERNEL_H__*/

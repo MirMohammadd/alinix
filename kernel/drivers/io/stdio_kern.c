@@ -79,6 +79,11 @@ vga_entry_t terminal_make_vga_entry(char c){
 	ret.color = color;
 	return ret;
 }
+void terminal_reset_scroll() {
+	while(future_index >= 80) {
+		terminal_scroll();
+	}
+}
 
 // int fprintf(FILE * file, const char *format, ...)
 // {

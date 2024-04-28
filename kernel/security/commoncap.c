@@ -16,8 +16,15 @@
 */
 
 #include <alinix/kernel.h>
+#include <alinix/kern_levels.h>
 
 static void warn_setuid_and_fcaps_mixed(const char *fname){
-    
+    static int warned;
+    if (!warned){
+        print(KERN_INFO "warning: `%s' has both setuid-root and"
+			" effective capabilities. Therefore not raising all"
+			" capabilities.\n", fname);
+        warned = 1;
+    }
 }
 

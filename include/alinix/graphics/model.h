@@ -36,4 +36,6 @@
 
 
 void display_set_register (uint16_t address, uint8_t value);
+void display_tcon_ctrl(uint8_t mask, uint8_t level);
+
 #endif

@@ -1,6 +1,8 @@
 #include <alinix/types.h>
 #include <alinix/graphics/model.h>
 
+uint8_t tcon_value;
+
 void display_set_register(uint16_t address,uint8_t value){
     DISPLAY_REGISTER_SELECT(0);
     DISPLAY_CS(0);
@@ -16,3 +18,14 @@ void display_set_register(uint16_t address,uint8_t value){
 			DISPLAY_WRITE_DATA(value << 8);
 		}
 }
+
+
+void display_tcon_ctrl(uint8_t mask, uint8_t level){
+    if (level == 0)
+        tcon_value &= ~mask;
+
+    else 
+        tcon_value |= mask;
+    display_set_register(0xAC, tcon_value);
+}
+

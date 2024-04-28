@@ -46,6 +46,127 @@ struct dim_sample{
 };
 
 
+struct dim_stats {
+	int ppms; /* packets per msec */
+	int bpms; /* bytes per msec */
+	int epms; /* events per msec */
+	int cpms; /* completions per msec */
+	int cpe_ratio; /* ratio of completions to events */
+};
 
+struct dim {
+	uint8_t state;
+	struct dim_stats prev_stats;
+	struct dim_sample start_sample;
+	struct dim_sample measuring_sample;
+	// struct work_struct work; //?Uncommnet?
+	void *priv;
+	uint8_t profile_ix;
+	uint8_t mode;
+	uint8_t tune_state;
+	uint8_t steps_right;
+	uint8_t steps_left;
+	uint8_t tired;
+};
+
+enum dim_cq_period_mode {
+	DIM_CQ_PERIOD_MODE_START_FROM_EQE = 0x0,
+	DIM_CQ_PERIOD_MODE_START_FROM_CQE = 0x1,
+	DIM_CQ_PERIOD_NUM_MODES
+};
+
+enum dim_state {
+	DIM_START_MEASURE,
+	DIM_MEASURE_IN_PROGRESS,
+	DIM_APPLY_NEW_PROFILE,
+};
+
+enum dim_tune_state {
+	DIM_PARKING_ON_TOP,
+	DIM_PARKING_TIRED,
+	DIM_GOING_RIGHT,
+	DIM_GOING_LEFT,
+};
+
+/**
+ * enum dim_stats_state - DIM algorithm statistics states
+ *
+ * These will determine the verdict of current iteration.
+ *
+ * @DIM_STATS_WORSE: Current iteration shows worse performance than before
+ * @DIM_STATS_SAME:  Current iteration shows same performance than before
+ * @DIM_STATS_BETTER: Current iteration shows better performance than before
+ */
+enum dim_stats_state {
+	DIM_STATS_WORSE,
+	DIM_STATS_SAME,
+	DIM_STATS_BETTER,
+};
+
+/**
+ * enum dim_step_result - DIM algorithm step results
+ *
+ * These describe the result of a step.
+ *
+ * @DIM_STEPPED: Performed a regular step
+ * @DIM_TOO_TIRED: Same kind of step was done multiple times - should go to
+ * tired parking
+ * @DIM_ON_EDGE: Stepped to the most left/right profile
+ */
+enum dim_step_result {
+	DIM_STEPPED,
+	DIM_TOO_TIRED,
+	DIM_ON_EDGE,
+};
+
+/**
+ *	dim_on_top - check if current state is a good place to stop (top location)
+ *	@dim: DIM context
+ *
+ * Check if current profile is a good place to park at.
+ * This will result in reducing the DIM checks frequency as we assume we
+ * shouldn't probably change profiles, unless traffic pattern wasn't changed.
+ */
+bool dim_on_top(struct dim *dim);
+
+/**
+ *	dim_turn - change profile altering direction
+ *	@dim: DIM context
+ *
+ * Go left if we were going right and vice-versa.
+ * Do nothing if currently parking.
+ */
+void dim_turn(struct dim *dim);
+
+/**
+ *	dim_park_on_top - enter a parking state on a top location
+ *	@dim: DIM context
+ *
+ * Enter parking state.
+ * Clear all movement history.
+ */
+void dim_park_on_top(struct dim *dim);
+
+/**
+ *	dim_park_tired - enter a tired parking state
+ *	@dim: DIM context
+ *
+ * Enter parking state.
+ * Clear all movement history and cause DIM checks frequency to reduce.
+ */
+void dim_park_tired(struct dim *dim);
+
+/**
+ *	dim_calc_stats - calculate the difference between two samples
+ *	@start: start sample
+ *	@end: end sample
+ *	@curr_stats: delta between samples
+ *
+ * Calculate the delta between two samples (in data rates).
+ * Takes into consideration counter wrap-around.
+ * Returned boolean indicates whether curr_stats are reliable.
+ */
+bool dim_calc_stats(struct dim_sample *start, struct dim_sample *end,
+		    struct dim_stats *curr_stats);
 
 #endif /*__ALINIX_KERNEL_DIM_H*/

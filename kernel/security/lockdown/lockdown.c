@@ -21,6 +21,8 @@
 #include <alinix/lsm_hooks.h>
 #include <alinix/types.h>
 #include <alinix/stdio.h>
+#include <alinix/memory.h>
+#include <alinix/ulib.h>
 
 
 // Defining the lockdown  function here to avoid circular dependency between security.cpp
@@ -124,7 +126,7 @@ static ssize_t lockdown_write(struct file *file, const char  *buf,
 	int i, len, err = -EINVAL;
 
 	state = memdup_user_nul(buf, n);
-	if (IS_ERR(state))
+	if (!state)
 		return PTR_ERR(state);
 
 	len = strlen(state);
@@ -133,7 +135,7 @@ static ssize_t lockdown_write(struct file *file, const char  *buf,
 		len--;
 	}
 
-	for (i = 0; i < ARRAY_SIZE(lockdown_levels); i++) {
+	for (i = 0; i < sizeof(lockdown_levels)/ sizeof(lockdown_levels)[0]; i++) {
 		enum lockdown_reason level = lockdown_levels[i];
 		const char *label = lockdown_reasons[level];
 

@@ -30,6 +30,11 @@
 
 #define ENOMEM 12
 
+typedef struct{
+	char character;
+	uint8_t color;
+} __attribute__((__packed__)) vga_entry_t;
+
 struct kparam_string {
 	unsigned int maxlen;
 	char *string;
@@ -61,5 +66,9 @@ struct kernel_param_ops {
 	void (*free)(void *arg);
 };
 
+
+vga_entry_t terminal_make_vga_entry(char c);
+void terminal_writeline(char* string);
+void terminal_scroll();
 
 #endif /*_ALINIX_KERNEL_KERNEL_H__*/

@@ -17,6 +17,7 @@
 #include <alinix/security.h>
 #include <alinix/uapi/asm-generic/errorno-base.h>
 #include <alinix/kernel.h>
+#include <alinix/string.h>
 
 // Defining the lockdown  function here to avoid circular dependency between security.cpp
 static enum lockdown_reason kernel_locked_down;
@@ -42,5 +43,19 @@ static int lock_kernel_down(const char* where,enum lockdown_reason level){
 
 
 static int __init lockdown_param(char *level){
+    if (!level){
+        return -EINVAL;
+    }
+    if (strcmp(level,"integrity"))
+        /*integrity refers to the protection of data from unauthorized modification, deletion, or disclosure. */
+        lock_kernel_down("command line", LOCKDOWN_INTEGRITY_MAX);
     
+    /*n the other hand, refers to the protection of sensitive information from unauthorized Access*/
+    else if (strcmp(level, "confidentiality"))
+		lock_kernel_down("command line", LOCKDOWN_CONFIDENTIALITY_MAX);
+    
+    else 
+        return -EINVAL;
+    
+    return 0;
 }

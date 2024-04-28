@@ -144,6 +144,9 @@ void terminal_write_next_entry(vga_entry_t entry){
 void terminal_write_char_at(uint16_t x, uint16_t y, vga_entry_t entry){
 	terminal[y * WIDTH + x] = entry;
 }
+void print(char* str,...){
+	terminal_writeline(str);
+}
 
 // int fprintf(FILE * file, const char *format, ...)
 // {

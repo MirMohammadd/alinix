@@ -19,12 +19,7 @@ enum kobject_action {
 	KOBJ_UNBIND,
 };
 
-struct kset {
-	struct list_head list;
-	spinlock_t list_lock;
-	struct kobject kobj;
-	const struct kset_uevent_ops *uevent_ops;
-} __randomize_layout;
+
 
 struct kobject {
 	const char		*name;
@@ -43,6 +38,13 @@ struct kobject {
 	struct delayed_work	release;
 #endif
 };
+
+struct kset {
+	struct list_head list;
+	spinlock_t list_lock;
+	struct kobject kobj;
+	const struct kset_uevent_ops *uevent_ops;
+} __randomize_layout;
 
 
 static inline void kset_put(struct kset *k)

@@ -73,6 +73,11 @@ void terminal_writeline(char* string){
 	}
 }
 
+void terminal_write_next_char(char c){
+	terminal_reset_scroll();
+	terminal_write_next_entry(terminal_make_vga_entry(c));
+}
+
 vga_entry_t terminal_make_vga_entry(char c){
 	vga_entry_t ret;
 	ret.character = c;
@@ -115,6 +120,10 @@ void terminal_write_next_entry(vga_entry_t entry){
 	}
 	terminal_set_cursor_position(x, y);
 
+}
+
+void terminal_write_char_at(uint16_t x, uint16_t y, vga_entry_t entry){
+	terminal[y * WIDTH + x] = entry;
 }
 
 // int fprintf(FILE * file, const char *format, ...)

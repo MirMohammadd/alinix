@@ -24,7 +24,7 @@
 
 
 
-
+#define __init		__section(".init.text")
 static void Initialize();
 CommandBlockWrapper SCSIPrepareCommandBlock(uint8_t command, int length, uint64_t lba, int sectors);
 bool ResetRecovery();

@@ -2,6 +2,7 @@
 #include <alinix/kernel.h>
 #include <alinix/compiler.h>
 #include <alinix/lsm_hooks.h>
+#include <alinix/init.h>
 
 #define LSM_ID_BPF 109
 

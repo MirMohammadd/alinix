@@ -18,10 +18,11 @@
 #include <alinix/uapi/asm-generic/errorno-base.h>
 #include <alinix/kernel.h>
 #include <alinix/string.h>
+#include <alinix/lsm_hooks.h>
 
 // Defining the lockdown  function here to avoid circular dependency between security.cpp
 static enum lockdown_reason kernel_locked_down;
-
+static enum lockdown_reason *lockdown_reasons;
 
 static const enum lockdown_reason lockdown_levels[] = {LOCKDOWN_NONE,
 						 LOCKDOWN_INTEGRITY_MAX,
@@ -58,4 +59,17 @@ static int __init lockdown_param(char *level){
         return -EINVAL;
     
     return 0;
+}
+
+static int lockdown_is_locked_down(enum lockdown_reason what){
+	if (what >= LOCKDOWN_CONFIDENTIALITY_MAX,
+		 "Invalid lockdown reason")
+		return -EPERM;
+    if (kernel_locked_down >= what) {
+    if (lockdown_reasons[what])
+			print("Lockdown: %s: %s is restricted; see man kernel_lockdown.7\n",
+				  "Lock", lockdown_reasons[what]);
+		return -EPERM;
+}
+    return 0;   
 }

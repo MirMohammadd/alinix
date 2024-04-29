@@ -169,9 +169,7 @@ typedef enum {
   MEMP_MAX
 } memp_t;
 
-typedef struct {
-	int counter;
-} atomic_t;
+
 
 typedef struct {
 	sint64_t counter;

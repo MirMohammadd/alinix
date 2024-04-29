@@ -48,7 +48,7 @@
 
 
 struct kiocb;
-
+struct bio_vec;
 
 
 struct address_space {

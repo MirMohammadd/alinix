@@ -18,6 +18,7 @@ struct iov_iter {
 	bool nofault;
 	bool data_source;
 	size_t iov_offset;
+	const struct bio_vec *bvec;
 	/*
 	 * Hack alert: overlay ubuf_iovec with iovec + count, so
 	 * that the members resolve correctly regardless of the type

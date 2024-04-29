@@ -25,6 +25,7 @@
 
 #define pgoff_t unsigned long
 
+typedef unsigned short		umode_t;
 typedef char                        int8_t;
 typedef unsigned char               uint8_t;
 typedef short                       int16_t;
@@ -49,6 +50,7 @@ typedef uint16_t u16;
 typedef uint32_t u32;
 typedef uint64_t u64;
 typedef char *va_list;
+typedef unsigned int	gid_t;
 typedef uint32_t phys_addr_t;
 typedef long long loff_t;
 typedef phys_addr_t resource_size_t;
@@ -97,6 +99,14 @@ bool Contains(const char* str, char c);
 struct llist_node {
 	struct llist_node *next;
 };
+
+typedef struct {
+	uint64_t val;
+} kuid_t;
+
+typedef struct {
+	gid_t val;
+} kgid_t;
 ////////////////////////////////////////
 typedef struct 
 {
@@ -159,6 +169,9 @@ typedef struct {
 	int counter;
 } atomic_t;
 
+typedef struct {
+	sint64_t counter;
+} atomic64_t;
 
 struct hlist_node {
 	struct hlist_node *next, **pprev;

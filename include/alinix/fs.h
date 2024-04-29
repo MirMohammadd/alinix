@@ -35,6 +35,8 @@
 #include <alinix/pid.h>
 #include <alinix/path.h>
 #include <alinix/mm_types.h>
+#include <alinix/rw_hint.h>
+#include <alinix/time.h>
 
 struct kiocb;
 struct inode {
@@ -79,7 +81,7 @@ struct inode {
 	unsigned short          i_bytes;
 	u8			i_blkbits;
 	enum rw_hint		i_write_hint;
-	blkcnt_t		i_blocks;
+	uint64_t		i_blocks;
 
 #ifdef __NEED_I_SIZE_ORDERED
 	seqcount_t		i_size_seqcount;
@@ -122,7 +124,7 @@ struct inode {
 		void (*free_inode)(struct inode *);
 	};
 	struct file_lock_context	*i_flctx;
-	struct address_space	i_data;
+	// struct address_space	i_data;
 	struct list_head	i_devices;
 	union {
 		struct pipe_inode_info	*i_pipe;

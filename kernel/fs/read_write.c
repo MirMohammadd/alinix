@@ -1,6 +1,7 @@
 #include <alinix/fs.h>
 #include <alinix/uio.h>
 #include <alinix/cdev.h>
+#include <alinix/types.h>
 
  filemap_splice_read(struct file *in, loff_t *ppos,
 			    struct pipe_inode_info *pipe,

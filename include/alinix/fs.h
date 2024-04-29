@@ -511,7 +511,7 @@ static inline loff_t i_size_read(const struct inode *inode)
 // #endif
 }
 
-
+static inline int atomic_read(const atomic_t *v);
 
 
 struct bio_vec {

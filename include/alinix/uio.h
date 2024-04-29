@@ -64,6 +64,13 @@ struct iov_iter {
 	};
 };
 
+static inline const struct iovec *iter_iov(const struct iov_iter *iter)
+{
+	if (iter->iter_type == ITER_UBUF)
+		return (const struct iovec *) &iter->__ubuf_iovec;
+	return iter->__iov;
+}
+
 static inline enum iter_type iov_iter_type(const struct iov_iter *i)
 {
 	return i->iter_type;
@@ -86,6 +93,11 @@ static inline bool iov_iter_is_discard(const struct iov_iter *i)
 static inline bool iter_is_ubuf(const struct iov_iter *i)
 {
 	return iov_iter_type(i) == ITER_UBUF;
+}
+
+static inline bool iov_iter_is_bvec(const struct iov_iter *i)
+{
+	return iov_iter_type(i) == ITER_BVEC;
 }
 
 #endif

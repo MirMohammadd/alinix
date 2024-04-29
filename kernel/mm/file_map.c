@@ -46,7 +46,7 @@ generic_file_read_iter(struct kiocb *iocb, struct iov_iter *iter)
 		 * the rest of the read.  Buffered reads will not work for
 		 * DAX files, so don't bother trying.
 		 */
-		if (retval < 0 || !count || IS_DAX(inode))
+		if (retval < 0 || !count  )
 			return retval;
 		if (iocb->ki_pos >= i_size_read(inode))
 			return retval;

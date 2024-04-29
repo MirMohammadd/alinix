@@ -86,7 +86,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 
 Alinix.bin: kernel/linker.ld $(KRNLOBJS)
 	cd drivers && $(MAKE) all 
-	cd .. && cd security && $(MAKE) all
+	cd security && $(MAKE) all
 	i686-elf-ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
 
 install : Alinix.bin

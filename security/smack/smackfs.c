@@ -33,4 +33,10 @@ enum smk_inos {
     SMK_RELABEL_SELF = 24, /* relabel possible without CAP_MAC_ADMIN */
 };
 
+static DEFINE_MUTEX(smack_cipso_lock);
+static DEFINE_MUTEX(smack_ambient_lock);
+static DEFINE_MUTEX(smk_net4addr_lock);
+static DEFINE_MUTEX(smk_net6addr_lock);
+
+
 

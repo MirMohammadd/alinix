@@ -35,7 +35,15 @@
 #include <alinix/pid.h>
 #include <alinix/path.h>
 
+struct kiocb;
 
+extern ssize_t generic_file_read_iter(struct kiocb *, struct iov_iter *);
+extern ssize_t __generic_file_write_iter(struct kiocb *, struct iov_iter *);
+extern ssize_t generic_file_write_iter(struct kiocb *, struct iov_iter *);
+extern ssize_t generic_file_direct_write(struct kiocb *, struct iov_iter *);
+ssize_t generic_perform_write(struct kiocb *, struct iov_iter *);
+ssize_t direct_write_fallback(struct kiocb *iocb, struct iov_iter *iter,
+		ssize_t direct_written, ssize_t buffered_written);
 
 /* Possible states of 'frozen' field */
 enum {
@@ -46,6 +54,33 @@ enum {
 					 * internal threads if needed) */
 	SB_FREEZE_COMPLETE = 4,		/* ->freeze_fs finished successfully */
 };
+
+struct kiocb {
+	struct file		*ki_filp;
+	loff_t			ki_pos;
+	void (*ki_complete)(struct kiocb *iocb, long ret);
+	void			*private;
+	int			ki_flags;
+	u16			ki_ioprio; /* See heisen/ioprio.h */
+	union {
+		/*
+		 * Only used for async buffered reads, where it denotes the
+		 * page waitqueue associated with completing the read. Valid
+		 * IFF IOCB_WAITQ is set.
+		 */
+		struct wait_page_queue	*ki_waitq;
+		/*
+		 * Can be used for O_DIRECT IO, where the completion handling
+		 * is punted back to the issuer of the IO. May only be set
+		 * if IOCB_DIO_CALLER_COMP is set by the issuer, and the issuer
+		 * must then check for presence of this handler when ki_complete
+		 * is invoked. The data passed in to this handler must be
+		 * assigned to ->private when dio_complete is assigned.
+		 */
+		ssize_t (*dio_complete)(void *data);
+	};
+};
+
 
 struct fown_struct {
 	// rwlock_t lock;          /* protects pid, uid, euid fields */

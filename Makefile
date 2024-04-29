@@ -43,7 +43,7 @@ KRNLSRCDIR := kernel
 KRNLOBJDIR := kernel/obj
 KERNEL_SEC_DIR = security
 
-SECURITY_SRCS := $(wildcard $(KRNLSRCDIR)/security/*.c)
+SECURITY_SRCS := $(wildcard security/*.c)
 
 # Create a list of object files corresponding to the source files
 SECURITY_OBJS := $(patsubst $(KRNLSRCDIR)/%.c,$(KRNLOBJDIR)/%.o,$(SECURITY_SRCS))
@@ -99,10 +99,11 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 #     @echo "COMPILING $@"
 #     $(CC) $(GCCPARAMS) -c -o $@ $<
 
-$(KRNLOBJDIR)/%.o: security/%.c
+$(SECURITY_OBJS)/%.o: (SECURITY_SRCS)/%.c
 	mkdir -p $(@D)
 	@echo "COMPILING $@"
 	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
+
 
 
 Alinix.bin: kernel/linker.ld $(KRNLOBJS)

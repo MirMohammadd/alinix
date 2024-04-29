@@ -485,6 +485,32 @@ static inline void file_accessed(struct file *file)
 	// 	touch_atime(&file->f_path);
 }
 
+static inline loff_t i_size_read(const struct inode *inode)
+{
+	// ;
+// #if BITS_PER_LONG==32 && defined(CONFIG_SMP)
+// 	loff_t i_size;
+// 	unsigned int seq;
+
+// 	do {
+// 		seq = read_seqcount_begin(&inode->i_size_seqcount);
+// 		i_size = inode->i_size;
+// 	} while (read_seqcount_retry(&inode->i_size_seqcount, seq));
+// 	return i_size;
+// #elif BITS_PER_LONG==32 && defined(CONFIG_PREEMPTION)
+// 	loff_t i_size;
+
+// 	preempt_disable();
+// 	i_size = inode->i_size;
+// 	preempt_enable();
+// 	return i_size;
+// #else
+// 	/* Pairs with smp_store_release() in i_size_write() */
+// 	return smp_load_acquire(&inode->i_size);
+// #endif
+}
+
+
 
 
 struct bio_vec {

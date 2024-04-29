@@ -24,9 +24,34 @@
 
 #include <alinix/types.h>
 #include <alinix/kconf.h>
-#include <uapi/asm/errno.h>
 #include <alinix/compiler_attributes.h>
 #include <alinix/types.h>
+#include <alinix/device.h>
+
+#define EILSEQ		88	/* Illegal byte sequence */
+#define ENOSYS		89	/* Function not implemented */
+#define ELOOP		90	/* Too many symbolic links encountered */
+#define ERESTART	91	/* Interrupted system call should be restarted */
+#define ESTRPIPE	92	/* Streams pipe error */
+#define ENOTEMPTY	93	/* Directory not empty */
+#define EUSERS		94	/* Too many users */
+#define ENOTSOCK	95	/* Socket operation on non-socket */
+#define EDESTADDRREQ	96	/* Destination address required */
+#define EMSGSIZE	97	/* Message too long */
+#define EPROTOTYPE	98	/* Protocol wrong type for socket */
+#define ENOPROTOOPT	99	/* Protocol not available */
+#define EPROTONOSUPPORT 120	/* Protocol not supported */
+#define ESOCKTNOSUPPORT 121	/* Socket type not supported */
+#define EOPNOTSUPP	122	/* Operation not supported on transport endpoint */
+#define EPFNOSUPPORT	123	/* Protocol family not supported */
+#define EAFNOSUPPORT	124	/* Address family not supported by protocol */
+#define EADDRINUSE	125	/* Address already in use */
+#define EADDRNOTAVAIL	126	/* Cannot assign requested address */
+#define ENETDOWN	127	/* Network is down */
+#define ENETUNREACH	128	/* Network is unreachable */
+#define ENETRESET	129	/* Network dropped connection because of reset */
+#define ECONNABORTED	130	/* Software caused connection abort */
+#define ECONNRESET	131	
 
 enum power_supply_charge_behaviour {
 	POWER_SUPPLY_CHARGE_BEHAVIOUR_AUTO = 0,

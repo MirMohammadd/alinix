@@ -26,8 +26,6 @@ VERSION = 1
 PATCHLEVEL = 4
 SUBLEVEL = 4
 
-include security/security.mk
-
 # Check if the make version is exactly 3.80
 ifeq ($(MAKE_VERSION),3.80)
     $(error This makefile requires GNU Make version 3.80. Your Make version is $(MAKE_VERSION))
@@ -45,7 +43,7 @@ KRNLSRCDIR := kernel
 KRNLOBJDIR := kernel/obj
 KERNEL_SEC_DIR = security
 
-SECURITY_SRCS := $(wildcard $(KRNLSRCDIR)/security/*.c)
+SECURITY_SRCS := $(wildcard security/*.c)
 
 # Create a list of object files corresponding to the source files
 SECURITY_OBJS := $(patsubst $(KRNLSRCDIR)/%.c,$(KRNLOBJDIR)/%.o,$(SECURITY_SRCS))
@@ -101,10 +99,11 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 #     @echo "COMPILING $@"
 #     $(CC) $(GCCPARAMS) -c -o $@ $<
 
-$(KRNLOBJDIR)/%.o: security%.c
+$(SECURITY_OBJS)/%.o: (SECURITY_SRCS)/%.c
 	mkdir -p $(@D)
 	@echo "COMPILING $@"
 	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
+
 
 
 Alinix.bin: kernel/linker.ld $(KRNLOBJS)
@@ -125,7 +124,7 @@ Alinix.iso: Alinix.bin
 	hdiutil makehybrid -o Alinix.iso iso -iso -joliet
 	# rm -rf iso
 
-all : Alinix.iso  security_files
+all : Alinix.iso 
 
 versionInfo:
 	@echo "Kernel Version: $(VERSION).$(PATCHLEVEL).$(SUBLEVEL)"

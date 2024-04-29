@@ -520,4 +520,14 @@ struct bio_vec {
 	unsigned int	bv_offset;
 };
 
+static inline int mapping_writably_mapped(struct address_space *mapping)
+{
+	return atomic_read(&mapping->i_mmap_writable) > 0;
+}
+
+static inline int atomic_read(const atomic_t *v)
+{
+	return v->counter;
+}
+
 #endif // __ALINIX_KERNEL_FS_H

@@ -65,6 +65,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.c
 $(KRNLOBJDIR)/%.o: $(KERNEL_SEC_DIR)/%.c
 	mkdir -p $(@D)
 	@echo "COMPILING $@"
+	@echo "makig sec"
 	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
 
 

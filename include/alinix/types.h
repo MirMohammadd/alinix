@@ -24,7 +24,7 @@
 #include <alinix/enums.h>
 
 #define pgoff_t unsigned long
-
+typedef unsigned int  gfp_t;
 typedef unsigned short		umode_t;
 typedef char                        int8_t;
 typedef unsigned char               uint8_t;

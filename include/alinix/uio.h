@@ -53,4 +53,9 @@ struct iov_iter {
 	};
 };
 
+static inline size_t iov_iter_count(const struct iov_iter *i)
+{
+	return i->count;
+}
+
 #endif

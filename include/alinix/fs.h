@@ -39,8 +39,9 @@
 #include <alinix/time.h>
 #include <alinix/xarray.h>
 
-
+#define O_NOFOLLOW	00400000	/* don't follow links */
 #define IOCB_DIRECT		(1 << 17)
+#define IOCB_NOWAIT		(int)
 
 
 struct kiocb;
@@ -474,5 +475,15 @@ struct file{
 	errseq_t		f_wb_err;
 	errseq_t		f_sb_err; /* for syncfs */
 };
+#define O_NOATIME	01000000
+static inline void file_accessed(struct file *file)
+{
+	if (!(file->f_flags & O_NOATIME))
+		touch_atime(&file->f_path);
+}
+
+
+
+
 
 #endif // __ALINIX_KERNEL_FS_H

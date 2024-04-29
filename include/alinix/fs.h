@@ -37,6 +37,7 @@
 #include <alinix/mm_types.h>
 #include <alinix/rw_hint.h>
 #include <alinix/time.h>
+#include <alinix/xarray.h>
 
 struct kiocb;
 

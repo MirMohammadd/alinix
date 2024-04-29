@@ -481,8 +481,8 @@ struct file{
 #define O_NOATIME	01000000
 static inline void file_accessed(struct file *file)
 {
-	if (!(file->f_flags & O_NOATIME))
-		touch_atime(&file->f_path);
+	// if (!(file->f_flags & O_NOATIME))
+	// 	touch_atime(&file->f_path);
 }
 
 

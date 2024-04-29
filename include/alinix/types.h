@@ -184,6 +184,26 @@ struct hlist_head {
 };
 
 
+typedef signed   char   S8;
+typedef unsigned char   U8;
+typedef signed   short  S16;
+typedef unsigned short  U16;
+
+
+typedef int32_t   S32;
+typedef u_int32_t U32;
+
+typedef struct _S64
+{
+    U32          Low;
+    S32          High;
+} S64;
+
+typedef struct _U64
+{
+    U32          Low;
+    U32          High;
+} U64;
 
 
 

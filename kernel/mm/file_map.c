@@ -5,6 +5,19 @@
 #include <alinix/uio.h>
 #include <alinix/pagevec.h>
 
+enum num_t { U64, first_t = U64, U32, S64, S32, last_t = S32 };
+
+static __always_inline u64 min_t(enum num_t t, u64 x, u64 y)
+{
+	switch (t) {
+	case U64: return (u64)x < (u64)y ? (u64)x : (u64)y;
+	case U32: return (u32)x < (u32)y ? (u32)x : (u32)y;
+	case S64: return (sint64_t)x < (sint64_t)y ? (sint64_t)x : (sint64_t)y;
+	case S32: return (sint32_t)x < (sint32_t)y ? (sint32_t)x : (sint32_t)y;
+	default: printf("min_t!\n"); exit(1);
+	}
+}
+
 #define PAGE_SHIFT 100
 
 static void __filemap_fdatawait_range(struct address_space *mapping,

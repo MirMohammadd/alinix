@@ -1,4 +1,6 @@
 #include <alinix/types.h>
+#include <smack/smack.h>
+
 
 
 #define BEBITS	(sizeof(__be32) * 8)
@@ -40,3 +42,6 @@ static DEFINE_MUTEX(smk_net6addr_lock);
 
 
 
+struct smack_known *smack_net_ambient;
+
+ef

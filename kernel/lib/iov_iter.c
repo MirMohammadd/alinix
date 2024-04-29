@@ -17,7 +17,7 @@ void iov_iter_revert(struct iov_iter *i, size_t unroll)
 	}
 	unroll -= i->iov_offset;
 	if (iov_iter_is_xarray(i) || iter_is_ubuf(i)) {
-		BUG(); /* We should never go beyond the start of the specified
+		 /* We should never go beyond the start of the specified
 			* range since we might then be straying into pages that
 			* aren't pinned.
 			*/

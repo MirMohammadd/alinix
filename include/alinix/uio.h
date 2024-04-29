@@ -83,5 +83,9 @@ static inline bool iov_iter_is_discard(const struct iov_iter *i)
 {
 	return iov_iter_type(i) == ITER_DISCARD;
 }
+static inline bool iter_is_ubuf(const struct iov_iter *i)
+{
+	return iov_iter_type(i) == ITER_UBUF;
+}
 
 #endif

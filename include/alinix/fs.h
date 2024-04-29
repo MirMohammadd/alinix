@@ -40,6 +40,7 @@
 #include <alinix/xarray.h>
 #include <alinix/limits.h>
 
+#define IOCB_WAITQ		(1 << 19)
 #define O_NOFOLLOW	00400000	/* don't follow links */
 #define IOCB_DIRECT		(1 << 17)
 #define IOCB_NOWAIT		(int)

@@ -10,6 +10,114 @@
 static void __filemap_fdatawait_range(struct address_space *mapping,
 				     loff_t start_byte, loff_t end_byte);
 
+
+ssize_t filemap_read(struct kiocb *iocb, struct iov_iter *iter,
+		ssize_t already_read)
+{
+	struct file *filp = iocb->ki_filp;
+	struct file_ra_state *ra = &filp->f_ra;
+	struct address_space *mapping = filp->f_mapping;
+	struct inode *inode = mapping->host;
+	struct folio_batch fbatch;
+	int i, error = 0;
+	bool writably_mapped;
+	loff_t isize, end_offset;
+	loff_t last_pos = ra->prev_pos;
+
+	if (unlikely(iocb->ki_pos >= inode->i_sb->s_maxbytes))
+		return 0;
+	if (unlikely(!iov_iter_count(iter)))
+		return 0;
+
+	iov_iter_truncate(iter, inode->i_sb->s_maxbytes);
+	folio_batch_init(&fbatch);
+
+	do {
+		cond_resched();
+
+		/*
+		 * If we've already successfully copied some data, then we
+		 * can no longer safely return -EIOCBQUEUED. Hence mark
+		 * an async read NOWAIT at that point.
+		 */
+		if ((iocb->ki_flags & IOCB_WAITQ) && already_read)
+			iocb->ki_flags |= IOCB_NOWAIT;
+
+		if (unlikely(iocb->ki_pos >= i_size_read(inode)))
+			break;
+
+		error = filemap_get_pages(iocb, iter->count, &fbatch, false);
+		if (error < 0)
+			break;
+
+		/*
+		 * i_size must be checked after we know the pages are Uptodate.
+		 *
+		 * Checking i_size after the check allows us to calculate
+		 * the correct value for "nr", which means the zero-filled
+		 * part of the page is not copied back to userspace (unless
+		 * another truncate extends the file - this is desired though).
+		 */
+		isize = i_size_read(inode);
+		if (unlikely(iocb->ki_pos >= isize))
+			goto put_folios;
+		end_offset = min_t(loff_t, isize, iocb->ki_pos + iter->count);
+
+		/*
+		 * Once we start copying data, we don't want to be touching any
+		 * cachelines that might be contended:
+		 */
+		writably_mapped = mapping_writably_mapped(mapping);
+
+		/*
+		 * When a read accesses the same folio several times, only
+		 * mark it as accessed the first time.
+		 */
+		if (!pos_same_folio(iocb->ki_pos, last_pos - 1,
+				    fbatch.folios[0]))
+			folio_mark_accessed(fbatch.folios[0]);
+
+		for (i = 0; i < folio_batch_count(&fbatch); i++) {
+			struct folio *folio = fbatch.folios[i];
+			size_t fsize = folio_size(folio);
+			size_t offset = iocb->ki_pos & (fsize - 1);
+			size_t bytes = min_t(loff_t, end_offset - iocb->ki_pos,
+					     fsize - offset);
+			size_t copied;
+
+			if (end_offset < folio_pos(folio))
+				break;
+			if (i > 0)
+				folio_mark_accessed(folio);
+			/*
+			 * If users can be writing to this folio using arbitrary
+			 * virtual addresses, take care of potential aliasing
+			 * before reading the folio on the kernel side.
+			 */
+			if (writably_mapped)
+				flush_dcache_folio(folio);
+
+			copied = copy_folio_to_iter(folio, offset, bytes, iter);
+
+			already_read += copied;
+			iocb->ki_pos += copied;
+			last_pos = iocb->ki_pos;
+
+			if (copied < bytes) {
+				error = -EFAULT;
+				break;
+			}
+		}
+put_folios:
+		for (i = 0; i < folio_batch_count(&fbatch); i++)
+			folio_put(fbatch.folios[i]);
+		folio_batch_init(&fbatch);
+	} while (iov_iter_count(iter) && iocb->ki_pos < isize && !error);
+
+	file_accessed(filp);
+	ra->prev_pos = last_pos;
+	return already_read ? already_read : error;
+}
 ssize_t
 generic_file_read_iter(struct kiocb *iocb, struct iov_iter *iter)
 {

@@ -6,6 +6,9 @@
 #include <alinix/mutex_types.h>
 #include <net/netlable.h>
 
+
+#define SMACK_PTRACE_DEFAULT 0
+
 struct smack_known {
 	struct list_head		list;
 	struct hlist_node		smk_hashed;

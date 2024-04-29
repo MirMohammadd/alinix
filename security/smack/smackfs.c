@@ -44,4 +44,48 @@ static DEFINE_MUTEX(smk_net6addr_lock);
 
 struct smack_known *smack_net_ambient;
 
-ef
+#ifdef CONFIG_SECURITY_SMACK_BRINGUP
+/*
+ * Allow one label to be unconfined. This is for
+ * debugging and application bring-up purposes only.
+ * It is bad and wrong, but everyone seems to expect
+ * to have it.
+ */
+struct smack_known *smack_unconfined;
+#endif
+
+/*
+ * If this value is set restrict syslog use to the label specified.
+ * It can be reset via smackfs/syslog
+ */
+struct smack_known *smack_syslog_label;
+
+/*
+ * Ptrace current rule
+ * SMACK_PTRACE_DEFAULT    regular smack ptrace rules (/proc based)
+ * SMACK_PTRACE_EXACT      labels must match, but can be overriden with
+ *			   CAP_SYS_PTRACE
+ * SMACK_PTRACE_DRACONIAN  labels must match, CAP_SYS_PTRACE has no effect
+ */
+int smack_ptrace_rule = SMACK_PTRACE_DEFAULT;
+
+/*
+ * Certain IP addresses may be designated as single label hosts.
+ * Packets are sent there unlabeled, but only from tasks that
+ * can write to the specified label.
+ */
+
+LIST_HEAD(smk_net4addr_list);
+#if IS_ENABLED(CONFIG_IPV6)
+LIST_HEAD(smk_net6addr_list);
+#endif /* CONFIG_IPV6 */
+
+/*
+ * Rule lists are maintained for each label.
+ */
+struct smack_parsed_rule {
+	struct smack_known	*smk_subject;
+	struct smack_known	*smk_object;
+	int			smk_access1;
+	int			smk_access2;
+};

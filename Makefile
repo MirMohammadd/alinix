@@ -99,10 +99,11 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 #     @echo "COMPILING $@"
 #     $(CC) $(GCCPARAMS) -c -o $@ $<
 
-$(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/security/%.c
-    mkdir -p $(@D)
-    @echo "COMPILING $@"
-    i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
+$(KRNLOBJDIR)/%.o: security/%.c
+	mkdir -p $(@D)
+	@echo "COMPILING $@"
+	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
+
 
 Alinix.bin: kernel/linker.ld $(KRNLOBJS)
 	# cd security && $(MAKE) all
@@ -110,7 +111,6 @@ Alinix.bin: kernel/linker.ld $(KRNLOBJS)
 	i686-elf-ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
 
 install : Alinix.bin
-security: $(SECURITY_OBJS)
 
 
 Alinix.iso: Alinix.bin
@@ -123,7 +123,7 @@ Alinix.iso: Alinix.bin
 	hdiutil makehybrid -o Alinix.iso iso -iso -joliet
 	# rm -rf iso
 
-all : Alinix.iso  $(SECURITY_OBJS)
+all : Alinix.iso 
 
 versionInfo:
 	@echo "Kernel Version: $(VERSION).$(PATCHLEVEL).$(SUBLEVEL)"

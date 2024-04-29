@@ -41,6 +41,7 @@ LDPARAMS := -m elf_i386
 
 KRNLSRCDIR := kernel
 KRNLOBJDIR := kernel/obj
+KERNEL_SEC_DIR = security
 
 KRNLFILES := $(shell find $(KRNLSRCDIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) #Find all the files that end with .cpp/.s/.asm/.c
 KRNLOBJS := $(patsubst $(KRNLSRCDIR)/%,$(KRNLOBJDIR)/%,$(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(KRNLFILES)))))) #Replace the .cpp/.s/.asm/.c extension with .o
@@ -60,6 +61,12 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.c
 	mkdir -p $(@D)
 	@echo "COMPILING $@"
 	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
+
+$(KRNLOBJDIR)/%.o: $(KERNEL_SEC_DIR)/%.c
+	mkdir -p $(@D)
+	@echo "COMPILING $@"
+	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
+
 
 ####################################
 #GDB Stub
@@ -85,7 +92,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 	nasm -f elf32 -O0 $< -o $@
 
 Alinix.bin: kernel/linker.ld $(KRNLOBJS)
-	cd security && $(MAKE) all
+	# cd security && $(MAKE) all
 	cd drivers && $(MAKE) all 
 	i686-elf-ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
 

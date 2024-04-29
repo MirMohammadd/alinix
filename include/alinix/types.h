@@ -190,20 +190,15 @@ typedef signed   short  S16;
 typedef unsigned short  U16;
 
 
-typedef int32_t   S32;
-typedef uint32_t U32;
+// typedef int32_t   S32;
+// typedef uint32_t U32;
 
-typedef struct _S64
-{
-    U32          Low;
-    S32          High;
-} S64;
 
-typedef struct _U64
-{
-    U32          Low;
-    U32          High;
-} U64;
+// typedef struct _U64
+// {
+//     U32          Low;
+//     U32          High;
+// } U64;
 
 
 

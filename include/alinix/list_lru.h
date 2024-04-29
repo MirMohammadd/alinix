@@ -18,7 +18,7 @@ struct list_lru_node {
 	/* global list, used for the root cgroup in cgroup aware lrus */
 	struct list_lru_one	lru;
 	long			nr_items;
-} ____cacheline_aligned_in_smp;
+} ;
 
 
 struct list_lru {

@@ -4,19 +4,19 @@
 #include <alinix/err.h>
 #include <alinix/uio.h>
 #include <alinix/pagevec.h>
-
-enum num_t { U64, first_t = U64, U32, S64, S32, last_t = S32 };
+enum num_t {
+	NUM_DEC, NUM_OCT, NUM_HEX
+};
 
 static __always_inline u64 min_t(enum num_t t, u64 x, u64 y)
 {
-	switch (t) {
-	case U64: return (u64)x < (u64)y ? (u64)x : (u64)y;
-	case U32: return (u32)x < (u32)y ? (u32)x : (u32)y;
-	case S64: return (sint64_t)x < (sint64_t)y ? (sint64_t)x : (sint64_t)y;
-	case S32: return (sint32_t)x < (sint32_t)y ? (sint32_t)x : (sint32_t)y;
-	default: printf("min_t!\n"); exit(1);
+	// switch (t) {
+	// case uint64_t: return (u64)x < (u64)y ? (u64)x : (u64)y;
+	// case uint32_t: return (u32)x < (u32)y ? (u32)x : (u32)y;
+	// case sint64_t: return (sint64_t)x < (sint64_t)y ? (sint64_t)x : (sint64_t)y;
+	// case sint32_t: return (sint32_t)x < (sint32_t)y ? (sint32_t)x : (sint32_t)y;
+	// default: print("min_t!\n"); exit(1);
 	}
-}
 
 #define PAGE_SHIFT 100
 
@@ -74,7 +74,7 @@ ssize_t filemap_read(struct kiocb *iocb, struct iov_iter *iter,
 		isize = i_size_read(inode);
 		if (unlikely(iocb->ki_pos >= isize))
 			goto put_folios;
-		end_offset = min_t(loff_t, isize, iocb->ki_pos + iter->count);
+		// end_offset = min_t(loff_t, isize, iocb->ki_pos + iter->count);
 
 		/*
 		 * Once we start copying data, we don't want to be touching any
@@ -94,9 +94,10 @@ ssize_t filemap_read(struct kiocb *iocb, struct iov_iter *iter,
 			struct folio *folio = fbatch.folios[i];
 			size_t fsize = folio_size(folio);
 			size_t offset = iocb->ki_pos & (fsize - 1);
-			size_t bytes = min_t(loff_t, end_offset - iocb->ki_pos,
-					     fsize - offset);
+			// size_t bytes = min_t(loff_t, end_offset - iocb->ki_pos,
+			// 		     fsize - offset);
 			size_t copied;
+			size_t bytes;
 
 			if (end_offset < folio_pos(folio))
 				break;

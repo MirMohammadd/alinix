@@ -94,10 +94,15 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 	@echo "ASSEMBLING $@"
 	nasm -f elf32 -O0 $< -o $@
 
-$(KRNLOBJDIR)/security/%.o: $(KRNLSRCDIR)/security/%.c
+# $(KRNLOBJDIR)/security/%.o: $(KRNLSRCDIR)/security/%.c
+#     mkdir -p $(@D)
+#     @echo "COMPILING $@"
+#     $(CC) $(GCCPARAMS) -c -o $@ $<
+
+$(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/security/%.c
     mkdir -p $(@D)
     @echo "COMPILING $@"
-    $(CC) $(GCCPARAMS) -c -o $@ $<
+    i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
 
 Alinix.bin: kernel/linker.ld $(KRNLOBJS)
 	# cd security && $(MAKE) all

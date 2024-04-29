@@ -1,53 +1,49 @@
-# Alinix Kernel Project, Licenced under GNU affero GPL, see file LICENSE for more information
+# CONFIG = ../makefile.config
+# include ${CONFIG}
 
-CONFIG = ../makefile.config
-include ${CONFIG}
+# LIBINCLUDE := ../include
+# LIBDIR := include
+# LIBFILE := ../lib/libcactusos.a
+# DEBUG := -g
 
-LIBINCLUDE := ../include
-LIBDIR := ../kernel
-DEBUG := -g
-LIBDRIVEINCLUDE = include
+# G++PARAMS := -m32 $(DEBUG) -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) -I include -I  ../arch/mips/include ../include -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
+# GCCPARAMS := -m32 $(DEBUG) -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) -I include -I  ../arch/mips/include -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -fleading-underscore -Wno-unknown-pragmas
+# LDPARAMS := -m elf_i386
 
-G++PARAMS := -m32 $(DEBUG)  -I ../include -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) -I $(LIBDRIVEINCLUDE) -I ../kernel/include -Wall -I ../lib/include -I ../libdrive/include -fno-omit-frame-pointer -I ../libdrive/include -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
-GCCPARAMS := -m32 $(DEBUG) -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) -I $(LIBDRIVEINCLUDE) -I ../kernel/include -Wall -I ../lib/include -I ../libdrive/include -fno-omit-frame-pointer -nostdlib -fno-builtin -fleading-underscore -Wno-unknown-pragmas
-LDPARAMS := -m elf_i386
+# APPS := $(shell find * -type d)
+# APPOUT := ../isofiles/security
 
-USB_DIR := .
+# SRCFILES := $(shell find $(APPS) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) #Find all the files that end with .cpp/.s/.asm/.c
+# OBJFILES := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(SRCFILES))))) #Replace the .cpp/.s/.asm/.c extension with .o
 
-SRCFILES := $(shell find $(USB_DIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) # Find all the files in usb3 that end with .cpp/.s/.asm/.c
-OBJFILES := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(SRCFILES))))) # Replace the .cpp/.s/.asm/.c extension with .o
+# .PHONY: all clean
 
-APPOUT := isofiles/security
+# all: linker.ld $(LIBFILE) $(OBJFILES)
+# 	for app in $(APPS) ; do \
+# 		echo building $$app.bin to $(APPOUT)/$$app.bin; \
+#     	i686-elf-ld $(LDPARAMS) -T $< -o $(APPOUT)/$$app.bin $$app/*.o -L$(LIBDIR) --library=cactusos; \
+# 		nm -a $(APPOUT)/$$app.bin | sort -d > $(APPOUT)/$$app.sym; \
+# 	done
 
-.PHONY: all clean
+# clean:
+# 	rm -rf $(OBJFILES) $(LIBFILE)
 
-all: $(OBJS)
-	$(foreach obj, $(OBJS), \
-		app_name=$$(basename $(obj) .o); \
-		app_bin=$(BINDIR)/$$app_name.bin; \
-		app_dir=$$(dirname $$app_bin); \
-		mkdir -p $$app_dir; \
-		echo building $$app_name.bin to $$app_bin; \
-		i686-elf-ld $(LDPARAMS) -T linker.ld -o $$app_bin $(obj) -L$(LIBDIR); \
-		nm -a $$app_bin | sort -d > $(BINDIR)/$$app_name.sym; \
-	)
+# # Build libcactusos.a with makefile in the LIBDIR
+# $(LIBFILE):
+# 	cd $(LIBDIR) && $(MAKE)
 
+# %.o: %.cpp
+# 	mkdir -p $(@D)
+# 	i686-elf-g++ $(G++PARAMS) -c -o $@ $<
 
-clean:
-	rm -rf $(OBJFILES)
+# %.o: %.c
+# 	mkdir -p $(@D)
+# 	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
 
-%.o: %.cpp
-	mkdir -p $(@D)
-	i686-elf-g++ $(G++PARAMS) -c -o $@ $<
+# %.o: %.asm
+# 	mkdir -p $(@D)
+# 	nasm -f elf32 -O0 $< -o $@
 
-%.o: %.c
-	mkdir -p $(@D)
-	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
-
-%.o: %.asm
-	mkdir -p $(@D)
-	nasm -f elf32 -O0 $< -o $@
-
-%.o: %.s
-	mkdir -p $(@D)
-	i686-elf-as --32 -o $@ $<
+# %.o: %.s
+# 	mkdir -p $(@D)
+# 	i686-elf-as --32 -o $@ $<

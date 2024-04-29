@@ -41,6 +41,13 @@ LDPARAMS := -m elf_i386
 
 KRNLSRCDIR := kernel
 KRNLOBJDIR := kernel/obj
+KERNEL_SEC_DIR = security
+
+SECURITY_SRCS := $(wildcard $(KRNLSRCDIR)/security/*.c)
+
+# Create a list of object files corresponding to the source files
+SECURITY_OBJS := $(patsubst $(KRNLSRCDIR)/%.c,$(KRNLOBJDIR)/%.o,$(SECURITY_SRCS))
+
 
 KRNLFILES := $(shell find $(KRNLSRCDIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) #Find all the files that end with .cpp/.s/.asm/.c
 KRNLOBJS := $(patsubst $(KRNLSRCDIR)/%,$(KRNLOBJDIR)/%,$(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(KRNLFILES)))))) #Replace the .cpp/.s/.asm/.c extension with .o
@@ -60,6 +67,9 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.c
 	mkdir -p $(@D)
 	@echo "COMPILING $@"
 	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
+
+
+
 
 ####################################
 #GDB Stub
@@ -84,12 +94,24 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 	@echo "ASSEMBLING $@"
 	nasm -f elf32 -O0 $< -o $@
 
+# $(KRNLOBJDIR)/security/%.o: $(KRNLSRCDIR)/security/%.c
+#     mkdir -p $(@D)
+#     @echo "COMPILING $@"
+#     $(CC) $(GCCPARAMS) -c -o $@ $<
+
+$(KRNLOBJDIR)/%.o: security/%.c
+	mkdir -p $(@D)
+	@echo "COMPILING $@"
+	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
+
+
 Alinix.bin: kernel/linker.ld $(KRNLOBJS)
+	# cd security && $(MAKE) all
 	cd drivers && $(MAKE) all 
-	cd security && $(MAKE) all
 	i686-elf-ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
 
 install : Alinix.bin
+
 
 Alinix.iso: Alinix.bin
 	nm -a Alinix.bin | sort -d > isofiles/debug.sym || true
@@ -101,7 +123,7 @@ Alinix.iso: Alinix.bin
 	hdiutil makehybrid -o Alinix.iso iso -iso -joliet
 	# rm -rf iso
 
-all : Alinix.iso
+all : Alinix.iso 
 
 versionInfo:
 	@echo "Kernel Version: $(VERSION).$(PATCHLEVEL).$(SUBLEVEL)"

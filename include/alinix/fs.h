@@ -30,6 +30,10 @@
 #include <alinix/time64.h>
 #include <alinix/percpu-rwsem.h>
 #include <alinix/uuid.h>
+#include <alinix/list_lru.h>
+#include <alinix/workqueue_types.h>
+#include <alinix/pid.h>
+#include <alinix/path.h>
 
 
 
@@ -42,6 +46,15 @@ enum {
 					 * internal threads if needed) */
 	SB_FREEZE_COMPLETE = 4,		/* ->freeze_fs finished successfully */
 };
+
+struct fown_struct {
+	// rwlock_t lock;          /* protects pid, uid, euid fields */
+	struct pid *pid;	/* pid or -pgrp where SIGIO should be sent */
+	enum pid_type pid_type;	/* Kind of process group SIGIO should be sent to */
+	uint32_t uid, euid;	/* uid/euid of process setting the owner */
+	int signum;		/* posix.1b rt signal to be delivered on IO */
+};
+
 
 #define SB_FREEZE_LEVELS (SB_FREEZE_COMPLETE - 1)
 

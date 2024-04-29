@@ -69,6 +69,11 @@ static inline enum iter_type iov_iter_type(const struct iov_iter *i)
 	return i->iter_type;
 }
 
+static inline enum iter_type iov_iter_type(const struct iov_iter *i)
+{
+	return i->iter_type;
+}
+
 static inline size_t iov_iter_count(const struct iov_iter *i)
 {
 	return i->count;

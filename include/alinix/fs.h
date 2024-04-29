@@ -39,6 +39,28 @@
 #include <alinix/time.h>
 
 struct kiocb;
+
+struct address_space {
+	struct inode		*host;
+	struct xarray		i_pages;
+	struct rw_semaphore	invalidate_lock;
+	gfp_t			gfp_mask;
+	atomic_t		i_mmap_writable;
+#ifdef CONFIG_READ_ONLY_THP_FOR_FS
+	/* number of thp, only for non-shmem files */
+	atomic_t		nr_thps;
+#endif
+	// struct rb_root_cached	i_mmap;
+	unsigned long		nrpages;
+	pgoff_t			writeback_index;
+	// const struct address_space_operations *a_ops;
+	unsigned long		flags;
+	errseq_t		wb_err;
+	spinlock_t		i_private_lock;
+	struct list_head	i_private_list;
+	struct rw_semaphore	i_mmap_rwsem;
+	void *			i_private_data;
+} __attribute__((aligned(sizeof(long)))) __randomize_layout;
 struct inode {
 	umode_t			i_mode;
 	unsigned short		i_opflags;

@@ -87,7 +87,9 @@ bool Contains(const char* str, char c);
 
 #endif /*ALINIX_NULL_CPP_NULL_PTR*/
 
-
+struct llist_node {
+	struct llist_node *next;
+};
 ////////////////////////////////////////
 typedef struct 
 {

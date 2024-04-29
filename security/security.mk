@@ -1,6 +1,6 @@
 # Define the source and object directories for security files
 SRCDIR := src/security
-OBJDIR := obj/security
+OBJDIR := ../kernel/obj/security
 
 # Define the compiler and its parameters
 CC := i686-elf-gcc

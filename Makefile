@@ -26,6 +26,8 @@ VERSION = 1
 PATCHLEVEL = 4
 SUBLEVEL = 4
 
+include security/security.mk
+
 # Check if the make version is exactly 3.80
 ifeq ($(MAKE_VERSION),3.80)
     $(error This makefile requires GNU Make version 3.80. Your Make version is $(MAKE_VERSION))
@@ -123,7 +125,7 @@ Alinix.iso: Alinix.bin
 	hdiutil makehybrid -o Alinix.iso iso -iso -joliet
 	# rm -rf iso
 
-all : Alinix.iso 
+all : Alinix.iso  security_files
 
 versionInfo:
 	@echo "Kernel Version: $(VERSION).$(PATCHLEVEL).$(SUBLEVEL)"

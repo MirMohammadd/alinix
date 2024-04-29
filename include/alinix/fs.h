@@ -39,7 +39,13 @@
 #include <alinix/time.h>
 #include <alinix/xarray.h>
 
+
+#define IOCB_DIRECT		(1 << 17)
+
+
 struct kiocb;
+
+
 
 struct address_space {
 	struct inode		*host;

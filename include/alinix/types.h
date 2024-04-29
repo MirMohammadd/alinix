@@ -23,6 +23,7 @@
 #include <alinix/_types.h>
 #include <alinix/enums.h>
 
+#define pgoff_t unsigned long
 
 typedef char                        int8_t;
 typedef unsigned char               uint8_t;
@@ -38,6 +39,7 @@ typedef signed short              sint16_t;
 typedef signed int               sint32_t;
 typedef signed long long int      sint64_t;
 typedef unsigned int            paddr_t;
+typedef unsigned int fmode_t;
 typedef uint8_t u8;
 typedef uint16_t u16;
 typedef uint32_t u32;
@@ -49,6 +51,7 @@ typedef phys_addr_t resource_size_t;
 typedef sint64_t ktime_t;
 typedef	unsigned int	uint;		/* Sys V compatibility */
 typedef unsigned char byte_t; // For  backward compatibility
+typedef u32 dev_t;
 //! This might run into problem (size_t)
 typedef unsigned long int size_t;
 typedef size_t ssize_t;

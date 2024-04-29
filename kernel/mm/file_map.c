@@ -7,6 +7,9 @@
 
 #define PAGE_SHIFT 100
 
+static void __filemap_fdatawait_range(struct address_space *mapping,
+				     loff_t start_byte, loff_t end_byte);
+
 ssize_t
 generic_file_read_iter(struct kiocb *iocb, struct iov_iter *iter)
 {

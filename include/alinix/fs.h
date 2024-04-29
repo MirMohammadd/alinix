@@ -34,6 +34,7 @@
 #include <alinix/workqueue_types.h>
 #include <alinix/pid.h>
 #include <alinix/path.h>
+#include <alinix/mm_types.h>
 
 struct kiocb;
 ssize_t filemap_splice_read(struct file *in, loff_t *ppos,

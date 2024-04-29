@@ -530,4 +530,9 @@ static inline int atomic_read(const atomic_t *v)
 	return v->counter;
 }
 
+static inline bool mapping_tagged(struct address_space *mapping, xa_mark_t tag)
+{
+	return xa_marked(&mapping->i_pages, tag);
+}
+
 #endif // __ALINIX_KERNEL_FS_H

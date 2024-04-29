@@ -8,6 +8,16 @@
 
 #include <alinix/xarray.h>
 
+enum iter_type {
+	/* iter types */
+	ITER_UBUF,
+	ITER_IOVEC,
+	ITER_BVEC,
+	ITER_KVEC,
+	ITER_XARRAY,
+	ITER_DISCARD,
+};
+
 struct iovec
 {
 	void *iov_base;	/* BSD uses caddr_t (1003.1g requires void *) */
@@ -54,9 +64,19 @@ struct iov_iter {
 	};
 };
 
+static inline enum iter_type iov_iter_type(const struct iov_iter *i)
+{
+	return i->iter_type;
+}
+
 static inline size_t iov_iter_count(const struct iov_iter *i)
 {
 	return i->count;
+}
+
+static inline bool iov_iter_is_discard(const struct iov_iter *i)
+{
+	return iov_iter_type(i) == ITER_DISCARD;
 }
 
 #endif

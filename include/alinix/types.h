@@ -107,6 +107,10 @@ typedef struct {
 typedef struct {
 	gid_t val;
 } kgid_t;
+
+typedef struct {
+	int counter;
+} atomic_t;
 ////////////////////////////////////////
 typedef struct 
 {

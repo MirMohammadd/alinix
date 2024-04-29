@@ -38,10 +38,13 @@
 #include <alinix/rw_hint.h>
 #include <alinix/time.h>
 #include <alinix/xarray.h>
+#include <alinix/limits.h>
 
 #define O_NOFOLLOW	00400000	/* don't follow links */
 #define IOCB_DIRECT		(1 << 17)
 #define IOCB_NOWAIT		(int)
+#define PAGE_MASK      0xFFFFF000
+#define MAX_RW_COUNT (INT_MAX & PAGE_MASK)
 
 
 struct kiocb;
@@ -484,6 +487,10 @@ static inline void file_accessed(struct file *file)
 
 
 
-
+struct bio_vec {
+	struct page	*bv_page;
+	unsigned int	bv_len;
+	unsigned int	bv_offset;
+};
 
 #endif // __ALINIX_KERNEL_FS_H

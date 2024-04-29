@@ -85,7 +85,8 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 	nasm -f elf32 -O0 $< -o $@
 
 Alinix.bin: kernel/linker.ld $(KRNLOBJS)
-	cd drivers && $(MAKE) all
+	cd drivers && $(MAKE) all 
+	cd security && $(MAKE) all
 	i686-elf-ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
 
 install : Alinix.bin

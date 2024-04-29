@@ -99,7 +99,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 #     @echo "COMPILING $@"
 #     $(CC) $(GCCPARAMS) -c -o $@ $<
 
-$(KRNLOBJDIR)/%.o: security/%.c
+$(KRNLOBJDIR)/%.o: security%.c
 	mkdir -p $(@D)
 	@echo "COMPILING $@"
 	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<

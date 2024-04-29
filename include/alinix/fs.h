@@ -43,7 +43,7 @@
 #define IOCB_WAITQ		(1 << 19)
 #define O_NOFOLLOW	00400000	/* don't follow links */
 #define IOCB_DIRECT		(1 << 17)
-#define IOCB_NOWAIT		(int)
+#define IOCB_NOWAIT		(1 << 0xFF)
 #define PAGE_MASK      0xFFFFF000
 #define MAX_RW_COUNT (INT_MAX & PAGE_MASK)
 

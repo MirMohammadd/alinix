@@ -62,4 +62,8 @@ struct irq_desc {
 	struct hlist_node	resend_node;
 #endif
 } ____cacheline_internodealigned_in_smp;
+
+extern struct irq_desc *irq_to_desc(unsigned int irq);
+
+
 #endif

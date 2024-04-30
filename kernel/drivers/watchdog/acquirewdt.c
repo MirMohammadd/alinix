@@ -18,5 +18,22 @@
 #include <alinix/kernel.h>
 #include <alinix/types.h>
 #include <alinix/err.h>
+#include <alinix/platfrom_device.h>
 
 
+
+/* Module information */
+#define DRV_NAME "acquirewdt"
+#define WATCHDOG_NAME "Acquire WDT"
+/* There is no way to see what the correct time-out period is */
+#define WATCHDOG_HEARTBEAT 0
+
+/* internal variables */
+/* the watchdog platform device */
+static struct platform_device *acq_platform_device;
+static unsigned long acq_is_open;
+static char expect_close;
+
+/* module parameters */
+/* You must set this - there is no sane way to probe for this board. */
+static int wdt_stop = 0x43;

@@ -4,7 +4,9 @@
 
 #define PIA_REG_PADWIDTH 255
 
-
+#define zTwoBase (0x80000000)
+#define ZTWO_PADDR(x) (((unsigned long)(x))-zTwoBase)
+#define ZTWO_VADDR(x) ((void *)(((unsigned long)(x))+zTwoBase))
 
 struct CIA {
     unsigned char pra;		char pad0[0xff];

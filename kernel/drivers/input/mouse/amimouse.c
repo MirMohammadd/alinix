@@ -59,4 +59,7 @@ PRIVATE irqreturn_t amimouse_interrupt(int irq,void *data){
     input_report_key(dev, BTN_LEFT,   ciaa.pra & 0x40);
 	input_report_key(dev, BTN_MIDDLE, potgor & 0x0100);
 	input_report_key(dev, BTN_RIGHT,  potgor & 0x0400);
+
+    input_sync(dev);
+
 }

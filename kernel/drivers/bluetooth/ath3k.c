@@ -19,6 +19,7 @@
 #include "bluetooth.h"
 #include "btbcm.h"
 #include "hci_core.h"
+#include "mod_devicetable.h"
 
 /**
  * @ref https://github.com/torvalds/linux/blob/master/drivers/bluetooth/ath3k.c
@@ -54,3 +55,145 @@ struct ath3k_version{
     u8 ref_clock;
     u8 revered[REVERSED_LEN];
 };
+
+static const struct usb_device_id ath3k_table[] = {
+    {0x0CF3, 0x3000},
+    {0x0489, 0xE027 },
+	{0x0489, 0xE03D },
+	{0x04F2, 0xAFF1 },
+	{0x0930, 0x0215 },
+	{0x0CF3, 0x3002 },
+	{0x0CF3, 0xE019 },
+	{0x13d3, 0x3304 },
+
+	/* Atheros AR9285 Malbec with sflash firmware */
+	{0x03F0, 0x311D },
+
+	/* Atheros AR3012 with sflash firmware*/
+	{0x0489, 0xe04d },
+	{0x0489, 0xe04e },
+	{0x0489, 0xe057 },
+	{0x0489, 0xe056 },
+	{0x0489, 0xe05f },
+	{0x0489, 0xe076 },
+	{0x0489, 0xe078 },
+	{0x0489, 0xe095 },
+	{0x04c5, 0x1330 },
+	{0x04CA, 0x3004 },
+	{0x04CA, 0x3005 },
+	{0x04CA, 0x3006 },
+	{0x04CA, 0x3007 },
+	{0x04CA, 0x3008 },
+	{0x04CA, 0x300b },
+	{0x04CA, 0x300d },
+	{0x04CA, 0x300f },
+	{0x04CA, 0x3010 },
+	{0x04CA, 0x3014 },
+	{0x04CA, 0x3018 },
+	{0x0930, 0x0219 },
+	{0x0930, 0x021c },
+	{0x0930, 0x0220 },
+	{0x0930, 0x0227 },
+	{0x0b05, 0x17d0 },
+	{0x0CF3, 0x0036 },
+	{0x0CF3, 0x3004 },
+	{0x0CF3, 0x3008 },
+	{0x0CF3, 0x311D },
+	{0x0CF3, 0x311E },
+	{0x0CF3, 0x311F },
+	{0x0cf3, 0x3121 },
+	{0x0CF3, 0x817a },
+	{0x0CF3, 0x817b },
+	{0x0cf3, 0xe003 },
+	{0x0CF3, 0xE004 },
+	{0x0CF3, 0xE005 },
+	{0x0CF3, 0xE006 },
+	{0x13d3, 0x3362 },
+	{0x13d3, 0x3375 },
+	{0x13d3, 0x3393 },
+	{0x13d3, 0x3395 },
+	{0x13d3, 0x3402 },
+	{0x13d3, 0x3408 },
+	{0x13d3, 0x3423 },
+	{0x13d3, 0x3432 },
+	{0x13d3, 0x3472 },
+	{0x13d3, 0x3474 },
+	{0x13d3, 0x3487 },
+	{0x13d3, 0x3490 },
+
+	/* Atheros AR5BBU12 with sflash firmware */
+	{0x0489, 0xE02C },
+
+	/* Atheros AR5BBU22 with sflash firmware */
+	{0x0489, 0xE036 },
+	{0x0489, 0xE03C },
+
+	{ }	/* Terminating entry */
+};
+
+#define BTUSB_ATH3012		0x80
+
+static const struct usb_device_id ath3k_blist_tbl[] = {
+
+	/* Atheros AR3012 with sflash firmware*/
+	{ 0x0489, 0xe04e, .driver_info = BTUSB_ATH3012 },
+	{ 0x0489, 0xe04d, .driver_info = BTUSB_ATH3012 },
+	{ 0x0489, 0xe056, .driver_info = BTUSB_ATH3012 },
+	{ 0x0489, 0xe057, .driver_info = BTUSB_ATH3012 },
+	{ 0x0489, 0xe05f, .driver_info = BTUSB_ATH3012 },
+	{ 0x0489, 0xe076, .driver_info = BTUSB_ATH3012 },
+	{ 0x0489, 0xe078, .driver_info = BTUSB_ATH3012 },
+	{ 0x0489, 0xe095, .driver_info = BTUSB_ATH3012 },
+	{ 0x04c5, 0x1330, .driver_info = BTUSB_ATH3012 },
+	{ 0x04ca, 0x3004, .driver_info = BTUSB_ATH3012 },
+	{ 0x04ca, 0x3005, .driver_info = BTUSB_ATH3012 },
+	{ 0x04ca, 0x3006, .driver_info = BTUSB_ATH3012 },
+	{ 0x04ca, 0x3007, .driver_info = BTUSB_ATH3012 },
+	{ 0x04ca, 0x3008, .driver_info = BTUSB_ATH3012 },
+	{ 0x04ca, 0x300b, .driver_info = BTUSB_ATH3012 },
+	{ 0x04ca, 0x300d, .driver_info = BTUSB_ATH3012 },
+	{ 0x04ca, 0x300f, .driver_info = BTUSB_ATH3012 },
+	{ 0x04ca, 0x3010, .driver_info = BTUSB_ATH3012 },
+	{ 0x04ca, 0x3014, .driver_info = BTUSB_ATH3012 },
+	{ 0x04ca, 0x3018, .driver_info = BTUSB_ATH3012 },
+	{ 0x0930, 0x0219, .driver_info = BTUSB_ATH3012 },
+	{ 0x0930, 0x021c, .driver_info = BTUSB_ATH3012 },
+	{ 0x0930, 0x0220, .driver_info = BTUSB_ATH3012 },
+	{ 0x0930, 0x0227, .driver_info = BTUSB_ATH3012 },
+	{ 0x0b05, 0x17d0, .driver_info = BTUSB_ATH3012 },
+	{ 0x0CF3, 0x0036, .driver_info = BTUSB_ATH3012 },
+	{ 0x0cf3, 0x3004, .driver_info = BTUSB_ATH3012 },
+	{ 0x0cf3, 0x3008, .driver_info = BTUSB_ATH3012 },
+	{ 0x0cf3, 0x311D, .driver_info = BTUSB_ATH3012 },
+	{ 0x0cf3, 0x311E, .driver_info = BTUSB_ATH3012 },
+	{ 0x0cf3, 0x311F, .driver_info = BTUSB_ATH3012 },
+	{ 0x0cf3, 0x3121, .driver_info = BTUSB_ATH3012 },
+	{ 0x0CF3, 0x817a, .driver_info = BTUSB_ATH3012 },
+	{ 0x0CF3, 0x817b, .driver_info = BTUSB_ATH3012 },
+	{ 0x0cf3, 0xe004, .driver_info = BTUSB_ATH3012 },
+	{ 0x0cf3, 0xe005, .driver_info = BTUSB_ATH3012 },
+	{ 0x0cf3, 0xe006, .driver_info = BTUSB_ATH3012 },
+	{ 0x0cf3, 0xe003, .driver_info = BTUSB_ATH3012 },
+	{ 0x13d3, 0x3362, .driver_info = BTUSB_ATH3012 },
+	{ 0x13d3, 0x3375, .driver_info = BTUSB_ATH3012 },
+	{ 0x13d3, 0x3393, .driver_info = BTUSB_ATH3012 },
+	{ 0x13d3, 0x3395, .driver_info = BTUSB_ATH3012 },
+	{ 0x13d3, 0x3402, .driver_info = BTUSB_ATH3012 },
+	{ 0x13d3, 0x3408, .driver_info = BTUSB_ATH3012 },
+	{ 0x13d3, 0x3423, .driver_info = BTUSB_ATH3012 },
+	{ 0x13d3, 0x3432, .driver_info = BTUSB_ATH3012 },
+	{ 0x13d3, 0x3472, .driver_info = BTUSB_ATH3012 },
+	{ 0x13d3, 0x3474, .driver_info = BTUSB_ATH3012 },
+	{ 0x13d3, 0x3487, .driver_info = BTUSB_ATH3012 },
+	{ 0x13d3, 0x3490, .driver_info = BTUSB_ATH3012 },
+
+	/* Atheros AR5BBU22 with sflash firmware */
+	{ 0x0489, 0xE036, .driver_info = BTUSB_ATH3012 },
+	{ 0x0489, 0xE03C, .driver_info = BTUSB_ATH3012 },
+
+	{ }	/* Terminating entry */
+};
+
+PRIVATE __always_inline VOID ath3k_log_failed_loading(int err,int len,int size,int count){
+    perror("Firmware loading err = %d, len %d size = %d, count = %d",err,len,size,count);
+}

@@ -52,4 +52,8 @@ PRIVATE irqreturn_t amimouse_interrupt(int irq,void *data){
 	amimouse_lasty = ny;
 
     // input_report_key(dev,BTN_LEFT,)
+    input_report_rel(dev,REL_X,dx);
+    input_report_rel(dev,REL_Y,dy);
+
+
 }

@@ -25,7 +25,7 @@
 
 #define ATOMIC_INIT(i) { (i) }
 
-
+typedef unsigned long irq_hw_number_t;
 typedef unsigned int  gfp_t;
 typedef char                        int8_t;
 typedef unsigned char               uint8_t;

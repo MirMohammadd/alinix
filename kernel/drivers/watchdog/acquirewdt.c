@@ -21,6 +21,8 @@
 #include <alinix/platfrom_device.h>
 #include <alinix/watchdog.h>
 #include <alinix/port.h>
+#include <alinix/platform_device.h>
+#include <alinix/driver.h>
 
 #define WATCHDOG_MINOR 130
 
@@ -81,3 +83,17 @@ static void acq_shutdown(struct platform_device *dev)
 	/* Turn the WDT off if we have a soft shutdown */
 	acq_stop();
 }
+
+static void acq_remove(struct platform_device *dev)
+{
+	if (wdt_stop != wdt_start)
+		return;
+}
+
+static struct platform_driver acquirewdt_driver = {
+	.remove_new	= acq_remove,
+	.shutdown	= acq_shutdown,
+	.driver		= {
+		.name	= DRV_NAME,
+	},
+};

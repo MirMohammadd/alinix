@@ -165,6 +165,8 @@ typedef struct raw_spinlock {
 	void *owner;
 } raw_spinlock_t;
 
-
+typedef struct pm_message {
+	int event;
+} pm_message_t;
 
 #endif /*__ALINIX_KERNEL__TYPES_H_HEADER_*/

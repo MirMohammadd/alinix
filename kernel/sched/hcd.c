@@ -17,7 +17,6 @@
 
 #include <alinix/kernel.h>
 #include <alinix/usb.h>
-#include <alinix/assert.h>
 #include <alinix/spinlock.h>
 
 #define EIDRM		36	/* Identifier removed */

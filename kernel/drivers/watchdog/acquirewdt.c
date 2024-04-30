@@ -75,3 +75,9 @@ PRIVATE int acq_probe(struct platform_device *dev){
         return ret;
 
 }
+
+static void acq_shutdown(struct platform_device *dev)
+{
+	/* Turn the WDT off if we have a soft shutdown */
+	acq_stop();
+}

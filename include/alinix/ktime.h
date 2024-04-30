@@ -2,7 +2,7 @@
 #define __ALINIX_KERNEL_K_TIME_H
 
 #include <alinix/types.h>
-
+#include <alinix/compiler.h>
 
 #define PSEC_PER_NSEC			1000L
 

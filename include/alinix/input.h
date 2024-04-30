@@ -175,6 +175,7 @@ static inline void input_report_key(struct input_dev *dev, unsigned int code, in
 	input_event(dev, EV_KEY, code, !!value);
 }
 
+
 static inline void input_report_rel(struct input_dev *dev, unsigned int code, int value)
 {
 	input_event(dev, EV_REL, code, value);

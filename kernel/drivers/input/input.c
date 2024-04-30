@@ -17,6 +17,7 @@
 #include <alinix/input.h>
 #include <alinix/ktime.h>
 #include <alinix/kernel.h>
+#include <alinix/compiler.h>
 
 #define INPUT_IGNORE_EVENT	0
 #define INPUT_PASS_TO_HANDLERS	1
@@ -67,7 +68,7 @@ static void input_event_dispose(struct input_dev *dev, int disposition,
 		dev->timestamp[INPUT_CLK_MONO] = ktime_set(0, 0);
 	} else if (dev->num_vals >= dev->max_vals - 2) {
 		dev->vals[dev->num_vals++] = input_value_sync;
-		input_pass_values(dev, dev->vals, dev->num_vals);
+		// input_pass_values(dev, dev->vals, dev->num_vals);
 		dev->num_vals = 0;
 	}
 }

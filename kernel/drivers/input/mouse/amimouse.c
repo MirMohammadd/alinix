@@ -23,7 +23,6 @@
 #include <alinix/string.h>
 #include <alinix/irqreturn.h>
 #include <alinix/input.h>
-#include <alinix/input.h>
 
 PRIVATE int amimouse_lastx, amimouse_lasty;
 
@@ -51,4 +50,6 @@ PRIVATE irqreturn_t amimouse_interrupt(int irq,void *data){
 
     amimouse_lastx = nx;
 	amimouse_lasty = ny;
+
+    // input_report_key(dev,BTN_LEFT,)
 }

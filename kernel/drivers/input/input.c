@@ -36,7 +36,7 @@ static inline int is_event_supported(unsigned int code,
 	return code <= max && test_bit(code, bm);
 }
 
-static void input_event(struct input_dev *dev, int disposition,
+static void input_event_des(struct input_dev *dev, int disposition,
 				unsigned int type, unsigned int code, int value)
 {
 	if ((disposition & INPUT_PASS_TO_DEVICE) && dev->event)

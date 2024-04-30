@@ -21,7 +21,7 @@
 
 #define EIDRM		36	/* Identifier removed */
 
-static inline hcd_urb_unlink_lock();
+static inline hcd_urb_unlink_lock(){};
 
 
 

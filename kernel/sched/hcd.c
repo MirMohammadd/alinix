@@ -17,7 +17,7 @@
 
 #include <alinix/kernel.h>
 #include <alinix/usb.h>
-#include <alinix/spinlock.h>
+// #include <alinix/spinlock.h>
 
 #define EIDRM		36	/* Identifier removed */
 
@@ -31,6 +31,6 @@ int usb_hcd_unlink_urb (struct urb *urb, int status){
 	int			retval = -EIDRM;
 	unsigned long		flags;
 
-    spin_lock_irqsave(&hcd_urb_unlink_lock, flags);
+    // spin_lock_irqsave(&hcd_urb_unlink_lock, flags);
 
 }

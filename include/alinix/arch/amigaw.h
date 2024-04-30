@@ -1,6 +1,11 @@
 #ifndef __ALINIX_KERNEL_AMIGAW_H
 #define __ALINIX_KERNEL_AMIGAW_H
 
+
+#define PIA_REG_PADWIDTH 255
+
+
+
 struct CIA {
     unsigned char pra;		char pad0[0xff];
     unsigned char prb;		char pad1[0xff];
@@ -18,6 +23,25 @@ struct CIA {
     unsigned char cra;		char padd[0xff];
     unsigned char crb;		char pade[0xff];
 };
+
+
+struct pia {
+	union {
+		volatile unsigned char pra;
+		volatile unsigned char ddra;
+	} ua;
+	unsigned char pad1[PIA_REG_PADWIDTH];
+	volatile unsigned char cra;
+	unsigned char pad2[PIA_REG_PADWIDTH];
+	union {
+		volatile unsigned char prb;
+		volatile unsigned char ddrb;
+	} ub;
+	unsigned char pad3[PIA_REG_PADWIDTH];
+	volatile unsigned char crb;
+	unsigned char pad4[PIA_REG_PADWIDTH];
+};
+
 
 #define CIAA_PHYSADDR	  (0xbfe001)
 #define CIAB_PHYSADDR	  (0xbfd000)

@@ -6,6 +6,7 @@
 #include <alinix/mutex_types.h>
 #include <alinix/spinlock_types.h>
 #include <alinix/timer_types.h>
+#include <alinix/event-code.h>
 
 
 struct input_handler;
@@ -32,6 +33,12 @@ enum input_clock_type {
 	INPUT_CLK_MAX
 };
 
+struct input_id {
+	u16 bustype;
+	u16 vendor;
+	u16 product;
+	u16 version;
+};
 
 
 struct input_dev {
@@ -40,17 +47,17 @@ struct input_dev {
 	const char *uniq;
 	struct input_id id;
 
-	unsigned long propbit[BITS_TO_LONGS(INPUT_PROP_CNT)];
+	unsigned long propbit[INPUT_PROP_CNT];
 
-	unsigned long evbit[BITS_TO_LONGS(EV_CNT)];
-	unsigned long keybit[BITS_TO_LONGS(KEY_CNT)];
-	unsigned long relbit[BITS_TO_LONGS(REL_CNT)];
-	unsigned long absbit[BITS_TO_LONGS(ABS_CNT)];
-	unsigned long mscbit[BITS_TO_LONGS(MSC_CNT)];
-	unsigned long ledbit[BITS_TO_LONGS(LED_CNT)];
-	unsigned long sndbit[BITS_TO_LONGS(SND_CNT)];
-	unsigned long ffbit[BITS_TO_LONGS(FF_CNT)];
-	unsigned long swbit[BITS_TO_LONGS(SW_CNT)];
+	unsigned long evbit[EV_CNT];
+	unsigned long keybit[KEY_CNT];
+	unsigned long relbit[REL_CNT];
+	unsigned long absbit[ABS_CNT];
+	unsigned long mscbit[MSC_CNT];
+	unsigned long ledbit[LED_CNT];
+	unsigned long sndbit[SND_CNT];
+	unsigned long ffbit[SND_CNT];
+	unsigned long swbit[SW_CNT];
 
 	unsigned int hint_events_per_packet;
 
@@ -77,10 +84,10 @@ struct input_dev {
 
 	struct input_absinfo *absinfo;
 
-	unsigned long key[BITS_TO_LONGS(KEY_CNT)];
-	unsigned long led[BITS_TO_LONGS(LED_CNT)];
-	unsigned long snd[BITS_TO_LONGS(SND_CNT)];
-	unsigned long sw[BITS_TO_LONGS(SW_CNT)];
+	unsigned long key[(KEY_CNT)];
+	unsigned long led[(LED_CNT)];
+	unsigned long snd[(SND_CNT)];
+	unsigned long sw[(SW_CNT)];
 
 	int (*open)(struct input_dev *dev);
 	void (*close)(struct input_dev *dev);

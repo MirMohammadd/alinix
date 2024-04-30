@@ -18,9 +18,19 @@
 #include <alinix/err.h>
 #include <alinix/types.h>
 #include <alinix/kernel.h>
+#include <alinix/iio/trigger.h>
 
 struct adc_keys_button{
     u32 voltage;
     u32 keycode;
+};
+
+
+struct dc_keys_state{
+    struct iio_channel *channel;
+    u32 num_keys;
+    u32 last_key;
+    u32 keyup_voltage;
+    const struct adc_keys_button *map;
 };
 

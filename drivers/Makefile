@@ -16,6 +16,14 @@ TARGET = ../Alinix.bin
 BINDIR = ../kernel/obj
 OBJDIR = ../kernel/obj
 
+KRNLOBJDIR := ../kernel/obj
+KRNLSRCDIR := ../kernel
+
+KRNLFILES := $(shell find $(KRNLSRCDIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) #Find all the files that end with .cpp/.s/.asm/.c
+KRNLOBJS := $(patsubst $(KRNLSRCDIR)/%,$(KRNLOBJDIR)/%,$(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(KRNLFILES)))))) #Replace the .cpp/.s/.asm/.c extension with .o
+
+
+
 CC = gcc
 CFLAGS = -m32 -g -D Alinix -I ../arch/mips/include -I $(INCLUDEDIRS) -I arch/mips/include -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas
 
@@ -27,7 +35,7 @@ all: $(TARGET)
 
 $(TARGET): $(OBJFILES)
 	mkdir -p $(@D)
-	i686-elf-ld $(LDFLAGS) -T $(LINKER_SCRIPT) $< -o $@ $(OBJDIR)
+	i686-elf-ld $(LDFLAGS) -T $(LINKER_SCRIPT) $< -o $@ $(KRNLOBJS)
 
 $(OBJDIR)/%.o: %.c
 	i686-elf-gcc $(CFLAGS) -c $< -o $@

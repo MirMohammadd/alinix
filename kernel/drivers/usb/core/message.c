@@ -18,6 +18,7 @@
 #include <alinix/types.h>
 #include <alinix/usb.h>
 #include <alinix/completion.h>
+#include <alinix/jiffies.h>
 
 
 
@@ -32,10 +33,24 @@ struct api_context{
 static void usb_api_blocking_completion(struct urb *urb){
     struct api_context *ctx = urb->context;
     ctx->status = urb->status;
-    
+
 }
 
+static int usb_start_wait_urb(struct urb *urb, int timeout, int *actual_length){
+    struct api_context ctx;
+    unsigned long expire;
+    int retval;
+    urb->context = &ctx;
+    urb->actual_length = 0;
 
+    if (unlikely(retval)){
+        goto out;
+    }
+    expire = timeout ? msecs_to_jiffies(timeout): MAX_SCHEDULE_TIMEOUT;
+
+    out:
+
+}
 
 int usb_control_msg_send(struct usb_device *dev, u8 endpoint, u8 request,
 			 u8 requesttype, u16 value, u16 index,

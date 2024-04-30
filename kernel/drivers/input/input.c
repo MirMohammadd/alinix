@@ -19,6 +19,7 @@
 #include <alinix/kernel.h>
 #include <alinix/compiler.h>
 #include <alinix/arch/amigaw.h>
+#include <alinix/iommufd_utils.h>
 
 #define INPUT_IGNORE_EVENT	0
 #define INPUT_PASS_TO_HANDLERS	1
@@ -29,9 +30,13 @@
 static const struct input_value input_value_sync = { EV_SYN, SYN_REPORT, 1 };
 
 
+static inline int is_event_supported(unsigned int code,
+				     unsigned long *bm, unsigned int max)
+{
+	return code <= max && test_bit(code, bm);
+}
 
-
-void input_event(struct input_dev *dev, int disposition,
+static void input_event(struct input_dev *dev, int disposition,
 				unsigned int type, unsigned int code, int value)
 {
 	if ((disposition & INPUT_PASS_TO_DEVICE) && dev->event)
@@ -71,5 +76,18 @@ void input_event(struct input_dev *dev, int disposition,
 		dev->vals[dev->num_vals++] = input_value_sync;
 		// input_pass_values(dev, dev->vals, dev->num_vals);
 		dev->num_vals = 0;
+	}
+}
+
+void input_event(struct input_dev *dev,
+		 unsigned int type, unsigned int code, int value)
+{
+	unsigned long flags;
+
+	if (is_event_supported(type, dev->evbit, EV_MAX)) {
+
+		// spin_lock_irqsave(&dev->event_lock, flags);
+		// input_handle_event(dev, type, code, value);
+		// spin_unlock_irqrestore(&dev->event_lock, flags);
 	}
 }

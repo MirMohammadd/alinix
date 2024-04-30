@@ -1,3 +1,19 @@
+/**
+ ** This file is part of AliNix.
+
+**AliNix is free software: you can redistribute it and/or modify
+**it under the terms of the GNU Affero General Public License as published by
+**the Free Software Foundation, either version 3 of the License, or
+**(at your option) any later version.
+
+**AliNix is distributed in the hope that it will be useful,
+**but WITHOUT ANY WARRANTY; without even the implied warranty of
+**MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+**GNU Affero General Public License for more details.
+
+**You should have received a copy of the GNU Affero General Public License
+**along with AliNix. If not, see <https://www.gnu.org/licenses/>.
+*/
 #ifndef __ALINIX_KERNEL_INPUT_H
 #define __ALINIX_KERNEL_INPUT_H
 
@@ -6,9 +22,19 @@
 #include <alinix/mutex_types.h>
 #include <alinix/spinlock_types.h>
 #include <alinix/timer_types.h>
+#include <alinix/event-code.h>
 
 
 struct input_handler;
+
+struct input_mt {
+	int trkid;
+	int num_slots;
+	int slot;
+	unsigned int flags;
+	unsigned int frame;
+	int *red;
+};
 
 struct input_keymap_entry {
 #define INPUT_KEYMAP_BY_INDEX	(1 << 0)
@@ -32,6 +58,12 @@ enum input_clock_type {
 	INPUT_CLK_MAX
 };
 
+struct input_id {
+	u16 bustype;
+	u16 vendor;
+	u16 product;
+	u16 version;
+};
 
 
 struct input_dev {
@@ -40,17 +72,17 @@ struct input_dev {
 	const char *uniq;
 	struct input_id id;
 
-	unsigned long propbit[BITS_TO_LONGS(INPUT_PROP_CNT)];
+	unsigned long propbit[INPUT_PROP_CNT];
 
-	unsigned long evbit[BITS_TO_LONGS(EV_CNT)];
-	unsigned long keybit[BITS_TO_LONGS(KEY_CNT)];
-	unsigned long relbit[BITS_TO_LONGS(REL_CNT)];
-	unsigned long absbit[BITS_TO_LONGS(ABS_CNT)];
-	unsigned long mscbit[BITS_TO_LONGS(MSC_CNT)];
-	unsigned long ledbit[BITS_TO_LONGS(LED_CNT)];
-	unsigned long sndbit[BITS_TO_LONGS(SND_CNT)];
-	unsigned long ffbit[BITS_TO_LONGS(FF_CNT)];
-	unsigned long swbit[BITS_TO_LONGS(SW_CNT)];
+	unsigned long evbit[EV_CNT];
+	unsigned long keybit[KEY_CNT];
+	unsigned long relbit[REL_CNT];
+	unsigned long absbit[ABS_CNT];
+	unsigned long mscbit[MSC_CNT];
+	unsigned long ledbit[LED_CNT];
+	unsigned long sndbit[SND_CNT];
+	unsigned long ffbit[SND_CNT];
+	unsigned long swbit[SW_CNT];
 
 	unsigned int hint_events_per_packet;
 
@@ -77,10 +109,10 @@ struct input_dev {
 
 	struct input_absinfo *absinfo;
 
-	unsigned long key[BITS_TO_LONGS(KEY_CNT)];
-	unsigned long led[BITS_TO_LONGS(LED_CNT)];
-	unsigned long snd[BITS_TO_LONGS(SND_CNT)];
-	unsigned long sw[BITS_TO_LONGS(SW_CNT)];
+	unsigned long key[(KEY_CNT)];
+	unsigned long led[(LED_CNT)];
+	unsigned long snd[(SND_CNT)];
+	unsigned long sw[(SW_CNT)];
 
 	int (*open)(struct input_dev *dev);
 	void (*close)(struct input_dev *dev);
@@ -133,6 +165,46 @@ struct input_handler {
 	struct list_head	h_list;
 	struct list_head	node;
 };
+
+
+void input_event(struct input_dev *dev, unsigned int type, unsigned int code, int value);
+void input_inject_event(struct input_handle *handle, unsigned int type, unsigned int code, int value);
+
+static inline void input_report_key(struct input_dev *dev, unsigned int code, int value)
+{
+	input_event(dev, EV_KEY, code, !!value);
+}
+
+
+static inline void input_report_rel(struct input_dev *dev, unsigned int code, int value)
+{
+	input_event(dev, EV_REL, code, value);
+}
+
+static inline void input_report_abs(struct input_dev *dev, unsigned int code, int value)
+{
+	input_event(dev, EV_ABS, code, value);
+}
+
+static inline void input_report_ff_status(struct input_dev *dev, unsigned int code, int value)
+{
+	input_event(dev, EV_FF_STATUS, code, value);
+}
+
+static inline void input_report_switch(struct input_dev *dev, unsigned int code, int value)
+{
+	input_event(dev, EV_SW, code, !!value);
+}
+
+static inline void input_sync(struct input_dev *dev)
+{
+	input_event(dev, EV_SYN, SYN_REPORT, 0);
+}
+
+static inline void input_mt_sync(struct input_dev *dev)
+{
+	input_event(dev, EV_SYN, SYN_MT_REPORT, 0);
+}
 
 
 

@@ -19,6 +19,7 @@
 #include "bluetooth.h"
 #include "btbcm.h"
 #include "hci_core.h"
+#include "mod_devicetable.h"
 
 /**
  * @ref https://github.com/torvalds/linux/blob/master/drivers/bluetooth/ath3k.c

@@ -18,6 +18,24 @@ struct irq_data {
 	void			*chip_data;
 };
 
+struct irq_common_data {
+	unsigned int		 state_use_accessors;
+#ifdef CONFIG_NUMA
+	unsigned int		node;
+#endif
+	void			*handler_data;
+	// struct msi_desc		*msi_desc;
+#ifdef CONFIG_SMP
+	cpumask_var_t		affinity;
+#endif
+#ifdef CONFIG_GENERIC_IRQ_EFFECTIVE_AFF_MASK
+	cpumask_var_t		effective_affinity;
+#endif
+#ifdef CONFIG_GENERIC_IRQ_IPI
+	unsigned int		ipi_offset;
+#endif
+};
+
 struct irq_chip {
 	const char	*name;
 	unsigned int	(*irq_startup)(struct irq_data *data);

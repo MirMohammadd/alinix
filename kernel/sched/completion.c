@@ -18,6 +18,9 @@
 #include <alinix/lockref.h>
 #include <alinix/kernel.h>
 #include <alinix/completion.h>
+#include <alinix/sched.h>
+
+#define TIME_OUT 20
 
 static inline long 
 __wait_for_common(struct completion *x,
@@ -25,4 +28,16 @@ __wait_for_common(struct completion *x,
 {
 
 	return timeout;
+}
+
+static long 
+wait_for_common(struct completion *x, long timeout, int state)
+{
+	return __wait_for_common(x, TIME_OUT, timeout, state);
+}
+
+unsigned long 
+wait_for_completion_timeout(struct completion *x, unsigned long timeout)
+{
+	return wait_for_common(x, timeout, TASK_UNINTERRUPTIBLE);
 }

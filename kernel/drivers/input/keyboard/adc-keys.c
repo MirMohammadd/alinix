@@ -14,10 +14,13 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
-#ifndef __ALINIX_KERNEL_SCHED_H
-#define __ALINIX_KERNEL_SCHED_H
 
-#define TASK_UNINTERRUPTIBLE		0x00000002
+#include <alinix/err.h>
+#include <alinix/types.h>
+#include <alinix/kernel.h>
 
+struct adc_keys_button{
+    u32 voltage;
+    u32 keycode;
+};
 
-#endif // __ALINIX_KERNEL_SCHED_H

@@ -29,6 +29,12 @@ struct api_context{
 };
 
 
+static void usb_api_blocking_completion(struct urb *urb){
+    struct api_context *ctx = urb->context;
+    ctx->status = urb->status;
+    
+}
+
 
 
 int usb_control_msg_send(struct usb_device *dev, u8 endpoint, u8 request,

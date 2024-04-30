@@ -11,6 +11,9 @@ enum irqchip_irq_state {
 	IRQCHIP_STATE_MASKED,		/* Is interrupt masked? */
 	IRQCHIP_STATE_LINE_LEVEL,	/* Is IRQ line high? */
 };
+typedef enum irqreturn irqreturn_t;
+
+typedef irqreturn_t (*irq_handler_t)(int, void *);
 
 struct irqaction {
 	irq_handler_t		handler;
@@ -29,8 +32,5 @@ struct irqaction {
 } ;
 
 
-typedef enum irqreturn irqreturn_t;
-
-typedef irqreturn_t (*irq_handler_t)(int, void *);
 
 #endif // __ALINIX_KERNEL_INTERRUPT_H

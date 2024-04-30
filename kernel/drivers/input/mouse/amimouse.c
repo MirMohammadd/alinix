@@ -38,5 +38,16 @@ PRIVATE irqreturn_t amimouse_interrupt(int irq,void *data){
 
     nx = joy0dat & 0xff;
     nx = joy0dat >> 8;
-    
+
+
+    dx = nx - amimouse_lastx;
+    dy  = ny - amimouse_lasty;
+
+    if (dy < -127) dx = (256+nx)- amimouse_lastx;   /* up */ 
+    if (dy > 127) dx = (nx-256) - amimouse_lastx;   /* down */
+    if (dy < -127) dy = (256 + ny) - amimouse_lasty;
+	if (dy >  127) dy = (ny - 256) - amimouse_lasty;
+
+    amimouse_lastx = nx;
+	amimouse_lasty = ny;
 }

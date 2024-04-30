@@ -1,3 +1,19 @@
+/**
+ ** This file is part of AliNix.
+
+**AliNix is free software: you can redistribute it and/or modify
+**it under the terms of the GNU Affero General Public License as published by
+**the Free Software Foundation, either version 3 of the License, or
+**(at your option) any later version.
+
+**AliNix is distributed in the hope that it will be useful,
+**but WITHOUT ANY WARRANTY; without even the implied warranty of
+**MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+**GNU Affero General Public License for more details.
+
+**You should have received a copy of the GNU Affero General Public License
+**along with AliNix. If not, see <https://www.gnu.org/licenses/>.
+*/
 #ifndef __ALINIX_KERNEL_INPUT_H
 #define __ALINIX_KERNEL_INPUT_H
 
@@ -10,6 +26,15 @@
 
 
 struct input_handler;
+
+struct input_mt {
+	int trkid;
+	int num_slots;
+	int slot;
+	unsigned int flags;
+	unsigned int frame;
+	int *red;
+};
 
 struct input_keymap_entry {
 #define INPUT_KEYMAP_BY_INDEX	(1 << 0)
@@ -140,6 +165,45 @@ struct input_handler {
 	struct list_head	h_list;
 	struct list_head	node;
 };
+
+
+void input_event(struct input_dev *dev, unsigned int type, unsigned int code, int value);
+void input_inject_event(struct input_handle *handle, unsigned int type, unsigned int code, int value);
+
+static inline void input_report_key(struct input_dev *dev, unsigned int code, int value)
+{
+	input_event(dev, EV_KEY, code, !!value);
+}
+
+static inline void input_report_rel(struct input_dev *dev, unsigned int code, int value)
+{
+	input_event(dev, EV_REL, code, value);
+}
+
+static inline void input_report_abs(struct input_dev *dev, unsigned int code, int value)
+{
+	input_event(dev, EV_ABS, code, value);
+}
+
+static inline void input_report_ff_status(struct input_dev *dev, unsigned int code, int value)
+{
+	input_event(dev, EV_FF_STATUS, code, value);
+}
+
+static inline void input_report_switch(struct input_dev *dev, unsigned int code, int value)
+{
+	input_event(dev, EV_SW, code, !!value);
+}
+
+static inline void input_sync(struct input_dev *dev)
+{
+	input_event(dev, EV_SYN, SYN_REPORT, 0);
+}
+
+static inline void input_mt_sync(struct input_dev *dev)
+{
+	input_event(dev, EV_SYN, SYN_MT_REPORT, 0);
+}
 
 
 

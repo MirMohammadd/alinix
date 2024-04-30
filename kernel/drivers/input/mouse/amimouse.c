@@ -23,6 +23,7 @@
 #include <alinix/string.h>
 #include <alinix/irqreturn.h>
 #include <alinix/input.h>
+#include <alinix/arch/amigaw.h>
 
 PRIVATE int amimouse_lastx, amimouse_lasty;
 
@@ -52,4 +53,23 @@ PRIVATE irqreturn_t amimouse_interrupt(int irq,void *data){
 	amimouse_lasty = ny;
 
     // input_report_key(dev,BTN_LEFT,)
+    input_report_rel(dev,REL_X,dx);
+    input_report_rel(dev,REL_Y,-dy);
+
+    input_report_key(dev, BTN_LEFT,   ciaa.pra & 0x40);
+	input_report_key(dev, BTN_MIDDLE, potgor & 0x0100);
+	input_report_key(dev, BTN_RIGHT,  potgor & 0x0400);
+
+    input_sync(dev);
+
+}
+
+PRIVATE int amimouse_open(struct input_dev *dev){
+    unsigned short joy0dat;
+	int error;
+
+	joy0dat = amiga_custom.joy0dat;
+
+	amimouse_lastx = joy0dat & 0xff;
+	amimouse_lasty = joy0dat >> 8;
 }

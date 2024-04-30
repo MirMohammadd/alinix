@@ -1,6 +1,7 @@
 #include <alinix/kernel.h>
 #include <alinix/interrupt.h>
 #include <alinix/memory.h>
+#include <alinix/settings.h>
 
 const void *free_irq(unsigned int irq, void *dev_id)
 {
@@ -16,7 +17,7 @@ const void *free_irq(unsigned int irq, void *dev_id)
 		desc->affinity_notify = NULL;
 #endif
 
-	action = __free_irq(desc, dev_id);
+	// action = __free_irq(desc, dev_id);
 
 	if (!action)
 		return NULL;

@@ -32,5 +32,11 @@ PRIVATE irqreturn_t amimouse_interrupt(int irq,void *data){
      *        It reads data from mouse device and calculate the movement distance.
     */
 
+    struct input_dev *dev = data; // Convert the data?
+    unsigned short joy0dat, potgor;
+	int nx, ny, dx, dy;
 
+    nx = joy0dat & 0xff;
+    nx = joy0dat >> 8;
+    
 }

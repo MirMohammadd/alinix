@@ -24,6 +24,17 @@
 #define MAX_TOUCHES 4
 
 
+#define ALPS_PROTO_V1		0x100
+#define ALPS_PROTO_V2		0x200
+#define ALPS_PROTO_V3		0x300
+#define ALPS_PROTO_V3_RUSHMORE	0x310
+#define ALPS_PROTO_V4		0x400
+#define ALPS_PROTO_V5		0x500
+#define ALPS_PROTO_V6		0x600
+#define ALPS_PROTO_V7		0x700	/* t3btl t4s */
+#define ALPS_PROTO_V8		0x800	/* SS4btl SS4s */
+#define ALPS_PROTO_V9		0x900	/* ss3btl */
+
 struct alps_nibble_commands{
     int command;
     unsigned char data;
@@ -53,6 +64,18 @@ struct alps_fields {
 	unsigned int ts_left:1;
 	unsigned int ts_right:1;
 	unsigned int ts_middle:1;
+};
+
+
+struct alps_protocol_info {
+	u16 version;
+	u8 byte0, mask0;
+	unsigned int flags;
+};
+
+struct alps_model_info {
+	u8 signature[3];
+	struct alps_protocol_info protocol_info;
 };
 
 #endif

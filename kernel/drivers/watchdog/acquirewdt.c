@@ -19,8 +19,10 @@
 #include <alinix/types.h>
 #include <alinix/err.h>
 #include <alinix/platfrom_device.h>
+#include <alinix/watchdog.h>
+#include <alinix/port.h>
 
-
+#define WATCHDOG_MINOR 130
 
 /* Module information */
 #define DRV_NAME "acquirewdt"
@@ -37,3 +39,39 @@ static char expect_close;
 /* module parameters */
 /* You must set this - there is no sane way to probe for this board. */
 static int wdt_stop = 0x43;
+/* You must set this - there is no sane way to probe for this board. */
+static int wdt_start = 0x443;
+
+static bool nowayout = WATCHDOG_NOWAYOUT;
+
+PRIVATE VOID acq_keepalive(NO_ARGS){
+    /* Write a watchdog value*/
+    inportb(wdt_start);
+
+}
+
+PRIVATE VOID acq_stop(NO_ARGS){
+    inportb(wdt_stop); // Make it stop
+}
+
+static ssize_t acq_write( const char  *buf,
+						size_t count, loff_t *ppos);
+
+
+PRIVATE int acq_probe(struct platform_device *dev){
+    int ret;
+
+    if (wdt_start != wdt_stop){
+        perror("I/O address 0x%04x already in use\n", wdt_stop);
+        ret = -5;
+        goto out;
+    }
+
+    if (ret != 0)
+        perror("cannot register miscdev on minor=%d (err=%d)\n",
+		       WATCHDOG_MINOR, ret);
+
+    out:
+        return ret;
+
+}

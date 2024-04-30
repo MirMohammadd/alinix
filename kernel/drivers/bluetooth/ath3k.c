@@ -32,6 +32,7 @@
 
 #define ENOMEM 12
 #define BULK_SIZE 1024 // Buffer to allocate size
+#define BUFSIZ 1024
 
 #define VERSION "1.0"
 #define ATH3K_FIRMWARE	"ath3k-1.fw"

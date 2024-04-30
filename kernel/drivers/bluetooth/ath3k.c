@@ -193,3 +193,7 @@ static const struct usb_device_id ath3k_blist_tbl[] = {
 
 	{ }	/* Terminating entry */
 };
+
+PRIVATE __always_inline VOID ath3k_log_failed_loading(int err,int len,int size,int count){
+    perror("Firmware loading err = %d, len %d size = %d, count = %d",err,len,size,count);
+}

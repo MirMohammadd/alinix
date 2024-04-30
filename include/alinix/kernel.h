@@ -88,6 +88,7 @@ void print(char* str,...);
 #define pr_notice print
 #define WARN  pr_warn
 #define pr_err  printk
+#define perror print
 
 
 #endif /*_ALINIX_KERNEL_KERNEL_H__*/

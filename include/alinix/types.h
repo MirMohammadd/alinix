@@ -160,7 +160,10 @@ struct hlist_head {
 };
 
 
-
+typedef struct raw_spinlock {
+	unsigned int magic, owner_cpu;
+	void *owner;
+} raw_spinlock_t;
 
 
 

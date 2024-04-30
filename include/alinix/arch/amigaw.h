@@ -8,6 +8,130 @@
 #define ZTWO_PADDR(x) (((unsigned long)(x))-zTwoBase)
 #define ZTWO_VADDR(x) ((void *)(((unsigned long)(x))+zTwoBase))
 
+
+
+
+struct CUSTOM {
+    unsigned short bltddat;
+    unsigned short dmaconr;
+    unsigned short vposr;
+    unsigned short vhposr;
+    unsigned short dskdatr;
+    unsigned short joy0dat;
+    unsigned short joy1dat;
+    unsigned short clxdat;
+    unsigned short adkconr;
+    unsigned short pot0dat;
+    unsigned short pot1dat;
+    unsigned short potgor;
+    unsigned short serdatr;
+    unsigned short dskbytr;
+    unsigned short intenar;
+    unsigned short intreqr;
+    unsigned char  *dskptr;
+    unsigned short dsklen;
+    unsigned short dskdat;
+    unsigned short refptr;
+    unsigned short vposw;
+    unsigned short vhposw;
+    unsigned short copcon;
+    unsigned short serdat;
+    unsigned short serper;
+    unsigned short potgo;
+    unsigned short joytest;
+    unsigned short strequ;
+    unsigned short strvbl;
+    unsigned short strhor;
+    unsigned short strlong;
+    unsigned short bltcon0;
+    unsigned short bltcon1;
+    unsigned short bltafwm;
+    unsigned short bltalwm;
+    unsigned char  *bltcpt;
+    unsigned char  *bltbpt;
+    unsigned char  *bltapt;
+    unsigned char  *bltdpt;
+    unsigned short bltsize;
+    unsigned char  pad2d;
+    unsigned char  bltcon0l;
+    unsigned short bltsizv;
+    unsigned short bltsizh;
+    unsigned short bltcmod;
+    unsigned short bltbmod;
+    unsigned short bltamod;
+    unsigned short bltdmod;
+    unsigned short spare2[4];
+    unsigned short bltcdat;
+    unsigned short bltbdat;
+    unsigned short bltadat;
+    unsigned short spare3[3];
+    unsigned short deniseid;
+    unsigned short dsksync;
+    unsigned short *cop1lc;
+    unsigned short *cop2lc;
+    unsigned short copjmp1;
+    unsigned short copjmp2;
+    unsigned short copins;
+    unsigned short diwstrt;
+    unsigned short diwstop;
+    unsigned short ddfstrt;
+    unsigned short ddfstop;
+    unsigned short dmacon;
+    unsigned short clxcon;
+    unsigned short intena;
+    unsigned short intreq;
+    unsigned short adkcon;
+    struct {
+	unsigned short	*audlc;
+	unsigned short audlen;
+	unsigned short audper;
+	unsigned short audvol;
+	unsigned short auddat;
+	unsigned short audspare[2];
+    } aud[4];
+    unsigned char  *bplpt[8];
+    unsigned short bplcon0;
+    unsigned short bplcon1;
+    unsigned short bplcon2;
+    unsigned short bplcon3;
+    unsigned short bpl1mod;
+    unsigned short bpl2mod;
+    unsigned short bplcon4;
+    unsigned short clxcon2;
+    unsigned short bpldat[8];
+    unsigned char  *sprpt[8];
+    struct {
+	unsigned short pos;
+	unsigned short ctl;
+	unsigned short dataa;
+	unsigned short datab;
+    } spr[8];
+    unsigned short color[32];
+    unsigned short htotal;
+    unsigned short hsstop;
+    unsigned short hbstrt;
+    unsigned short hbstop;
+    unsigned short vtotal;
+    unsigned short vsstop;
+    unsigned short vbstrt;
+    unsigned short vbstop;
+    unsigned short sprhstrt;
+    unsigned short sprhstop;
+    unsigned short bplhstrt;
+    unsigned short bplhstop;
+    unsigned short hhposw;
+    unsigned short hhposr;
+    unsigned short beamcon0;
+    unsigned short hsstrt;
+    unsigned short vsstrt;
+    unsigned short hcenter;
+    unsigned short diwhigh;
+    unsigned short spare4[11];
+    unsigned short fmode;
+};
+
+
+
 struct CIA {
     unsigned char pra;		char pad0[0xff];
     unsigned char prb;		char pad1[0xff];
@@ -26,6 +150,9 @@ struct CIA {
     unsigned char crb;		char pade[0xff];
 };
 
+
+#define CUSTOM_PHYSADDR     (0xdff000)
+#define amiga_custom ((*(volatile struct CUSTOM *)(zTwoBase+CUSTOM_PHYSADDR)))
 
 struct pia {
 	union {

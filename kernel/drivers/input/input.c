@@ -31,7 +31,7 @@ static const struct input_value input_value_sync = { EV_SYN, SYN_REPORT, 1 };
 
 
 
-void input_event_dispose(struct input_dev *dev, int disposition,
+void input_event(struct input_dev *dev, int disposition,
 				unsigned int type, unsigned int code, int value)
 {
 	if ((disposition & INPUT_PASS_TO_DEVICE) && dev->event)

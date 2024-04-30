@@ -63,3 +63,13 @@ PRIVATE irqreturn_t amimouse_interrupt(int irq,void *data){
     input_sync(dev);
 
 }
+
+PRIVATE int amimouse_open(struct input_dev *dev){
+    unsigned short joy0dat;
+	int error;
+
+	joy0dat = amiga_custom.joy0dat;
+
+	amimouse_lastx = joy0dat & 0xff;
+	amimouse_lasty = joy0dat >> 8;
+}

@@ -23,6 +23,7 @@
 #include <alinix/string.h>
 #include <alinix/irqreturn.h>
 #include <alinix/input.h>
+#include <alinix/input.h>
 
 PRIVATE int amimouse_lastx, amimouse_lasty;
 

@@ -3,7 +3,6 @@
 
 #include <alinix/kernel.h>
 #include <alinix/assert.h>
-#include <pthread.h>
 #include <alinix/spinlock_types.h>
 
 

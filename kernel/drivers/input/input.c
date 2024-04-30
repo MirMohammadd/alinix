@@ -15,7 +15,8 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 #include <alinix/input.h>
-
+#include <alinix/ktime.h>
+#include <alinix/kernel.h>
 
 #define INPUT_IGNORE_EVENT	0
 #define INPUT_PASS_TO_HANDLERS	1
@@ -24,6 +25,8 @@
 #define INPUT_FLUSH		8
 #define INPUT_PASS_TO_ALL	(INPUT_PASS_TO_HANDLERS | INPUT_PASS_TO_DEVICE)
 static const struct input_value input_value_sync = { EV_SYN, SYN_REPORT, 1 };
+
+
 
 
 static void input_event_dispose(struct input_dev *dev, int disposition,
@@ -52,8 +55,8 @@ static void input_event_dispose(struct input_dev *dev, int disposition,
 	}
 
 	if (disposition & INPUT_FLUSH) {
-		if (dev->num_vals >= 2)
-			input_pass_values(dev, dev->vals, dev->num_vals);
+		// if (dev->num_vals >= 2)
+			// input_pass_values(dev, dev->vals, dev->num_vals);
 		dev->num_vals = 0;
 		/*
 		 * Reset the timestamp on flush so we won't end up

@@ -22,6 +22,8 @@
 #include <alinix/types.h>
 #include <alinix/mutex_types.h>
 #include <alinix/device.h>
+#include <alinix/irq.h>
+#include <alinix/list.h>
 
 
 #define CONFIG_IIO_CONSUMERS_PER_TRIGGER 32 /* Maximum number of consumers per trigger */
@@ -78,7 +80,7 @@ struct iio_trigger {
 	unsigned long pool[CONFIG_IIO_CONSUMERS_PER_TRIGGER];
 	struct mutex			pool_lock;
 	bool				attached_own_device;
-	struct work_struct		reenable_work;
+	// struct work_struct		reenable_work;
 };
 
 

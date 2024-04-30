@@ -26,7 +26,7 @@ LINKER_SCRIPT = ../kernel/linker.ld
 all: $(TARGET)
 
 $(TARGET): $(OBJFILES)
-	mkdir -p $(BINDIR)
+	mkdir -p $(@D)
 	i686-elf-ld $(LDFLAGS) -T $(LINKER_SCRIPT) $< -o $@ $(OBJDIR)
 
 $(OBJDIR)/%.o: %.c

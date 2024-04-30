@@ -14,10 +14,13 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
-#ifndef __ALINIX_KERNEL_SCHED_H
-#define __ALINIX_KERNEL_SCHED_H
 
-#define TASK_UNINTERRUPTIBLE		0x00000002
+/*
+ * Definitions for ALPS version 3 and 4 command mode protocol
+ */
+#define ALPS_CMD_NIBBLE_10	0x01f2
 
+#define ALPS_REG_BASE_RUSHMORE	0xc2c0
+#define ALPS_REG_BASE_V7	0xc2c0
+#define ALPS_REG_BASE_PINNACLE	0x0000
 
-#endif // __ALINIX_KERNEL_SCHED_H

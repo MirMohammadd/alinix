@@ -1,53 +1,44 @@
-# Alinix Kernel Project, Licenced under GNU affero GPL, see file LICENSE for more information
+# AliNix kernel Makefile for the drivers directory
 
-CONFIG = ../makefile.config
-include ${CONFIG}
+INCLUDEDIRS := ../include
 
-LIBINCLUDE := ../lib/include
-LIBDIR := ../lib
-DEBUG := -g
-LIBDRIVEINCLUDE = ../libdrive/include
+G++PARAMS := -m32 -g -D Alinix -I ../arch/mips/include -I $(INCLUDEDIRS) -I arch/mips/include -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
+GCCPARAMS := -m32 -g -D Alinix -I -I ../arch/mips/include $(INCLUDEDIRS) -I arch/mips/include -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas
+ASPARAMS := --32
+LDFLAGS := -m elf_i386
 
-G++PARAMS := -m32 $(DEBUG)  -I ../include -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) -I $(LIBDRIVEINCLUDE) -I ../kernel/include -Wall -I ../lib/include -I ../libdrive/include -fno-omit-frame-pointer -I ../libdrive/include -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
-GCCPARAMS := -m32 $(DEBUG) -I $(LIBINCLUDE) $(OPTIMIZE_FLAGS) -I $(LIBDRIVEINCLUDE) -I ../kernel/include -Wall -I ../lib/include -I ../libdrive/include -fno-omit-frame-pointer -nostdlib -fno-builtin -fleading-underscore -Wno-unknown-pragmas
-LDPARAMS := -m elf_i386
+SRC_DIR = . 
 
-USB_DIR := net usb3
+SRCFILES := $(shell find $(SRC_DIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) #Find all the files in usb3 that end with .cpp/.s/.asm/.c
+OBJFILES := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(SRCFILES))))) #Replace the .cpp/.s/.asm/.c extension with .o
 
-SRCFILES := $(shell find $(USB_DIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) # Find all the files in usb3 that end with .cpp/.s/.asm/.c
-OBJFILES := $(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(SRCFILES))))) # Replace the .cpp/.s/.asm/.c extension with .o
+TARGET = ../Alinix.bin
+BINDIR = ../kernel/obj
+OBJDIR = ../kernel/obj
 
-APPOUT := ../isofiles/drivers
+KRNLOBJDIR := ../kernel/obj
+KRNLSRCDIR := ../kernel
+
+KRNLFILES := $(shell find $(KRNLSRCDIR) -type f \( -name \*.cpp -o -name \*.s -o -name \*.asm -o -name \*.c \)) #Find all the files that end with .cpp/.s/.asm/.c
+KRNLOBJS := $(patsubst $(KRNLSRCDIR)/%,$(KRNLOBJDIR)/%,$(patsubst %.cpp,%.o,$(patsubst %.s,%.o,$(patsubst %.asm,%.o,$(patsubst %.c,%.o,$(KRNLFILES)))))) #Replace the .cpp/.s/.asm/.c extension with .o
+
+
+
+CC = gcc
+CFLAGS = -m32 -g -D Alinix -I ../arch/mips/include -I $(INCLUDEDIRS) -I arch/mips/include -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas
 
 .PHONY: all clean
 
-all: $(OBJS)
-	$(foreach obj, $(OBJS), \
-		app_name=$$(basename $(obj) .o); \
-		app_bin=$(BINDIR)/$$app_name.bin; \
-		app_dir=$$(dirname $$app_bin); \
-		mkdir -p $$app_dir; \
-		echo building $$app_name.bin to $$app_bin; \
-		i686-elf-ld $(LDPARAMS) -T linker.ld -o $$app_bin $(obj) -L$(LIBDIR); \
-		nm -a $$app_bin | sort -d > $(BINDIR)/$$app_name.sym; \
-	)
+LINKER_SCRIPT = ../kernel/linker.ld
 
+all: $(TARGET)
+
+$(TARGET): $(OBJFILES)
+	mkdir -p $(@D)
+	i686-elf-ld $(LDFLAGS) -T $(LINKER_SCRIPT) $< -o $@ $(KRNLOBJS)
+
+$(OBJDIR)/%.o: %.c
+	i686-elf-gcc $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(OBJFILES)
-
-%.o: %.cpp
-	mkdir -p $(@D)
-	i686-elf-g++ $(G++PARAMS) -c -o $@ $<
-
-%.o: %.c
-	mkdir -p $(@D)
-	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
-
-%.o: %.asm
-	mkdir -p $(@D)
-	nasm -f elf32 -O0 $< -o $@
-
-%.o: %.s
-	mkdir -p $(@D)
-	i686-elf-as --32 -o $@ $<
+	rm -rf $(OBJDIR)/*.o $(BINDIR)/$(TARGET)

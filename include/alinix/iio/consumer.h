@@ -14,10 +14,30 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
-#ifndef __ALINIX_KERNEL_SCHED_H
-#define __ALINIX_KERNEL_SCHED_H
-
-#define TASK_UNINTERRUPTIBLE		0x00000002
+#ifndef __ALINIX_KERNEL_IIO_CONSUMER_H
+#define __ALINIX_KERNEL_IIO_CONSUMER_H
 
 
-#endif // __ALINIX_KERNEL_SCHED_H
+#include <alinix/types.h>
+#include <alinix/device.h>
+
+struct iio_dev;
+struct iio_chan_spec;
+struct device;
+struct fwnode_handle;
+
+
+struct iio_dev{
+    int     modes;
+    struct device dev;
+    struct iio_buffer		*buffer;
+    CONSTANT unsigned long *available_scan_masks;
+    unsigned mask_length;
+    const unsigned long		*active_scan_mask;
+    bool scanTimeStamp;
+    
+};
+
+
+
+#endif // __ALINIX_KERNEL_IIO_CONSUMER_H

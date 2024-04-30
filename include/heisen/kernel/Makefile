@@ -8,7 +8,8 @@ CC = gcc
 LD = ld
 NASM = nasm
 CFLAGS := -std=c99 -fno-pic -static -fno-builtin -nostdinc -fno-strict-aliasing -O2 -Wall -m32 -MD -Wextra -fno-omit-frame-pointer -fno-stack-protector
-LDFLAGS := -melf_i386 --oformat binary
+LDFLAGS := -m elf_i386
+
 
 KERNELOBJS = load.o x86.o cli.o hwio.o kernel.o pci.o fs.o net.o sound.o $(ULIBDIR)ulib.o
 

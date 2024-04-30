@@ -22,6 +22,7 @@
 #include <alinix/spinlock_types.h>
 #include <alinix/compiler_types.h>
 
+void kobject_put(struct kobject *kobj);
 
 
 enum kobject_action {
@@ -70,6 +71,5 @@ static inline void kset_put(struct kset *k)
 
 
 
-void kobject_put(struct kobject *kobj);
 
 #endif

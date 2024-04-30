@@ -16,14 +16,23 @@
 */
 
 #include <alinix/kernel.h>
+#include <alinix/firmware.h>
 #include "bluetooth.h"
 #include "btbcm.h"
 #include "hci_core.h"
 #include "mod_devicetable.h"
+#include <alinix/memory.h>
+#include <alinix/ulib.h>
+#include <alinix/usb.h>
+
 
 /**
  * @ref https://github.com/torvalds/linux/blob/master/drivers/bluetooth/ath3k.c
 */
+
+#define ENOMEM 12
+#define BULK_SIZE 1024 // Buffer to allocate size
+#define BUFSIZ 1024
 
 #define VERSION "1.0"
 #define ATH3K_FIRMWARE	"ath3k-1.fw"
@@ -196,4 +205,29 @@ static const struct usb_device_id ath3k_blist_tbl[] = {
 
 PRIVATE __always_inline VOID ath3k_log_failed_loading(int err,int len,int size,int count){
     perror("Firmware loading err = %d, len %d size = %d, count = %d",err,len,size,count);
+}
+
+#define USB_REQ_DFU_DNLOAD	1
+#define BULK_SIZE		4096
+#define FW_HDR_SIZE		20
+#define TIMEGAP_USEC_MIN	50
+#define TIMEGAP_USEC_MAX	100
+
+static int ath3k_load_firmware(struct usb_device *udev,const struct firmware* firmware){
+    ////////////////////////////////
+    // Sending buffer
+    u8 *sendBuf;
+    int len = 0;
+    int err, pipe, size, sent = 0;
+	int count = firmware->size;
+    ////////////////////////////////
+    print("udev %d",udev);
+
+    sendBuf = (u8 *)malloc(BUFSIZ);
+
+    if (!sendBuf){
+        print("Can't allocate memory chunk for firmware");
+        return -ENOMEM;
+
+    }
 }

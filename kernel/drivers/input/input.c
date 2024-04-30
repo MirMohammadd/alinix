@@ -18,6 +18,7 @@
 #include <alinix/ktime.h>
 #include <alinix/kernel.h>
 #include <alinix/compiler.h>
+#include <alinix/arch/amigaw.h>
 
 #define INPUT_IGNORE_EVENT	0
 #define INPUT_PASS_TO_HANDLERS	1

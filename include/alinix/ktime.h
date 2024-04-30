@@ -3,6 +3,7 @@
 
 #include <alinix/types.h>
 #include <alinix/compiler.h>
+#include <alinix/kernel.h>
 
 #define PSEC_PER_NSEC			1000L
 

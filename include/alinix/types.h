@@ -23,7 +23,7 @@
 #include <alinix/_types.h>
 #include <alinix/enums.h>
 
-
+typedef unsigned int  gfp_t;
 typedef char                        int8_t;
 typedef unsigned char               uint8_t;
 typedef short                       int16_t;

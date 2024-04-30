@@ -16,7 +16,6 @@
 */
 
 #include <alinix/kernel.h>
-#include <alinix/usb/hidparser.h>
 #include <alinix/firmware.h>
 #include "bluetooth.h"
 #include "btbcm.h"
@@ -228,6 +227,6 @@ static int ath3k_load_firmware(struct usb_device *udev,const struct firmware* fi
     if (!sendBuf){
         print("Can't allocate memory chunk for firmware");
         return -ENOMEM;
-        
+
     }
 }

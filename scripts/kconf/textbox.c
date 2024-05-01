@@ -67,3 +67,25 @@ static void print_line(WINDOW *win, int row, int width){
     wclrtoeol(win);
 }
 
+static void print_page(WINDOW *win, int height, int width){
+    int i,passed_end = 0;
+
+    page_length = 0;
+    print_line(win,i,width);
+    if (!passed_end)
+        page_length++;
+     if (!end_reached && passed_end)
+        passed_end = 1;
+    wnoutrefresh(win);
+}
+
+
+static void print_position(WINDOW *win){
+    int percent;
+    	wattrset(win, dlg.position_indicator.atr);
+	wbkgdset(win, dlg.position_indicator.atr & A_COLOR);
+	percent = (page - buf) * 100 / strlen(buf);
+	wmove(win, getmaxy(win) - 3, getmaxx(win) - 9);
+	wprintw(win, "(%3d%%)", percent);
+}
+

@@ -1,4 +1,6 @@
 #include <alinix/kernel.h>
+#include <alinix/skbuff.h>
+
 
 const char *const audit_mode_names[] = {
 	"normal",
@@ -53,4 +55,10 @@ static const char *const aa_class_names[] = {
 	"unknown",
 	"X",
 	"dbus",
+};
+
+struct audit_buffer {
+	struct sk_buff       *skb;	/* formatted skb ready to send */
+	struct audit_context *ctx;	/* NULL or associated context */
+	gfp_t		     gfp_mask;
 };

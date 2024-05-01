@@ -19,5 +19,8 @@
 
 #define TASK_UNINTERRUPTIBLE		0x00000002
 
+enum {
+	TASK_COMM_LEN = 16,
+};
 
 #endif // __ALINIX_KERNEL_SCHED_H

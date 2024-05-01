@@ -31,7 +31,7 @@ typedef struct multiboot_info_header{
 
 
 
-#include <alinix/physicalmemory.h>
+#include <alinix/physicalmemory.h> // This should be for Memory management.
 
 
 #endif // 

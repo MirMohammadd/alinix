@@ -103,3 +103,28 @@ void clear(){
         *(vram.ram+i) = (uint16_t) 3872;
     }
 }
+
+// Start accessing the computer video hardware
+void vbe_init(multiboot_info_t *info){
+    vbe_controller_info_t *vbe_contr = (vbe_controller_info_t *) info->vbe_control_info;
+    vbe_mode_info_t *vbe_mode = (vbe_mode_info_t *) info->vbe_mode_info;
+
+    vbemem.buffer_size = vbe_mode->width * vbe_mode->height * (vbe_mode->bpp / 8);
+    vbemem.mem = (uint32_t *) vbe_mode->framebuffer;
+    vbemem.xres = vbe_mode->width;
+    vbemem.yres = vbe_mode->height;
+    vbemem.bpp = vbe_mode->bpp;
+    vbemem.pitch = vbe_mode->pitch;
+
+    if (!vbe_mode->framebuffer || vbe_contr->version <= 0x0200 || !(vbe_mode->attributes & 0x8)){
+        if(vbe_mode->width != 80 && vbe_mode->height != 25) {
+            regs16_t regs;
+            regs.ax = 0x3;
+            int32(0x10, &regs);
+        }else{
+            uint32_t addr = (uint32_t)vbe_mode->framebuffer;
+            uint32_t addr_buf = addr + vbemem.buffer_size;
+            vbemem.buffer = (uint32_t *) addr_buf;
+        }
+    }
+}

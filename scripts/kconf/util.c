@@ -3,7 +3,9 @@
 #include <ctype.h>
 
 
-
+struct dialog_list *item_cur;
+struct dialog_list item_nil;
+struct dialog_list *item_head;
 /* Needed in signal handler in mconf.c */
 int saved_x, saved_y;
 
@@ -568,9 +570,7 @@ int on_key_resize(void)
 	return KEY_RESIZE;
 }
 
-struct dialog_list *item_cur;
-struct dialog_list item_nil;
-struct dialog_list *item_head;
+
 
 void item_reset(void)
 {
@@ -691,4 +691,16 @@ int item_is_selecteditem_is_selected(void)
 int item_is_tag(char tag)
 {
 	return (item_cur->node.tag == tag);
+}
+
+
+int zconf_lineno(void)
+{
+	return 0;
+}
+
+
+int item_is_selected(void)
+{
+	return (item_cur->node.selected != 0);
 }

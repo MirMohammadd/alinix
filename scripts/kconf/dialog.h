@@ -4,7 +4,7 @@
 #include <ncurses.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include "util.h"
 
 #define KEY_ESC 27
 

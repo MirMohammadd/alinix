@@ -16,6 +16,12 @@ void printMenu(WINDOW *menu_win, int highlight){
             mvwprintw(menu_win, y, x, "%s", choices[i]);
             wattroff(menu_win, COLOR_PAIR(1));
             wattroff(menu_win, A_REVERSE);
-        } // Needs to be printed
+        }         else
+        {
+            mvwprintw(menu_win, y, x, "%s", choices[i]);
+        }// Needs to be printed
+        ++y;
     }
+    wrefresh(menu_win);
 }
+

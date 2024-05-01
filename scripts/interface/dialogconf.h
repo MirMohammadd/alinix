@@ -25,5 +25,6 @@ static int n_choices = sizeof(choices) / sizeof(char *);
 
 void printMenu(WINDOW *menu_win, int highlight);
 void printTitle();
+int getInterfaceScreenSize();
 
 #endif // __SCRIPTS_INTERNAL_DIALOG_H

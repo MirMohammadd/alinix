@@ -104,6 +104,12 @@ int main()
         printMenu(menu_win, highlight);
         if (choice != 0) /* User did a choice come out of the infinite loop */
             break;
+        
+        switch (choice){
+            case 1:
+                endwin(); // Exit ncurses mode
+                return 0; // Exit the program
+        }
     }
 
     mvprintw(LINES - 1, 0, "You chose choice %d with choice string %s\n", choice, choices[choice - 1]);

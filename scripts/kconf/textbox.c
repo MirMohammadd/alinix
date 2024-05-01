@@ -31,3 +31,28 @@ static void back_lines(int n){
         page++;
     }
 }
+
+static char *get_line(void){
+    int i = 0;
+    static char line[MAX_LEN + 1];
+    
+    end_reached = 0;
+    while (*page != '\n'){
+        if (*page == '\0'){
+            end_reached = 1;
+            break;
+        } else if (i < MAX_LEN){
+            line[i++] = *(page++);
+        }else {
+            if (i == MAX_LEN){
+                line[i] = '\0';
+            
+            if (!end_reached)
+                page++;
+            }
+        }
+
+    }
+    return line;
+}
+

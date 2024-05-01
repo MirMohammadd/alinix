@@ -25,6 +25,7 @@
 
 #define ATOMIC_INIT(i) { (i) }
 
+typedef int pid_t;
 typedef unsigned long irq_hw_number_t;
 typedef unsigned int  gfp_t;
 typedef char                        int8_t;

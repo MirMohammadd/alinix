@@ -44,7 +44,7 @@ struct sk_buff{
     union {
         struct {
             unsigned long _skb_refdst;
-            sk_buff *skb;
+            struct sk_buff *skb;
         };
         struct list_head	tcp_tsorted_anchor;
     };

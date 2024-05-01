@@ -2,6 +2,11 @@
 #define __ALINIX_KRL_SECURITY_APP_ARMOR_H
 
 
+#define AA_CLASS_X		31
+#define AA_CLASS_DBUS		32
+
+#define AA_CLASS_LAST		AA_CLASS_DBUS
+
 #include <alinix/types.h>
 
 struct apparmor_audit_data {

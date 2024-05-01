@@ -6,10 +6,13 @@
 
 #define KEY_ESC 27
 
+#define item_foreach() \
+	for (item_cur = item_head ? item_head: item_cur; \
+	     item_cur && (item_cur != &item_nil); item_cur = item_cur->next)
 
 #define MIN(x,y) (x < y ?x:y)
 #define MAX(x,y) (x > y ? x : y)
-
+#define MAX_LEN 2048
 #define WIDTH 30
 #define HEIGHT 10
 
@@ -17,6 +20,20 @@ int startx = 0;
 int starty = 0;
 
 
+/* minimum (re)size values */
+#define CHECKLIST_HEIGTH_MIN 6	/* For dialog_checklist() */
+#define CHECKLIST_WIDTH_MIN 6
+#define INPUTBOX_HEIGTH_MIN 2	/* For dialog_inputbox() */
+#define INPUTBOX_WIDTH_MIN 2
+#define MENUBOX_HEIGTH_MIN 15	/* For dialog_menu() */
+#define MENUBOX_WIDTH_MIN 65
+#define TEXTBOX_HEIGTH_MIN 8	/* For dialog_textbox() */
+#define TEXTBOX_WIDTH_MIN 8
+#define YESNO_HEIGTH_MIN 4	/* For dialog_yesno() */
+#define YESNO_WIDTH_MIN 4
+#define WINDOW_HEIGTH_MIN 19	/* For init_dialog() */
+#define WINDOW_WIDTH_MIN 80
+#define ERRDISPLAYTOOSMALL (KEY_MAX + 1)
 
 
 
@@ -80,7 +97,19 @@ void inline setTitle(){
     attroff(COLOR_PAIR(2));
     attroff(A_BOLD);
 }
+#define MAXITEMSTR 200
 
+struct dialog_item {
+	char str[MAXITEMSTR];	/* prompt displayed */
+	char tag;
+	void *data;	/* pointer to menu item - used by menubox+checklist */
+	int selected;	/* Set to 1 by dialog_*() function if selected. */
+};
+
+struct dialog_list {
+	struct dialog_item node;
+	struct dialog_list *next;
+};
 
 int init_dialog(const char *backtitle);
 void set_dialog_backtitle(const char *backtitle);

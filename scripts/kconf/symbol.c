@@ -10,6 +10,16 @@
 #include <regex.h>
 
 #include "lkc.h"
+#include "dialog.h"
+#include "util.h"
+
+
+
+
+struct dialog_list *item_cur;
+struct dialog_list item_nil;
+struct dialog_list *item_head;
+
 
 struct symbol symbol_yes = {
 	.name = "y",
@@ -1277,3 +1287,13 @@ const char *prop_get_type_name(enum prop_type type)
 	}
 	return "unknown";
 }
+
+
+void conf_parse(const char *name)
+{
+	return;
+}
+int dialog_checklist(const char *title, const char *prompt, int height,
+		     int width, int list_height){
+				return 1;
+			 }

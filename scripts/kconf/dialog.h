@@ -20,8 +20,8 @@
 #define TAB 9
 
 
-int startx = 0;
-int starty = 0;
+static int startx = 0;
+static int starty = 0;
 
 
 /* minimum (re)size values */
@@ -49,7 +49,7 @@ struct dialog_color {
 };
 
 
-char* choices[] = {
+static char* choices[] = {
     "Compile Alinix Kernel with GCC cross compiler",
     "Exit"
 };

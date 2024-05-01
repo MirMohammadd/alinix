@@ -704,3 +704,61 @@ int item_is_selected(void)
 {
 	return (item_cur->node.selected != 0);
 }
+
+
+void dialog_clear(void)
+{
+	int lines, columns;
+
+	lines = getmaxy(stdscr);
+	columns = getmaxx(stdscr);
+
+	attr_clear(stdscr, lines, columns, dlg.screen.atr);
+	/* Display background title if it exists ... - SLH */
+	if (dlg.backtitle != NULL) {
+		int i, len = 0, skip = 0;
+		struct subtitle_list *pos;
+
+		wattrset(stdscr, dlg.screen.atr);
+		mvwaddstr(stdscr, 0, 1, (char *)dlg.backtitle);
+
+		for (pos = dlg.subtitles; pos != NULL; pos = pos->next) {
+			/* 3 is for the arrow and spaces */
+			len += strlen(pos->text) + 3;
+		}
+
+		wmove(stdscr, 1, 1);
+		if (len > columns - 2) {
+			const char *ellipsis = "[...] ";
+			waddstr(stdscr, ellipsis);
+			skip = len - (columns - 2 - strlen(ellipsis));
+		}
+
+		for (pos = dlg.subtitles; pos != NULL; pos = pos->next) {
+			if (skip == 0)
+				waddch(stdscr, ACS_RARROW);
+			else
+				skip--;
+
+			if (skip == 0)
+				waddch(stdscr, ' ');
+			else
+				skip--;
+
+			if (skip < strlen(pos->text)) {
+				waddstr(stdscr, pos->text + skip);
+				skip = 0;
+			} else
+				skip -= strlen(pos->text);
+
+			if (skip == 0)
+				waddch(stdscr, ' ');
+			else
+				skip--;
+		}
+
+		for (i = len + 1; i < columns - 1; i++)
+			waddch(stdscr, ACS_HLINE);
+	}
+	wnoutrefresh(stdscr);
+}

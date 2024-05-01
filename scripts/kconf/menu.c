@@ -13,6 +13,8 @@
 
 static const char nohelp_text[] = "There is no help available for this option.";
 
+struct menu *current_menu, *current_entry;
+
 struct menu rootmenu;
 static struct menu **last_entry_ptr;
 struct menu *current_menu;

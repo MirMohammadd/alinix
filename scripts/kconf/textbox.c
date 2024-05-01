@@ -56,3 +56,14 @@ static char *get_line(void){
     return line;
 }
 
+static void print_line(WINDOW *win, int row, int width){
+    char *line;
+
+    line = get_line();
+    line += MIN(strlen(line),hscroll);
+    wmove(win, row, 0);	/* move cursor to correct line */
+	waddch(win, ' ');
+	waddnstr(win, line, MIN(strlen(line), width - 2));
+    wclrtoeol(win);
+}
+

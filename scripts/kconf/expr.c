@@ -10,12 +10,16 @@
 #include <string.h>
 
 #include "lkc.h"
+#include "lkc_proto.h"
 #include "expr.h"
 
 #define DEBUG_EXPR	0
-
+struct symbol * symbol_hash[SYMBOL_HASHSIZE];
 static struct expr *expr_eliminate_yn(struct expr *e);
 static void expr_eliminate_dups1(enum expr_type type, struct expr **ep1, struct expr **ep2);
+
+
+struct symbol symbol_yes, symbol_no, symbol_mod;
 
 struct expr *expr_alloc_symbol(struct symbol *sym)
 {

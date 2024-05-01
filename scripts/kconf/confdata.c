@@ -19,7 +19,8 @@
 #include <unistd.h>
 
 #include "lkc.h"
-
+#include "expr.h"
+struct menu rootmenu;
 /* return true if 'path' exists, false otherwise */
 static bool is_present(const char *path)
 {

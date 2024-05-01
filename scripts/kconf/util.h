@@ -16,6 +16,7 @@ void item_reset(void);
 void item_set_selected(int val);
 void item_make(const char *fmt, ...);
 void item_add_str(const char *fmt, ...);
-
+const char *item_str(void);
 int item_is_selected(void);
+void item_set(int n);
 #endif /*__SCRIPTS_KCONF_UTIL_H*/

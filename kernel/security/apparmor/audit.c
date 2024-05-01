@@ -58,11 +58,6 @@ static const char *const aa_class_names[] = {
 	"dbus",
 };
 
-struct audit_buffer {
-	struct sk_buff       *skb;	/* formatted skb ready to send */
-	struct audit_context *ctx;	/* NULL or associated context */
-	gfp_t		     gfp_mask;
-};
 
 
 static void audit_pre(struct audit_buffer *ab, void *va){
@@ -81,6 +76,6 @@ static void audit_pre(struct audit_buffer *ab, void *va){
 
     if (ad->name){
         print("name = %s",ad->name);
-        
+
     }
 }

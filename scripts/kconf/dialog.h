@@ -4,6 +4,8 @@
 #include <ncurses.h>
 #include <stdlib.h>
 
+#define KEY_ESC 27
+
 
 #define MIN(x,y) (x < y ?x:y)
 #define MAX(x,y) (x > y ? x : y)

@@ -16,12 +16,16 @@
 */
 #include <alinix/video.h>
 #include <alinix/gui/window.h>
+#include <alinix/types.h>
 
 
 static int x;
 static int y;
 struct video_mem vram;
 struct vbe_mem vbemem;
+
+
+#define PRINT_K_BUFFER_SIZE 256
 
 void video_init(int h,int w){
     x = 0;
@@ -31,3 +35,7 @@ void video_init(int h,int w){
     vram.ram = (uint16_t *) 0xB8000; // Settle the RAM
 }
 
+void printk(char *buffer, ...){
+    char str[PRINT_K_BUFFER_SIZE];
+    va_list args;
+}

@@ -6,10 +6,23 @@
 #include <alinix/rbtree_types.h>
 #include <alinix/llist.h>
 #include <alinix/ktime.h>
+#include <alinix/spinlock.h>
+#include <alinix/spinlock_types.h>
 
 /**
  * @brief https://github.com/torvalds/linux/blob/master/include/linux/skbuff.h#L855
 */
+
+struct sk_buff;
+
+struct sk_buff_head {
+	/* These two members must be first to match sk_buff. */
+    struct sk_buff	*next;
+    struct sk_buff	*prev;
+
+	u32		qlen;
+	spinlock_t	lock;
+};
 
 struct sk_buff{
     union {

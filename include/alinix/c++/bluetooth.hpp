@@ -22,6 +22,8 @@
 #include <alinix/list.h>
 #include <alinix/gpio/desc.h>
 #include <alinix/clk.h>
+#include <alinix/skbuff.h>
+
 
 #define BCM_NULL_PKT 0x00
 #define BCM_NULL_SIZE 0
@@ -40,7 +42,12 @@
 #define BCM_NUM_SUPPLIES 2
 
 
+struct bcm_data {
+	struct sk_buff		*rx_skb;
+	struct sk_buff_head	txq;
 
+	struct bcm_device	*dev;
+};
 
 
 class Bluetooth{

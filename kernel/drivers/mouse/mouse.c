@@ -1,6 +1,7 @@
 #include <alinix/mouse.h>
 #include <alinix/types.h>
 #include <alinix/port.h>
+#include <alinix/idt.h>
 uint8_t mouse_cycle = 0;
 char mouse_byte[3];
 

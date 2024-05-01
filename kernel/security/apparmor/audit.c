@@ -1,6 +1,7 @@
 #include <alinix/kernel.h>
 #include <alinix/skbuff.h>
-
+#include <alinix/audit.h>
+#include <alinix/security/apparmor/audit.h>
 
 const char *const audit_mode_names[] = {
 	"normal",
@@ -62,3 +63,9 @@ struct audit_buffer {
 	struct audit_context *ctx;	/* NULL or associated context */
 	gfp_t		     gfp_mask;
 };
+
+
+static void audit_pre(struct audit_buffer *ab, void *va){
+    struct apparmor_audit_data *ad;
+
+}

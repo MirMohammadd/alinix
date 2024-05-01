@@ -7,7 +7,16 @@
 #include <alinix/list.h>
 #include <alinix/sched.h>
 
+struct audit_buffer {
+	struct sk_buff       *skb;	/* formatted skb ready to send */
+	struct audit_context *ctx;	/* NULL or associated context */
+	gfp_t		     gfp_mask;
+};
 
+
+#define AUDIT_OFF	0
+#define AUDIT_ON	1
+#define AUDIT_LOCKED	2
 
 #define AUDIT_NAMES	5
 

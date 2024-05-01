@@ -206,6 +206,17 @@ void draw_char(int x, int y, char *font_char) {
         }
     }
 }
+void draw_pixel(int x, int y, uint32_t color) {
+    if(x < 0 || x > vbemem.xres || y < 0 || y > vbemem.yres)
+        return;
+    x = x * (vbemem.bpp / 8);
+    y = y * vbemem.pitch;
+    
+    register uint8_t *pixel = (uint8_t *) ((uint32_t) vbemem.buffer) + x + y;
+    pixel[0] = color & 0xFF;
+    pixel[1] = (color >> 8) & 0xFF;
+    pixel[2] = (color >> 16) & 0xFF;
+}
 
 int is_text_mode() {
     if(vbemem.mem != 0) {

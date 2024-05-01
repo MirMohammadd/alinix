@@ -5,8 +5,8 @@
 #define HEAP_END 0x200000
 
 heap_info_t heap_info;
-extern uint32_t kernel_start;
-extern uint32_t kernel_end;
+uint32_t kernel_start;
+uint32_t kernel_end;
 /**
  * Init the kernel heap memory
  */

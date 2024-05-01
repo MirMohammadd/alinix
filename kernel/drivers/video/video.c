@@ -95,3 +95,11 @@ void printk_string(char *buffer){
         }
     }
 }
+
+
+void clear(){
+    x = y = 0;
+    for (int i = 0; i < vram.height;i++){
+        *(vram.ram+i) = (uint16_t) 3872;
+    }
+}

@@ -1,4 +1,6 @@
 #include "dialog.h"
+#include <string.h>
+#include "util.h"
 
 
 static int hscroll;

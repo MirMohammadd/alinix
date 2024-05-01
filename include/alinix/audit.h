@@ -7,7 +7,25 @@
 #include <alinix/list.h>
 #include <alinix/sched.h>
 
+
+
 #define AUDIT_NAMES	5
+
+enum audit_state {
+	AUDIT_STATE_DISABLED,	/* Do not create per-task audit_context.
+				 * No syscall-specific audit records can
+				 * be generated. */
+	AUDIT_STATE_BUILD,	/* Create the per-task audit_context,
+				 * and fill it in at syscall
+				 * entry time.  This makes a full
+				 * syscall record available if some
+				 * other part of the kernel decides it
+				 * should be recorded. */
+	AUDIT_STATE_RECORD	/* Create the per-task audit_context,
+				 * always fill it in at syscall entry
+				 * time, and always write out the audit
+				 * record at syscall exit time.  */
+};
 
 struct audit_context {
 	int		    dummy;	/* must be the first element */

@@ -25,8 +25,12 @@ enum cea_speaker_placement {
 };
 
 struct cea_channel_speaker_allocation{
-    int ca_index;
-    int spk_mask;
+	int ca_index;
+	int speakers[8];
+
+	/* derived values, just for convenience */
+	int channels;
+	int spk_mask;
 };
 
 struct channel_map_table {

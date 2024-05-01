@@ -13,6 +13,7 @@
 #include "dialog.h"
 #include "mnconf-common.h"
 #include "util.h"
+#include "lkc_proto.h"
 
 static const char mconf_readme[] =
 "Overview\n"

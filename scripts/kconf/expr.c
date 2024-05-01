@@ -10,10 +10,12 @@
 #include <string.h>
 
 #include "lkc.h"
+#include "expr.h"
 
 #define DEBUG_EXPR	0
 
 static struct expr *expr_eliminate_yn(struct expr *e);
+static void expr_eliminate_dups1(enum expr_type type, struct expr **ep1, struct expr **ep2);
 
 struct expr *expr_alloc_symbol(struct symbol *sym)
 {

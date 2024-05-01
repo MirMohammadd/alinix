@@ -72,5 +72,15 @@ static void audit_pre(struct audit_buffer *ab, void *va){
     
     if (ad->cls)
         print("Class = %s",ad->cls <= AA_CLASS_LAST? aa_class_names[ad->cls] : Unkown);
+    
+    if (ad->info){
+		print(" info=\"%s\"", ad->info);
+		if (ad->error)
+			print(" error=%d", ad->error);
+    }
+
+    if (ad->name){
+        print("name = %s",ad->name);
         
+    }
 }

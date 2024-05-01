@@ -18,7 +18,9 @@
 #include <alinix/gui/window.h>
 #include <alinix/types.h>
 #include <alinix/kernel.h>
-
+#include <alinix/mm.h>
+#include <alinix/memory.h>
+#include <alinix/paging.h>
 
 static int x;
 static int y;
@@ -125,6 +127,10 @@ void vbe_init(multiboot_info_t *info){
             uint32_t addr = (uint32_t)vbe_mode->framebuffer;
             uint32_t addr_buf = addr + vbemem.buffer_size;
             vbemem.buffer = (uint32_t *) addr_buf;
+            for(int i = 0; i < (int) vbemem.buffer_size / PAGE_SIZE; i++, addr += PAGE_SIZE, addr_buf += PAGE_SIZE) {
+            vmm_map(get_kern_directory(), addr_buf, PAGE_PRESENT | PAGE_RW);
+            vmm_map_phys(get_kern_directory(), addr, addr, PAGE_PRESENT | PAGE_RW);
+        }
         }
     }
 }

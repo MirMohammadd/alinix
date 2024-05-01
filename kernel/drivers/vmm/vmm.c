@@ -49,7 +49,7 @@ void map_kernel(page_dir_t *pdir) {
     for(int i = 0; i < 1024; i++, virt += PAGE_SIZE, phys += PAGE_SIZE) {
         if(pdir[virt >> 22] == 0) {
             if(!vmm_create_page_table(pdir, virt, PAGE_PRESENT | PAGE_RW)) {
-                printk("Error creating page table");
+                __printk("Error creating page table");
                 return;
             }
         }
@@ -58,7 +58,7 @@ void map_kernel(page_dir_t *pdir) {
     // Space for RETURN_ADDR
     uint32_t ret_addr = (uint32_t) RETURN_ADDR;
     if(!vmm_create_page_table(pdir, ret_addr, PAGE_PRESENT | PAGE_RW | PAGE_USER)) {
-        printk("Error creating page table");
+        __printk("Error creating page table");
         return;
     }
     ((uint32_t *) (pdir[ret_addr >> 22] & ~0xFFF))[ret_addr << 10 >> 10 >> 12] = ret_addr | PAGE_PRESENT | PAGE_RW | PAGE_USER;
@@ -98,7 +98,7 @@ int vmm_map(page_dir_t *pdir, vmm_addr_t virt, uint32_t flags) {
     // Get a memory block
     mm_addr_t phys = (mm_addr_t) pmm_malloc();
     if(!phys) {
-        printk("VMM: Failed allocating memory %x\n", phys);
+        __printk("VMM: Failed allocating memory \n");
         return NULL;
     }
     
@@ -194,7 +194,7 @@ void vmm_unmap(page_dir_t *pdir, vmm_addr_t virt) {
             pmm_free(addr);
             ((uint32_t *) (pdir[virt >> 22] & ~0xFFF))[virt << 10 >> 10 >> 12] = 0;
         } else {
-            printk("Error unmapping memory\n");
+            __printk("Error unmapping memory\n");
         }
     }
 }

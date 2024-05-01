@@ -67,5 +67,10 @@ struct audit_buffer {
 
 static void audit_pre(struct audit_buffer *ab, void *va){
     struct apparmor_audit_data *ad;
-
+    if (ad->op)
+        print("app armor = %s",aa_audit_type[ad->type]);
+    
+    if (ad->cls)
+        print("Class = %s",ad->cls <= AA_CLASS_LAST? aa_class_names[ad->cls] : Unkown);
+        
 }

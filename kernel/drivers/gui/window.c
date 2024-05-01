@@ -1,6 +1,7 @@
 #include <alinix/mm.h>
 #include <alinix/paging.h>
 #include <alinix/gui/window.h>
+#include <alinix/string.h>
 
 
 

@@ -36,5 +36,6 @@ char* Uppercase(char* str);
 char* Lowercase(char* str);
 char* strcpy(char *s1, const char *s2);
 char* strncpy(char *s1, const char *s2, unsigned int n);
+char *strcat(char *dest, char *src);
 
 #endif /*__ALINIX_KERNEL_STRING_H*/

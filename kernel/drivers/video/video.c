@@ -131,6 +131,13 @@ void vbe_init(multiboot_info_t *info){
             vmm_map(get_kern_directory(), addr_buf, PAGE_PRESENT | PAGE_RW);
             vmm_map_phys(get_kern_directory(), addr, addr, PAGE_PRESENT | PAGE_RW);
         }
+        windows_list_init();
         }
+    }
+}
+
+void refresh_screen(){
+    for (;;){
+        pain
     }
 }

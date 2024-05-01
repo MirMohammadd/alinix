@@ -57,5 +57,6 @@ mm_addr_t get_pdbr();
 void flush_tlb(vmm_addr_t addr);
 int get_cr0();
 int get_cr2();
+void *first_free(size_t len);
 
 #endif // __ALINIX_KERNEL_MM_H

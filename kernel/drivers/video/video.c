@@ -21,6 +21,8 @@
 #include <alinix/mm.h>
 #include <alinix/memory.h>
 #include <alinix/paging.h>
+#include <alinix/gui/fonts/font.h>
+
 
 static int x;
 static int y;
@@ -140,5 +142,75 @@ void refresh_screen(){
     for (;;){
         // pain
         memcpy(vbemem.mem,vbemem.buffer,vbemem.buffer_size);
+    }
+}
+
+
+void draw_rect(int x, int y, int w, int h, uint32_t color) {
+    if(x < 0 || x > vbemem.xres || y < 0 || y > vbemem.yres)
+        return;
+    
+    uint8_t r = color & 0xFF;
+    uint8_t g = (color >> 8) & 0xFF;
+    uint8_t b = (color >> 16) & 0xFF;
+    
+    uint8_t *where = (uint8_t *) (((uint32_t) vbemem.buffer) + (x * (vbemem.bpp / 8)) + (y * vbemem.pitch));
+    uint32_t row = vbemem.xres * (vbemem.bpp / 8);
+    
+    for(int i = 0; i < h; i++) {
+        for(int j = 0; j < w; j++) {
+            where[j * 4] = r;
+            where[j * 4 + 1] = g;
+            where[j * 4 + 2] = b;
+        }
+        where += row;
+    }
+}
+
+void draw_string(int x, int y, char *string) {
+    int startx = x;
+    while(*string) {
+        switch(*string) {
+            case '\0':
+                return;
+            case '\b':
+                // TODO
+                break;
+            case '\r':
+                // TODO
+                break;
+            case '\n':
+                y += 9;
+                x = startx;
+                break;
+            case ' ':
+                x += 9;
+                break;
+            default:
+                draw_char(x, y, fonts[(int) *string]);
+                x += 9;
+                break;
+        }
+        string++;
+    }
+}
+
+void draw_char(int x, int y, char *font_char) {
+    for(int i = 0; i < 8; i++) {
+        int l = 0;
+        for(int j = 7; j >= 0; j--) {
+            if(font_char[i] & (1 << j)) {
+                draw_pixel(x + l, y + i, 0x000000);
+            }
+            l++;
+        }
+    }
+}
+
+int is_text_mode() {
+    if(vbemem.mem != 0) {
+        return 0;
+    } else {
+        return 1;
     }
 }

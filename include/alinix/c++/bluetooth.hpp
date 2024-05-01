@@ -84,35 +84,40 @@ class Bluetooth{
 
 };
 
+
+
+static int irq_polarity = -1;
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-            struct list_head    list;
-        uint8_t status;
-        uint16_t devices;
-        uint16_t services;
-        uint16_t characteristics;
-        uint8_t* uuid;
-        struct device *dev;
-        const char* name;
-        struct gpio_desc *device_wake_up;
-        struct gpio_desc	*shutdown;
-        int			(*set_device_wakeup)(struct bcm_device *, bool);
-        int			(*set_shutdown)(struct bcm_device *, bool);
-        bool res_enabled;
-        struct clk		*txco_clk;
-        struct clk		*lpo_clk;
-        bool			res_enabled;
+struct list_head    list;
+uint8_t status;
+uint16_t devices;
+uint16_t services;
+uint16_t characteristics;
+uint8_t* uuid;
+struct device *dev;
+const char* name;
+struct gpio_desc *device_wake_up;
+struct gpio_desc	*shutdown;
+int			(*set_device_wakeup)(struct bcm_device *, bool);
+int			(*set_shutdown)(struct bcm_device *, bool);
+bool res_enabled;
+struct clk		*txco_clk;
+struct clk		*lpo_clk;
+bool			res_enabled;
 
-        u32			init_speed;
-        u32			oper_speed;
-        int			irq;
-        bool			irq_active_low;
+u32			init_speed;
+u32			oper_speed;
+int			irq;
+bool			irq_active_low;
 
-        void Setup();
-        bool GetDeviceList();
-        bool GetServiceList();
-        bool GetCharacteristics();
+void Setup();
+bool GetDeviceList();
+bool GetServiceList();
+bool GetCharacteristics();
+
 #ifdef __cplusplus
 }
 #endif

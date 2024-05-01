@@ -1,0 +1,2 @@
+#include "kconf/dialog.h"
+

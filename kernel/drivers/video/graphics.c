@@ -1,6 +1,7 @@
 #include <alinix/paging.h>
 #include <alinix/mm.h>
 #include <alinix/kernel.h>
+#include <alinix/mouse.h>
 
 
 void paint_desktop() {

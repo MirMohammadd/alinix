@@ -26,4 +26,6 @@ typedef struct mouse_info{
     uint32_t buttons;  
 }mouse_info_t;
 
+void mouse_handler();
+mouse_info_t *get_mouse_info();
 #endif // __ALINIX_KERNEL_MOUSE_H

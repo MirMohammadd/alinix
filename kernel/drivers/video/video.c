@@ -138,6 +138,7 @@ void vbe_init(multiboot_info_t *info){
 
 void refresh_screen(){
     for (;;){
-        pain
+        // pain
+        memcpy(vbemem.mem,vbemem.buffer,vbemem.buffer_size);
     }
 }

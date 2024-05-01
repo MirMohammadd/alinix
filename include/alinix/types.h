@@ -173,4 +173,21 @@ typedef struct pm_message {
 	int event;
 } pm_message_t;
 
+
+typedef struct regs16 {
+    uint16_t di;
+    uint16_t si;
+    uint16_t bp;
+    uint16_t sp;
+    uint16_t bx;
+    uint16_t dx;
+    uint16_t cx;
+    uint16_t ax;
+    uint16_t gs;
+    uint16_t fs;
+    uint16_t es;
+    uint16_t ds;
+    uint16_t eflags;
+} __attribute__ ((packed)) regs16_t;
+
 #endif /*__ALINIX_KERNEL__TYPES_H_HEADER_*/

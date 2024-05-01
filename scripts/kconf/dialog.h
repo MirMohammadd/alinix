@@ -15,6 +15,8 @@
 #define MAX_LEN 2048
 #define WIDTH 30
 #define HEIGHT 10
+#define TAB 9
+
 
 int startx = 0;
 int starty = 0;

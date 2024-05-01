@@ -55,7 +55,7 @@ void scroll() {
     }
 }
 
-void printk(char *buffer, ...){
+void __printk(char *buffer, ...){
     char str[PRINT_K_BUFFER_SIZE];
     va_list args;
     va_start(args,buffer);

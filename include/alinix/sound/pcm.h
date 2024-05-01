@@ -3,7 +3,7 @@
 
 #include <alinix/types.h>
 
-#define _SNDRV_PCM_FMTBIT(fmt)		(1ULL << ( int)SNDRV_PCM_FORMAT_##fmt)
+#define _SNDRV_PCM_FMTBIT(fmt)		
 
 #define SNDRV_PCM_FMTBIT_S8		_SNDRV_PCM_FMTBIT(S8)
 #define SNDRV_PCM_FMTBIT_U8		_SNDRV_PCM_FMTBIT(U8)

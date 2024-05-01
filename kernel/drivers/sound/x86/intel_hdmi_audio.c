@@ -99,28 +99,29 @@ static const struct channel_map_table map_tables[] = {
 
 /* hardware capability structure */
 static const struct snd_pcm_hardware had_pcm_hardware = {
-	.info =	(SNDRV_PCM_INFO_INTERLEAVED |
-		SNDRV_PCM_INFO_MMAP |
-		SNDRV_PCM_INFO_MMAP_VALID |
-		SNDRV_PCM_INFO_NO_PERIOD_WAKEUP),
-	.formats = (SNDRV_PCM_FMTBIT_S16_LE |
-		    SNDRV_PCM_FMTBIT_S24_LE |
-		    SNDRV_PCM_FMTBIT_S32_LE),
-	.rates = SNDRV_PCM_RATE_32000 |
-		SNDRV_PCM_RATE_44100 |
-		SNDRV_PCM_RATE_48000 |
-		SNDRV_PCM_RATE_88200 |
-		SNDRV_PCM_RATE_96000 |
-		SNDRV_PCM_RATE_176400 |
-		SNDRV_PCM_RATE_192000,
-	.rate_min = HAD_MIN_RATE,
-	.rate_max = HAD_MAX_RATE,
-	.channels_min = HAD_MIN_CHANNEL,
-	.channels_max = HAD_MAX_CHANNEL,
-	.buffer_bytes_max = HAD_MAX_BUFFER,
-	.period_bytes_min = HAD_MIN_PERIOD_BYTES,
-	.period_bytes_max = HAD_MAX_PERIOD_BYTES,
-	.periods_min = HAD_MIN_PERIODS,
-	.periods_max = HAD_MAX_PERIODS,
-	.fifo_size = HAD_FIFO_SIZE,
+    .info =     (SNDRV_PCM_INFO_INTERLEAVED |
+                 SNDRV_PCM_INFO_MMAP |
+                 SNDRV_PCM_INFO_MMAP_VALID |
+                 SNDRV_PCM_INFO_NO_PERIOD_WAKEUP),
+    // .formats =  SNDRV_PCM_FMTBIT_S16_LE |
+    //             SNDRV_PCM_FMTBIT_S24_LE |
+    //             SNDRV_PCM_FMTBIT_S32_LE,
+    .rates =    SNDRV_PCM_RATE_32000 |
+                SNDRV_PCM_RATE_44100 |
+                SNDRV_PCM_RATE_48000 |
+                SNDRV_PCM_RATE_88200 |
+                SNDRV_PCM_RATE_96000 |
+                SNDRV_PCM_RATE_176400 |
+                SNDRV_PCM_RATE_192000,
+    .rate_min = HAD_MIN_RATE,
+    .rate_max = HAD_MAX_RATE,
+    .channels_min = HAD_MIN_CHANNEL,
+    .channels_max = HAD_MAX_CHANNEL,
+    .buffer_bytes_max = HAD_MAX_BUFFER,
+    .period_bytes_min = HAD_MIN_PERIOD_BYTES,
+    .period_bytes_max = HAD_MAX_PERIOD_BYTES,
+    .periods_min = HAD_MIN_PERIODS,
+    .periods_max = HAD_MAX_PERIODS,
+    .fifo_size = HAD_FIFO_SIZE,
 };
+

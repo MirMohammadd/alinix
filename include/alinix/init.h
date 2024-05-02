@@ -59,6 +59,7 @@
 #include <net/device_net.h>
 #include <net/def.h>
 #include <net/dhcp.h>
+#include <alinix/xheap.h>
 #include <alinix/security/apparmor/audit.h>
 
 

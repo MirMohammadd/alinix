@@ -49,6 +49,16 @@
 #include <alinix/gui/directgui.h>
 #include <alinix/gui/fonts/font.h>
 #include <alinix/gui/gui.h>
+#include <alinix/netif.h>
+#include <net/arp.h>
+#include <net/auto_ip.h>
+#include <net/bpf.h>
+#include <net/icmp.h>
+#include <net/ipv4.h>
+#include <net/tcp.h>
+#include <net/tcp_impl.h>
+#include <net/dns.h>
+#include <net/device_net.h>
 
 #define __init		__section(".init.text")
 static void Initialize();

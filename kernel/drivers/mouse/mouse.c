@@ -6,7 +6,7 @@ uint8_t mouse_cycle = 0;
 char mouse_byte[3];
 
 void mouse_int();
-static void mouse_wait(uint8_t type) {
+void mouse_wait(uint8_t type) {
     uint32_t timeout = 100000;
     uint32_t expect = (type == 1) ? 1 : 0;
     while(timeout--) {
@@ -16,25 +16,25 @@ static void mouse_wait(uint8_t type) {
     return;
 }
 
-static void mouse_write(uint8_t write) {
+void mouse_write(uint8_t write) {
     mouse_wait(1);
     outportb(MOUSE_STATUS, MOUSE_WRITE);
     mouse_wait(1);
     outportb(MOUSE_PORT, write);
 }
 
-static uint8_t mouse_read() {
+uint8_t mouse_read() {
     mouse_wait(2);
     return inportb(MOUSE_PORT);
 }
 
 static mouse_info_t info;
 
-static mouse_info_t *get_mouse_info() {
+mouse_info_t *get_mouse_info() {
     return &info;
 }
 
-static void mouse_handler() {
+void mouse_handler() {
     uint8_t status = inportb(MOUSE_STATUS);
     while(status & MOUSE_BBIT) {
         char mouse_in = inportb(MOUSE_PORT);
@@ -73,7 +73,7 @@ read_next:
     }
 }
 
-static void mouse_check_bounds() {
+void mouse_check_bounds() {
     if(info.x > 1024)
         info.x = 1024;
     else if(info.x < 0)

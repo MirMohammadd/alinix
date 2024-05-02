@@ -42,5 +42,12 @@ void *umalloc(size_t len, vmm_addr_t *heap);
 void ufree(void *ptr, vmm_addr_t *heap);
 void *umalloc_sys(size_t len);
 void ufree_sys(void *ptr);
+void kheap_init();
+void *kmalloc(size_t len);
+void kfree(void *ptr);
+void *first_free(size_t len);
+int get_heap_size();
+int get_used_heap();
+void print_header(heap_header_t *head);
 
 #endif

@@ -109,4 +109,5 @@ struct idt_ptr {
     uint32_t base;
 } __attribute__((__packed__));
 
+void install_ir(uint32_t i, uint16_t flags, uint16_t sel, void *irq);
 #endif /*__ALINIX_KERNEL_IDT_H*/

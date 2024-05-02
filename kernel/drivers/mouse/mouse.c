@@ -2,11 +2,11 @@
 #include <alinix/types.h>
 #include <alinix/port.h>
 #include <alinix/idt.h>
-uint8_t mouse_cycle = 0;
-char mouse_byte[3];
+static uint8_t mouse_cycle = 0;
+static char mouse_byte[3];
 
 // void mouse_int();
-void mouse_wait(uint8_t type) {
+static void mouse_wait(uint8_t type) {
     uint32_t timeout = 100000;
     uint32_t expect = (type == 1) ? 1 : 0;
     while(timeout--) {
@@ -16,25 +16,25 @@ void mouse_wait(uint8_t type) {
     return;
 }
 
-void mouse_write(uint8_t write) {
+static void mouse_write(uint8_t write) {
     mouse_wait(1);
     outportb(MOUSE_STATUS, MOUSE_WRITE);
     mouse_wait(1);
     outportb(MOUSE_PORT, write);
 }
 
-uint8_t mouse_read() {
+static uint8_t mouse_read() {
     mouse_wait(2);
     return inportb(MOUSE_PORT);
 }
 
 static mouse_info_t info;
 
-mouse_info_t *get_mouse_info() {
+static mouse_info_t *get_mouse_info() {
     return &info;
 }
 
-void mouse_handler() {
+static void mouse_handler() {
     uint8_t status = inportb(MOUSE_STATUS);
     while(status & MOUSE_BBIT) {
         char mouse_in = inportb(MOUSE_PORT);
@@ -73,7 +73,7 @@ read_next:
     }
 }
 
-void mouse_check_bounds() {
+static void mouse_check_bounds() {
     if(info.x > 1024)
         info.x = 1024;
     else if(info.x < 0)
@@ -84,7 +84,7 @@ void mouse_check_bounds() {
         info.y = 0;
 }
 
-void mouse_init() {
+static void mouse_init() {
     info.x = 0;
     info.y = 0;
     uint8_t status;

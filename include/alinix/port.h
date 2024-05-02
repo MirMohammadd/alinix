@@ -41,4 +41,10 @@ void writeMemReg(const uint32_t addr, const uint32_t val);
 
 uint32_t readMemReg(const uint32_t addr);
 
+#define halt asm volatile("hlt")
+
+#define enable_int asm volatile("sti")
+
+#define disable_int asm volatile("cli")
+
 #endif // __ALINIX_KERNEL_PORT_H

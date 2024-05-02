@@ -92,4 +92,22 @@ void EnableInterrupts();
 void DisableInterrupts();
 bool AreEnabled();
 
+#define MAX_INTERRUPTS 256
+
+
+struct idt_info{
+    uint16_t base_low;
+    uint16_t sel;
+    uint8_t reserved;
+    uint8_t flags;
+    uint16_t base_high;
+}__attribute__((__packed__));
+
+
+struct idt_ptr {
+    uint16_t limit;
+    uint32_t base;
+} __attribute__((__packed__));
+
+void install_ir(uint32_t i, uint16_t flags, uint16_t sel, void *irq);
 #endif /*__ALINIX_KERNEL_IDT_H*/

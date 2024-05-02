@@ -59,6 +59,9 @@
 #include <net/tcp_impl.h>
 #include <net/dns.h>
 #include <net/device_net.h>
+#include <net/def.h>
+#include <net/dhcp.h>
+
 
 #define __init		__section(".init.text")
 static void Initialize();

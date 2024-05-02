@@ -17,11 +17,30 @@
 #include <alinix/types.h>
 #include <net/def.h>
 
+/**
+ * @brief Converts a 16-bit integer from host byte order to network byte order.
+ * 
+ * This function takes a 16-bit integer in host byte order and converts it 
+ * to network byte order (big-endian) by swapping the byte order.
+ * 
+ * @param n The 16-bit integer in host byte order to convert.
+ * @return The 16-bit integer in network byte order (big-endian).
+ */
+
 uint16_t
 lwip_htons(uint16_t n)
 {
   return ((n & 0xff) << 8) | ((n & 0xff00) >> 8);
 }
+/**
+ * @brief Converts a 32-bit integer from network byte order to host byte order.
+ * 
+ * This function takes a 32-bit integer in network byte order (big-endian) and converts it 
+ * to host byte order by calling the lwip_htonl function to swap the byte order.
+ * 
+ * @param n The 32-bit integer in network byte order to convert.
+ * @return The 32-bit integer in host byte order.
+ */
 
 uint32_t
 lwip_ntohl(uint32_t n)

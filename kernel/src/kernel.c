@@ -65,6 +65,7 @@ int kernelMain(){
     if (strcmp(args, "gdb")){
         gdbEnabled = true;
     }
+    dhcp_start("eth0");
 
     /////////////////////
     // This should always return 0

@@ -64,7 +64,7 @@ int kernelMain(){
         kernelMemoryCorruptionLockDown();
         return -1;
     }
-    void kheap_init();
+    kheap_init();
 
     const char* args = (const char*)phys2virt(mbi->cmdline);
     if (strcmp(args, "gdb")){

@@ -56,7 +56,7 @@ static void mouse_handler() {
                         goto read_next;
                     info.x += mouse_byte[1];
                     info.y -= mouse_byte[2];
-                    mouse_check_bounds();
+                    __MOUSE_CHECK_BOUNDS();
                     
                     if(mouse_byte[0] & LEFT_CLICK)
                         info.buttons = LEFT_CLICK;
@@ -73,16 +73,18 @@ read_next:
     }
 }
 
-static inline void mouse_check_bounds() {
-    if(info.x > 1024)
-        info.x = 1024;
-    else if(info.x < 0)
-        info.x = 0;
-    if(info.y > 768)
-        info.y = 768;
-    else if(info.y < 0)
-        info.y = 0;
-}
+#define __MOUSE_CHECK_BOUNDS() \
+    do { \
+        if(info.x > 1024) \
+            info.x = 1024; \
+        else if(info.x < 0) \
+            info.x = 0; \
+        if(info.y > 768) \
+            info.y = 768; \
+        else if(info.y < 0) \
+            info.y = 0; \
+    } while(0)
+
 
 static void mouse_init() {
     info.x = 0;

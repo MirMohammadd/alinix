@@ -5,7 +5,7 @@
 uint8_t mouse_cycle = 0;
 char mouse_byte[3];
 
-void mouse_int();
+// void mouse_int();
 void mouse_wait(uint8_t type) {
     uint32_t timeout = 100000;
     uint32_t expect = (type == 1) ? 1 : 0;

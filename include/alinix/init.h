@@ -19,9 +19,46 @@
 #ifndef _ALINIX_INIT_H
 #define _ALINIX_INIT_H
 
+
+/**
+ * @brief This file should be used to initiate the kernel Entry point.
+*/
+
 #include <alinix/types.h>
 #include <alinix/physicalmemory.h>
 
+
+
+#include <alinix/idt.h>
+#include <alinix/assembly.h>
+#include <alinix/audit.h>
+#include <alinix/security.h>
+#include <alinix/inet.h>
+#include <alinix/arch.h>
+#include <alinix/bootconsole.h>
+#include <alinix/etherdevice.h>
+#include <alinix/if_arp.h>
+#include <alinix/swait.h>
+#include <alinix/settings.h>
+#include <alinix/irq.h>
+#include <alinix/ip.h>
+#include <alinix/compiler.h>
+#include <alinix/gui/window.h>
+#include <alinix/gui/canvas.h>
+#include <alinix/gui/colors.h>
+#include <alinix/gui/directgui.h>
+#include <alinix/gui/fonts/font.h>
+#include <alinix/gui/gui.h>
+#include <alinix/netif.h>
+#include <net/arp.h>
+#include <net/auto_ip.h>
+#include <net/icmp.h>
+#include <net/tcp.h>
+#include <net/tcp_impl.h>
+#include <net/dns.h>
+#include <net/device_net.h>
+#include <net/def.h>
+#include <net/dhcp.h>
 
 
 #define __init		__section(".init.text")

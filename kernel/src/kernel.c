@@ -21,6 +21,13 @@
 #include <alinix/multiboot.h>
 #include <alinix/system.h>
 #include <alinix/printk.h>
+#include <alinix/kernel.h>
+#include <alinix/idt.h>
+#include <alinix/assembly.h>
+#include <alinix/audit.h>
+#include <alinix/security.h>
+#include <alinix/inet.h>
+#include <alinix/init.h>
 multiboot_info_t* mbi = 0;
 
 /// @brief //////
@@ -46,6 +53,9 @@ int kernelMain(){
     /**
      * @brief Main  function for Kernel Entry Point, implementing all the final actions here
     */
+    #ifdef IGNORE_INTERRUPT
+    IgnoreInterrupt();
+    #endif
     uint32_t kernel_base = (uint32_t) &_kernel_base;
     uint32_t kernel_end = (uint32_t) &_kernel_end;
     uint32_t kernel_size = kernel_end - kernel_base;
@@ -55,6 +65,7 @@ int kernelMain(){
     if (strcmp(args, "gdb")){
         gdbEnabled = true;
     }
+    dhcp_start("eth0");
 
     /////////////////////
     // This should always return 0

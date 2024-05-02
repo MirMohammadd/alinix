@@ -52,8 +52,16 @@ void display_set_register(uint16_t address,uint8_t value){
 }
 
 /**
+ * @brief Controls the Timing Controller (TCON) settings for the display device.
  * 
-*/
+ * This function adjusts the TCON settings based on the provided mask and level values.
+ * If the level is 0, the function clears the bits specified by the mask in the TCON value.
+ * If the level is non-zero, the function sets the bits specified by the mask in the TCON value.
+ * After adjusting the TCON value, it calls the display_set_register function to update the TCON register in the display device.
+ * 
+ * @param mask The bitmask indicating which bits to modify in the TCON value (8-bit unsigned integer).
+ * @param level The level (0 or non-zero) that determines whether to clear or set the masked bits in the TCON value (8-bit unsigned integer).
+ */
 
 void display_tcon_ctrl(uint8_t mask, uint8_t level){
     if (level == 0)

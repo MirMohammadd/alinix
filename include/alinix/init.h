@@ -43,6 +43,12 @@
 #include <alinix/irq.h>
 #include <alinix/ip.h>
 #include <alinix/compiler.h>
+#include <alinix/gui/window.h>
+#include <alinix/gui/canvas.h>
+#include <alinix/gui/colors.h>
+#include <alinix/gui/directgui.h>
+#include <alinix/gui/fonts/font.h>
+#include <alinix/gui/gui.h>
 
 #define __init		__section(".init.text")
 static void Initialize();

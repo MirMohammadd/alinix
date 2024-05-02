@@ -104,6 +104,6 @@ void mouse_init() {
     mouse_read();
     mouse_write(0xF4);
     mouse_read();
-    install_ir(44, 0x80 | 0x0E, 0x8, &mouse_int);
-    enable_int();
+    // install_ir(44, 0x80 | 0x0E, 0x8, &mouse_int);
+    // enable_int();
 }

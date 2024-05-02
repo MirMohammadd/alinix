@@ -293,6 +293,12 @@ void display_gpio_tcon(uint16_t index, uint16_t value)
     display_tcon_delay();
 }
 
+/**
+ * @brief Settles value to the  required GPIO pin of TCON register.
+ * @param gpio_pin The desired GPIO pin for which you want to set the value.
+ * @note Do not make this function static.
+*/
+
 void display_write_pixel (uint16_t x_coord, uint16_t y_coord, uint32_t color)
 {
 	uint32_t address = 1;
@@ -373,7 +379,9 @@ void display_write_pixel (uint16_t x_coord, uint16_t y_coord, uint32_t color)
 }
 	
 
-
+/**
+ * @brief Functions that writes pixels to TCON pins
+*/
 void display_tcon_write_byte(uint8_t value)
 {
     uint8_t    mask;
@@ -397,7 +405,11 @@ void display_tcon_write_byte(uint8_t value)
     }
 }
 
-
+/**
+ * @brief Implements delay on TCON screen.
+ * @param none.
+ * @return none.
+*/
 void display_tcon_delay(void)
 {
     uint16_t timeOut;

@@ -21,6 +21,13 @@
 #include <alinix/multiboot.h>
 #include <alinix/system.h>
 #include <alinix/printk.h>
+#include <alinix/kernel.h>
+#include <alinix/idt.h>
+#include <alinix/assembly.h>
+#include <alinix/audit.h>
+#include <alinix/security.h>
+#include <alinix/inet.h>
+#include <alinix/init.h>
 multiboot_info_t* mbi = 0;
 
 /// @brief //////

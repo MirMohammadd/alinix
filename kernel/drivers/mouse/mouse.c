@@ -88,7 +88,7 @@ void mouse_init() {
     info.x = 0;
     info.y = 0;
     uint8_t status;
-    disable_int();
+    disable_int;
     mouse_wait(1);
     outportb(MOUSE_STATUS, 0xA8);
     mouse_wait(1);
@@ -104,5 +104,5 @@ void mouse_init() {
     mouse_write(0xF4);
     mouse_read();
     install_ir(44, 0x80 | 0x0E, 0x8, &mouse_int);
-    enable_int();
+    enable_int;
 }

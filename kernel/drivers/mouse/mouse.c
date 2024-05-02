@@ -5,6 +5,19 @@
 static uint8_t mouse_cycle = 0;
 static char mouse_byte[3];
 
+#define __MOUSE_CHECK_BOUNDS() \
+    do { \
+        if(info.x > 1024) \
+            info.x = 1024; \
+        else if(info.x < 0) \
+            info.x = 0; \
+        if(info.y > 768) \
+            info.y = 768; \
+        else if(info.y < 0) \
+            info.y = 0; \
+    } while(0)
+
+
 // void mouse_int();
 static void mouse_wait(uint8_t type) {
     uint32_t timeout = 100000;
@@ -73,17 +86,6 @@ read_next:
     }
 }
 
-#define __MOUSE_CHECK_BOUNDS() \
-    do { \
-        if(info.x > 1024) \
-            info.x = 1024; \
-        else if(info.x < 0) \
-            info.x = 0; \
-        if(info.y > 768) \
-            info.y = 768; \
-        else if(info.y < 0) \
-            info.y = 0; \
-    } while(0)
 
 
 static void mouse_init() {

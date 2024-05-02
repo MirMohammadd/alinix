@@ -124,7 +124,7 @@ void vbe_init(multiboot_info_t *info){
         if(vbe_mode->width != 80 && vbe_mode->height != 25) {
             regs16_t regs;
             regs.ax = 0x3;
-            int32(0x10, &regs);
+            // int32(0x10, &regs);
         }else{
             uint32_t addr = (uint32_t)vbe_mode->framebuffer;
             uint32_t addr_buf = addr + vbemem.buffer_size;

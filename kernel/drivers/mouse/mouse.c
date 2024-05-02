@@ -73,7 +73,7 @@ read_next:
     }
 }
 
-static void mouse_check_bounds() {
+void mouse_check_bounds() {
     if(info.x > 1024)
         info.x = 1024;
     else if(info.x < 0)

@@ -72,6 +72,15 @@ void display_tcon_ctrl(uint8_t mask, uint8_t level){
     display_set_register(0xAC, tcon_value);
 }
 
+/**
+ * @brief  Initiates various display model settings and configurations
+ * 
+ * This function will initiate the display mode by setting up various registers with specific values to configure the display device.
+ * Performs various tasks to setup the pixels and timing settings, and pixel output  mode. 
+ * It also enables RGB saving and power-saving configurations .
+ * @arg  none
+ * 
+*/
 
 void display_model_initialise(NO_ARGS){
     uint16_t data;
@@ -245,7 +254,11 @@ void display_model_initialise(NO_ARGS){
 	display_delay_ms(20);
 }
 
-
+/**
+ * @brief Sparks the delay which pause the execution for miliseconds.
+ * @note Loops through until reaches the delay millisecond.
+ * @param  ms Delay time in milliseconds(Should unsigned integer 16 bit).
+ */
 void display_delay_ms (uint16_t delay_ms){
     uint32_t count;
 

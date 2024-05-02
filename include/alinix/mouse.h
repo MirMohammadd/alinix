@@ -27,5 +27,10 @@ typedef struct mouse_info{
 }mouse_info_t;
 
 void mouse_handler();
+void mouse_init();
+void mouse_check_bounds() ;
+uint8_t mouse_read() ;
+void mouse_write(uint8_t write) ;
+void mouse_wait(uint8_t type) ;
 mouse_info_t *get_mouse_info();
 #endif // __ALINIX_KERNEL_MOUSE_H

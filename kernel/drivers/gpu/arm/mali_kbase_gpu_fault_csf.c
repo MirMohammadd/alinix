@@ -17,6 +17,10 @@
 #include <alinix/types.h>
 #include <alinix/register.h>
 
+/**
+ * @brief Gets the kernel exception name.
+*/
+
 const char* __kbase_gpu_exception_name(uint32_t exception_code){
     	const char *e;
 

@@ -24,6 +24,17 @@
 
 uint8_t tcon_value;
 
+/**
+ * @brief Sets a register in the display device with the provided address and value.
+ * 
+ * This function selects the appropriate register in the display device based on the address provided.
+ * If the least significant bit of the address is set (1), the function writes the value directly to the display register.
+ * If the least significant bit of the address is not set (0), the function left-shifts the value by 8 bits before writing it to the display register.
+ * 
+ * @param address The address of the register to be set (16-bit unsigned integer).
+ * @param value The value to be written to the register (8-bit unsigned integer).
+ */
+
 void display_set_register(uint16_t address,uint8_t value){
     DISPLAY_REGISTER_SELECT(0);
     DISPLAY_CS(0);
@@ -40,6 +51,17 @@ void display_set_register(uint16_t address,uint8_t value){
 		}
 }
 
+/**
+ * @brief Controls the Timing Controller (TCON) settings for the display device.
+ * 
+ * This function adjusts the TCON settings based on the provided mask and level values.
+ * If the level is 0, the function clears the bits specified by the mask in the TCON value.
+ * If the level is non-zero, the function sets the bits specified by the mask in the TCON value.
+ * After adjusting the TCON value, it calls the display_set_register function to update the TCON register in the display device.
+ * 
+ * @param mask The bitmask indicating which bits to modify in the TCON value (8-bit unsigned integer).
+ * @param level The level (0 or non-zero) that determines whether to clear or set the masked bits in the TCON value (8-bit unsigned integer).
+ */
 
 void display_tcon_ctrl(uint8_t mask, uint8_t level){
     if (level == 0)
@@ -50,6 +72,15 @@ void display_tcon_ctrl(uint8_t mask, uint8_t level){
     display_set_register(0xAC, tcon_value);
 }
 
+/**
+ * @brief  Initiates various display model settings and configurations
+ * 
+ * This function will initiate the display mode by setting up various registers with specific values to configure the display device.
+ * Performs various tasks to setup the pixels and timing settings, and pixel output  mode. 
+ * It also enables RGB saving and power-saving configurations .
+ * @arg  none
+ * 
+*/
 
 void display_model_initialise(NO_ARGS){
     uint16_t data;
@@ -223,7 +254,11 @@ void display_model_initialise(NO_ARGS){
 	display_delay_ms(20);
 }
 
-
+/**
+ * @brief Sparks the delay which pause the execution for miliseconds.
+ * @note Loops through until reaches the delay millisecond.
+ * @param  ms Delay time in milliseconds(Should unsigned integer 16 bit).
+ */
 void display_delay_ms (uint16_t delay_ms){
     uint32_t count;
 
@@ -257,6 +292,12 @@ void display_gpio_tcon(uint16_t index, uint16_t value)
     display_tcon_ctrl(0x01, 1);
     display_tcon_delay();
 }
+
+/**
+ * @brief Settles value to the  required GPIO pin of TCON register.
+ * @param gpio_pin The desired GPIO pin for which you want to set the value.
+ * @note Do not make this function static.
+*/
 
 void display_write_pixel (uint16_t x_coord, uint16_t y_coord, uint32_t color)
 {
@@ -338,7 +379,9 @@ void display_write_pixel (uint16_t x_coord, uint16_t y_coord, uint32_t color)
 }
 	
 
-
+/**
+ * @brief Functions that writes pixels to TCON pins
+*/
 void display_tcon_write_byte(uint8_t value)
 {
     uint8_t    mask;
@@ -362,7 +405,11 @@ void display_tcon_write_byte(uint8_t value)
     }
 }
 
-
+/**
+ * @brief Implements delay on TCON screen.
+ * @param none.
+ * @return none.
+*/
 void display_tcon_delay(void)
 {
     uint16_t timeOut;

@@ -52,7 +52,6 @@
 #include <alinix/netif.h>
 #include <net/arp.h>
 #include <net/auto_ip.h>
-#include <net/bpf.h>
 #include <net/icmp.h>
 #include <net/ipv4.h>
 #include <net/tcp.h>

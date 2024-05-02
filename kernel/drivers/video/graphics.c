@@ -3,7 +3,8 @@
 #include <alinix/kernel.h>
 #include <alinix/mouse.h>
 
-extern mouse_info_t *get_mouse_info();
+mouse_info_t *get_mouse_info();
+
 
 
 void paint_desktop() {

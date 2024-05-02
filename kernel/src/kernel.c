@@ -28,6 +28,7 @@
 #include <alinix/security.h>
 #include <alinix/inet.h>
 #include <alinix/init.h>
+
 multiboot_info_t* mbi = 0;
 
 /// @brief //////
@@ -59,13 +60,16 @@ int kernelMain(){
     uint32_t kernel_base = (uint32_t) &_kernel_base;
     uint32_t kernel_end = (uint32_t) &_kernel_end;
     uint32_t kernel_size = kernel_end - kernel_base;
-
+    if (!kernel_base){
+        kernelMemoryCorruptionLockDown();
+        return -1;
+    }
 
     const char* args = (const char*)phys2virt(mbi->cmdline);
     if (strcmp(args, "gdb")){
         gdbEnabled = true;
     }
-    dhcp_start("eth0");
+    // dhcp_start("eth0");
 
     /////////////////////
     // This should always return 0

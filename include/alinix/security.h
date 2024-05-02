@@ -48,6 +48,9 @@ enum lockdown_reason {
 	LOCKDOWN_XMON_RW,
 	LOCKDOWN_XFRM_SECRET,
 	LOCKDOWN_CONFIDENTIALITY_MAX,
+	MEMORY_CORRUPTION
 };
+
+void kernelMemoryCorruptionLockDown();
 
 #endif

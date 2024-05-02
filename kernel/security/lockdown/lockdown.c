@@ -146,3 +146,9 @@ static ssize_t lockdown_write(struct file *file, const char  *buf,
 	free(state);
 	return err ? err : n;
 }
+
+/////////////////////////////////////
+
+void kernelMemoryCorruptionLockDown(){
+    lock_kernel_down("Kernel configuration",MEMORY_CORRUPTION);
+}

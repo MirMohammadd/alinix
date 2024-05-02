@@ -24,6 +24,17 @@
 
 uint8_t tcon_value;
 
+/**
+ * @brief Sets a register in the display device with the provided address and value.
+ * 
+ * This function selects the appropriate register in the display device based on the address provided.
+ * If the least significant bit of the address is set (1), the function writes the value directly to the display register.
+ * If the least significant bit of the address is not set (0), the function left-shifts the value by 8 bits before writing it to the display register.
+ * 
+ * @param address The address of the register to be set (16-bit unsigned integer).
+ * @param value The value to be written to the register (8-bit unsigned integer).
+ */
+
 void display_set_register(uint16_t address,uint8_t value){
     DISPLAY_REGISTER_SELECT(0);
     DISPLAY_CS(0);
@@ -40,6 +51,9 @@ void display_set_register(uint16_t address,uint8_t value){
 		}
 }
 
+/**
+ * 
+*/
 
 void display_tcon_ctrl(uint8_t mask, uint8_t level){
     if (level == 0)

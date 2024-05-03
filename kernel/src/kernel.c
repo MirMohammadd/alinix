@@ -51,6 +51,16 @@ void callConstructors()
         (*i)();
 }
 
+static inline void *find_pa(unsigned long *vptb, void *ptr){
+    unsigned long address = (unsigned long )ptr;
+    unsigned long result;
+    result = vptb[address >> 13];
+	result >>= 32;
+	result <<= 13;
+	result |= address & 0x1fff;
+	return (void *) result;
+}
+
 int kernelMain(){
     /**
      * @brief Main  function for Kernel Entry Point, implementing all the final actions here

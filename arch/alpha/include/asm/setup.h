@@ -8,6 +8,9 @@
 
 #define absolute_pointer(val)	RELOC_HIDE((void *)(val), 0)
 
+#define CONFIG_PAGE_OFFSET 0
+#define PAGE_OFFSET		CONFIG_PAGE_OFFSET
+
 
 /*
  * We leave one page for the initial stack page, and one page for

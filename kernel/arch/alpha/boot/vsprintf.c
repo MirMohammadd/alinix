@@ -1,13 +1,49 @@
-
 #include <alinix/kernel.h>
-
 #include <alinix/string.h>
+
+unsigned long long __udivdi3(unsigned long long num, unsigned long long den) {
+    unsigned long long quot = 0, bit = 1;
+
+    while ((long long)den >= 0) {
+        den <<= 1;
+        bit <<= 1;
+    }
+
+    while (bit) {
+        if (den <= num) {
+            num -= den;
+            quot |= bit;
+        }
+
+        bit >>= 1;
+        den >>= 1;
+    }
+
+    return quot;
+}
+
+unsigned long long __umoddi3(unsigned long long num, unsigned long long den) {
+    while ((long long)den >= 0) {
+        den <<= 1;
+    }
+
+    while (den > num) {
+        den >>= 1;
+    }
+
+    while (den <= num) {
+        num -= den;
+    }
+
+    return num;
+}
 
 static inline unsigned int do_div(unsigned long long *n, unsigned int base) {
     unsigned int rem = *n % base;
-    *n /= base;
+    *n =  *n / base;
     return rem;
 }
+
 
 
 

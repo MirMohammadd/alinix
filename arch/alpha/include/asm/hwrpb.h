@@ -17,6 +17,7 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+#define INIT_HWRPB ((struct hwrpb_struct *) 0x10000000)
 
 struct hwrpb_struct {
 	unsigned long phys_addr;	/* check: physical address of the hwrpb */

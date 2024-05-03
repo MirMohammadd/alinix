@@ -30,6 +30,7 @@
 #include <alinix/init.h>
 
 multiboot_info_t* mbi = 0;
+struct hwrpb_struct *hwrpb = INIT_HWRPB;
 
 /// @brief //////
 // Basic global vars for kernel

@@ -62,7 +62,7 @@ static inline void *find_pa(unsigned long *vptb, void *ptr){
 	return (void *) result;
 }
 
-
+#if defined(__i386__) || defined(_M_IX86) || defined(__x86_64__) || defined(_M_X64)
 static inline void
 runkernel(void)
 {
@@ -72,6 +72,21 @@ runkernel(void)
 		: /* no outputs: it doesn't even return */
 		: "r" (START_ADDR));
 }
+
+#elif defined(__arm__) || defined(__aarch64__) || defined(__arm64__) || defined(__aarch64__)
+
+static inline void runkernel(void){
+    asm volatile(
+        "adrp x0, %0\n\t"
+        "add x0, x0, :lo12:%0\n\t"
+        "br x0"
+        :
+        : "p"(START_ADDR)
+        : "x0"
+    );
+}
+
+#endif 
 
 
 int kernelMain(){

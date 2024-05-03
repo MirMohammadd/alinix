@@ -74,7 +74,10 @@ int kernelMain(){
         gdbEnabled = true;
     }
     // dhcp_start("eth0");
-
+    srm_printk(" Ok\nNow booting the kernel\n");
+	for (int i = 0 ; i < 0x100000000 ; i++)
+        
+    // asm volatile  ("hlt"); 
     /////////////////////
     // This should always return 0
     return 0;

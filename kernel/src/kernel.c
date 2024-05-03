@@ -28,6 +28,7 @@
 #include <alinix/security.h>
 #include <alinix/inet.h>
 #include <alinix/init.h>
+#include <asm/setup.h>
 
 multiboot_info_t* mbi = 0;
 struct hwrpb_struct *hwrpb = INIT_HWRPB;
@@ -60,6 +61,18 @@ static inline void *find_pa(unsigned long *vptb, void *ptr){
 	result |= address & 0x1fff;
 	return (void *) result;
 }
+
+
+static inline void
+runkernel(void)
+{
+	__asm__ __volatile__(
+		"bis %0,%0,$27\n\t"
+		"jmp ($27)"
+		: /* no outputs: it doesn't even return */
+		: "r" (START_ADDR));
+}
+
 
 int kernelMain(){
     /**

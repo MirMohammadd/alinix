@@ -65,6 +65,8 @@ int kernelMain(){
         kernelMemoryCorruptionLockDown();
         return -1;
     }
+    display_model_initialise();
+
     srm_printk("Starting the Kheap...\n");
     kheap_init();
     srm_printk("Started the Kheap\n");

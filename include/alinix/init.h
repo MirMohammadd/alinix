@@ -61,6 +61,7 @@
 #include <net/dhcp.h>
 #include <alinix/xheap.h>
 #include <alinix/security/apparmor/audit.h>
+#include <alinix/graphics/model.h>
 
 
 #define __init		__section(".init.text")

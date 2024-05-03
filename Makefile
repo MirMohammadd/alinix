@@ -34,8 +34,8 @@ endif
 INCLUDEDIRS := include
 QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../qemuTrace.txt -d cpu_reset #-readconfig qemu-usb-config.cfg -drive if=none,id=stick,file=disk.img -device usb-storage,bus=ehci.0,drive=stick
 
-G++PARAMS := -m32 -g -D Alinix -I $(INCLUDEDIRS) -I arch/mips/include -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas
-GCCPARAMS := -m32 -g -D Alinix -I $(INCLUDEDIRS) -I arch/mips/include -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas
+G++PARAMS := -m32 -g -D Alinix -I $(INCLUDEDIRS) -I arch/mips/include -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -lgcc
+GCCPARAMS := -m32 -g -D Alinix -I $(INCLUDEDIRS) -I arch/mips/include -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas -lgcc
 ASPARAMS := --32
 LDPARAMS := -m elf_i386
 

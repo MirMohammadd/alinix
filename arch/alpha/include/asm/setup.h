@@ -8,7 +8,7 @@
 
 #define absolute_pointer(val)	RELOC_HIDE((void *)(val), 0)
 
-#define CONFIG_PAGE_OFFSET 0
+#define CONFIG_PAGE_OFFSET 0x80000000
 #define PAGE_OFFSET		CONFIG_PAGE_OFFSET
 
 

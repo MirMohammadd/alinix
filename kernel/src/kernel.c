@@ -62,30 +62,7 @@ static inline void *find_pa(unsigned long *vptb, void *ptr){
 	return (void *) result;
 }
 
-#if defined(__i386__) || defined(_M_IX86) 
-static inline void
-runkernel(void)
-{
-	__asm__ __volatile__(
-		"bis %0,%0,$27\n\t"
-		"jmp ($27)"
-		: /* no outputs: it doesn't even return */
-		: "r" (START_ADDR));
-}
 
-#elif defined(__arm__) || defined(__aarch64__) || defined(__arm64__) || defined(__aarch64__)
-
-static inline void runkernel(void){
-    asm volatile(
-        "ldr x0, %0\n\t"
-        "br x0"
-        :
-        : "m"(START_ADDR)
-        : "x0"
-    );
-}
-
-#endif 
 
 
 int kernelMain(){
@@ -118,7 +95,6 @@ int kernelMain(){
 	for (int i = 0 ; i < 0x100000000 ; i++)
         
     // asm volatile  ("hlt"); 
-    runkernel();
     /////////////////////
     // This should always return 0
     return 0;

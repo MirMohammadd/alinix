@@ -60,11 +60,14 @@ int kernelMain(){
     uint32_t kernel_base = (uint32_t) &_kernel_base;
     uint32_t kernel_end = (uint32_t) &_kernel_end;
     uint32_t kernel_size = kernel_end - kernel_base;
+    srm_printk("Starting the Kernel ...\n");
     if (!kernel_base){
         kernelMemoryCorruptionLockDown();
         return -1;
     }
+    srm_printk("Starting the Kheap...\n");
     kheap_init();
+    srm_printk("Started the Kheap\n");
 
     const char* args = (const char*)phys2virt(mbi->cmdline);
     if (strcmp(args, "gdb")){

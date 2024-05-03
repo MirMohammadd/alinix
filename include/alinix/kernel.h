@@ -83,7 +83,7 @@ void print(char* str,...);
 long srm_printk(const char *fmt, ...);
 int sprintf(char * buf, const char *fmt, ...);
 int vsprintf(char *buf, const char *fmt, va_list args);
-
+long srm_puts(const char* str,long len);
 /////////////////////////////////
 #define pr_warn print
 #define printk print

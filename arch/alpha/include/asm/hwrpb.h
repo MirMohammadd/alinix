@@ -19,6 +19,48 @@
 */
 #define INIT_HWRPB ((struct hwrpb_struct *) 0x10000000)
 
+
+struct pcb_struct {
+	unsigned long ksp;
+	unsigned long usp;
+	unsigned long ptbr;
+	unsigned int pcc;
+	unsigned int asn;
+	unsigned long unique;
+	unsigned long flags;
+	unsigned long res1, res2;
+};
+
+
+struct percpu_struct {
+	unsigned long hwpcb[16];
+	unsigned long flags;
+	unsigned long pal_mem_size;
+	unsigned long pal_scratch_size;
+	unsigned long pal_mem_pa;
+	unsigned long pal_scratch_pa;
+	unsigned long pal_revision;
+	unsigned long type;
+	unsigned long variation;
+	unsigned long revision;
+	unsigned long serial_no[2];
+	unsigned long logout_area_pa;
+	unsigned long logout_area_len;
+	unsigned long halt_PCBB;
+	unsigned long halt_PC;
+	unsigned long halt_PS;
+	unsigned long halt_arg;
+	unsigned long halt_ra;
+	unsigned long halt_pv;
+	unsigned long halt_reason;
+	unsigned long res;
+	unsigned long ipc_buffer[21];
+	unsigned long palcode_avail[16];
+	unsigned long compatibility;
+	unsigned long console_data_log_pa;
+	unsigned long console_data_log_length;
+	unsigned long bcache_info;
+};
 struct hwrpb_struct {
 	unsigned long phys_addr;	/* check: physical address of the hwrpb */
 	unsigned long id;		/* check: "HWRPB\0\0\0" */

@@ -62,7 +62,7 @@ void ConsoleInit(bool enableSerial)
     if(enableSerial)
     {
         Init(COM1);
-        WriteLine("Start of serial log for HeisenOs");
+        WriteLine("Start of serial log for Alinix");
     }
 }
 

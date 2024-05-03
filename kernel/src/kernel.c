@@ -77,11 +77,10 @@ runkernel(void)
 
 static inline void runkernel(void){
     asm volatile(
-        "adrp x0, %0\n\t"
-        "add x0, x0, :lo12:%0\n\t"
+        "ldr x0, %0\n\t"
         "br x0"
         :
-        : "p"(START_ADDR)
+        : "m"(START_ADDR)
         : "x0"
     );
 }

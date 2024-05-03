@@ -62,7 +62,7 @@ static inline void *find_pa(unsigned long *vptb, void *ptr){
 	return (void *) result;
 }
 
-#if defined(__i386__) || defined(_M_IX86) || defined(__x86_64__) || defined(_M_X64)
+#if defined(__i386__) || defined(_M_IX86) 
 static inline void
 runkernel(void)
 {

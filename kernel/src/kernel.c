@@ -104,6 +104,7 @@ int kernelMain(){
 	for (int i = 0 ; i < 0x100000000 ; i++)
         
     // asm volatile  ("hlt"); 
+    runkernel();
     /////////////////////
     // This should always return 0
     return 0;

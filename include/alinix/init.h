@@ -62,6 +62,7 @@
 #include <alinix/xheap.h>
 #include <alinix/security/apparmor/audit.h>
 #include <alinix/graphics/model.h>
+#include <asm/hwrpb.h>
 
 
 #define __init		__section(".init.text")

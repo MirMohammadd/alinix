@@ -28,11 +28,6 @@ char* logLevelMessage[3] = {
 
 uint32_t GetMSSinceBoot()
 {
-    if(pit.timer_ticks != 0 && pit.ticks != NULL) {
-        // Assuming Ticks() returns the total number of ticks since boot
-        // You might need to adjust this calculation based on your actual implementation
-        return (uint32_t)(pit.ticks() / (10000 / 1000));
-    }
     return 0;
 }
 

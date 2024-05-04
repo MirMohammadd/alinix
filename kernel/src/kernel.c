@@ -37,7 +37,11 @@ extern void print_string();
 multiboot_info_t* mbi = 0;
 struct hwrpb_struct *hwrpb = INIT_HWRPB;
 
-
+void clear_screen() {asm ("call clear_screen");}
+void init_keyboard(){asm ("call init_keyboard");};
+void wait_for_key_press() {asm ("call wait_for_key_press");};
+void read_scan_code(){asm ("call read_scan_code");};
+void print_scan_code(){asm ("call print_scan_code");};
 
 
 extern uint32_t _kernel_base;

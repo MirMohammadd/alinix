@@ -35,24 +35,43 @@ extern void kernelMain();
 multiboot_info_t* mbi = 0;
 struct hwrpb_struct *hwrpb = INIT_HWRPB;
 
+
+
+
+extern uint32_t _kernel_base;
+extern uint32_t _kernel_end;
+extern uint32_t _kernel_virtual_base;
+extern uint32_t stack_top;
+
+typedef void (*constructor)();
+extern constructor start_ctors;
+extern constructor end_ctors;
+extern void callConstructors()
+{
+    for(constructor* i = &start_ctors; i != &end_ctors; i++)
+        (*i)();
+}
+
+extern void _set_debug_traps();
+
 /// @brief //////
 // Basic global vars for kernel
 //! These variables should be static
-static uint32_t _kernel_base;
-static uint32_t _kernel_end;
-static uint32_t  _kernel_virtual_base;
-static uint32_t stack_top;
+extern uint32_t _kernel_base;
+extern uint32_t _kernel_end;
+extern uint32_t  _kernel_virtual_base;
+extern uint32_t stack_top;
 
 // bool gdbEnabled;
 
 typedef void (*constructor)();
 constructor start_ctors;
 constructor end_ctors;
-void callConstructors()
-{
-    for(constructor* i = &start_ctors; i != &end_ctors; i++)
-        (*i)();
-}
+// extern void callConstructors()
+// {
+//     for(constructor* i = &start_ctors; i != &end_ctors; i++)
+//         (*i)();
+// }
 
 static inline void *find_pa(unsigned long *vptb, void *ptr){
     unsigned long address = (unsigned long )ptr;

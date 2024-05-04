@@ -69,6 +69,7 @@
 #include <alinix/bootconsole.h>
 #include <alinix/keyboard.h>
 #include <alinix/beep.h>
+#include <alinix/progress.h>
 
 
 

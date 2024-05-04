@@ -127,6 +127,7 @@ void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic){
     srm_printk("Starting the Kheap...\n");
     kheap_init();
     srm_printk("Started the Kheap\n");
+    ProgressBarInit(progressBar,10,15,13,45);
 
     const char* args = (const char*)phys2virt(mbi->cmdline);
     if (strcmp(args, "gdb")){

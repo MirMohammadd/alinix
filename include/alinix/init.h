@@ -28,6 +28,9 @@
 #include <alinix/physicalmemory.h>
 
 
+/**
+ * @brief Header files for kernel initiation
+*/
 
 #include <alinix/idt.h>
 #include <alinix/assembly.h>
@@ -73,10 +76,10 @@
 
 
 #define __init		__section(".init.text")
-// static void Initialize();
+static void Initialize();
 CommandBlockWrapper SCSIPrepareCommandBlock(uint8_t command, int length, uint64_t lba, int sectors);
-// bool ResetRecovery();
-// bool SCSIRequest(CommandBlockWrapper* request, uint8_t* dataPointer, int dataLength);
+bool ResetRecovery();
+bool SCSIRequest(CommandBlockWrapper* request, uint8_t* dataPointer, int dataLength);
 void DeInitialize();
 char ReadSector(uint32_t lba, uint8_t* buf);
 char WriteSector(uint32_t lba, uint8_t* buf);

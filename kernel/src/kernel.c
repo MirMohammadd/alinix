@@ -64,16 +64,10 @@ extern uint32_t _kernel_end;
 extern uint32_t  _kernel_virtual_base;
 extern uint32_t stack_top;
 
-// bool gdbEnabled;
 
 typedef void (*constructor)();
 constructor start_ctors;
 constructor end_ctors;
-// extern void callConstructors()
-// {
-//     for(constructor* i = &start_ctors; i != &end_ctors; i++)
-//         (*i)();
-// }
 
 static inline void *find_pa(unsigned long *vptb, void *ptr){
     unsigned long address = (unsigned long )ptr;
@@ -139,6 +133,6 @@ extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic
     srm_printk(" Ok\nNow booting the kernel\n");
 
 	for (int i = 0 ; i < 0x100000000 ; i++)
-        
+        // Do nothing here
     asm volatile  ("hlt");
 }

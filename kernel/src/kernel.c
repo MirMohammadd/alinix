@@ -33,7 +33,6 @@
 
 void _print_string(const char* str);
 
-extern void kernelMain();
 extern void print_string();
 multiboot_info_t* mbi = 0;
 struct hwrpb_struct *hwrpb = INIT_HWRPB;
@@ -100,7 +99,7 @@ void _print_string(const char* str)
 
 
 
-void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic){
+extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic){
     /**
      * @brief Main  function for Kernel Entry Point, implementing all the final actions here
     */
@@ -114,18 +113,23 @@ void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic){
     gdbEnabled = true;
     ConsoleInit(true);
     ConsoleClear();
+    Write("Starting the kernel entry...");
     Log(Info,"Hello!");
     beep();
     srm_printk("Starting the Kernel ...\n");
     if (!kernel_base){
+        Log(Error,"Panic! Kernel Base is memory corrupted!!");
         kernelMemoryCorruptionLockDown();
-        return -1;
     }
     display_model_initialise();
+    WriteLine("Booting the kernel");
 
     srm_printk("Starting the Kheap...\n");
+    _print_string("Starting the Kheap..\n");
+    Log(Info,"Kheap is getting started...\n");
     kheap_init();
     srm_printk("Started the Kheap\n");
+    ProgressBarInit(progressBar,10,15,13,45);
 
     const char* args = (const char*)phys2virt(mbi->cmdline);
     if (strcmp(args, "gdb")){
@@ -136,10 +140,5 @@ void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic){
 
 	for (int i = 0 ; i < 0x100000000 ; i++)
         
-    asm volatile  ("hlt"); 
-    // runkernel();
-    /////////////////////
-    // This should always return 0
-    // return 0;
-    //////////////////////
+    asm volatile  ("hlt");
 }

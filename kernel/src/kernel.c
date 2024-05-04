@@ -30,6 +30,8 @@
 #include <alinix/init.h>
 #include <asm/setup.h>
 
+extern void kernelMain();
+
 multiboot_info_t* mbi = 0;
 struct hwrpb_struct *hwrpb = INIT_HWRPB;
 
@@ -65,7 +67,7 @@ static inline void *find_pa(unsigned long *vptb, void *ptr){
 
 
 
-int kernelMain(){
+void kernelMain(){
     /**
      * @brief Main  function for Kernel Entry Point, implementing all the final actions here
     */
@@ -75,6 +77,8 @@ int kernelMain(){
     uint32_t kernel_base = (uint32_t) &_kernel_base;
     uint32_t kernel_end = (uint32_t) &_kernel_end;
     uint32_t kernel_size = kernel_end - kernel_base;
+    gdbEnabled = true;
+    Log(Info,"Hello!");
     srm_printk("Starting the Kernel ...\n");
     if (!kernel_base){
         kernelMemoryCorruptionLockDown();
@@ -92,11 +96,12 @@ int kernelMain(){
     }
     // dhcp_start("eth0");
     srm_printk(" Ok\nNow booting the kernel\n");
-	for (int i = 0 ; i < 0x100000000 ; i++)
+	// for (int i = 0 ; i < 0x100000000 ; i++)
         
     // asm volatile  ("hlt"); 
+    // runkernel();
     /////////////////////
     // This should always return 0
-    return 0;
+    // return 0;
     //////////////////////
 }

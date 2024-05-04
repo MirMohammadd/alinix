@@ -17,7 +17,7 @@
 #ifndef __ALINIX_KERNEL_INTERRUPT_H
 #define __ALINIX_KERNEL_INTERRUPT_H
 
-
+#include <alinix/irqreturn.h>
 
 
 

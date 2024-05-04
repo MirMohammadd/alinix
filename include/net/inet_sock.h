@@ -34,8 +34,8 @@ struct ip_options{
 			ts_needaddr:1;
     unsigned char	router_alert;
 	unsigned char	cipso;
-	unsigned char	__pad2;
-	unsigned char	__data[];
+	// unsigned char	__pad2;
+	// unsigned char	__data[];
 };
 
 

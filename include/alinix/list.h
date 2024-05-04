@@ -26,12 +26,12 @@ struct list_head {
 };
 
 
-static inline bool __list_add_valid(struct list_head *new,
+static inline bool __list_add_valid(struct list_head *new_,
 					     struct list_head *prev,
 					     struct list_head *next){
         bool ret = true;
 
-        if (next->prev == prev && prev->next == next && new != prev && new != next){
+        if (next->prev == prev && prev->next == next && new_ != prev && new_ != next){
             return true;
         }
         ret = false;

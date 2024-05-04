@@ -64,6 +64,8 @@
 #include <alinix/graphics/model.h>
 #include <asm/hwrpb.h>
 #include <asm/setup.h>
+#include <alinix/log.h>
+#include <alinix/enums.h>
 
 
 #define __init		__section(".init.text")

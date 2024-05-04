@@ -218,7 +218,7 @@
          };
        };
      };
-     typedef struct multiboot_info multiboot_info_t;
+     typedef struct multiboot_info __multiboot_info_t;
      
      struct multiboot_color
      {

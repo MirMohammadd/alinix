@@ -104,11 +104,20 @@ extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic
     #ifdef IGNORE_INTERRUPT
     IgnoreInterrupt();
     #endif
+    inportb(0x60);
     _print_string("Hello World!");
     uint32_t kernel_base = (uint32_t) &_kernel_base;
     uint32_t kernel_end = (uint32_t) &_kernel_end;
     uint32_t kernel_size = kernel_end - kernel_base;
     gdbEnabled = true;
+    ForegroundColor = VGA_COLOR_BLUE;
+    BackgroundColor = VGA_COLOR_LIGHT_GREY;
+    Clear(45);
+    if(multiboot_magic != MULTIBOOT_BOOTLOADER_MAGIC)
+    {
+        WriteLine("Error: not booted by a multiboot bootloader");
+        return;
+    }
     init_keyboard();
     ConsoleInit(true);
     ConsoleClear();

@@ -75,8 +75,8 @@ void ConsoleInit(bool enableSerial)
 
 void Write(char* str)
 {
-    if (BootConsoleWriteToSerial)
-        WriteStr(str);
+    // if (BootConsoleWriteToSerial)
+    //     WriteStr(str);
 
     for(int i = 0; str[i] != '\0'; ++i)
     {

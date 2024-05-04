@@ -48,6 +48,8 @@ kernel_boot_msg:
     .asciz "Booting kernel\n"
 rom_boot_msg:
     .asciz "Booting from ROM\n"
+hello_msg:
+    .asciz "Hello, World!\n"
 
 .section .text
 .align 4
@@ -89,10 +91,20 @@ _entrypoint:
     mov $kernel_boot_msg, %esi  # Load address of message
     call print_string           # Call function to print string
 
-    # Call the kernelMain function
+    # Print "Hello, World!" message
+    mov $hello_msg, %esi  # Load address of message
+    call print_string           # Call function to print string
+
+    add $KERNEL_VIRTUAL_BASE, %ebx
+
+    call callConstructors
+
+    push $_kernel_base
+    push $_kernel_end
+    push %eax
+    push %ebx
     call kernelMain
 
-    # Halt the processor
 _stop:
     cli
     hlt
@@ -104,7 +116,7 @@ loop:
     lodsb               # Load byte at %esi into AL, increment %esi
     test %al, %al       # Check if end of string
     jz done             # If end, jump to done
-    mov $0x7f, %ah      # Attribute byte (white on black)
+    mov $0x0f, %ah      # Attribute byte (white text on white background)
     mov %ax, (%edi)     # Write to video memory
     add $2, %edi        # Move to next character position
     jmp loop            # Repeat for next character

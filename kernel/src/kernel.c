@@ -64,16 +64,10 @@ extern uint32_t _kernel_end;
 extern uint32_t  _kernel_virtual_base;
 extern uint32_t stack_top;
 
-// bool gdbEnabled;
 
 typedef void (*constructor)();
 constructor start_ctors;
 constructor end_ctors;
-// extern void callConstructors()
-// {
-//     for(constructor* i = &start_ctors; i != &end_ctors; i++)
-//         (*i)();
-// }
 
 static inline void *find_pa(unsigned long *vptb, void *ptr){
     unsigned long address = (unsigned long )ptr;

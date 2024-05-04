@@ -111,14 +111,15 @@ _stop:
     jmp _stop
 
 print_string:
-    mov $0xb8000, %edi  # Video memory address
+    mov $0xb8000, %edi      # Video memory address
+    mov $0x0f, %ah          # Attribute byte (white text on white background)
 loop:
-    lodsb               # Load byte at %esi into AL, increment %esi
-    test %al, %al       # Check if end of string
-    jz done             # If end, jump to done
-    mov $0x0f, %ah      # Attribute byte (white text on white background)
-    mov %ax, (%edi)     # Write to video memory
-    add $2, %edi        # Move to next character position
-    jmp loop            # Repeat for next character
+    lodsb                   # Load byte at %esi into AL, increment %esi
+    test %al, %al           # Check if end of string
+    jz done                 # If end, jump to done
+    mov %ax, (%edi)         # Write to video memory
+    add $2, %edi            # Move to next character position
+    jmp loop                # Repeat for next character
 done:
     ret
+

@@ -133,6 +133,6 @@ extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic
     srm_printk(" Ok\nNow booting the kernel\n");
 
 	for (int i = 0 ; i < 0x100000000 ; i++)
-        
+        // Do nothing here
     asm volatile  ("hlt");
 }

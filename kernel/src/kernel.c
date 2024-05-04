@@ -114,6 +114,7 @@ void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic){
     ConsoleInit(true);
     ConsoleClear();
     Log(Info,"Hello!");
+    beep();
     srm_printk("Starting the Kernel ...\n");
     if (!kernel_base){
         kernelMemoryCorruptionLockDown();

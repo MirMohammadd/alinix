@@ -1,6 +1,7 @@
 #ifndef __ALINIX_KERNEL_VGA_H
 #define __ALINIX_KERNEL_VGA_H
 
+#include <alinix/gui/colors.h>
 
        enum vga_color {
             VGA_COLOR_BLACK = 0,

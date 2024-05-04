@@ -7,3 +7,8 @@
  * * Defines the clock for the system 
 */
 
+/**
+ * @note Needed ports for RTC (real time clock) are : 
+ * *0x70
+ * * 0x71
+*/

@@ -73,6 +73,16 @@ typedef void (*constructor)();
 constructor start_ctors;
 constructor end_ctors;
 
+
+/**
+ * @brief Function to find the physical address corresponding to a virtual address.
+ * 
+ * This function takes a virtual address pointer and a virtual page table, and returns the corresponding physical address.
+ * 
+ * @param vptb Pointer to the virtual page table.
+ * @param ptr Void pointer to the virtual address to be translated.
+ * @return Void pointer representing the physical address corresponding to the virtual address.
+ */
 static inline void *find_pa(unsigned long *vptb, void *ptr){
     unsigned long address = (unsigned long )ptr;
     unsigned long result;
@@ -83,11 +93,18 @@ static inline void *find_pa(unsigned long *vptb, void *ptr){
 	return (void *) result;
 }
 
+/**
+ * @brief Prints the string and messages to the video memory
+ * @param String to be printed
+*/
+
 void _print_string(const char* str)
 {
     // VGA text mode buffer
     volatile char* video_memory = (volatile char*)0xb8000;
-    for(int i = 0; str[i] != '\0'; ++i)
+    // We can change the buffer
+    int bufferSize = 80 * 25;
+    for(int i = 0; str[i] != '\0' && i < bufferSize; ++i)
     {
         // Each character takes 2 bytes: ASCII and attribute
         video_memory[i*2] = str[i];

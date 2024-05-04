@@ -73,6 +73,16 @@ typedef void (*constructor)();
 constructor start_ctors;
 constructor end_ctors;
 
+
+/**
+ * @brief Function to find the physical address corresponding to a virtual address.
+ * 
+ * This function takes a virtual address pointer and a virtual page table, and returns the corresponding physical address.
+ * 
+ * @param vptb Pointer to the virtual page table.
+ * @param ptr Void pointer to the virtual address to be translated.
+ * @return Void pointer representing the physical address corresponding to the virtual address.
+ */
 static inline void *find_pa(unsigned long *vptb, void *ptr){
     unsigned long address = (unsigned long )ptr;
     unsigned long result;

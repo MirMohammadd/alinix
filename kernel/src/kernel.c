@@ -30,8 +30,10 @@
 #include <alinix/init.h>
 #include <asm/setup.h>
 
-extern void kernelMain();
+void _print_string(const char* str);
 
+extern void kernelMain();
+extern void print_string();
 multiboot_info_t* mbi = 0;
 struct hwrpb_struct *hwrpb = INIT_HWRPB;
 
@@ -83,16 +85,28 @@ static inline void *find_pa(unsigned long *vptb, void *ptr){
 	return (void *) result;
 }
 
+void _print_string(const char* str)
+{
+    // VGA text mode buffer
+    volatile char* video_memory = (volatile char*)0xb8000;
+    for(int i = 0; str[i] != '\0'; ++i)
+    {
+        // Each character takes 2 bytes: ASCII and attribute
+        video_memory[i*2] = str[i];
+        video_memory[i*2+1] = 0x0F; // White text on black background
+    }
+}
 
 
 
-extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic){
+void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic){
     /**
      * @brief Main  function for Kernel Entry Point, implementing all the final actions here
     */
     #ifdef IGNORE_INTERRUPT
     IgnoreInterrupt();
     #endif
+    _print_string("Hello World!");
     uint32_t kernel_base = (uint32_t) &_kernel_base;
     uint32_t kernel_end = (uint32_t) &_kernel_end;
     uint32_t kernel_size = kernel_end - kernel_base;
@@ -117,32 +131,10 @@ extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic
     }
     // dhcp_start("eth0");
     srm_printk(" Ok\nNow booting the kernel\n");
-        asm volatile (
-        "mov $0x06, %%ah\n"   // Scroll window up
-        "mov $0x00, %%al\n"   // Number of lines to scroll
-        "mov $0x1F, %%bh\n"   // Attribute (color)
-        "mov $0, %%cx\n"      // Upper left corner (row 0, col 0)
-        "mov $0, %%dx\n"      // Lower right corner (row 0, col 0)
-        "int $0x10\n"         // Call BIOS video interrupt
-        :
-        :
-        : "ah", "al", "bh", "cx", "dx"
-    );
 
-    // Write message to the screen
-    asm volatile (
-        "mov $0x0E, %%ah\n"   // Teletype output
-        "mov $'H', %%al\n"    // Character to print
-        "mov $0, %%bh\n"      // Page number
-        "mov $0x1F, %%bl\n"   // Attribute (color)
-        "int $0x10\n"         // Call BIOS video interrupt
-        :
-        :
-        : "ah", "al", "bh", "bl"
-    );
-	// for (int i = 0 ; i < 0x100000000 ; i++)
+	for (int i = 0 ; i < 0x100000000 ; i++)
         
-    // asm volatile  ("hlt"); 
+    asm volatile  ("hlt"); 
     // runkernel();
     /////////////////////
     // This should always return 0

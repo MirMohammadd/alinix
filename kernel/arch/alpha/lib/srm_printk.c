@@ -2,37 +2,14 @@
 #include <alinix/asm/console.h>
 
 
-long
-srm_printk(const char *fmt, ...)
+void srm_printk(const char* str)
 {
-	static char buf[1024];
-	va_list args;
-	long len, num_lf;
-	char *src, *dst;
-
-	va_start(args, fmt);
-	len = vsprintf(buf, fmt, args);
-	va_end(args);
-
-	/* count number of linefeeds in string: */
-
-	num_lf = 0;
-	for (src = buf; *src; ++src) {
-		if (*src == '\n') {
-			++num_lf;
-		}
-	}
-
-	if (num_lf) {
-		/* expand each linefeed into carriage-return/linefeed: */
-		for (dst = src + num_lf; src >= buf; ) {
-			if (*src == '\n') {
-				*dst-- = '\r';
-			}
-			*dst-- = *src--;
-		}
-	}
-
-	srm_puts(buf, num_lf+len);	
-        return len;
+    // VGA text mode buffer
+    volatile char* video_memory = (volatile char*)0xb8000;
+    for(int i = 0; str[i] != '\0'; ++i)
+    {
+        // Each character takes 2 bytes: ASCII and attribute
+        video_memory[i*2] = str[i];
+        video_memory[i*2+1] = 0x0F; // White text on black background
+    }
 }

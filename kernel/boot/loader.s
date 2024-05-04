@@ -15,11 +15,16 @@
 
 .section .bootstrap_stack, "aw", @nobits
 stack_bottom:
-    .skip 16384 # 16 KiB
+.skip 16384 # 16 KiB
 .global stack_top
 stack_top:
 
 .section .data
+.align 4
+.global welcome_message
+welcome_message:
+    .asciz "Loading kernel...\n"
+
 .align 0x1000
 .global BootPageDirectory
 BootPageDirectory:
@@ -51,6 +56,18 @@ _kernel_virtual_base:
 _entrypoint:
     mov $(BootPageDirectory - KERNEL_VIRTUAL_BASE), %ecx
     mov %ecx, %cr3
+
+    # Clear the screen
+    mov $0x06, %ah   # Function to scroll the screen
+    xor %bh, %bh     # Blank attribute (no color)
+    mov $0x00, %dl   # Number of lines to scroll
+    mov $0x184F, %cx # Bottom-right corner of the screen
+    mov $0x00, %dh   # Top-left corner of the screen
+    int $0x10        # Call BIOS interrupt to scroll the screen
+
+    # Print "Loading kernel" message
+    lea welcome_message, %esi
+    call print_string
 
     # enable 4 mb pages
     mov %cr4, %ecx
@@ -85,15 +102,18 @@ _entrypoint:
     push %ebx
     call kernelMain
 
-    # Change background color to blue (assuming 0x1F is blue)
-    mov $0x06, %ah   # Scroll window up
-    mov $0x00, %al   # Number of lines to scroll
-    mov $0x1F, %bh   # Attribute (color)
-    mov $0, %cx      # Upper left corner (row 0, col 0)
-    mov $0, %dx      # Lower right corner (row 0, col 0)
-    int $0x10        # Call BIOS video interrupt
+_stop:
+    cli
+    hlt
+    jmp _stop
 
-    _stop:
-        cli
-        hlt
-        jmp _stop
+print_string:
+    mov $0x0E, %ah   # Set function to teletype output
+.loop:
+    lodsb            # Load next byte of string
+    test %al, %al    # Check for null terminator
+    jz .done         # If null terminator, we're done
+    int $0x10        # Otherwise, print character
+    jmp .loop        # Repeat for next character
+.done:
+    ret

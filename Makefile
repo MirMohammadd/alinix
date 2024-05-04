@@ -58,6 +58,7 @@ KRNLOBJS := $(patsubst $(KRNLSRCDIR)/%,$(KRNLOBJDIR)/%,$(patsubst %.cpp,%.o,$(pa
 $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.cpp
 	mkdir -p $(@D)
 	@echo "COMPILING $@"
+	cd libx && make
 	i686-elf-g++ $(G++PARAMS) -c -o $@ $<
 
 ####################################

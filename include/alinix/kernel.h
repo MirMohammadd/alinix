@@ -80,7 +80,7 @@ void terminal_write_next_entry(vga_entry_t entry);
 void terminal_write_next_char(char c);
 void terminal_write_char_at(uint16_t x, uint16_t y, vga_entry_t entry);
 void print(char* str,...);
-void srm_printk(const char* str);
+long srm_printk(const char *fmt, ...);
 int sprintf(char * buf, const char *fmt, ...);
 int vsprintf(char *buf, const char *fmt, va_list args);
 long srm_puts(const char* str,long len);

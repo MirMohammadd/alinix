@@ -119,7 +119,6 @@ extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic
     srm_printk("Starting the Kernel ...\n");
     if (!kernel_base){
         kernelMemoryCorruptionLockDown();
-        return -1;
     }
     display_model_initialise();
     WriteLine("Booting the kernel");

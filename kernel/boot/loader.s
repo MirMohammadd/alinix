@@ -54,9 +54,6 @@ _kernel_virtual_base:
 .type _entrypoint, @function
 
 _entrypoint:
-    mov $(BootPageDirectory - KERNEL_VIRTUAL_BASE), %ecx
-    mov %ecx, %cr3
-
     # Clear the screen
     mov $0x06, %ah   # Function to scroll the screen
     xor %bh, %bh     # Blank attribute (no color)
@@ -69,19 +66,17 @@ _entrypoint:
     lea welcome_message, %esi
     call print_string
 
-    # enable 4 mb pages
-    mov %cr4, %ecx
-    or $0x00000010, %ecx
-    mov %ecx, %cr4
+    # Enable paging (assuming you have set up the page directory and tables)
+    mov %cr3, %eax   # Load the address of the page directory into eax
+    mov %eax, %cr3   # Set cr3 to the address of the page directory
 
-    # enable paging
-    mov %cr0, %ecx
-    or $0x80000001, %ecx
-    mov %ecx, %cr0
+    mov %cr0, %eax   # Load the value of cr0 into eax
+    or $0x80000001, %eax  # Set the paging bit (bit 31) and the protection bit (bit 0)
+    mov %eax, %cr0   # Write eax back to cr0 to enable paging
 
-    # jump to higher half code
-    lea 4f, %ecx
-    jmp *%ecx
+    # Jump to the higher-half kernel
+    lea 4f, %eax     # Load the address of label 4 into eax
+    jmp *%eax        # Jump to the address in eax
 
 4:
     # Unmap the identity-mapped pages

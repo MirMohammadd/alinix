@@ -30,6 +30,33 @@ static bool Initialized;
 #define SYSTEM_INFO_ADDR 0xBFFEE000
 
 
+/////////////////////////////////
+/**
+ * @brief Macros defined for the System clock
+*/
+#define	NBUF	15		/* size of buffer cache */
+#define	NINODE	100		/* number of in core inodes */
+#define	NFILE	100		/* number of in core file structures */
+#define	NMOUNT	5		/* number of mountable file systems */
+#define	NEXEC	3		/* number of simultaneous exec's */
+#define	MAXMEM	(64*32)		/* max core per process - first # is Kw */
+#define	SSIZE	20		/* initial stack size (*64 bytes) */
+#define	SINCR	20		/* increment of stack (*64 bytes) */
+#define	NOFILE	15		/* max open files per process */
+#define	CANBSIZ	256		/* max size of typewriter line */
+#define	CMAPSIZ	100		/* size of core allocation area */
+#define	SMAPSIZ	100		/* size of swap allocation area */
+#define	NCALL	20		/* max simultaneous time callouts */
+#define	NPROC	50		/* max number of processes */
+#define	NTEXT	40		/* max number of pure texts */
+#define	NCLIST	100		/* max total clist size */
+#define	HZ	60		/* Ticks/second of the clock */
 
+
+struct callo{
+    int c_time;
+    int c_arg;
+    int	(*c_func)();	/* routine */
+};
 
 #endif /*__ALINIX_KERNEL_SYSTEM_HEADER_H*/

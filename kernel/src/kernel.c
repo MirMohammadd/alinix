@@ -33,7 +33,7 @@
 
 void _print_string(const char* str);
 
-extern void kernelMain();
+extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic);
 extern void print_string();
 multiboot_info_t* mbi = 0;
 struct hwrpb_struct *hwrpb = INIT_HWRPB;

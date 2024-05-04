@@ -134,7 +134,7 @@ typedef struct {
 #define NO_RETURN VOID
 #define __always_inline inline
 #define __ksym __attribute__((section(".ksyms")))
-
+#define RET return
 
 
 /////////////////////

@@ -1,7 +1,4 @@
 /**
- * @author Ali Mirmohammad
- * @file serialport.h
- * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
  ** This file is part of AliNix.
 
 **AliNix is free software: you can redistribute it and/or modify
@@ -17,26 +14,15 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+#ifndef __ALINIX_DRIVERS_BUS_OWB_H
+#define __ALINIX_DRIVERS_BUS_OWB_H
 
-#ifndef _ALINIX_KERNEL_SERIAL_PORT_H__
-#define _ALINIX_KERNEL_SERIAL_PORT_H__
-
-#include <alinix/enums.h>
-#include <alinix/types.h>
-
-int SerialportSerialSendReady();
-
-void SerialportWrite(char a);
-
-void SerialportWriteStr(char * str);
-
-// bool Initialized = false;
+// ROM commands
+#define OWB_ROM_SEARCH        0xF0  ///< Perform Search ROM cycle to identify devices on the bus
+#define OWB_ROM_READ          0x33  ///< Read device ROM (single device on bus only)
+#define OWB_ROM_MATCH         0x55  ///< Address a specific device on the bus by ROM
+#define OWB_ROM_SKIP          0xCC  ///< Address all devices on the bus simultaneously
+#define OWB_ROM_SEARCH_ALARM  0xEC  ///< Address all devices on the bus with a set alarm flag
 
 
-void SerialportInit(enum COMPort port);
-
-void Writestr(char* s);
-
-// static bool Initialized = false;
-
-#endif 
+#endif // 

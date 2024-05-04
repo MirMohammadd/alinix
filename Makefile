@@ -34,8 +34,8 @@ endif
 INCLUDEDIRS := include
 QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../qemuTrace.txt -d cpu_reset #-readconfig qemu-usb-config.cfg -drive if=none,id=stick,file=disk.img -device usb-storage,bus=ehci.0,drive=stick
 
-G++PARAMS := -m32 -g -D Alinix -I $(INCLUDEDIRS) -I arch/mips/include -I arch/alpha/include -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -lgcc -L/usr/lib/gcc/i686-elf/10.2.0/
-GCCPARAMS := -m32 -g -D Alinix -I $(INCLUDEDIRS) -I arch/mips/include -I arch/alpha/include -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas -lgcc -L/usr/lib/gcc/i686-elf/10.2.0/
+G++PARAMS := -m32 -g -D Alinix -I $(INCLUDEDIRS) -I arch/mips/include -I arch/alpha/include -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -lgcc -L/usr/lib/gcc/i686-elf/10.2.0/ -w
+GCCPARAMS := -m32 -g -x c -c  -D Alinix -I $(INCLUDEDIRS) -I arch/mips/include -I arch/alpha/include -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas -lgcc -L/usr/lib/gcc/i686-elf/10.2.0/ -w
 ASPARAMS := --32
 LDPARAMS := -m elf_i386
 
@@ -94,6 +94,8 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 	@echo "ASSEMBLING $@"
 	nasm -f elf32 -O0 $< -o $@
 
+	
+
 # $(KRNLOBJDIR)/security/%.o: $(KRNLSRCDIR)/security/%.c
 #     mkdir -p $(@D)
 #     @echo "COMPILING $@"
@@ -102,7 +104,7 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 $(SECURITY_OBJS)/%.o: (SECURITY_SRCS)/%.c
 	mkdir -p $(@D)
 	@echo "COMPILING $@"
-	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
+	i686-elf-gcc  $(GCCPARAMS) -c -o $@ $< 
 
 
 
@@ -138,4 +140,4 @@ versionInfo:
 .PHONY: clean
 
 clean:
-	rm -rf $(KRNLOBJDIR) Alinix.bin Alinix01.iso
+	rm -rf $(KRNLOBJDIR) Alinix.bin Alinix.iso

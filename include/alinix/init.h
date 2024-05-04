@@ -63,6 +63,13 @@
 #include <alinix/security/apparmor/audit.h>
 #include <alinix/graphics/model.h>
 #include <asm/hwrpb.h>
+#include <asm/setup.h>
+#include <alinix/log.h>
+#include <alinix/enums.h>
+#include <alinix/bootconsole.h>
+#include <alinix/keyboard.h>
+#include <alinix/beep.h>
+
 
 
 #define __init		__section(".init.text")

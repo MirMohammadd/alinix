@@ -30,9 +30,11 @@
 // bool Initialized = false;
 
 
-static enum  ScreenMode_t screenMode = TextMode;
-
+// static enum  ScreenMode_t screenMode = TextMode;
+#include <alinix/log.h>
 
 void Print(const char* data, uint32_t length);
+void printString(const char* str);
+
 
 #endif

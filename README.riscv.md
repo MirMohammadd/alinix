@@ -10,3 +10,4 @@ make
 ## Run in QEMU
 
 qemu-system-riscv64 -machine virt -bios fudge -serial stdio
+qemu-system-x86_64 -kernel alinix.bin

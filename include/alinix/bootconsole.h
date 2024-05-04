@@ -70,4 +70,8 @@ enum vga_color {
     VGA_COLOR_WHITE = 15
 };
 
+static uint8_t BackgroundColor = VGA_COLOR_BLACK; //Default console background color
+static uint8_t ForegroundColor = VGA_COLOR_WHITE; //Default console foreground color
+
+
 #endif /*__ALINIX_KERNEL_BOOT_CONSOLE_H*/

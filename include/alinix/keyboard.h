@@ -18,6 +18,8 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+#ifndef __ALINIX_KERNEL_KEYBOARD_H
+#define __ALINIX_KERNEL_KEYBOARD_H
 #include <alinix/types.h>
 
 struct InternalKeyboardStatus{
@@ -51,3 +53,6 @@ typedef struct {
 bool ContainsKey(uint8_t key, uint8_t* packet, int* pos);
 void UpdateLEDS();
 
+
+
+#endif 

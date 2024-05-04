@@ -67,6 +67,7 @@
 #include <alinix/log.h>
 #include <alinix/enums.h>
 #include <alinix/bootconsole.h>
+#include <alinix/keyboard.h>
 
 
 #define __init		__section(".init.text")

@@ -138,4 +138,4 @@ versionInfo:
 .PHONY: clean
 
 clean:
-	rm -rf $(KRNLOBJDIR) Alinix.bin Alinix01.iso
+	rm -rf $(KRNLOBJDIR) Alinix.bin Alinix.iso

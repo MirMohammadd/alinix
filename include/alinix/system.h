@@ -25,8 +25,8 @@
 #include <alinix/enums.h>
 #include <alinix/types.h>
 
-static bool gdbEnabled;
-static bool Initialized;
+bool gdbEnabled;
+bool Initialized;
 #define SYSTEM_INFO_ADDR 0xBFFEE000
 
 

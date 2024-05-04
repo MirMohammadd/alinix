@@ -33,6 +33,8 @@ enum LogLevel
     Warning,
     Error
 };
+#include <alinix/enums.h>
+enum ScreenMode_t screenMode = TextMode;
 
 void Log(enum LogLevel level, const char* __restrict__ format, ...);
 void Print(const char* data, uint32_t length);

@@ -22,6 +22,7 @@
 #define _ALINIX_KERNEL_SERIAL_PORT_H__
 
 #include <alinix/enums.h>
+#include <alinix/types.h>
 
 int SerialportSerialSendReady();
 
@@ -36,6 +37,6 @@ void SerialportInit(enum COMPort port);
 
 void Writestr(char* s);
 
-
+// static bool Initialized = false;
 
 #endif 

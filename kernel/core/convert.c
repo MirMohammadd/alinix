@@ -15,7 +15,7 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 #include <alinix/convert.h>
-
+#include <alinix/memory.h>
 
 StringToInt(char* string)
 {
@@ -58,4 +58,16 @@ StringToInt(char* string)
 int IsSpace(char c)
 {
     return c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r';
+}
+
+char* IntToHexString(uint8_t w)
+{
+    static const char* digits = "0123456789ABCDEF";
+    uint32_t hexSize = sizeof(uint32_t)<<1;
+    char* rc =  malloc(sizeof(char[hexSize + 1])); //Terminate string with 0
+    memset(rc, 0, hexSize + 1);
+
+    for (uint32_t i=0, j=(hexSize-1)*4 ; i<hexSize; ++i,j-=4)
+        rc[i] = digits[(w>>j) & 0x0f];
+    return rc;
 }

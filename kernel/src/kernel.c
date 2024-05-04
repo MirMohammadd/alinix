@@ -140,10 +140,5 @@ extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic
 
 	for (int i = 0 ; i < 0x100000000 ; i++)
         
-    asm volatile  ("hlt"); 
-    // runkernel();
-    /////////////////////
-    // This should always return 0
-    // return 0;
-    //////////////////////
+    asm volatile  ("hlt");
 }

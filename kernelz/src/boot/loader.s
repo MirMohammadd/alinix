@@ -46,6 +46,8 @@ _kernel_virtual_base:
 .section .rodata
 kernel_boot_msg:
     .asciz "Booting kernel\n"
+rom_boot_msg:
+    .asciz "Booting from ROM\n"
 
 .section .text
 .align 4
@@ -79,20 +81,18 @@ _entrypoint:
     # Mark end of call stack for unwinding
     movl $0, %ebp
 
+    # Print "Booting from ROM" message
+    mov $rom_boot_msg, %esi  # Load address of message
+    call print_string           # Call function to print string
+
     # Print "Booting kernel" message
     mov $kernel_boot_msg, %esi  # Load address of message
     call print_string           # Call function to print string
 
-    add $KERNEL_VIRTUAL_BASE, %ebx
-
-    call callConstructors
-
-    push $_kernel_base
-    push $_kernel_end
-    push %eax
-    push %ebx
+    # Call the kernelMain function
     call kernelMain
 
+    # Halt the processor
 _stop:
     cli
     hlt
@@ -104,7 +104,7 @@ loop:
     lodsb               # Load byte at %esi into AL, increment %esi
     test %al, %al       # Check if end of string
     jz done             # If end, jump to done
-    mov $0x7f, %ah      # Attribute byte (white on white)
+    mov $0x7f, %ah      # Attribute byte (white on black)
     mov %ax, (%edi)     # Write to video memory
     add $2, %edi        # Move to next character position
     jmp loop            # Repeat for next character

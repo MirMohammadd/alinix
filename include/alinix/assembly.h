@@ -21,4 +21,19 @@
 
 #define	INSTRUCTION_CLOCK_FREQUENCY	80000000
 
+#define __print_asm(msg) \
+    asm volatile ( \
+        "mov $0x0E, %%ah \n"   /* Set AH to 0x0E (Teletype output) */ \
+        "1: lodsb \n"           /* Load next byte from string into AL */ \
+        "cmp $0, %%al \n"       /* Check for null terminator */ \
+        "je 2f \n"              /* If null terminator, jump to end */ \
+        "int $0x10 \n"          /* Otherwise, call BIOS interrupt for screen output */ \
+        "jmp 1b \n"             /* Repeat loop */ \
+        "2: \n"                 /* End label */ \
+        :                       /* Output operands (none) */ \
+        : "S"(msg)              /* Input operand (address of string) */ \
+        : "ah", "al"            /* Clobbered registers */ \
+    )
+
+
 #endif // __ALINIX_KERNEL_ASSEMBLY_H

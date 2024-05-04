@@ -107,6 +107,7 @@ extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic
     gdbEnabled = true;
     ConsoleInit(true);
     ConsoleClear();
+    __print_asm("Starting the kernel....\n");
     Write("Starting the kernel entry...");
     Log(Info,"Hello!");
     beep();

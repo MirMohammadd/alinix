@@ -33,7 +33,6 @@
 
 void _print_string(const char* str);
 
-extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic);
 extern void print_string();
 multiboot_info_t* mbi = 0;
 struct hwrpb_struct *hwrpb = INIT_HWRPB;
@@ -100,7 +99,7 @@ void _print_string(const char* str)
 
 
 
-void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic){
+extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic){
     /**
      * @brief Main  function for Kernel Entry Point, implementing all the final actions here
     */
@@ -125,6 +124,8 @@ void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic){
     display_model_initialise();
 
     srm_printk("Starting the Kheap...\n");
+    _print_string("Starting the Kheap..\n");
+    Log(Info,"Kheap is getting started...\n");
     kheap_init();
     srm_printk("Started the Kheap\n");
     ProgressBarInit(progressBar,10,15,13,45);

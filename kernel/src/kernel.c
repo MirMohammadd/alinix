@@ -29,6 +29,7 @@
 #include <alinix/inet.h>
 #include <alinix/init.h>
 #include <asm/setup.h>
+#include <net/dhcp.h>
 
 void _print_string(const char* str);
 
@@ -130,7 +131,7 @@ void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic){
     if (strcmp(args, "gdb")){
         gdbEnabled = true;
     }
-    // dhcp_start("eth0");
+    dhcp_start("eth0");
     srm_printk(" Ok\nNow booting the kernel\n");
 
 	for (int i = 0 ; i < 0x100000000 ; i++)

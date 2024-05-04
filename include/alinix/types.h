@@ -72,7 +72,7 @@ typedef uint16_t __le16;
 #define NULL (void *)0
 #endif
 
-
+#define CONSOLE_BUFFER_LENGTH 64
 ////////////////////
 /**
  * @brief Networking types
@@ -172,6 +172,7 @@ typedef struct raw_spinlock {
 typedef struct pm_message {
 	int event;
 } pm_message_t;
+
 
 
 typedef struct regs16 {

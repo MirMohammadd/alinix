@@ -94,6 +94,8 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 	@echo "ASSEMBLING $@"
 	nasm -f elf32 -O0 $< -o $@
 
+	
+
 # $(KRNLOBJDIR)/security/%.o: $(KRNLSRCDIR)/security/%.c
 #     mkdir -p $(@D)
 #     @echo "COMPILING $@"

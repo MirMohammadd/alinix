@@ -74,33 +74,9 @@ _entrypoint:
     or $0x80000001, %eax  # Set the paging bit (bit 31) and the protection bit (bit 0)
     mov %eax, %cr0   # Write eax back to cr0 to enable paging
 
-    # Jump to the higher-half kernel
-    lea 4f, %eax     # Load the address of label 4 into eax
-    jmp *%eax        # Jump to the address in eax
+    # Your code to jump to the higher-half kernel and continue execution
 
-4:
-    # Unmap the identity-mapped pages
-    movl $0, BootPageDirectory
-    invlpg 0
-
-    movl $stack_top, %esp
-    # Mark end of call stack for unwinding
-    movl $0, %ebp
-
-    add $KERNEL_VIRTUAL_BASE, %ebx
-
-    call callConstructors
-
-    push $_kernel_base
-    push $_kernel_end
-    push %eax
-    push %ebx
-    call kernelMain
-
-_stop:
-    cli
-    hlt
-    jmp _stop
+    # Infinite loop
 
 print_string:
     mov $0x0E, %ah   # Set function to teletype output
@@ -112,3 +88,5 @@ print_string:
     jmp .loop        # Repeat for next character
 .done:
     ret
+
+.size _entrypoint, . - _entrypoint

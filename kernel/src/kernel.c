@@ -118,6 +118,7 @@ extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic
     beep();
     srm_printk("Starting the Kernel ...\n");
     if (!kernel_base){
+        Log(Error,"Panic! Kernel Base is memory corrupted!!");
         kernelMemoryCorruptionLockDown();
     }
     display_model_initialise();

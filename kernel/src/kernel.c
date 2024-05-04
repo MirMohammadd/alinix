@@ -92,6 +92,7 @@ void _print_string(const char* str)
 {
     // VGA text mode buffer
     volatile char* video_memory = (volatile char*)0xb8000;
+    // We can change the buffer
     int bufferSize = 80 * 25;
     for(int i = 0; str[i] != '\0' && i < bufferSize; ++i)
     {

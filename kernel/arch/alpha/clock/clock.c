@@ -29,3 +29,18 @@ PRIVATE __always_inline VOID __setup_registers(){
     outportb(0x71, 0x20);	// write to CMOS/RTC RAM
     EnableInterrupts(); // Run sti 
 }
+
+void inline change_interrupts_rate(int frequency,int rate){
+    rate &= 0x0F;
+    DisableInterrupts();
+    outportb(0x70, 0x8A);		// set index to register A, disable NMI
+    char prev= (char) inportb(0x71);	// get initial value of register A
+    outportb(0x70, 0x8A);		// reset index to A
+    outportb(0x71, (prev & 0xF0) | rate); //write only our rate to A. Note, rate is the bottom 4 bits.
+    EnableInterrupts();
+}
+
+void inline __select_C_register(){
+    outportb(0x70, 0x0C);	// select register C
+    inportb(0x71);		// just throw away contents
+}

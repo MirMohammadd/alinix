@@ -66,6 +66,7 @@
 #include <asm/setup.h>
 #include <alinix/log.h>
 #include <alinix/enums.h>
+#include <alinix/bootconsole.h>
 
 
 #define __init		__section(".init.text")

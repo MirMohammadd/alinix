@@ -122,6 +122,7 @@ extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic
         return -1;
     }
     display_model_initialise();
+    WriteLine("Booting the kernel");
 
     srm_printk("Starting the Kheap...\n");
     _print_string("Starting the Kheap..\n");

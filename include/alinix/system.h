@@ -57,6 +57,6 @@ struct callo{
     int c_time;
     int c_arg;
     int	(*c_func)();	/* routine */
-}callout[NCALL];
+};
 
 #endif /*__ALINIX_KERNEL_SYSTEM_HEADER_H*/

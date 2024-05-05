@@ -119,9 +119,10 @@ extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic
     // #ifdef IGNORE_INTERRUPT
     // IgnoreInterrupt();
     // #endif
+    const char* helloMsg = "Hello World!";
     ConsoleInit(true);
-    
     ConsoleClear();
+    outportb(0x3D4, *helloMsg);
     inportb(0x60);
     _print_string("Hello World!");
     uint32_t kernel_base = (uint32_t) &_kernel_base;

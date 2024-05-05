@@ -43,6 +43,9 @@ KRNLSRCDIR := kernel
 KRNLOBJDIR := kernel/obj
 KERNEL_SEC_DIR = security
 
+KERNEL_CXX_DIR = kernelcxx/src
+LIB_CXX_DIR = libcxx
+
 SECURITY_SRCS := $(wildcard security/*.c)
 
 # Create a list of object files corresponding to the source files
@@ -108,10 +111,11 @@ $(SECURITY_OBJS)/%.o: (SECURITY_SRCS)/%.c
 
 
 
+
 drivers:
 	cd drivers && $(MAKE) all
 
-Alinix.bin: linker.ld $(KRNLOBJS)
+Alinix.bin: kernel/linker.ld $(KRNLOBJS)
 	# cd security && $(MAKE) all
 	# cd drivers && $(MAKE) all 
 	i686-elf-ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)

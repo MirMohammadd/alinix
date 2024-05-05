@@ -116,9 +116,13 @@ extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic
     /**
      * @brief Main  function for Kernel Entry Point, implementing all the final actions here
     */
-    #ifdef IGNORE_INTERRUPT
-    IgnoreInterrupt();
-    #endif
+    // #ifdef IGNORE_INTERRUPT
+    // IgnoreInterrupt();
+    // #endif
+    const char* helloMsg = "Hello World!";
+    ConsoleInit(true);
+    ConsoleClear();
+    outportb(0x3D4, *helloMsg);
     inportb(0x60);
     _print_string("Hello World!");
     uint32_t kernel_base = (uint32_t) &_kernel_base;
@@ -127,13 +131,20 @@ extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic
     gdbEnabled = true;
     ForegroundColor = VGA_COLOR_BLUE;
     BackgroundColor = VGA_COLOR_LIGHT_GREY;
+    ConsoleClear();
     Clear(45);
     clock_init();
     if(multiboot_magic != MULTIBOOT_BOOTLOADER_MAGIC)
     {
+        Log(Error,"Error!");
         WriteLine("Error: not booted by a multiboot bootloader");
         return;
     }
+    Write("Kernel virtual base: 0x"); printfHex32(_kernel_virtual_base); WriteLine(" ");
+    Write("Kernel Base: 0x"); printfHex32(kernel_base);
+    WriteLine(" ");
+    Write("Kernel End: 0x"); printfHex32(kernel_end); WriteLine("  ");
+    Write("Kernel Size: "); Write(IntToString(kernel_size / 1024)); Write(" Kb      ("); Write(IntToString(kernel_size)); WriteLine(")");
     init_keyboard();
     ConsoleInit(true);
     ConsoleClear();

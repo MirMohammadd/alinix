@@ -5,17 +5,17 @@
 .set CHECKSUM, -(MAGIC + FLAGS) # checksum of above, to prove we are multiboot
 
 .section .multiboot
-    .align 4
-    .long MAGIC
-    .long FLAGS
-    .long CHECKSUM
+	.align 4
+	.long MAGIC
+	.long FLAGS
+	.long CHECKSUM
 
 .set KERNEL_VIRTUAL_BASE, 0xC0000000
 .set KERNEL_PAGE_NUMBER, (KERNEL_VIRTUAL_BASE >> 22)
 
 .section .bootstrap_stack, "aw", @nobits
 stack_bottom:
-    .skip 16384 # 16 KiB
+.skip 16384 # 16 KiB
 .global stack_top
 stack_top:
 
@@ -23,33 +23,25 @@ stack_top:
 .align 0x1000
 .global BootPageDirectory
 BootPageDirectory:
-    # identity map the first 4 MB
-    .long 0x00000083
+	# identity map the first 4 MB
+	.long 0x00000083
+	
+	# pages before kernel
+	.rept (KERNEL_PAGE_NUMBER - 1)
+	.long 0
+	.endr
+	
+	# this page contains the kernel
+	.long 0x00000083
 
-    # pages before kernel
-    .rept (KERNEL_PAGE_NUMBER - 1)
-    .long 0
-    .endr
-
-    # this page contains the kernel
-    .long 0x00000083
-
-    # pages after kernel
-    .rept (1024 - KERNEL_PAGE_NUMBER - 1)
-    .long 0
-    .endr
+	# pages after kernel
+	.rept (1024 - KERNEL_PAGE_NUMBER - 1)
+	.long 0
+	.endr
 
 .global _kernel_virtual_base
 _kernel_virtual_base:
-    .long KERNEL_VIRTUAL_BASE
-
-.section .rodata
-kernel_boot_msg:
-    .asciz "Booting kernel\n"
-rom_boot_msg:
-    .asciz "Booting from ROM\n"
-hello_msg:
-    .asciz "Hello, World!\n"
+	.long KERNEL_VIRTUAL_BASE
 
 .section .text
 .align 4
@@ -57,50 +49,38 @@ hello_msg:
 .type _entrypoint, @function
 
 _entrypoint:
-    mov $(BootPageDirectory - KERNEL_VIRTUAL_BASE), %ecx
-    mov %ecx, %cr3
+	mov $(BootPageDirectory - KERNEL_VIRTUAL_BASE), %ecx
+	mov %ecx, %cr3
 
-    # enable 4 mb pages
-    mov %cr4, %ecx
-    or $0x00000010, %ecx
-    mov %ecx, %cr4
+	# enable 4 mb pages
+	mov %cr4, %ecx
+	or $0x00000010, %ecx
+	mov %ecx, %cr4
 
-    # enable paging
-    mov %cr0, %ecx
-    or $0x80000001, %ecx
-    mov %ecx, %cr0
+	# enable paging
+	mov %cr0, %ecx
+	or $0x80000001, %ecx
+	mov %ecx, %cr0
 
-    # jump to higher half code
-    lea 4f, %ecx
-    jmp *%ecx
+	# jump to higher half code
+	lea 4f, %ecx
+	jmp *%ecx
 
 4:
-    # Unmap the identity-mapped pages
-    movl $0, BootPageDirectory
-    invlpg 0
+	# Unmap the identity-mapped pages
+	movl $0, BootPageDirectory
+	invlpg 0
 
-    movl $stack_top, %esp
-    # Mark end of call stack for unwinding
-    movl $0, %ebp
+	movl $stack_top, %esp
+	# Mark end of call stack for unwinding
+	movl $0, %ebp
 
-    # Print "Booting from ROM" message
-    mov $rom_boot_msg, %esi  # Load address of message
-    call print_string           # Call function to print string
-
-    # Print "Booting kernel" message
-    mov $kernel_boot_msg, %esi  # Load address of message
-    call print_string           # Call function to print string
-
-    # Print "Hello, World!" message
-    mov $hello_msg, %esi  # Load address of message
-    call print_string           # Call function to print string
-
-    add $KERNEL_VIRTUAL_BASE, %ebx
+	add $KERNEL_VIRTUAL_BASE, %ebx
 
     call callConstructors
 
-    push $_kernel_base
-    push $_kernel_end
+	push $_kernel_base
+	push $_kernel_end
     push %eax
     push %ebx
     call kernelMain
@@ -109,17 +89,3 @@ _stop:
     cli
     hlt
     jmp _stop
-
-print_string:
-    mov $0xb8000, %edi      # Video memory address
-    mov $0x0f, %ah          # Attribute byte (white text on white background)
-loop:
-    lodsb                   # Load byte at %esi into AL, increment %esi
-    test %al, %al           # Check if end of string
-    jz done                 # If end, jump to done
-    mov %ax, (%edi)         # Write to video memory
-    add $2, %edi            # Move to next character position
-    jmp loop                # Repeat for next character
-done:
-    ret
-

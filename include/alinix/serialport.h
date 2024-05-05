@@ -31,13 +31,14 @@ void SerialportWrite(char a);
 void SerialportWriteStr(char * str);
 
 // bool Initialized = false;
+void WriteStr(char* str);
 
 
 void SerialportInit(enum COMPort port);
 
 void Writestr(char* s);
 void Init(enum COMPort port);
-
+uint32_t GetMSSinceBoot();
 // static bool Initialized = false;
 
 #endif 

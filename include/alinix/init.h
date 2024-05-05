@@ -73,7 +73,8 @@
 #include <alinix/keyboard.h>
 #include <alinix/beep.h>
 #include <alinix/progress.h>
-
+#include <alinix/print.h>
+#include <alinix/convert.h>
 
 #define __init		__section(".init.text")
 static void Initialize();

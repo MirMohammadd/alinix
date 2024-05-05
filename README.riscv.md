@@ -11,3 +11,4 @@ make
 
 qemu-system-riscv64 -machine virt -bios fudge -serial stdio
 qemu-system-x86_64 -kernel alinix.bin
+qemu-system-x86_64 -kernel cactusos.bin

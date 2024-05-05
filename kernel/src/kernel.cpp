@@ -16,14 +16,15 @@
 #include <core/power.h>
 #include <installer/installer.h>
 #include <alinix/init.h>
-#include <alinix/security/apparmor/audit.h>
-#include <alinix/security/integrity.h>
-#include <alinix/security.h>
+#include <alinix/enums.h>
+#include <alinix/log.h>
+#include <alinix/bootconsole.h>
 
 using namespace CactusOS;
 using namespace CactusOS::common;
 using namespace CactusOS::core;
 using namespace CactusOS::system;
+
 
 extern "C" uint32_t _kernel_base;
 extern "C" uint32_t _kernel_end;
@@ -44,7 +45,7 @@ extern "C" void _set_debug_traps();
 PowerRequest powerRequestState;
 void IdleThread()
 {
-    powerRequestState = None;
+    powerRequestState = 0;
     uint64_t prevTicks = System::pit->Ticks();
     while(1) {
         uint64_t ticks = System::pit->Ticks();
@@ -100,9 +101,7 @@ extern "C" void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_m
     uint32_t kernel_base = (uint32_t) &_kernel_base;
     uint32_t kernel_end = (uint32_t) &_kernel_end;
     uint32_t kernel_size = kernel_end - kernel_base;
-    if (!kernel_base){
-        kernelMemoryCorruptionLockDown();
-    }
+
     //////////////
     // Check Kernel Arguments
     //////////////
@@ -117,8 +116,8 @@ extern "C" void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_m
     else if(String::strncmp(args, "serial", 7))
         BootConsole::Init(true);
 
-    BootConsole::ForegroundColor = VGA_COLOR_BLACK;
-    BootConsole::BackgroundColor = VGA_COLOR_BLACK;
+    BootConsole::ForegroundColor = VGA_COLOR_BLUE;
+    BootConsole::BackgroundColor = VGA_COLOR_LIGHT_GREY;
     BootConsole::Clear();
 
     if(multiboot_magic != MULTIBOOT_BOOTLOADER_MAGIC)
@@ -127,7 +126,7 @@ extern "C" void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_m
         return;
     }
 
-    BootConsole::WriteLine("Starting Alinix  Kernel");
+    BootConsole::WriteLine("Starting Kernel");
     BootConsole::Write("Built on: "); BootConsole::WriteLine(__DATE__ "  " __TIME__);
 
     BootConsole::Write("Kernel virtual base: 0x"); Print::printfHex32(_kernel_virtual_base); BootConsole::WriteLine();

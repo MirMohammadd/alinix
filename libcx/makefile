@@ -1,4 +1,4 @@
-# The makefile for the CactusOS project, this file will get more complicated when the OS is in a later stage of development.
+# The makefile for the Alinix project, this file will get more complicated when the OS is in a later stage of development.
 
 ##########
 # .s files are GAS assembly
@@ -76,79 +76,79 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.asm
 
 
 
-CactusOS.bin: kernelcc/linker.ld $(KRNLOBJS)
+Alinix.bin: ../linker.ld $(KRNLOBJS)
 	i686-elf-ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
 
-CactusOS.iso: CactusOS.bin
+Alinix.iso: Alinix.bin
 	cd lib/ && $(MAKE)
 	cd apps/ && $(MAKE)
 	
-	nm -a CactusOS.bin | sort -d > isofiles/debug.sym
+	nm -a Alinix.bin | sort -d > isofiles/debug.sym
 	cp -r isofiles/. iso
 	mkdir iso/boot
 	mkdir iso/boot/grub
-	cp CactusOS.bin iso/boot/CactusOS.bin
+	cp Alinix.bin iso/boot/Alinix.bin
 	cp grub.cfg iso/boot/grub/grub.cfg
-	grub-mkrescue --output=CactusOS.iso iso
+	grub-mkrescue --output=Alinix.iso iso
 	rm -rf iso
 
 .PHONY: clean qemu kdbg run filelist serialDBG qemuDBG fastApps
 clean:
-	rm -rf $(KRNLOBJDIR) CactusOS.bin CactusOS.iso
+	rm -rf $(KRNLOBJDIR) Alinix.bin Alinix.iso
 	cd lib/ && $(MAKE) clean
 	cd apps/ && $(MAKE) clean
 	rm -rf isofiles/apps/*.bin
 	rm -rf isofiles/apps/*.sym
 
-qemu: CactusOS.iso
-	qemu-system-i386 -cdrom CactusOS.iso -serial stdio $(QEMUOPTIONS)
+qemu: Alinix.iso
+	qemu-system-i386 -cdrom Alinix.iso -serial stdio $(QEMUOPTIONS)
 
-qemuDBG: CactusOS.iso
-	qemu-system-i386 -cdrom CactusOS.iso -serial stdio $(QEMUOPTIONS) -s -S &
+qemuDBG: Alinix.iso
+	qemu-system-i386 -cdrom Alinix.iso -serial stdio $(QEMUOPTIONS) -s -S &
 
-qemuGDB: CactusOS.iso
-	qemu-system-i386 -cdrom CactusOS.iso $(QEMUOPTIONS) -serial pty &
-	gdb -ex 'file CactusOS.bin' -ex 'target remote /dev/pts/1' -q
+qemuGDB: Alinix.iso
+	qemu-system-i386 -cdrom Alinix.iso $(QEMUOPTIONS) -serial pty &
+	gdb -ex 'file Alinix.bin' -ex 'target remote /dev/pts/1' -q
 
-run: CactusOS.iso
-	vboxmanage startvm "CactusOS" -E VBOX_GUI_DBG_AUTO_SHOW=true -E VBOX_GUI_DBG_ENABLED=true &
-	rm "CactusOS.log"
-	echo "" > "CactusOS.log"
-	tail -f "CactusOS.log"
+run: Alinix.iso
+	vboxmanage startvm "Alinix" -E VBOX_GUI_DBG_AUTO_SHOW=true -E VBOX_GUI_DBG_ENABLED=true &
+	rm "Alinix.log"
+	echo "" > "Alinix.log"
+	tail -f "Alinix.log"
 
 serialDBG:
 	gcc -o tools/serialDebugger/a.out tools/serialDebugger/main.c
 	sudo ./tools/serialDebugger/a.out
 
-kdbg: CactusOS.iso
-	qemu-system-i386 $(QEMUOPTIONS) -cdrom CactusOS.iso -serial stdio -s -S &
-	kdbg -r localhost:1234 CactusOS.bin
+kdbg: Alinix.iso
+	qemu-system-i386 $(QEMUOPTIONS) -cdrom Alinix.iso -serial stdio -s -S &
+	kdbg -r localhost:1234 Alinix.bin
 
 grub-core:
 	grub-mkimage -o isofiles/setup/core.img -O i386-pc -p="(hd0,msdos1)/boot/grub" --config=grubcore.cfg -v configfile biosdisk part_msdos fat normal multiboot echo
 
-# Only rebuild LIBCactusOS and the apps without recompiling the kernel
+# Only rebuild LIBAlinix and the apps without recompiling the kernel
 fastApps:
 	rm -rf isofiles/apps/*.bin
 	cd lib/ && $(MAKE) clean && $(MAKE)
 	cd apps/ && $(MAKE) clean && $(MAKE)
-	rm CactusOS.iso
+	rm Alinix.iso
 
 turboApps:
 	rm -rf isofiles/apps/*.bin
 	cd apps/ && $(MAKE) clean && $(MAKE)
-	rm CactusOS.iso
+	rm Alinix.iso
 
-installUSB: CactusOS.iso CactusOS.bin isofiles/debug.sym isofiles/apps
+installUSB: Alinix.iso Alinix.bin isofiles/debug.sym isofiles/apps
 	rm -rf /media/remco/ISOIMAGE/apps/*.bin
 	cp -r isofiles/apps/* /media/remco/ISOIMAGE/apps/
 	cp isofiles/debug.sym /media/remco/ISOIMAGE/debug.sym
-	cp CactusOS.bin /media/remco/ISOIMAGE/boot/CactusOS.bin
+	cp Alinix.bin /media/remco/ISOIMAGE/boot/Alinix.bin
 	umount /media/remco/ISOIMAGE
 
-debug: CactusOS.iso
+debug: Alinix.iso
 	pyuic5 tools/advancedDebugger/mainGUI.ui -o tools/advancedDebugger/mainWindow.py
-	qemu-system-i386 -cdrom CactusOS.iso $(QEMUOPTIONS) -serial pty &
+	qemu-system-i386 -cdrom Alinix.iso $(QEMUOPTIONS) -serial pty &
 	/usr/bin/python3 tools/advancedDebugger/main.py
 
 

@@ -111,7 +111,7 @@ $(SECURITY_OBJS)/%.o: (SECURITY_SRCS)/%.c
 drivers:
 	cd drivers && $(MAKE) all
 
-Alinix.bin: kernel/linker.ld $(KRNLOBJS)
+Alinix.bin: linker.ld $(KRNLOBJS)
 	# cd security && $(MAKE) all
 	# cd drivers && $(MAKE) all 
 	i686-elf-ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)

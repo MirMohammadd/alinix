@@ -34,14 +34,17 @@ endif
 INCLUDEDIRS := include
 QEMUOPTIONS := -boot d -device VGA,edid=on,xres=1024,yres=768 -trace events=../qemuTrace.txt -d cpu_reset #-readconfig qemu-usb-config.cfg -drive if=none,id=stick,file=disk.img -device usb-storage,bus=ehci.0,drive=stick
 
-G++PARAMS := -m32 -g -D Alinix  -I $(INCLUDEDIRS) -I arch/mips/include -I arch/alpha/include -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -lgcc -L/usr/lib/gcc/i686-elf/10.2.0/ -w  -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I arch/alpha/include
-GCCPARAMS := -m32 -g -x c -c   -D Alinix -I $(INCLUDEDIRS) -I arch/mips/include -I arch/alpha/include -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas -lgcc -L/usr/lib/gcc/i686-elf/10.2.0/ -w  -std=c++17 -ffreestanding -O2 -Wall -Wextra  -I arch/alpha/include
+G++PARAMS := -m32 -g -D Alinix  -I $(INCLUDEDIRS) -I arch/mips/include -I arch/alpha/include -Wall -fno-omit-frame-pointer -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-exceptions -fno-rtti -fno-leading-underscore -Wno-write-strings -fpermissive -Wno-unknown-pragmas -lgcc -L/usr/lib/gcc/i686-elf/10.2.0/ -w  -std=gnu99 -ffreestanding -O2 -Wall -Wextra -I arch/alpha/include 
+GCCPARAMS := -m32 -g -x c -c   -D Alinix -I $(INCLUDEDIRS) -I arch/mips/include -I arch/alpha/include -Wall -fno-omit-frame-pointer -nostdlib -fno-builtin -Wno-unknown-pragmas -lgcc -L/usr/lib/gcc/i686-elf/10.2.0/ -w  -std=c++17 -ffreestanding -O2 -Wall -Wextra  -I arch/alpha/include 
 ASPARAMS := --32
 LDPARAMS := -m elf_i386
 
 KRNLSRCDIR := kernel
 KRNLOBJDIR := kernel/obj
 KERNEL_SEC_DIR = security
+
+KERNEL_CXX_DIR = kernelcxx/src
+LIB_CXX_DIR = libcxx
 
 SECURITY_SRCS := $(wildcard security/*.c)
 
@@ -108,12 +111,14 @@ $(SECURITY_OBJS)/%.o: (SECURITY_SRCS)/%.c
 
 
 
+
 drivers:
 	cd drivers && $(MAKE) all
 
 Alinix.bin: kernel/linker.ld $(KRNLOBJS)
 	# cd security && $(MAKE) all
 	# cd drivers && $(MAKE) all 
+	# cd libcs && make || true
 	i686-elf-ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
 
 install : Alinix.bin

@@ -116,9 +116,11 @@ extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic
     /**
      * @brief Main  function for Kernel Entry Point, implementing all the final actions here
     */
+    ConsoleClear();
     // #ifdef IGNORE_INTERRUPT
     // IgnoreInterrupt();
     // #endif
+    // kernel_panic("Error Error Error!");
     const char* helloMsg = "Hello World!";
     ConsoleInit(true);
     ConsoleClear();
@@ -172,6 +174,7 @@ extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic
         gdbEnabled = true;
     }
     dhcp_start("eth0");
+    Log(Info,"Ok\n Now booting the kernel");
     srm_printk(" Ok\nNow booting the kernel\n");
 
 	for (int i = 0 ; i < 0x100000000 ; i++)

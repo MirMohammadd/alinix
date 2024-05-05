@@ -31,6 +31,7 @@ void SerialportWrite(char a);
 void SerialportWriteStr(char * str);
 
 // bool Initialized = false;
+void WriteStr(char* str);
 
 
 void SerialportInit(enum COMPort port);

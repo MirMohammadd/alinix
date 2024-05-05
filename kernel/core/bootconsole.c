@@ -15,6 +15,7 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 #include <alinix/bootconsole.h>
+#include <alinix/serialport.h>
 
 /*/////////////////
 // Static variable initialisations
@@ -75,8 +76,9 @@ void ConsoleInit(bool enableSerial)
 
 void Write(char* str)
 {
-    // if (BootConsoleWriteToSerial)
-    //     WriteStr(str);
+    if (BootConsoleWriteToSerial)
+        WriteStr(str);
+        
 
     for(int i = 0; str[i] != '\0'; ++i)
     {

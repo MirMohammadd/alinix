@@ -127,6 +127,7 @@ extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic
     gdbEnabled = true;
     ForegroundColor = VGA_COLOR_BLUE;
     BackgroundColor = VGA_COLOR_LIGHT_GREY;
+    ConsoleClear();
     Clear(45);
     clock_init();
     if(multiboot_magic != MULTIBOOT_BOOTLOADER_MAGIC)

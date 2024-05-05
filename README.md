@@ -1,6 +1,6 @@
 # Alinix
-[![.github/workflows/elf-gcc.yml](https://github.com/MirMohammadd/AliNix/blob/main/.github/workflows/elf-gcc.yml)]
-[workflow](.github/workflows/elf-gcc.yml)
+
+[[!workflow](.github/workflows/elf-gcc.yml)]
 # Alinix kernel: Unraveling the Power of Possibilities!
 # Inspired by https://github.com/Remco123/CactusOS and Linux kernel
 # Alinix Kernel

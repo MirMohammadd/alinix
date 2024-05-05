@@ -116,9 +116,11 @@ extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic
     /**
      * @brief Main  function for Kernel Entry Point, implementing all the final actions here
     */
+    ConsoleClear();
     // #ifdef IGNORE_INTERRUPT
     // IgnoreInterrupt();
     // #endif
+    // kernel_panic("Error Error Error!");
     const char* helloMsg = "Hello World!";
     ConsoleInit(true);
     ConsoleClear();

@@ -75,6 +75,7 @@
 #include <alinix/progress.h>
 #include <alinix/print.h>
 #include <alinix/convert.h>
+#include <alinix/panic.h>
 
 #define __init		__section(".init.text")
 static void Initialize();

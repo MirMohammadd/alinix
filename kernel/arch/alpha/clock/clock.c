@@ -1,6 +1,7 @@
 #include <alinix/system.h>
 #include <alinix/init.h>
 #include <alinix/kernel.h>
+#include <clock/clock.h>
 
 #define	UMODE	0170000
 #define	SCHMAG	10
@@ -43,4 +44,10 @@ void inline change_interrupts_rate(int frequency,int rate){
 void inline __select_C_register(){
     outportb(0x70, 0x0C);	// select register C
     inportb(0x71);		// just throw away contents
+}
+
+VOID clock_init(){
+    __setup_registers();
+    change_interrupts_rate(0, 0); // Specify your desired frequency and rate here
+    __select_C_register();
 }

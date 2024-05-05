@@ -30,6 +30,7 @@
 #include <alinix/init.h>
 #include <asm/setup.h>
 #include <net/dhcp.h>
+#include <clock/clock.h>
 
 void _print_string(const char* str);
 
@@ -130,6 +131,7 @@ extern void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_magic
     ForegroundColor = VGA_COLOR_BLUE;
     BackgroundColor = VGA_COLOR_LIGHT_GREY;
     Clear(45);
+    clock_init();
     if(multiboot_magic != MULTIBOOT_BOOTLOADER_MAGIC)
     {
         WriteLine("Error: not booted by a multiboot bootloader");

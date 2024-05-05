@@ -38,7 +38,7 @@ void SerialportInit(enum COMPort port);
 
 void Writestr(char* s);
 void Init(enum COMPort port);
-
+uint32_t GetMSSinceBoot();
 // static bool Initialized = false;
 
 #endif 

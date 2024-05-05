@@ -45,10 +45,7 @@ void read_scan_code(){asm ("call read_scan_code");};
 void print_scan_code(){asm ("call print_scan_code");};
 
 
-extern uint32_t _kernel_base;
-extern uint32_t _kernel_end;
-extern uint32_t _kernel_virtual_base;
-extern uint32_t stack_top;
+
 
 typedef void (*constructor)();
 extern constructor start_ctors;

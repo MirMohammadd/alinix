@@ -178,15 +178,15 @@ extern "C" void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_m
 
     VirtualMemoryManager::Initialize();
     BootConsole::WriteLine("Virtual Memory Loaded");
-
+    Log(Info,"Starting the Alinix kernel heap...");
     KernelHeap::Initialize(KERNEL_HEAP_START, KERNEL_HEAP_START + KERNEL_HEAP_SIZE);
-    Log(Info, "Kernel Heap Initialized");
+    Log(Info, "Kernel Heap Initialized : [OK]");
 
     // From here we (should) only use the Log function for logging
     Log(Info, "Switching to log function based output");
 
     Power::Initialize();
-    Log(Info, "Power Control Loaded");
+    Log(Info, "Kernel Power Control Loaded : [ok]");
 
     Log(Info, "Passing mbi to system");
     System::mbi = (multiboot_info_t*)KernelHeap::malloc(sizeof(multiboot_info_t));

@@ -1,10 +1,10 @@
-# Say My Name!!!
+# Alinix
 
-
-# Heisen Kernel: Unraveling the Power of Possibilities!
+[![workflow](.github/workflows/elf-gcc.yml)]
+# Alinix kernel: Unraveling the Power of Possibilities!
 # Inspired by https://github.com/Remco123/CactusOS and Linux kernel
-# HeisenKernel
-HeisenKernel is a sophisticated operating system kernel designed to embody the spirit of innovation and reliability in the tech industry. With a focus on efficiency and performance, this kernel represents a fusion of cutting-edge technology and meticulous design principles.
+# Alinix Kernel
+Alinix Kernel is a sophisticated operating system kernel designed to embody the spirit of innovation and reliability in the tech industry. With a focus on efficiency and performance, this kernel represents a fusion of cutting-edge technology and meticulous design principles.
 
 
 # Compilation  and Execution Environment Setup guide:

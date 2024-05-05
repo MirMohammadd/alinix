@@ -42,7 +42,7 @@ System::SYSTEM_STATS System::statistics = {};
 void System::Start()
 {
     BootConsole::ForegroundColor = VGA_COLOR_BLACK;
-    Log(Info, "Adding system components");
+    Log(Info, "Adding system components to kernel");
     
     System::rtc = new RTC();
     Log(Info, "- RTC [Done]     (%x)", (uint32_t)System::rtc);
@@ -50,10 +50,10 @@ void System::Start()
     InterruptDescriptorTable::DisableInterrupts();
     System::pit = new PIT();
     InterruptDescriptorTable::EnableInterrupts();
-    Log(Info, "- PIT [Done]     (%x)", (uint32_t)System::pit);
+    Log(Info, "- PIT [Done] [OK]    (%x)", (uint32_t)System::pit);
 
     System::dma = new DMAController();
-    Log(Info, "- DMA [Done]     (%x)", (uint32_t)System::dma);
+    Log(Info, "- DMA [Done] [OK]     (%x)", (uint32_t)System::dma);
 
     System::smbios = new SMBIOS();
     Log(Info, "- SMBIOS [Done]     (%x)", (uint32_t)System::smbios);

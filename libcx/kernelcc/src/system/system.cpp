@@ -88,6 +88,8 @@ void System::Start()
     Log(Info, "Starting Keyboard Manager");
     System::keyboardManager = new KeyboardManager();
 
+    Log(Info, "\n[OK]");
+
     Log(Info, "Starting Scheduler");
     InterruptDescriptorTable::DisableInterrupts();
     System::scheduler = new Scheduler();

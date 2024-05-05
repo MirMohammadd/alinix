@@ -61,6 +61,7 @@ void System::Start()
     Log(Info, "Adding Virtual 8086");
     System::vm86Manager = new Virtual8086Manager();
     System::vm86Monitor = new Virtual8086Monitor();
+    Log(Info,"[Ok]\n Now booting the kernel..");
 
     // The graphics component is added here but not used right away, we don't need to be in video mode so early.
     System::gfxDevice = GraphicsDevice::GetBestDevice();
@@ -73,9 +74,12 @@ void System::Start()
 
     Log(Info, "Loading Initial Ramdisk");
     InitialRamDisk::Initialize(System::mbi);
+    Log(Info, "Loading Initial Ramdisk[ok]");
+    Log(Info, "Loading Initial Alinix Kernel Base...\n");
+
 
     System::pci = new PCIController();
-    Log(Info, "- PCI [Done]     (%x)", (uint32_t)System::pci);
+    Log(Info, "- PCI [Done] \n     (%x)", (uint32_t)System::pci);
 
     System::pci->PopulateDeviceList();
 

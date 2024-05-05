@@ -112,7 +112,7 @@ extern "C" void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_m
         BootConsole::Init(true);
 
     BootConsole::ForegroundColor = VGA_COLOR_BLUE;
-    BootConsole::BackgroundColor = VGA_COLOR_LIGHT_GREY;
+    BootConsole::BackgroundColor = VGA_COLOR_BLACK;
     BootConsole::Clear();
 
     if(multiboot_magic != MULTIBOOT_BOOTLOADER_MAGIC)
@@ -237,7 +237,7 @@ extern "C" void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_m
                 Installer::Run();
             }
         }
-        BootConsole::ForegroundColor = VGA_COLOR_BLACK;
+        BootConsole::ForegroundColor = VGA_COLOR_WHITE;
         BootConsole::WriteLine("Running LiveCD....");
         System::setupMode = false;
     }

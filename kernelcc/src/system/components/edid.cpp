@@ -90,7 +90,7 @@ void EDID::AcquireEDID()
                 Log(Info, "ASCII String: %s", info->detailed_timings[i].descriptorData);
                 break;
             case 0xFC: //Monitor Name, stored as ASCII
-                Log(Info, "Monitor Name: %s", info->detailed_timings[i].descriptorData);
+                Log(Warning, "Monitor Name: %s", info->detailed_timings[i].descriptorData);
                 break;
             default:
                 break;

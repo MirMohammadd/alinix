@@ -52,7 +52,7 @@ void CactusOS::system::Log(LogLevel level, const char* __restrict__ format, ...)
         switch (level)
         {
             case Info:
-                BootConsole::ForegroundColor = VGA_COLOR_BLACK;
+                BootConsole::ForegroundColor = VGA_COLOR_WHITE;
                 break;
             case Warning:
                 BootConsole::ForegroundColor = VGA_COLOR_BROWN;

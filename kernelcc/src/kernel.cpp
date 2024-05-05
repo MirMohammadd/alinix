@@ -117,8 +117,8 @@ extern "C" void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_m
     else if(String::strncmp(args, "serial", 7))
         BootConsole::Init(true);
 
-    BootConsole::ForegroundColor = VGA_COLOR_BLACK;
-    BootConsole::BackgroundColor = VGA_COLOR_BLACK;
+    BootConsole::ForegroundColor = VGA_COLOR_LIGHT_GREEN;
+    BootConsole::BackgroundColor = VGA_COLOR_LIGHT_GREEN;
     BootConsole::Clear();
 
     if(multiboot_magic != MULTIBOOT_BOOTLOADER_MAGIC)
@@ -198,7 +198,7 @@ extern "C" void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_m
     System::mbi = (multiboot_info_t*)KernelHeap::malloc(sizeof(multiboot_info_t));
     MemoryOperations::memcpy(System::mbi, mbi, sizeof(multiboot_info_t));
 
-    BootConsole::ForegroundColor = VGA_COLOR_MAGENTA;
+    BootConsole::ForegroundColor = VGA_COLOR_GREEN;
     Log(Info, "-Kernel core intialized-");
 
     // Further intialisation is done in the system class
@@ -223,7 +223,7 @@ extern "C" void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_m
     // Otherwise we run the liveCD
     if(System::vfs->Filesystems->GetAt(System::vfs->bootPartitionID)->disk->type != HardDisk) {
         // Prompt user
-        BootConsole::ForegroundColor = VGA_COLOR_BLUE;
+        BootConsole::ForegroundColor = VGA_COLOR_GREEN;
         System::setupMode = true;
         BootConsole::WriteLine("Press Enter to run Installer\nStarting LiveCD in 5 seconds....");
 

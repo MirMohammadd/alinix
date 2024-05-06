@@ -18,6 +18,7 @@ Note: this project has been using part of fudge kernel at https://github.com/jez
 
 # Screenshots
 
+
 ![Alt text](images/kernelImage.png)
 
 # Alinix kernel booting 

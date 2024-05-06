@@ -32,6 +32,11 @@
 #define GARBAGE_DATA       0xAA55
 #define MAX_TIME_ATTEMPTS  1000
 
+uint8_t joystick_values[] = {
+    0x01, 0x02, 0x04, 0x08, /* Axis */
+    0x10, 0x20, 0x40, 0x80, /* Buttons */
+};
+
 enum JoystickValues
 {
     JoystickButtonA = 0x10,
@@ -59,6 +64,10 @@ struct JoystickStatus{
 };
 
 
+
+struct JoystickStatus *jst;
+
+bool joystick_button(uint8_t buttonnum);
 
 
 #endif 

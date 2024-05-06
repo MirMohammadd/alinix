@@ -321,25 +321,7 @@ struct e1000_context_desc {
 };
 
 /* Offload data descriptor */
-struct e1000_data_desc {
-	__le64 buffer_addr;   /* Address of the descriptor's buffer address */
-	union {
-		__le32 data;
-		struct {
-			__le16 length;    /* Data buffer length */
-			u8 typ_len_ext;
-			u8 cmd;
-		} flags;
-	} lower;
-	union {
-		__le32 data;
-		struct {
-			u8 status;        /* Descriptor status */
-			u8 popts;         /* Packet Options */
-			__le16 special;
-		} fields;
-	} upper;
-};
+#include "e1k_utils.h"
 
 /* Statistics counters collected by the MAC */
 struct e1000_hw_stats {

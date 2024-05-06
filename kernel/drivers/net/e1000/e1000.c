@@ -1,6 +1,7 @@
 #include <alinix/drivers/e1000/hw.h>
 #include <alinix/kernel.h>
 #include <alinix/drivers/e1000/e1k_utils.h>
+#include <alinix/init.h>
 
 #define NB_MAX_DESC 256
 
@@ -15,6 +16,10 @@ static void send_data(void);
 
 uint8_t * bar0, * tx_buffer;
 struct e1000_desc * tx_ring;
+
+static int device_open(struct inode *inode, struct file *file){
+
+}
 
 
 

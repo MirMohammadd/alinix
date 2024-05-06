@@ -28,6 +28,7 @@ struct Font
 };
 void BoundingBox(const char* string, int* retW, int* retH, const void* data, const int* offsetTable);
 
+#ifndef __cplusplus
 
 static char fonts[128][8] = {
   { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, 
@@ -160,5 +161,6 @@ static char fonts[128][8] = {
   { 0x00, 0x08, 0x1C, 0x36, 0x63, 0x41, 0x41, 0x7F }
 };
 
+#endif
 
 #endif /*__ALINIX_KERNEL_FONT_H*/

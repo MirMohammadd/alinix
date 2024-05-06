@@ -68,6 +68,6 @@ struct JoystickStatus{
 struct JoystickStatus *jst;
 
 bool joystick_button(uint8_t buttonnum);
-
+uint16_t joy_stick_status(uint8_t byte);
 
 #endif 

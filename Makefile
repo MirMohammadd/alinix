@@ -71,6 +71,10 @@ $(KRNLOBJDIR)/%.o: $(KRNLSRCDIR)/%.c
 	@echo "COMPILING $@"
 	i686-elf-gcc $(GCCPARAMS) -c -o $@ $<
 
+$(KRNLOBJDIR)/%.o: libcx/kernelcc/src/%.cpp
+	mkdir -p $(@D)
+	@echo "COMPILING $@"
+	i686-elf-g++ $(GCCPARAMS) -c -o $@ $<
 
 
 
@@ -121,7 +125,10 @@ Alinix.bin: kernel/linker.ld $(KRNLOBJS)
 	# cd libcs && make || true
 	i686-elf-ld $(LDPARAMS) -T $< -o $@ $(KRNLOBJS)
 
-install : Alinix.bin
+loader :
+	cd libcx && make qemu || true
+install : Alinix.bin loader
+
 
 
 Alinix.iso: Alinix.bin
@@ -134,7 +141,7 @@ Alinix.iso: Alinix.bin
 	hdiutil makehybrid -o Alinix.iso iso -iso -joliet
 	# rm -rf iso
 
-all : Alinix.iso  drivers
+all : Alinix.iso  drivers install
 
 versionInfo:
 	@echo "Kernel Version: $(VERSION).$(PATCHLEVEL).$(SUBLEVEL)"
@@ -146,3 +153,4 @@ versionInfo:
 
 clean:
 	rm -rf $(KRNLOBJDIR) Alinix.bin Alinix.iso
+	cd libcx && make clean || true

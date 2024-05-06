@@ -697,9 +697,9 @@ struct e1000_hw {
 	} dev_spec;
 };
 
-// #include "82571.h"
-// #include "80003es2lan.h"
-// #include "ich8lan.h"
+#include "82571.h"
+#include "80003es2lan.h"
+#include "ich8lan.h"
 
 /* These functions must be implemented by drivers */
 sint32_t  e1000_read_pcie_cap_reg(struct e1000_hw *hw, u32 reg, u16 *value);

@@ -17,6 +17,8 @@
 #ifndef __ALINIX_KERNEL_GAME_PORT_H
 #define __ALINIX_KERNEL_GAME_PORT_H
 
+#include <alinix/types.h>
+
 
 /**
  * @ref https://github.com/torvalds/linux/blob/master/include/linux/gameport.h#L16
@@ -29,5 +31,34 @@
 #define JOYSTICK_PORT 0x201
 #define GARBAGE_DATA       0xAA55
 #define MAX_TIME_ATTEMPTS  1000
+
+enum JoystickValues
+{
+    JoystickButtonA = 0x10,
+    JoystickButtonB = 0x20,
+    JoystickButtonC = 0x40,
+    JoystickButtonD = 0x80,
+    JoystickAxisX   = 0x01,
+    JoystickAxisY   = 0x02,
+    JoystickDeltaX  = 0x04,
+    JoystickDeltaY  = 0x08,
+};
+ 
+
+
+struct JoystickStatus{
+    uint16_t AxisX;
+    uint16_t AxisY;
+    uint16_t DeltaX;
+    uint16_t DeltaY;
+    bool ButtonA;
+    bool ButtonB;
+    bool ButtonC;
+    bool ButtonD;
+    bool JoystickFlag;
+};
+
+
+
 
 #endif 

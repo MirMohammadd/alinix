@@ -14,37 +14,37 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
-#include <alinix/gameport.h>
-#include <alinix/types.h>
-#include <alinix/port.h>
-#include <alinix/log.h>
+#include <core/port.h>
 #include <alinix/kernel.h>
 #include <alinix/init.h>
+#include <alinix/c++/gameport.hpp>
+#include <system/log.h>
 
-struct JoystickStatus jst;
+struct JoystickStatus *jst;
 
-
-bool joystick_button(uint8_t buttonnum){
+using namespace CactusOS::system;
+bool joystick_button_cxx(uint8_t buttonnum){
     int i;
     for (i = 4; i <= 8; ++i){
         if (joystick_values[i] == buttonnum){
-            return ((inportb(JOYSTICK_PORT) & buttonnum) == 0);
+            return ((CactusOS::core::inportb(JOYSTICK_PORT) & buttonnum) == 0);
         }
     }
-    srm_printk("Invalid value: %x; Out of bounds.\n", buttonnum);
+    // Log(Error,"Invalid value:; Out of bounds.\n");
     return 0;
 }
 
 struct JoystickStatus joystick_dump(void)
 {
-    jst.AxisX   = joy_stick_status(JoystickAxisX);
-    jst.AxisY   = joy_stick_status(JoystickAxisY);
-    jst.DeltaX  = joy_stick_status(JoystickDeltaX);
-    jst.DeltaY  = joy_stick_status(JoystickDeltaY);
-    jst.ButtonA = joystick_button(joy_stick_status(JoystickButtonA));
-    jst.ButtonB = joystick_button(joy_stick_status(JoystickButtonB));
-    jst.ButtonC = joystick_button(joy_stick_status(JoystickButtonC));
-    jst.ButtonD = joystick_button(joy_stick_status(JoystickButtonD));
+    struct JoystickStatus jst;
+    jst.AxisX   = joy_stick_status_cxx(JoystickAxisX);
+    jst.AxisY   = joy_stick_status_cxx(JoystickAxisY);
+    jst.DeltaX  = joy_stick_status_cxx(JoystickDeltaX);
+    jst.DeltaY  = joy_stick_status_cxx(JoystickDeltaY);
+    jst.ButtonA = joystick_button_cxx(joy_stick_status_cxx(JoystickButtonA));
+    jst.ButtonB = joystick_button_cxx(joy_stick_status_cxx(JoystickButtonB));
+    jst.ButtonC = joystick_button_cxx(joy_stick_status_cxx(JoystickButtonC));
+    jst.ButtonD = joystick_button_cxx(joy_stick_status_cxx(JoystickButtonD));
     return jst;
 }
 /* 
@@ -53,24 +53,24 @@ struct JoystickStatus joystick_dump(void)
  * through game port.
  */
 
-uint16_t joy_stick_status(uint8_t byte){
+uint16_t joy_stick_status_cxx(uint8_t byte){
     int time_out = 0;
     /* Disable interrupts, so they don't affect timing */
     asm volatile("cli");
     /* Any read needs to be with a write. The byte that we send 
      * can be garbage, it doesn't matters.
      */
-    uint16_t stat = (uint16_t)inportb(JOYSTICK_PORT);
-    outportb(JOYSTICK_PORT, GARBAGE_DATA);
+    unsigned char stat = (uint16_t)CactusOS::core::inportb(JOYSTICK_PORT);
+    CactusOS::core::outportb(JOYSTICK_PORT, GARBAGE_DATA);
 
     while (1){
         if (stat & byte){
-            jst.JoystickFlag = true;
+            jst->JoystickFlag = true;
             break;
 
         }
         else if (time_out == MAX_TIME_ATTEMPTS){
-            jst.JoystickFlag = false;
+            jst->JoystickFlag = false;
             return 0;
         }
         ++time_out;

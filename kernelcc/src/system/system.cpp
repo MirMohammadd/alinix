@@ -1,5 +1,6 @@
 #include <system/system.h>
 #include <system/listings/directorylisting.h>
+#include <alinix/c++/gameport.hpp>
 
 using namespace CactusOS;
 using namespace CactusOS::common;

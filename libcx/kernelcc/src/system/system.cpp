@@ -1,5 +1,6 @@
 #include <system/system.h>
 #include <system/listings/directorylisting.h>
+#include <alinix/c++/gameport.hpp>
 
 using namespace CactusOS;
 using namespace CactusOS::common;
@@ -38,9 +39,11 @@ SymbolDebugger* System::kernelDebugger = 0;
 bool System::isBochs = false; //are we running inside bochs
 #endif
 System::SYSTEM_STATS System::statistics = {};
+uint16_t joyStickStat = joy_stick_status_cxx(1024);
 
 void System::Start()
 {
+
     BootConsole::ForegroundColor = VGA_COLOR_BLACK;
     Log(Info, "Adding system components to kernel");
     
@@ -57,6 +60,7 @@ void System::Start()
 
     System::smbios = new SMBIOS();
     Log(Info, "- SMBIOS [Done]     (%x)", (uint32_t)System::smbios);
+
 
     Log(Info, "Adding Virtual 8086");
     System::vm86Manager = new Virtual8086Manager();
@@ -78,7 +82,8 @@ void System::Start()
 
     System::pci = new PCIController();
     Log(Info, "- PCI [Done]     (%x)", (uint32_t)System::pci);
-
+    Log(Info,"Having joyStick drivers status at: %d",joyStickStat);
+    
     System::pci->PopulateDeviceList();
 
     Log(Info, "Starting Driver Manager");
@@ -91,6 +96,7 @@ void System::Start()
     System::keyboardManager = new KeyboardManager();
 
     Log(Info, "\n[OK]");
+
 
     Log(Info, "Starting Scheduler");
     InterruptDescriptorTable::DisableInterrupts();

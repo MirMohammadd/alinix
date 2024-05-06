@@ -454,10 +454,10 @@ struct e1000_host_mng_command_info {
 	u8 command_data[E1000_HI_MAX_MNG_DATA_LENGTH];
 };
 
-// #include "mac.h"
-// #include "phy.h"
-// #include "nvm.h"
-// #include "manage.h"
+#include "mac.h"
+#include "phy.h"
+#include "nvm.h"
+#include "manage.h"
 
 struct e1000_mac_operations {
 	/* Function pointers for the MAC. */

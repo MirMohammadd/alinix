@@ -35,14 +35,14 @@ bool joystick_button(uint8_t buttonnum){
 struct JoystickStatus joystick_dump(void)
 {
     struct JoystickStatus jst;
-    jst.AxisX   = joystick_status(JoystickAxisX);
-    jst.AxisY   = joystick_status(JoystickAxisY);
-    jst.DeltaX  = joystick_status(JoystickDeltaX);
-    jst.DeltaY  = joystick_status(JoystickDeltaY);
-    jst.ButtonA = joystick_button(joystick_status(JoystickButtonA));
-    jst.ButtonB = joystick_button(joystick_status(JoystickButtonB));
-    jst.ButtonC = joystick_button(joystick_status(JoystickButtonC));
-    jst.ButtonD = joystick_button(joystick_status(JoystickButtonD));
+    jst.AxisX   = joy_stick_status(JoystickAxisX);
+    jst.AxisY   = joy_stick_status(JoystickAxisY);
+    jst.DeltaX  = joy_stick_status(JoystickDeltaX);
+    jst.DeltaY  = joy_stick_status(JoystickDeltaY);
+    jst.ButtonA = joystick_button(joy_stick_status(JoystickButtonA));
+    jst.ButtonB = joystick_button(joy_stick_status(JoystickButtonB));
+    jst.ButtonC = joystick_button(joy_stick_status(JoystickButtonC));
+    jst.ButtonD = joystick_button(joy_stick_status(JoystickButtonD));
     return jst;
 }
 /* 

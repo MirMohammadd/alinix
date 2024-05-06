@@ -3,6 +3,7 @@
 
 
 
+#define EBUSY 16
 /**
  * @ref https://github.com/merlinrebrovic/e1000e/blob/master/src/hw.h
 */

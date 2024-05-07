@@ -12,6 +12,9 @@ Alinix Kernel is a sophisticated operating system kernel designed to embody the 
 2. run "make qemu" in this directory to build the kernel and run it in the virtual machine, you also get the related ISO file.
 3. Enjoy and donate!!!!
 
+# How to install
+bash <(make install)
+
 
 # IMPORTANT
 Note: this project has been using part of fudge kernel at https://github.com/jezze/fudge/blob/master/lib/hash/crc.c and other kernels at https://wiki.osdev.org/Projects and all rights will be reserved

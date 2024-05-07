@@ -1,0 +1,5 @@
+#ifndef __ALINIX_KERNEL_DRIVERS_UCAPI_H
+#define __ALINIX_KERNEL_DRIVERS_UCAPI_H
+
+
+#endif

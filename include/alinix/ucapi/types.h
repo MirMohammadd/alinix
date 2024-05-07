@@ -361,31 +361,7 @@ uacpi_object *uacpi_create_object(uacpi_object_type type);
 void uacpi_object_ref(uacpi_object *obj);
 void uacpi_object_unref(uacpi_object *obj);
 
-typedef struct uacpi_object {
-    struct uacpi_shareable shareable;
-    u8 type;
-    u8 flags;
 
-    union {
-        u64 integer;
-        uacpi_package *package;
-        uacpi_buffer_field buffer_field;
-        uacpi_object *inner_object;
-        uacpi_control_method *method;
-        uacpi_buffer *buffer;
-        uacpi_mutex *mutex;
-        uacpi_event *event;
-        uacpi_buffer_index buffer_index;
-        uacpi_operation_region *op_region;
-        uacpi_device *device;
-        uacpi_processor *processor;
-        uacpi_thermal_zone *thermal_zone;
-        uacpi_address_space_handlers *address_space_handlers;
-        uacpi_handlers *handlers;
-        uacpi_power_resource power_resource;
-        uacpi_field_unit *field_unit;
-    };
-} uacpi_object;
 
 
 #endif 

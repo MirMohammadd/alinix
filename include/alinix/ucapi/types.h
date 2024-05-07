@@ -387,9 +387,5 @@ typedef struct uacpi_object {
     };
 } uacpi_object;
 
-typedef union uacpi_object_name {
-    char text[4];
-    u32 id;
-} uacpi_object_name;
 
 #endif 

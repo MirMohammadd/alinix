@@ -8,5 +8,10 @@
 
 
 static uacpi_namespace_node *find_pci_root(uacpi_namespace_node *node){
-    
+    static const char *pci_root_ids[] = {
+        PCI_ROOT_PNP_ID,
+        PCI_EXPRESS_ROOT_PNP_ID,
+        NULL
+    };
+    uacpi_namespace_node *parent = node->parent;
 }

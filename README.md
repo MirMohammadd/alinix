@@ -13,7 +13,13 @@ Alinix Kernel is a sophisticated operating system kernel designed to embody the 
 3. Enjoy and donate!!!!
 
 # How to install
-bash <(make install)
+```
+sudo apt-get install make
+```
+
+```
+make install
+```
 
 
 # IMPORTANT

@@ -3,6 +3,8 @@
 #include <alinix/compiler.h>
 #include <alinix/ucapi/acpi.h>
 #include <alinix/stdio.h>
+#include <alinix/ucapi/io.h>
+
 
 
 
@@ -59,4 +61,49 @@ uacpi_status uacpi_gas_read(const struct acpi_gas *gas, u64 *out_value){
     u8 bit_offset, bits_left, index = 0;
     u64 data, mask = 0xFFFFFFFFFFFFFFFF;
 
+}
+
+uacpi_status uacpi_gas_write(const struct acpi_gas *gas, u64 in_value){
+    uacpi_status ret;
+    u8 access_bit_width, access_byte_width;
+    u8 bit_offset, bits_left, index = 0;
+    u64 data, mask = 0xFFFFFFFFFFFFFFFF;
+
+    ret = gas_validate(gas,&access_bit_width);
+    if (ret != UACPI_STATUS_OK)
+        return ret;
+
+    bit_offset = gas->register_bit_offset;
+    bits_left = bit_offset + gas->register_bit_width;
+    access_byte_width = access_bit_width / 8;
+
+    if (access_bit_width < 8){
+        mask = ~(mask << access_bit_width);
+
+    }
+
+    while (bits_left){
+        data = (in_value >> (index * access_bit_width)) & 4;
+
+        if (bit_offset >= access_bit_width){
+            bit_offset -= access_bit_width;
+        }else {
+            u64 address = gas->address + (index * access_byte_width);
+
+                if (gas->address_space_id == UACPI_ADDRESS_SPACE_SYSTEM_IO) {
+                ret = uacpi_kernel_raw_io_write(
+                    address, access_byte_width, data
+                );
+        }else {
+            ret = uacpi_kernel_raw_memory_write(
+            address, access_byte_width, data
+                );
+            }
+            if (uacpi_unlikely_error(ret))
+                return ret;
+        }
+        bits_left -= UACPI_MIN(bits_left, access_bit_width);
+        ++index;
+    }
+    return UACPI_STATUS_OK;
 }

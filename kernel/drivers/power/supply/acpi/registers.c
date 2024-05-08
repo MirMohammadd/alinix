@@ -2,6 +2,7 @@
 #include <alinix/ucapi/acpi.h>
 #include <alinix/ucapi/context.h>
 #include <alinix/ucapi/compiler.h>
+#include <alinix/ucapi/api.h>
 #include <alinix/kernel.h>
 #include <alinix/stat.h>
 

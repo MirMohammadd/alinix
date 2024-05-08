@@ -43,4 +43,9 @@ uacpi_status uacpi_kernel_raw_io_write(
 );
 void uacpi_kernel_log(enum uacpi_log_level, const char*, ...);
 
+
+void uacpi_kernel_vlog(enum uacpi_log_level, const char*, va_list);
+
+
+
 #endif

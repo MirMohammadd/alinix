@@ -26,3 +26,29 @@ void uacpi_kernel_log(enum uacpi_log_level lvl, const char* text, ...)
 
     va_end(vlist);
 }
+
+void uacpi_kernel_vlog(enum uacpi_log_level lvl, const char* text, va_list vlist)
+{
+    const char *lvl_str;
+
+    switch (lvl) {
+    case UACPI_LOG_DEBUG:
+        lvl_str = "DEBUG";
+        break;
+    case UACPI_LOG_TRACE:
+        lvl_str = "TRACE";
+        break;
+    case UACPI_LOG_INFO:
+        lvl_str = "INFO";
+        break;
+    case UACPI_LOG_WARN:
+        lvl_str = "WARN";
+        break;
+    case UACPI_LOG_ERROR:
+        lvl_str = "ERROR";
+        break;
+    default:
+        ;
+    }
+
+}

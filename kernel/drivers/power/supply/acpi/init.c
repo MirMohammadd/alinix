@@ -25,7 +25,7 @@ struct FADT *fadt;
  * @ref https://wiki.osdev.org/Acpi
 */
 
-static inline settle_io_ports(){
+static inline void settle_io_ports(){
     outportb(fadt->SMI_CommandPort,fadt->AcpiEnable);
 }
 

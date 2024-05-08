@@ -1,9 +1,7 @@
 #ifndef __ALINIX_KERNEL_UAPI_NAME_SPACE_H
 #define __ALINIX_KERNEL_UAPI_NAME_SPACE_H
 
-#include "types.h"
-
-
+#include "module.h"
 
 typedef struct uacpi_object {
     struct uacpi_shareable shareable;

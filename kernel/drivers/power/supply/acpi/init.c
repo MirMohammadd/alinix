@@ -14,20 +14,21 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
-#ifndef __ALINIX_KERNEL_STDIO_H
-#define __ALINIX_KERNEL_STDIO_H
+#include <alinix/init_power.h>
+#include <alinix/port.h>
+#include <alinix/init.h>
+#include <alinix/kernel.h>
 
+struct FADT *fadt;
 
+/**
+ * @ref https://wiki.osdev.org/Acpi
+*/
 
+static inline void settle_io_ports(){
+    outportb(fadt->SMI_CommandPort,fadt->AcpiEnable);
+}
 
-typedef struct {
-    char *dummy[1];
-}FILE;
-int fprintf(FILE * file, const char *format, ...);
-
-
-#define UACPI_ALIGN_UP_MASK(x, mask) (((x) + (mask)) & ~(mask))
-#define UACPI_ALIGN_UP(x, val, type) UACPI_ALIGN_UP_MASK(x, (type)(val) - 1)
-
-
-#endif /*__ALINIX_KERNEL_STDIO_H*/
+VOID init_port_power(){
+    while (inportw(fadt->PM1aControlBlock) & 1 == 0);
+}

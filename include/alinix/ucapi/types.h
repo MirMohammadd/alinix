@@ -6,6 +6,8 @@
 #include "namespace.h"
 
 typedef void *uacpi_handle;
+
+
 typedef enum uacpi_object_type {
     UACPI_OBJECT_UNINITIALIZED = 0,
     UACPI_OBJECT_INTEGER = 1,
@@ -313,31 +315,7 @@ typedef struct uacpi_field_unit {
     u8 lock_rule : 1;
 } uacpi_field_unit;
 
-typedef struct uacpi_object {
-    struct uacpi_shareable shareable;
-    u8 type;
-    u8 flags;
 
-    union {
-        u64 integer;
-        uacpi_package *package;
-        uacpi_buffer_field buffer_field;
-        uacpi_object *inner_object;
-        uacpi_control_method *method;
-        uacpi_buffer *buffer;
-        uacpi_mutex *mutex;
-        uacpi_event *event;
-        uacpi_buffer_index buffer_index;
-        uacpi_operation_region *op_region;
-        uacpi_device *device;
-        uacpi_processor *processor;
-        uacpi_thermal_zone *thermal_zone;
-        uacpi_address_space_handlers *address_space_handlers;
-        uacpi_handlers *handlers;
-        uacpi_power_resource power_resource;
-        uacpi_field_unit *field_unit;
-    };
-} uacpi_object;
 
 typedef struct uacpi_args {
     uacpi_object **objects;

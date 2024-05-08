@@ -10,6 +10,17 @@ size_t uacpi_round_up_bits_to_bytes(size_t length){
     return UACPI_ALIGN_UP(length,8,size_t) / 8;
 }
 
+PRIVATE void cut_misaligned_tail(u8 *data,
+size_t offset,u32 len){
+    u8 rem = len & 7;
+
+    if (rem == 0){
+        return;
+    }
+
+    data[offset]   &= ((1ull << rem) - 1);
+}
+
 static uacpi_status gas_validate(
     const struct acpi_gas *gas, u8 *access_bit_width
 ){

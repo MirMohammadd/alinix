@@ -16,3 +16,13 @@ uacpi_status uacpi_kernel_raw_io_read(
     return UACPI_STATUS_OK;
 }
 
+
+void uacpi_kernel_log(enum uacpi_log_level lvl, const char* text, ...)
+{
+    va_list vlist;
+    va_start(vlist, text);
+
+    uacpi_kernel_vlog(lvl, text, vlist);
+
+    va_end(vlist);
+}

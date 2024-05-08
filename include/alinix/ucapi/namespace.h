@@ -3,7 +3,6 @@
 
 #include "types.h"
 
-struct uacpi_namespace_node;
 typedef struct uacpi_namespace_node {
     struct uacpi_shareable shareable;
     uacpi_object_name name;

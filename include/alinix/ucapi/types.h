@@ -4,6 +4,8 @@
 
 #include <alinix/types.h>
 
+#include "namespace.h"
+
 typedef void *uacpi_handle;
 typedef enum uacpi_status {
     UACPI_STATUS_OK = 0,

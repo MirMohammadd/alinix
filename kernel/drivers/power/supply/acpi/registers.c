@@ -1,6 +1,8 @@
 #include <alinix/ucapi/registers.h>
 #include <alinix/ucapi/acpi.h>
 #include <alinix/ucapi/context.h>
+#include <alinix/ucapi/compiler.h>
+
 
 struct uacpi_runtime_context g_uacpi_rt_ctx = { 0 };
 

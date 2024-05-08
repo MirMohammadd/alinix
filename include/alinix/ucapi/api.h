@@ -1,7 +1,7 @@
 #ifndef __ALINIX_KERNEL_UCAPI_API__INCLUDED_H
 #define __ALINIX_KERNEL_UCAPI_API__INCLUDED_H
 
-#include <alinix/ucapi/api.h>
+#include <alinix/ucapi/types.h>
 
 enum uacpi_log_level {
     /*

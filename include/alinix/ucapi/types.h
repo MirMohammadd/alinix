@@ -6,6 +6,12 @@
 
 #include "namespace.h"
 
+typedef union uacpi_object_name {
+    char text[4];
+    u32 id;
+} uacpi_object_name;
+
+
 typedef struct uacpi_namespace_node {
     struct uacpi_shareable shareable;
     uacpi_object_name name;
@@ -366,10 +372,6 @@ typedef struct uacpi_args {
     size_t count;
 } uacpi_args;
 
-typedef union uacpi_object_name {
-    char text[4];
-    u32 id;
-} uacpi_object_name;
 
 typedef enum uacpi_firmware_request_type {
     UACPI_FIRMWARE_REQUEST_TYPE_BREAKPOINT,

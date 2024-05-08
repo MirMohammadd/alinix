@@ -3,7 +3,6 @@
 
 
 #include <alinix/types.h>
-#include "namespace.h"
 
 typedef void *uacpi_handle;
 

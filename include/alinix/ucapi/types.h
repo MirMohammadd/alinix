@@ -5,6 +5,9 @@
 #include <alinix/types.h>
 
 #include "namespace.h"
+struct uacpi_shareable {
+    u32 reference_count;
+};
 
 typedef union uacpi_object_name {
     char text[4];
@@ -82,9 +85,7 @@ typedef enum uacpi_object_type {
 } uacpi_object_type;
 
 
-struct uacpi_shareable {
-    u32 reference_count;
-};
+
 
 typedef struct uacpi_buffer {
     struct uacpi_shareable shareable;

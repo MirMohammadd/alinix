@@ -4,7 +4,6 @@
 
 #include <alinix/types.h>
 
-#include "namespace.h"
 typedef struct uacpi_object uacpi_object;
 struct uacpi_shareable {
     u32 reference_count;

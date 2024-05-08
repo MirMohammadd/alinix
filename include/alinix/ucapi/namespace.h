@@ -4,6 +4,7 @@
 #include <alinix/ucapi/types.h>
 #include "types.h"
 
+struct uacpi_field_unit;
 typedef struct uacpi_object {
     struct uacpi_shareable shareable;
     u8 type;

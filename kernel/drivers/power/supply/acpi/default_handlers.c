@@ -14,4 +14,8 @@ static uacpi_namespace_node *find_pci_root(uacpi_namespace_node *node){
         NULL
     };
     uacpi_namespace_node *parent = node->parent;
+
+    while (parent != uacpi_namespace_root()){
+        
+    }
 }

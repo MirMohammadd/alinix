@@ -1,10 +1,8 @@
 #ifndef __ALINIX_KERNEL_UAPI_NAME_SPACE_H
 #define __ALINIX_KERNEL_UAPI_NAME_SPACE_H
 
-#include <alinix/ucapi/types.h>
-#include "types.h"
+#include "module.h"
 
-struct uacpi_field_unit;
 typedef struct uacpi_object {
     struct uacpi_shareable shareable;
     u8 type;

@@ -12,6 +12,8 @@ typedef struct uacpi_namespace_node {
     struct uacpi_namespace_node *child;
     struct uacpi_namespace_node *next;
 } uacpi_namespace_node;
+typedef struct uacpi_namespace_node uacpi_namespace_node;
+
 typedef struct uacpi_object {
     struct uacpi_shareable shareable;
     u8 type;

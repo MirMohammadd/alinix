@@ -24,6 +24,13 @@ static uacpi_status gas_validate(
         return UACPI_STATUS_UNIMPLEMENTED;
     }
 
+    if (gas->access_size > 4){
+        uacpi_warn("unsupported GAS access size %d\n",
+                   gas->access_size);
+        return UACPI_STATUS_UNIMPLEMENTED;
+    }
+    
+
 }
 
 uacpi_status uacpi_gas_read(const struct acpi_gas *gas, u64 *out_value){

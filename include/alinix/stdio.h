@@ -25,4 +25,9 @@ typedef struct {
 }FILE;
 int fprintf(FILE * file, const char *format, ...);
 
+
+#define UACPI_ALIGN_UP_MASK(x, mask) (((x) + (mask)) & ~(mask))
+#define UACPI_ALIGN_UP(x, val, type) UACPI_ALIGN_UP_MASK(x, (type)(val) - 1)
+
+
 #endif /*__ALINIX_KERNEL_STDIO_H*/

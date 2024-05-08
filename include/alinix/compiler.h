@@ -29,6 +29,7 @@
 
 # define fallthrough                    __attribute__((__fallthrough__))
 
+#define uacpi_unlikely(expr) __builtin_expect(!!(expr), 0)
 /**
  * @brief Define the compiler  macro to mark something as deprecated.
 */

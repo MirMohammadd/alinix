@@ -10,6 +10,10 @@ size_t uacpi_round_up_bits_to_bytes(size_t length){
     return UACPI_ALIGN_UP(length,8,size_t) / 8;
 }
 
+
+/**
+ * @brief Function that cuts tail 
+*/
 PRIVATE void cut_misaligned_tail(u8 *data,
 size_t offset,u32 len){
     u8 rem = len & 7;

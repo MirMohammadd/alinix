@@ -10,22 +10,25 @@ SOFTWARE.
 */
 #include <alinix/kernel.h>
 #include <alinix/init.h>
+#include <alinix/ucapi/types.h>
 
-#include <alinix/ucapi/namespace.h>
+/**
+ * @ref https://github.com/UltraOS/uACPI
+*/
 
-#define PCI_ROOT_PNP_ID "PNP0A03"
-#define PCI_EXPRESS_ROOT_PNP_ID "PNP0A08"
+struct package_length {
+    u32 begin;
+    u32 end;
+};
 
-
-static uacpi_namespace_node *find_pci_root(uacpi_namespace_node *node){
-    static const char *pci_root_ids[] = {
-        PCI_ROOT_PNP_ID,
-        PCI_EXPRESS_ROOT_PNP_ID,
-        NULL
+struct item{
+    u8 type;
+    union {
+        uacpi_handle handle;
+        uacpi_object *obj;
+        struct uacpi_namespace_node *node;
+        struct package_length pkg;
+        u64 immediate;
+        u8 immediate_bytes[8];
     };
-    uacpi_namespace_node *parent = node->parent;
-
-    while (parent != uacpi_namespace_root()){
-        
-    }
-}
+};

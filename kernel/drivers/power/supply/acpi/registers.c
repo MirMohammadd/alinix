@@ -2,6 +2,7 @@
 #include <alinix/ucapi/acpi.h>
 #include <alinix/ucapi/context.h>
 #include <alinix/ucapi/compiler.h>
+#include <alinix/kernel.h>
 
 
 struct uacpi_runtime_context g_uacpi_rt_ctx = { 0 };

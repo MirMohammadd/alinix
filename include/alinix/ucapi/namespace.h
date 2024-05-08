@@ -56,4 +56,6 @@ uacpi_namespace_node *uacpi_namespace_get_predefined(
     uacpi_predefined_namespace
 );
 
+uacpi_namespace_node *uacpi_namespace_root(void);
+
 #endif

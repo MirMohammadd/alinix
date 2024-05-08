@@ -1,6 +1,8 @@
 #ifndef __ALINIX_KERNEL_UCAPI_API__INCLUDED_H
 #define __ALINIX_KERNEL_UCAPI_API__INCLUDED_H
 
+#include <alinix/ucapi/api.h>
+
 enum uacpi_log_level {
     /*
      * Super verbose logging, every op & uop being processed is logged.

@@ -2,8 +2,8 @@
 #define __ALINIX_KERNEL__UCAPI_CONTEXT_H
 
 #include <alinix/types.h>
-#include_next "types.h"
 #include "acpi.h"
+#include "uacpi.h"
 
 struct uacpi_runtime_context {
     /*

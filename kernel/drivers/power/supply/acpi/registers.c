@@ -6,6 +6,10 @@
 #include <alinix/kernel.h>
 #include <alinix/stat.h>
 
+extern uacpi_status uacpi_kernel_raw_io_read(
+    u64, u8, u64 *ret
+);
+
 
 struct uacpi_runtime_context g_uacpi_rt_ctx = { 0 };
 

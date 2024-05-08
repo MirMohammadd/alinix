@@ -15,3 +15,4 @@ uacpi_status uacpi_kernel_raw_io_read(
     *ret = 0xFFFFFFFFFFFFFFFF;
     return UACPI_STATUS_OK;
 }
+

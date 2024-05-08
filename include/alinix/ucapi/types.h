@@ -7,6 +7,7 @@
 
 typedef void *uacpi_handle;
 
+typedef struct uacpi_object uacpi_object;
 
 typedef enum uacpi_object_type {
     UACPI_OBJECT_UNINITIALIZED = 0,
@@ -361,7 +362,6 @@ uacpi_object *uacpi_create_object(uacpi_object_type type);
 
 void uacpi_object_ref(uacpi_object *obj);
 void uacpi_object_unref(uacpi_object *obj);
-typedef struct uacpi_object uacpi_object;
 
 
 

@@ -4,6 +4,8 @@
 #include <alinix/types.h>
 #include "acpi.h"
 #include "uacpi.h"
+extern struct uacpi_runtime_context g_uacpi_rt_ctx;
+
 
 struct uacpi_runtime_context {
     /*

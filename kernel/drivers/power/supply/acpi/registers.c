@@ -2,7 +2,7 @@
 #include <alinix/ucapi/acpi.h>
 #include <alinix/ucapi/context.h>
 
-
+struct uacpi_runtime_context g_uacpi_rt_ctx = { 0 };
 
 
 enum register_kind {
@@ -88,7 +88,7 @@ static struct register_spec registers[UACPI_REGISTER_MAX + 1] = {
 static struct register_spec *get_reg(u8 idx)
 {
     if (idx > UACPI_REGISTER_MAX)
-        return UACPI_NULL;
+        return NULL;
 
     return &registers[idx];
 }
@@ -107,7 +107,7 @@ static uacpi_status read_one(
         return uacpi_gas_read(reg, out_value);
     }
 
-    return uacpi_kernel_raw_io_read(*(uacpi_u32*)reg, byte_width, out_value);
+    return uacpi_kernel_raw_io_read(*(u32*)reg, byte_width, out_value);
 }
 
 static uacpi_status write_one(
@@ -124,7 +124,7 @@ static uacpi_status write_one(
         return uacpi_gas_write(reg, in_value);
     }
 
-    return uacpi_kernel_raw_io_write(*(uacpi_u32*)reg, byte_width, in_value);
+    return uacpi_kernel_raw_io_write(*(u32*)reg, byte_width, in_value);
 }
 
 static uacpi_status do_read_register(
@@ -158,7 +158,7 @@ uacpi_status uacpi_read_register(
     struct register_spec *reg;
 
     reg = get_reg(reg_enum);
-    if (uacpi_unlikely(reg == UACPI_NULL))
+    if (uacpi_unlikely(reg == NULL))
         return UACPI_STATUS_INVALID_ARGUMENT;
 
     return do_read_register(reg, out_value);
@@ -201,7 +201,7 @@ uacpi_status uacpi_write_register(
     struct register_spec *reg;
 
     reg = get_reg(reg_enum);
-    if (uacpi_unlikely(reg == UACPI_NULL))
+    if (uacpi_unlikely(reg == NULL))
         return UACPI_STATUS_INVALID_ARGUMENT;
 
     return do_write_register(reg, in_value);
@@ -215,7 +215,7 @@ uacpi_status uacpi_write_registers(
     struct register_spec *reg;
 
     reg = get_reg(reg_enum);
-    if (uacpi_unlikely(reg == UACPI_NULL))
+    if (uacpi_unlikely(reg == NULL))
         return UACPI_STATUS_INVALID_ARGUMENT;
 
     ret = write_one(reg->kind, reg->accessor0, reg->access_width, in_value0);

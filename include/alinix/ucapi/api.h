@@ -32,4 +32,13 @@ enum uacpi_log_level {
     UACPI_LOG_ERROR = 0,
 };
 
+
+uacpi_status uacpi_kernel_raw_io_read(
+    u64 address, u8 byte_width, u64 *out_value
+);
+uacpi_status uacpi_kernel_raw_io_write(
+    u64 address, u8 byte_width, u64 in_value
+);
+
+
 #endif

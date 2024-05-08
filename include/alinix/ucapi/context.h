@@ -58,4 +58,9 @@ struct uacpi_runtime_context {
 };
 
 
+static inline bool uacpi_rt_should_log(enum uacpi_log_level lvl)
+{
+    return lvl <= g_uacpi_rt_ctx.params.log_level;
+}
+
 #endif

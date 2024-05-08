@@ -5,6 +5,7 @@
 #include <alinix/types.h>
 
 #include "namespace.h"
+typedef struct uacpi_object uacpi_object;
 struct uacpi_shareable {
     u32 reference_count;
 };
@@ -59,7 +60,6 @@ typedef enum uacpi_status {
     UACPI_STATUS_AML_INVALID_RESOURCE = 0x0EFF0008,
 } uacpi_status;
 
-typedef struct uacpi_object uacpi_object;
 
 typedef enum uacpi_object_type {
     UACPI_OBJECT_UNINITIALIZED = 0,

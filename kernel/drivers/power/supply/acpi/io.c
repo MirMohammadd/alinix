@@ -4,6 +4,8 @@
 #include <alinix/ucapi/acpi.h>
 #include <alinix/stdio.h>
 #include <alinix/ucapi/io.h>
+#include <alinix/ucapi/log.h>
+
 
 
 
@@ -107,3 +109,4 @@ uacpi_status uacpi_gas_write(const struct acpi_gas *gas, u64 in_value){
     }
     return UACPI_STATUS_OK;
 }
+

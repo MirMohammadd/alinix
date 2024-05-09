@@ -7,6 +7,10 @@
  * @ref https://wiki.osdev.org/Shutdown
 */
 
+/**
+ * @brief Function that administrate the shutdown proccess
+ * @param None
+*/
 void shutdown(){
     outportw(0x604, 0x2000);
     // This is mostly used in QEMU

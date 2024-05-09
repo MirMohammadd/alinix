@@ -20,6 +20,8 @@
 #include <alinix/types.h>
 
 
+#define REBOOT_PORT 0x64
+#define REBOOT_COMMAND 0xFE
 
 struct rebootTable{
     int reset_register;

@@ -18,8 +18,14 @@
 #include <alinix/init.h>
 #include <alinix/types.h>
 #include <alinix/reboot.h>
+#include <alinix/port.h>
 
 
 VOID reboot(){
     uint8_t good = 0x02;
+    while (good & 0x2)
+        good = (uint8_t)inportb(REBOOT_PORT);
+
+    outportb(REBOOT_PORT,REBOOT_COMMAND);
+    asm volatile("hlt");
 }

@@ -33,6 +33,6 @@ SOFTWARE.
 #include <alinix/compiler.h>
 
 
-PRIVATE uacpi_object_name fadt_signature = {
-    .text = {ACPI_FADT_SIGNATURE}
-};
+// PRIVATE uacpi_object_name fadt_signature = {
+//     .text = {ACPI_FADT_SIGNATURE}
+// };

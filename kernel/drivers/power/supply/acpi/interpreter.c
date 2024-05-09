@@ -27,6 +27,8 @@ SOFTWARE.
 #include <alinix/kernel.h>
 #include <alinix/init.h>
 #include <alinix/ucapi/types.h>
+#include <alinix/ucapi/codes.h>
+
 
 /**
  * @ref https://github.com/UltraOS/uACPI
@@ -47,4 +49,30 @@ struct item{
         u64 immediate;
         u8 immediate_bytes[8];
     };
+};
+
+enum item_type {
+    ITEM_NONE = 0,
+    ITEM_NAMESPACE_NODE,
+    ITEM_NAMESPACE_NODE_METHOD_LOCAL,
+    ITEM_OBJECT,
+    ITEM_EMPTY_OBJECT,
+    ITEM_PACKAGE_LENGTH,
+    ITEM_IMMEDIATE,
+};
+
+DYNAMIC_ARRAY_WITH_INLINE_STORAGE(item_array, struct item, 8)
+
+struct op_context {
+    u8 pc;
+    bool preempted;
+
+    /*
+     * == 0 -> none
+     * >= 1 -> item[idx - 1]
+     */
+    u8 tracked_pkg_idx;
+
+    const struct uacpi_op_spec *op;
+    struct item_array items;
 };

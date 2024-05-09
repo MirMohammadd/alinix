@@ -170,4 +170,16 @@ struct FADT
     GenericAddressStructure X_GPE1Block;
 };
 
+
+
+#define DYNAMIC_ARRAY_WITH_INLINE_STORAGE(name, type, inline_capacity)       \
+    struct name {                                                            \
+        type inline_storage[inline_capacity];                                \
+        type *dynamic_storage;                                               \
+        size_t dynamic_capacity;                                         \
+        size_t size_including_inline;                                    \
+    };                                                                       \
+
+
+
 #endif /*_ALINIX_KERNEL_KERNEL_H__*/

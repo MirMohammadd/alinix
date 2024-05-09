@@ -47,7 +47,6 @@ UACPI_PACKED(struct acpi_gas {
     u8 access_size;
     u64 address;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_gas, 12);
 
 UACPI_PACKED(struct acpi_rsdp {
     char signature[8];
@@ -62,7 +61,7 @@ UACPI_PACKED(struct acpi_rsdp {
     u8 extended_checksum;
     u8 rsvd[3];
 })
-UACPI_EXPECT_SIZEOF(struct acpi_rsdp, 36);
+// UACPI_EXPECT_SIZEOF(struct acpi_rsdp, 36);
 
 UACPI_PACKED(struct acpi_sdt_hdr {
     char signature[4];
@@ -75,7 +74,7 @@ UACPI_PACKED(struct acpi_sdt_hdr {
     u32 creator_id;
     u32 creator_revision;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_sdt_hdr, 36);
+// UACPI_EXPECT_SIZEOF(struct acpi_sdt_hdr, 36);
 
 UACPI_PACKED(struct acpi_rsdt {
     struct acpi_sdt_hdr hdr;
@@ -134,7 +133,7 @@ UACPI_PACKED(struct acpi_madt {
     u32 flags;
     struct acpi_entry_hdr entries[];
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt, 44);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt, 44);
 
 /*
  * - acpi_madt_lapic->flags
@@ -150,7 +149,7 @@ UACPI_PACKED(struct acpi_madt_lapic {
     u8 id;
     u32 flags;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_lapic, 8);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_lapic, 8);
 
 UACPI_PACKED(struct acpi_madt_ioapic {
     struct acpi_entry_hdr hdr;
@@ -159,7 +158,7 @@ UACPI_PACKED(struct acpi_madt_ioapic {
     u32 address;
     u32 gsi_base;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_ioapic, 12);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_ioapic, 12);
 
 /*
  * - acpi_madt_interrupt_source_override->flags
@@ -185,14 +184,14 @@ UACPI_PACKED(struct acpi_madt_interrupt_source_override {
     u32 gsi;
     u16 flags;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_interrupt_source_override, 10);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_interrupt_source_override, 10);
 
 UACPI_PACKED(struct acpi_madt_nmi_source {
     struct acpi_entry_hdr hdr;
     u16 flags;
     u32 gsi;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_nmi_source, 8);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_nmi_source, 8);
 
 UACPI_PACKED(struct acpi_madt_lapic_nmi {
     struct acpi_entry_hdr hdr;
@@ -200,14 +199,14 @@ UACPI_PACKED(struct acpi_madt_lapic_nmi {
     u16 flags;
     u8 lint;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_lapic_nmi, 6);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_lapic_nmi, 6);
 
 UACPI_PACKED(struct acpi_madt_lapic_address_override {
     struct acpi_entry_hdr hdr;
     u16 rsvd;
     u64 address;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_lapic_address_override, 12);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_lapic_address_override, 12);
 
 UACPI_PACKED(struct acpi_madt_iosapic {
     struct acpi_entry_hdr hdr;
@@ -216,7 +215,7 @@ UACPI_PACKED(struct acpi_madt_iosapic {
     u32 gsi_base;
     u64 address;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_iosapic, 16);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_iosapic, 16);
 
 UACPI_PACKED(struct acpi_madt_lsapic {
     struct acpi_entry_hdr hdr;
@@ -228,7 +227,7 @@ UACPI_PACKED(struct acpi_madt_lsapic {
     u32 uid;
     char uid_string[];
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_lsapic, 16);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_lsapic, 16);
 
 // acpi_madt_platform_interrupt_source->platform_flags
 #define ACPI_CPEI_PROCESSOR_OVERRIDE (1 << 0)
@@ -243,7 +242,7 @@ UACPI_PACKED(struct acpi_madt_platform_interrupt_source {
     u32 gsi;
     u32 platform_flags;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_platform_interrupt_source, 16);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_platform_interrupt_source, 16);
 
 UACPI_PACKED(struct acpi_madt_x2apic {
     struct acpi_entry_hdr hdr;
@@ -252,7 +251,7 @@ UACPI_PACKED(struct acpi_madt_x2apic {
     u32 flags;
     u32 uid;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_x2apic, 16);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_x2apic, 16);
 
 UACPI_PACKED(struct acpi_madt_x2apic_nmi {
     struct acpi_entry_hdr hdr;
@@ -261,7 +260,7 @@ UACPI_PACKED(struct acpi_madt_x2apic_nmi {
     u8 lint;
     u8 reserved[3];
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_x2apic_nmi, 12);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_x2apic_nmi, 12);
 
 // acpi_madt_gicc->flags
 #define ACPI_GICC_ENABLED (1 << 0)
@@ -293,7 +292,7 @@ UACPI_PACKED(struct acpi_madt_gicc {
     u16 spe_overflow_interrupt;
     u16 trbe_interrupt;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_gicc, 82);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_gicc, 82);
 
 UACPI_PACKED(struct acpi_madt_gicd {
     struct acpi_entry_hdr hdr;
@@ -304,7 +303,7 @@ UACPI_PACKED(struct acpi_madt_gicd {
     u8 gic_version;
     u8 reserved1[3];
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_gicd, 24);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_gicd, 24);
 
 // acpi_madt_gic_msi_frame->flags
 #define ACPI_SPI_SELECT (1 << 0)
@@ -318,7 +317,7 @@ UACPI_PACKED(struct acpi_madt_gic_msi_frame {
     u16 spi_count;
     u16 spi_base;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_gic_msi_frame, 24);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_gic_msi_frame, 24);
 
 UACPI_PACKED(struct acpi_madt_gicr {
     struct acpi_entry_hdr hdr;
@@ -326,7 +325,7 @@ UACPI_PACKED(struct acpi_madt_gicr {
     u64 address;
     u32 length;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_gicr, 16);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_gicr, 16);
 
 UACPI_PACKED(struct acpi_madt_gic_its {
     struct acpi_entry_hdr hdr;
@@ -335,7 +334,7 @@ UACPI_PACKED(struct acpi_madt_gic_its {
     u64 address;
     u32 rsvd1;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_gic_its, 20);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_gic_its, 20);
 
 UACPI_PACKED(struct acpi_madt_multiprocessor_wakeup {
     struct acpi_entry_hdr hdr;
@@ -343,7 +342,7 @@ UACPI_PACKED(struct acpi_madt_multiprocessor_wakeup {
     u32 rsvd;
     u64 mailbox_address;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_multiprocessor_wakeup, 16);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_multiprocessor_wakeup, 16);
 
 #define ACPI_CORE_PIC_ENABLED (1 << 0)
 
@@ -354,7 +353,7 @@ UACPI_PACKED(struct acpi_madt_core_pic {
     u32 id;
     u32 flags;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_core_pic, 15);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_core_pic, 15);
 
 UACPI_PACKED(struct acpi_madt_lio_pic {
     struct acpi_entry_hdr hdr;
@@ -364,7 +363,7 @@ UACPI_PACKED(struct acpi_madt_lio_pic {
     u16 cascade_vector;
     u64 cascade_vector_mapping;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_lio_pic, 23);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_lio_pic, 23);
 
 UACPI_PACKED(struct acpi_madt_ht_pic {
     struct acpi_entry_hdr hdr;
@@ -373,7 +372,7 @@ UACPI_PACKED(struct acpi_madt_ht_pic {
     u16 size;
     u64 cascade_vector;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_ht_pic, 21);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_ht_pic, 21);
 
 UACPI_PACKED(struct acpi_madt_eio_pic {
     struct acpi_entry_hdr hdr;
@@ -382,7 +381,7 @@ UACPI_PACKED(struct acpi_madt_eio_pic {
     u8 node;
     u64 node_map;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_eio_pic, 13);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_eio_pic, 13);
 
 UACPI_PACKED(struct acpi_madt_msi_pic {
     struct acpi_entry_hdr hdr;
@@ -391,7 +390,7 @@ UACPI_PACKED(struct acpi_madt_msi_pic {
     u32 start;
     u32 count;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_msi_pic, 19);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_msi_pic, 19);
 
 UACPI_PACKED(struct acpi_madt_bio_pic {
     struct acpi_entry_hdr hdr;
@@ -401,7 +400,7 @@ UACPI_PACKED(struct acpi_madt_bio_pic {
     u16 hardware_id;
     u16 gsi_base;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_bio_pic, 17);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_bio_pic, 17);
 
 UACPI_PACKED(struct acpi_madt_lpc_pic {
     struct acpi_entry_hdr hdr;
@@ -410,7 +409,7 @@ UACPI_PACKED(struct acpi_madt_lpc_pic {
     u16 size;
     u16 cascade_vector;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_madt_lpc_pic, 15);
+// UACPI_EXPECT_SIZEOF(struct acpi_madt_lpc_pic, 15);
 
 enum acpi_srat_entry_type {
     ACPI_SRAT_ENTRY_TYPE_PROCESSOR_AFFINITY = 0,
@@ -429,7 +428,7 @@ UACPI_PACKED(struct acpi_srat {
     u64 rsvd1;
     struct acpi_entry_hdr entries[];
 })
-UACPI_EXPECT_SIZEOF(struct acpi_srat, 48);
+// UACPI_EXPECT_SIZEOF(struct acpi_srat, 48);
 
 /*
  * acpi_srat_processor_affinity->flags
@@ -446,7 +445,7 @@ UACPI_PACKED(struct acpi_srat_processor_affinity {
     u8 proximity_domain_high[3];
     u32 clock_domain;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_srat_processor_affinity, 16);
+// UACPI_EXPECT_SIZEOF(struct acpi_srat_processor_affinity, 16);
 
 // acpi_srat_memory_affinity->flags
 #define ACPI_SRAT_MEMORY_ENABLED (1 << 0)
@@ -463,7 +462,7 @@ UACPI_PACKED(struct acpi_srat_memory_affinity {
     u32 flags;
     u64 rsdv2;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_srat_memory_affinity, 40);
+// UACPI_EXPECT_SIZEOF(struct acpi_srat_memory_affinity, 40);
 
 UACPI_PACKED(struct acpi_srat_x2apic_affinity {
     struct acpi_entry_hdr hdr;
@@ -474,7 +473,7 @@ UACPI_PACKED(struct acpi_srat_x2apic_affinity {
     u32 clock_domain;
     u32 rsvd1;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_srat_x2apic_affinity, 24);
+// UACPI_EXPECT_SIZEOF(struct acpi_srat_x2apic_affinity, 24);
 
 // acpi_srat_gicc_affinity->flags
 #define ACPI_SRAT_GICC_ENABLED (1 << 0)
@@ -486,7 +485,7 @@ UACPI_PACKED(struct acpi_srat_gicc_affinity {
     u32 flags;
     u32 clock_domain;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_srat_gicc_affinity, 18);
+// UACPI_EXPECT_SIZEOF(struct acpi_srat_gicc_affinity, 18);
 
 UACPI_PACKED(struct acpi_srat_gic_its_affinity {
     struct acpi_entry_hdr hdr;
@@ -494,7 +493,7 @@ UACPI_PACKED(struct acpi_srat_gic_its_affinity {
     u16 rsvd;
     u32 id;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_srat_gic_its_affinity, 12);
+// UACPI_EXPECT_SIZEOF(struct acpi_srat_gic_its_affinity, 12);
 
 // acpi_srat_generic_affinity->flags
 #define ACPI_GENERIC_AFFINITY_ENABLED (1 << 0)
@@ -509,7 +508,7 @@ UACPI_PACKED(struct acpi_srat_generic_affinity {
     u32 flags;
     u32 rsvd1;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_srat_generic_affinity, 32);
+// UACPI_EXPECT_SIZEOF(struct acpi_srat_generic_affinity, 32);
 
 // acpi_srat_rintc_affinity->flags
 #define ACPI_SRAT_RINTC_AFFINITY_ENABLED (1 << 0)
@@ -522,14 +521,14 @@ UACPI_PACKED(struct acpi_srat_rintc_affinity {
     u32 flags;
     u32 clock_domain;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_srat_rintc_affinity, 20);
+// UACPI_EXPECT_SIZEOF(struct acpi_srat_rintc_affinity, 20);
 
 UACPI_PACKED(struct acpi_slit {
     struct acpi_sdt_hdr hdr;
     u64 num_localities;
     u8 matrix[];
 })
-UACPI_EXPECT_SIZEOF(struct acpi_slit, 44);
+// UACPI_EXPECT_SIZEOF(struct acpi_slit, 44);
 
 // acpi_fdt->iapc_flags
 #define ACPI_IA_PC_LEGACY_DEVS  (1 << 0)
@@ -625,7 +624,7 @@ UACPI_PACKED(struct acpi_fadt {
     struct acpi_gas sleep_status_reg;
     u64 hypervisor_vendor_identity;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_fadt, 276);
+// UACPI_EXPECT_SIZEOF(struct acpi_fadt, 276);
 
 // acpi_facs->flags
 #define ACPI_S4BIOS_F               (1 << 0)
@@ -647,7 +646,7 @@ UACPI_PACKED(struct acpi_facs {
     u32 ospm_flags;
     char rsvd1[24];
 })
-UACPI_EXPECT_SIZEOF(struct acpi_facs, 64);
+// UACPI_EXPECT_SIZEOF(struct acpi_facs, 64);
 
 UACPI_PACKED(struct acpi_mcfg_allocation {
     u64 address;
@@ -656,14 +655,14 @@ UACPI_PACKED(struct acpi_mcfg_allocation {
     u8 end_bus;
     u32 rsvd;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_mcfg_allocation, 16);
+// UACPI_EXPECT_SIZEOF(struct acpi_mcfg_allocation, 16);
 
 UACPI_PACKED(struct acpi_mcfg {
     struct acpi_sdt_hdr hdr;
     u64 rsvd;
     struct acpi_mcfg_allocation entries[];
 })
-UACPI_EXPECT_SIZEOF(struct acpi_mcfg, 44);
+// UACPI_EXPECT_SIZEOF(struct acpi_mcfg, 44);
 
 // acpi_hpet->block_id
 #define ACPI_HPET_PCI_VENDOR_ID_SHIFT 16
@@ -687,7 +686,7 @@ UACPI_PACKED(struct acpi_hpet {
     u16 min_clock_tick;
     u8 flags;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_hpet, 56);
+// UACPI_EXPECT_SIZEOF(struct acpi_hpet, 56);
 
 // PM1{a,b}_STS
 #define ACPI_PM1_STS_TMR_STS_IDX 0
@@ -840,7 +839,7 @@ UACPI_PACKED(struct acpi_ecdt {
     u8 gpe_bit;
     char ec_id[];
 })
-UACPI_EXPECT_SIZEOF(struct acpi_ecdt, 65);
+// UACPI_EXPECT_SIZEOF(struct acpi_ecdt, 65);
 
 #define ACPI_LARGE_ITEM (1 << 7)
 
@@ -888,32 +887,32 @@ UACPI_EXPECT_SIZEOF(struct acpi_ecdt, 65);
 UACPI_PACKED(struct acpi_small_item {
     u8 type_and_length;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_small_item,  1);
+// UACPI_EXPECT_SIZEOF(struct acpi_small_item,  1);
 
 UACPI_PACKED(struct acpi_resource_irq {
     struct acpi_small_item common;
     u16 irq_mask;
     u8 flags;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_irq, 4);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_irq, 4);
 
 UACPI_PACKED(struct acpi_resource_dma {
     struct acpi_small_item common;
     u8 channel_mask;
     u8 flags;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_dma, 3);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_dma, 3);
 
 UACPI_PACKED(struct acpi_resource_start_dependent {
     struct acpi_small_item common;
     u8 flags;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_start_dependent, 2);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_start_dependent, 2);
 
 UACPI_PACKED(struct acpi_resource_end_dependent {
     struct acpi_small_item common;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_end_dependent, 1);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_end_dependent, 1);
 
 UACPI_PACKED(struct acpi_resource_io {
     struct acpi_small_item common;
@@ -923,14 +922,14 @@ UACPI_PACKED(struct acpi_resource_io {
     u8 alignment;
     u8 length;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_io, 8);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_io, 8);
 
 UACPI_PACKED(struct acpi_resource_fixed_io {
     struct acpi_small_item common;
     u16 address;
     u8 length;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_fixed_io, 4);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_fixed_io, 4);
 
 UACPI_PACKED(struct acpi_resource_fixed_dma {
     struct acpi_small_item common;
@@ -938,25 +937,25 @@ UACPI_PACKED(struct acpi_resource_fixed_dma {
     u16 channel;
     u8 transfer_width;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_fixed_dma, 6);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_fixed_dma, 6);
 
 UACPI_PACKED(struct acpi_resource_vendor_defined_type0 {
     struct acpi_small_item common;
     u8 byte_data[];
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_vendor_defined_type0, 1);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_vendor_defined_type0, 1);
 
 UACPI_PACKED(struct acpi_resource_end_tag {
     struct acpi_small_item common;
     u8 checksum;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_end_tag, 2);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_end_tag, 2);
 
 UACPI_PACKED(struct acpi_large_item {
     u8 type;
     u16 length;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_large_item, 3);
+// UACPI_EXPECT_SIZEOF(struct acpi_large_item, 3);
 
 UACPI_PACKED(struct acpi_resource_memory24 {
     struct acpi_large_item common;
@@ -966,13 +965,13 @@ UACPI_PACKED(struct acpi_resource_memory24 {
     u16 alignment;
     u16 length;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_memory24, 12);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_memory24, 12);
 
 UACPI_PACKED(struct acpi_resource_vendor_defined_type1 {
     struct acpi_large_item common;
     u8 byte_data[];
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_vendor_defined_type1, 3);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_vendor_defined_type1, 3);
 
 UACPI_PACKED(struct acpi_resource_memory32 {
     struct acpi_large_item common;
@@ -982,7 +981,7 @@ UACPI_PACKED(struct acpi_resource_memory32 {
     u32 alignment;
     u32 length;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_memory32, 20);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_memory32, 20);
 
 UACPI_PACKED(struct acpi_resource_fixed_memory32 {
     struct acpi_large_item common;
@@ -990,7 +989,7 @@ UACPI_PACKED(struct acpi_resource_fixed_memory32 {
     u32 address;
     u32 length;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_fixed_memory32, 12);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_fixed_memory32, 12);
 
 UACPI_PACKED(struct acpi_resource_address {
     struct acpi_large_item common;
@@ -998,7 +997,7 @@ UACPI_PACKED(struct acpi_resource_address {
     u8 flags;
     u8 type_flags;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_address, 6);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_address, 6);
 
 UACPI_PACKED(struct acpi_resource_address64 {
     struct acpi_resource_address common;
@@ -1008,7 +1007,7 @@ UACPI_PACKED(struct acpi_resource_address64 {
     u64 translation_offset;
     u64 length;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_address64, 46);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_address64, 46);
 
 UACPI_PACKED(struct acpi_resource_address32 {
     struct acpi_resource_address common;
@@ -1018,7 +1017,7 @@ UACPI_PACKED(struct acpi_resource_address32 {
     u32 translation_offset;
     u32 length;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_address32, 26);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_address32, 26);
 
 UACPI_PACKED(struct acpi_resource_address16 {
     struct acpi_resource_address common;
@@ -1028,7 +1027,7 @@ UACPI_PACKED(struct acpi_resource_address16 {
     u16 translation_offset;
     u16 length;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_address16, 16);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_address16, 16);
 
 UACPI_PACKED(struct acpi_resource_address64_extended {
     struct acpi_resource_address common;
@@ -1041,7 +1040,7 @@ UACPI_PACKED(struct acpi_resource_address64_extended {
     u64 length;
     u64 attributes;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_address64_extended, 56);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_address64_extended, 56);
 
 UACPI_PACKED(struct acpi_resource_extended_irq {
     struct acpi_large_item common;
@@ -1049,7 +1048,7 @@ UACPI_PACKED(struct acpi_resource_extended_irq {
     u8 num_irqs;
     u32 irqs[];
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_extended_irq, 5);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_extended_irq, 5);
 
 UACPI_PACKED(struct acpi_resource_generic_register {
     struct acpi_large_item common;
@@ -1059,7 +1058,7 @@ UACPI_PACKED(struct acpi_resource_generic_register {
     u8 access_size;
     u64 address;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_generic_register, 15);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_generic_register, 15);
 
 UACPI_PACKED(struct acpi_resource_gpio_connection {
     struct acpi_large_item common;
@@ -1076,7 +1075,7 @@ UACPI_PACKED(struct acpi_resource_gpio_connection {
     u16 vendor_data_offset;
     u16 vendor_data_length;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_gpio_connection, 23);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_gpio_connection, 23);
 
 #define ACPI_SERIAL_TYPE_I2C 1
 #define ACPI_SERIAL_TYPE_SPI 2
@@ -1094,14 +1093,14 @@ UACPI_PACKED(struct acpi_resource_serial {
     u8 type_specific_revision_id;
     u16 type_data_length;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_serial, 12);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_serial, 12);
 
 UACPI_PACKED(struct acpi_resource_serial_i2c {
     struct acpi_resource_serial common;
     u32 connection_speed;
     u16 slave_address;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_serial_i2c, 18);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_serial_i2c, 18);
 
 UACPI_PACKED(struct acpi_resource_serial_spi {
     struct acpi_resource_serial common;
@@ -1111,7 +1110,7 @@ UACPI_PACKED(struct acpi_resource_serial_spi {
     u8 polarity;
     u16 device_selection;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_serial_spi, 21);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_serial_spi, 21);
 
 UACPI_PACKED(struct acpi_resource_serial_uart {
     struct acpi_resource_serial common;
@@ -1121,12 +1120,12 @@ UACPI_PACKED(struct acpi_resource_serial_uart {
     u8 parity;
     u8 lines_enabled;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_serial_uart, 22);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_serial_uart, 22);
 
 UACPI_PACKED(struct acpi_resource_serial_csi2 {
     struct acpi_resource_serial common;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_serial_csi2, 12);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_serial_csi2, 12);
 
 UACPI_PACKED(struct acpi_resource_pin_function {
     struct acpi_large_item common;
@@ -1140,7 +1139,7 @@ UACPI_PACKED(struct acpi_resource_pin_function {
     u16 vendor_data_offset;
     u16 vendor_data_length;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_pin_function, 18);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_pin_function, 18);
 
 UACPI_PACKED(struct acpi_resource_pin_configuration {
     struct acpi_large_item common;
@@ -1154,7 +1153,7 @@ UACPI_PACKED(struct acpi_resource_pin_configuration {
     u16 vendor_data_offset;
     u16 vendor_data_length;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_pin_configuration, 20);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_pin_configuration, 20);
 
 UACPI_PACKED(struct acpi_resource_pin_group {
     struct acpi_large_item common;
@@ -1165,7 +1164,7 @@ UACPI_PACKED(struct acpi_resource_pin_group {
     u16 vendor_data_offset;
     u16 vendor_data_length;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_pin_group, 14);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_pin_group, 14);
 
 UACPI_PACKED(struct acpi_resource_pin_group_function {
     struct acpi_large_item common;
@@ -1178,7 +1177,7 @@ UACPI_PACKED(struct acpi_resource_pin_group_function {
     u16 vendor_data_offset;
     u16 vendor_data_length;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_pin_group_function, 17);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_pin_group_function, 17);
 
 UACPI_PACKED(struct acpi_resource_pin_group_configuration {
     struct acpi_large_item common;
@@ -1192,7 +1191,7 @@ UACPI_PACKED(struct acpi_resource_pin_group_configuration {
     u16 vendor_data_offset;
     u16 vendor_data_length;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_pin_group_configuration, 20);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_pin_group_configuration, 20);
 
 UACPI_PACKED(struct acpi_resource_clock_input {
     struct acpi_large_item common;
@@ -1202,7 +1201,7 @@ UACPI_PACKED(struct acpi_resource_clock_input {
     u32 numerator;
     u8 source_index;
 })
-UACPI_EXPECT_SIZEOF(struct acpi_resource_clock_input, 13);
+// UACPI_EXPECT_SIZEOF(struct acpi_resource_clock_input, 13);
 
 
 

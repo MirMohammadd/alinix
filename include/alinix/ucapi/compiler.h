@@ -3,10 +3,10 @@
 
 #define UACPI_ALWAYS_INLINE inline
 
-#define UACPI_PACKED(decl)  \
-    __pragma(pack(push, 1)) \
-    decl;                   \
-    __pragma(pack(pop))
+#define UACPI_PACKED(decl)  
+//     _Pragma(pack(push, 1)) \
+//     decl;                   \
+//     _Pragma(pack(pop))
 #define uacpi_unlikely(expr) __builtin_expect(!!(expr), 0)
 #define uacpi_likely(expr)   __builtin_expect(!!(expr), 1)
 

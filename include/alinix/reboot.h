@@ -28,6 +28,8 @@ struct rebootTable{
     char *reset_command;
     uint8_t rebootPort;
 };
+
+typedef struct rebootTable reboot_t;
 // Forward declartion of reboot function 
 VOID reboot();
 

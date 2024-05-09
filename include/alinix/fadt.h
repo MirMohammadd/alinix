@@ -22,6 +22,16 @@ struct ACPISDTHeader {
 };
 
 
-bool fadtChecksum(struct ACPISDTHeader *tableHeader);
+struct RSDT {
+  struct ACPISDTHeader h;
+  uint32_t PointerToOtherSDT[];  // Flexible array member
+};
 
+struct XSDT {
+  struct ACPISDTHeader h;
+  uint64_t PointerToOtherSDT[];  // Flexible array member
+};
+
+bool fadtChecksum(struct ACPISDTHeader *tableHeader);
+void *findFACP(void *RootSDT);
 #endif

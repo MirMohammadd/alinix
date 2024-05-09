@@ -14,40 +14,29 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
-#ifndef __ALINIX_KERNEL_RSPD_ACPI_H
-#define __ALINIX_KERNEL_RSPD_ACPI_H
+#include <alinix/fadt.h>
+#include <alinix/string.h>
 
+struct ACPISDTHeader *h;
 
-/**
- * @ref https://wiki.osdev.org/RSDP
-*/
+bool fadtChecksum(struct ACPISDTHeader *tableHeader){
+    unsigned char sum = 0;
 
+    for (int i = 0; i < tableHeader->Length;i++){
+        sum += ((char *)tableHeader)[i];
+    }
+    return sum == 0;
+}
+void *findFACP(void *RootSDT){
+    struct RSDT *rsdt = (struct RDST *)RootSDT;
+    int entries = (rsdt->h.Length - sizeof(rsdt->h)) / 4;
 
-#define ACPI_VERSION "1.0"
+    for (int i = 0; i < entries;i++){
+        if (!strcmp(h->Signature, "FACP")){
+            return (void*)h;
+        }
 
-#include <alinix/compiler.h>
-#include <alinix/types.h>
+    }
+    return NULL; // Noting found :))
 
-struct RSDP_t{
-    char Sign[8];
-    u8 check_sum;
-    char QEMID[6];
-    u8 revision;
-    u32 RsdtAddress;
-}__attribute__ ((packed));
-
-struct XSDP_t {
- char Signature[8];
- uint8_t Checksum;
- char OEMID[6];
- uint8_t Revision;
- uint32_t RsdtAddress;      // deprecated since version 2.0
- 
- uint32_t Length;
- uint64_t XsdtAddress;
- uint8_t ExtendedChecksum;
- uint8_t reserved[3];
-} __attribute__ ((packed));
-
-
-#endif
+}

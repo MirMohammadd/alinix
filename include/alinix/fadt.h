@@ -14,40 +14,40 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
-#ifndef __ALINIX_KERNEL_RSPD_ACPI_H
-#define __ALINIX_KERNEL_RSPD_ACPI_H
+#ifndef __ALINIX_KERNEL_FADT_H
+#define __ALINIX_KERNEL_FADT_H
 
 
 /**
- * @ref https://wiki.osdev.org/RSDP
+ * @ref https://wiki.osdev.org/RSDT
 */
 
-
-#define ACPI_VERSION "1.0"
-
-#include <alinix/compiler.h>
 #include <alinix/types.h>
 
-struct RSDP_t{
-    char Sign[8];
-    u8 check_sum;
-    char QEMID[6];
-    u8 revision;
-    u32 RsdtAddress;
-}__attribute__ ((packed));
 
-struct XSDP_t {
- char Signature[8];
- uint8_t Checksum;
- char OEMID[6];
- uint8_t Revision;
- uint32_t RsdtAddress;      // deprecated since version 2.0
- 
- uint32_t Length;
- uint64_t XsdtAddress;
- uint8_t ExtendedChecksum;
- uint8_t reserved[3];
-} __attribute__ ((packed));
+struct ACPISDTHeader {
+  char Signature[4];
+  uint32_t Length;
+  uint8_t Revision;
+  uint8_t Checksum;
+  char OEMID[6];
+  char OEMTableID[8];
+  uint32_t OEMRevision;
+  uint32_t CreatorID;
+  uint32_t CreatorRevision;
+};
 
 
+struct RSDT {
+  struct ACPISDTHeader h;
+  uint32_t PointerToOtherSDT[];  // Flexible array member
+};
+
+struct XSDT {
+  struct ACPISDTHeader h;
+  uint64_t PointerToOtherSDT[];  // Flexible array member
+};
+
+bool fadtChecksum(struct ACPISDTHeader *tableHeader);
+void *findFACP(void *RootSDT);
 #endif

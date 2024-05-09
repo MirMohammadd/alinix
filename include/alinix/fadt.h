@@ -21,4 +21,7 @@ struct ACPISDTHeader {
   uint32_t CreatorRevision;
 };
 
+
+bool fadtChecksum(struct ACPISDTHeader *tableHeader);
+
 #endif

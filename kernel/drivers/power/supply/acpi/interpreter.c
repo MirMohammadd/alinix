@@ -48,3 +48,13 @@ struct item{
         u8 immediate_bytes[8];
     };
 };
+
+enum item_type {
+    ITEM_NONE = 0,
+    ITEM_NAMESPACE_NODE,
+    ITEM_NAMESPACE_NODE_METHOD_LOCAL,
+    ITEM_OBJECT,
+    ITEM_EMPTY_OBJECT,
+    ITEM_PACKAGE_LENGTH,
+    ITEM_IMMEDIATE,
+};

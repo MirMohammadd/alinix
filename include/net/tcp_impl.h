@@ -6,7 +6,6 @@
 #include <net/ip_addr.h>
 
 
-void tcp_pcb_purge(struct tcp_pcb *pcb);
 
 extern union tcp_listen_pcbs_t tcp_listen_pcbs;
 

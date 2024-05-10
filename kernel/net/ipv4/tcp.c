@@ -24,7 +24,7 @@
 uint8_t tcp_active_pcbs_changed;
 
 struct tcp_pcb *tcp_tw_pcbs;
-
+void tcp_pcb_purge(struct tcp_pcb *pcb);
 enum tcp_state {
   CLOSED      = 0,
   LISTEN      = 1,

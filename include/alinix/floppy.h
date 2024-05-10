@@ -43,4 +43,17 @@ enum FloppyCommands
    SCAN_HIGH_OR_EQUAL =         29
 };
 
+inline void FloppyHandler()
+{
+   ReceivedIRQ = true;
+}
+
+inline void WaitForIRQ()
+{
+   ReceivedIRQ = false;
+   while(!ReceivedIRQ) ;
+}
+
+void ResetFloppy();
+
 #endif

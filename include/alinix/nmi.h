@@ -22,6 +22,14 @@
 */
 
 
+#include <alinix/types.h>
+
+#define NMI_PORT 0x70
+
+
+VOID NMI_enable();
+VOID NMI_disable();
+
 
 
 #endif

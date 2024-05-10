@@ -2,6 +2,9 @@
 #define __ALINIX_KERNEL_POWER_OFF_H
 
 #include <alinix/types.h>
+#include <alinix/core/power.h>
+
+
 
 struct powerOff{
     u16 *SMI_CMD;

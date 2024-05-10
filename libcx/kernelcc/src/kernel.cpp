@@ -56,6 +56,8 @@ SOFTWARE.
 #include <installer/installer.h>
 #include <system/reboot.hpp>
 
+
+
 using namespace CactusOS;
 using namespace CactusOS::common;
 using namespace CactusOS::core;
@@ -145,7 +147,7 @@ extern "C" void kernelMain(const multiboot_info_t* mbi, unsigned int multiboot_m
     if(String::strncmp(args, "gdb", 4)) {
         System::gdbEnabled = true;
         
-        Serialport::Init(COM1); // Init serial port
+        Serialport::Init(0x3F8); // Init serial port
         BootConsole::Init(false); // But don't use it for debug messages
     }
     else if(String::strncmp(args, "serial", 7))

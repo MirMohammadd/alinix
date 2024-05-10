@@ -42,6 +42,7 @@ typedef signed short              sint16_t;
 typedef signed int               sint32_t;
 typedef signed long long int      sint64_t;
 typedef unsigned int            paddr_t;
+typedef uint8_t byte;
 typedef uint8_t u8;
 typedef uint16_t u16;
 typedef uint32_t u32;

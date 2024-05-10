@@ -131,8 +131,7 @@ tcp_segs_free(struct tcp_seg *seg)
   }
 }
 
-void
-tcp_pcb_purge(struct tcp_pcb *pcb)
+void tcp_pcb_purge(struct tcp_pcb *pcb)
 {
   if (pcb->state != CLOSED &&
      pcb->state != TIME_WAIT &&

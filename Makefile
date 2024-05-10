@@ -140,7 +140,7 @@ Alinix.iso: Alinix.bin
 	hdiutil makehybrid -o Alinix.iso iso -iso -joliet
 	# rm -rf iso
 
-all : Alinix.iso  install
+all : Alinix.bin  install
 
 versionInfo:
 	@echo "Kernel Version: $(VERSION).$(PATCHLEVEL).$(SUBLEVEL)"

@@ -1,5 +1,7 @@
 #include <alinix/kernel.h>
 #include <alinix/init.h>
+#include <alinix/heap.h>
+#include <alinix/memory.h>
 
 extern  void _putDebugChar(char a)
 {

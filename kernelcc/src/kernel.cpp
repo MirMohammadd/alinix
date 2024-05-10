@@ -19,6 +19,8 @@
 #include <alinix/security/apparmor/audit.h>
 #include <alinix/security/integrity.h>
 #include <alinix/security.h>
+#include <alinix/enums.h>
+#include <alinix/log.h>
 
 using namespace CactusOS;
 using namespace CactusOS::common;

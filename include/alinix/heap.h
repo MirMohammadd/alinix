@@ -30,8 +30,7 @@ void* UserHeapMalloc(uint32_t size);
 void* alignedMalloc(uint32_t size, uint32_t align);
 void allignedFree(void* ptr);
 void Free(void *ptr);
-
-#define free Free
+#include <alinix/heap.h>
 
 #define HEAP_INCREASE_SIZE 10_MB
 

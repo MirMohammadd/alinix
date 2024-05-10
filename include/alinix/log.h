@@ -22,6 +22,7 @@
 #define __ALINIX__LOG_H
 
 #include <alinix/types.h>
+#include <alinix/enums.h>
 
 #define LOG_SHOW_MS 1
 

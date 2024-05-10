@@ -22,6 +22,8 @@
 #include <alinix/memory.h>
 #include <alinix/ulib.h>
 #include <alinix/string.h>
+#include <alinix/ulib.h>
+#include <alinix/heap.h>
 
 int ExtractDiskNumber(const char* path, uint8_t* idSizeReturn){
     if (Contains(path,":") && Contains(path, PATH_SEPERATOR_C)){

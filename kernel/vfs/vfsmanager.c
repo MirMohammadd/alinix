@@ -28,7 +28,7 @@
 #include <alinix/types.h>
 
 int ExtractDiskNumber(const char* path, uint8_t* idSizeReturn){
-    if (Contains(path,":") && Contains(path, PATH_SEPERATOR_C)){
+    if (1){
         int idLength  = IndexOf(path,':',0);
         char* idStr = (char *)malloc(sizeof(char[idLength]));
         memcpy(idStr,path,idLength);

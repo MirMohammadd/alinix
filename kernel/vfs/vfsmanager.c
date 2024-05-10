@@ -51,7 +51,7 @@ int ExtractDiskNumber(const char* path, uint8_t* idSizeReturn){
         else
             idValue = StringToInt(idStr);
 
-        free(idStr);
+        Free(idStr);
 
         if(idSizeReturn != 0)
             *idSizeReturn = idLength;   

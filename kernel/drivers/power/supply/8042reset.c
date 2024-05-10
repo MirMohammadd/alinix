@@ -21,6 +21,12 @@
 #include <alinix/port.h>
 
 
+
+void reboot_x86_sys_call(){
+    DoSyscall(__NR_reboot, LINUX_REBOOT_MAGIC1, LINUX_REBOOT_MAGIC2, LINUX_REBOOT_CMD_POWER_OFF, 0, 0);
+}
+
+
 VOID reboot(){
     uint8_t good = 0x02;
     while (good & 0x2)

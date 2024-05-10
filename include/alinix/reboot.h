@@ -18,11 +18,21 @@
 #define	__ALINIX_KERNEL_REBOOT_H
 
 #include <alinix/types.h>
+#include <alinix/syscall.h>
 
 
 #define REBOOT_PORT 0x64
 #define REBOOT_COMMAND 0xFE
 
+// Define the system call numbers
+#define __NR_reboot 169
+
+// Define the reboot command constants
+#define LINUX_REBOOT_MAGIC1 0xfee1dead
+#define LINUX_REBOOT_MAGIC2 672274793
+#define LINUX_REBOOT_CMD_POWER_OFF 0x4321fedc
+
+void reboot_x86_sys_call();
 struct rebootTable{
     int reset_register;
     char *reset_command;

@@ -54,7 +54,8 @@ SOFTWARE.
 #include <core/fpu.h>
 #include <core/power.h>
 #include <installer/installer.h>
-#include <system/reboot.hpp>
+// #include <system/reboot.hpp>
+
 
 using namespace CactusOS;
 using namespace CactusOS::common;

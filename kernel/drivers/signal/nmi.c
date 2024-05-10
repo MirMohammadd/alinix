@@ -14,33 +14,28 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
-#ifndef _ALINIX_KERNEL_HEAP_H
-#define _ALINIX_KERNEL_HEAP_H
 
-
+#include <alinix/kernel.h>
+#include <alinix/init.h>
+#include <alinix/port.h>
 #include <alinix/types.h>
-#ifndef align_up
-#define align_up(num, align) \
-    (((num) + ((align) - 1)) & ~((align) - 1))
-#endif
+#include <alinix/nmi.h>
 
-uint32_t pageRoundUp(uint32_t address);
-uint32_t pageRoundDown(uint32_t address);
-void* UserHeapMalloc(uint32_t size);
-void* alignedMalloc(uint32_t size, uint32_t align);
-void allignedFree(void* ptr);
-void Free(void *ptr);
-#include <alinix/heap.h>
+/**
+ * @brief Function that enables the NMI
+*/
+VOID NMI_enable(){
+    outportb(NMI_PORT,inportb(NMI_PORT) & 0x7F);
+    inportb(0x71);
+}
 
-#define HEAP_INCREASE_SIZE 10_MB
+/**
+ * @brief Function that disables the NMI
+*/
 
-struct MemoryHeader
-{
-    struct MemoryHeader* next;
-    struct MemoryHeader* prev;
-    bool allocated;
-    uint32_t size;
-} __attribute__((packed));
-bool CheckForErrors();
+VOID NMI_disable(){
+    outportb(NMI_PORT, inportb(NMI_PORT) | 0x80);
+    inportb(0x71);
+}
 
-#endif /*_ALINIX_KERNEL_HEAP_H*/
+

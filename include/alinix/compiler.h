@@ -26,6 +26,9 @@
 
 #include <alinix/types.h>
 #include <net/typing.h>
+#include <alinix/init.h>
+#include <alinix/kernel.h>
+
 
 # define fallthrough                    __attribute__((__fallthrough__))
 
@@ -56,7 +59,7 @@
 #ifdef LWIP_UNIX_EMPTY_ASSERT
 #define LWIP_PLATFORM_ASSERT(x)
 #else
-#define LWIP_PLATFORM_ASSERT(x) do {printf("Assertion \"%s\" failed at line %d in %s\n", \
+#define LWIP_PLATFORM_ASSERT(x) do {print("Assertion \"%s\" failed at line %d in %s\n", \
                                      x, __LINE__, __FILE__);} while(0)
 #endif
 

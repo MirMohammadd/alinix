@@ -22,9 +22,13 @@
 #include <alinix/memory.h>
 #include <alinix/ulib.h>
 #include <alinix/string.h>
+#include <alinix/ulib.h>
+#include <alinix/heap.h>
+#include <alinix/convert.h>
+#include <alinix/types.h>
 
 int ExtractDiskNumber(const char* path, uint8_t* idSizeReturn){
-    if (Contains(path,":") && Contains(path, PATH_SEPERATOR_C)){
+    if (1){
         int idLength  = IndexOf(path,':',0);
         char* idStr = (char *)malloc(sizeof(char[idLength]));
         memcpy(idStr,path,idLength);
@@ -39,7 +43,7 @@ int ExtractDiskNumber(const char* path, uint8_t* idSizeReturn){
                     idValue = bootPartitionID;
                     break;      
                 default:
-                    free(idStr);
+                    Free(idStr);
                     return -1;
                     break;
             }
@@ -47,7 +51,7 @@ int ExtractDiskNumber(const char* path, uint8_t* idSizeReturn){
         else
             idValue = StringToInt(idStr);
 
-        free(idStr);
+        Free(idStr);
 
         if(idSizeReturn != 0)
             *idSizeReturn = idLength;   

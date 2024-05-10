@@ -116,8 +116,7 @@ $(SECURITY_OBJS)/%.o: (SECURITY_SRCS)/%.c
 
 
 
-drivers:
-	cd drivers && $(MAKE) all
+
 
 Alinix.bin: kernel/linker.ld $(KRNLOBJS)
 	# cd security && $(MAKE) all
@@ -141,7 +140,7 @@ Alinix.iso: Alinix.bin
 	hdiutil makehybrid -o Alinix.iso iso -iso -joliet
 	# rm -rf iso
 
-all : Alinix.iso  drivers install
+all : Alinix.bin  install
 
 versionInfo:
 	@echo "Kernel Version: $(VERSION).$(PATCHLEVEL).$(SUBLEVEL)"

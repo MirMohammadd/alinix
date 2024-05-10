@@ -43,7 +43,7 @@ int ExtractDiskNumber(const char* path, uint8_t* idSizeReturn){
                     idValue = bootPartitionID;
                     break;      
                 default:
-                    free(idStr);
+                    Free(idStr);
                     return -1;
                     break;
             }

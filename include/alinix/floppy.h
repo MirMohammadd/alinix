@@ -1,6 +1,10 @@
 #ifndef __ALINIX_KERNEL_FLOPPY_H
 #define __ALINIX_KERNEL_FLOPPY_H
 
+#include <alinix/types.h>
+
+static volatile byte ReceivedIRQ = false;
+
 enum FloppyRegisters
 {
    STATUS_REGISTER_A                = 0x3F0, // read-only

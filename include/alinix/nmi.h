@@ -17,5 +17,11 @@
 #ifndef __ALINIX_KERNEL_NMI_H
 #define __ALINIX_KERNEL_NMI_H
 
+/**
+ * @brief NMI, interrupt cannot be ignored
+*/
+
+
+
 
 #endif

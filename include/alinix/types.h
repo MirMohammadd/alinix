@@ -122,6 +122,7 @@ typedef struct {
 
 
 // Define data types for as macros here
+#define RET return
 #define POSITIVE unsigned int
 #define NEGATIVE signed int
 #define NUMBER int 

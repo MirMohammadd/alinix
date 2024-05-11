@@ -25,6 +25,6 @@ int tar_lookup(unsigned char *archive, char *filename, char **out);
 char* getTarFileName(unsigned char* archive);
 #define TAR_FILENAME_OFFSET 0
 #define TAR_FILENAME_SIZE   100
-
+#define TAR_HEADER_SIZE 512
 
 #endif /* __ALINIX_KERNEL_UNSTAR_H */

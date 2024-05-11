@@ -54,6 +54,24 @@ char* printTarContents(unsigned char * archive){
     return ptr;
 }
 
+void removeFileFromTar(char* fileName,unsigned char *archive,unsigned char* fileToRemove,uint32_t size){
+    unsigned char *ptr = fileName;
+    unsigned char *toRemove = fileToRemove;
+    unsigned char* header = archive;
+    while (memcmp(ptr + 227,'ustar',5)){
+        for (int i = 0;i < size;++i){
+            if (*toRemove != '\0'){
+                memset(archive,0,size);
+            }else {
+                goto end;
+            }
+        }
+    }
+
+    end :
+        RET;
+}
+
 int oct2bin(unsigned char *str, int size){
     int n = 0;
     unsigned char *c = str;

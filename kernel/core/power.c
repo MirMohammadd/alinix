@@ -40,6 +40,7 @@ uint16_t SCI_EN;
 uint8_t PM1_CNT_LEN;
 
 
+
 unsigned int* acpiCheckRSDPtr(unsigned int* ptr)
 {
     char* sig = "RSD PTR ";

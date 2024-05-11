@@ -19,6 +19,13 @@
 #include <alinix/heap.h>
 #include <alinix/types.h>
 
+
+/**
+ * @brief Sets memory, memory safe approach 
+ * @param bufptr A pointer to the buffer to be filled 
+ * @param value Value to be filled
+ * @param size size to be filled in the buffer
+*/
 void memset(void* bufptr, char value, uint32_t size){
     unsigned char* buf = (unsigned char*)bufptr;
 

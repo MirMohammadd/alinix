@@ -1,6 +1,6 @@
 /**
  * @author Ali Mirmohammad
- * @file nmi.h
+ * @file node.h
  * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
  ** This file is part of AliNix.
 
@@ -17,13 +17,37 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
-#ifndef __ALINIX_KERNEL_NMI_H
-#define __ALINIX_KERNEL_NMI_H
+#ifndef __ALINIX_KERNEL_AT_API_H
+#define __ALINIX_KERNEL_AT_API_H
 
 
-#define NMI_PORT 0x70
+#include <alinix/port.h>
+#include <alinix/types.h>
 
-void NMI_enable();
-void NMI_disable();
+/**
+ * @ref https://wiki.osdev.org/ATAPI
+*/
+// Handy register number defines
+#define DATA 0
+#define ERROR_R 1
+#define SECTOR_COUNT 2
+#define LBA_LOW 3
+#define LBA_MID 4
+#define LBA_HIGH 5
+#define DRIVE_SELECT 6
+#define COMMAND_REGISTER 7
+ 
+// Control register defines
+#define CONTROL 0x206
+ 
+#define ALTERNATE_STATUS 0
+
+
+static void ata_io_wait(const uint8_t p);
+
+// Reads sectors starting from lba to buffer
+int read_cdrom(uint16_t port, bool slave, uint32_t lba, uint32_t sectors, uint16_t *buffer);
+
+
 
 #endif

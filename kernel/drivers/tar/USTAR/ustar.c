@@ -27,11 +27,15 @@ static inline void tarFileIsNotValid(){
     Log(Error,"Tar file is not valid");
 }
 
-static inline char* getTarFileName(unsigned char* archive){
+char* getTarFileName(unsigned char* archive){
     unsigned char *ptr = archive;
-    while (*ptr != '\0'){
-        
+    static char fileName[TAR_FILENAME_SIZE + 1];
+    int i = TAR_FILENAME_SIZE - 1;
+    while (*ptr != '\0' && i >= 0 && (fileName[i] == ' ' || fileName[i] == '\0')){
+        fileName[i] = '\0';
+        i++;
     }
+    return fileName;
 }
 
 int oct2bin(unsigned char *str, int size){

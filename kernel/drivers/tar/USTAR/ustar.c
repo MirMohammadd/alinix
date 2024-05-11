@@ -18,3 +18,33 @@
 #include <alinix/types.h>
 #include <alinix/kernel.h>
 #include <alinix/port.h>
+#include <alinix/unstar.h>
+#include <alinix/memory.h>
+#include <alinix/ulib.h>
+#include <alinix/heap.h>
+
+int oct2bin(unsigned char *str, int size){
+    int n = 0;
+    unsigned char *c = str;
+
+    while (size-- > 0){
+        n *= 8;
+        n += *c - '0';
+        c++;
+    }
+    return n;
+}
+
+int tar_lookup(unsigned char *archive, char *filename, char **out){
+    unsigned char *ptr = archive;
+
+    while (!memcmp(ptr + 257 ,"unstar",5)){
+        int fileSize = oct2bin(ptr+0x7c,11);
+        if (!memcmp(ptr, filename, strlen(filename) + 1)) {
+            *out = ptr + 512;
+            return fileSize;
+        }
+        ptr += (((fileSize + 511) / 512) + 1) * 512;
+    }
+    return 0;
+}

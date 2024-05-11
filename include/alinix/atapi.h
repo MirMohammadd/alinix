@@ -1,6 +1,6 @@
 /**
  * @author Ali Mirmohammad
- * @file nmi.h
+ * @file node.h
  * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
  ** This file is part of AliNix.
 
@@ -17,13 +17,9 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
-#ifndef __ALINIX_KERNEL_NMI_H
-#define __ALINIX_KERNEL_NMI_H
+#ifndef __ALINIX_KERNEL_AT_API_H
+#define __ALINIX_KERNEL_AT_API_H
 
 
-#define NMI_PORT 0x70
-
-void NMI_enable();
-void NMI_disable();
 
 #endif

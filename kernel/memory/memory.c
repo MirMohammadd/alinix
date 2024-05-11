@@ -19,6 +19,13 @@
 #include <alinix/heap.h>
 #include <alinix/types.h>
 
+
+/**
+ * @brief Sets memory, memory safe approach 
+ * @param bufptr A pointer to the buffer to be filled 
+ * @param value Value to be filled
+ * @param size size to be filled in the buffer
+*/
 void memset(void* bufptr, char value, uint32_t size){
     unsigned char* buf = (unsigned char*)bufptr;
 
@@ -28,6 +35,12 @@ void memset(void* bufptr, char value, uint32_t size){
     return bufptr;
 }
 
+/**
+ * @brief Compares the two memory buffer
+ * @param aptr buffer pointer
+ * @param bptr comparing buffer pointer 
+ * @param size size to be compared
+*/
 int memcmp(const void* aptr, const void* bptr, uint32_t size){
     const unsigned char* a = (const unsigned char*) aptr;
 	const unsigned char* b = (const unsigned char*) bptr;
@@ -40,6 +53,12 @@ int memcmp(const void* aptr, const void* bptr, uint32_t size){
 	return 0;
 }
 
+/**
+ * @brief moves the memory buffers
+ * @param dstptr pointer to the destination pointer
+ * @param srcptr pointer to the source
+ * @param size size to be filled
+*/
 void* memmove(void* dstptr, const void* srcptr, uint32_t size){
     unsigned char* dst = (unsigned char*) dstptr;
 	const unsigned char* src = (const unsigned char*) srcptr;
@@ -53,6 +72,11 @@ void* memmove(void* dstptr, const void* srcptr, uint32_t size){
 	return dstptr;
 }
 
+/**
+ * @brief Compares the memory
+ * @param dstptr 
+ * @param srcptr
+*/
 void* memcpy(void* dstptr, const void* srcptr, uint32_t size){
     unsigned char* dst = (unsigned char*) dstptr;
 	const unsigned char* src = (const unsigned char*) srcptr;

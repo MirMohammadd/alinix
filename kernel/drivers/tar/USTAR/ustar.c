@@ -54,6 +54,13 @@ char* printTarContents(unsigned char * archive){
     return ptr;
 }
 
+/**
+ * @brief Removes the file from the tar content
+ * @param filename pointer to the file name
+ * @param archive pointer to the archive 
+ * @param fileToremove pointer to file be removed
+ * @param size size to be removed
+*/
 void removeFileFromTar(char* fileName,unsigned char *archive,unsigned char* fileToRemove,uint32_t size){
     unsigned char *ptr = fileName;
     unsigned char *toRemove = fileToRemove;

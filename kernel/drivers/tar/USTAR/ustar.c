@@ -14,3 +14,7 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+#include <alinix/init.h>
+#include <alinix/types.h>
+#include <alinix/kernel.h>
+#include <alinix/port.h>

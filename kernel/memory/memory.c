@@ -35,6 +35,12 @@ void memset(void* bufptr, char value, uint32_t size){
     return bufptr;
 }
 
+/**
+ * @brief Compares the two memory buffer
+ * @param aptr buffer pointer
+ * @param bptr comparing buffer pointer 
+ * @param size size to be compared
+*/
 int memcmp(const void* aptr, const void* bptr, uint32_t size){
     const unsigned char* a = (const unsigned char*) aptr;
 	const unsigned char* b = (const unsigned char*) bptr;

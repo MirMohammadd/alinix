@@ -72,6 +72,11 @@ void* memmove(void* dstptr, const void* srcptr, uint32_t size){
 	return dstptr;
 }
 
+/**
+ * @brief Compares the memory
+ * @param dstptr 
+ * @param srcptr
+*/
 void* memcpy(void* dstptr, const void* srcptr, uint32_t size){
     unsigned char* dst = (unsigned char*) dstptr;
 	const unsigned char* src = (const unsigned char*) srcptr;

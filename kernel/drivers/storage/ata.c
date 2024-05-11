@@ -48,4 +48,31 @@ int read_cdrom(uint16_t port, bool slave, uint32_t lba, uint32_t sectors, uint16
         ata_io_wait(port); // I think we might need this delay, not sure, so keep this
 
         // Halt here for status
+        while (1){
+            uint8_t status = inportb(port + COMMAND_REGISTER);
+            if ((status & 0x01) == 0){
+                return 1;
+            }
+            if (!(status & 0x80) && (status & 0x08))
+                break;
+		ata_io_wait(port);
+        }
+        outsw(port + DATA, (uint16_t *) read_cmd, 6);
+
+        for (uint32_t i = 1; i < sectors;i++){
+            		while (1) {
+			uint8_t status = inportb(port + COMMAND_REGISTER);
+			if (status & 0x01)
+				return 1;
+			if (!(status & 0x80) && (status & 0x08))
+				break;
+		}
+ 
+		int size = inportb(port + LBA_HIGH) << 8
+		           | inportb(port + LBA_MID); // Get the size of transfer
+ 
+		insw(port + DATA, (uint16_t *) ((uint8_t *) buffer + i * 0x800), size / 2); // Read it
+        }
+
+
 }

@@ -47,4 +47,18 @@ uint32_t readMemReg(const uint32_t addr);
 
 #define disable_int asm volatile("cli")
 
+
+static __inline__ void outsw(uint16_t __port, const void *__buf, unsigned long __n) {
+	__asm__ __volatile__("cld; rep; outsw"
+			: "+S"(__buf), "+c"(__n)
+			: "d"(__port));
+}
+
+static __inline void insw(uint16_t __port, void *__buf, unsigned long __n) {
+	__asm__ __volatile__("cld; rep; insw"
+			: "+D"(__buf), "+c"(__n)
+			: "d"(__port));
+}
+ 
+
 #endif // __ALINIX_KERNEL_PORT_H

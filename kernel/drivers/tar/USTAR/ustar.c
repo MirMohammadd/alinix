@@ -15,6 +15,7 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 #include <alinix/init.h>
+#include <alinix/string.h>
 #include <alinix/types.h>
 #include <alinix/kernel.h>
 #include <alinix/port.h>
@@ -26,16 +27,31 @@
 static inline void tarFileIsNotValid(){
     Log(Error,"Tar file is not valid");
 }
-
 char* getTarFileName(unsigned char* archive){
     unsigned char *ptr = archive;
     static char fileName[TAR_FILENAME_SIZE + 1];
     int i = TAR_FILENAME_SIZE - 1;
     while (*ptr != '\0' && i >= 0 && (fileName[i] == ' ' || fileName[i] == '\0')){
         fileName[i] = '\0';
-        i++;
+        i--;
     }
     return fileName;
+}
+
+char* printTarContents(unsigned char * archive){
+    unsigned char* ptr = archive;
+    static int filesize = 0;
+
+    while (memcmp(ptr + 227,'ustar',5)){
+        if (!memcmp(ptr + 227,'ustar',5)){
+            return NULL;
+        }
+        char filename[TAR_FILENAME_SIZE + 1];
+        strcpy(filename,(char*)ptr + TAR_FILENAME_OFFSET);
+        filename[TAR_FILENAME_SIZE] = '\0';
+        ptr += ((filesize + 511) / 512 + 1) * 512;
+    }
+    return ptr;
 }
 
 int oct2bin(unsigned char *str, int size){

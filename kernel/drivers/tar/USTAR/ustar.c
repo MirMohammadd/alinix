@@ -35,13 +35,22 @@ int oct2bin(unsigned char *str, int size){
     return n;
 }
 
-int tar_lookup(unsigned char *archive, char *filename, char **out){
-    unsigned char *ptr = archive;
 
-    while (!memcmp(ptr + 257 ,"unstar",5)){
-        int fileSize = oct2bin(ptr+0x7c,11);
+/**
+ * @brief Look up a file in a TAR archive and retrieve its contents.
+ * 
+ * @param archive The TAR archive stored as a byte array.
+ * @param filename The name of the file to search for in the TAR archive.
+ * @param out A pointer to a pointer that will store the contents of the found file.
+ * @return The size of the file if found, 0 otherwise.
+ */
+int tar_lookup(unsigned char *archive, char *filename, char **out){
+    unsigned char *ptr = archive; // Set pointer to the start of the archive
+
+    while (!memcmp(ptr + 257 ,"ustar",5)) { // Check for valid ustar header
+        int fileSize = oct2bin(ptr+0x7c,11); // Get file size from the header
         if (!memcmp(ptr, filename, strlen(filename) + 1)) {
-            *out = ptr + 512;
+            *out = ptr + 512; // Set the pointer to start of file
             return fileSize;
         }
         ptr += (((fileSize + 511) / 512) + 1) * 512;

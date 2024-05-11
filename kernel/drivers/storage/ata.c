@@ -30,6 +30,11 @@ static void ata_io_wait(const uint8_t p){
 	inportb(p + CONTROL + ALTERNATE_STATUS);
 }
 
+/**
+ * @brief reads the cdorm from I/O
+ * @note Always checks the LSB  to state the clear bit.
+*/
+
 int read_cdrom(uint16_t port, bool slave, uint32_t lba, uint32_t sectors, uint16_t *buffer){
             // The command
 	volatile uint8_t read_cmd[12] = {0xA8, 0,

@@ -14,20 +14,12 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
-#include <alinix/shutdown.h>
-#include <alinix/init.h>
-#include <alinix/kernel.h>
+#ifndef __ALINIX_KERNEL_UNSTAR_H
+#define __ALINIX_KERNEL_UNSTAR_H
 
+int oct2bin(unsigned char *str, int size);
 
-/**
- * @ref https://wiki.osdev.org/Shutdown
-*/
+/*Returns the size and the pointer to the file data*/
+int tar_lookup(unsigned char *archive, char *filename, char **out);
 
-/**
- * @brief Function that administrate the shutdown proccess
- * @param None
-*/
-void shutdown(){
-    outportw(0x604, 0x2000);
-    // This is mostly used in QEMU
-}
+#endif /* __ALINIX_KERNEL_UNSTAR_H */

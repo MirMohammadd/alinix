@@ -23,6 +23,17 @@
 #include <alinix/ulib.h>
 #include <alinix/heap.h>
 
+static inline void tarFileIsNotValid(){
+    Log(Error,"Tar file is not valid");
+}
+
+static inline char* getTarFileName(unsigned char* archive){
+    unsigned char *ptr = archive;
+    while (*ptr != '\0'){
+        
+    }
+}
+
 int oct2bin(unsigned char *str, int size){
     int n = 0;
     unsigned char *c = str;

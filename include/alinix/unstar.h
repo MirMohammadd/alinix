@@ -22,4 +22,8 @@ int oct2bin(unsigned char *str, int size);
 /*Returns the size and the pointer to the file data*/
 int tar_lookup(unsigned char *archive, char *filename, char **out);
 
+#define TAR_FILENAME_OFFSET 0
+#define TAR_FILENAME_SIZE   100
+
+
 #endif /* __ALINIX_KERNEL_UNSTAR_H */

@@ -53,6 +53,12 @@ int memcmp(const void* aptr, const void* bptr, uint32_t size){
 	return 0;
 }
 
+/**
+ * @brief moves the memory buffers
+ * @param dstptr pointer to the destination pointer
+ * @param srcptr pointer to the source
+ * @param size size to be filled
+*/
 void* memmove(void* dstptr, const void* srcptr, uint32_t size){
     unsigned char* dst = (unsigned char*) dstptr;
 	const unsigned char* src = (const unsigned char*) srcptr;

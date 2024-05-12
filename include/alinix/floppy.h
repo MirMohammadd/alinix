@@ -56,4 +56,7 @@ inline void WaitForIRQ()
 
 void ResetFloppy();
 
+void lba_2_chs(uint32_t lba, uint16_t* cyl, uint16_t* head, uint16_t* sector);
+
+
 #endif

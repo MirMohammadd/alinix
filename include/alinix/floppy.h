@@ -3,6 +3,8 @@
 
 #include <alinix/types.h>
 
+#define FLOPPY_144_SECTORS_PER_TRACK 18
+
 static volatile byte ReceivedIRQ = false;
 
 enum FloppyRegisters

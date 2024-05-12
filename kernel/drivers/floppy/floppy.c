@@ -19,6 +19,8 @@
 #include <alinix/init.h>
 #include <alinix/types.h>
 
+
+
 void ResetFloppy()
 {
  
@@ -26,5 +28,7 @@ void ResetFloppy()
 }
 
 void lba_2_chs(uint32_t lba, uint16_t* cyl, uint16_t* head, uint16_t* sector){
-
+    *cyl = lba / (2 * FLOPPY_144_SECTORS_PER_TRACK);
+    *head   = ((lba % (2 * FLOPPY_144_SECTORS_PER_TRACK)) / FLOPPY_144_SECTORS_PER_TRACK);
+    *sector = ((lba % (2 * FLOPPY_144_SECTORS_PER_TRACK)) % FLOPPY_144_SECTORS_PER_TRACK + 1);
 }

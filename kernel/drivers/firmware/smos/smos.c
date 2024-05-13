@@ -20,6 +20,10 @@
 #include <alinix/types.h>
 
 
+/**
+ * @ref https://wiki.osdev.org/Unreal_Mode
+*/
+
 int century_register = 0x00;                                // Set by ACPI table parsing code if possible
 unsigned char second;
 unsigned char minute;

@@ -17,6 +17,12 @@
 #ifndef __ALINIX_KERNEL_SMOS_H
 #define __ALINIX_KERNEL_SMOS_H
 
+#define CURRENT_YEAR        2024                           //! Change this each year!
 
+
+#include <alinix/types.h>
+
+VOID ReadFromCMOS (unsigned char array []);
+VOID WriteTOCMOS(unsigned char array[]);
 
 #endif

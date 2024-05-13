@@ -19,6 +19,10 @@
 
 struct ACPISDTHeader *h;
 
+
+/**
+ * @brief Checks the sum of the table headers
+*/
 bool fadtChecksum(struct ACPISDTHeader *tableHeader){
     unsigned char sum = 0;
 

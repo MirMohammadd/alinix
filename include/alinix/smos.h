@@ -25,4 +25,12 @@
 VOID ReadFromCMOS (unsigned char array []);
 VOID WriteTOCMOS(unsigned char array[]);
 
+void out_byte(int port, int value);
+int in_byte(int port);
+
+enum {
+      cmos_address = 0x70,
+      cmos_data    = 0x71
+};
+
 #endif

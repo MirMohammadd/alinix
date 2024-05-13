@@ -121,7 +121,7 @@ void System::Start()
 
     System::pci = new PCIController();
     Log(Info, "- PCI [Done]     (%x)", (uint32_t)System::pci);
-    Log(Info,"Having joyStick drivers status at: %d",joyStickStat);
+    Log(Info,"JoyStick driver status: %d",joyStickStat);
     
     System::pci->PopulateDeviceList();
 

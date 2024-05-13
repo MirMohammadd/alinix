@@ -30,5 +30,11 @@ unsigned int year;
 
 
 static inline int get_update_in_progress_flag(){
-    
+    outportb(cmos_address,0x0A);
+    return inportb((cmos_data) & 0x80);
+}
+
+static inline unsigned char get_RTC_register(int reg) {
+    outportb(cmos_address, reg);
+    return inportb(cmos_data);
 }

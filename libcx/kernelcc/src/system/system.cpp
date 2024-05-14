@@ -40,6 +40,7 @@ SOFTWARE.
 #include <system/system.h>
 #include <system/listings/directorylisting.h>
 #include <alinix/c++/gameport.hpp>
+#include <alinix/security.h>
 
 using namespace CactusOS;
 using namespace CactusOS::common;

@@ -1,6 +1,7 @@
 #include <core/exceptions.h>
 #include <system/system.h>
 #include <common/print.h>
+#include <alinix/security.h>
 
 using namespace CactusOS;
 using namespace CactusOS::common;
@@ -68,6 +69,7 @@ uint32_t Exceptions::PageFault(uint32_t esp)
     int id = regs->ErrorCode & 0x10;          // Caused by an instruction fetch?
 
     BootConsole::Write("Got Page Fault (");
+    kernelMemoryCorruptionLockDown();
 
     if(present)
         BootConsole::Write("present ");

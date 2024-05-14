@@ -126,7 +126,11 @@ typedef struct {
 #define POSITIVE unsigned int
 #define NEGATIVE signed int
 #define NUMBER int 
+#ifndef __cplusplus
+
 #define STRING char*
+
+#endif // __cplusplus
 #define REAL  double
 #define VOID void
 #define EXTERNAL extern

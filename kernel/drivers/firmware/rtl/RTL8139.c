@@ -18,6 +18,9 @@
 #include <alinix/kernel.h>
 #include <alinix/init.h>
 
+/**
+ * @ref https://wiki.osdev.org/RTL8139
+*/
 
 struct rtl8139 *rtldev;
 void rtl8139_init(struct rtl8139 *dev){

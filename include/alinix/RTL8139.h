@@ -19,17 +19,7 @@
 
 #include <alinix/types.h>
 
-void rtl8139_init();
 
-void rtl8139_interrupt();
-
-void rtl8139_eoi();
-
-void rtl8139_set_irq(int irq);
-
-void rtl8139_clear_irq(int irq);
-
-void rtl8139_handle_irq(int irq);
 
 
 struct pci_config_space{
@@ -56,6 +46,7 @@ struct pci_config_space{
     uint8_t interrupt_pin;
     uint8_t min_grant;
     uint8_t max_latency;
+    uint8_t ioaddr;
 };
 
 // MAC Control Registers
@@ -99,6 +90,18 @@ struct rtl8139 {
     struct eeprom_control_regs eeprom_ctrl; // EEPROM control registers
     struct dma_control_regs dma_ctrl;     // DMA control registers
 };
+
+void rtl8139_init(struct rtl8139 *dev);
+
+void rtl8139_interrupt();
+
+void rtl8139_eoi();
+
+void rtl8139_set_irq(int irq);
+
+void rtl8139_clear_irq(int irq);
+
+void rtl8139_handle_irq(int irq);
 
 #endif
 

@@ -38,7 +38,8 @@ static const char* lockdown_reasons;
 
 
 static int lock_kernel_down(const char *where,enum lockdown_reason level){
-    Log(Warning,"Kernel is locked down from %s",where);
+    Log(Error,"Kernel is locked down due to the %s",where);
+    kernel_locked_down = level;
     return 0;
 }
 
@@ -74,5 +75,5 @@ static int  lockdown_lsm_init(void){
 /////////////////////////////////////
 
 void kernelMemoryCorruptionLockDown(){
-    lock_kernel_down("Kernel configuration",MEMORY_CORRUPTION);
+    lock_kernel_down("Memory corruption",MEMORY_CORRUPTION);
 }

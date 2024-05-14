@@ -49,5 +49,12 @@ static inline VOID enable_rec_and_transmit(struct rtl8139 *dev){
 
 void rtl8139_handler(uint8_t isr, uint64_t error, uint64_t irq,struct rtl8139 *dev) {
     uint16_t status = inportw(dev->pci_config.io_base + 0x3e);
-    
+    outportw(dev->pci_config.io_base + 0x3E, 0x05);
+
+    if (status & TOK){
+        Log(Info,"RTL Packed has been sent...");
+    }
+    if (status & ROK){
+        Log(Info,"RTL Packed has been received...");
+    }
 }

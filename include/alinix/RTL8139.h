@@ -27,6 +27,8 @@
 #define IMR_PORT 0x3C
 #define IMR_OUT_PORT 0x0005
 
+#define TOK 0x4 // 0100 in binary, represents the 3rd bit
+#define ROK 0x1 // 0001 in binary, represents the 1st bit
 
 struct pci_config_space{
     uint16_t vendor_id;
@@ -53,6 +55,7 @@ struct pci_config_space{
     uint8_t min_grant;
     uint8_t max_latency;
     uint8_t ioaddr;
+    uint16_t io_base;
 };
 
 // MAC Control Registers

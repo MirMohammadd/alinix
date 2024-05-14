@@ -32,10 +32,10 @@ struct device_private;
 
 struct device{
 	struct kobject kobj;
-    CONSTANT STRING *name;        
+    CONSTANT char *name;        
     uint64_t base;
-    CONSTANT STRING vendor;   /* Vendor name */
-    CONSTANT STRING product;   /* Product name */
+    CONSTANT char vendor;   /* Vendor name */
+    CONSTANT char product;   /* Product name */
     struct dev_pm_domain	*pm_domain;
     struct device_private	*p;
 };

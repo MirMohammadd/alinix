@@ -25,6 +25,8 @@
 #define SOFTWARE_RESET_IO_PORT 0x37
 #define SOFTWARE_OUT_IO_PORT 0x10
 #define IMR_PORT 0x3C
+#define IMR_OUT_PORT 0x0005
+
 
 struct pci_config_space{
     uint16_t vendor_id;

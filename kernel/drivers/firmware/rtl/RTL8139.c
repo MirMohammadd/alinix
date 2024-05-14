@@ -32,5 +32,10 @@ static inline void rtl8139_init(struct rtl8139 *dev){
 }
 
 static inline VOID set_imr_isr(struct rtl8139 *dev){
-    
+    outportw(dev->pci_config.ioaddr + IMR_PORT,IMR_OUT_PORT);
 }
+
+/**
+ * @note Before hoping to see a packet coming to you, you should tell the RTL8139 to accept packets based on various rules. The configuration register is RCR.
+*/
+

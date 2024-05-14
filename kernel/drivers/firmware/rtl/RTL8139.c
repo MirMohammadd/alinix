@@ -39,3 +39,10 @@ static inline VOID set_imr_isr(struct rtl8139 *dev){
  * @note Before hoping to see a packet coming to you, you should tell the RTL8139 to accept packets based on various rules. The configuration register is RCR.
 */
 
+static inline VOID configure_rev_buffer(struct rtl8139 *dev){
+    outportl(dev->pci_config.ioaddr + 0x44, 0xf | (1 << 7)); // (1 << 7) is the WRAP bit, 0xf is AB+AM+APM+AAP
+}
+
+static inline VOID enable_rec_and_transmit(struct rtl8139 *dev){
+    outportb(dev->pci_config.ioaddr + 0x37, 0x0C); // Sets the RE and TE bits high
+}

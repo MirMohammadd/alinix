@@ -46,3 +46,7 @@ static inline VOID configure_rev_buffer(struct rtl8139 *dev){
 static inline VOID enable_rec_and_transmit(struct rtl8139 *dev){
     outportb(dev->pci_config.ioaddr + 0x37, 0x0C); // Sets the RE and TE bits high
 }
+
+void rtl8139_handler(uint8_t isr, uint64_t error, uint64_t irq,struct rtl8139 *dev) {
+    
+}

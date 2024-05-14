@@ -24,7 +24,7 @@
 #define OUT_PORT_RTL_ADDRESS 0x0
 #define SOFTWARE_RESET_IO_PORT 0x37
 #define SOFTWARE_OUT_IO_PORT 0x10
-
+#define IMR_PORT 0x3C
 
 struct pci_config_space{
     uint16_t vendor_id;
@@ -95,7 +95,6 @@ struct rtl8139 {
     struct dma_control_regs dma_ctrl;     // DMA control registers
 };
 
-void rtl8139_init(struct rtl8139 *dev); // Used to initiate the rtl8139
 
 void rtl8139_interrupt(struct rtl8139 *dev);
 
@@ -106,6 +105,7 @@ void rtl8139_set_irq(int irq);
 void rtl8139_clear_irq(int irq);
 
 void rtl8139_handle_irq(int irq);
+
 
 #endif
 

@@ -24,9 +24,13 @@
 */
 
 struct rtl8139 *rtldev;
-void rtl8139_init(struct rtl8139 *dev){
+static inline void rtl8139_init(struct rtl8139 *dev){
     outportb(dev->pci_config.ioaddr + TO_SUM_IO_ADDRESS,OUT_PORT_RTL_ADDRESS); // OUT the data from here 
     do {
         ; // Do nothing here
     }while (inportb(dev->pci_config.ioaddr +SOFTWARE_RESET_IO_PORT) & SOFTWARE_OUT_IO_PORT);
+}
+
+static inline VOID set_imr_isr(struct rtl8139 *dev){
+    
 }

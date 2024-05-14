@@ -41,6 +41,7 @@ SOFTWARE.
 #include <system/listings/directorylisting.h>
 #include <alinix/c++/gameport.hpp>
 #include <alinix/security.h>
+#include <alinix/RTL8139.h>
 
 using namespace CactusOS;
 using namespace CactusOS::common;
@@ -114,6 +115,10 @@ void System::Start()
     System::edid = new EDID();
     Log(Info, "- EDID [Done]     (%x)", (uint32_t)System::edid);
     System::edid->AcquireEDID();
+
+    // Start the rtl 
+    Log(Info,"[OK] calling the RTL constructor");
+    init_rtl();
 
     Log(Info, "Loading Initial Ramdisk [OK]");
     InitialRamDisk::Initialize(System::mbi);

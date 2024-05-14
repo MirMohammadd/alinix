@@ -21,6 +21,11 @@ sudo apt-get install make
 make install
 ```
 
+# How to run in qemu
+```
+qemu-system-x86_64 -kernel alinix.bin
+```
+
 
 # IMPORTANT
 Note: this project has been using part of fudge kernel at https://github.com/jezze/fudge/blob/master/lib/hash/crc.c and other kernels at https://wiki.osdev.org/Projects and all rights will be reserved

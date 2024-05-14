@@ -20,7 +20,7 @@
 #include <alinix/types.h>
 
 
-
+#define TO_SUM_IO_ADDRESS 0x52
 
 struct pci_config_space{
     uint16_t vendor_id;

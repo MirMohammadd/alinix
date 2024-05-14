@@ -17,6 +17,7 @@
 #include <alinix/RTL8139.h>
 #include <alinix/kernel.h>
 #include <alinix/init.h>
+#include <alinix/port.h>
 
 /**
  * @ref https://wiki.osdev.org/RTL8139

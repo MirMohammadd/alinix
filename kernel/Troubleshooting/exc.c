@@ -18,4 +18,16 @@
 #include <alinix/kernel.h>
 #include <alinix/init.h>
 #include <alinix/types.h>
+#include <alinix/panic.h>
+#include <alinix/Troubleshooting.h>
 
+
+static int nestexc = 0;
+
+void gpfExcHandler(void){
+    if (nestexc > MAX_NESTED_EXCEPTIONS) Panic();
+    nestexc++;
+
+    nestexc--;
+    return;
+}

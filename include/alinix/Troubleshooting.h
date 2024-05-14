@@ -17,5 +17,9 @@
 #ifndef __ALINIX_KERNEL_Troubleshooting_H
 #define __ALINIX_KERNEL_Troubleshooting_H
 
+#define MAX_NESTED_EXCEPTIONS 19
+
+void gpfExcHandler(void);
+
 
 #endif

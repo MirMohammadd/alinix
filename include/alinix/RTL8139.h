@@ -113,5 +113,7 @@ void rtl8139_handle_irq(int irq);
 
 void rtl8139_handler(uint8_t isr, uint64_t error, uint64_t irq,struct rtl8139 *dev);
 
+VOID init_rtl();
+
 #endif
 

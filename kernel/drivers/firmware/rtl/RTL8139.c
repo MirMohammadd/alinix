@@ -19,6 +19,7 @@
 #include <alinix/init.h>
 
 
-void rtl8139_init(){
-    
+struct rtl8139 *rtldev;
+void rtl8139_init(struct rtl8139 *dev){
+
 }

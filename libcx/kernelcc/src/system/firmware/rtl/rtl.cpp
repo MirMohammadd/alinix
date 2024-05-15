@@ -51,6 +51,12 @@ static inline VOID enable_rec_and_transmit(struct rtl8139 *dev){
     CactusOS::core::outportb(dev->pci_config.ioaddr + 0x37, 0x0C); // Sets the RE and TE bits high
 }
 
+/**
+ * @brief Handles the rtl8139 device.
+ * @param isr 8 bytes integer regarding isr.
+ * @param error 64 bytes integer, representing the error code.
+ * @param dev pointer to rtl8139 device.
+*/
 void rtl8139_handler(uint8_t isr, uint64_t error, uint64_t irq,struct rtl8139 *dev) {
     uint16_t status = CactusOS::core::inportw(dev->pci_config.io_base + 0x3e);
     CactusOS::core::outportw(dev->pci_config.io_base + 0x3E, 0x05);

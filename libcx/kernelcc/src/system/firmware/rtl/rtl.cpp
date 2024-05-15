@@ -31,6 +31,11 @@ static inline void rtl8139_init(struct rtl8139 *dev){
     }while (CactusOS::core::inportb(dev->pci_config.ioaddr +SOFTWARE_RESET_IO_PORT) & SOFTWARE_OUT_IO_PORT);
 }
 
+/**
+ * @brief Settle imr and isr
+ * @param dev pointer to rtl8139 device.
+*/
+
 static inline VOID set_imr_isr(struct rtl8139 *dev){
     CactusOS::core::outportw(dev->pci_config.ioaddr + IMR_PORT,IMR_OUT_PORT);
 }

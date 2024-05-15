@@ -23,7 +23,7 @@
  * @ref https://wiki.osdev.org/RTL8139
 */
 
-struct rtl8139 *rtldev;
+struct rtl8139 *rtldev; // pointer to out device
 static inline void rtl8139_init(struct rtl8139 *dev){
     CactusOS::core::outportb(dev->pci_config.ioaddr + TO_SUM_IO_ADDRESS,OUT_PORT_RTL_ADDRESS); // OUT the data from here 
     do {

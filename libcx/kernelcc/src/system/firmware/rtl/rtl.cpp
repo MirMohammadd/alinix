@@ -57,6 +57,10 @@ void rtl8139_handler(uint8_t isr, uint64_t error, uint64_t irq,struct rtl8139 *d
     }
 }
 
+/**
+ * @brief Functions that starts the RTL network driver.
+ * @return None
+*/
 VOID init_rtl(){
     rtl8139_init(rtldev);
     set_imr_isr(rtldev);

@@ -43,6 +43,10 @@ static inline VOID configure_rev_buffer(struct rtl8139 *dev){
     CactusOS::core::outportl(dev->pci_config.ioaddr + 0x44, 0xf | (1 << 7)); // (1 << 7) is the WRAP bit, 0xf is AB+AM+APM+AAP
 }
 
+/**
+ * @brief Function that initiates the receiving and transmission of a network device.
+ * @param dev A pointer to the rtl8139 device.
+*/
 static inline VOID enable_rec_and_transmit(struct rtl8139 *dev){
     CactusOS::core::outportb(dev->pci_config.ioaddr + 0x37, 0x0C); // Sets the RE and TE bits high
 }

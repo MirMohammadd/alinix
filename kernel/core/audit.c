@@ -18,7 +18,6 @@
 /**
  * @abstraction:
  * 	- Provides security audit utility and functions.
- **  - Kernel lock down enums and functions are defined here.
 */
 
 #include <alinix/kernel.h>

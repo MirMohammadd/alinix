@@ -18,6 +18,12 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+
+/**
+ * @abstraction:
+ * 	- Charger implementor.
+*/
+
 #include <alinix/kernel.h>
 #include <alinix/regmap.h>
 #include <alinix/physicalmemory.h>

@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ * 	- Provide util over the input I/O.
+*/
 #include <alinix/input.h>
 #include <alinix/ktime.h>
 #include <alinix/kernel.h>

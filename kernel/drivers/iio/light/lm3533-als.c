@@ -15,6 +15,12 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+
+/**
+ * @abstraction:
+ * 	- Util for the light driver.
+*/
+
 #include <alinix/platform_device.h>
 #include <alinix/mutex_types.h>
 #include <alinix/types.h>

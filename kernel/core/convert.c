@@ -14,10 +14,15 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Provides the converting data types to each other util.
+*/
 #include <alinix/convert.h>
 #include <alinix/memory.h>
 
-StringToInt(char* string)
+StringToInt(char* string) // TODO Add the missing return type here.
 {
     int result = 0;
     unsigned int digit;

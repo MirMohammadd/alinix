@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ * 	- Provides util over the raspberry PI.
+*/
+
 #include <alinix/types.h>
 #include <alinix/kernel.h>
 #include <alinix/init.h>

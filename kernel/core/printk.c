@@ -14,6 +14,12 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Provides util over printk for printing the kernel info.
+ *  - Note: May be obsolete soon.
+*/
 #include <alinix/printk.h>
 
 void Print(const char* data, uint32_t length) {

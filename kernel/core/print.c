@@ -14,6 +14,12 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Provides utility for printing info on the kernel screen.
+ *  - Provides printing different data types.
+*/
 #include <alinix/print.h>
 #include <alinix/types.h>
 

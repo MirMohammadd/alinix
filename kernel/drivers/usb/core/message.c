@@ -14,6 +14,12 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Not implemented yet.
+ *  - Message util of the kernel (USB).
+*/
 #include <alinix/kernel.h>
 #include <alinix/types.h>
 #include <alinix/usb.h>

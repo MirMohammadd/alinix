@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ * 	- Main entry of the power supply.
+*/
 #include <alinix/types.h>
 #include <alinix/device.h>
 #include <alinix/pm.h>

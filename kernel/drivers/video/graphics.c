@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Kernel graphics driver.
+*/
 #include <alinix/paging.h>
 #include <alinix/mm.h>
 #include <alinix/kernel.h>

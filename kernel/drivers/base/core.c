@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ * 	- Provide util for kernel core section.
+*/
 #include <alinix/kernel.h>
 #include <alinix/pci.h>
 #include <alinix/kobject.h>

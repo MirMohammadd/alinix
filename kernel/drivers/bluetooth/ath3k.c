@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ * 	- Bluetooth util.
+*/
+
 #include <alinix/kernel.h>
 #include <alinix/firmware.h>
 #include "bluetooth.h"

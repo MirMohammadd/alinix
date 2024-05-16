@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Kernel watchdog implemented here.
+*/
+
 #include <alinix/kernel.h>
 #include <alinix/types.h>
 #include <alinix/err.h>

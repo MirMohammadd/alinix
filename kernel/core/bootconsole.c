@@ -17,7 +17,7 @@
 
 /**
  * @abstraction:
- *  -Provides utility for booting console.
+ *  - Provides utility for booting console.
 */
 
 #include <alinix/bootconsole.h>

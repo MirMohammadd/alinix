@@ -14,6 +14,12 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  -Provides utility for booting console.
+*/
+
 #include <alinix/bootconsole.h>
 #include <alinix/serialport.h>
 

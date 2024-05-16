@@ -14,6 +14,10 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+/**
+ * @abstraction:
+ *  - Provides the system component utility.
+*/
 #include <alinix/system/component.h>
 
 SystemComponent* SystemComponent_create(char* name, char* description) {

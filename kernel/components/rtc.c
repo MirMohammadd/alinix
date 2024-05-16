@@ -18,6 +18,10 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Provides the RTC util, including update and sharing.
+*/
 #include <alinix/rtc.h>
 #include <alinix/port.h>
 #include <alinix/system/component.h>

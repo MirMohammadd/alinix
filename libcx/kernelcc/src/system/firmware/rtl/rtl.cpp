@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+/**
+ * Abstraction:
+ *  -Provides RTL networking util.
+*/
+
 #include <alinix/RTL8139.h>
 #include <alinix/kernel.h>
 #include <alinix/init.h>

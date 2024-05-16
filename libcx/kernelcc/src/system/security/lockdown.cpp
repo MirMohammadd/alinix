@@ -15,6 +15,12 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * Abstraction:
+ *  - Provides kernel lock down utility.
+ *  - Used for C++.
+*/
+
 #include "loadpin.hpp"
 #include "module.hpp"
 

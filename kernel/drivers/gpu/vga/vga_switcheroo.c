@@ -14,6 +14,13 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ * 	- Provide common functions over the VGA.
+*/
+
+
 #include <alinix/types.h>
 #include <alinix/kernel.h>
 #include <alinix/compiler.h>

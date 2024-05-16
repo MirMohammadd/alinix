@@ -18,6 +18,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ * 	- Util for vsprintf functions.
+*/
+
 #include <alinix/types.h>
 #include <alinix/stdarg.h>
 #include <alinix/compiler.h>

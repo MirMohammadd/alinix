@@ -14,6 +14,12 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+/**
+ * @abstraction:
+ * 	- Header file
+ * 	- Provides security audit utility and functions.
+ **  - Kernel lock down enums and functions are defined here.
+*/
 #ifndef __ALINIX_KERNEL_AUDIT_H
 #define __ALINIX_KERNEL_AUDIT_H
 

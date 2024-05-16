@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ * 	- Provides security audit utility and functions.
+*/
+
 #include <alinix/kernel.h>
 #include <alinix/audit.h>
 #include <alinix/memory.h>

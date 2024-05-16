@@ -17,6 +17,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Provides utility over the power management of the kernel.
+*/
 #include <alinix/power.h>
 #include <alinix/core/power.h>
 #include <alinix/types.h>

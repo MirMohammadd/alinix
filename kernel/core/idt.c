@@ -18,6 +18,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Provides util for IDT functionality.
+*/
+
 #include <alinix/idt.h>
 #include <alinix/memory.h>
 

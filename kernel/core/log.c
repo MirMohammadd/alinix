@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Provides logging functionality while booting.
+*/
 #include <alinix/log.h>
 #include <alinix/bootconsole.h>
 #include <alinix/serialport.h>

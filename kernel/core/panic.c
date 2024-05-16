@@ -18,6 +18,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Provides util for when the kernel is panic.
+*/
+
 #include <alinix/panic.h>
 #include <alinix/log.h>
 #include <alinix/idt.h>

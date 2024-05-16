@@ -14,6 +14,10 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+/**
+ * @abstraction:
+ *  - Define the heap memory section.
+*/
 #include <alinix/heap.h>
 #include <alinix/memory.h>
 //? Use Malloc in heap.h or  memory.h ???

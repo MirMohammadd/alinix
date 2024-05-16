@@ -18,6 +18,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Provide util over TSS.
+*/
+
 #include <alinix/core/tss.h>
 #include <alinix/tss.h>
 #include <alinix/enums.h>

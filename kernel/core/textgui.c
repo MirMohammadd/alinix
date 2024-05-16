@@ -17,6 +17,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - TextGUI utility implemented here.
+*/
 #include <alinix/textgui.h>
 
 volatile uint16_t* videoMemory = (uint16_t*)0xC00B8000;

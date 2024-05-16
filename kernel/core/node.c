@@ -18,6 +18,10 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Provides utility for the kernel nodes.
+*/
 #include <alinix/node.h>
 
 List* interruptCallbacks[256] = {NULL};

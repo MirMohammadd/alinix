@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Provides util for SMOS.
+*/
 #include <alinix/smos.h>
 #include <alinix/kernel.h>
 #include <alinix/init.h>

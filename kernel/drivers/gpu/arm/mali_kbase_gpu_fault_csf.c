@@ -18,6 +18,11 @@
 #include <alinix/register.h>
 
 /**
+ * @abstraction:
+ * 	- Provides util over GPU.
+*/
+
+/**
  * @brief Gets the kernel exception name.
 */
 

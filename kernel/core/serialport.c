@@ -18,6 +18,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Provides functionality for the serial ports I/O.
+*/
+
 #include <alinix/types.h>
 #include <alinix/enums.h>
 #include <alinix/port.h>

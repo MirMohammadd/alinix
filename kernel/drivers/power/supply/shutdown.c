@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Provides the shutdown functionality.
+*/
 #include <alinix/shutdown.h>
 #include <alinix/init.h>
 #include <alinix/kernel.h>

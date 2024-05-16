@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Util over the keyboard keys.
+*/
+
 #include <alinix/err.h>
 #include <alinix/types.h>
 #include <alinix/kernel.h>

@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - All kernel errors and exceptions are defined here.
+*/
+
 #include <alinix/exceptions.h>
 #include <alinix/types.h>
 #include <alinix/printk.h>

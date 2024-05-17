@@ -14,6 +14,12 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - EVM header file implemented.
+*/
+
 #ifndef __ALINIX_KERNEL_SECURITY_EVM_H
 #define __ALINIX_KERNEL_SECURITY_EVM_H
 

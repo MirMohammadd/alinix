@@ -116,7 +116,7 @@ void rtl8139_handler(uint8_t isr, uint64_t error, uint64_t irq,struct rtl8139 *d
 
 VOID init_rtl();
 
-struct pci_config_space *device;
+static struct pci_config_space *device;
 
 #endif
 

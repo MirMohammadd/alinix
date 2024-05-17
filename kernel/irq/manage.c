@@ -14,6 +14,13 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Manages the IRQ.
+*/
+
+
 #include <alinix/kernel.h>
 #include <alinix/interrupt.h>
 #include <alinix/memory.h>

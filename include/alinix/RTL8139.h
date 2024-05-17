@@ -39,6 +39,7 @@ struct pci_config_space{
     uint8_t prog_if;
     uint8_t subclass;
     uint8_t class_code;
+    uint16_t version;
     uint8_t cache_line_size;
     uint8_t latency_timer;
     uint8_t header_type;

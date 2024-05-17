@@ -28,8 +28,30 @@
 #include <alinix/init.h>
 #include <alinix/port.h>
 #include <alinix/types.h>
+#include <alinix/module.h>
+#include <alinix/RTL8139.h>
 
-static uint16_t i8254x_read_eeprom(uint8_t addr){
+#include "8254x.h"
+
+#define I8254X_EECD   0x00000010 /* EEPROM/Flash Control - RW */
+#define I8254X_EECD_EE_PRES (1 << 8) /* EEPROM Present */
+
+
+static uint16_t i8254x_read_eeprom(uint8_t addr,struct pci_config_space *dev){
     uint16_t tmp;
     uint16_t data;
+    if((le32_to_cpu(mmio_read_dword(I8254X_EECD)) & I8254X_EECD_EE_PRES) == 0) {
+        Log(Info,"EEPROM present bit is not set for i8254x\n");
+    }
+    if(dev->version == I82547GI_EI
+    || dev->version == I82541EI_A0
+    || dev->version == I82541EI_B0
+    || dev->version == I82541ER_C0
+    || dev->version == I82541GI_B1
+    || dev->version == I82541PI_C0) {
+        tmp = ((uint16_t)addr & 0xfff ) << 2;
+    }else{
+        tmp = ((uint32_t)addr & 0xff) << 8;
+    }
+    
 }

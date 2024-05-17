@@ -15,6 +15,14 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+
+/**
+ * @note:
+ *  @reminder:
+   ** Big-endian: Stores the most significant byte at the lowest memory address.
+   ** Little-endian: Stores the least significant byte at the lowest memory address.
+*/
+
 #ifndef __ALINIX_KERNEL_MODULE_H
 #define __ALINIX_KERNEL_MODULE_H
 

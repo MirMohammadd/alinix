@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ * 	- Provides the memory util for the kernel.
+*/
+
 #include <alinix/memory.h>
 #include <alinix/heap.h>
 #include <alinix/types.h>

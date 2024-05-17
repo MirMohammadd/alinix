@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ * 	- DIM implemented here.
+*/
+
 #include <alinix/dim.h>
 #include <alinix/kernel.h>
 #include <alinix/math.h>

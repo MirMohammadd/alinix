@@ -17,6 +17,9 @@
 #ifndef __ALINIX_KERNEL_NET_RTL_8169_H
 #define __ALINIX_KERNEL_NET_RTL_8169_H
 
+/**
+ * @note : This is not the best header, look for one in alinix include directory.
+*/
 
 static int ioaddr;
 void getMacAddr(int macAddress[]);

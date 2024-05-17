@@ -35,4 +35,23 @@ inline void mmio_write_dword(uint32_t addr, uint32_t value) {
     *reg = value;
 }
 
+inline uint32_t cpu_to_le32(uint32_t value) {
+    #if defined(__GNUC__) || defined(__clang__)
+        return __builtin_bswap32(value);
+    #else
+        return ((value & 0xFF) << 24) |
+               ((value & 0xFF00) << 8) |
+               ((value & 0xFF0000) >> 8) |
+               ((value & 0xFF000000) >> 24);
+    #endif
+}
+
+typedef struct {
+    volatile uint32_t* base;  // Base address of the MMIO region
+    size_t size; // Size of the MMIO region in bytes
+    volatile uint32_t *addr;               
+} mmio_region_t;
+
+
+
 #endif

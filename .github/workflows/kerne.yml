@@ -1,4 +1,4 @@
-name: CI/CD with i686-elf-gcc and i686-elf-g++
+name: Base kernel CI
 
 on:
   push:

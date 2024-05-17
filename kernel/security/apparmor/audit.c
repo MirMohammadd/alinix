@@ -14,6 +14,13 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Audit implement for the kernel security.
+*/
+
+
 #include <alinix/kernel.h>
 #include <alinix/skbuff.h>
 #include <alinix/audit.h>

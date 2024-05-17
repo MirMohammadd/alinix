@@ -15,6 +15,13 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+
+/**
+ * @abstraction:
+ * 	- Provides the listing directory ability.
+*/
+
+
 #include <alinix/system.h>
 #include <alinix/listings/directorylisting.h>
 

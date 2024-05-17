@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ * 	- Implements the completion of the kernel core.
+*/
+
 #include <alinix/lockref.h>
 #include <alinix/kernel.h>
 #include <alinix/completion.h>

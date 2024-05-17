@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Kernel security implement.
+*/
+
 #include <alinix/kernel.h>
 #include "evm.h"
 #include <alinix/hash.h>

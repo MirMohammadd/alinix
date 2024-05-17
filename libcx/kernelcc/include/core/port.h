@@ -21,6 +21,14 @@ namespace CactusOS
             __asm__ __volatile__ ("outb %1, %0" : : "dN" (_port), "a" (_data));
         }
 
+        inline static void outl(common::uint16_t port, common::uint32_t value) {
+        __asm__ volatile (
+            "outl %0, %1"
+            :
+            : "a"(value), "Nd"(port)
+        );
+        }
+
         inline static unsigned short inportw(unsigned short _port)
         {
             unsigned short rv;

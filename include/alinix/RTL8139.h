@@ -17,6 +17,7 @@
 #ifndef __ALINIX_KERNEL_RT_81_39_H  
 #define __ALINIX_KERNEL_RT_81_39_H
 
+#include <alinix/module.h>
 #include <alinix/types.h>
 
 
@@ -39,10 +40,12 @@ struct pci_config_space{
     uint8_t prog_if;
     uint8_t subclass;
     uint8_t class_code;
+    uint16_t version;
     uint8_t cache_line_size;
     uint8_t latency_timer;
     uint8_t header_type;
     uint8_t bist;
+    struct mmio_s mmio;
     uint32_t bar[6]; // Base Address Registers
     uint32_t cardbus_cis;
     uint16_t subsys_vendor_id;
@@ -114,6 +117,8 @@ void rtl8139_handle_irq(int irq);
 void rtl8139_handler(uint8_t isr, uint64_t error, uint64_t irq,struct rtl8139 *dev);
 
 VOID init_rtl();
+
+static struct pci_config_space *device;
 
 #endif
 

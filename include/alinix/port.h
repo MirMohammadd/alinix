@@ -18,6 +18,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ * 	- Provide util header for the I/O ports.
+*/
+
 #ifndef __ALINIX_KERNEL_PORT_H
 #define __ALINIX_KERNEL_PORT_H
 
@@ -36,7 +41,13 @@ void outportl(unsigned short _port, unsigned int _data);
 void inportsm(unsigned short port, unsigned char * data, unsigned long size);
 
 void outportsm(unsigned short port, unsigned char * data, unsigned long size) ;
-
+inline static void outl(uint16_t port, uint32_t value) {
+__asm__ volatile (
+	"outl %0, %1"
+	:
+	: "a"(value), "Nd"(port)
+);
+}
 void writeMemReg(const uint32_t addr, const uint32_t val);
 
 uint32_t readMemReg(const uint32_t addr);

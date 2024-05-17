@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ * 	- Util of the kernel library package.
+*/
 #include <alinix/kernel.h>
 #include <alinix/libgcc.h>
 

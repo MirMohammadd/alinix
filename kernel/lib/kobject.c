@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ * 	- implements kernel objects.
+*/
 #include <alinix/kernel.h>
 #include <alinix/kobject.h>
 #include <alinix/kern_levels.h>

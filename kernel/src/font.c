@@ -14,6 +14,13 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Kernel font for GUI.
+*/
+
+
 #include <alinix/gui/fonts/font.h>
 
 void BoundingBox(const char* string, int* retW, int* retH, const void* data, const int* offsetTable){

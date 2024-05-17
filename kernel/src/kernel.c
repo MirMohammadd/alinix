@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Kernel Main entry file.
+*/
+
 #include <alinix/types.h>
 #include <alinix/memory.h>
 #include <alinix/string.h>

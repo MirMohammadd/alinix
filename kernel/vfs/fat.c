@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Fat file system implemented here.
+*/
+
 #include <alinix/fs/fat.h>
 #include <alinix/types.h>
 #include <alinix/vfs/virtualfilesystem.h>

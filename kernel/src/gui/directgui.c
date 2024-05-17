@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Direct GUI for kernel interface.
+*/
+
 #include <alinix/gui/canvas.h>
 #include <alinix/types.h>
 #include <alinix/gui/directgui.h>

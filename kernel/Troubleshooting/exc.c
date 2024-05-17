@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - exec for troubleshooting.
+*/
+
 #include <alinix/kernel.h>
 #include <alinix/init.h>
 #include <alinix/types.h>

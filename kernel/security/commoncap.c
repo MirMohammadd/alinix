@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Commoncap for the kernel security.
+*/
+
 #include <alinix/kernel.h>
 #include <alinix/kern_levels.h>
 #include <alinix/security/commoncap.h>

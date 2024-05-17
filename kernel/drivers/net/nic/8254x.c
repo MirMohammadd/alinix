@@ -24,4 +24,12 @@
 */
 
 #include <alinix/port.h>
+#include <alinix/kernel.h>
+#include <alinix/init.h>
+#include <alinix/port.h>
+#include <alinix/types.h>
 
+static uint16_t i8254x_read_eeprom(uint8_t addr){
+    uint16_t tmp;
+    uint16_t data;
+}

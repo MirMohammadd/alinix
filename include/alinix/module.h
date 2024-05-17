@@ -1,7 +1,4 @@
 /**
- * @author Ali Mirmohammad
- * @file port.h
- * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
  ** This file is part of AliNix.
 
 **AliNix is free software: you can redistribute it and/or modify
@@ -18,10 +15,9 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
-/**
- * @abstraction:
- *  - Provide util for the 8253x Intel net interface.
-*/
+#ifndef __ALINIX_KERNEL_MODULE_H
+#define __ALINIX_KERNEL_MODULE_H
 
-#include <alinix/port.h>
-
+#include <alinix/types.h>
+uint32_t le32_to_cpu(uint32_t le_value);
+#endif

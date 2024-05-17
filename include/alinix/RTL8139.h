@@ -17,6 +17,7 @@
 #ifndef __ALINIX_KERNEL_RT_81_39_H  
 #define __ALINIX_KERNEL_RT_81_39_H
 
+#include <alinix/module.h>
 #include <alinix/types.h>
 
 
@@ -44,6 +45,7 @@ struct pci_config_space{
     uint8_t latency_timer;
     uint8_t header_type;
     uint8_t bist;
+    struct mmio_s mmio;
     uint32_t bar[6]; // Base Address Registers
     uint32_t cardbus_cis;
     uint16_t subsys_vendor_id;

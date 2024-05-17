@@ -35,7 +35,7 @@ inline void mmio_write_dword(uint32_t addr, uint32_t value) {
     *reg = value;
 }
 
-inline uint32_t cpu_to_le32(uint32_t value) {
+inline uint32_t cpu_to_le32(uint16_t value) {
     #if defined(__GNUC__) || defined(__clang__)
         return __builtin_bswap32(value);
     #else
@@ -45,8 +45,14 @@ inline uint32_t cpu_to_le32(uint32_t value) {
                ((value & 0xFF000000) >> 24);
     #endif
 }
+#define MMIO32(addr) (*(volatile uint32_t *)(addr))
 
-typedef struct {
+// Read a double-word (32-bit) value from a MMIO register with an offset
+inline uint32_t mmio_read_dword(uint32_t base_addr, uint32_t offset) {
+    return MMIO32(base_addr + offset);
+}
+
+typedef struct mmio_s{
     volatile uint32_t* base;  // Base address of the MMIO region
     size_t size; // Size of the MMIO region in bytes
     volatile uint32_t *addr;               

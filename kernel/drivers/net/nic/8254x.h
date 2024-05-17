@@ -27,6 +27,9 @@
 
 #include <alinix/RTL8139.h>
 
+
+#define I8254X_EERD_DONE (1 << 4) /* EEPROM Read Done */
+
 #define I82547GI_EI       0x1075  // Actual value for Intel 82547GI
 #define I82541EI_A0       0x1010  // Actual value for Intel 82541EI A0
 #define I82541EI_B0       0x1011  // Actual value for Intel 82541EI B0
@@ -39,5 +42,6 @@
 #define I82547GI_EI_SUBSYSTEM_VENDOR_ID 0x8086  // Subsystem Vendor ID
 #define I82547GI_EI_SUBSYSTEM_ID        0x5678  // Subsystem ID
 
+#define I8254X_EERD  0x00014   // Address offset for EEPROM read data register
 
 #define I8254X_EERD_START  0x0001  // Start bit for EEPROM read operation

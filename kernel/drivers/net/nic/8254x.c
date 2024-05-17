@@ -40,7 +40,7 @@
 static uint16_t i8254x_read_eeprom(uint8_t addr,struct pci_config_space *dev){
     uint16_t tmp;
     uint16_t data;
-    if((le32_to_cpu(mmio_read_dword(I8254X_EECD)) & I8254X_EECD_EE_PRES) == 0) {
+    if((le32_to_cpu(mmio_read_dword(I8254X_EECD,I8254X_EERD)) & I8254X_EECD_EE_PRES) == 0) {
         Log(Info,"EEPROM present bit is not set for i8254x\n");
     }
     if(dev->version == I82547GI_EI
@@ -55,6 +55,20 @@ static uint16_t i8254x_read_eeprom(uint8_t addr,struct pci_config_space *dev){
     }
 
     tmp |= I8254X_EERD_START;
-    
+
+    tmp |= I8254X_EERD_START;
+    mmio_write_dword(dev->mmio.addr, I8254X_EERD);
+ 
+    /* Wait until the read is finished - then the DONE bit is cleared */
+    timeout((le32_to_cpu(mmio_read_dword(dev->mmio.addr, I8254X_EERD)) & I8254X_EERD_DONE) == 0, 100);
+ 
+    /* Obtain the data */
+    data = (uint16_t)(le32_to_cpu(mmio_read_dword(dev->mmio.addr, I8254X_EERD)) >> 16);
+ 
+    /* Tell EEPROM to stop reading */
+    tmp = le32_to_cpu(mmio_read_dword(dev->mmio.addr, I8254X_EERD));
+    tmp &= ~(uint32_t)I8254X_EERD_START;
+    mmio_write_dword(dev->mmio.addr, I8254X_EERD);
+    return data;
 
 }

@@ -28,4 +28,11 @@
 
 #include <alinix/types.h>
 uint32_t le32_to_cpu(uint32_t le_value);
+
+inline void mmio_write_dword(uint32_t addr, uint32_t value) {
+    // Assuming 'addr' is the address of the MMIO register
+    volatile uint32_t* reg = (volatile uint32_t*)addr;
+    *reg = value;
+}
+
 #endif

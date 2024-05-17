@@ -53,5 +53,8 @@ static uint16_t i8254x_read_eeprom(uint8_t addr,struct pci_config_space *dev){
     }else{
         tmp = ((uint32_t)addr & 0xff) << 8;
     }
+
+    tmp |= I8254X_EERD_START;
     
+
 }

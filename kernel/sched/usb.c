@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Implements the USB drivers.
+*/
+
 #include <alinix/kernel.h>
 #include <alinix/usb.h>
 

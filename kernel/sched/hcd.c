@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ * 	- Implements the HCD for the kernel.
+*/
+
 #include <alinix/kernel.h>
 #include <alinix/usb.h>
 // #include <alinix/spinlock.h>

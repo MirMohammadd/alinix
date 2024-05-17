@@ -41,5 +41,3 @@
 
 
 #define I8254X_EERD_START  0x0001  // Start bit for EEPROM read operation
-struct pci_config_space *device;
-

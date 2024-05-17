@@ -16,6 +16,12 @@
 */
 
 
+/**
+ * @abstraction:
+ *  - System call for the kernel implemented here.
+*/
+
+
 /*
 +---+--------------------+
 | r |    Register(s)     |

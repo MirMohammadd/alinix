@@ -261,5 +261,12 @@ struct pci_dev {
 
 uint16_t pciConfigReadWord(uint8_t bus, uint8_t slot, uint8_t func, uint8_t offset);
 uint16_t pciCheckVendor(uint8_t bus, uint8_t slot);
+void checkDevice(uint8_t bus, uint8_t device);
+void checkAllBuses(void);
+void checkBus(uint8_t bus);
+void checkFunction(uint8_t bus, uint8_t device, uint8_t function);
+void checkAllBuses(void);
+uint64_t arch_msi_address(uint64_t *data, size_t vector, uint32_t processor, uint8_t edgetrigger, uint8_t deassert);
+
 
 #endif // __ALINIX_KERNEL_PCI_H

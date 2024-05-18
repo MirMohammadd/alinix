@@ -15,6 +15,13 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstract:
+ *  - Implements DHCP driver for the kernel drivers.
+ * @todo:
+ *  - Implement for C++.
+*/
+
 #include <alinix/compiler.h>
 #include <alinix/types.h>
 #include <alinix/memory.h>
@@ -1221,6 +1228,7 @@ dhcp_option_hostname(struct dhcp *dhcp, struct netif *netif)
 {
   if (netif->hostname != NULL) {
     size_t namelen = strlen(netif->hostname);
+    // Check if not null
     if (namelen > 0) {
       uint8_t len;
       const char *p = netif->hostname;

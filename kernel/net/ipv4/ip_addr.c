@@ -14,6 +14,14 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstract:
+ *  - Driver for the IP address of the kernel.
+ * @todo:
+ *  - Implement for C++.
+*/
+
 #include <net/ip_addr.h>
 
 

@@ -9,8 +9,11 @@ struct DSCB1{
     uint16_t ds1dsnam;
     uint16_t start_cc;
     uint16_t start_hh;
-    
+
 };
 
+void GetCHRFromVTOC(void *buffer);
+void CheckDSCB(struct DSCB1 *dscb, const char *name);
+void FindFile(const char *name) ;
 
 #endif

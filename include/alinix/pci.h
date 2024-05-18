@@ -58,7 +58,11 @@ struct pci_dev {
 	unsigned short	device;
 	unsigned short	subsystem_vendor;
 	unsigned short	subsystem_device;
+	#ifndef __cplusplus
 	unsigned int	class;		/* 3 bytes: (base,sub,prog-if) */
+	#else
+	unsigned int	cls;		/* 3 bytes: (base,sub,prog-if) */
+	#endif
 	uint8_t		revision;	/* PCI revision, low byte of class word */
 	uint8_t		hdr_type;	/* PCI header type (`multi' flag masked out) */
 #ifdef CONFIG_PCIEAER

@@ -45,3 +45,24 @@ uint16_t pciCheckVendor(uint8_t bus, uint8_t slot) {
     }
     return (vendor);
 }
+
+ void checkDevice(uint8_t bus, uint8_t device){
+    uint16_t vendor,device;
+    vendor = pciCheckVendor(bus,device);
+    if (vendor == 0x8086){
+        RET;
+    }
+ }
+ 
+ void checkFunction(uint8_t bus, uint8_t device, uint8_t function) {
+ }
+
+void checkAllBuses(void){
+    uint16_t bus;
+    uint16_t device;
+    for (bus = 0;bus < 256;bus++){
+        for (device = 0; device < 32;device++){
+            checkDevice(bus,device);
+        }
+    }
+}

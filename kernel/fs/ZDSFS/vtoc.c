@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  Implemented VTOC for the file system kernel.
+*/
 #include <alinix/VTOC.h>
 #include <alinix/memory.h>
 

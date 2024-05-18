@@ -58,7 +58,11 @@ struct pci_dev {
 	unsigned short	device;
 	unsigned short	subsystem_vendor;
 	unsigned short	subsystem_device;
+	#ifndef __cplusplus
 	unsigned int	class;		/* 3 bytes: (base,sub,prog-if) */
+	#else
+	unsigned int	cls;		/* 3 bytes: (base,sub,prog-if) */
+	#endif
 	uint8_t		revision;	/* PCI revision, low byte of class word */
 	uint8_t		hdr_type;	/* PCI header type (`multi' flag masked out) */
 #ifdef CONFIG_PCIEAER
@@ -255,5 +259,18 @@ struct pci_dev {
 	/* These methods index pci_reset_fn_methods[] */
 	uint8_t reset_methods[PCI_NUM_RESET_METHODS]; /* In priority order */
 };
+
+
+////////////////////////////////////////////////////////////
+
+uint16_t pciConfigReadWord(uint8_t bus, uint8_t slot, uint8_t func, uint8_t offset);
+uint16_t pciCheckVendor(uint8_t bus, uint8_t slot);
+void checkDevice(uint8_t bus, uint8_t device);
+void checkAllBuses(void);
+void checkBus(uint8_t bus);
+void checkFunction(uint8_t bus, uint8_t device, uint8_t function);
+void checkAllBuses(void);
+uint64_t arch_msi_address(uint64_t *data, size_t vector, uint32_t processor, uint8_t edgetrigger, uint8_t deassert);
+
 
 #endif // __ALINIX_KERNEL_PCI_H

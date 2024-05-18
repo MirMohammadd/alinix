@@ -15,7 +15,7 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 /**
- * Abstraction:
+ * @abstraction:
  *  -Provides RTL networking util.
 */
 

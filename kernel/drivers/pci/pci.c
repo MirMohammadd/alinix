@@ -37,3 +37,11 @@ uint16_t pciConfigReadWord(uint8_t bus, uint8_t slot, uint8_t func, uint8_t offs
     tmp = (uint16_t)((inportl(0xCFC) >> ((offset & 2) * 8)) & 0xFFFF);
     return tmp;
 }
+
+uint16_t pciCheckVendor(uint8_t bus, uint8_t slot) {
+    uint16_t vendor,device;
+    if ((vendor == pciConfigReadWord(bus,slot,0,0)) != 0xFFFF){
+        device = pciConfigReadWord(bus, slot, 0, 2);
+    }
+    return (vendor);
+}

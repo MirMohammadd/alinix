@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstract:
+ *  Implements UDP connection for kernel.
+*/
 #include <alinix/types.h>
 #include <net/err.h>
 #include <alinix/ip.h>

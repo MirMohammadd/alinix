@@ -31,6 +31,10 @@
 #include <alinix/ulib.h>
 #include <alinix/heap.h>
 
+/**
+ * @brief
+ *  - Logs that the tar file is invalid.
+*/
 static inline void tarFileIsNotValid(){
     Log(Error,"Tar file is not valid");
 }
@@ -45,6 +49,10 @@ char* getTarFileName(unsigned char* archive){
     return fileName;
 }
 
+/**
+ * @brief Prints the tar file content.
+ * @param archive pointer to the archived file.
+*/
 char* printTarContents(unsigned char * archive){
     unsigned char* ptr = archive;
     static int filesize = 0;

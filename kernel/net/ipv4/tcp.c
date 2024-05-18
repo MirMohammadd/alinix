@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstract:
+ *  - Implements TCP connection for kernel.
+*/
 #include <net/tcp.h>
 #include <net/tcp_impl.h>
 #include <alinix/types.h>

@@ -46,8 +46,8 @@ uint16_t pciCheckVendor(uint8_t bus, uint8_t slot) {
     return (vendor);
 }
 
- void checkDevice(uint8_t bus, uint8_t device){
-    uint16_t vendor,device;
+void checkDevice(uint8_t bus, uint8_t device){
+    uint16_t vendor;
     vendor = pciCheckVendor(bus,device);
     if (vendor == 0x8086){
         RET;

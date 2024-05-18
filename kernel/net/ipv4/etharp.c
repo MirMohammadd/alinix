@@ -14,6 +14,14 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstract:
+ *  - Implements Arp requests for kernel.
+ * @todo:
+ *  - Implement for C++.
+*/
+
 #include <net/err.h>
 #include <alinix/types.h>
 #include <net/ip_addr.h>

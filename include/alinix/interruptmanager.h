@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Defines managing the interrupts and IRQ.
+*/
+
 #ifndef ALINIX_INTERRUPTMANAGER_H
 #define ALINIX_INTERRUPTMANAGER_H
 

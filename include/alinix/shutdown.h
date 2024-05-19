@@ -14,6 +14,12 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Kernel shutdown implementation in header file.
+*/
+
 #ifndef __ALINIX_KERNEL_SHUT_DOWN_H
 #define __ALINIX_KERNEL_SHUT_DOWN_H
 

@@ -14,6 +14,12 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+
+/**
+ * @abstract:
+ * 	- Kernel regmap header file, needed for kernel modules.
+*/
 #ifndef __ALINIX_KERNEL_REG_MAP_H
 #define __ALINIX_KERNEL_REG_MAP_H
 

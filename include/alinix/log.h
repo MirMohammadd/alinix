@@ -18,6 +18,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Defines the kernel logging in header file.
+*/
+
 #ifndef __ALINIX__LOG_H
 #define __ALINIX__LOG_H
 

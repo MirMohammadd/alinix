@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Kernel implementation header file for syscall.
+*/
 #ifndef __ALINIX_KERNEL_KERNEL_IMPL_SYSCALL
 #define __ALINIX_KERNEL_KERNEL_IMPL_SYSCALL
 

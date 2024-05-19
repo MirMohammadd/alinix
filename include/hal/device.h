@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Kernel device for file system implementation.
+*/
+
 #ifndef DEVICE_H
 #define DEVICE_H
 

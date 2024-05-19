@@ -17,6 +17,11 @@
 
 
 /**
+ * @abstraction:
+ *  - Implementation of the kernel Modules needed for modules creation.
+ *  - Essential header.
+*/
+/**
  * @note:
  *  @reminder:
    ** Big-endian: Stores the most significant byte at the lowest memory address.

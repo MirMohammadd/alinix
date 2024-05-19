@@ -1,6 +1,5 @@
 # Alinix
 
-[![workflow](.github/workflows/elf-gcc.yml)]
 # Alinix kernel: Unraveling the Power of Possibilities!
 # Inspired by https://github.com/Remco123/CactusOS and Linux kernel
 # Alinix Kernel
@@ -34,7 +33,10 @@ Note: this project has been using part of fudge kernel at https://github.com/jez
 
 
 ![Alt text](images/ScreenKernel.png)
+Developing image at kernel.c main file.
 
 # Alinix kernel booting 
 ![Alt text](boot.png)
+
+alinix kernel 1.5.3 booting 
 

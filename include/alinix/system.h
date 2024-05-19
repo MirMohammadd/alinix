@@ -18,6 +18,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - System header file for the kernel basic system settings.
+*/
+
 
 #ifndef __ALINIX_KERNEL_SYSTEM_HEADER_H
 #define __ALINIX_KERNEL_SYSTEM_HEADER_H

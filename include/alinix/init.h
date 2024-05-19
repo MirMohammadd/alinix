@@ -15,6 +15,10 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstract:
+ *  - used to initiate the kernel modules.
+*/
 
 #ifndef _ALINIX_INIT_H
 #define _ALINIX_INIT_H

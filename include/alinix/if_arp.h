@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstract:
+ *  - Interface arp interface.
+*/
 #ifndef __ALINIX_KERNEL_IF_ARP_H
 #define __ALINIX_KERNEL_IF_ARP_H
 

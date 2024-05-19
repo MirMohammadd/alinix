@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstract:
+ *  - Game port driver for the kernel implementation.
+*/
 #ifndef __ALINIX_KERNEL_GAME_PORT_H
 #define __ALINIX_KERNEL_GAME_PORT_H
 

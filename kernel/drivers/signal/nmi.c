@@ -12,6 +12,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Implements the NMI signal.
+*/
+
 #include <alinix/kernel.h>
 #include <alinix/init.h>
 #include <alinix/port.h>

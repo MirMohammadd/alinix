@@ -38,5 +38,5 @@ Note: this project has been using part of fudge kernel at https://github.com/jez
 # Alinix kernel booting 
 ![Alt text](boot.png)
 
-alinix kernel 1.5.3 booting 
+      alinix kernel 1.5.3 booting 
 

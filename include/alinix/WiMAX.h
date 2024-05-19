@@ -212,10 +212,10 @@ struct wimax_device{
     enum wimax_rf_state rfState;
 };
 
-void wimax_rfkill(wimax_device *dev, enum wimax_rf_state state);
-void wimax_reset(wimax_device *dev);
-enum wimax_st wimax_state_get(wimax_device *dev);
-void wimax_state_change(wimax_device *dev, enum wimax_st new_state);
+void wimax_rfkill(struct wimax_device *dev, enum wimax_rf_state state);
+void wimax_reset(struct wimax_device *dev);
+enum wimax_st wimax_state_get(struct wimax_device *dev);
+void wimax_state_change(struct wimax_device *dev, enum wimax_st new_state);
 
 
 #endif

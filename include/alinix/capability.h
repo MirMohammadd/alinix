@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstract:
+ * 	- Kernel capability header file implemented.
+*/
 #ifndef __ALINIX_KERNEL_CAPABILITY_H
 #define __ALINIX_KERNEL_CAPABILITY_H
 

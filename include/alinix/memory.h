@@ -18,6 +18,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Kernel memory operations header file.
+*/
+
 #ifndef _ALINIX_KERNEL_MEMORY_H
 #define _ALINIX_KERNEL_MEMORY_H
 

@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+/**
+ * @abstraction:
+ * 	- Defines interrupts and IRQ.
+*/
+
 #ifndef __ALINIX_KERNEL_INTERRUPT_H
 #define __ALINIX_KERNEL_INTERRUPT_H
 

@@ -206,4 +206,10 @@ enum {
 	__WIMAX_ST_INVALID			/* Always keep last */
 };
 
+struct wmax_device{
+    int devId;
+    enum wimax_st state;
+    enum wimax_rf_state rfState;
+};
+
 #endif

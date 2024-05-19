@@ -21,5 +21,11 @@
 #include <alinix/kernel.h>
 
 void wimax_rfkill(struct wimax_device *dev, enum wimax_rf_state state){
-
+    if (state == WIMAX_RF_ON){
+        dev->state = WIMAX_ST_RADIO_OFF;
+    } else if (state == WIMAX_RF_OFF){
+        dev->state = WIMAX_ST_RADIO_OFF;
+    }else{
+        ;
+        }
 }

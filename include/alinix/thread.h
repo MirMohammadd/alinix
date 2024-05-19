@@ -18,6 +18,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Kernel thread implementation.
+ *  - Header file.
+*/
 #ifndef __ALINIX_KERNEL_THREAD_H
 #define __ALINIX_KERNEL_THREAD_H
 

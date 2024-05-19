@@ -15,6 +15,12 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Helps listing directory.
+ *  - Header file.
+*/
+
 #include <alinix/thread.h>
 #include <alinix/types.h>
 

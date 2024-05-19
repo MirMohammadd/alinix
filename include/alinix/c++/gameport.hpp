@@ -14,6 +14,15 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+
+/**
+ * @abstraction:
+ *  - Implements game port drivers for the kernel
+ *  - Joy stick drivers implemented
+ * @todo
+ *  - Add more stuff for the drivers.
+*/
 #ifndef _____FFF__ALINIX_KERNEL_GAME_PORT_HPP
 #define _____FFF__ALINIX_KERNEL_GAME_PORT_HPP
 

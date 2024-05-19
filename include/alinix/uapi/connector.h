@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstract:
+ * 	- Kernel connector in UAPI.
+*/
 #ifndef __UPAPI_CONNECTOR_H
 #define __UPAPI_CONNECTOR_H
 

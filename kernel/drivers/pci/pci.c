@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @file pci.c
+ * @date 18 may 2024
+*/
+
 #include <alinix/init.h>
 #include <alinix/module.h>
 #include <alinix/kernel.h>
@@ -68,11 +73,24 @@ void checkDevice(uint8_t bus, uint8_t device){
     if (vendor == 0x8086){
         RET;
     }
- }
- 
- void checkFunction(uint8_t bus, uint8_t device, uint8_t function) {
- }
+}
 
+
+void checkFunction(uint8_t bus, uint8_t device, uint8_t function) {
+}
+
+/**
+ * @brief Function to check the Vendor ID of a PCI device and take action based on the result
+ */
+
+/**
+ * @brief Check the Vendor ID of a PCI device and take action based on the result.
+ * 
+ * This function checks the Vendor ID of a PCI device located at a specific bus and device number. If the Vendor ID matches a specific value (0x8086 in this case), a certain action is taken.
+ * 
+ * @param bus The bus number of the PCI device.
+ * @param device The device number of the PCI device.
+ */
 void checkAllBuses(void){
     uint16_t bus;
     uint16_t device;

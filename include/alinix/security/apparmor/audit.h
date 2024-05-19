@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ * 	- Implements the security audits for the kernel.
+*/
 #ifndef __ALINIX_KRL_SECURITY_APP_ARMOR_H
 #define __ALINIX_KRL_SECURITY_APP_ARMOR_H
 

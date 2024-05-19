@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstract:
+ *  - Kernel heap implementation for drivers memory.
+*/
 #ifndef _ALINIX_KERNEL_HEAP_H
 #define _ALINIX_KERNEL_HEAP_H
 

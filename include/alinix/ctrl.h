@@ -17,7 +17,7 @@
 
 /**
  * Purpose:
- *      - fProvide more control over controlling the flow
+ *      - Provide more control over controlling the flow
 */
 #ifndef __ALINIX_KERNEL_CTRL_H
 #define __ALINIX_KERNEL_CTRL_H

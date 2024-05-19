@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ * 	- Bitwise operations.
+*/
 #ifndef ___ALINIX_KERNEL_BIT_OPS_H
 #define ___ALINIX_KERNEL_BIT_OPS_H
 

@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Kernel Exceptions header file implemented.
+*/
+
 #ifndef __ALINIX_KERNEL_EXCEPTIONS_H
 #define __ALINIX_KERNEL_EXCEPTIONS_H
 

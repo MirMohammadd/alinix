@@ -21,6 +21,15 @@
 #include <alinix/pci.h>
 #include <alinix/types.h>
 
+/**
+ * Reads a 16-bit value from the PCI configuration space.
+ * 
+ * @param bus Bus number of the PCI device.
+ * @param slot Slot number of the PCI device.
+ * @param func Function number of the PCI device.
+ * @param offset Offset within the configuration space to read from.
+ * @return The 16-bit value read from the specified configuration space offset.
+ */
 uint16_t pciConfigReadWord(uint8_t bus, uint8_t slot, uint8_t func, uint8_t offset){
     uint32_t address;
     uint32_t lbus  = (uint32_t)bus;
@@ -38,6 +47,13 @@ uint16_t pciConfigReadWord(uint8_t bus, uint8_t slot, uint8_t func, uint8_t offs
     return tmp;
 }
 
+/**
+ * @brief Check the Vendor ID of a PCI device at a specified bus and slot.
+ * 
+ * @param bus The bus number of the PCI device.
+ * @param slot The slot number of the PCI device.
+ * @return uint16_t The Vendor ID of the PCI device.
+ */
 uint16_t pciCheckVendor(uint8_t bus, uint8_t slot) {
     uint16_t vendor,device;
     if ((vendor == pciConfigReadWord(bus,slot,0,0)) != 0xFFFF){

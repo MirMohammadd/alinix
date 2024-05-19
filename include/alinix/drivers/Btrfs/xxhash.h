@@ -15,6 +15,10 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - XXhash implementation for alinix kernel.
+*/
 
 /**
  * @ref https://github.com/maharmstone/btrfs-efi/blob/master/src/xxhash.h

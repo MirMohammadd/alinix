@@ -14,6 +14,12 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Graphical model header file implementation.
+ *  - Useful macros defined.
+*/
 #ifndef __ALINIX_KERNEL_GRAPHICS_MODEL_H
 #define __ALINIX_KERNEL_GRAPHICS_MODEL_H
 

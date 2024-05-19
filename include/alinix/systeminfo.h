@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Kernel system info implemented.
+*/
 #ifndef __ALINIX_KERNEL_SYSTEM_INFO_H_
 #define __ALINIX_KERNEL_SYSTEM_INFO_H_
 

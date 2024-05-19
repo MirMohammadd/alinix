@@ -206,10 +206,16 @@ enum {
 	__WIMAX_ST_INVALID			/* Always keep last */
 };
 
-struct wmax_device{
+struct wimax_device{
     int devId;
     enum wimax_st state;
     enum wimax_rf_state rfState;
 };
+
+void wimax_rfkill(wimax_device *dev, enum wimax_rf_state state);
+void wimax_reset(wimax_device *dev);
+enum wimax_st wimax_state_get(wimax_device *dev);
+void wimax_state_change(wimax_device *dev, enum wimax_st new_state);
+
 
 #endif

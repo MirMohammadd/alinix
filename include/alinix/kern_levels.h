@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Kernel levels.
+*/
 #ifndef __ALINIX_KERNEL_KERN_LEVELS_H
 #define __ALINIX_KERNEL_KERN_LEVELS_H
 

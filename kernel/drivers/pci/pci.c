@@ -101,12 +101,40 @@ void checkAllBuses(void){
     }
 }
 
+/**
+ * @brief Function to check devices on a specific bus
+ */
+
+/**
+ * @brief Check devices on a specific bus.
+ * 
+ * This function iterates through the devices (0-31) on a specific bus and calls the checkDevice function to check the Vendor ID.
+ * 
+ * @param bus The bus number to check devices on.
+ */
 void checkBus(uint8_t bus){
     uint8_t device;
     for (device = 0;device < 32;device++){
         checkDevice(bus,device);
     }
 }
+
+/**
+ * @brief Function to calculate the MSI address for a given MSI request
+ */
+
+/**
+ * @brief Calculate the MSI address for a given MSI request.
+ * 
+ * This function calculates the MSI address based on the provided parameters.
+ * 
+ * @param data Pointer to store the MSI data.
+ * @param vector Vector number for the MSI request (0-255).
+ * @param processor Processor ID to target the MSI request.
+ * @param edgetrigger Specifies if the MSI is edge-triggered (1) or level-triggered (0).
+ * @param deassert Specifies if the MSI deassert message is required (1) or not required (0).
+ * @return The MSI address calculated based on the parameters.
+ */
 
 uint64_t arch_msi_address(uint64_t *data, size_t vector, uint32_t processor, uint8_t edgetrigger, uint8_t deassert) {
 	*data = (vector & 0xFF) | (edgetrigger == 1 ? 0 : (1 << 15)) | (deassert == 1 ? 0 : (1 << 14));

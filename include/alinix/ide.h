@@ -15,6 +15,10 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstract:
+ *  - Kernel for IDE header file.
+*/
 
 #ifndef __ALINIX_KERNEL_IDE_H
 #define __ALINIX_KERNEL_IDE_H

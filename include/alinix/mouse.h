@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Implementation of the kernel mouse driver.
+*/
 #ifndef __ALINIX_KERNEL_MOUSE_H
 #define __ALINIX_KERNEL_MOUSE_H
 

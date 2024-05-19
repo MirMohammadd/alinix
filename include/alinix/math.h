@@ -17,6 +17,12 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Implementation of mathematical operations in this header file.
+ * @file : math.h
+*/
 #ifndef __ALINIX_KERNEL_MATH_H
 #define __ALINIX_KERNEL_MATH_H
 

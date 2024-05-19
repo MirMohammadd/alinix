@@ -15,6 +15,10 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Kernel status implementation header file.
+*/
 #ifndef __ALINIX_KERNEL_STAT_H
 #define __ALINIX_KERNEL_STAT_H
 

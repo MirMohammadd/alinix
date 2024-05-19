@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Kernel FCNTL implementation for ASM section.
+*/
 #ifndef __ALINIX_KERNEL_ASM_FCNTL_INCLUDED_H
 #define __ALINIX_KERNEL_ASM_FCNTL_INCLUDED_H
 

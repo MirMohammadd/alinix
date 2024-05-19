@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ * 	- Kernel e1000 drivers.
+*/
+
 #ifndef __ALINIX_INTEL_ETHERNET_H
 #define __ALINIX_INTEL_ETHERNET_H
 

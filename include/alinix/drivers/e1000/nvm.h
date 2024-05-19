@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Kernel e1000 driver, nvm header file.
+*/
 #ifndef __ALINIX_KERNEL_DRIVERS_E_1000_NVM_H
 #define __ALINIX_KERNEL_DRIVERS_E_1000_NVM_H
 

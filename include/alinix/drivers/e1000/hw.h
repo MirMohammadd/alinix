@@ -14,6 +14,13 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ * 	- e1000 driver.
+*/
+
+
 #ifndef ALINIX_KERNEL_DRIVERS_E1000_HW_H
 #define ALINIX_KERNEL_DRIVERS_E1000_HW_H
 

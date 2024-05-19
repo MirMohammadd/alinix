@@ -18,6 +18,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Kernel random module implementation header file.
+*/
+
 #ifndef __ALINIX_KERNEL_RANDOM_HEADER_H
 #define __ALINIX_KERNEL_RANDOM_HEADER_H
 

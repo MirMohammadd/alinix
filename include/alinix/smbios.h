@@ -18,6 +18,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Kernel SM bios header file implementation.
+*/
+
 #ifndef __ALINIX_KERNEL_SMBIOS_H
 #define __ALINIX_KERNEL_SMBIOS_H
 

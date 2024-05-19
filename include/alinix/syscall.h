@@ -18,6 +18,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Kernel system calls header file implementation.
+*/
+
 #ifndef __ALINIX_SYS_CALL_HEADER_H_
 #define __ALINIX_SYS_CALL_HEADER_H_
 

@@ -17,6 +17,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Defines kernel needed data types.
+*/
 #ifndef __ALINIX_KERNEL__TYPES_H_HEADER_
 #define __ALINIX_KERNEL__TYPES_H_HEADER_
 

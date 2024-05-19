@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ * 	- Kernel security header file implementation and provides util for the kernel security stuff.
+*/
 #ifndef __ALINIX_KERNEL_SECURITY_H
 #define __ALINIX_KERNEL_SECURITY_H
 

@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Kernel stream header file implementation for C++.
+*/
 #ifndef __ALINIX_KERNEL_STREAM_HPP
 #define __ALINIX_KERNEL_STREAM_HPP
 

@@ -18,6 +18,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Kernel serial ports implementations in header file.
+*/
+
 #ifndef _ALINIX_KERNEL_SERIAL_PORT_H__
 #define _ALINIX_KERNEL_SERIAL_PORT_H__
 

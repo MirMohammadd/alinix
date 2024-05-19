@@ -17,6 +17,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - alinix kernel registers implemented in this header file.
+*/
 #ifndef __ALINIX__REGISTER_H
 #define __ALINIX__REGISTER_H
 

@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstract:
+ *  - Kernel build bug header implemented.
+*/
 #ifndef __ALINIX_KERNEL_BUILD_BUG_H
 #define __ALINIX_KERNEL_BUILD_BUG_H
 

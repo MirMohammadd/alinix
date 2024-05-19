@@ -18,6 +18,12 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstract:
+ *  - Kernel RTC networking device.
+ *  - header implementations.
+*/
+
 #ifndef __ALINIX_KERNEL_RTC_H
 #define __ALINIX_KERNEL_RTC_H
 

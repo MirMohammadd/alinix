@@ -15,6 +15,10 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstract:
+ *  - Kernel boot console implemented.
+*/
 #ifndef __ALINIX_KERNEL_BOOT_CONSOLE_H
 #define __ALINIX_KERNEL_BOOT_CONSOLE_H
 

@@ -18,6 +18,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Print function util in header file for the kernel.
+*/
+
 #ifndef _ALINIX_KERNEL_PRINT_K_HEADER_H
 #define _ALINIX_KERNEL_PRINT_K_HEADER_H
 

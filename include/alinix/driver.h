@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstract:
+ * 	- kernel generic driver header file.
+*/
 #ifndef __ALINIX___KERNEL_DRIVER_H
 #define __ALINIX___KERNEL_DRIVER_H
 

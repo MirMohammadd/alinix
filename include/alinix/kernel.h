@@ -18,6 +18,12 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Main header file for the kernel.
+ *  - Needed files for the kernel are all included here.
+*/
+
 #ifndef _ALINIX_KERNEL_KERNEL_H__
 #define _ALINIX_KERNEL_KERNEL_H__
 

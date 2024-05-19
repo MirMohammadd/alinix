@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Implementation of IRQ returns.
+*/
 #ifndef __ALINIX_KERNEL_IRQ_RETURN_H
 #define __ALINIX_KERNEL_IRQ_RETURN_H
 

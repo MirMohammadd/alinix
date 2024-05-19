@@ -18,6 +18,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+
+/**
+ * @abstraction:
+ *  -Keyboard utils are implemented here.
+*/
 #ifndef __ALINIX_KERNEL_KEYBOARD_H
 #define __ALINIX_KERNEL_KEYBOARD_H
 #include <alinix/types.h>

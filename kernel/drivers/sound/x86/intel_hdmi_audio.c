@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ * 	- Kernel intel for drivers audio files.
+*/
 #include <alinix/sound/x86/intel_hdmi_audio.h>
 #include <alinix/kernel.h>
 #include <alinix/sound/pcm.h>

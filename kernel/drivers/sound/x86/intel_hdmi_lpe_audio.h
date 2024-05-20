@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Kernel header file for intel audio.
+*/
 #ifndef __ALINIX_KERNEL_INTEL_HDMI_IPE_AUDIO_H
 #define __ALINIX_KERNEL_INTEL_HDMI_IPE_AUDIO_H
 

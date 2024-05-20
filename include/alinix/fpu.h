@@ -42,4 +42,8 @@ struct FPUControlWord
 
 static void Enable();
 
+inline void fpu_load_control_word(const uint16_t control){
+    asm volatile("fldcw %0;"::"m"(control)); 
+}
+
 #endif /*__ALINIX_KERNEL_FPU_H*/

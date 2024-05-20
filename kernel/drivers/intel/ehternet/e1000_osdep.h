@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Kernel e1000 networking stuff.
+*/
 #ifndef __ALINIX_KERNEL_ETHERNET_E_1000_OS_DEP_H
 #define __ALINIX_KERNEL_ETHERNET_E_1000_OS_DEP_H
 

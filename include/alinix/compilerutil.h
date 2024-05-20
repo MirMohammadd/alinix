@@ -20,6 +20,8 @@
 
 /**
  * @warning Let this file be empty for now
+ * @abstraction:
+ *  - Compiler utils.(Not implemented for now.)
 */
 
 #endif /*__ALINIX_KERNEL_COMPILER_UTIL_H*/

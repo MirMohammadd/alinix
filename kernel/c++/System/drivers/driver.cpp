@@ -14,6 +14,15 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+
+
+/**
+ * @abstraction:
+ *  - Kernel system driver for C++
+*/
+
+
 // #include <system/drivers/driver.hpp>
 
 // Driver::Driver(char* name, char* description)

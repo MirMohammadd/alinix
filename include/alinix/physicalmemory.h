@@ -18,6 +18,13 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+
+/**
+ * @abstraction:
+ *  - Kernel Physical memory header file implementation.
+ *  - Useful macros and DS implemented.
+*/
+
 #ifndef __ALINIX_KERNEL_PHYISCAL_MEMORY_H
 #define __ALINIX_KERNEL_PHYISCAL_MEMORY_H
 

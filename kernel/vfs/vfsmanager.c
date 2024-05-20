@@ -15,6 +15,11 @@
 // **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 // */
 
+/**
+ * @abstraction:
+ *  - Let this be empty.
+*/
+
 // #include <alinix/vfs/vfsmanager.h>
 // #include <alinix/vfs/virtualfilesystem.h>
 // #include <alinix/system/component.h>

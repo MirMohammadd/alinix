@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ * 	- Kernel platform device header file implementation.
+*/
 #ifndef __PLATFORM_DEVICE_H
 #define __PLATFORM_DEVICE_H
 

@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Kernel NTFS debug header file.
+*/
 #ifndef __ALINIX_KERNEL_DEBUG_H_NTFS_3
 #define __ALINIX_KERNEL_DEBUG_H_NTFS_3
 

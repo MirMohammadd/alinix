@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Kernel e1000 networking device driver stuff.
+*/
 #include <alinix/drivers/e1000/hw.h>
 #include <alinix/kernel.h>
 #include <alinix/drivers/e1000/e1k_utils.h>

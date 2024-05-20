@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ * 	- Kernel error header file.
+*/
 #ifndef _ALINIX_KERNEL_ERR_H
 #define _ALINIX_KERNEL_ERR_H
 

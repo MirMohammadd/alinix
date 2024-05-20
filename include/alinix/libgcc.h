@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstract:
+ * 	- Kernel LIBGCC for the compiler implemented.
+*/
 #ifndef __ALINIX_KERNEL_LIB_GCC_H
 #define __ALINIX_KERNEL_LIB_GCC_H
 

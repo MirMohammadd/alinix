@@ -24,6 +24,11 @@
 */
 
 
+/**
+ * @abstraction:
+ * 	- Kernel WIMAX header file implemented.
+*/
+
 #include <alinix/types.h>
 
 enum {

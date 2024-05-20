@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstract:
+ * 	- Kernel files hook header file.
+*/
 #ifndef __ALINIX_KERNEL_LSM_HOOKS_H
 #define __ALINIX_KERNEL_LSM_HOOKS_H
 

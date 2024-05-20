@@ -15,6 +15,10 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ * 	- Kernel DIM header file implemented.
+*/
 
 /**
  * @ref https://github.com/torvalds/linux/blob/master/include/linux/dim.h

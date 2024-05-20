@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Kernel x heap implemented.
+*/
 #ifndef __ALINIX_KERNEL_X_HEAP_H
 #define __ALINIX_KERNEL_X_HEAP_H
 

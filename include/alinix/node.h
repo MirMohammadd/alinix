@@ -17,6 +17,12 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Handles different kernel nodes.
+ *  - Header file implemented.
+*/
 #include <alinix/types.h>
 #include <alinix/interruptmanager.h>
 #include <alinix/ulib.h>

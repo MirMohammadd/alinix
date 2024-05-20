@@ -21,6 +21,11 @@
  *      -Define the used compiler
 */
 
+/**
+ * @abstraction:
+ *  - Kernel compiler attributes header file.
+*/
+
 #ifndef __ALINIX_KERNEL_COMPILER_H
 #define __ALINIX_KERNEL_COMPILER_H
 

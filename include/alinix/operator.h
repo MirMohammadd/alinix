@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Implementation of the operations for the kernel.
+*/
 #ifndef __ALINIX_KERNEL_OPERATOR_H
 #define __ALINIX_KERNEL_OPERATOR_H
 

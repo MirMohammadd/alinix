@@ -15,7 +15,10 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
-
+/**
+ * @abstraction:
+ *  - Kernel fonts defined on header file.
+*/
 #ifndef FONT_H
 #define FONT_H
 

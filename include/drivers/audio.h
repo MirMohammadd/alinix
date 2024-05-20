@@ -15,6 +15,10 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Kernel audio file header for audio stuff drivers.
+*/
 
 #ifndef AUDIO_H
 #define AUDIO_H

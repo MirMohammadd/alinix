@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstract:
+ * `- Kernel port implemented.
+*/
 #ifndef __ALINIX_PRE_PORT_H
 #define __ALINIX_PRE_PORT_H
 

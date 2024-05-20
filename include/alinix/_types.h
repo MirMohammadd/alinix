@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstract:
+ *  - Kernel types.
+*/
+
 #ifndef ALINIX_KERNEL_DEMO_DEF_T_INCLUDED_H
 #define ALINIX_KERNEL_DEMO_DEF_T_INCLUDED_H
 

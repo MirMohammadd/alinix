@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+
+/**
+ * @abstraction:
+ *  - Kernel window header file.
+*/
 #ifndef WINDOW_H
 #define WINDOW_H
 

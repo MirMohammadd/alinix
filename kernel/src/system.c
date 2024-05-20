@@ -14,5 +14,10 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Kernel system stuff.
+*/
 #include <alinix/multiboot.h>
 

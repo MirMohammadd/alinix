@@ -18,6 +18,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ * 	- Kernel charger drivers implemented.
+*/
+
 #include <alinix/types.h>
 #include <alinix/hrtimer_types.h>
 

@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstract:
+ * 	- Kernel I/O utils.
+*/
 #ifndef __IOMMUFD_UTILS_H
 #define __IOMMUFD_UTILS_H
 

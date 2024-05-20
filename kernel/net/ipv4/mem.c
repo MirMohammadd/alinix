@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Kernel mem for IPV4 driver.
+*/
+
 #include <alinix/types.h>
 #include <net/mem.h>
 

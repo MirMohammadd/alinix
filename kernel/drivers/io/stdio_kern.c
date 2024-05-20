@@ -17,6 +17,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ * 	- Kernel standard I/O stuff.
+*/
 #include <alinix/stdio.h>
 #include <alinix/kernel.h>
 #include <alinix/string.h>

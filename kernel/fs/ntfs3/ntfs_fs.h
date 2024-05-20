@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ * 	- Kernel NTFS file system header file.
+*/
 #ifndef __ALINIX_KERNEL_FS_NTFS3_H_FS
 #define __ALINIX_KERNEL_FS_NTFS3_H_FS
 

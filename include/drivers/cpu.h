@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Kernel CPU header file for drivers.
+*/
+
 
 #ifndef CPU_H
 #define CPU_H

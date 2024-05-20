@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Kernel list header file for C++.
+*/
 #ifndef __ALINIX_KERNEL_LISTS_HPP
 #define __ALINIX_KERNEL_LISTS_HPP
 

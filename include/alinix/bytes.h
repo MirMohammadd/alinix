@@ -19,6 +19,11 @@
  * Purpose:
  *      -Provides the byte amounts definitions
 */
+
+/**
+ * @abstraction:
+ *  - Kernel bytes operations and defined amounts.
+*/
 #ifndef _ALINIX_KERNEL_BITES_H
 #define _ALINIX_KERNEL_BITES_H
 

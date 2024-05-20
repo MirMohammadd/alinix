@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @warning
+ *  - Do NOT TAMPER THIS FILE, SHOULD BE EMPTY.
+*/
 #include <alinix/kernel.h>
 #include <alinix/keyboard.h>
 #include <alinix/port.h>

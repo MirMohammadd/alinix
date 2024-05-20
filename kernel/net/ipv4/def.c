@@ -18,6 +18,11 @@
 #include <net/def.h>
 
 /**
+ * @abstraction:
+ *  - stuff for the ipv4 drivers.
+*/
+
+/**
  * @brief Converts a 16-bit integer from host byte order to network byte order.
  * 
  * This function takes a 16-bit integer in host byte order and converts it 

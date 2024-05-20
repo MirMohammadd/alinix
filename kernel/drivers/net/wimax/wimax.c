@@ -15,6 +15,12 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+
+/**
+ * @abstraction:
+ *  - Kernel WIMAX driver for networking.
+*/
+
 #include <alinix/WiMAX.h>
 #include <alinix/init.h>
 #include <alinix/module.h>

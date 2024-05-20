@@ -19,6 +19,11 @@
  * Purpose:
  *      - Provide more control over controlling the flow
 */
+
+/**
+ * @abstraction:
+ *  - Kernel control stuff.
+*/
 #ifndef __ALINIX_KERNEL_CTRL_H
 #define __ALINIX_KERNEL_CTRL_H
 

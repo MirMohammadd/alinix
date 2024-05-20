@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ * 	- Kernel VGA drivers added.
+*/
 #ifndef __ALINIX_KERNEL_VGA_SWITCH_HEROO_H
 #define __ALINIX_KERNEL_VGA_SWITCH_HEROO_H
 

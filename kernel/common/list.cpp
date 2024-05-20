@@ -17,5 +17,7 @@
 
 /**
  * @note: Do NOTHING HERE.
+ * @abstraction:
+ *  - Kernel list for C++ implemented.
 */
 #include <alinix/list.hpp>

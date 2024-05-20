@@ -15,6 +15,10 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Kernel power off implemented in this header file.
+*/
 
 #ifndef __ALINIX_KERNEL_POWER_OFF_H
 #define __ALINIX_KERNEL_POWER_OFF_H

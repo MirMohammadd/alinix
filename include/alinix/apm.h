@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstract:
+ *  - Kernel APM implemented.
+*/
+
 #ifndef __ALINIX_KERNEL_APM_H
 #define __ALINIX_KERNEL_APM_H
 

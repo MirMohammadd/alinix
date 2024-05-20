@@ -15,4 +15,10 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Kernel interrupt manager.
+ *  - Core stuff.
+*/
+
 #include <alinix/node.h>

@@ -17,6 +17,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Kernel API.
+*/
 #ifndef __ALINIX_KERNEL_AT_API_H
 #define __ALINIX_KERNEL_AT_API_H
 

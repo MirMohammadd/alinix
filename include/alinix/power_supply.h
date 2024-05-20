@@ -19,6 +19,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ * 	- Kernel power implementation.
+*/
+
 #ifndef __ALINIX_KERNEL_POWER_SUPPLY_H
 #define __ALINIX_KERNEL_POWER_SUPPLY_H
 

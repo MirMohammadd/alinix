@@ -15,7 +15,10 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
-
+/**
+ * @abstraction:
+ *  - Kernel VGA implementation in header file.
+*/
 #ifndef __ALINIX_KERNEL_VGA_H
 #define __ALINIX_KERNEL_VGA_H
 

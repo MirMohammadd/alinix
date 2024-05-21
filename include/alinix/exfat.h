@@ -22,6 +22,8 @@
 
 #include <alinix/types.h>
 
+#define ENTRY_TYPE 0x85
+
 struct bootsector {
 	char jump[3];
 	char fsid[8];
@@ -40,5 +42,15 @@ struct bootsector {
         char bootcode[390];
         char bootsign[2];
 };
+
+struct {
+        uint8_t entrytype;
+        uint8_t entrycount; // This is the number of subsequent entries that also belong to this "file" entry. Should be at least 2, one 0xC0 and one 0xC1 for info and filename.
+        uint8_t pad[2];
+        uint32_t flags; // 0x10 == directory, probably identical to fat32
+        uint32_t creation, modification, access;
+        char pad[12];
+} fileEntry;
+
 
 uint32_t BootChecksum(unsigned char * Sectors,unsigned short BytesPerSector);

@@ -27,5 +27,16 @@
 #include <alinix/types.h>
 
 uint32_t BootChecksum(unsigned char * Sectors,unsigned short BytesPerSector){
-    
+    uint32_t numberOfBytes = (uint32_t)BytesPerSector * 11;
+    uint32_t checkSum = 0;
+    uint32_t index;
+
+    for (index = 0;index < numberOfBytes;index++){
+        if ((index == 226) || (index == 107) || (index == 112)){
+            continue;
+        }
+        checkSum = ((checkSum&1) ? 0x80000000 : 0) + (checkSum>>1) + (uint32_t)Sectors[index];
+
+    }
+    return checkSum;
 }

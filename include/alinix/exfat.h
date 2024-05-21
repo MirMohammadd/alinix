@@ -22,7 +22,8 @@
 
 #include <alinix/types.h>
 
-#define ENTRY_TYPE 0x85
+#define ENTRY_TYPE_FILE_INFO 0x85
+#define ENTRY_TYPE_FILE_ENTRY_INFO 0xC0
 
 struct bootsector {
 	char jump[3];
@@ -42,6 +43,22 @@ struct bootsector {
         char bootcode[390];
         char bootsign[2];
 };
+
+struct {
+        uint8_t entryType;
+        uint8_t flags;
+        uint8_t unk; // = 0. May be part of next field, but then it'd be in big-endian order which is unlikely.
+        uint8_t filenameLengthInBytes;
+        uint64_t filesize;
+        uint32_t unk;
+        uint32_t startCluster; // minus 2! Same as fat12/16/32.
+        uint64_t filesize2;
+} fileInfoEntry;
+
+struct {
+        uint8_t entrytype , entrycount ;
+        uint16_t name[15];
+} filenameEntry;
 
 struct {
         uint8_t entrytype;

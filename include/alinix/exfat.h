@@ -36,10 +36,8 @@ struct bootsector {
         uint32_t sectorStartOfFirstCluster;
         uint32_t clusterCountInFs;
         uint32_t clusterForRootDirectory;
-        uint32_t unk[2];
         uint8_t logBytesPerSector, logSectorsPerCluster, fatCount, driveId; // 2-log for both. bytesPerCluster = 1 << (logBytesPerSector + logSectorsPerCluster).
         uint8_t percentInUse; // for display ala windows computer explorer
-        uint8_t unk[7];
         char bootcode[390];
         char bootsign[2];
 };
@@ -50,7 +48,6 @@ struct {
         uint8_t unk; // = 0. May be part of next field, but then it'd be in big-endian order which is unlikely.
         uint8_t filenameLengthInBytes;
         uint64_t filesize;
-        uint32_t unk;
         uint32_t startCluster; // minus 2! Same as fat12/16/32.
         uint64_t filesize2;
 } fileInfoEntry;
@@ -66,7 +63,6 @@ struct {
         uint8_t pad[2];
         uint32_t flags; // 0x10 == directory, probably identical to fat32
         uint32_t creation, modification, access;
-        char pad[12];
 } fileEntry;
 
 

@@ -25,5 +25,22 @@ int get_set_volume(uint8_t *base,struct volume_level *level,int flag){
             cmdLeft = MASTER_VOLUME_LCH;
             cmdRight = MASTER_VOLUME_RCH;
             break;
+        case Cd:
+            cmdLeft = MASTER_VOLUME_LCH;
+            cmdRight = MASTER_VOLUME_RCH;
+            break;
+        case Line:
+            cmdLeft = MASTER_VOLUME_LCH;
+            cmdRight = MASTER_VOLUME_RCH;
+            break;
+        case Mic:
+            cmdLeft = cmdRight = MONO_OUT_VOLUME;
+            break;
+        case Treble:
+            return 22;
+		case Bass:
+			return 22;
+		default:
+			return 22;
     }
 }

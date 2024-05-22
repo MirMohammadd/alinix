@@ -12,3 +12,9 @@ uint32_t dev_mixer_read(uint32_t *base, uint32_t reg){
     res = inportl(base[0] + REG_SB_BASE); // Use inportl instead of outportb
     return res;
 }
+
+uint32_t dev_mixer_write(uint32_t *base, uint32_t reg){
+    uint32_t res;
+    res = inportl(base[0] + REG_SB_BASE); // Use inportl instead of outportb
+    return res;
+}

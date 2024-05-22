@@ -16,7 +16,6 @@
 #define MIC_VOLUME			0x0e
 #define MONO_OUT_VOLUME		0x0f
 
-#ifdef MIXER_SB16
 #define SB16_MASTER_LEFT	0x30
 #define SB16_MASTER_RIGHT	0x31
 #define SB16_DAC_LEFT		0x32
@@ -33,9 +32,7 @@
 #define SB16_TREBLE_RIGHT	0x45
 #define SB16_BASS_LEFT		0x46
 #define SB16_BASS_RIGHT		0x47
-#endif
 
-#ifdef MIXER_AC97
 #define AC97_MASTER_VOLUME			0x02
 #define AC97_AUX_OUT_VOLUME			0x04
 #define AC97_MONO_VOLUME			0x06
@@ -54,9 +51,8 @@
 #define AC97_POWERDOWN			0x26
 #define AC97_RECORD_SELECT		0x1a
 #define AC97_RESET				0x00
-#endif
 
-int get_set_volume(uint32_t *pbase, struct volume_level *level, int flag);
+int get_set_volume(uint8_t *base,struct volume_level *level,int flag);
 void dev_set_default_volume(uint32_t *pbase);
 
 

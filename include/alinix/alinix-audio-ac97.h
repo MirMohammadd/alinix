@@ -18,6 +18,6 @@ struct ac97_codec{
 } ac97_codec_t;
 
 
-
+VOID ac97_initialize();
 
 #endif

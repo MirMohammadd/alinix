@@ -8,3 +8,8 @@ struct ac97_codec* ac97Dev;
 static inline void ac97_write_register(uint16_t reg,uint16_t value){
     outportw(ac97Dev->base_address + reg,value);
 }
+
+static inline void ac97_read_register(uint16_t reg){
+    return inportw(ac97Dev->base_address + reg);
+}
+

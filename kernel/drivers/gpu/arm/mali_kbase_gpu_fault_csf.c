@@ -16,6 +16,11 @@
 */
 #include <alinix/types.h>
 #include <alinix/register.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("GPU implementation driver module")
+MODULE_LICENSE("AGPL")
 
 /**
  * @abstraction:

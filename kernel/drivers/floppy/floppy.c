@@ -23,6 +23,11 @@
 #include <alinix/kernel.h>
 #include <alinix/init.h>
 #include <alinix/types.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Floppy driver")
+MODULE_LICENSE("AGPL")
 
 
 

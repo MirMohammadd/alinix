@@ -29,6 +29,11 @@
 #include <alinix/pci.h>
 #include <alinix/ulib.h>
 #include <alinix/memory.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("VGA Switcheroo")
+MODULE_LICENSE("AGPL-3.0")
 
 #define GFP_KERNEL 0
 

@@ -22,6 +22,11 @@
 #include <alinix/kernel.h>
 #include <alinix/pci.h>
 #include <alinix/kobject.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel core section")
+MODULE_LICENSE("AGPL-3.0")
 
 
 static LIST_HEAD(deferred_sync);

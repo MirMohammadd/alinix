@@ -23,6 +23,11 @@
 #include <alinix/device.h>
 #include <alinix/klist.h>
 #include <alinix/drivers/base/base.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel DD header for drivers")
+MODULE_LICENSE("AGPL")
 
 bool device_is_bound(struct device *dev)
 {

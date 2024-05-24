@@ -22,6 +22,11 @@
 
 #include <alinix/types.h>
 #include <alinix/vendors.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Vendor ID implementation")
+MODULE_LICENSE("AGPL-3.0")
 
 static inline void cpuid(int code, uint32_t *a, uint32_t *d) {
   asm volatile("cpuid":"=a"(*a),"=d"(*d):"a"(code):"ecx","ebx");

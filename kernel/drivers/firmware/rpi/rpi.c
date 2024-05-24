@@ -23,8 +23,14 @@
 #include <alinix/types.h>
 #include <alinix/kernel.h>
 #include <alinix/init.h>
+#include <alinix/module.h>
 
 #include "rpi.h"
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Raspberry PI abstraction")
+MODULE_LICENSE("AGPL")
+
 
 static uint32_t MMIO_BASE;
 

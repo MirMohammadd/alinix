@@ -28,6 +28,11 @@
 #include <alinix/port.h>
 #include <alinix/platform_device.h>
 #include <alinix/driver.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel watchdog driver implementation")
+MODULE_LICENSE("AGPL")
 
 #define WATCHDOG_MINOR 130
 

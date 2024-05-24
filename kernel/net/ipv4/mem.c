@@ -22,6 +22,11 @@
 
 #include <alinix/types.h>
 #include <net/mem.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel mem for IPV4 driver")
+MODULE_LICENSE("AGPL")
 
 struct memp_malloc_helper
 {

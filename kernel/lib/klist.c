@@ -21,6 +21,12 @@
 */
 #include <alinix/klist.h>
 #include <alinix/kernel.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel List")
+MODULE_LICENSE("AGPL")
 
 int klist_node_attached(struct klist_node *n)
 {

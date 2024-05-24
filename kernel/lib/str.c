@@ -20,6 +20,11 @@
  * 	- Kernel string library implemented.
 */
 #include <alinix/string.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("String library")
+MODULE_LICENSE("AGPL-3.0")
 
 
 char *strcat(char *dst, const char *src)

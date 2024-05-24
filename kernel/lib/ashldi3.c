@@ -21,6 +21,12 @@
 */
 #include <alinix/kernel.h>
 #include <alinix/libgcc.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel library")
+MODULE_LICENSE("AGPL")
 
 long long  __ashldi3(long long u, int b){
     DWunion uu, w;

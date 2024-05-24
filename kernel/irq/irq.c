@@ -23,6 +23,11 @@
 
 #include <alinix/irqdesc.h>
 #include <alinix/types.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("IRQ implementation")
+MODULE_LICENSE("AGPL")
 
 #define NR_IRQS 32
 struct irq_desc irq_desc_array[NR_IRQS];

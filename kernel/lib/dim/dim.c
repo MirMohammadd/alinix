@@ -23,6 +23,12 @@
 #include <alinix/dim.h>
 #include <alinix/kernel.h>
 #include <alinix/math.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("DIM driver implementation")
+MODULE_LICENSE("AGPL-3.0")
 
 
 bool dim_on_top(struct dim *dim){

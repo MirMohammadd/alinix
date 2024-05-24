@@ -25,6 +25,11 @@
 #include <alinix/interrupt.h>
 #include <alinix/memory.h>
 #include <alinix/settings.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("IRQ Manager")
+MODULE_LICENSE("AGPL")
 
 const void *free_irq(unsigned int irq, void *dev_id)
 {

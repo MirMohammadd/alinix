@@ -28,6 +28,11 @@
 #include <alinix/ulib.h>
 #include <alinix/bitops.h>
 #include <alinix/list.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel security implement")
+MODULE_LICENSE("AGPL-3.0")
 
 #define EBUSY 16
 #define EINVAL 22

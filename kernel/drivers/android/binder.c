@@ -21,6 +21,11 @@
 */
 #include <alinix/types.h>
 #include <alinix/kernel.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel stuff binder for android")
+MODULE_LICENSE("AGPL-3.0")
 
 static HLIST_HEAD(binder_deferred_list);
 static DEFINE_MUTEX(binder_deferred_lock);

@@ -19,6 +19,11 @@
  *  - Provides the system component utility.
 */
 #include <alinix/system/component.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("System component utility")
+MODULE_LICENSE("AGPL-3.0")
 
 SystemComponent* SystemComponent_create(char* name, char* description) {
     SystemComponent* component = (SystemComponent*)malloc(sizeof(SystemComponent));

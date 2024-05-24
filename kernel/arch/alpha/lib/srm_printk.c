@@ -21,6 +21,11 @@
 */
 #include <alinix/kernel.h>
 #include <alinix/asm/console.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel Printing and Logging Utility")
+MODULE_LICENSE("AGPL-3.0")
 
 
 long

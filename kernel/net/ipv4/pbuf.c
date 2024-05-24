@@ -31,6 +31,11 @@
 #include <net/debug.h>
 #include <net/err.h>
 #include <net/pbuf.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel Buffer Driver for IPV4")
+MODULE_LICENSE("AGPL")
 
 
 #define PBUF_POOL_BUFSIZE_ALIGNED LWIP_MEM_ALIGN_SIZE(PBUF_POOL_BUFSIZE)

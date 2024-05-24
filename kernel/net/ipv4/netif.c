@@ -27,6 +27,12 @@
 #include <alinix/ip.h>
 #include <alinix/arch.h>
 #include <net/def.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("AliNix IPV4 driver")
+MODULE_LICENSE("AGPL-3.0")
 
 #define NETIF_STATUS_CALLBACK(n)
 

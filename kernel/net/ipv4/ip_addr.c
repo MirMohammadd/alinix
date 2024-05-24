@@ -23,6 +23,11 @@
 */
 
 #include <net/ip_addr.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("IP address driver for the kernel")
+MODULE_LICENSE("AGPL")
 
 
 const ip_addr_t ip_addr_any = { IPADDR_ANY };

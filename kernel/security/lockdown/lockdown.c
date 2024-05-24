@@ -28,6 +28,13 @@
 #include <alinix/stdio.h>
 #include <alinix/memory.h>
 #include <alinix/ulib.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("AliNix Security Module for lock down.")
+MODULE_LICENSE("AGPL-3.0")
+
 
 
 // Defining the lockdown  function here to avoid circular dependency between security.cpp

@@ -28,6 +28,11 @@
 #include <alinix/panic.h>
 #include <alinix/rculist.h>
 #include <alinix/panic.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel Security Module")
+MODULE_LICENSE("AGPL-3.0")
 
 #define LSM_CONFIG_COUNT  32 /* Number of configuration options */
 

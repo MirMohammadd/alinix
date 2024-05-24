@@ -25,6 +25,11 @@
 #include <net/err.h>
 #include <net/ip_addr.h>
 #include <net/def.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("TCP implementation")
+MODULE_LICENSE("AGPL")
 
 uint8_t tcp_active_pcbs_changed;
 

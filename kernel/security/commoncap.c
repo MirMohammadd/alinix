@@ -26,6 +26,12 @@
 #include <alinix/time.h>
 #include <alinix/capability.h>
 #include <alinix/types.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Commoncap for the kernel security")
+MODULE_LICENSE("AGPL-3.0")
 
 
 /**

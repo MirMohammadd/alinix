@@ -27,6 +27,11 @@
 #include <alinix/memory.h>
 #include <net/netif.h>
 #include <alinix/arch.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("UDP Kernel Module")
+MODULE_LICENSE("AGPL-3.0")
 
 void netif_set_gw(struct netif *netif, ip_addr_t *gw);
 

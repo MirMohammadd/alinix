@@ -25,6 +25,12 @@
 #include <alinix/skbuff.h>
 #include <alinix/audit.h>
 #include <alinix/security/apparmor/audit.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mormohammad")
+MODULE_DESCRIPTION("AliNix Kernel Security Audit Module")
+MODULE_LICENSE("AGPL-3.0")
 
 const char *const audit_mode_names[] = {
 	"normal",

@@ -29,6 +29,11 @@
 #include <alinix/limits.h>
 #include <alinix/operator.h>
 #include <alinix/compiler_types.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("vsprintf utility functions")
+MODULE_LICENSE("AGPLv3")
 
 
 

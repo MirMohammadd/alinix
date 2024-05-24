@@ -29,6 +29,11 @@
 #include <alinix/memory.h>
 #include <alinix/ulib.h>
 #include <alinix/usb.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Bluetooth module")
+MODULE_LICENSE("AGPL-3.0")
 
 
 /**

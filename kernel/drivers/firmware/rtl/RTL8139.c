@@ -23,6 +23,11 @@
 #include <alinix/kernel.h>
 #include <alinix/init.h>
 #include <alinix/port.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("RTL8139 Networking Driver")
+MODULE_LICENSE("AGPL")
 
 /**
  * @ref https://wiki.osdev.org/RTL8139

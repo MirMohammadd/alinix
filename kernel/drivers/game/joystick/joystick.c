@@ -25,6 +25,12 @@
 #include <alinix/log.h>
 #include <alinix/kernel.h>
 #include <alinix/init.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Joystick utils for kernel")
+MODULE_LICENSE("AGPL-3.0")
+
 
 struct JoystickStatus jst;
 

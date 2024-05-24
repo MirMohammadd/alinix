@@ -26,6 +26,12 @@
 #include <net/memp.h>
 #include <alinix/memory.h>
 #include <alinix/ulib.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel memp IPV4 implementations")
+MODULE_LICENSE("AGPL-3.0-or-later")
 
 #define MEMP_SIZE           0
 

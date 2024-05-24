@@ -23,6 +23,12 @@
 #include <alinix/paging.h>
 #include <alinix/gui/window.h>
 #include <alinix/string.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Window utils")
+MODULE_LICENSE("AGPL-3.0")
 
 
 

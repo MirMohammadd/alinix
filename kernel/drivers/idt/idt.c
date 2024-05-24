@@ -21,6 +21,12 @@
 */
 #include <alinix/idt.h>
 #include <alinix/types.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("IDT implementation module")
+MODULE_LICENSE("AGPL-3.0")
+
 
 struct idt_ptr idtr;
 struct idt_info idt[MAX_INTERRUPTS];

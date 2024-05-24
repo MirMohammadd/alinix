@@ -22,6 +22,11 @@
 #include <alinix/types.h>
 #include <alinix/graphics/model.h>
 #include <alinix/kernel.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Graphic models")
+MODULE_LICENSE("AGPL-3.0")
 
 #define	INSTRUCTION_CLOCK_FREQUENCY	80000000
 #define WORD_VAL uint32_t

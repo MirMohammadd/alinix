@@ -26,12 +26,18 @@
 #include <alinix/compiler.h>
 #include <alinix/lsm_hooks.h>
 #include <alinix/init.h>
+#include <alinix/module.h>
 
 #define LSM_ID_BPF 109
 
 /**
  * @ref https://github.com/torvalds/linux/blob/master/security/bpf/hooks.c
 */
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("BPF LSM hooks")
+MODULE_LICENSE("AGPL-3.0")
 
 static const struct lsm_id bpf_lsmid  = {
 	.name = "bpf",

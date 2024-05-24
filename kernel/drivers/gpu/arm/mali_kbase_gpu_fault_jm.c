@@ -23,6 +23,11 @@
 
 
 #include <alinix/types.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("GPU util")
+MODULE_LICENSE("AGPL")
 
 
 const char* kbase_gpu_exception_name(uint32_t const exception_code){

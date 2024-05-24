@@ -23,6 +23,11 @@
 #include "ntfs_fs.h"
 #include <alinix/types.h>
 #include <alinix/nls.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("NTFS3 driver")
+MODULE_LICENSE("AGPL-3.0")
 
 
 /* Convert little endian UTF-16 to NLS string. */

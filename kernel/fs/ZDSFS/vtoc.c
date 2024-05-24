@@ -21,6 +21,11 @@
 */
 #include <alinix/VTOC.h>
 #include <alinix/memory.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("VTOC for the file system kernel")
+MODULE_LICENSE("AGPL")
 
 void GetCHRFromVTOC(void *buffer){
     uint16_t cyl,head;

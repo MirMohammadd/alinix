@@ -24,6 +24,11 @@
 
 #include <alinix/system.h>
 #include <alinix/listings/directorylisting.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Provides the listing directory ability.")
+MODULE_LICENSE("AGPL")
 
 int BeginListing(struct Thread* thread, uint32_t pathPtr){
     char* path = (char* )pathPtr;

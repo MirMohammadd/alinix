@@ -23,6 +23,11 @@
 #include <alinix/memory.h>
 #include <alinix/heap.h>
 #include <alinix/types.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Memory management")
+MODULE_LICENSE("AGPL-3.0")
 
 
 /**

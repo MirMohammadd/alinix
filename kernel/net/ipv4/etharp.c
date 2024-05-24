@@ -36,6 +36,12 @@
 #include <net/def.h>
 #include <net/arp.h>
 #include <alinix/arch.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("ARP implementation for AliNix")
+MODULE_LICENSE("AGPLv3")
 
 struct stats_proto etharp;
 

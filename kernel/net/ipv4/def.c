@@ -16,6 +16,11 @@
 */
 #include <alinix/types.h>
 #include <net/def.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("A simple module to test the module system for networking.")
+MODULE_LICENSE("AGPL3")
 
 /**
  * @abstraction:

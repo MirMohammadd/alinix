@@ -28,12 +28,15 @@
 #include <alinix/ip.h>
 #include <alinix/if_arp.h>
 #include <alinix/arch.h>
-
+#include <alinix/module.h>
 #include <net/dhcp.h>
 #include <net/debug.h>
 #include <net/err.h>
 #include <net/netif.h>
 
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("DHCP driver for the kernel drivers")
+MODULE_LICENSE("AGPL")
 
 
 void dhcp_set_struct(struct netif *netif, struct dhcp *dhcp);

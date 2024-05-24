@@ -25,6 +25,11 @@
 #include <alinix/init.h>
 #include <alinix/kernel.h>
 #include <clock/clock.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("System clock utility")
+MODULE_LICENSE("AGPL")
 
 #define	UMODE	0170000
 #define	SCHMAG	10

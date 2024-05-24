@@ -23,18 +23,18 @@
 #include <core/port.h>
 #include <system/log.h>
 
-using namespace CactusOS::core;
+
 
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("AC97 Audio Driver")
 MODULE_LICENSE("AGPL-3.0")
 
 static inline void ac97_write_register(uint16_t reg,uint16_t value,struct ac97_codec* dev){
-    outportw(dev->base_address + reg,value);
+    CactusOS::core::outportw(dev->base_address + reg,value);
 }
 
 static inline uint16_t ac97_read_register(uint16_t reg,struct ac97_codec* dev){
-    return inportw(dev->base_address + reg);
+    return CactusOS::core::inportw(dev->base_address + reg);
 }
 
 
@@ -52,6 +52,6 @@ void ac97_initialize(){
         // Set master volume to maximum
     ac97_write_register(AC97_MASTER_VOLUME_REGISTER, 0x0000,ac97Dev);
     ac97_write_register(AC97_PCM_OUT_VOLUME_REGISTER, 0x0000,ac97Dev);
-    EnableInterrupts();
+    asm volatile("sti");
 
 }

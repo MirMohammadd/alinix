@@ -21,6 +21,9 @@
 #include <alinix/pci.h>
 #include <alinix/interrupt.h>
 
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("AC97 Audio Driver")
+MODULE_LICENSE("AGPL-3.0")
 
 static inline void ac97_write_register(uint16_t reg,uint16_t value,struct ac97_codec* dev){
     outportw(dev->base_address + reg,value);

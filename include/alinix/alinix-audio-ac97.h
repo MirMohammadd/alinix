@@ -26,6 +26,7 @@
 
 #include <alinix/port.h>
 #include <alinix/types.h>
+#include <alinix/module.h>
 
 struct ac97_codec{
     uint32_t base_address;

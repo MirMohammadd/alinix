@@ -39,6 +39,12 @@
 #include <net/def.h>
 #include <net/inet.h>
 #include <alinix/stdarg.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Auto IP for AliNix")
+MODULE_LICENSE("AGPLv3")
 
 
 

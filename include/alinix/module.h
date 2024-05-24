@@ -63,6 +63,14 @@ typedef struct mmio_s{
     volatile uint32_t *addr;               
 } mmio_region_t;
 
+#define MODULE_AUTHOR(author) \
+    static const char *module_author = author;
+
+#define MODULE_DESCRIPTION(description) \
+    static const char *module_description = description;
+
+#define MODULE_LICENSE(license) \
+    static const char *module_license = license;
 
 
 #endif

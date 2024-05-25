@@ -26,11 +26,16 @@
 
 #include <system/log.h>
 #include <common/string.h>
+#include <alinix/module.h>
 
 using namespace CactusOS;
 using namespace CactusOS::common;
 using namespace CactusOS::system;
 
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel lock down implementation for security stuff")
+MODULE_LICENSE("AGPL-3.0")
 
 
 static const enum lockdown_reason lockdown_levels[] = {LOCKDOWN_NONE,

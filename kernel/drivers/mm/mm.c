@@ -22,6 +22,11 @@
 #include <alinix/memory.h>
 #include <alinix/paging.h>
 #include <alinix/mm.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel memory stuff.")
+MODULE_LICENSE("AGPL-3.0")
 
 
 

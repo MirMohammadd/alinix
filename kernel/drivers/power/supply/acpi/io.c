@@ -24,6 +24,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+/**
+ * @abstraction:
+ *  - default handler for the ACPI kernel.
+*/
 #include <alinix/init.h>
 #include <alinix/ucapi/types.h>
 #include <alinix/compiler.h>
@@ -31,6 +36,11 @@ SOFTWARE.
 #include <alinix/stdio.h>
 #include <alinix/ucapi/io.h>
 #include <alinix/ucapi/log.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("ACPI I/O util module")
+MODULE_LICENSE("AGPL-3.0")
 
 
 

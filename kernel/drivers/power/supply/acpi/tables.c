@@ -25,12 +25,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+/**
+ * @brief Kernel ACPI driver util
+*/
+
 #include <alinix/kernel.h>
 #include <alinix/init.h>
 #include <alinix/ucapi/types.h>
 #include <alinix/ucapi/compiler.h>
 #include <alinix/ucapi/acpi.h>
 #include <alinix/compiler.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel ACPI driver util")
+MODULE_LICENSE("AGPL-3.0")
 
 
 // PRIVATE uacpi_object_name fadt_signature = {

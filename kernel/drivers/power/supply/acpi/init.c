@@ -25,10 +25,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+/**
+ * @abstraction:
+ *  - ACPI driver
+*/
+
 #include <alinix/init_power.h>
 #include <alinix/port.h>
 #include <alinix/init.h>
 #include <alinix/kernel.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Initialize power management")
+MODULE_LICENSE("AGPL-3.0")
 
 struct FADT *fadt;
 

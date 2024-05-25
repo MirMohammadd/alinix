@@ -24,10 +24,22 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+/**
+ * @abstraction:
+ *  - ACPI driver.
+*/
+
 #include <alinix/kernel.h>
 #include <alinix/init.h>
 #include <alinix/ucapi/types.h>
 #include <alinix/ucapi/codes.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("A simple kernel module for ACPI")
+MODULE_LICENSE("AGPL")
 
 
 /**

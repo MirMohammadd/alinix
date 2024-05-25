@@ -24,7 +24,18 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+/**
+ * @abstraction:
+ *  - default handler for the ACPI kernel.
+*/
+
 #include <alinix/ucapi/types.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("UCAPI types")
+MODULE_LICENSE("AGPL-3.0")
 
 const char *uacpi_address_space_to_string(
     enum uacpi_address_space space

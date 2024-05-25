@@ -24,10 +24,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+/**
+ * @abstraction:
+ *  - default handler for the ACPI kernel.
+*/
 #include <alinix/kernel.h>
 #include <alinix/init.h>
-
+#include <alinix/module.h>
 #include <alinix/ucapi/namespace.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("UCAPI namespace")
+MODULE_LICENSE("AGPL-3.0")
 
 uacpi_namespace_node
 predefined_namespaces[UACPI_PREDEFINED_NAMESPACE_MAX + 1] = {

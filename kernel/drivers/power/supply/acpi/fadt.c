@@ -14,8 +14,21 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - default handler for the ACPI kernel.
+*/
+
+
 #include <alinix/fadt.h>
 #include <alinix/string.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("FADT")
+MODULE_LICENSE("AGPL")
 
 struct ACPISDTHeader *h;
 

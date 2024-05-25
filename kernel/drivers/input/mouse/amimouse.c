@@ -24,6 +24,11 @@
 #include <alinix/irqreturn.h>
 #include <alinix/input.h>
 #include <alinix/arch/amigaw.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Amiga Mouse Driver")
+MODULE_LICENSE("AGPL-3.0")
 
 PRIVATE int amimouse_lastx, amimouse_lasty;
 

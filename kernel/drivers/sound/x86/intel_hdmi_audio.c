@@ -24,6 +24,11 @@
 #include <alinix/sound/pcm.h>
 #include <alinix/uapi/sound/asound.h>
 #include "intel_hdmi_lpe_audio.h"
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Intel HDMI Audio Driver")
+MODULE_LICENSE("AGPL-3.0")
 
 #define AUD_SAMPLE_RATE_32	32000
 #define AUD_SAMPLE_RATE_44_1	44100

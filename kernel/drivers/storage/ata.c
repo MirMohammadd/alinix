@@ -27,6 +27,11 @@
 #include <alinix/init.h>
 #include <alinix/port.h>
 #include <alinix/atapi.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("ATA storage driver")
+MODULE_LICENSE("AGPL")
 
 static void ata_io_wait(const uint8_t p){
 	inportb(p + CONTROL + ALTERNATE_STATUS);

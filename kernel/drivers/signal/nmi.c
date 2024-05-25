@@ -22,6 +22,11 @@
 #include <alinix/port.h>
 #include <alinix/types.h>
 #include <alinix/nmi.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("NMI signal")
+MODULE_LICENSE("AGPL")
 
 /**
  * @brief Function that enables the NMI

@@ -23,6 +23,12 @@
 #include <alinix/kernel.h>
 #include <alinix/init.h>
 #include <core/port.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("RTL networking util")
+MODULE_LICENSE("AGPL-3.0")
 
 /**
  * @ref https://wiki.osdev.org/RTL8139

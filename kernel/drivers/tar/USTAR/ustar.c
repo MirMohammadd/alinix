@@ -30,6 +30,12 @@
 #include <alinix/memory.h>
 #include <alinix/ulib.h>
 #include <alinix/heap.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("File archive")
+MODULE_LICENSE("AGPLv3")
 
 /**
  * @brief

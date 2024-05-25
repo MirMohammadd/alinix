@@ -47,6 +47,12 @@ SOFTWARE.
 #include <alinix/init.h>
 #include <alinix/c++/gameport.hpp>
 #include <system/log.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Joy stick driver util")
+MODULE_LICENSE("AGPL-3.0")
 
 struct JoystickStatus *jst;
 

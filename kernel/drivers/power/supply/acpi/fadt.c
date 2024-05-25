@@ -16,6 +16,12 @@
 */
 #include <alinix/fadt.h>
 #include <alinix/string.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("FADT")
+MODULE_LICENSE("AGPL")
 
 struct ACPISDTHeader *h;
 

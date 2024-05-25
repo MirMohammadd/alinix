@@ -26,6 +26,12 @@
 #include <alinix/kernel.h>
 #include <alinix/string.h>
 #include <alinix/asm.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel standard I/O")
+MODULE_LICENSE("AGPLv3")
 
 #define TERMINAL_COMMAND_PORT 0x3D4
 #define TERMINAL_DATA_PORT 0x3D5

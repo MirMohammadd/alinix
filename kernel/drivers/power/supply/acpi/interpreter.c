@@ -24,6 +24,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+/**
+ * @abstraction:
+ *  - ACPI driver.
+*/
+
 #include <alinix/kernel.h>
 #include <alinix/init.h>
 #include <alinix/ucapi/types.h>

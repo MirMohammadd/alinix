@@ -25,6 +25,12 @@
 #include <alinix/kernel.h>
 #include <alinix/pci.h>
 #include <alinix/types.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("PCI Driver")
+MODULE_LICENSE("AGPL-3.0")
 
 /**
  * Reads a 16-bit value from the PCI configuration space.

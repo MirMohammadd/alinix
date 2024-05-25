@@ -24,6 +24,12 @@
 #include <alinix/platform_device.h>
 #include <alinix/mutex_types.h>
 #include <alinix/types.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Light driver")
+MODULE_LICENSE("AGPL")
 
 #define LM3533_ALS_RESISTOR_MIN			1
 #define LM3533_ALS_RESISTOR_MAX			127

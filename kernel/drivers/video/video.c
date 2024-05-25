@@ -28,6 +28,11 @@
 #include <alinix/memory.h>
 #include <alinix/paging.h>
 #include <alinix/gui/fonts/font.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel graphics driver")
+MODULE_LICENSE("AGPL-3.0")
 
 
 static int x;

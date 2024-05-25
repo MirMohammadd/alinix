@@ -18,6 +18,13 @@
 */
 #include <alinix/port.h>
 #include <alinix/beep.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Beep Module")
+MODULE_LICENSE("AGPL-3.0")
+
 void beep(){
     outportb(0xB6, 0x43);
     outportb(30, 0x42);

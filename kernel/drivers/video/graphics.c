@@ -23,6 +23,11 @@
 #include <alinix/mm.h>
 #include <alinix/kernel.h>
 #include <alinix/mouse.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel graphics driver")
+MODULE_LICENSE("AGPL-3.0")
 
 mouse_info_t *get_mouse_info();
 

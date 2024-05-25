@@ -25,6 +25,11 @@
 #include <alinix/usb.h>
 #include <alinix/completion.h>
 #include <alinix/jiffies.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("USB kernel module")
+MODULE_LICENSE("AGPL-3.0")
 
 
 

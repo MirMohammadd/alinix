@@ -22,6 +22,12 @@
 
 #include <alinix/mm.h>
 #include <alinix/paging.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel Memory Drivers")
+MODULE_LICENSE("AGPL-3.0")
 
 
 #define RETURN_ADDR 0x400000

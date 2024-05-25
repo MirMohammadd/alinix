@@ -23,6 +23,10 @@
 #include <alinix/kernel.h>
 #include <alinix/init.h>
 
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("ALSA 4000 driver")
+MODULE_LICENSE("AGPL")
+
 uint32_t dev_mixer_read(uint32_t *base, uint32_t reg){
     uint32_t res;
     res = inportl(base[0] + REG_SB_BASE); // Use inportl instead of outportb

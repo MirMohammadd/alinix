@@ -31,6 +31,11 @@ SOFTWARE.
 #include <alinix/ucapi/api.h>
 #include <alinix/kernel.h>
 #include <alinix/stat.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("ACPI util driver module")
+MODULE_LICENSE("AGPL-3.0")
 
 extern uacpi_status uacpi_kernel_raw_io_read(
     u64, u8, u64 *ret

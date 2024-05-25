@@ -17,7 +17,11 @@
 #include <alinix/drivers/audio/als4000/als4000.h>
 #include <alinix/drivers/audio/als4000/sound.h>
 #include <alinix/drivers/audio/als4000/mixer.h>
+#include <alinix/module.h>
 
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("ALi M5451 ALS4000 Audio Driver")
+MODULE_LICENSE("AGPL")
 
 
 uint8_t mixer_value[] = {

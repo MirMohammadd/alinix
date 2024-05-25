@@ -21,6 +21,11 @@
 
 #include <alinix/kernel.h>
 #include <alinix/pci.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel PCI implementation")
+MODULE_LICENSE("AGPL")
 
 void pci_dev_put(struct pci_dev *dev)
 {

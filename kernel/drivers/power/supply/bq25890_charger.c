@@ -27,6 +27,11 @@
 #include <alinix/kernel.h>
 #include <alinix/regmap.h>
 #include <alinix/physicalmemory.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel Charger module")
+MODULE_LICENSE("AGPL")
 
 /**
  * @ref https://github.com/torvalds/linux/blob/master/drivers/power/supply/bq25890_charger.c

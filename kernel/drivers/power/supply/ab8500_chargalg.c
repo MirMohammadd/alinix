@@ -25,6 +25,11 @@
 
 #include <alinix/types.h>
 #include <alinix/hrtimer_types.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel Charger Driver")
+MODULE_LICENSE("AGPL")
 
 
 /* Watchdog kick interval */

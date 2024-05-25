@@ -25,6 +25,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+/**
+ * @brief Kernel ACPI driver util
+*/
+
 #include <alinix/kernel.h>
 #include <alinix/init.h>
 #include <alinix/ucapi/types.h>

@@ -26,6 +26,12 @@ SOFTWARE.
 */
 #include <alinix/ucapi/api.h>
 #include <alinix/ucapi/types.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("UCAPI")
+MODULE_LICENSE("AGPL-3.0")
 
 
 

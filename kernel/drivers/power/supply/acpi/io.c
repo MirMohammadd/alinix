@@ -31,6 +31,11 @@ SOFTWARE.
 #include <alinix/stdio.h>
 #include <alinix/ucapi/io.h>
 #include <alinix/ucapi/log.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("ACPI I/O util module")
+MODULE_LICENSE("AGPL-3.0")
 
 
 

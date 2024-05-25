@@ -29,6 +29,11 @@ SOFTWARE.
 #include <alinix/port.h>
 #include <alinix/init.h>
 #include <alinix/kernel.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Initialize power management")
+MODULE_LICENSE("AGPL-3.0")
 
 struct FADT *fadt;
 

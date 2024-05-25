@@ -28,6 +28,12 @@ SOFTWARE.
 #include <alinix/init.h>
 #include <alinix/ucapi/types.h>
 #include <alinix/ucapi/codes.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("A simple kernel module for ACPI")
+MODULE_LICENSE("AGPL")
 
 
 /**

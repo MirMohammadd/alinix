@@ -22,6 +22,11 @@
 #include <alinix/shutdown.h>
 #include <alinix/init.h>
 #include <alinix/kernel.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Shutdown module")
+MODULE_LICENSE("AGPL-3.0")
 
 
 /**

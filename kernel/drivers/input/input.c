@@ -25,6 +25,11 @@
 #include <alinix/compiler.h>
 #include <alinix/arch/amigaw.h>
 #include <alinix/iommufd_utils.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Input/Output abstraction")
+MODULE_LICENSE("AGPL-3.0")
 
 #define INPUT_IGNORE_EVENT	0
 #define INPUT_PASS_TO_HANDLERS	1

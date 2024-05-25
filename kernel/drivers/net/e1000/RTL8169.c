@@ -23,6 +23,11 @@
 #include <alinix/init.h>
 #include <alinix/kernel.h>
 #include <alinix/port.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("RTL8169 Kernel RTL Driver")
+MODULE_LICENSE("AGPL-3.0")
 
 void getMacAddr(int macAddress[]){
     char i;

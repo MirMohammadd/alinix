@@ -23,6 +23,12 @@
 #include <alinix/kernel.h>
 #include <alinix/drivers/e1000/e1k_utils.h>
 #include <alinix/init.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("e1000 driver")
+MODULE_LICENSE("AGPL-3.0")
 
 #define NB_MAX_DESC 256
 

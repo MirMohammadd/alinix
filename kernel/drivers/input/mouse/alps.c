@@ -18,6 +18,11 @@
 #include <alinix/kernel.h>
 #include "alps.h"
 #include "psmouse.h"
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("PS/2 Mouse Driver")
+MODULE_LICENSE("AGPL-3.0")
 
 
 /*

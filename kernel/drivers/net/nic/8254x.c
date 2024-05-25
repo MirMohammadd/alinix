@@ -30,6 +30,11 @@
 #include <alinix/types.h>
 #include <alinix/module.h>
 #include <alinix/RTL8139.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("8254x Intel net interface")
+MODULE_LICENSE("AGPL")
 
 #include "8254x.h"
 

@@ -23,6 +23,12 @@
 #include <alinix/types.h>
 #include <alinix/port.h>
 #include <alinix/idt.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Mouse abstraction")
+MODULE_LICENSE("AGPL-3.0")
+
 static uint8_t mouse_cycle = 0;
 static char mouse_byte[3];
 

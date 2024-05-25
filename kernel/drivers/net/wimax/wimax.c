@@ -26,6 +26,10 @@
 #include <alinix/module.h>
 #include <alinix/kernel.h>
 
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel WIMAX driver for networking.")
+MODULE_LICENSE("AGPL")
+
 void wimax_rfkill(struct wimax_device *dev, enum wimax_rf_state state){
     if (state == WIMAX_RF_ON){
         dev->state = WIMAX_ST_RADIO_OFF;

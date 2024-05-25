@@ -22,6 +22,11 @@
 #include <alinix/kernel.h>
 #include <alinix/mm.h>
 #include <alinix/xheap.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel heap memory stuff header operations.")
+MODULE_LICENSE("AGPL")
 
 #define HEAP_END 0x200000
 

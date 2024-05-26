@@ -22,6 +22,11 @@
 #include <alinix/types.h>
 #include <alinix/device.h>
 #include <alinix/pm.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Power Supply")
+MODULE_LICENSE("AGPL")
 
 static bool pm_ops_is_empty(const struct dev_pm_ops *ops)
 {

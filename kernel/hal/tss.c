@@ -19,6 +19,13 @@
  * @abstraction:
  *  - Kernel TSS implementations.
 */
+
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel TSS implementations")
+MODULE_LICENSE("AGPL-3.0")
+
 void flush_tss() {
     asm volatile("mov $0x2B, %ax; \
                   ltr %ax;");

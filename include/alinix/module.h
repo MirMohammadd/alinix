@@ -20,6 +20,7 @@
  * @abstraction:
  *  - Implementation of the kernel Modules needed for modules creation.
  *  - Essential header.
+ *  - Provides the kernel module macros for writing kernel modules.
 */
 /**
  * @note:

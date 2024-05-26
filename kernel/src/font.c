@@ -22,6 +22,12 @@
 
 
 #include <alinix/gui/fonts/font.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel font for GUI")
+MODULE_LICENSE("AGPL-3.0")
+
 
 void BoundingBox(const char* string, int* retW, int* retH, const void* data, const int* offsetTable){
     if(string == NULL || retW == NULL || retH == NULL)

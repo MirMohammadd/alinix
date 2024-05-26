@@ -28,6 +28,11 @@
 #include <alinix/types.h>
 #include <alinix/module.h>
 
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Fat file system driver")
+MODULE_LICENSE("AGPL-3.0")
+
 Disk* Disk_create(uint32_t controllerIndex, void* controller, DiskType type, uint64_t size, uint32_t blocks, uint32_t blocksize){
     /**
      * @brief Creates a disk for the file system FAT

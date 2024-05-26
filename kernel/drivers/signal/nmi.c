@@ -27,6 +27,8 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("NMI signal")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
+
 
 /**
  * @brief Function that enables the NMI

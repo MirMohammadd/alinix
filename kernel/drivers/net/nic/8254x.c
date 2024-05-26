@@ -35,6 +35,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("8254x Intel net interface")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
 
 #include "8254x.h"
 

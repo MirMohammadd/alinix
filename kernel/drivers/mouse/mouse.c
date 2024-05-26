@@ -28,6 +28,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Mouse abstraction")
 MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("0.1")
 
 static uint8_t mouse_cycle = 0;
 static char mouse_byte[3];

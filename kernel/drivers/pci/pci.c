@@ -31,6 +31,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("PCI Driver")
 MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("0.1")
 
 /**
  * Reads a 16-bit value from the PCI configuration space.

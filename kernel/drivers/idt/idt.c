@@ -26,6 +26,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("IDT implementation module")
 MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("0.1")
 
 
 struct idt_ptr idtr;

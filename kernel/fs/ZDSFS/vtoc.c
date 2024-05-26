@@ -26,6 +26,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("VTOC for the file system kernel")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
 
 void GetCHRFromVTOC(void *buffer){
     uint16_t cyl,head;

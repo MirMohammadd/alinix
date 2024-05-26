@@ -28,6 +28,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Kernel graphics driver")
 MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("0.1")
 
 mouse_info_t *get_mouse_info();
 

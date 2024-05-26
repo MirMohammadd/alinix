@@ -32,6 +32,8 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Kernel Charger module")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
+
 
 /**
  * @ref https://github.com/torvalds/linux/blob/master/drivers/power/supply/bq25890_charger.c

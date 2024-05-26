@@ -26,6 +26,8 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("ALSA 4000 driver")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
+
 
 uint32_t dev_mixer_read(uint32_t *base, uint32_t reg){
     uint32_t res;

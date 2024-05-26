@@ -28,6 +28,8 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("IRQ implementation")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
+
 
 #define NR_IRQS 32
 struct irq_desc irq_desc_array[NR_IRQS];

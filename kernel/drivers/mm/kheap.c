@@ -27,6 +27,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Kernel heap memory stuff header operations.")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
 
 #define HEAP_END 0x200000
 

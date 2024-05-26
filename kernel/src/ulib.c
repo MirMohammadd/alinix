@@ -23,6 +23,12 @@
 
 #include <alinix/types.h>
 #include <alinix/syscall.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel Module")
+MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
 
 
 uint syscall(uint service, void *param)

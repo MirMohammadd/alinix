@@ -37,6 +37,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("DHCP driver for the kernel drivers")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
 
 
 void dhcp_set_struct(struct netif *netif, struct dhcp *dhcp);

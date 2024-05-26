@@ -22,6 +22,8 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("ALi M5451 ALS4000 Audio Driver")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
+
 
 
 uint8_t mixer_value[] = {

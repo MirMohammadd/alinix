@@ -27,6 +27,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Kernel library")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
 
 long long  __ashldi3(long long u, int b){
     DWunion uu, w;

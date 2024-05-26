@@ -34,6 +34,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("AliNix Security Module for lock down.")
 MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("0.1")
 
 
 

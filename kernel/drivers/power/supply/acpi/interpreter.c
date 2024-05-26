@@ -40,6 +40,7 @@ SOFTWARE.
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("A simple kernel module for ACPI")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
 
 
 /**

@@ -31,6 +31,7 @@
 MODULE_AUTHOR("Ali Mormohammad")
 MODULE_DESCRIPTION("AliNix Kernel Security Audit Module")
 MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("0.1")
 
 const char *const audit_mode_names[] = {
 	"normal",

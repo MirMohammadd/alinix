@@ -24,6 +24,15 @@
 #include <alinix/types.h>
 #include <alinix/reboot.h>
 #include <alinix/port.h>
+#include <alinix/module.h>
+
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Reset 8042 for kernel implemented.")
+MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
+
 
 
 

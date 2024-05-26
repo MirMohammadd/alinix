@@ -30,6 +30,8 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Kernel Charger Driver")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
+
 
 
 /* Watchdog kick interval */

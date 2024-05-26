@@ -29,6 +29,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Provides the listing directory ability.")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
 
 int BeginListing(struct Thread* thread, uint32_t pathPtr){
     char* path = (char* )pathPtr;

@@ -36,6 +36,8 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("File archive")
 MODULE_LICENSE("AGPLv3")
+MODULE_VERSION("0.1")
+
 
 /**
  * @brief

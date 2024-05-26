@@ -32,6 +32,8 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("ATA storage driver")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
+
 
 static void ata_io_wait(const uint8_t p){
 	inportb(p + CONTROL + ALTERNATE_STATUS);

@@ -29,6 +29,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("DIM driver implementation")
 MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("0.1")
 
 
 bool dim_on_top(struct dim *dim){

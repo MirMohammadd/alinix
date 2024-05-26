@@ -29,6 +29,12 @@
 #include <alinix/memory.h>
 #include <alinix/gui/colors.h>
 #include <alinix/gui/fonts/font.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Canvas for the GUI kernel implemented.")
+MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("0.1")
 
 
 void Canvas_SetPixel(int x, int y, uint32_t color){

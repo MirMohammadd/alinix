@@ -24,6 +24,12 @@
 #include <alinix/kernel.h>
 #include <alinix/completion.h>
 #include <alinix/sched.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel core completion")
+MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
 
 #define TIME_OUT 20
 

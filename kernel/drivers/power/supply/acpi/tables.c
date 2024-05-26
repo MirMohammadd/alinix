@@ -41,6 +41,7 @@ SOFTWARE.
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Kernel ACPI driver util")
 MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("0.1")
 
 
 // PRIVATE uacpi_object_name fadt_signature = {

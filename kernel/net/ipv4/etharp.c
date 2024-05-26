@@ -42,6 +42,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("ARP implementation for AliNix")
 MODULE_LICENSE("AGPLv3")
+MODULE_VERSION("0.1")
 
 struct stats_proto etharp;
 

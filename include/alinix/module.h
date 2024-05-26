@@ -20,6 +20,7 @@
  * @abstraction:
  *  - Implementation of the kernel Modules needed for modules creation.
  *  - Essential header.
+ *  - Provides the kernel module macros for writing kernel modules.
 */
 /**
  * @note:
@@ -63,14 +64,34 @@ typedef struct mmio_s{
     volatile uint32_t *addr;               
 } mmio_region_t;
 
+/**
+ * @brief
+ *  - Macro for storing the module author name.
+*/
 #define MODULE_AUTHOR(author) \
     static const char *module_author = author;
 
+
+/**
+ * @brief
+ *  - Macro for storing module description.
+*/
 #define MODULE_DESCRIPTION(description) \
     static const char *module_description = description;
 
+
+/**
+ * @brief 
+ *  - Macro for storing the module license.
+*/
 #define MODULE_LICENSE(license) \
     static const char *module_license = license;
 
+/**
+ * @brief 
+ *  - Macro for storing the module version.
+*/
+#define MODULE_VERSION(version) \
+    static const char *module_version = version;
 
-#endif
+#endif // __ALINIX_KERNEL_MODULE_H

@@ -33,6 +33,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Kernel watchdog driver implementation")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
 
 #define WATCHDOG_MINOR 130
 

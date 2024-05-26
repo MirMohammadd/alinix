@@ -30,6 +30,8 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("IRQ Manager")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
+
 
 const void *free_irq(unsigned int irq, void *dev_id)
 {

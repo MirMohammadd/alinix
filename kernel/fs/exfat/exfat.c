@@ -29,6 +29,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Extended FAT File System")
 MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("0.1")
 
 uint32_t BootChecksum(unsigned char * Sectors,unsigned short BytesPerSector){
     uint32_t numberOfBytes = (uint32_t)BytesPerSector * 11;

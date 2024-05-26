@@ -27,6 +27,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Kernel mem for IPV4 driver")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
 
 struct memp_malloc_helper
 {

@@ -28,6 +28,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("USB driver")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
 
 void usb_kill_urb(struct urb *urb){
     if (!(urb && urb->dev)){

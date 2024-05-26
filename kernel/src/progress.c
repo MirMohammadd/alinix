@@ -27,6 +27,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Progress report of kernel.")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
 
 
 void ProgressBarInit(ProgressBar *pb, int x_p, int y_p, int width, int height) {

@@ -30,6 +30,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Troubleshooting module")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
 
 
 static int nestexc = 0;

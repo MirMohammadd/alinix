@@ -33,6 +33,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Kernel Security Module")
 MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("0.1")
 
 #define LSM_CONFIG_COUNT  32 /* Number of configuration options */
 

@@ -41,6 +41,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("AliNix Kernel")
 MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("0.1")
 
 
 void _print_string(const char* str);

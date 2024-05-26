@@ -27,6 +27,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Kernel List")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
 
 int klist_node_attached(struct klist_node *n)
 {

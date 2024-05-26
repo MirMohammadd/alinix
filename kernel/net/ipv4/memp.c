@@ -32,6 +32,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Kernel memp IPV4 implementations")
 MODULE_LICENSE("AGPL-3.0-or-later")
+MODULE_VERSION("0.1")
 
 #define MEMP_SIZE           0
 

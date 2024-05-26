@@ -27,6 +27,14 @@
 #include <alinix/enums.h>
 #include <alinix/port.h>
 #include <alinix/serialport.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Serial Port I/O")
+MODULE_LICENSE("AGPLv3")
+MODULE_VERSION("0.1")
+
+
 bool ConsoleInitialized;
 
 enum COMPort PortAddress = COM1;

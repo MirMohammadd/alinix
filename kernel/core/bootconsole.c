@@ -22,6 +22,14 @@
 
 #include <alinix/bootconsole.h>
 #include <alinix/serialport.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Provides utility for booting console.")
+MODULE_LICENSE("AGPLv3")
+MODULE_VERSION("0.1")
+
 
 /*/////////////////
 // Static variable initialisations

@@ -34,6 +34,8 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("vsprintf utility functions")
 MODULE_LICENSE("AGPLv3")
+MODULE_VERSION("0.1")
+
 
 
 

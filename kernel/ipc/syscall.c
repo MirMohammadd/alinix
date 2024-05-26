@@ -36,6 +36,12 @@
 */
 
 #include <alinix/syscall.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("System call for the kernel implemented here.")
+MODULE_LICENSE("AGPLv3")
 
 int DoSyscall(unsigned int intNum, unsigned int arg1, unsigned int arg2, unsigned int arg3, unsigned int arg4, unsigned int arg5)
 {

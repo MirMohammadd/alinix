@@ -82,7 +82,7 @@ typedef struct mmio_s{
 
 /**
  * @brief 
- *  Macro for storing the module license.
+ *  - Macro for storing the module license.
 */
 #define MODULE_LICENSE(license) \
     static const char *module_license = license;

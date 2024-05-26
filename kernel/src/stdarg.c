@@ -22,6 +22,11 @@
 
 
 #include <alinix/stdarg.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Standard arguments")
+MODULE_LICENSE("AGPL-3.0")
 
 int printf (const char *format, ...)
 {

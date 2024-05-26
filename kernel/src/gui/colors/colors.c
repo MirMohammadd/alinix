@@ -23,6 +23,11 @@
 
 #include <alinix/types.h>
 #include <alinix/gui/colors.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel Colors for GUI")
+MODULE_LICENSE("AGPL-3.0")
 
 static const int AMASK = 0xFF000000;
 static const int RBMASK = 0x00FF00FF;

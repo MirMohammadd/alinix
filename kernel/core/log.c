@@ -24,6 +24,14 @@
 #include <alinix/serialport.h>
 #include <alinix/system.h>
 #include <alinix/pit.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Provides logging functionality while booting.")
+MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("0.1")
+
 
 char* logLevelMessage[3] = {
     "[Info]",

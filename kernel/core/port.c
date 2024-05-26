@@ -19,6 +19,13 @@
  *  - Provides util for the kernel I/O ports.
 */
 #include <alinix/port.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Port I/O")
+MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
+
 
 
 unsigned char inportb (unsigned short _port)

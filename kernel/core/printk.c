@@ -21,6 +21,13 @@
  *  - Note: May be obsolete soon.
 */
 #include <alinix/printk.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Printk utility")
+MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("0.1")
+
 
 void Print(const char* data, uint32_t length) {
     /* Send data through serial port */

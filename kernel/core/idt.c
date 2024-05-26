@@ -25,6 +25,13 @@
 
 #include <alinix/idt.h>
 #include <alinix/memory.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("IDT utility functions")
+MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("0.1")
+
 
 
 

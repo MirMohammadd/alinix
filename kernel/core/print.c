@@ -22,6 +22,14 @@
 */
 #include <alinix/print.h>
 #include <alinix/types.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Print utility")
+MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("0.1")
+
 
 
 void printfHex(uint8_t key){

@@ -20,6 +20,12 @@
  *  - Locks the kernel.
 */
 #include <alinix/lock.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Locks the kernel.")
+MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
 
 void Lock(){
     asm ("pause");

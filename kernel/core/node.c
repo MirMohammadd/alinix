@@ -23,6 +23,14 @@
  *  - Provides utility for the kernel nodes.
 */
 #include <alinix/node.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Node module")
+MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("0.1")
+
 
 List* interruptCallbacks[256] = {NULL};
 

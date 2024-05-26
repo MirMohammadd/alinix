@@ -19,6 +19,12 @@
 #include <alinix/types.h>
 #include <alinix/module.h>
 
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("A simple module to test the module system")
+MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
+
+
 uint32_t le32_to_cpu(uint32_t le_value) {
     // Check if the system is little-endian or big-endian
     uint32_t test = 1;

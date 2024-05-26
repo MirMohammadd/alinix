@@ -22,6 +22,13 @@
 #include <alinix/cpu.h>
 #include <alinix/types.h>
 #include <alinix/bootconsole.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("CPU utility")
+MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
+
 
 /*Parameters should be pointer type*/
 static inline void cpuid(uint32_t reg, uint32_t *eax, uint32_t *ebx, uint32_t *ecx, uint32_t *edx){

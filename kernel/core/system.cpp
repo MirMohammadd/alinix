@@ -23,6 +23,13 @@
 #include <alinix/stream.hpp>
 #include <alinix/system.h>
 #include <alinix/components/graphicdevice.hpp>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel system driver")
+MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
+
 
 
 GraphicsDevice* System::gfxDevice = 0;

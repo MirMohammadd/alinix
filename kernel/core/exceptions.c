@@ -29,6 +29,13 @@
 #include <alinix/idt.h>
 #include <alinix/panic.h>
 #include <alinix/register.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Kernel exceptions")
+MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("0.1")
+
 
 ////////////////////////////////////////////////////
 //Global  Variables

@@ -30,6 +30,8 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Raspberry PI abstraction")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
+
 
 
 static uint32_t MMIO_BASE;

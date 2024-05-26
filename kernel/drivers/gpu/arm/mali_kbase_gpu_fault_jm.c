@@ -28,6 +28,8 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("GPU util")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
+
 
 
 const char* kbase_gpu_exception_name(uint32_t const exception_code){

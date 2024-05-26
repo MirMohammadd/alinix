@@ -28,6 +28,8 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("RTL8139 Networking Driver")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
+
 
 /**
  * @ref https://wiki.osdev.org/RTL8139

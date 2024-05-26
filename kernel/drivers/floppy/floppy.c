@@ -28,6 +28,8 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Floppy driver")
 MODULE_LICENSE("AGPL")
+MODULE_VERSION("0.1")
+
 
 
 

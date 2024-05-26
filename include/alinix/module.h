@@ -73,4 +73,7 @@ typedef struct mmio_s{
     static const char *module_license = license;
 
 
+#define MODULE_VERSION(license) \
+    static const char *module_license = license;
+
 #endif

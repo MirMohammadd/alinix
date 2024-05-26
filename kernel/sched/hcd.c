@@ -22,6 +22,11 @@
 
 #include <alinix/kernel.h>
 #include <alinix/usb.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("HCD for the kernel")
+MODULE_LICENSE("AGPL-3.0")
 // #include <alinix/spinlock.h>
 
 #define EIDRM		36	/* Identifier removed */

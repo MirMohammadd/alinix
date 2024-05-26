@@ -22,6 +22,12 @@
 
 #include <alinix/kernel.h>
 #include <alinix/usb.h>
+#include <alinix/module.h>
+
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("USB driver")
+MODULE_LICENSE("AGPL")
 
 void usb_kill_urb(struct urb *urb){
     if (!(urb && urb->dev)){

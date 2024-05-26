@@ -22,6 +22,11 @@
 
 
 #include <alinix/progress.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Progress report of kernel.")
+MODULE_LICENSE("AGPL")
 
 
 void ProgressBarInit(ProgressBar *pb, int x_p, int y_p, int width, int height) {

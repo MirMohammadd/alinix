@@ -15,6 +15,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 #include <alinix/math.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Math module")
+MODULE_LICENSE("AGPL-3.0")
 
 long Abs(long v){
     if(v == 0)

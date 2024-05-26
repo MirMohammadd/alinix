@@ -27,6 +27,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Vendor ID implementation")
 MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("0.1")
 
 static inline void cpuid(int code, uint32_t *a, uint32_t *d) {
   asm volatile("cpuid":"=a"(*a),"=d"(*d):"a"(code):"ecx","ebx");

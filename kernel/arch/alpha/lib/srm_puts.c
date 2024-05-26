@@ -21,6 +21,13 @@
 */
 #include <alinix/kernel.h>
 #include <alinix/asm/console.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Logging and printing utility")
+MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("0.1")
+
 
 
 long srm_puts(const char* str,long len){

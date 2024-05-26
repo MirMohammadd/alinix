@@ -25,6 +25,11 @@
 #include <alinix/types.h>
 #include <alinix/panic.h>
 #include <alinix/Troubleshooting.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Troubleshooting module")
+MODULE_LICENSE("AGPL")
 
 
 static int nestexc = 0;

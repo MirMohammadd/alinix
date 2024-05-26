@@ -22,6 +22,11 @@
 
 
 #include <alinix/vfs/virtualfilesystem.h>
+#include <alinix/module.h>
+
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Virtual File System")
+MODULE_LICENSE("AGPL-3.0")
 
 VirtualFileSystem* VirtualFileSystem_create(Disk* disk, uint32_t start, uint32_t size, char* name) {
     VirtualFileSystem* vfs = (VirtualFileSystem*)malloc(sizeof(VirtualFileSystem));

@@ -25,6 +25,9 @@
 
 #include <alinix/types.h>
 
+/**
+ * @brief VTOC file system structure implemented.
+*/
 struct DSCB1{
     unsigned char * ds1fmtid;
     uint16_t ds1dsnam;

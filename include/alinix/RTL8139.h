@@ -39,6 +39,10 @@
 #define TOK 0x4 // 0100 in binary, represents the 3rd bit
 #define ROK 0x1 // 0001 in binary, represents the 1st bit
 
+
+/**
+ * @brief Space for PCI config as structure.
+*/
 struct pci_config_space{
     uint16_t vendor_id;
     uint16_t device_id;

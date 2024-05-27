@@ -28,6 +28,11 @@
 /* Places which use this should consider cpumask_var_t. */
 #define NR_CPUS		CONFIG_NR_CPUS
 
+
+/**
+ * @brief Data structure for the CPU mask util.
+ * @brief Useful for bit ops.
+*/
 typedef struct cpumask { char bits; } cpumask_t;
 
 

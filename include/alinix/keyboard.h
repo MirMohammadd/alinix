@@ -27,6 +27,10 @@
 #define __ALINIX_KERNEL_KEYBOARD_H
 #include <alinix/types.h>
 
+/**
+ * @brief Kernel keyboard status.
+ * @note Should be used within the keyboard tasks.
+*/
 struct InternalKeyboardStatus{
     bool LeftShift;
     bool RightShift;

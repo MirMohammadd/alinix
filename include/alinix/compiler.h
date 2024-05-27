@@ -71,7 +71,11 @@
 
 typedef uintptr_t  mem_ptr_t;
 
-#define UACPI_ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
+
+/**
+ * @brief Find array size using this macro.
+*/
+#define UACPI_ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0])) 
 
 #define UACPI_UNUSED(x) (void)(x)
 

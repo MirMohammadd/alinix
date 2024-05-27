@@ -22,6 +22,9 @@
 #ifndef __ALINIX_KERNEL_UNSTAR_H
 #define __ALINIX_KERNEL_UNSTAR_H
 
+/**
+ * @brief Function for the TAR file system.
+*/
 int oct2bin(unsigned char *str, int size);
 
 /*Returns the size and the pointer to the file data*/

@@ -28,7 +28,7 @@
 
 #define NMI_PORT 0x70
 
-void NMI_enable();
-void NMI_disable();
+void NMI_enable(); // Enable EMI 
+void NMI_disable(); // Disable NMI
 
 #endif

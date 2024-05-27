@@ -24,6 +24,10 @@
 #define __ALINIX_KERNEL_SHUT_DOWN_H
 
 
+/**
+ * @brief
+ * - Shut down function, used to shut down the kernel.
+*/
 void shutdown();
 
 

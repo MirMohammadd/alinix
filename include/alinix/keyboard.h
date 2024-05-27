@@ -21,7 +21,7 @@
 
 /**
  * @abstraction:
- *  -Keyboard utils are implemented here.
+ *  - Keyboard utils are implemented here.
 */
 #ifndef __ALINIX_KERNEL_KEYBOARD_H
 #define __ALINIX_KERNEL_KEYBOARD_H

@@ -22,6 +22,11 @@
 #ifndef __ALINIX_KERNEL_SECURITY_H
 #define __ALINIX_KERNEL_SECURITY_H
 
+/**
+ * @brief Reason of the kernel lock down.
+ * @brief This enum should be used whenever the kernel is being lock downed.
+*/
+
 enum lockdown_reason {
 	LOCKDOWN_NONE,
 	LOCKDOWN_MODULE_SIGNATURE,

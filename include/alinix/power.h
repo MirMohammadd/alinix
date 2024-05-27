@@ -26,8 +26,8 @@
 #ifndef __ALINIX_KERNEL_HEADER_H
 #define __ALINIX_KERNEL_HEADER_H
 
-void Initialize();
-void Reboot();
-void Poweroff();
+void Initialize(); // Starts the power 
+void Reboot(); // Reboot the kernel
+void Poweroff(); // Kernel power off
 
 #endif /* __ALINIX_KERNEL_HEADER_H */

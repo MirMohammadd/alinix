@@ -23,6 +23,10 @@
 #define __ALINIX_KERNEL_LOCK_HPP
 
 
+
+/**
+ * @brief Used to lock the mutex and proccess of the kernel.
+*/
 class MutexLock
 {
 private:

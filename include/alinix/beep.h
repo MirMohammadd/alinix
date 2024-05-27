@@ -25,6 +25,10 @@
 
 #include <alinix/port.h>
 
+
+/**
+ * @brief Used to produce beep sound.
+*/
 void beep();
 
 

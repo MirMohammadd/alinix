@@ -41,6 +41,10 @@ inline void mmio_write_dword(uint32_t addr, uint32_t value) {
     *reg = value;
 }
 
+/**
+ * @brief converts to the le32.
+ * @param value Should be unsigned int.
+*/
 inline uint32_t cpu_to_le32(uint16_t value) {
     #if defined(__GNUC__) || defined(__clang__)
         return __builtin_bswap32(value);

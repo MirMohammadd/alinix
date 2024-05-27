@@ -25,6 +25,10 @@
 
 #include <alinix/types.h>
 
+
+/**
+ * @brief Structure for the DVD device of kernel.
+*/
 struct dvd{
     unsigned char hours;
     unsigned char minutes;

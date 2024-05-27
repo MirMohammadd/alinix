@@ -26,6 +26,9 @@
 #include <alinix/types.h>
 
 
+/**
+ * @brief Some useful macros for the networking device.
+*/
 #define TO_SUM_IO_ADDRESS 0x52
 #define OUT_PORT_RTL_ADDRESS 0x0
 #define SOFTWARE_RESET_IO_PORT 0x37

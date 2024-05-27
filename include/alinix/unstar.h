@@ -35,5 +35,8 @@ char* getTarFileName(unsigned char* archive);
 #define TAR_FILENAME_SIZE   100
 #define TAR_HEADER_SIZE 512
 
+/**
+ * @brief TAR implementation for the kernel file system.
+*/
 void removeFileFromTar(char* fileName,unsigned char *archive,unsigned char* fileToRemove,uint32_t size);
 #endif /* __ALINIX_KERNEL_UNSTAR_H */

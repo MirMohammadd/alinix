@@ -32,9 +32,25 @@
 #include <net/opt.h>
 #include <net/pbuf.h>
 
+
+/**
+ * @brief Set memory in buffer.
+*/
 void memset(void* bufptr, char value, uint32_t size);
+
+/**
+ * @brief Copy memory from a pointer to another.
+*/
 void* memcpy(void* dstptr, const void* srcptr, uint32_t size);
+
+/**
+ * @brief Compares the memory.
+*/
 int memcmp(const void* aptr, const void* bptr, uint32_t size);
+
+/**
+ * @brief Moves the memory to pointer from another.
+*/
 void * memmove(void* dstptr, const void* srcptr, uint32_t size);
 
 #define phys2virt(x) ((x) + THREE_GB)

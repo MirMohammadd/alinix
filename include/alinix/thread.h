@@ -30,6 +30,11 @@
 #include <alinix/enums.h>
 #include <alinix/register.h>
 
+
+/**
+ * @brief Thread structure.
+ * @brief May be used to run a thread.
+*/
 struct Thread
 {
     enum Process* parent;

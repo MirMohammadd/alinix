@@ -27,6 +27,10 @@
 #include <alinix/interruptmanager.h>
 #include <alinix/ulib.h>
 
+
+/**
+ * @brief Structure for the system nodes.
+*/
 typedef struct Node {
     void (*handler)(uint8_t);
     struct Node* next;

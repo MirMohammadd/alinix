@@ -28,9 +28,9 @@
 
 #define PANIC_CPU_INVALID -1
 
-void Panic();
-void Start();
+void Panic(); // Stops the kernel and panic.
+void Start(); // Start the kernel.
 
-void kernel_panic(const char *fmt, ...);
+void kernel_panic(const char *fmt, ...); // Kernel panic function when kernel stops or panics.
 
 #endif /*__ALINIX_KERNEL_PANIC_H*/

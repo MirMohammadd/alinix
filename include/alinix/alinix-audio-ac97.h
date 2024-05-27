@@ -28,6 +28,11 @@
 #include <alinix/types.h>
 #include <alinix/module.h>
 
+
+/**
+ * @brief 
+ * ac97 device structure.
+*/
 struct ac97_codec{
     uint32_t base_address;
     uint32_t irq;

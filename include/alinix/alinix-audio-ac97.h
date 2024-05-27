@@ -34,7 +34,9 @@ struct ac97_codec{
     bool initialized;
 } ac97_codec_t;
 
-
+/**
+ * @brief Starts the ac97 audio driver.
+*/
 VOID ac97_initialize();
 
 #endif

@@ -40,6 +40,10 @@
 
 #define __init
 
+
+/**
+ * @brief VGA entry type for the kernel.
+*/
 typedef struct{
 	char character;
 	uint8_t color;
@@ -99,6 +103,10 @@ long srm_puts(const char* str,long len);
 #define perror print
 #define pr_alert print
 
+
+/**
+ * @brief Structure for the basic address of kernel.
+*/
 typedef struct GenericAddressStructure
 {
   uint8_t AddressSpace;

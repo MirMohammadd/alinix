@@ -26,6 +26,9 @@
 #include <alinix/spinlock_types.h>
 #include <alinix/list.h>
 
+/**
+ * @brief Mutex data type.
+*/
 struct mutex {
 
 #ifdef CONFIG_MUTEX_SPIN_ON_OWNER

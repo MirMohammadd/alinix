@@ -33,8 +33,8 @@
 #define TEXT_COLOR VGA_COLOR_WHITE
 
 void DisableCursor(); // Disables the cursor of the GUI interface
-void SetPixel(int x, int y, char color,uint16_t character, char background);
-void ClearScreen(char color );
-void StatusBar(char* text, int percentage);
-void TextDrawString(char* text, int x, int y, char color, char background);
+void SetPixel(int x, int y, char color,uint16_t character, char background); // Sets the pixels of the kernel GUI.
+void ClearScreen(char color );  // Clear the Screen 
+void StatusBar(char* text, int percentage); // Kernel Status bar progress
+void TextDrawString(char* text, int x, int y, char color, char background); // Draws the string of the kernel.
 #endif /*__ALINIX_KERNEL_TEXTGUI_H*/

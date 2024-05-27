@@ -32,7 +32,7 @@
 
 #define TEXT_COLOR VGA_COLOR_WHITE
 
-void DisableCursor();
+void DisableCursor(); // Disables the cursor of the GUI interface
 void SetPixel(int x, int y, char color,uint16_t character, char background);
 void ClearScreen(char color );
 void StatusBar(char* text, int percentage);

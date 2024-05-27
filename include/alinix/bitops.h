@@ -22,6 +22,9 @@
 #ifndef ___ALINIX_KERNEL_BIT_OPS_H
 #define ___ALINIX_KERNEL_BIT_OPS_H
 
+/**
+ * @brief Useful bit operation as inline function. 
+*/
 static inline int test_and_set_bit(int nr, volatile unsigned long * addr)
 {
 	unsigned long mask = nr;

@@ -61,6 +61,9 @@ enum lockdown_reason {
 	MEMORY_CORRUPTION
 };
 
+/**
+ * @brief Used for when memory corruption occur.
+*/
 void kernelMemoryCorruptionLockDown();
 
 #endif

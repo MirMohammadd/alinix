@@ -28,6 +28,9 @@
 
 static volatile byte ReceivedIRQ = false;
 
+/**
+ * @brief Floppy disk hardware register enums.
+*/
 enum FloppyRegisters
 {
    STATUS_REGISTER_A                = 0x3F0, // read-only

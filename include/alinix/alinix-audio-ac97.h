@@ -28,13 +28,20 @@
 #include <alinix/types.h>
 #include <alinix/module.h>
 
+
+/**
+ * @brief 
+ * ac97 device structure.
+*/
 struct ac97_codec{
     uint32_t base_address;
     uint32_t irq;
     bool initialized;
 } ac97_codec_t;
 
-
+/**
+ * @brief Starts the ac97 audio driver.
+*/
 VOID ac97_initialize();
 
 #endif

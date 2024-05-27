@@ -34,6 +34,10 @@
 #include <alinix/compiler.h>
 //////////////////////////////////
 
+
+/**
+ * @brief Some useful macros.
+*/
 #define SOF_BROADCAST     0x20U  /* permit to send and to receive broadcast messages (see IP_SOF_BROADCAST option) */
 
 #define IP_PCB_ADDRHINT ;uint8_t addr_hint

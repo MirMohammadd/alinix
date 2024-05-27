@@ -24,6 +24,9 @@
 
 #include <alinix/types.h>
 
+/**
+ * @brief Global descriptor table structure implementation.
+*/
 struct GDTEntry
 {
     uint16_t limit_low;           // The lower 16 bits of the limit.

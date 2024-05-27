@@ -27,7 +27,9 @@
 #include <alinix/irq.h>
 
 #define IRQ_DEFAULT_INIT_FLAGS	0
-
+/**
+ * @brief IRQ settings.
+*/
 enum {
 	_IRQ_DEFAULT_INIT_FLAGS	= IRQ_DEFAULT_INIT_FLAGS,
 	_IRQ_PER_CPU		= IRQ_PER_CPU,

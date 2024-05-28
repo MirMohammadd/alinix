@@ -30,4 +30,4 @@
 #define min MIN
 #define max MAX
 
-#endif
+#endif /*__ALINIX_KERNEL_OPERATOR_H*/

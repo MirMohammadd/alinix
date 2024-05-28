@@ -27,7 +27,9 @@
 #include <alinix/core/power.h>
 
 
-
+/**
+ * @brief Structure of power off operations.
+*/
 struct powerOff{
     u16 *SMI_CMD;
     byte ACPI_ENABLE;

@@ -238,7 +238,7 @@ struct bcr_mpy {
 	unsigned int pad:8, x1616:8, dsp:4, cycles:2, type:2, ver:8;
 #else
 	unsigned int ver:8, type:2, cycles:2, dsp:4, x1616:8, pad:8;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_iccm_arcompact {
@@ -246,7 +246,7 @@ struct bcr_iccm_arcompact {
 	unsigned int base:16, pad:5, sz:3, ver:8;
 #else
 	unsigned int ver:8, sz:3, pad:5, base:16;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_iccm_arcv2 {
@@ -254,7 +254,7 @@ struct bcr_iccm_arcv2 {
 	unsigned int pad:8, sz11:4, sz01:4, sz10:4, sz00:4, ver:8;
 #else
 	unsigned int ver:8, sz00:4, sz10:4, sz01:4, sz11:4, pad:8;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_dccm_arcompact {

@@ -51,6 +51,10 @@ enum PAGE_ENTRY_SIZE
 #define PAGETBL_INDEX(addr) ((((uint32_t)addr) >> 12) & 0x3ff)
 #define PAGEFRAME_INDEX(addr) (((uint32_t)addr) & 0xfff)
 
+
+/**
+ * @brief Entry directory of the page as structure.
+*/
 struct PageDirectoryEntry
 {
     uint32_t present        : 1;    //Is this page present in physical memory or perhaps on the disk.

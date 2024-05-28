@@ -43,4 +43,4 @@ struct powerOff{
     byte PM1_CNT_LEN;
 };
 
-#endif
+#endif /*__ALINIX_KERNEL_POWER_OFF_H*/

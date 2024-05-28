@@ -28,4 +28,4 @@
 
 ////////////////////////
 
-#endif
+#endif /*__ALINIX_KERNEL_IF_ARP_H*/

@@ -29,4 +29,4 @@
 
 // Let be empty for now
 
-#endif
+#endif /*__ALINIX_KERNEL_IDE_H*/

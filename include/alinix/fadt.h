@@ -55,4 +55,5 @@ struct XSDT {
 
 bool fadtChecksum(struct ACPISDTHeader *tableHeader);
 void *findFACP(void *RootSDT);
-#endif
+
+#endif /*__ALINIX_KERNEL_FADT_H*/

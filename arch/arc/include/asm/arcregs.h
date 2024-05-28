@@ -198,7 +198,7 @@ struct bcr_mmu_4 {
 	/*           DTLB      ITLB      JES        JE         JA      */
 	unsigned int u_dtlb:3, u_itlb:3, n_super:2, n_entry:2, n_ways:2,
 		     pae:1, res:2, sz0:4, sz1:4, sasid:1, ver:8;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_cache {
@@ -206,7 +206,7 @@ struct bcr_cache {
 	unsigned int pad:12, line_len:4, sz:4, config:4, ver:8;
 #else
 	unsigned int ver:8, config:4, sz:4, line_len:4, pad:12;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_slc_cfg {
@@ -214,7 +214,7 @@ struct bcr_slc_cfg {
 	unsigned int pad:24, way:2, lsz:2, sz:4;
 #else
 	unsigned int sz:4, lsz:2, way:2, pad:24;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_clust_cfg {
@@ -222,7 +222,7 @@ struct bcr_clust_cfg {
 	unsigned int pad:7, c:1, num_entries:8, num_cores:8, ver:8;
 #else
 	unsigned int ver:8, num_cores:8, num_entries:8, c:1, pad:7;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_volatile {
@@ -230,7 +230,7 @@ struct bcr_volatile {
 	unsigned int start:4, limit:4, pad:22, order:1, disable:1;
 #else
 	unsigned int disable:1, order:1, pad:22, limit:4, start:4;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_mpy {

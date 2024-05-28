@@ -8,4 +8,4 @@
 
 #include <asm-generic/fcntl.h>
 
-#endif
+#endif /*_ARM_FCNTL_H*/

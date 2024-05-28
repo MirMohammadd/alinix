@@ -30,4 +30,4 @@ static inline long  PTR_ERR(const void *ptr)
 	return (long) ptr;
 }
 
-#endif
+#endif /*_ALINIX_KERNEL_ERR_H*/

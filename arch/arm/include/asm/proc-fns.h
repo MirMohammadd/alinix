@@ -128,7 +128,7 @@ static inline void init_proc_vtable(const struct processor *p)
 {
 	processor = *p;
 }
-#endif
+#endif /*CONFIG_BIG_LITTLE*/
 
 #define cpu_proc_init			PROC_VTABLE(_proc_init)
 #define cpu_check_bugs			PROC_VTABLE(check_bugs)
@@ -142,7 +142,7 @@ static inline void init_proc_vtable(const struct processor *p)
 /* These two are private to arch/arm/kernel/suspend.c */
 #define cpu_do_suspend			PROC_VTABLE(do_suspend)
 #define cpu_do_resume			PROC_VTABLE(do_resume)
-#endif
+#endif /*CONFIG_BIG_LITTLE*/
 
 extern void cpu_resume(void);
 
@@ -175,13 +175,13 @@ extern void cpu_resume(void);
 		pg &= ~0x3fff;				\
 		(pgd_t *)phys_to_virt(pg);		\
 	})
-#endif
+#endif /*CONFIG_ARM_LPAE*/
 
 #else	/*!CONFIG_MMU */
 
 #define cpu_switch_mm(pgd,mm)	{ }
 
-#endif
+#endif /*CONFIG_MMU*/
 
 #endif /* __ASSEMBLY__ */
 #endif /* __KERNEL__ */

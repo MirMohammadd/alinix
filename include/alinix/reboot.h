@@ -48,4 +48,4 @@ typedef struct rebootTable reboot_t;
 // Forward declartion of reboot function 
 VOID reboot();
 
-#endif
+#endif /*__ALINIX_KERNEL_REBOOT_H*/

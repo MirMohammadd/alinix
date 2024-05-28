@@ -19,4 +19,4 @@ struct cpuinfo_arm {
 
 DECLARE_PER_CPU(struct cpuinfo_arm, cpu_data);
 
-#endif
+#endif /*__ASM_ARM_CPU_H*/

@@ -51,4 +51,4 @@ public:
     void MoveToFront(ContextInfo* info);
 };
 
-#endif
+#endif /*__CONTEXTMANAGER_H*/

@@ -69,7 +69,7 @@ struct processor {
 	void (*set_pte_ext)(pte_t *ptep, pte_t pte);
 #else
 	void (*set_pte_ext)(pte_t *ptep, pte_t pte, unsigned int ext);
-#endif
+#endif /*CONFIG_ARM_LPAE*/
 
 	/* Suspend/resume */
 	unsigned int suspend_size;
@@ -91,7 +91,7 @@ extern void cpu_do_switch_mm(phys_addr_t pgd_phys, struct mm_struct *mm);
 extern void cpu_set_pte_ext(pte_t *ptep, pte_t pte);
 #else
 extern void cpu_set_pte_ext(pte_t *ptep, pte_t pte, unsigned int ext);
-#endif
+#endif /*CONFIG_ARM_LPAE*/
 extern void cpu_reset(unsigned long addr, bool hvc) __attribute__((noreturn));
 
 /* These three are private to arch/arm/kernel/suspend.c */

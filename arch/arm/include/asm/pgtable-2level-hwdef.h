@@ -85,4 +85,4 @@
 
 #define PHYS_MASK		(~0UL)
 
-#endif
+#endif /*_ASM_PGTABLE_2LEVEL_HWDEF_H*/

@@ -128,4 +128,4 @@ enum cpuid_requests {
   CPUID_INTELBRANDSTRINGEND,
 };
 
-#endif
+#endif /*__ALINIX_KERNEL_CPU_VENDORS_H*/

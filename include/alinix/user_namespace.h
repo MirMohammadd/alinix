@@ -24,4 +24,4 @@
 
 
 // Let this be empty
-#endif
+#endif /*__ALINIX_KERNEL_USER_NAMESPACE_H*/

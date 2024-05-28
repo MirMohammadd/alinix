@@ -60,4 +60,4 @@ struct ntfs_sb_info {
 	u64 usn_jrnl_no;
 };
 
-#endif // 
+#endif /*__ALINIX_KERNEL_FS_NTFS3_H_FS*/

@@ -73,4 +73,4 @@ static forceinline void init_input_bitstream(struct input_bitstream *is,
 	is->end = is->next + size;
 }
 
-#endif
+#endif /*__ALINIX_KERNEL_FS_NTFS_3_DECOMPRESS_H*/

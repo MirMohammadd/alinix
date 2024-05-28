@@ -6,7 +6,7 @@
 # define __BITS_PER_LONG 64
 #else
 # define __BITS_PER_LONG 32
-#endif
+#endif /*__x86_64__*/
 
 #include <asm-generic/bitsperlong.h>
 

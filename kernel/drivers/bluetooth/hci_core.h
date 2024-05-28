@@ -196,4 +196,5 @@ struct hci_dev {
 	u8		le_rx_def_phys;
 
 };
-#endif
+
+#endif /*__ALINIX_KERNEL_HCI_CORE_H*/

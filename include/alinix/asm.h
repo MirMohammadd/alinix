@@ -34,4 +34,4 @@
     );
 
 
-#endif
+#endif /*__ALINIX_KERNEL_ASM_H*/

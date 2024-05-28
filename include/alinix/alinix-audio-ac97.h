@@ -44,4 +44,4 @@ struct ac97_codec{
 */
 VOID ac97_initialize();
 
-#endif
+#endif /*__AUDIO_C_97_H*/

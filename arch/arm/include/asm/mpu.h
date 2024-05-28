@@ -41,7 +41,7 @@
 #define PMSAv7_RGN_NORMAL	(PMSAv7_RGN_CACHEABLE | PMSAv7_ACR_SHARED)
 #else
 #define PMSAv7_RGN_NORMAL	PMSAv7_RGN_CACHEABLE
-#endif
+#endif /*CONFIG_SMP*/
 
 /* Access permission bits of ACR (only define those that we use)*/
 #define PMSAv7_AP_PL1RO_PL0NA	(0x5 << 8)
@@ -63,7 +63,7 @@
 #define PMSAv8_RGN_SHARED	(3 << 3) // inner sharable
 #else
 #define PMSAv8_RGN_SHARED	(0 << 3)
-#endif
+#endif /*CONFIG_SMP*/
 
 #define PMSAv8_RGN_DEVICE_nGnRnE	0
 #define PMSAv8_RGN_NORMAL		1
@@ -74,7 +74,7 @@
 #define PMSAv8_MINALIGN		32
 #else
 #define PMSAv8_MINALIGN		64
-#endif
+#endif /*CONFIG_CPU_V7M*/
 
 /* For minimal static MPU region configurations */
 #define PMSAv7_PROBE_REGION	0
@@ -127,8 +127,8 @@ static inline void pmsav7_adjust_lowmem_bounds(void) {};
 static inline void pmsav8_adjust_lowmem_bounds(void) {};
 static inline void pmsav7_setup(void) {};
 static inline void pmsav8_setup(void) {};
-#endif
+#endif /*CONFIG_ARM_MPU*/
 
 #endif /* __ASSEMBLY__ */
 
-#endif
+#endif /*__ARM_MPU_H*/

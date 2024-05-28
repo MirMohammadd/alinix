@@ -29,4 +29,4 @@ typedef struct {
 }  bdaddr_t;
 
 
-#endif
+#endif /*__ALINIX_KERNEL_BLUE_TOOTH_H*/

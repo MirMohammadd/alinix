@@ -20,6 +20,9 @@
  *  - Provides util for extended fat file system in header file.
 */
 
+#ifndef __ALINIX_EXFAT_H
+#define __ALINIX_EXFAT_H
+
 #include <alinix/types.h>
 
 #define ENTRY_TYPE_FILE_INFO 0x85
@@ -67,3 +70,5 @@ struct {
 
 
 uint32_t BootChecksum(unsigned char * Sectors,unsigned short BytesPerSector);
+
+#endif /*__ALINIX_EXFAT_H*/

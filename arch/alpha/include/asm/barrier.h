@@ -15,7 +15,7 @@
 #define __ASM_SMP_MB	"\tmb\n"
 #else
 #define __ASM_SMP_MB
-#endif
+#endif /*CONFIG_SMP*/
 
 // #include <asm-generic/barrier.h>
 

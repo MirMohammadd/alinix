@@ -50,4 +50,4 @@ LIBHeisenKernel::uint8_t cursorBitmap[CURSOR_W * CURSOR_H] =
     ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,ALPHA,BLACK,BLACK,ALPHA,ALPHA,ALPHA
 };
 
-#endif
+#endif /*_CURSOR_H*/

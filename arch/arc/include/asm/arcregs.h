@@ -77,7 +77,7 @@
 #define ECR_V_PROTV			0x06
 #define ECR_V_TRAP			0x09
 #define ECR_V_MISALIGN			0x0d
-#endif
+#endif /*CONFIG_ISA_ARCOMPACT*/
 
 /* DTLB Miss and Protection Violation Cause Codes */
 
@@ -159,7 +159,7 @@ struct bcr_identity {
 	unsigned int chip_id:16, cpu_id:8, family:8;
 #else
 	unsigned int family:8, cpu_id:8, chip_id:16;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_isa_arcv2 {
@@ -169,7 +169,7 @@ struct bcr_isa_arcv2 {
 #else
 	unsigned int ver:8, pad1:12, be:1, atomic:1, unalign:1,
 		     ldd:1, pad2:4, div_rem:4;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_uarch_build {
@@ -177,7 +177,7 @@ struct bcr_uarch_build {
 	unsigned int pad:8, prod:8, maj:8, min:8;
 #else
 	unsigned int min:8, maj:8, prod:8, pad:8;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_mmu_3 {
@@ -187,7 +187,7 @@ struct bcr_mmu_3 {
 #else
 	unsigned int u_dtlb:4, u_itlb:4, pg_sz:4, sasid:1, res:3, sets:4,
 		     ways:4, ver:8;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_mmu_4 {

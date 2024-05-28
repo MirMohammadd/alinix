@@ -54,4 +54,4 @@ void DesktopItem::DrawToContext()
     this->context->sharedContextInfo->AddDirtyArea(0, 0, width, height);
 }
 
-#endif
+#endif /*ITEM_H*/

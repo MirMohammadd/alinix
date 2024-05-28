@@ -5,4 +5,4 @@
 #include <uapi/asm/stat.h>
 
 
-#endif
+#endif /*__ASM_STAT_H*/

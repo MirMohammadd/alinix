@@ -166,12 +166,12 @@
 
 #define SO_RCVTIMEO (sizeof(time_t) == sizeof(__kernel_long_t) ? SO_RCVTIMEO_OLD : SO_RCVTIMEO_NEW)
 #define SO_SNDTIMEO (sizeof(time_t) == sizeof(__kernel_long_t) ? SO_SNDTIMEO_OLD : SO_SNDTIMEO_NEW)
-#endif
+#endif /*__BITS_PER_LONG*/
 
 #define SCM_TIMESTAMP           SO_TIMESTAMP
 #define SCM_TIMESTAMPNS         SO_TIMESTAMPNS
 #define SCM_TIMESTAMPING        SO_TIMESTAMPING
 
-#endif
+#endif /*__BITS_PER_LONG*/
 
 #endif /* _UAPI_ASM_SOCKET_H */

@@ -63,4 +63,4 @@ struct dev_pm_domain {
 
 static bool pm_ops_is_empty(const struct dev_pm_ops *ops);
 
-#endif
+#endif /*__ALINIX_KERNEL_PM_H*/

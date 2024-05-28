@@ -90,4 +90,4 @@
  */
 #define IS_ENABLED(option) __or(IS_BUILTIN(option), IS_MODULE(option))
 
-#endif
+#endif // __ALINIX_KERNEL_K_CONF_H

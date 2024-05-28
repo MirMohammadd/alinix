@@ -254,4 +254,4 @@ extern void wait_for_key_press();
 extern void read_scan_code();
 extern void print_scan_code();
 
-#endif 
+#endif /*__ALINIX_KERNEL_KEYBOARD_H*/

@@ -49,4 +49,4 @@ struct klist {
 
 extern int klist_node_attached(struct klist_node *n);
 
-#endif
+#endif /*__ALINIX_KERNEL_K_LIST_H*/

@@ -84,4 +84,4 @@ inline uint32_t PIT_handle_interrupt(uint32_t esp) {
 // void PIT_Beep_freq_duration(PIT* pit, uint32_t freq, uint32_t duration);
 // uint64_t PIT_Ticks(PIT* pit);
 
-#endif
+#endif /*__ALINIX_KERNEL_PIT_HEADER_H*/

@@ -74,4 +74,4 @@ struct JoystickStatus{
 bool joystick_button(uint8_t buttonnum);
 uint16_t joy_stick_status(uint8_t byte);
 
-#endif 
+#endif  /*__ALINIX_KERNEL_GAME_PORT_H*/

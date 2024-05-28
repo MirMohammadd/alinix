@@ -45,6 +45,9 @@ struct IDTPointer
 } __attribute__((packed));
 
 
+/**
+ * @brief All Interrupt implemented for kernel to be handled.
+*/
 void IgnoreInterrupt();
 void HandleInterruptRequest0x00();
 void HandleInterruptRequest0x01();

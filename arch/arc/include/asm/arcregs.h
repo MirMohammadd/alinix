@@ -287,7 +287,7 @@ struct bcr_fp_arcv2 {
 	unsigned int pad2:15, dp:1, pad1:7, sp:1, ver:8;
 #else
 	unsigned int ver:8, sp:1, pad1:7, dp:1, pad2:15;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_actionpoint {
@@ -295,7 +295,7 @@ struct bcr_actionpoint {
 	unsigned int pad:21, min:1, num:2, ver:8;
 #else
 	unsigned int ver:8, num:2, min:1, pad:21;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 #include <soc/arc/timers.h>
@@ -305,7 +305,7 @@ struct bcr_bpu_arcompact {
 	unsigned int pad2:19, fam:1, pad:2, ent:2, ver:8;
 #else
 	unsigned int ver:8, ent:2, pad:2, fam:1, pad2:19;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_bpu_arcv2 {
@@ -313,7 +313,7 @@ struct bcr_bpu_arcv2 {
 	unsigned int pad:6, fbe:2, tqe:2, ts:4, ft:1, rse:2, pte:3, bce:3, ver:8;
 #else
 	unsigned int ver:8, bce:3, pte:3, rse:2, ft:1, ts:4, tqe:2, fbe:2, pad:6;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 /* Error Protection Build: ECC/Parity */
@@ -322,7 +322,7 @@ struct bcr_erp {
 	unsigned int pad3:5, mmu:3, pad2:4, ic:3, dc:3, pad1:6, ver:8;
 #else
 	unsigned int ver:8, pad1:6, dc:3, ic:3, pad2:4, mmu:3, pad3:5;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 /* Error Protection Control */
@@ -331,15 +331,15 @@ struct ctl_erp {
 	unsigned int pad2:27, mpd:1, pad1:2, dpd:1, dpi:1;
 #else
 	unsigned int dpi:1, dpd:1, pad1:2, mpd:1, pad2:27;
-#endif
-};
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
+}; 
 
 struct bcr_lpb {
 #ifdef CONFIG_CPU_BIG_ENDIAN
 	unsigned int pad:16, entries:8, ver:8;
 #else
 	unsigned int ver:8, entries:8, pad:16;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_generic {
@@ -347,7 +347,7 @@ struct bcr_generic {
 	unsigned int info:24, ver:8;
 #else
 	unsigned int ver:8, info:24;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 static inline int is_isa_arcv2(void)

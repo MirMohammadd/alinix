@@ -36,4 +36,4 @@ struct nls_table {
 };
 
 
-#endif
+#endif /*__ALINIX_KERNEL_NLS_H*/

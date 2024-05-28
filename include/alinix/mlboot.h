@@ -55,4 +55,4 @@ typedef struct multiboot_info_header{
 #include <alinix/physicalmemory.h> // This should be for Memory management.
 
 
-#endif // 
+#endif /*__ALINIX_KERNEL_ML_BOOT_H*/

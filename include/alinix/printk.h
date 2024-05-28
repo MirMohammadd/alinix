@@ -42,4 +42,4 @@ void Print(const char* data, uint32_t length);
 void printString(const char* str);
 
 
-#endif
+#endif /*_ALINIX_KERNEL_PRINT_K_HEADER_H*/

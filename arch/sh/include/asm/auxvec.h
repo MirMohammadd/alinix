@@ -19,7 +19,7 @@
  * to build a gate VMA we don't care about otherwise..
  */
 #define AT_SYSINFO_EHDR		33
-#endif
+#endif /*CONFIG_VSYSCALL*/
 
 /*
  * More complete cache descriptions than AT_[DIU]CACHEBSIZE.  If the

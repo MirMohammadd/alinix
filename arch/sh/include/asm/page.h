@@ -23,13 +23,13 @@
 #define HPAGE_SHIFT	22
 #elif defined(CONFIG_HUGETLB_PAGE_SIZE_64MB)
 #define HPAGE_SHIFT	26
-#endif
+#endif /*CONFIG_HUGETLB_PAGE_SIZE_64K*/
 
 #ifdef CONFIG_HUGETLB_PAGE
 #define HPAGE_SIZE		(1UL << HPAGE_SHIFT)
 #define HPAGE_MASK		(~(HPAGE_SIZE-1))
 #define HUGETLB_PAGE_ORDER	(HPAGE_SHIFT-PAGE_SHIFT)
-#endif
+#endif /*CONFIG_HUGETLB_PAGE*/
 
 #ifndef __ASSEMBLY__
 #include <asm/uncached.h>
@@ -74,7 +74,7 @@ typedef struct { unsigned long pgprot; } pgprot_t;
 typedef struct { unsigned long pgd; } pgd_t;
 #define pte_val(x)	((x).pte_low)
 #define __pte(x)	((pte_t) { (x) } )
-#endif
+#endif /*CONFIG_X2TLB*/
 
 #define pgd_val(x)	((x).pgd)
 #define pgprot_val(x)	((x).pgprot)
@@ -102,7 +102,7 @@ typedef struct page *pgtable_t;
 #define PHYSICAL_OFFSET (CONFIG_PHYSICAL_START - __MEMORY_START)
 #else
 #define PHYSICAL_OFFSET 0
-#endif
+#endif /*CONFIG_PHYSICAL_START*/
 
 /*
  * PAGE_OFFSET is the virtual address of the start of kernel address
@@ -125,7 +125,7 @@ typedef struct page *pgtable_t;
 #else
 #define ___pa(x)	((x)-PAGE_OFFSET)
 #define ___va(x)	((x)+PAGE_OFFSET)
-#endif
+#endif /*CONFIG_PMB*/
 
 #ifndef __ASSEMBLY__
 #define __pa(x)		___pa((unsigned long)x)

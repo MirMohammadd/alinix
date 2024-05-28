@@ -25,6 +25,10 @@
 #ifndef __ALINIX_KERNEL_LOCK_H
 #define __ALINIX_KERNEL_LOCK_H
 
-
+/**
+ * @brief Threading lock for threads.
+*/
 void Lock();
+
+
 #endif

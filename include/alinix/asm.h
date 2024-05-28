@@ -24,6 +24,9 @@
 
 # define RET    bx      lr
 
+/**
+ * @brief outing the data to specific port.
+*/
 #define outb(_port, _data)  \
     asm volatile("outb %b0, %w1" \
         : \

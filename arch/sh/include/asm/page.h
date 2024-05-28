@@ -139,11 +139,11 @@ typedef struct page *pgtable_t;
 #else
 #define UNCAC_ADDR(addr)	((addr) - PAGE_OFFSET + uncached_start)
 #define CAC_ADDR(addr)		((addr) - uncached_start + PAGE_OFFSET)
-#endif
+#endif /*CONFIG_29BIT*/
 #else
 #define UNCAC_ADDR(addr)	((addr))
 #define CAC_ADDR(addr)		((addr))
-#endif
+#endif /*CONFIG_UNCACHED_MAPPING*/
 
 #define pfn_to_kaddr(pfn)	__va((pfn) << PAGE_SHIFT)
 #define page_to_phys(page)	(page_to_pfn(page) << PAGE_SHIFT)

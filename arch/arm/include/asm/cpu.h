@@ -14,7 +14,7 @@ struct cpuinfo_arm {
 	u32		cpuid;
 #ifdef CONFIG_SMP
 	unsigned int	loops_per_jiffy;
-#endif
+#endif /*CONFIG_SMP*/
 };
 
 DECLARE_PER_CPU(struct cpuinfo_arm, cpu_data);

@@ -50,4 +50,4 @@ typedef struct InterruptTransfer
     int endpoint;
 } InterruptTransfer_t;
 
-#endif
+#endif /*__ALINIX_KERNEL_CTRL_H*/

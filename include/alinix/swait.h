@@ -32,4 +32,4 @@ struct swait_queue_head {
 	struct list_head	task_list;
 };
 
-#endif
+#endif /*__ALINIX_KERNEL_SWAIT_H*/

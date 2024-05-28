@@ -18,6 +18,9 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+#ifndef __ALINIX_KERNEL_NODE_H
+#define __ALINIX_KERNEL_NODE_H
+
 /**
  * @abstraction:
  *  - Handles different kernel nodes.
@@ -46,3 +49,5 @@ void List_push(List* list, void (*handler)(uint8_t)) ;
 
 
 void AddHandler(uint8_t interrupt, void (*handler)(uint8_t));
+
+#endif /*__ALINIX_KERNEL_NODE_H*/

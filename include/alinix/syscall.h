@@ -28,7 +28,9 @@
 
 #define SYSCALL_MEM_ALLOCATE            0x0000
 
-
+/**
+ * @brief System calls enums.
+*/
 enum Systemcalls {
         SYSCALL_EXIT = 0, // Tells kernel that procces is done and can be removed
 

@@ -213,4 +213,4 @@ static inline void input_mt_sync(struct input_dev *dev)
 
 
 
-#endif
+#endif /*__ALINIX_KERNEL_INPUT_H*/

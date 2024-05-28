@@ -30,4 +30,4 @@ struct open_how {
 	u64 resolve;
 };
 
-#endif
+#endif /*__ALINIX_KERNEL_OPEN_AT2_H*/

@@ -25,4 +25,4 @@
 #define insl(port, buffer, count) asm volatile("cld; rep; insl" :: "D" (buffer), "d" (port), "c" (count))
 
 
-#endif
+#endif /*__ALINIX_PRE_PORT_H*/

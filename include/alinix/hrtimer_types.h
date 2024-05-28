@@ -32,4 +32,4 @@ struct hrtimer {
 	uint8_t				is_hard;
 };
 
-#endif
+#endif /*__ALINIX_KERNEL_HRT_TIMER_TYPES_H*/

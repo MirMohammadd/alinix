@@ -31,4 +31,4 @@
 void Lock();
 
 
-#endif
+#endif /*__ALINIX_KERNEL_LOCK_H*/

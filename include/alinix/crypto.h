@@ -43,4 +43,4 @@ struct crypto_tfm {
 	void *__crt_ctx[] CRYPTO_MINALIGN_ATTR;
 };
 
-#endif
+#endif /*__ALINIX_KERNEL_CRYPTO_H*/

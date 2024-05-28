@@ -58,4 +58,4 @@ static inline bool irq_settings_is_per_cpu_devid(struct irq_desc *desc)
 
 
 
-#endif
+#endif /*__ALINIX_KERNEL_SETTINGS_H*/

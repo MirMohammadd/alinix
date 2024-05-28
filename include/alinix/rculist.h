@@ -39,4 +39,4 @@ static inline void hlist_add_tail_rcu(struct hlist_node *n,
 	} 
 }
 
-#endif
+#endif /*__ALINIX_KERNEL_RCU_LIST_H*/

@@ -35,4 +35,4 @@
 #define KERN_DEBUG	KERN_SOH "7"	/* debug-level messages */
 
 
-#endif
+#endif // __ALINIX_KERNEL_KERN_LEVELS_H

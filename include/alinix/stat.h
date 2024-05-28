@@ -31,4 +31,4 @@
 
 #define uacpi_unlikely_error(expr) uacpi_unlikely((expr) != UACPI_STATUS_OK)
 
-#endif
+#endif /*__ALINIX_KERNEL_STAT_H*/

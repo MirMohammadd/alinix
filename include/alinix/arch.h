@@ -28,4 +28,4 @@
 #define snmp_delete_ipaddridx_tree(ni)
 
 
-#endif
+#endif /*__ALINIX_KERNEL_ARCH_H*/

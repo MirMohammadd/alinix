@@ -31,4 +31,4 @@
 void NMI_enable(); // Enable EMI 
 void NMI_disable(); // Disable NMI
 
-#endif
+#endif /*__ALINIX_KERNEL_NMI_H*/

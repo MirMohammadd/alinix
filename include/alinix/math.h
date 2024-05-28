@@ -42,4 +42,4 @@ double cosine(double x);
 double tangent(double x);
 
 
-#endif 
+#endif /*__ALINIX_KERNEL_MATH_H*/

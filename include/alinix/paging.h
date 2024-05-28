@@ -65,4 +65,4 @@ int paging_first_free();
 void page_table_free(void *addr);
 uint32_t *get_page_table_bitmap();
 
-#endif 
+#endif  /*__ALINIX_KERNEL_PAGING_H*/

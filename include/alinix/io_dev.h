@@ -33,4 +33,4 @@ struct resource {
 	struct resource *parent, *sibling, *child;
 };
 
-#endif
+#endif /*__ALINIX_KERNEL_IO_DEV_H*/

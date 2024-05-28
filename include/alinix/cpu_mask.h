@@ -36,4 +36,4 @@
 typedef struct cpumask { char bits; } cpumask_t;
 
 
-#endif
+#endif /*__ALINIX_KERNEL_CPU_MASK_H*/

@@ -41,6 +41,9 @@ enum LogLevel
 #include <alinix/enums.h>
 static enum ScreenMode_t screenMode = TextMode;
 
+/**
+ * @brief used to log a message to output.
+*/
 void Log(enum LogLevel level, const char* __restrict__ format, ...);
 void Print(const char* data, uint32_t length);
 

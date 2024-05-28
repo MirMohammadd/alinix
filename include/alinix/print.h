@@ -31,4 +31,4 @@
 void printfHex(uint8_t key);
 void printfHex32(uint32_t key);
 
-#endif
+#endif /*__ALINIX_KERNEL_PRINT_NORM_H*/

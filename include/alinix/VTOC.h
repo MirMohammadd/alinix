@@ -40,4 +40,4 @@ void GetCHRFromVTOC(void *buffer);
 void CheckDSCB(struct DSCB1 *dscb, const char *name);
 void FindFile(const char *name) ;
 
-#endif
+#endif /*__ALINIX_KERNEL_V_TOC_H*/

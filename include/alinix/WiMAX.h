@@ -223,4 +223,4 @@ enum wimax_st wimax_state_get(struct wimax_device *dev);
 void wimax_state_change(struct wimax_device *dev, enum wimax_st new_state);
 
 
-#endif
+#endif /*__ALINIX_KERNEL_WI_MAX_H*/

@@ -86,4 +86,4 @@ void DisableResumeTimer(APMController* controller) ;
 void DisableRingIndicator(APMController* controller);
 
 
-#endif // 
+#endif // __ALINIX_KERNEL_APM_H

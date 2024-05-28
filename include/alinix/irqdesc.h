@@ -87,4 +87,4 @@ struct irq_desc {
 extern struct irq_desc *irq_to_desc(unsigned int irq);
 
 
-#endif
+#endif /*__ALINIX_KERNEL_IRQ_DESC_H*/

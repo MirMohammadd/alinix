@@ -42,5 +42,5 @@ static inline bool test_bit(unsigned int nr, unsigned long *addr)
 }
 
 
-#endif
+#endif /*__IOMMUFD_UTILS_H*/
 

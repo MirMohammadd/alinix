@@ -31,4 +31,4 @@ typedef union {
 	long long ll;
 } DWunion;
 
-#endif
+#endif /*__ALINIX_KERNEL_LIB_GCC_H*/

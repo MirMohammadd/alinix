@@ -42,4 +42,4 @@ static ProgressBar* progressBar;
 
 void ProgressBarInit(ProgressBar *pb, int x_p, int y_p, int width, int height);
 
-#endif // 
+#endif /*__ALINIX_KERNEL_PROGRESS_H*/

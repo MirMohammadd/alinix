@@ -74,4 +74,4 @@ struct dentry {
 	} d_u;
 };
 
-#endif
+#endif /*__ALINIX_KERNEL_DE_CACHE_H*/

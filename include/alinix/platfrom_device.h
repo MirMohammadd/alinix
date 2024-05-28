@@ -50,4 +50,4 @@ struct platform_device {
 	// struct pdev_archdata	archdata;
 };
 
-#endif
+#endif /*__PLATFORM_DEVICE_H*/

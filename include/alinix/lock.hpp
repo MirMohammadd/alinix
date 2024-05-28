@@ -38,4 +38,4 @@ public:
     void Unlock();
 };
 
-#endif
+#endif /*__ALINIX_KERNEL_LOCK_HPP*/

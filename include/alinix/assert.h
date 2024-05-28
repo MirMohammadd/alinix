@@ -33,4 +33,4 @@
     } while (0)
 
 
-#endif // 
+#endif /*__ALINIX_KERNEL_ASSERT_H*/

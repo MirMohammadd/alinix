@@ -32,4 +32,4 @@
 void beep();
 
 
-#endif // 
+#endif /*__ALINIX_KERNEL_BEEP_H*/

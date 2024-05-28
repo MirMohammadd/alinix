@@ -132,5 +132,5 @@ VOID init_rtl();
 
 static struct pci_config_space *device;
 
-#endif
+#endif /*__ALINIX_KERNEL_RT_81_39_H*/
 

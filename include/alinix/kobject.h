@@ -77,4 +77,4 @@ static inline void kset_put(struct kset *k)
 
 
 
-#endif
+#endif /*__ALINIX_KERNEL_K_OBJECT_H*/

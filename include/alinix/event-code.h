@@ -984,4 +984,4 @@
 #define SND_CNT			(SND_MAX+1)
 
 
-#endif
+#endif /*__ALINIX_KERNEL_EVENT_CODE_H*/

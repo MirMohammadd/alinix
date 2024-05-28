@@ -103,4 +103,4 @@ static inline void invlpg(void* addr)
 
 void* GetPageForAddress(uint32_t virtualAddress, bool shouldCreate, bool readWrite, bool userPages);
 
-#endif
+#endif /*__ALINIX_KERNEL_VIRTUAL_MEMORY_H*/

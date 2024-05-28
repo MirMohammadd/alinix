@@ -24,4 +24,4 @@
 
 
 
-#endif
+#endif /*__ALINIX_KERNEL_ETHERNET_E_1000_OS_DEP_H*/

@@ -46,4 +46,4 @@ enum vga_color {
     VGA_COLOR_WHITE = 15
 };
 
-#endif // 
+#endif /*__ALINIX_KERNEL_VGA_H*/

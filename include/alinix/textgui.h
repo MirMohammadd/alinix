@@ -37,4 +37,5 @@ void SetPixel(int x, int y, char color,uint16_t character, char background); // 
 void ClearScreen(char color );  // Clear the Screen 
 void StatusBar(char* text, int percentage); // Kernel Status bar progress
 void TextDrawString(char* text, int x, int y, char color, char background); // Draws the string of the kernel.
+
 #endif /*__ALINIX_KERNEL_TEXTGUI_H*/

@@ -28,4 +28,4 @@
 
 VOID init_port_power();
 
-#endif
+#endif /*__ALINIX_KERNEL_INIT_POWER_H*/

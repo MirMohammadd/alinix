@@ -46,4 +46,4 @@ void Init(enum COMPort port);
 uint32_t GetMSSinceBoot();
 // static bool Initialized = false;
 
-#endif 
+#endif  /*_ALINIX_KERNEL_SERIAL_PORT_H__*/

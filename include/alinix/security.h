@@ -66,4 +66,4 @@ enum lockdown_reason {
 */
 void kernelMemoryCorruptionLockDown();
 
-#endif
+#endif /*__ALINIX_KERNEL_SECURITY_H*/

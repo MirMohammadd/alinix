@@ -12,7 +12,7 @@
 					cpu_all_mask : \
 					cpumask_of_node(pcibus_to_node(bus)))
 
-#endif
+#endif /*CONFIG_NUMA*/
 
 #define mc_capable()    (1)
 

@@ -54,6 +54,6 @@ do {							\
 #define uncached_resize(size)		BUG()
 #define jump_to_uncached()		do { } while (0)
 #define back_to_cached()		do { } while (0)
-#endif
+#endif /*CONFIG_UNCACHED_MAPPING*/
 
 #endif /* __ASM_SH_UNCACHED_H */

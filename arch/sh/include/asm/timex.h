@@ -16,7 +16,7 @@
 #define CLOCK_TICK_RATE		(CONFIG_SH_PCLK_FREQ / 4) /* Underlying HZ */
 #else
 #define CLOCK_TICK_RATE		1193180
-#endif
+#endif /*CONFIG_SH_PCLK_FREQ*/
 
 #include <asm-generic/timex.h>
 

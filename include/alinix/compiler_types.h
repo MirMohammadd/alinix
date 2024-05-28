@@ -56,4 +56,4 @@ __attribute__((naked)) void unreachable(void) {
 
 #endif
 
-#endif
+#endif /*__ALINIX_KERNEL_COMPILER_TYPES_H*/

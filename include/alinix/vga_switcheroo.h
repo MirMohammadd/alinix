@@ -48,4 +48,4 @@ struct vga_switcheroo_client_ops {
 };
 
 
-#endif // __ALINIX_KERNEL_VGA_SWITCH_HEROO_H
+#endif /*__ALINIX_KERNEL_VGA_SWITCH_HEROO_H*/

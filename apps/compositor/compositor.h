@@ -157,4 +157,4 @@ public:
     void ProcessRequests();
 };
 
-#endif
+#endif /*__COMPISTOR_H*/

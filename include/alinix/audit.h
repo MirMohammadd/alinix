@@ -171,4 +171,4 @@ struct audit_context {
 
 
 
-#endif
+#endif /*__ALINIX_KERNEL_AUDIT_H*/

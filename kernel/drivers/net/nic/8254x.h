@@ -23,6 +23,9 @@
  *  - Provide util for the 8253x Intel net interface.
 */
 
+#ifndef __ALINIX_KERNEL_8254X_NET_NIC_H
+#define __ALINIX_KERNEL_8254X_NET_NIC_H
+
 #include <alinix/port.h>
 
 #include <alinix/RTL8139.h>
@@ -45,3 +48,5 @@
 #define I8254X_EERD  0x00014   // Address offset for EEPROM read data register
 
 #define I8254X_EERD_START  0x0001  // Start bit for EEPROM read operation
+
+#endif /*__ALINIX_KERNEL_8254X_NET_NIC_H*/

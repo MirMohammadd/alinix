@@ -37,8 +37,8 @@
 
 #define mb()	asm volatile("sync\n" : : : "memory")
 
-#endif
+#endif /*CONFIG_ISA_ARCV2*/
 
 #include <asm-generic/barrier.h>
 
-#endif
+#endif /*__ASM_BARRIER_H*/

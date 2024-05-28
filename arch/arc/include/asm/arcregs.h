@@ -262,7 +262,7 @@ struct bcr_dccm_arcompact {
 	unsigned int res:21, sz:3, ver:8;
 #else
 	unsigned int ver:8, sz:3, res:21;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_dccm_arcv2 {
@@ -270,7 +270,7 @@ struct bcr_dccm_arcv2 {
 	unsigned int pad2:12, cyc:3, pad1:1, sz1:4, sz0:4, ver:8;
 #else
 	unsigned int ver:8, sz0:4, sz1:4, pad1:1, cyc:3, pad2:12;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 /* ARCompact: Both SP and DP FPU BCRs have same format */
@@ -279,7 +279,7 @@ struct bcr_fp_arcompact {
 	unsigned int fast:1, ver:8;
 #else
 	unsigned int ver:8, fast:1;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_fp_arcv2 {

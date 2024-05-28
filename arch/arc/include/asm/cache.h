@@ -6,7 +6,7 @@
 #define L1_CACHE_SHIFT		6
 #else
 #define L1_CACHE_SHIFT		CONFIG_ARC_CACHE_LINE_SHIFT
-#endif
+#endif /*CONFIG_ARC_CACHE_LINE_SHIFT*/
 
 #define L1_CACHE_BYTES		(1 << L1_CACHE_SHIFT)
 #define CACHE_LINE_MASK		(~(L1_CACHE_BYTES - 1))
@@ -55,7 +55,7 @@
  */
 #if defined(CONFIG_ARC_HAS_LL64) && defined(CONFIG_ARC_HAS_LLSC)
 #define ARCH_SLAB_MINALIGN	8
-#endif
+#endif /*CONFIG_ARC_HAS_LL64*/
 
 extern int ioc_enable;
 extern unsigned long perip_base, perip_end;
@@ -119,4 +119,4 @@ extern unsigned long perip_base, perip_end;
 #define ARC_IO_COH_PARTIAL_BIT	BIT(0)
 #define ARC_REG_IO_COH_AP0_BASE	0x508
 #define ARC_REG_IO_COH_AP0_SIZE	0x509
-#endif
+#endif /*__ARC_ASM_CACHE_H*/

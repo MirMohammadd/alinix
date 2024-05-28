@@ -1274,4 +1274,4 @@ void seqbuf_dump(void);	/* This function must be provided by programs */
 
 #endif
 
-#endif
+#endif /*__ALINIX_KERNEL_SOUND_CARD_AUDIO_H*/

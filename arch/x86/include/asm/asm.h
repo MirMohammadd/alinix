@@ -12,7 +12,7 @@
 # define __ASM_FORM_RAW(x, ...)		    __stringify(x,##__VA_ARGS__)
 # define __ASM_FORM_COMMA(x, ...)	" " __stringify(x,##__VA_ARGS__) ","
 # define __ASM_REGPFX			%%
-#endif
+#endif /*__ASSEMBLY__*/
 
 #define _ASM_BYTES(x, ...)	__ASM_FORM(.byte x,##__VA_ARGS__ ;)
 
@@ -24,7 +24,7 @@
 /* 64 bit */
 # define __ASM_SEL(a,b)		__ASM_FORM(b)
 # define __ASM_SEL_RAW(a,b)	__ASM_FORM_RAW(b)
-#endif
+#endif /*__x86_64__*/
 
 #define __ASM_SIZE(inst, ...)	__ASM_SEL(inst##l##__VA_ARGS__, \
 					  inst##q##__VA_ARGS__)
@@ -110,7 +110,7 @@
 #define _ASM_ARG5B	r8b
 #define _ASM_ARG6B	r9b
 
-#endif
+#endif /*__x86_64__*/
 
 #ifndef __ASSEMBLY__
 #ifndef __pic__
@@ -123,8 +123,8 @@ static __always_inline __pure void *rip_rel_ptr(void *p)
 #define RIP_REL_REF(var)	(*(typeof(&(var)))rip_rel_ptr(&(var)))
 #else
 #define RIP_REL_REF(var)	(var)
-#endif
-#endif
+#endif /*__pic__*/
+#endif /*__ASSEMBLY__*/
 
 /*
  * Macros to generate condition code outputs from inline assembly,
@@ -136,7 +136,7 @@ static __always_inline __pure void *rip_rel_ptr(void *p)
 #else
 # define CC_SET(c) "\n\tset" #c " %[_cc_" #c "]\n"
 # define CC_OUT(c) [_cc_ ## c] "=qm"
-#endif
+#endif /*__GCC_ASM_FLAG_OUTPUTS__*/
 
 #ifdef __KERNEL__
 

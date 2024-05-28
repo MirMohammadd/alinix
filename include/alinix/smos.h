@@ -38,4 +38,4 @@ enum {
       cmos_data    = 0x71
 };
 
-#endif
+#endif /*__ALINIX_KERNEL_SMOS_H*/

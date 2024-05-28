@@ -31,4 +31,4 @@
 void shutdown();
 
 
-#endif
+#endif /*__ALINIX_KERNEL_SHUT_DOWN_H*/

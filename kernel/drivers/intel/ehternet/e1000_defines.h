@@ -940,4 +940,4 @@
 #endif /* ERROR_REPORT */
 
 
-#endif
+#endif /*__ALINIX_INTEL_ETHERNET_H*/

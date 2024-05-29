@@ -14,7 +14,7 @@
 
 extern phys_addr_t arm_dma_limit;
 #define ARCH_LOW_ADDRESS_LIMIT arm_dma_limit
-#endif
+#endif /*CONFIG_ZONE_DMA*/
 
 #ifdef CONFIG_ISA_DMA_API
 /*
@@ -136,7 +136,7 @@ extern int  get_dma_residue(unsigned int chan);
 
 #ifndef NO_DMA
 #define NO_DMA	255
-#endif
+#endif /*CONFIG_ZONE_DMA*/
 
 #endif /* CONFIG_ISA_DMA_API */
 

@@ -12,8 +12,8 @@
 */
 # define L1_CACHE_BYTES     32
 # define L1_CACHE_SHIFT     5
-#endif
+#endif /*CONFIG_ALPHA_GENERIC*/
 
 #define SMP_CACHE_BYTES    L1_CACHE_BYTES
 
-#endif
+#endif /*__ARCH_ALPHA_CACHE_H*/

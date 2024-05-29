@@ -2,4 +2,4 @@
 #include "faultinfo_32.h"
 #else
 #include "faultinfo_64.h"
-#endif
+#endif /*__i386__*/

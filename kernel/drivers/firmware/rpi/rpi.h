@@ -29,4 +29,4 @@ unsigned char uart_getc();
 void uart_puts(const char* str);
 
 
-#endif
+#endif /*__ALINIX_RPI_H*/

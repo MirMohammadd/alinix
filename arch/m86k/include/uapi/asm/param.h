@@ -6,7 +6,7 @@
 #define EXEC_PAGESIZE	4096
 #else
 #define EXEC_PAGESIZE	8192
-#endif
+#endif /*__uClinux__*/
 
 #include <asm-generic/param.h>
 

@@ -77,7 +77,7 @@
 #define ECR_V_PROTV			0x06
 #define ECR_V_TRAP			0x09
 #define ECR_V_MISALIGN			0x0d
-#endif
+#endif /*CONFIG_ISA_ARCOMPACT*/
 
 /* DTLB Miss and Protection Violation Cause Codes */
 
@@ -159,7 +159,7 @@ struct bcr_identity {
 	unsigned int chip_id:16, cpu_id:8, family:8;
 #else
 	unsigned int family:8, cpu_id:8, chip_id:16;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_isa_arcv2 {
@@ -169,7 +169,7 @@ struct bcr_isa_arcv2 {
 #else
 	unsigned int ver:8, pad1:12, be:1, atomic:1, unalign:1,
 		     ldd:1, pad2:4, div_rem:4;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_uarch_build {
@@ -177,7 +177,7 @@ struct bcr_uarch_build {
 	unsigned int pad:8, prod:8, maj:8, min:8;
 #else
 	unsigned int min:8, maj:8, prod:8, pad:8;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_mmu_3 {
@@ -187,7 +187,7 @@ struct bcr_mmu_3 {
 #else
 	unsigned int u_dtlb:4, u_itlb:4, pg_sz:4, sasid:1, res:3, sets:4,
 		     ways:4, ver:8;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_mmu_4 {
@@ -198,7 +198,7 @@ struct bcr_mmu_4 {
 	/*           DTLB      ITLB      JES        JE         JA      */
 	unsigned int u_dtlb:3, u_itlb:3, n_super:2, n_entry:2, n_ways:2,
 		     pae:1, res:2, sz0:4, sz1:4, sasid:1, ver:8;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_cache {
@@ -206,7 +206,7 @@ struct bcr_cache {
 	unsigned int pad:12, line_len:4, sz:4, config:4, ver:8;
 #else
 	unsigned int ver:8, config:4, sz:4, line_len:4, pad:12;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_slc_cfg {
@@ -214,7 +214,7 @@ struct bcr_slc_cfg {
 	unsigned int pad:24, way:2, lsz:2, sz:4;
 #else
 	unsigned int sz:4, lsz:2, way:2, pad:24;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_clust_cfg {
@@ -222,7 +222,7 @@ struct bcr_clust_cfg {
 	unsigned int pad:7, c:1, num_entries:8, num_cores:8, ver:8;
 #else
 	unsigned int ver:8, num_cores:8, num_entries:8, c:1, pad:7;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_volatile {
@@ -230,7 +230,7 @@ struct bcr_volatile {
 	unsigned int start:4, limit:4, pad:22, order:1, disable:1;
 #else
 	unsigned int disable:1, order:1, pad:22, limit:4, start:4;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_mpy {
@@ -238,7 +238,7 @@ struct bcr_mpy {
 	unsigned int pad:8, x1616:8, dsp:4, cycles:2, type:2, ver:8;
 #else
 	unsigned int ver:8, type:2, cycles:2, dsp:4, x1616:8, pad:8;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_iccm_arcompact {
@@ -246,7 +246,7 @@ struct bcr_iccm_arcompact {
 	unsigned int base:16, pad:5, sz:3, ver:8;
 #else
 	unsigned int ver:8, sz:3, pad:5, base:16;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_iccm_arcv2 {
@@ -254,7 +254,7 @@ struct bcr_iccm_arcv2 {
 	unsigned int pad:8, sz11:4, sz01:4, sz10:4, sz00:4, ver:8;
 #else
 	unsigned int ver:8, sz00:4, sz10:4, sz01:4, sz11:4, pad:8;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_dccm_arcompact {
@@ -262,7 +262,7 @@ struct bcr_dccm_arcompact {
 	unsigned int res:21, sz:3, ver:8;
 #else
 	unsigned int ver:8, sz:3, res:21;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_dccm_arcv2 {
@@ -270,7 +270,7 @@ struct bcr_dccm_arcv2 {
 	unsigned int pad2:12, cyc:3, pad1:1, sz1:4, sz0:4, ver:8;
 #else
 	unsigned int ver:8, sz0:4, sz1:4, pad1:1, cyc:3, pad2:12;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 /* ARCompact: Both SP and DP FPU BCRs have same format */
@@ -279,7 +279,7 @@ struct bcr_fp_arcompact {
 	unsigned int fast:1, ver:8;
 #else
 	unsigned int ver:8, fast:1;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_fp_arcv2 {
@@ -287,7 +287,7 @@ struct bcr_fp_arcv2 {
 	unsigned int pad2:15, dp:1, pad1:7, sp:1, ver:8;
 #else
 	unsigned int ver:8, sp:1, pad1:7, dp:1, pad2:15;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_actionpoint {
@@ -295,7 +295,7 @@ struct bcr_actionpoint {
 	unsigned int pad:21, min:1, num:2, ver:8;
 #else
 	unsigned int ver:8, num:2, min:1, pad:21;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 #include <soc/arc/timers.h>
@@ -305,7 +305,7 @@ struct bcr_bpu_arcompact {
 	unsigned int pad2:19, fam:1, pad:2, ent:2, ver:8;
 #else
 	unsigned int ver:8, ent:2, pad:2, fam:1, pad2:19;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_bpu_arcv2 {
@@ -313,7 +313,7 @@ struct bcr_bpu_arcv2 {
 	unsigned int pad:6, fbe:2, tqe:2, ts:4, ft:1, rse:2, pte:3, bce:3, ver:8;
 #else
 	unsigned int ver:8, bce:3, pte:3, rse:2, ft:1, ts:4, tqe:2, fbe:2, pad:6;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 /* Error Protection Build: ECC/Parity */
@@ -322,7 +322,7 @@ struct bcr_erp {
 	unsigned int pad3:5, mmu:3, pad2:4, ic:3, dc:3, pad1:6, ver:8;
 #else
 	unsigned int ver:8, pad1:6, dc:3, ic:3, pad2:4, mmu:3, pad3:5;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 /* Error Protection Control */
@@ -331,15 +331,15 @@ struct ctl_erp {
 	unsigned int pad2:27, mpd:1, pad1:2, dpd:1, dpi:1;
 #else
 	unsigned int dpi:1, dpd:1, pad1:2, mpd:1, pad2:27;
-#endif
-};
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
+}; 
 
 struct bcr_lpb {
 #ifdef CONFIG_CPU_BIG_ENDIAN
 	unsigned int pad:16, entries:8, ver:8;
 #else
 	unsigned int ver:8, entries:8, pad:16;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 struct bcr_generic {
@@ -347,7 +347,7 @@ struct bcr_generic {
 	unsigned int info:24, ver:8;
 #else
 	unsigned int ver:8, info:24;
-#endif
+#endif /*CONFIG_CPU_BIG_ENDIAN*/
 };
 
 static inline int is_isa_arcv2(void)

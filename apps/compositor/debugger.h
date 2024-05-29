@@ -44,4 +44,4 @@ public:
     void ProcessGeneral();
 };
 
-#endif
+#endif /*_CURSOR_H*/

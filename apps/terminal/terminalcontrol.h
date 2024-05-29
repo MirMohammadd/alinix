@@ -40,4 +40,4 @@ protected:
     void OnKeyDown(uint8_t key, KEYPACKET_FLAGS modifiers) override;
 };
 
-#endif
+#endif /*TERMINAL_CONTROL_H*/

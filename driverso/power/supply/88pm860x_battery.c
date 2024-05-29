@@ -990,7 +990,7 @@ static int pm860x_battery_resume(struct device *dev)
 		chip->wakeup_flag &= ~(1 << PM8607_IRQ_CC);
 	return 0;
 }
-#endif
+#endif /*CONFIG_PM_SLEEP*/
 
 static SIMPLE_DEV_PM_OPS(pm860x_battery_pm_ops,
 			pm860x_battery_suspend, pm860x_battery_resume);

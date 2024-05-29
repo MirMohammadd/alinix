@@ -9,7 +9,7 @@
 # include "processor_32.h"
 #else
 # include "processor_64.h"
-#endif
+#endif /*CONFIG_X86_32*/
 
 #define KSTK_EIP(tsk) KSTK_REG(tsk, HOST_IP)
 #define KSTK_ESP(tsk) KSTK_REG(tsk, HOST_SP)
@@ -39,4 +39,4 @@ static __always_inline void cpu_relax(void)
 
 #include <asm/processor-generic.h>
 
-#endif
+#endif /*__UM_PROCESSOR_H*/

@@ -41,7 +41,7 @@ extern void irq_ctx_exit(int cpu);
 #else
 # define irq_ctx_init(cpu) do { } while (0)
 # define irq_ctx_exit(cpu) do { } while (0)
-#endif
+#endif /*CONFIG_IRQSTACKS*/
 
 #ifdef CONFIG_INTC_BALANCING
 extern unsigned int irq_lookup(unsigned int irq);
@@ -49,7 +49,7 @@ extern void irq_finish(unsigned int irq);
 #else
 #define irq_lookup(irq)		(irq)
 #define irq_finish(irq)		do { } while (0)
-#endif
+#endif /*CONFIG_INTC_BALANCING*/
 
 #include <asm-generic/irq.h>
 

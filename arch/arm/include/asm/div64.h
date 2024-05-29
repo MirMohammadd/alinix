@@ -104,6 +104,6 @@ static inline uint64_t __arch_xprod_64(uint64_t m, uint64_t n, bool bias)
 
 #include <asm-generic/div64.h>
 
-#endif
+#endif /*CONFIG_AEABI*/
 
-#endif
+#endif /*__ASM_ARM_DIV64*/

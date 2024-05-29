@@ -42,4 +42,4 @@ void ProgressBar::SetValue(int v)
     DirectGUI::DrawFillRect(foreground, x + 1, y + 1, (fraction * (double)w), h - 1);
 }
 
-#endif
+#endif /*PROGRESS_H*/

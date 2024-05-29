@@ -20,7 +20,7 @@
 #include <asm/atomic-llsc.h>
 #else
 #include <asm/atomic-spinlock.h>
-#endif
+#endif /*CONFIG_ARC_HAS_LLSC*/
 
 /*
  * 64-bit atomics
@@ -29,8 +29,8 @@
 #include <asm-generic/atomic64.h>
 #else
 #include <asm/atomic64-arcv2.h>
-#endif
+#endif /*CONFIG_GENERIC_ATOMIC64*/
 
 #endif	/* !__ASSEMBLY__ */
 
-#endif
+#endif /*_ASM_ARC_ATOMIC_H*/

@@ -24,4 +24,4 @@ typedef unsigned long pgprot_t;
 #define __pmd(x)        (x)
 #define __pgprot(x)     (x)
 
-#endif
+#endif /*_ASMARM_PAGE_NOMMU_H*/

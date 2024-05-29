@@ -7,7 +7,7 @@
 #else
 #define __percpu_seg		fs
 #define __percpu_rel
-#endif
+#endif /*CONFIG_X86_64*/
 
 #ifdef __ASSEMBLY__
 
@@ -15,7 +15,7 @@
 #define __percpu		%__percpu_seg:
 #else
 #define __percpu
-#endif
+#endif /*CONFIG_SMP*/
 
 #define PER_CPU_VAR(var)	__percpu(var)__percpu_rel
 
@@ -23,7 +23,7 @@
 #define INIT_PER_CPU_VAR(var)  init_per_cpu__##var
 #else
 #define INIT_PER_CPU_VAR(var)  var
-#endif
+#endif /*CONFIG_X86_64_SMP*/
 
 #else /* ...!ASSEMBLY */
 
@@ -40,13 +40,13 @@
 #ifdef __CHECKER__
 #define __seg_gs		__attribute__((address_space(__seg_gs)))
 #define __seg_fs		__attribute__((address_space(__seg_fs)))
-#endif
+#endif /*__CHECKER__*/
 
 #ifdef CONFIG_X86_64
 #define __percpu_seg_override	__seg_gs
 #else
 #define __percpu_seg_override	__seg_fs
-#endif
+#endif /*CONFIG_X86_64*/
 
 #define __percpu_prefix		""
 
@@ -122,7 +122,7 @@
 #define init_per_cpu_var(var)  init_per_cpu__##var
 #else
 #define init_per_cpu_var(var)  var
-#endif
+#endif /*CONFIG_X86_64_SMP*/
 
 /* For arch-specific code, we can use direct single-insn ops (they
  * don't give an lvalue though). */
@@ -349,7 +349,7 @@ do {									\
 
 #define raw_cpu_try_cmpxchg64(pcp, ovalp, nval)		percpu_try_cmpxchg64_op(8,         , pcp, ovalp, nval)
 #define this_cpu_try_cmpxchg64(pcp, ovalp, nval)	percpu_try_cmpxchg64_op(8, volatile, pcp, ovalp, nval)
-#endif
+#endif /*CONFIG_X86_32*/
 
 #ifdef CONFIG_X86_64
 #define raw_cpu_cmpxchg64(pcp, oval, nval)	percpu_cmpxchg_op(8,         , pcp, oval, nval);
@@ -418,7 +418,7 @@ do {									\
 
 #define raw_cpu_try_cmpxchg128(pcp, ovalp, nval)	percpu_try_cmpxchg128_op(16,         , pcp, ovalp, nval)
 #define this_cpu_try_cmpxchg128(pcp, ovalp, nval)	percpu_try_cmpxchg128_op(16, volatile, pcp, ovalp, nval)
-#endif
+#endif /*CONFIG_X86_64*/
 
 /*
  * this_cpu_read() makes gcc load the percpu variable every time it is
@@ -467,7 +467,7 @@ do {									\
 
 #define this_cpu_read_8(pcp)		__raw_cpu_read(volatile, pcp)
 #define this_cpu_write_8(pcp, val)	__raw_cpu_write(volatile, pcp, val)
-#endif
+#endif /*CONFIG_X86_64*/
 
 #define this_cpu_read_const(pcp)	__raw_cpu_read(, pcp)
 #else /* CONFIG_USE_X86_SEG_SUPPORT */
@@ -492,7 +492,7 @@ do {									\
 
 #define this_cpu_read_8(pcp)		percpu_from_op(8, volatile, "mov", pcp)
 #define this_cpu_write_8(pcp, val)	percpu_to_op(8, volatile, "mov", (pcp), val)
-#endif
+#endif /*CONFIG_X86_64*/
 
 /*
  * The generic per-cpu infrastrucutre is not suitable for
@@ -579,7 +579,7 @@ do {									\
 #define this_cpu_xchg_8(pcp, nval)		percpu_xchg_op(8, volatile, pcp, nval)
 #define this_cpu_cmpxchg_8(pcp, oval, nval)	percpu_cmpxchg_op(8, volatile, pcp, oval, nval)
 #define this_cpu_try_cmpxchg_8(pcp, ovalp, nval)	percpu_try_cmpxchg_op(8, volatile, pcp, ovalp, nval)
-#endif
+#endif /*CONFIG_X86_64*/
 
 static __always_inline bool x86_this_cpu_constant_test_bit(unsigned int nr,
                         const unsigned long __percpu *addr)
@@ -591,7 +591,7 @@ static __always_inline bool x86_this_cpu_constant_test_bit(unsigned int nr,
 	return ((1UL << (nr % BITS_PER_LONG)) & raw_cpu_read_8(*a)) != 0;
 #else
 	return ((1UL << (nr % BITS_PER_LONG)) & raw_cpu_read_4(*a)) != 0;
-#endif
+#endif /*CONFIG_X86_64*/
 }
 
 static inline bool x86_this_cpu_variable_test_bit(int nr,

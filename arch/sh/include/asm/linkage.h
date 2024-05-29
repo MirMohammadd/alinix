@@ -4,4 +4,4 @@
 #define __ALIGN .balign 4
 #define __ALIGN_STR ".balign 4"
 
-#endif
+#endif /*CONFIG_INTC_BALANCING*/

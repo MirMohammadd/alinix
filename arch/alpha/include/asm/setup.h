@@ -26,7 +26,7 @@
 #define KERNEL_START_PHYS	0x300000 /* Old bootloaders hardcoded this.  */
 #else
 #define KERNEL_START_PHYS	0x1000000 /* required: Wildfire/Titan/Marvel */
-#endif
+#endif /*CONFIG_ALPHA_LEGACY_START_ADDRESS*/
 
 #define KERNEL_START	(PAGE_OFFSET+KERNEL_START_PHYS)
 #define SWAPPER_PGD	KERNEL_START
@@ -50,4 +50,4 @@
 
 
 
-#endif
+#endif /*__ALINIX_KERNEL_SETUP_ASM_H*/

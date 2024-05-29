@@ -14,4 +14,4 @@ static inline void __patch_text_early(void *addr, unsigned int insn)
 	__patch_text_real(addr, insn, false);
 }
 
-#endif
+#endif /*_ARM_KERNEL_PATCH_H*/

@@ -259,4 +259,4 @@
 #define E1000_TSAUXC	0x0B640 /* Timesync Auxiliary Control register */
 
 
-#endif
+#endif /*__ALINIX_INTEL_ETHERNET_E_1000_REGS_H*/

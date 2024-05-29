@@ -13,7 +13,7 @@
 #  include <sys/time.h>
 #  include <sys/types.h>
 #  include <unistd.h>
-#endif
+#endif /*_WIN32  || _WIN64*/
 
 #include "posix.h"
 #include "util.h"

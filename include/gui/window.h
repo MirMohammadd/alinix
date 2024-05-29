@@ -71,4 +71,4 @@ void text_area_set_text(text_area_t *text_area, char *text);
 void text_area_append(text_area_t *text_area, char *text);
 void draw_text_area(window_t *window, text_area_t *text_area);
 
-#endif
+#endif /*WINDOW_H*/

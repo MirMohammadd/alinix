@@ -18,7 +18,7 @@
 #include <asm/cmpxchg-cas.h>
 #else
 #include <asm/cmpxchg-irq.h>
-#endif
+#endif /*CONFIG_GUSA_RB*/
 
 extern void __xchg_called_with_bad_pointer(void);
 

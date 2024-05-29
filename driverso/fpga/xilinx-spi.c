@@ -258,7 +258,7 @@ static const struct of_device_id xlnx_spi_of_match[] = {
 	{}
 };
 MODULE_DEVICE_TABLE(of, xlnx_spi_of_match);
-#endif
+#endif /*CONFIG_OF*/
 
 static struct spi_driver xilinx_slave_spi_driver = {
 	.driver = {

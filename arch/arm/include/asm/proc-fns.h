@@ -69,7 +69,7 @@ struct processor {
 	void (*set_pte_ext)(pte_t *ptep, pte_t pte);
 #else
 	void (*set_pte_ext)(pte_t *ptep, pte_t pte, unsigned int ext);
-#endif
+#endif /*CONFIG_ARM_LPAE*/
 
 	/* Suspend/resume */
 	unsigned int suspend_size;
@@ -91,7 +91,7 @@ extern void cpu_do_switch_mm(phys_addr_t pgd_phys, struct mm_struct *mm);
 extern void cpu_set_pte_ext(pte_t *ptep, pte_t pte);
 #else
 extern void cpu_set_pte_ext(pte_t *ptep, pte_t pte, unsigned int ext);
-#endif
+#endif /*CONFIG_ARM_LPAE*/
 extern void cpu_reset(unsigned long addr, bool hvc) __attribute__((noreturn));
 
 /* These three are private to arch/arm/kernel/suspend.c */
@@ -128,7 +128,7 @@ static inline void init_proc_vtable(const struct processor *p)
 {
 	processor = *p;
 }
-#endif
+#endif /*CONFIG_BIG_LITTLE*/
 
 #define cpu_proc_init			PROC_VTABLE(_proc_init)
 #define cpu_check_bugs			PROC_VTABLE(check_bugs)
@@ -142,7 +142,7 @@ static inline void init_proc_vtable(const struct processor *p)
 /* These two are private to arch/arm/kernel/suspend.c */
 #define cpu_do_suspend			PROC_VTABLE(do_suspend)
 #define cpu_do_resume			PROC_VTABLE(do_resume)
-#endif
+#endif /*CONFIG_BIG_LITTLE*/
 
 extern void cpu_resume(void);
 
@@ -175,13 +175,13 @@ extern void cpu_resume(void);
 		pg &= ~0x3fff;				\
 		(pgd_t *)phys_to_virt(pg);		\
 	})
-#endif
+#endif /*CONFIG_ARM_LPAE*/
 
 #else	/*!CONFIG_MMU */
 
 #define cpu_switch_mm(pgd,mm)	{ }
 
-#endif
+#endif /*CONFIG_MMU*/
 
 #endif /* __ASSEMBLY__ */
 #endif /* __KERNEL__ */

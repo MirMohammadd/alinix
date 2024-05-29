@@ -29,4 +29,4 @@ struct faultinfo {
 
 #define PTRACE_FULL_FAULTINFO 1
 
-#endif
+#endif /*__FAULTINFO_X86_64_H*/

@@ -94,4 +94,4 @@ ATOMIC_OPS(xor, xor)
 #undef ATOMIC_OP_RETURN
 #undef ATOMIC_OP
 
-#endif
+#endif /*_ASM_ARC_ATOMIC_LLSC_H*/

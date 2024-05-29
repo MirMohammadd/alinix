@@ -94,6 +94,6 @@ int btbcm_finalize(struct hci_dev *hdev, bool *fw_load_done, bool use_autobaud_m
 #else 
 
 
-#endif
+#endif /*CONFIG_BT_BCM*/
 
-#endif
+#endif /*__ALINIX_KERNEL_BTB_CM_H*/

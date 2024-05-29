@@ -125,7 +125,7 @@ static const struct of_device_id zynqmp_fpga_of_match[] = {
 	{},
 };
 MODULE_DEVICE_TABLE(of, zynqmp_fpga_of_match);
-#endif
+#endif /*CONFIG_OF*/
 
 static struct platform_driver zynqmp_fpga_driver = {
 	.probe = zynqmp_fpga_probe,

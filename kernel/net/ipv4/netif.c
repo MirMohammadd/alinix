@@ -75,7 +75,7 @@ void netif_set_down(struct netif *netif)
     netif->flags &= ~NETIF_FLAG_UP;
 #if LWIP_SNMP
     snmp_get_sysuptime(&netif->ts);
-#endif
+#endif /*LWIP_SNMP*/
 
 #if LWIP_ARP
     if (netif->flags & NETIF_FLAG_ETHARP) {
@@ -128,7 +128,7 @@ netif_set_ipaddr(struct netif *netif, ip_addr_t *ipaddr)
       }
     }
   }
-#endif
+#endif /*LWIP_TCP*/
   snmp_delete_ipaddridx_tree(netif);
   snmp_delete_iprteidx_tree(0,netif);
   /* set new IP address to netif */

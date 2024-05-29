@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file vga.h
  * @abstraction:
  *  - Kernel VGA implementation in header file.
 */

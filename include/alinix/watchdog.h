@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file watchdog.h
  * @abstract:
  * 	- Watchdog implementation for the kernel.
 */

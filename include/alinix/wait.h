@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file wait.h
  * @abstract:
  * 	- Wait header file for operations.
 */

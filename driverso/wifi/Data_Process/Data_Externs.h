@@ -9,4 +9,4 @@
 		extern		uint8_t 	Connect_To_Data[ CONNECT_TO_DATA_SIZE ];
 		extern		uint8_t 	Connect_Send_Data[ CONNECT_SEND_DATA_SIZE ];
 
-#endif
+#endif /*__Data_Externs___H*/

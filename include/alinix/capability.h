@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file capability.h
  * @abstract:
  * 	- Kernel capability header file implemented.
 */

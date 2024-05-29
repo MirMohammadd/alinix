@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file clk.h
  * @abstraction:
  * 	- Kernel CLK header file implemented.
 */

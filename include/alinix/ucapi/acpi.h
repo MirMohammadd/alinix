@@ -14,6 +14,13 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - UACPI util.
+*/
+
+
 #ifndef __ALINIX_UACPI_ACPI_ACPI_H__INCLUDED
 #define __ALINIX_UACPI_ACPI_ACPI_H__INCLUDED
 

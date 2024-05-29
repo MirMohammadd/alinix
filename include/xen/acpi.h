@@ -71,6 +71,6 @@ static inline void xen_acpi_sleep_register(void)
 static inline void xen_acpi_sleep_register(void)
 {
 }
-#endif
+#endif /*CONFIG_XEN_DOM0*/
 
 #endif	/* _XEN_ACPI_H */

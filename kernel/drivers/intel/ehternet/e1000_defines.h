@@ -815,7 +815,7 @@
 
 #ifndef ETH_ADDR_LEN
 #define ETH_ADDR_LEN			6
-#endif
+#endif /*ETH_ADDR_LEN*/
 
 #define PHY_REVISION_MASK		0xFFFFFFF0
 #define MAX_PHY_REG_ADDRESS		0x1F  /* 5 bit address bus (0-0x1F) */

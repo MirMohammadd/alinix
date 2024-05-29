@@ -78,4 +78,4 @@ struct alps_model_info {
 	struct alps_protocol_info protocol_info;
 };
 
-#endif
+#endif /*__ALINIX_KERNEL_ALPS_H*/

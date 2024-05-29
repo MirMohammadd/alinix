@@ -45,7 +45,7 @@ const void *free_irq(unsigned int irq, void *dev_id)
 #ifdef CONFIG_SMP
 	if (WARN_ON(desc->affinity_notify))
 		desc->affinity_notify = NULL;
-#endif
+#endif /*CONFIG_SMP*/
 
 	// action = __free_irq(desc, dev_id);
 

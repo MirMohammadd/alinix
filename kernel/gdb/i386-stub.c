@@ -955,7 +955,7 @@ void handle_exception(int exceptionVector)
 	  /* Huh? This doesn't look like "nothing".
 	     m68k-stub.c and sparc-stub.c don't have it.  */
 	  BREAKPOINT ();
-#endif
+#endif // 0
             break;
         } /* switch */
 

@@ -24,7 +24,7 @@
 
 #ifndef __cplusplus
 #warning "Including stream.hpp in C is not recommended"
-#endif
+#endif /*__cplusplus*/
 
 #include <alinix/types.h>
 

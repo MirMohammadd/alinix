@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ * 	- Driver audio util.
+*/
 #ifndef __ALINIX_KERNEL_AUDIO_als4000_H
 #define __ALINIX_KERNEL_AUDIO_als4000_H
 
@@ -122,4 +127,4 @@ uint32_t dev_mixer_read(uint32_t *base, uint32_t reg);
 
 
 
-#endif
+#endif /*__ALINIX_KERNEL_AUDIO_als4000_H*/

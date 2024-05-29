@@ -63,4 +63,4 @@ char Disk_WriteSector(Disk* disk, uint32_t lba, uint8_t* buf) {
     return 0;
 }
 
-#endif
+#endif /*__ALINIX_KERNEL_DISK_H*/

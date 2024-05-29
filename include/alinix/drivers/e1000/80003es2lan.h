@@ -90,4 +90,4 @@
 /* In-Band Control Register (Page 194, Register 18) */
 #define GG82563_ICR_DIS_PADDING                 0x0010 /* Disable Padding */
 
-#endif
+#endif /*__ALINIX_KERNEL_80003ES_2_LAN_H*/

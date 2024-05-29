@@ -77,4 +77,4 @@ enum e1000_mng_mode {
 /* Intel(R) Active Management Technology signature */
 #define E1000_IAMT_SIGNATURE  0x544D4149
 
-#endif
+#endif /*__ALINIX_KERNEL_MANAGE_DRIVERS_E1000_H*/

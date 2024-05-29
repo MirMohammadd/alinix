@@ -53,7 +53,7 @@ inline uint32_t cpu_to_le32(uint16_t value) {
                ((value & 0xFF00) << 8) |
                ((value & 0xFF0000) >> 8) |
                ((value & 0xFF000000) >> 24);
-    #endif
+    #endif /*__GNUC__*/
 }
 #define MMIO32(addr) (*(volatile uint32_t *)(addr))
 

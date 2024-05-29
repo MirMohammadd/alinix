@@ -260,4 +260,4 @@ sint32_t e1000_oem_bits_config_ich8lan(struct e1000_hw *hw, bool d0_config);
 void e1000_copy_rx_addrs_to_phy_ich8lan(struct e1000_hw *hw);
 sint32_t e1000_lv_jumbo_workaround_ich8lan(struct e1000_hw *hw, bool enable);
 
-#endif 
+#endif  /*__ALINIX_KERNEL_DRIVERS_E_100__ICH_8_LAN_H*/

@@ -37,7 +37,7 @@ struct timer_list {
 
 #ifdef CONFIG_LOCKDEP
 	struct lockdep_map	lockdep_map;
-#endif
+#endif /*CONFIG_LOCKDEP*/
 };
 
 #endif // __ALINIX_KERNEL_TIMER_TYPES_H

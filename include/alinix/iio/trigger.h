@@ -85,4 +85,4 @@ struct iio_trigger {
 
 
 
-#endif
+#endif /*__ALINIX_IIO_TRIGGER_H*/

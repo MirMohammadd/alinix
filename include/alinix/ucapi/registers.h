@@ -69,4 +69,4 @@ uacpi_status uacpi_read_register_field(enum uacpi_register_field, u64*);
 uacpi_status uacpi_write_register_field(enum uacpi_register_field, u64);
 
 
-#endif
+#endif /*__UCAPI_REGISTERS_INCLUDED__H*/

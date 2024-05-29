@@ -1520,4 +1520,4 @@
 #define E1000_GEN_POLL_TIMEOUT          640
 
 
-#endif
+#endif /*__ALINIX_KERNEL_DRIVERS_NET_E1000_H_DEFS*/

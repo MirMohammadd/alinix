@@ -246,7 +246,7 @@
     #define REG_DV_VHORI_SIZE_1 0x195
     #define REG_DV_VVERT_SIZE_0 0x198
     #define REG_DV_VVERT_SIZE_1 0x199
-#endif
+#endif // 0
 #define REG_DV_VMEM_STR_ADDR1_0         0x19c
 #define REG_DV_VMEM_STR_ADDR1_1         0x19d
 #define REG_DV_VMEM_STR_ADDR1_2         0x19e
@@ -1257,4 +1257,4 @@ struct DWORD_VAL{
     uint64_t v;
 };
 
-#endif
+#endif /*__ALINIX_KERNEL_GRAPHICS_MODEL_H*/

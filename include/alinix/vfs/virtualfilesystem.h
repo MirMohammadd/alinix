@@ -63,4 +63,4 @@ int CreateDirectory(const char* path);
 // Get size of specified file in bytes
 uint32_t GetFileSize(const char* filename);
 
-#endif
+#endif /*__ALINIX_KERNEL_VIRTUAL_FILE_SYSTEM_VFS_H*/

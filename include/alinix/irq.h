@@ -36,7 +36,7 @@ struct irq_data {
 	struct irq_domain	*domain;
 #ifdef	CONFIG_IRQ_DOMAIN_HIERARCHY
 	struct irq_data		*parent_data;
-#endif
+#endif /*CONFIG_IRQ_DOMAIN_HIERARCHY*/
 	void			*chip_data;
 };
 
@@ -80,18 +80,18 @@ struct irq_common_data {
 	unsigned int		 state_use_accessors;
 #ifdef CONFIG_NUMA
 	unsigned int		node;
-#endif
+#endif /*CONFIG_NUMA*/
 	void			*handler_data;
 	// struct msi_desc		*msi_desc;
 #ifdef CONFIG_SMP
 	cpumask_var_t		affinity;
-#endif
+#endif /*CONFIG_SMP*/
 #ifdef CONFIG_GENERIC_IRQ_EFFECTIVE_AFF_MASK
 	cpumask_var_t		effective_affinity;
-#endif
+#endif /*CONFIG_GENERIC_IRQ_EFFECTIVE_AFF_MASK*/
 #ifdef CONFIG_GENERIC_IRQ_IPI
 	unsigned int		ipi_offset;
-#endif
+#endif /*CONFIG_GENERIC_IRQ_IPI*/
 };
 
 struct irq_chip {
@@ -118,7 +118,7 @@ struct irq_chip {
 #ifdef CONFIG_DEPRECATED_IRQ_CPU_ONOFFLINE
 	void		(*irq_cpu_online)(struct irq_data *data);
 	void		(*irq_cpu_offline)(struct irq_data *data);
-#endif
+#endif /*CONFIG_DEPRECATED_IRQ_CPU_ONOFFLINE*/
 	void		(*irq_suspend)(struct irq_data *data);
 	void		(*irq_resume)(struct irq_data *data);
 	void		(*irq_pm_shutdown)(struct irq_data *data);

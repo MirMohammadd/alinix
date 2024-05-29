@@ -66,4 +66,4 @@ uacpi_namespace_node *uacpi_namespace_get_predefined(
 
 uacpi_namespace_node *uacpi_namespace_root(void);
 
-#endif
+#endif /*__ALINIX_KERNEL_UAPI_NAME_SPACE_H*/

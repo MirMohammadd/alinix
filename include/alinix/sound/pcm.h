@@ -74,4 +74,4 @@ struct snd_pcm_hardware {
 };
 
 
-#endif
+#endif /*__ALINIX_KERNEL_SOUND_PCM_H*/

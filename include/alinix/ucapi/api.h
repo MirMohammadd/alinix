@@ -64,4 +64,4 @@ void uacpi_kernel_vlog(enum uacpi_log_level, const char*, va_list);
 
 
 
-#endif
+#endif /*__ALINIX_KERNEL_UCAPI_API__INCLUDED_H*/

@@ -41,4 +41,4 @@ public:
     
     static GraphicsDevice* GetBestDevice();
 };
-#endif /**/
+#endif /*__ALINIX_KERNEL_COMPONENTS_GRAPHIC_DEVICE_HPP*/

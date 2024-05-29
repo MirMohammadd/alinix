@@ -48,4 +48,4 @@ void DrawChar(char character, int x, int y, uint32_t color);
 //? Change above?
 
 
-#endif 
+#endif  /*__ALINIX_KERNEL_DIRECT_GUI_H*/

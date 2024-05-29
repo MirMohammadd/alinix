@@ -58,7 +58,7 @@ struct kobject {
 
 #ifdef CONFIG_DEBUG_KOBJECT_RELEASE
 	struct delayed_work	release;
-#endif
+#endif /*CONFIG_DEBUG_KOBJECT_RELEASE*/
 };
 
 struct kset {

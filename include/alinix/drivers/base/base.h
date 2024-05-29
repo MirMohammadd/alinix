@@ -38,4 +38,4 @@ struct device_private {
 	uint8_t dead:1;
 };
 
-#endif
+#endif /*__ALINIX_KERNEL_BASE_BASE_H*/

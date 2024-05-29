@@ -22,7 +22,7 @@
 
 #ifndef UACPI_REDUCED_HARDWARE
     #define UACPI_REDUCED_HARDWARE 0
-#endif
+#endif /*UACPI_REDUCED_HARDWARE*/
 
 #if UACPI_REDUCED_HARDWARE == 1
 #define UACPI_MAKE_STUB_FOR_REDUCED_HARDWARE(fn, ret) \
@@ -38,7 +38,7 @@
 
 #if UACPI_REDUCED_HARDWARE != 0
 #error UACPI_REDUCED_HARDWARE must be set to either 0 or 1
-#endif
+#endif /*UACPI_REDUCED_HARDWARE*/
 
 #define UACPI_STUB_IF_REDUCED_HARDWARE(fn, ret) fn;
 #define UACPI_ALWAYS_ERROR_FOR_REDUCED_HARDWARE(fn) fn;
@@ -47,7 +47,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif
+#endif /*__cplusplus*/
 
 /*
  * Bad table checksum should be considered a fatal error
@@ -140,7 +140,7 @@ UACPI_ALWAYS_ERROR_FOR_REDUCED_HARDWARE(
 
 #ifdef __cplusplus
 }
-#endif
+#endif // __cplusplus
 
 
-#endif
+#endif /*__ALINIX_KERNEL_UACPI_H*/

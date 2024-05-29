@@ -340,4 +340,4 @@
 #define E1000_RXUDP      0x0B638 /* Time Sync Rx UDP Port - RW */
 
 
-#endif // 
+#endif // __ALINIX_KERNEL_DRIVERS_E1000_REGS_H

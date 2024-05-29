@@ -69,7 +69,7 @@ void * memmove(void* dstptr, const void* srcptr, uint32_t size);
 
 #ifndef LWIP_MEM_ALIGN_SIZE
 #define LWIP_MEM_ALIGN_SIZE(size) (((size) + MEM_ALIGNMENT - 1) & ~(MEM_ALIGNMENT-1))
-#endif
+#endif /*LWIP_MEM_ALIGN_SIZE*/
 
 
 

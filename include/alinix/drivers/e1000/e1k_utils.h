@@ -161,4 +161,4 @@ struct __attribute__((packed)) e1000_desc {
 	};
 };
 
-#endif
+#endif /*__ALINIX_KERNEL_E1L_DRIVERS_NET_UTILS_H*/

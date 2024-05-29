@@ -427,4 +427,4 @@ void uacpi_object_unref(uacpi_object *obj);
 
 
 
-#endif 
+#endif  /*__ALINIX_KERNEL_UAPI_POWER_TYPES_H*/

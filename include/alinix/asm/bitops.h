@@ -21,7 +21,7 @@
  * 	- Bit operations in header file.
 */
 #ifndef _____BITOPS_H
-#define ____BITOPS_H
+#define _____BITOPS_H
 
 #include <alinix/types.h>
 
@@ -59,4 +59,4 @@ static inline bool test_bit(unsigned int nr, unsigned long *addr)
 }
 
 
-#endif
+#endif /*_____BITOPS_H*/

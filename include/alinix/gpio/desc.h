@@ -29,4 +29,4 @@ struct gpio_desc {
 	unsigned long	config;
 };
 
-#endif
+#endif /*_ALINIX_KERNEL_DESC_H*/

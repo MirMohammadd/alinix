@@ -119,7 +119,7 @@ public:
         uint32_t diskWriteOp = 0;
     } SYSTEM_STATS;
     static SYSTEM_STATS statistics;
-    #endif
+    #endif /*ENABLE_ADV_DEBUG*/
 
     static void Start();
     static void Panic();

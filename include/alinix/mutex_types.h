@@ -33,14 +33,14 @@ struct mutex {
 
 #ifdef CONFIG_MUTEX_SPIN_ON_OWNER
 	struct optimistic_spin_queue osq; /* Spinner MCS lock */
-#endif
+#endif /*CONFIG_MUTEX_SPIN_ON_OWNER*/
 	struct list_head	wait_list;
 #ifdef CONFIG_DEBUG_MUTEXES
 	void			*magic;
-#endif
+#endif /*CONFIG_DEBUG_MUTEXES*/
 #ifdef CONFIG_DEBUG_LOCK_ALLOC
 	struct lockdep_map	dep_map;
-#endif
+#endif /*CONFIG_DEBUG_LOCK_ALLOC*/
 };
 
 #endif //__ALINIX_KERNEL_MUTEX_TYPES_H

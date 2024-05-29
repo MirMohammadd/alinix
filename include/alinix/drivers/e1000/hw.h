@@ -229,13 +229,13 @@ enum e1000_serdes_link_state {
 
 #ifndef __le16
 #define __le16 u16
-#endif
+#endif /*__le16*/
 #ifndef __le32
 #define __le32 u32
-#endif
+#endif /*__le32*/
 #ifndef __le64
 #define __le64 u64
-#endif
+#endif /*__le64*/
 
 
 union e1000_rx_desc_extended{
@@ -710,4 +710,4 @@ struct e1000_hw {
 /* These functions must be implemented by drivers */
 sint32_t  e1000_read_pcie_cap_reg(struct e1000_hw *hw, u32 reg, u16 *value);
 
-#endif 
+#endif  /*ALINIX_KERNEL_DRIVERS_E1000_HW_H*/

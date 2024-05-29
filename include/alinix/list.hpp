@@ -24,7 +24,7 @@
 
 #ifndef __cplusplus
 #error "This file must be compiled with C++"
-#endif
+#endif /*__cplusplus*/
 
 
 #include <alinix/lock.hpp>

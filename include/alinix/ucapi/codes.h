@@ -29,4 +29,4 @@ struct uacpi_op_spec {
     uint16_t code;
 };
 
-#endif
+#endif /*__ALINIX_KERNEL_CODES_H*/

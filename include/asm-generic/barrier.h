@@ -19,7 +19,7 @@
 
 #ifndef nop
 #define nop()	asm volatile ("nop")
-#endif
+#endif // nop
 
 /*
  * Architectures that want generic instrumentation can define __ prefixed
@@ -28,27 +28,27 @@
 
 #ifdef __mb
 #define mb()	do { kcsan_mb(); __mb(); } while (0)
-#endif
+#endif /*__mb*/
 
 #ifdef __rmb
 #define rmb()	do { kcsan_rmb(); __rmb(); } while (0)
-#endif
+#endif /*__rmb*/
 
 #ifdef __wmb
 #define wmb()	do { kcsan_wmb(); __wmb(); } while (0)
-#endif
+#endif /*__wmb*/
 
 #ifdef __dma_mb
 #define dma_mb()	do { kcsan_mb(); __dma_mb(); } while (0)
-#endif
+#endif /*__dma_mb*/
 
 #ifdef __dma_rmb
 #define dma_rmb()	do { kcsan_rmb(); __dma_rmb(); } while (0)
-#endif
+#endif /*__dma_rmb*/
 
 #ifdef __dma_wmb
 #define dma_wmb()	do { kcsan_wmb(); __dma_wmb(); } while (0)
-#endif
+#endif /*__dma_wmb*/
 
 /*
  * Force strict CPU ordering. And yes, this is required on UP too when we're

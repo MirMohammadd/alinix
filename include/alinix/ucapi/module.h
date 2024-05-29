@@ -19,4 +19,4 @@
 
 #include "types.h"
 
-#endif
+#endif /*__ALINIX__KERNEL_UACPI_MODULE_H*/

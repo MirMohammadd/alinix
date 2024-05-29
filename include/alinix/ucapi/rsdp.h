@@ -50,4 +50,4 @@ struct XSDP_t {
 } __attribute__ ((packed));
 
 
-#endif
+#endif /*__ALINIX_KERNEL_RSPD_ACPI_H*/

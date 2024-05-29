@@ -47,4 +47,4 @@
 bool joystick_button_cxx(uint8_t buttonnum);
 uint16_t joy_stick_status_cxx(uint8_t byte);
 
-#endif 
+#endif  /*_____FFF__ALINIX_KERNEL_GAME_PORT_HPP*/

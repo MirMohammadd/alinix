@@ -113,4 +113,4 @@
 #define TSTA_LC                         (1 << 2)    // Late Collision
 #define LSTA_TU                         (1 << 3)    // Trans
 
-#endif
+#endif /*__ALINIX_KERNEL_CPP_NET_PORT_HPP*/

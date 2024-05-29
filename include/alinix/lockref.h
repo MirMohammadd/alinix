@@ -28,7 +28,7 @@ struct lockref {
 	union {
 #if USE_CMPXCHG_LOCKREF
 		aligned_u64 lock_count;
-#endif
+#endif /*USE_CMPXCHG_LOCKREF*/
 		struct {
 			spinlock_t lock;
 			int count;

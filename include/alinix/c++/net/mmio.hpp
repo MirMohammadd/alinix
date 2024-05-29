@@ -72,4 +72,4 @@ void MMIOUtils::write64 (uint64_t p_address,uint64_t p_value)
 }
 
 
-#endif
+#endif /*__ALINIX_KERNEL_CPP_MMIO_HPP*/

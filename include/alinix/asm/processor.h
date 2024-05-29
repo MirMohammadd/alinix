@@ -30,4 +30,4 @@ static inline void local_irq_disable(void)
 }
 
 
-#endif
+#endif /*__ALINIX_KERNEL_PROCESSOR_H*/

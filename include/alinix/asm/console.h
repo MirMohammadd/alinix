@@ -25,4 +25,4 @@
 
 extern long callback_puts(long unit, const char *s, long length);
 
-#endif
+#endif /*__ALINIX_KERNEL_ASM__CONSOLE_HEADER*/

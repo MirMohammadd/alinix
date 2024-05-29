@@ -137,6 +137,6 @@ int DoSyscall(unsigned int intNum, unsigned int arg1 = 0, unsigned int arg2 = 0,
 #else 
 int DoSyscall(unsigned int intNum, unsigned int arg1, unsigned int arg2, unsigned int arg3, unsigned int arg4, unsigned int arg5);
 
-#endif
+#endif /*__cplusplus*/
 
 #endif /*__ALINIX_SYS_CALL_HEADER_H_*/

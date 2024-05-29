@@ -53,8 +53,8 @@ struct irq_desc {
 	struct irq_affinity_notify *affinity_notify;
 #ifdef CONFIG_GENERIC_PENDING_IRQ
 	cpumask_var_t		pending_mask;
-#endif
-#endif
+#endif /*CONFIG_GENERIC_PENDING_IRQ*/
+#endif /*CONFIG_SMP*/
 	unsigned long		threads_oneshot;
 	atomic_t		threads_active;
 	wait_queue_head_t       wait_for_threads;
@@ -63,25 +63,25 @@ struct irq_desc {
 	unsigned int		no_suspend_depth;
 	unsigned int		cond_suspend_depth;
 	unsigned int		force_resume_depth;
-#endif
+#endif /*CONFIG_PM_SLEEP*/
 #ifdef CONFIG_PROC_FS
 	struct proc_dir_entry	*dir;
-#endif
+#endif /*CONFIG_PROC_FS*/
 #ifdef CONFIG_GENERIC_IRQ_DEBUGFS
 	struct dentry		*debugfs_file;
 	const char		*dev_name;
-#endif
+#endif /*CONFIG_GENERIC_IRQ_DEBUGFS*/
 #ifdef CONFIG_SPARSE_IRQ
 	struct rcu_head		rcu;
 	struct kobject		kobj;
-#endif
+#endif /*CONFIG_SPARSE_IRQ*/
 	struct mutex		request_mutex;
 	int			parent_irq;
 	struct module		*owner;
 	const char		*name;
 #ifdef CONFIG_HARDIRQS_SW_RESEND
 	struct hlist_node	resend_node;
-#endif
+#endif /*CONFIG_HARDIRQS_SW_RESEND*/
 };
 
 extern struct irq_desc *irq_to_desc(unsigned int irq);

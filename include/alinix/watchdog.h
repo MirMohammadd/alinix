@@ -169,7 +169,7 @@ static inline void watchdog_notify_pretimeout(struct watchdog_device *wdd)
 {
 	pr_alert("watchdog%d: pretimeout event\n", wdd->id);
 }
-#endif
+#endif /*CONFIG_WATCHDOG_PRETIMEOUT_GOV*/
 
 /* drivers/watchdog/watchdog_core.c */
 void watchdog_set_restart_priority(struct watchdog_device *wdd, int priority);

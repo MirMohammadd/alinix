@@ -67,17 +67,17 @@ struct pci_dev {
 	unsigned int	class;		/* 3 bytes: (base,sub,prog-if) */
 	#else
 	unsigned int	cls;		/* 3 bytes: (base,sub,prog-if) */
-	#endif
+	#endif /*__cplusplus*/
 	uint8_t		revision;	/* PCI revision, low byte of class word */
 	uint8_t		hdr_type;	/* PCI header type (`multi' flag masked out) */
 #ifdef CONFIG_PCIEAER
 	uint16_t		aer_cap;	/* AER capability offset */
 	struct aer_stats *aer_stats;	/* AER stats for this device */
-#endif
+#endif /*CONFIG_PCIEAER*/
 #ifdef CONFIG_PCIEPORTBUS
 	struct rcec_ea	*rcec_ea;	/* RCEC cached endpoint association */
 	struct pci_dev  *rcec;          /* Associated RCEC device */
-#endif
+#endif /*CONFIG_PCIEPORTBUS*/
 	uint32_t		devcap;		/* PCIe Device Capabilities */
 	uint8_t		pcie_cap;	/* PCIe capability offset */
 	uint8_t		msi_cap;	/* MSI capability offset */
@@ -129,7 +129,7 @@ struct pci_dev {
 	struct pcie_link_state	*link_state;	/* ASPM link state */
 	unsigned int	ltr_path:1;	/* Latency Tolerance Reporting
 					   supported from root to here */
-#endif
+#endif /*CONFIG_PCIEASPM*/
 	unsigned int	pasid_no_tlp:1;		/* PASID works without TLP Prefix */
 	unsigned int	eetlp_prefix_path:1;	/* End-to-End TLP Prefix */
 
@@ -210,23 +210,23 @@ struct pci_dev {
 
 #ifdef CONFIG_HOTPLUG_PCI_PCIE
 	unsigned int	broken_cmd_compl:1;	/* No compl for some cmds */
-#endif
+#endif /*CONFIG_HOTPLUG_PCI_PCIE*/
 #ifdef CONFIG_PCIE_PTM
 	uint16_t		ptm_cap;		/* PTM Capability */
 	unsigned int	ptm_root:1;
 	unsigned int	ptm_enabled:1;
 	uint8_t		ptm_granularity;
-#endif
+#endif /*CONFIG_PCIE_PTM*/
 #ifdef CONFIG_PCI_MSI
 	void __iomem	*msix_base;
 	raw_spinlock_t	msi_lock;
-#endif
+#endif /*CONFIG_PCI_MSI*/
 	struct pci_vpd	vpd;
 #ifdef CONFIG_PCIE_DPC
 	uint16_t		dpc_cap;
 	unsigned int	dpc_rp_extensions:1;
 	uint8_t		dpc_rp_log_size;
-#endif
+#endif /*CONFIG_PCIE_DPC*/
 #ifdef CONFIG_PCI_ATS
 	union {
 		struct pci_sriov	*sriov;		/* PF: SR-IOV info */
@@ -234,22 +234,22 @@ struct pci_dev {
 	};
 	uint16_t		ats_cap;	/* ATS Capability offset */
 	uint8_t		ats_stu;	/* ATS Smallest Translation Unit */
-#endif
+#endif /*CONFIG_PCI_ATS*/
 #ifdef CONFIG_PCI_PRI
 	uint16_t		pri_cap;	/* PRI Capability offset */
 	uint32_t		pri_reqs_alloc; /* Number of PRI requests allocated */
 	unsigned int	pasid_required:1; /* PRG Response PASID Required */
-#endif
+#endif /*CONFIG_PCI_PRI*/
 #ifdef CONFIG_PCI_PASID
 	uint16_t		pasid_cap;	/* PASID Capability offset */
 	uint16_t		pasid_features;
-#endif
+#endif /*CONFIG_PCI_PASID*/
 #ifdef CONFIG_PCI_P2PDMA
 	struct pci_p2pdma __rcu *p2pdma;
-#endif
+#endif /*CONFIG_PCI_P2PDMA*/
 #ifdef CONFIG_PCI_DOE
 	struct xarray	doe_mbs;	/* Data Object Exchange mailboxes */
-#endif
+#endif /*CONFIG_PCI_DOE*/
 	uint16_t		acs_cap;	/* ACS Capability offset */
 	phys_addr_t	rom;		/* Physical address if not from BAR */
 	size_t		romlen;		/* Length if not from BAR */

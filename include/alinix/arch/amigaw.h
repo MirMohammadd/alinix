@@ -198,4 +198,4 @@ struct pia {
 #define ciaa   ((*(volatile struct CIA *)(zTwoBase + CIAA_PHYSADDR)))
 #define ciab   ((*(volatile struct CIA *)(zTwoBase + CIAB_PHYSADDR)))
 
-#endif
+#endif /*__ALINIX_KERNEL_AMIGAW_H*/

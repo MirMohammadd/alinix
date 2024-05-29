@@ -221,7 +221,7 @@ extern void power_supply_put(struct power_supply *psy);
 static inline void power_supply_put(struct power_supply *psy) {}
 static inline struct power_supply *power_supply_get_by_name(const char *name)
 { return NULL; }
-#endif
+#endif /*CONFIG_POWER_SUPPLY*/
 #ifdef CONFIG_OF
 extern struct power_supply *power_supply_get_by_phandle(struct device_node *np,
 							const char *property);
@@ -298,7 +298,7 @@ power_supply_supports_temp2ri(struct power_supply_battery_info *info)
 extern int power_supply_is_system_supplied(void);
 #else
 static inline int power_supply_is_system_supplied(void) { return -ENOSYS; }
-#endif
+#endif /*CONFIG_POWER_SUPPLY*/
 
 extern int power_supply_get_property(struct power_supply *psy,
 			    enum power_supply_property psp,
@@ -312,7 +312,7 @@ static inline int power_supply_set_property(struct power_supply *psy,
 			    enum power_supply_property psp,
 			    const union power_supply_propval *val)
 { return 0; }
-#endif
+#endif /*CONFIG_POWER_SUPPLY*/
 extern int power_supply_property_is_writeable(struct power_supply *psy,
 					enum power_supply_property psp);
 extern void power_supply_external_power_changed(struct power_supply *psy);
@@ -406,7 +406,7 @@ static inline int power_supply_add_hwmon_sysfs(struct power_supply *psy)
 
 static inline
 void power_supply_remove_hwmon_sysfs(struct power_supply *psy) {}
-#endif
+#endif /*CONFIG_POWER_SUPPLY_HWMON*/
 
 #ifdef CONFIG_SYSFS
 ssize_t power_supply_charge_behaviour_show(struct device *dev,
@@ -430,6 +430,6 @@ static inline int power_supply_charge_behaviour_parse(unsigned int available_beh
 {
 	return -EOPNOTSUPP;
 }
-#endif
+#endif /*CONFIG_SYSFS*/
 
 #endif /*__ALINIX_KERNEL_POWER_SUPPLY_H*/

@@ -90,7 +90,7 @@ static int irq_polarity = -1;
 
 #ifdef __cplusplus
 extern "C" {
-#endif
+#endif /*__cplusplus*/
 struct list_head    list;
 uint8_t status;
 uint16_t devices;
@@ -120,7 +120,7 @@ bool GetCharacteristics();
 
 #ifdef __cplusplus
 }
-#endif
+#endif /*__cplusplus*/
 
 
 

@@ -68,7 +68,7 @@ typedef size_t ssize_t;
 typedef enum  {false = 0, true = 1} bool;
 // #include <stdbool.h>
 //?++<<<include <stdbool.h>
-#endif
+#endif /*__cplusplus*/
 
 /////////////////////////
 // Defining the extra system types
@@ -76,7 +76,7 @@ typedef uint16_t __le16;
 
 #ifndef NULL
 #define NULL (void *)0
-#endif
+#endif /*NULL*/
 
 #define CONSOLE_BUFFER_LENGTH 64
 ////////////////////

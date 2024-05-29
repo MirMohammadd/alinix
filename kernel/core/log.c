@@ -51,7 +51,7 @@ void Log(enum LogLevel level, const char* __restrict__ format, ...)
     {
         #if LOG_SHOW_MS
         Write("["); Write(IntToString(GetMSSinceBoot())); Write("] ");
-        #endif
+        #endif /*LOG_SHOW_MS*/
         switch (level)
         {
             case Info:
@@ -70,7 +70,7 @@ void Log(enum LogLevel level, const char* __restrict__ format, ...)
     {
         #if LOG_SHOW_MS
         WriteStr("["); WriteStr(IntToString(GetMSSinceBoot())); WriteStr("] ");
-        #endif
+        #endif /*LOG_SHOW_MS*/
         WriteStr(logLevelMessage[level]); WriteStr(": ");
     }
 

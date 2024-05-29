@@ -66,7 +66,7 @@ struct thread_info {
 	u32			status;		/* thread synchronous flags */
 #ifdef CONFIG_SMP
 	u32			cpu;		/* current CPU */
-#endif
+#endif /*CONFIG_SMP*/
 };
 
 #define INIT_THREAD_INFO(tsk)			\
@@ -78,7 +78,7 @@ struct thread_info {
 
 #include <asm/asm-offsets.h>
 
-#endif
+#endif /*CONFIG_SMP*/
 
 /*
  * thread information flags
@@ -142,14 +142,14 @@ struct thread_info {
 # define _TIF_WORK_CTXSW	(_TIF_WORK_CTXSW_BASE | _TIF_SPEC_IB)
 #else
 # define _TIF_WORK_CTXSW	(_TIF_WORK_CTXSW_BASE)
-#endif
+#endif /*CONFIG_SMP*/
 
 #ifdef CONFIG_X86_IOPL_IOPERM
 # define _TIF_WORK_CTXSW_PREV	(_TIF_WORK_CTXSW| _TIF_USER_RETURN_NOTIFY | \
 				 _TIF_IO_BITMAP)
 #else
 # define _TIF_WORK_CTXSW_PREV	(_TIF_WORK_CTXSW| _TIF_USER_RETURN_NOTIFY)
-#endif
+#endif /*CONFIG_X86_IOPL_IOPERM*/
 
 #define _TIF_WORK_CTXSW_NEXT	(_TIF_WORK_CTXSW)
 
@@ -209,7 +209,7 @@ static inline int arch_within_stack_frames(const void * const stack,
 	return BAD_STACK;
 #else
 	return NOT_STACK;
-#endif
+#endif /*CONFIG_FRAME_POINTER*/
 }
 
 #endif  /* !__ASSEMBLY__ */
@@ -230,14 +230,14 @@ static inline int arch_within_stack_frames(const void * const stack,
 #define arch_set_restart_data(restart)	\
 	do { restart->arch_data = current_thread_info()->status; } while (0)
 
-#endif
+#endif /*CONFIG_COMPAT*/
 
 #ifdef CONFIG_X86_32
 #define in_ia32_syscall() true
 #else
 #define in_ia32_syscall() (IS_ENABLED(CONFIG_IA32_EMULATION) && \
 			   current_thread_info()->status & TS_COMPAT)
-#endif
+#endif /*__ASSEMBLY__*/
 
 extern void arch_setup_new_exec(void);
 #define arch_setup_new_exec arch_setup_new_exec

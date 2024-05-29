@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file spinlock_types.h
  * @abstraction:    
  *  - Kernel spinlock types implementations header file.
 */

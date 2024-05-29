@@ -125,4 +125,4 @@ struct chameleon_bar {
 int chameleon_parse_cells(struct mcb_bus *bus, phys_addr_t mapbase,
 			  void __iomem *base);
 
-#endif
+#endif /*__MCB_INTERNAL*/

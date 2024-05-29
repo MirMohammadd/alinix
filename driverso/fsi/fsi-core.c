@@ -869,7 +869,7 @@ static char *cfam_devnode(const struct device *dev, umode_t *mode,
 	return kasprintf(GFP_KERNEL, "fsi/cfam%d", slave->cdev_idx);
 #else
 	return kasprintf(GFP_KERNEL, "cfam%d", slave->cdev_idx);
-#endif
+#endif /*CONFIG_FSI_NEW_DEV_NODE*/
 }
 
 static const struct device_type cfam_type = {
@@ -885,7 +885,7 @@ static char *fsi_cdev_devnode(const struct device *dev, umode_t *mode,
 	return kasprintf(GFP_KERNEL, "fsi/%s", dev_name(dev));
 #else
 	return kasprintf(GFP_KERNEL, "%s", dev_name(dev));
-#endif
+#endif /*CONFIG_FSI_NEW_DEV_NODE*/
 }
 
 const struct device_type fsi_cdev_type = {
@@ -901,7 +901,7 @@ static int fsi_adjust_index(int index)
 	return index;
 #else
 	return index + 1;
-#endif
+#endif /*CONFIG_FSI_NEW_DEV_NODE*/
 }
 
 static int __fsi_get_new_minor(struct fsi_slave *slave, enum fsi_dev_type type,

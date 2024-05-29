@@ -103,7 +103,7 @@ static const char *get_err_string(u8 err)
 
 	return "Default switch case";
 }
-#endif
+#endif /*DEBUG*/
 
 static void dump_status_reg(unsigned long *status)
 {
@@ -112,7 +112,7 @@ static void dump_status_reg(unsigned long *status)
 		 *status, test_bit(DONE, status), test_bit(ENAB, status),
 		 test_bit(BUSY, status), test_bit(FAIL, status),
 		 test_bit(DVER, status), get_err_string(get_err(status)));
-#endif
+#endif /*DEBUG*/
 }
 
 static int wait_until_not_busy(struct spi_device *spi)
@@ -380,7 +380,7 @@ static const struct of_device_id of_match[] = {
 	{}
 };
 MODULE_DEVICE_TABLE(of, of_match);
-#endif
+#endif /*CONFIG_OF*/
 
 static const struct spi_device_id lattice_ids[] = {
 	{ "machxo2-slave-spi", 0 },

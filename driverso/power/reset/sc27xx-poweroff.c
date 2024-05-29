@@ -36,7 +36,7 @@ static void sc27xx_poweroff_shutdown(void)
 		if (cpu != smp_processor_id())
 			remove_cpu(cpu);
 	}
-#endif
+#endif /*CONFIG_HOTPLUG_CPU*/
 }
 
 static struct syscore_ops poweroff_syscore_ops = {

@@ -32,7 +32,7 @@
 /* Enable whole-word match copying on selected architectures  */
 #if defined(__i386__) || defined(__x86_64__) || defined(__ARM_FEATURE_UNALIGNED)
 #  define FAST_UNALIGNED_ACCESS
-#endif
+#endif /*__i386__*/
 
 /* Size of a machine word  */
 #define WORDBYTES (sizeof(size_t))

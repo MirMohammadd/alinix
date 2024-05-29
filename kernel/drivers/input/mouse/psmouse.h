@@ -90,4 +90,4 @@ enum psmouse_type {
 };
 
 
-#endif
+#endif /*__ALINIX_KERNEL_PS_MOUSE_H*/

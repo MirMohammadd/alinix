@@ -28,7 +28,7 @@
 
 #if defined (__cplusplus)
 extern "C" {
-#endif
+#endif /*__cplusplus*/
 
 #ifndef XXHASH_H_5627135585666179
 #define XXHASH_H_5627135585666179 1
@@ -103,7 +103,7 @@ regular symbol name will be automatically translated by this header.
 #  define XXH64_canonicalFromHash XXH_NAME2(XXH_NAMESPACE, XXH64_canonicalFromHash)
 #  define XXH32_hashFromCanonical XXH_NAME2(XXH_NAMESPACE, XXH32_hashFromCanonical)
 #  define XXH64_hashFromCanonical XXH_NAME2(XXH_NAMESPACE, XXH64_hashFromCanonical)
-#endif
+#endif /*XXH_NAMESPACE*/
 
 
 /* *************************************
@@ -191,7 +191,7 @@ When done, free XXH state space if it was allocated dynamically.
 ****************************/
 #if !(defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L))   /* ! C99 */
 #  define restrict   /* disable restrict */
-#endif
+#endif /*__STDC_VERSION__*/
 
 XXH_PUBLIC_API void XXH32_copyState(XXH32_state_t* restrict dst_state, const XXH32_state_t* restrict src_state);
 XXH_PUBLIC_API void XXH64_copyState(XXH64_state_t* restrict dst_state, const XXH64_state_t* restrict src_state);
@@ -264,6 +264,6 @@ XXH_PUBLIC_API XXH64_hash_t XXH64_hashFromCanonical(const XXH64_canonical_t* src
 
 #if defined (__cplusplus)
 }
-#endif
+#endif /*__cplusplus*/
 
 #endif // __ALINIX_KERNEL_XX_HASH_H_DRIVERS___INCLUDED

@@ -57,4 +57,4 @@ struct inout_ctrl
   enum InputState 	right;
 };
 
-#endif
+#endif /*__SOUND_DRIVER_SOUND_H*/

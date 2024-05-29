@@ -53,4 +53,4 @@ bool e1000_check_phy_82574(struct e1000_hw *hw);
 bool e1000e_get_laa_state_82571(struct e1000_hw *hw);
 void e1000e_set_laa_state_82571(struct e1000_hw *hw, bool state);
 
-#endif
+#endif /*__ALINIX_KERNEL_DRIVERS_E1000_82571_H*/

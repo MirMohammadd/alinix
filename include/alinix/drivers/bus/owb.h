@@ -30,4 +30,4 @@
 #define OWB_ROM_SEARCH_ALARM  0xEC  ///< Address all devices on the bus with a set alarm flag
 
 
-#endif // 
+#endif //  __ALINIX_DRIVERS_BUS_OWB_H

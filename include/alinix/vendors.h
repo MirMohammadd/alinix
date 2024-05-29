@@ -14,10 +14,19 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @file vendors.h
+ * @abstraction:
+ *  - Kernel CPU vendor.
+*/
+
 #ifndef __ALINIX_KERNEL_CPU_VENDORS_H
 #define __ALINIX_KERNEL_CPU_VENDORS_H
 
-
+/**
+ * @brief Kernel CPU vendors defined for the CPU vendors.
+*/
 #define CPUID_VENDOR_AMD           "AuthenticAMD"
 #define CPUID_VENDOR_AMD_OLD       "AMDisbetter!" // Early engineering samples of AMD K5 processor
 #define CPUID_VENDOR_INTEL         "GenuineIntel"

@@ -71,4 +71,4 @@ void e1000e_update_adaptive(struct e1000_hw *hw);
 void e1000_write_vfta_generic(struct e1000_hw *hw, u32 offset, u32 value);
 
 
-#endif
+#endif /*__ALINIX_KERNEL_E_1000_MAC_H*/

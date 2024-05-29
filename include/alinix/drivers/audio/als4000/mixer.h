@@ -14,6 +14,13 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+
+/**
+ * @abstraction:
+ *  - Kernel audio util.
+*/
+
 #ifndef __SOUND_KERNEL_MIXER_H
 #define __SOUND_KERNEL_MIXER_H
 
@@ -72,4 +79,4 @@ int get_set_volume(uint8_t *base,struct volume_level *level,int flag);
 void dev_set_default_volume(uint32_t *pbase);
 
 
-#endif
+#endif /*__SOUND_KERNEL_MIXER_H*/

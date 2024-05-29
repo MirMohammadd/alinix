@@ -47,8 +47,8 @@
 #  define TOP_OF_KERNEL_STACK_PADDING (2 * 8)
 # else
 #  define TOP_OF_KERNEL_STACK_PADDING 0
-# endif
-#endif
+# endif /*CONFIG_X86_FRED*/
+#endif /*CONFIG_X86_32*/
 
 /*
  * low level task data that entry.S needs immediate access to

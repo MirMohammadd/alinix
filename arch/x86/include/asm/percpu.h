@@ -579,7 +579,7 @@ do {									\
 #define this_cpu_xchg_8(pcp, nval)		percpu_xchg_op(8, volatile, pcp, nval)
 #define this_cpu_cmpxchg_8(pcp, oval, nval)	percpu_cmpxchg_op(8, volatile, pcp, oval, nval)
 #define this_cpu_try_cmpxchg_8(pcp, ovalp, nval)	percpu_try_cmpxchg_op(8, volatile, pcp, ovalp, nval)
-#endif
+#endif /*CONFIG_X86_64*/
 
 static __always_inline bool x86_this_cpu_constant_test_bit(unsigned int nr,
                         const unsigned long __percpu *addr)
@@ -591,7 +591,7 @@ static __always_inline bool x86_this_cpu_constant_test_bit(unsigned int nr,
 	return ((1UL << (nr % BITS_PER_LONG)) & raw_cpu_read_8(*a)) != 0;
 #else
 	return ((1UL << (nr % BITS_PER_LONG)) & raw_cpu_read_4(*a)) != 0;
-#endif
+#endif /*CONFIG_X86_64*/
 }
 
 static inline bool x86_this_cpu_variable_test_bit(int nr,

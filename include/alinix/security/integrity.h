@@ -44,4 +44,4 @@ struct ima_digest_data {
 } __packed;
 
 
-#endif
+#endif /*__ALINIX_KERNEL_SECURITY_M_H*/

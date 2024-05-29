@@ -29,4 +29,4 @@
 #define uacpi_warn(...)  uacpi_log_lvl(UACPI_LOG_WARN, __VA_ARGS__)
 #define uacpi_error(...) uacpi_log_lvl(UACPI_LOG_ERROR, __VA_ARGS__)
 
-#endif
+#endif /*__ALINIX_KERNEL_LOG_H_UACPI_INCLUDED*/

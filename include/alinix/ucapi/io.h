@@ -24,4 +24,4 @@
 uacpi_status uacpi_gas_read(const struct acpi_gas *gas, u64 *value);
 uacpi_status uacpi_gas_write(const struct acpi_gas *gas, u64 value);
 
-#endif
+#endif /*__ALINIX_KERNEL_U_CAPI_IO_H*/

@@ -1221,4 +1221,4 @@ UACPI_PACKED(struct acpi_resource_clock_input {
 
 
 
-#endif 
+#endif  /*__ALINIX_UACPI_ACPI_ACPI_H__INCLUDED*/

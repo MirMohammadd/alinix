@@ -33,4 +33,4 @@ typedef struct {
 
 SystemComponent* SystemComponent_create(char* name, char* description) ;
 
-#endif 
+#endif  /*__ALINIX_KERNEL_COMPONENT_H*/

@@ -27,4 +27,4 @@
 #define uacpi_likely(expr)   __builtin_expect(!!(expr), 1)
 
 
-#endif
+#endif /*__ALINIX_KERNEL_DRIVERS_UCAPI_H*/

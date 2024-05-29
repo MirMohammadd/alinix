@@ -62,7 +62,7 @@ struct uacpi_runtime_context {
     bool is_hardware_reduced;
     bool has_global_lock;
     uacpi_handle sci_handle;
-#endif
+#endif /*UACPI_REDUCED_HARDWARE*/
 
 #define UACPI_INIT_LEVEL_EARLY 0
 #define UACPI_INIT_LEVEL_TABLES_LOADED 1
@@ -79,4 +79,4 @@ static inline bool uacpi_rt_should_log(enum uacpi_log_level lvl)
     return lvl <= g_uacpi_rt_ctx.params.log_level;
 }
 
-#endif
+#endif /*__ALINIX_KERNEL__UCAPI_CONTEXT_H*/

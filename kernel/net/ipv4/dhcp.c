@@ -60,7 +60,7 @@ void dhcp_network_changed(struct netif *netif);
 /** if enabled, check whether the offered IP address is not in use, using ARP */
 #if DHCP_DOES_ARP_CHECK
 void dhcp_arp_reply(struct netif *netif, ip_addr_t *addr);
-#endif
+#endif /*DHCP_DOES_ARP_CHECK*/
 
 /** to be called every minute */
 void dhcp_coarse_tmr(void);
@@ -963,12 +963,12 @@ dhcp_renew(struct netif *netif)
 #if 0
     dhcp_option(dhcp, DHCP_OPTION_REQUESTED_IP, 4);
     dhcp_option_long(dhcp, ntohl(dhcp->offered_ip_addr.addr));
-#endif
+#endif // 0
 
 #if 0
     dhcp_option(dhcp, DHCP_OPTION_SERVER_ID, 4);
     dhcp_option_long(dhcp, ntohl(dhcp->server_ip_addr.addr));
-#endif
+#endif // 0
 
 #if LWIP_NETIF_HOSTNAME
     dhcp_option_hostname(dhcp, netif);
@@ -1024,7 +1024,7 @@ dhcp_rebind(struct netif *netif)
 
     dhcp_option(dhcp, DHCP_OPTION_SERVER_ID, 4);
     dhcp_option_long(dhcp, ntohl(dhcp->server_ip_addr.addr));
-#endif
+#endif /*0*/
 
     dhcp_option_trailer(dhcp);
 
@@ -1530,7 +1530,7 @@ dhcp_recv(void *arg, struct udp_pcb *pcb, struct pbuf *p, ip_addr_t *addr, uint1
 #else
       /* bind interface to the acknowledged lease address */
       dhcp_bind(netif);
-#endif
+#endif /*DHCP_DOES_ARP_CHECK*/
     }
     /* already bound to the given lease address? */
     else if ((dhcp->state == DHCP_REBOOTING) || (dhcp->state == DHCP_REBINDING) || (dhcp->state == DHCP_RENEWING)) {
@@ -1582,7 +1582,7 @@ dhcp_create_msg(struct netif *netif, struct dhcp *dhcp, uint8_t message_type)
     xid = DHCP_GLOBAL_XID;
     xid_initialised = !xid_initialised;
   }
-#endif
+#endif /*DHCP_CREATE_RAND_XID*/
   LWIP_ERROR("dhcp_create_msg: netif != NULL", (netif != NULL), return ERR_ARG;);
   LWIP_ERROR("dhcp_create_msg: dhcp != NULL", (dhcp != NULL), return ERR_VAL;);
   LWIP_ASSERT("dhcp_create_msg: dhcp->p_out == NULL", dhcp->p_out == NULL);

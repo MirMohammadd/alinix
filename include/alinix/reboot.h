@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file reboot.h
  * @abstraction:
  *  - Kernel reboot header file implemented, for reboot operations.
 */

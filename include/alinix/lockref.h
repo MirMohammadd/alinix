@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file lockref.h
  * @abstract:
  * 	- Kernel locking thread.
 */

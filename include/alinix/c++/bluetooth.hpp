@@ -14,6 +14,11 @@
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
+
+/**
+ * @abstraction:
+ *  - Provides bluetooth util for C++ section.
+*/
 #ifndef __ALINIX_KERNEL_C_PLUS_PLUS_BLUETOOTH_HPP
 #define __ALINIX_KERNEL_C_PLUS_PLUS_BLUETOOTH_HPP
 

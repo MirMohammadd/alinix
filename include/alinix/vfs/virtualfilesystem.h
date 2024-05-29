@@ -18,6 +18,11 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
+/**
+ * @abstraction:
+ *  - Kernel virtual file system header file driver util.
+*/
+
 #ifndef __ALINIX_KERNEL_VIRTUAL_FILE_SYSTEM_VFS_H
 #define __ALINIX_KERNEL_VIRTUAL_FILE_SYSTEM_VFS_H
 

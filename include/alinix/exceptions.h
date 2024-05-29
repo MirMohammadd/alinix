@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file exceptions.h
  * @abstraction:
  *  - Kernel Exceptions header file implemented.
 */

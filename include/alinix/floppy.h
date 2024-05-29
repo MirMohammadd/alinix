@@ -15,6 +15,7 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 /**
+ * @file floppy.h
  * @abstract:
  *    - Floppy drivers implementation header file.
 */

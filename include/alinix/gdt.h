@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file gdt.h
  * Purpose:
  *      - GDT definitions and utils
 */

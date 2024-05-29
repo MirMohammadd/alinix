@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file hash.h
  * @abstract:
  * 	- Kernel hash implementation.
 */

@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file gameport.h
  * @abstract:
  *  - Game port driver for the kernel implementation.
 */

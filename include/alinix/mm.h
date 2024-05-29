@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file mm.h
  * @abstraction:
  *  - Kernel MM memory manager added header file.
 */

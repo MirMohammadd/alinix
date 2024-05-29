@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file timer_types.h
  * @abstraction:
  * 	- Timer types header file.
 */

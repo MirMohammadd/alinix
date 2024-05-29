@@ -194,7 +194,7 @@ void uart_puts(const char* str)
  
 #if defined(__cplusplus)
 extern "C" /* Use C linkage for kernel_main. */
-#endif
+#endif /*__cplusplus*/
  
 #ifdef AARCH64
 // arguments for AArch64
@@ -202,7 +202,7 @@ void kernel_main(uint64_t dtb_ptr32, uint64_t x1, uint64_t x2, uint64_t x3)
 #else
 // arguments for AArch32
 void kernel_main(uint32_t r0, uint32_t r1, uint32_t atags)
-#endif
+#endif /*AARCH64*/
 {
 	// initialize UART for Raspi2
 	uart_init(2);

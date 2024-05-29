@@ -344,7 +344,7 @@ void display_write_pixel (uint16_t x_coord, uint16_t y_coord, uint32_t color)
 		output_color |= (uint16_t)(input_color.v[1] & 0xe0) >> 5;		//Green bits 5:3
 		output_color |= (uint16_t)(input_color.v[1] & 0x1c) << 11;	//Green bits 2:0
 		output_color |= (uint16_t)(input_color.v[2] & 0xf8);			//Red
-	#endif
+	#endif /*DISPLAY_BUS_INTERFACE_IS_BIG_ENDIAN*/
 
 
 	//----- DO X COORD -----
@@ -381,7 +381,7 @@ void display_write_pixel (uint16_t x_coord, uint16_t y_coord, uint32_t color)
 		w_temp.v[1] = 0x01;
 		w_temp.v[0] = ((DWORD_VAL) address).v[0];
 		DISPLAY_WRITE_DATA(w_temp.Val);
-	#endif
+	#endif /*DISPLAY_BUS_INTERFACE_IS_BIG_ENDIAN*/
 
 	DISPLAY_REGISTER_SELECT(1);		//Select Data
 	

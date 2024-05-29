@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file shutdown.h
  * @abstraction:
  *  - Kernel shutdown implementation in header file.
 */

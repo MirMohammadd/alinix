@@ -27,6 +27,9 @@ MODULE_LICENSE("AGPL-3.0")
 MODULE_VERSION("0.1")
 
 
+/**
+ * @brief Generates beep sound using I/O ports.
+*/
 void beep(){
     outportb(0xB6, 0x43);
     outportb(30, 0x42);

@@ -44,6 +44,10 @@ uacpi_status uacpi_read_register(enum uacpi_register, u64*);
 uacpi_status uacpi_write_register(enum uacpi_register, u64);
 uacpi_status uacpi_write_registers(enum uacpi_register, u64, u64);
 
+
+/**
+ * @brief UACPI registers field enum.
+*/
 enum uacpi_register_field {
     UACPI_REGISTER_FIELD_TMR_STS = 0,
     UACPI_REGISTER_FIELD_BM_STS,

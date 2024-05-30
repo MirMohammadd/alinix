@@ -24,6 +24,9 @@
 #define __ALINIX_KERNEL_L_LIST_H
 
 
+/**
+ * @brief Kernel list node structure.
+*/
 struct llist_node {
 	struct llist_node *next;
 };

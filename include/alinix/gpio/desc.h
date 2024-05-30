@@ -1,4 +1,5 @@
 /**
+ * @file desc.h
  ** This file is part of AliNix.
 
 **AliNix is free software: you can redistribute it and/or modify
@@ -13,6 +14,11 @@
 
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
+*/
+
+/**
+ * @abstraction:
+ * 	- GPIO header file for driver util.
 */
 #ifndef _ALINIX_KERNEL_DESC_H
 #define _ALINIX_KERNEL_DESC_H

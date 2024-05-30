@@ -26,6 +26,11 @@
 
 #include <alinix/kernel.h>
 
+
+
+/**
+ * @brief Structure for USB device util .
+*/
 struct usb_device {
 	int		devnum;
 	char		devpath[16];

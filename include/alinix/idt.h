@@ -30,6 +30,10 @@
 #define IDT_INTERRUPT 0xE
 #define IDT_INTERRUPT_OFFSET 0x20
 
+
+/**
+ * @brief IDT data structure.
+*/
 struct IDTEntry
 {
     uint16_t handlerLowBits;
@@ -39,6 +43,10 @@ struct IDTEntry
     uint16_t handlerHighBits;
 } __attribute__((packed));
 
+
+/**
+ * @brief IDT pointer data structure.
+*/
 struct IDTPointer
 {
     uint16_t size;

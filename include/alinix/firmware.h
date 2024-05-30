@@ -26,6 +26,10 @@
 
 #include <alinix/types.h>
 
+
+/**
+ * @brief firmware structure.
+*/
 struct firmware {
 	size_t size;
 	const u8 *data;

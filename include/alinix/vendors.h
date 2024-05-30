@@ -59,6 +59,10 @@
 #define CPUID_VENDOR_BHYVE         "bhyve bhyve "
 #define CPUID_VENDOR_QNX           " QNXQVMBSQG "
 
+
+/**
+ * @brief CPU vendors enum for vendors util.
+*/
 enum {
     CPUID_FEAT_ECX_SSE3         = 1 << 0, 
     CPUID_FEAT_ECX_PCLMUL       = 1 << 1,
@@ -123,6 +127,11 @@ enum {
     CPUID_FEAT_EDX_IA64         = 1 << 30,
     CPUID_FEAT_EDX_PBE          = 1 << 31
 };
+
+
+/**
+ * @brief CPU id enum util.
+*/
 
 enum cpuid_requests {
   CPUID_GETVENDORSTRING,

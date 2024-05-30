@@ -26,6 +26,11 @@
 
 #include <alinix/kernel.h>
 
+
+
+/**
+ * @brief Structure for USB device util .
+*/
 struct usb_device {
 	int		devnum;
 	char		devpath[16];
@@ -108,6 +113,10 @@ struct usb_device {
 	unsigned use_generic_driver:1;
 };
 
+
+/**	
+ * @brief URB device structure.
+*/
 struct urb {
 	/* private: usb core and host controller only fields in the urb */
 	struct kref kref;		/* reference count of the URB */

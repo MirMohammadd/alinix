@@ -25,6 +25,10 @@
 
 #include <alinix/types.h>
 
+
+/**
+ * @brief FPU util data structure.
+*/
 struct FPUControlWord
 {
     uint8_t InvalidOperand : 1;

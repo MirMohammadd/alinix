@@ -128,6 +128,11 @@ enum {
     CPUID_FEAT_EDX_PBE          = 1 << 31
 };
 
+
+/**
+ * @brief CPU id enum util.
+*/
+
 enum cpuid_requests {
   CPUID_GETVENDORSTRING,
   CPUID_GETFEATURES,

@@ -40,7 +40,9 @@
 #define KTIME_SEC_MAX			(KTIME_MAX / NSEC_PER_SEC)
 #define KTIME_SEC_MIN			(KTIME_MIN / NSEC_PER_SEC)
 
-
+/**
+ * @brief Kernel time settings function.
+*/
 static inline ktime_t ktime_set(const sint64_t secs, const unsigned long nsecs)
 {
 	if (unlikely(secs >= KTIME_SEC_MAX))

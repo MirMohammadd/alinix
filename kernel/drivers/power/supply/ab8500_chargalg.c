@@ -1,6 +1,6 @@
 /**
  * @author Ali Mirmohammad
- * @file kernel.h
+ * @file ab8500_chargalg.c
  * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
  ** This file is part of AliNix.
 

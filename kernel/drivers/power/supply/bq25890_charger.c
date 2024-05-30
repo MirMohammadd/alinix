@@ -1,6 +1,6 @@
 /**
  * @author Ali Mirmohammad
- * @file kernel.h
+ * @file bq25890_charger
  * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
  ** This file is part of AliNix.
 

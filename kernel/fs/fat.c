@@ -1,6 +1,6 @@
 /**
  * @author Ali Mirmohammad
- * @file power.c
+ * @file fat.c
  * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
  ** This file is part of AliNix.
 

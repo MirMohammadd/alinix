@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file firmware.h
  * @abstract:
  * 	- Kernel firmware implemented.
 */

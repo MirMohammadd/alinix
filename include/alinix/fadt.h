@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file fadt.h
  * @abstract:
  *  - RSDT for kernel driver.
 */

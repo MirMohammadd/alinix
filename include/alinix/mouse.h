@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file mouse.h
  * @abstraction:
  *  - Implementation of the kernel mouse driver.
 */

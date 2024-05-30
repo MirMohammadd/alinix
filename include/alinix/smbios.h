@@ -19,6 +19,7 @@
 */
 
 /**
+ * @file smbios.h
  * @abstraction:
  *  - Kernel SM bios header file implementation.
 */

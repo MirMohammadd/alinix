@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file poweroff.h
  * @abstraction:
  *  - Kernel power off implemented in this header file.
 */

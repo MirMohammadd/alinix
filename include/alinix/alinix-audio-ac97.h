@@ -1,4 +1,5 @@
 /**
+ * @file alinix-audio-ac97
  ** This file is part of AliNix.
 
 **AliNix is free software: you can redistribute it and/or modify
@@ -13,6 +14,11 @@
 
 **You should have received a copy of the GNU Affero General Public License
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
+*/
+
+/**
+ * @abstraction:
+ *  - Alinix kernel Audio driver.
 */
 #ifndef __AUDIO_C_97_H
 #define __AUDIO_C_97_H

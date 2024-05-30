@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file err.h
  * @abstraction:
  * 	- Kernel error header file.
 */

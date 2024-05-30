@@ -17,6 +17,7 @@
 
 
 /**
+ * @file device.h
  * Abstraction:
  *      - Device  (CPU / GPU) utility
 */

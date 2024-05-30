@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file spinlock.h
  * @abstraction:
  * 	- Kernel spinlock implementations.
 */

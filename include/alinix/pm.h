@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file pm.h
  * @abstraction:
  * 	- Kernel PM header file implemented.
 */

@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file time.h
  * @abstraction:
  * 	- Kernel time implementation.
  * 	- Header file.

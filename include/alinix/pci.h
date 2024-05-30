@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file pci.h
  * @abstraction:
  * 	- Kernel PCI driver implementation header file.
 */

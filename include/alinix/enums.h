@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file enums.h
  * Abstract:
  *      - Provide utility for the kernel enums
 */

@@ -19,6 +19,7 @@
 */
 
 /**
+ * @file thread.h
  * @abstraction:
  *  - Kernel thread implementation.
  *  - Header file.

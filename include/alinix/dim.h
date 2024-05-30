@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file dim.h
  * @abstraction:
  * 	- Kernel DIM header file implemented.
 */

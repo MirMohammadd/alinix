@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file arch.h
  * Purpose:
  *      -Provide  functions to read configuration from INI files. and architecture stuff utility
 */

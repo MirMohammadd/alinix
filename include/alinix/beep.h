@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file beep.h
  * @abstract:
  *  - Kernel beep sound implemented.
 */

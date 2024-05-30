@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file paging.h
  * @abstract:
  *  - Kernel Paging.
  *  - memory management.

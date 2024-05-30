@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file ktime.h
  * @abstraction:
  * 	- Kernel time header file implemented.
 */

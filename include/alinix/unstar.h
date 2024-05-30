@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file unstar.h
  * @abstract:
  *  - Kernel TAR file and ZIP implementation header file.
 */

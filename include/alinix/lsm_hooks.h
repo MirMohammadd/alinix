@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file lsm_hooks.h
  * @abstract:
  * 	- Kernel files hook header file.
 */

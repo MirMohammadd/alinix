@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file etherdevice.h
  * Purpose:
  *      - Provide utility functions for Ethernet devices.
 */

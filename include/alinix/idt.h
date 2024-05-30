@@ -16,6 +16,7 @@
 */
 
 /**
+ * @file idt.h
  * @abstract:
  *  - Kernel IDT implementation.
 */

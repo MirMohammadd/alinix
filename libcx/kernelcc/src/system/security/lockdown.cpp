@@ -36,6 +36,8 @@ using namespace CactusOS::system;
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Kernel lock down implementation for security stuff")
 MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("0.1")
+
 
 
 static const enum lockdown_reason lockdown_levels[] = {LOCKDOWN_NONE,

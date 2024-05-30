@@ -39,6 +39,10 @@ void Free(void *ptr);
 
 #define HEAP_INCREASE_SIZE 10_MB
 
+
+/**
+ * @brief Memory header data structure for kernel heap.
+*/
 struct MemoryHeader
 {
     struct MemoryHeader* next;

@@ -113,6 +113,10 @@ struct usb_device {
 	unsigned use_generic_driver:1;
 };
 
+
+/**	
+ * @brief URB device structure.
+*/
 struct urb {
 	/* private: usb core and host controller only fields in the urb */
 	struct kref kref;		/* reference count of the URB */

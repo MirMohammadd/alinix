@@ -52,6 +52,10 @@ struct watchdog_ops {
 	long (*ioctl)(struct watchdog_device *, unsigned int, unsigned long);
 };
 
+
+/**
+ * @brief Watchdog device util structure.
+*/
 struct watchdog_device {
 	int id;
 	struct device *parent;

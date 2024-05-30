@@ -43,6 +43,9 @@ static uint8_t joystick_values[] = {
     0x10, 0x20, 0x40, 0x80, /* Buttons */
 };
 
+/**
+ * @brief Joy stick values.
+*/
 enum JoystickValues
 {
     JoystickButtonA = 0x10,
@@ -56,6 +59,10 @@ enum JoystickValues
 };
  
 
+
+/**
+ * @brief Joy stick status structure.
+*/
 
 struct JoystickStatus{
     uint16_t AxisX;
@@ -71,7 +78,9 @@ struct JoystickStatus{
 
 
 
-
+/**
+ * @brief Joy stick driver function util.
+*/
 bool joystick_button(uint8_t buttonnum);
 uint16_t joy_stick_status(uint8_t byte);
 

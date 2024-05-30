@@ -38,6 +38,10 @@ struct GDTEntry
     uint8_t  base_high;           // The last 8 bits of the base.
 } __attribute__((packed));
 
+
+/**
+ * @brief GDT pointer structure.
+*/
 struct GDTPointer
 {
     uint16_t limit;               // The upper 16 bits of all selector limits.

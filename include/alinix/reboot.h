@@ -39,6 +39,10 @@
 #define LINUX_REBOOT_CMD_POWER_OFF 0x4321fedc
 
 void reboot_x86_sys_call();
+
+/**
+ * @brief reboot table data structure.
+*/
 struct rebootTable{
     int reset_register;
     char *reset_command;

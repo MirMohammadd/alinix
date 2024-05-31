@@ -69,6 +69,10 @@ static inline void delay(int32_t count){
     RET;
 }
 
+
+/**
+ * @brief Enum util for rpi.
+*/
 enum
 {
     // The offsets for reach register.

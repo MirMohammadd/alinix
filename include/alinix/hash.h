@@ -26,7 +26,9 @@
 
 #include <alinix/crypto.h>\
 
-
+/**
+ * @brief Hash data structure crypto.
+*/
 struct crypto_shash {
 	unsigned int descsize;
 	struct crypto_tfm base;

@@ -42,6 +42,10 @@
 #define RIGHT_CLICK     0x2
 #define MIDDLE_CLICK    0x4
 
+
+/**
+ * @brief Mouse info for the kernel.
+*/
 typedef struct mouse_info{
     int x;
     int y;

@@ -34,6 +34,10 @@
 
 typedef void USBDriver;
 
+
+/**
+ * @brief InterruptTransfer data structure.
+*/
 typedef struct InterruptTransfer
 {
     uint8_t* bufferPointer;

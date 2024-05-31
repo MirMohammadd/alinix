@@ -39,6 +39,10 @@ typedef struct Node {
     struct Node* next;
 } Node;
 
+
+/**
+ * @brief Node data structure for the kernel DS.
+*/
 typedef struct List {
     Node* head;
     Node* tail;

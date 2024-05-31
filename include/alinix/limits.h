@@ -23,6 +23,11 @@
 #ifndef __ALINIX_KERNEL_LIMITS_H
 #define __ALINIX_KERNEL_LIMITS_H
 
+
+/**
+ * @brief :
+ *  - Useful macros for limit.h
+*/
 #define USHRT_MAX	((unsigned short)~0U)
 #define SHRT_MAX	((short)(USHRT_MAX >> 1))
 #define SHRT_MIN	((short)(-SHRT_MAX - 1))

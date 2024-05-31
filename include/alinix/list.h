@@ -27,6 +27,10 @@
 struct hlist_bl_node {
 	struct hlist_bl_node *next, **pprev;
 };
+
+/**
+ * @brief List head DS.
+*/
 struct list_head {
 	struct list_head *next, *prev;
 };

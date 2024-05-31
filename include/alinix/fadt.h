@@ -29,7 +29,9 @@
 */
 
 #include <alinix/types.h>
-
+/**
+ * @brief FADT header structure util.
+*/
 
 struct ACPISDTHeader {
   char Signature[4];
@@ -43,11 +45,17 @@ struct ACPISDTHeader {
   uint32_t CreatorRevision;
 };
 
-
+/**
+ * @brief FADT header structure util.
+*/
 struct RSDT {
   struct ACPISDTHeader h;
   uint32_t PointerToOtherSDT[];  // Flexible array member
 };
+
+/**
+ * @brief FADT header structure util.
+*/
 
 struct XSDT {
   struct ACPISDTHeader h;

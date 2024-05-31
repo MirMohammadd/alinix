@@ -31,6 +31,10 @@ MODULE_DESCRIPTION("RTL8169 Kernel RTL Driver")
 MODULE_LICENSE("AGPL-3.0")
 MODULE_VERSION("0.1")
 
+
+/**
+ * @brief Get the mac address of the device using I/O ports.
+*/
 void getMacAddr(int macAddress[]){
     char i;
     for (i = 0;i < 6;i++){

@@ -43,6 +43,9 @@ enum kobject_action {
 };
 
 
+/**
+ * @brief Kernel object DS.
+*/
 
 struct kobject {
 	const char		*name;

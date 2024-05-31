@@ -30,6 +30,11 @@
 #include <alinix/cpu_mask.h>
 #include <alinix/wait.h>
 
+
+
+/**
+ * @brief IRQ desc structure.
+*/
 struct irq_desc {
 	struct irq_common_data	irq_common_data;
 	struct irq_data		irq_data;

@@ -29,6 +29,10 @@
 #define HEAP_MAGIC      0xA0B0C0
 
 
+
+/**
+ * @brief Heap data structure.
+*/
 typedef struct heap_header {
     int magic; // sanity check: 0xA0B0C0
     size_t size;

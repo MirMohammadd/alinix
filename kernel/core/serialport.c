@@ -38,7 +38,9 @@ MODULE_VERSION("0.1")
 bool ConsoleInitialized;
 
 enum COMPort PortAddress = COM1;
-
+/**
+ * @brief Start the kernel serial port with this function.
+*/
 void Init(enum COMPort port)
 {
     PortAddress = port;

@@ -39,6 +39,7 @@ MODULE_VERSION("0.1")
 /**
  * @brief Function that administrate the shutdown proccess
  * @param None
+ * @return None
 */
 void shutdown(){
     outportw(0x604, 0x2000);

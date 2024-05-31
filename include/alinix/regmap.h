@@ -25,6 +25,10 @@
 #define __ALINIX_KERNEL_REG_MAP_H
 
 
+
+/**
+ * @brief Kernel register map.
+*/
 struct regmap_range {
 	unsigned int range_min;
 	unsigned int range_max;

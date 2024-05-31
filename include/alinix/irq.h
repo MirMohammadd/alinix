@@ -28,6 +28,10 @@
 #include <alinix/interrupt.h>
 #include <alinix/cpu.h>
 
+
+/**
+ * @brief IRQ data structure.
+*/
 struct irq_data {
 	u32			mask;
 	unsigned int		irq;

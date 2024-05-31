@@ -36,7 +36,9 @@ MODULE_VERSION("0.1")
 
 struct JoystickStatus jst;
 
-
+/**
+ * @brief Joy stick handler button util.
+*/
 bool joystick_button(uint8_t buttonnum){
     int i;
     for (i = 4; i <= 8; ++i){
@@ -66,6 +68,10 @@ struct JoystickStatus joystick_dump(void)
  * through game port.
  */
 
+
+/**
+ * @brief Joy stick util status.
+*/
 uint16_t joy_stick_status(uint8_t byte){
     int time_out = 0;
     /* Disable interrupts, so they don't affect timing */

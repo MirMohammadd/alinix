@@ -23,7 +23,9 @@
 #ifndef __ALINIX_KERNEL_SPIN_LOCK_TYPES_H
 #define __ALINIX_KERNEL_SPIN_LOCK_TYPES_H
 
-
+/**
+ * @brief Spinlock data type.
+*/
 typedef union{
     int  slock;	/* must be signed for proper  CHECK_WAITING */
 }spinlock_t;

@@ -50,6 +50,10 @@ bool joystick_button(uint8_t buttonnum){
     return 0;
 }
 
+
+/**
+ * @brief Joy stick status dump function, settles settings of joy stick.
+*/
 struct JoystickStatus joystick_dump(void)
 {
     jst.AxisX   = joy_stick_status(JoystickAxisX);

@@ -24,9 +24,9 @@
 #include <alinix/module.h>
 
 MODULE_AUTHOR("Ali Mirmohammad")
-MODULE_DESCRIPTION("Locks the kernel.")
+MODULE_DESCRIPTION("Locks the kernel/ kernel threads.")
 MODULE_LICENSE("AGPL")
-MODULE_VERSION("0.1")
+MODULE_VERSION("0.2")
 
 void Lock(){
     asm ("pause");

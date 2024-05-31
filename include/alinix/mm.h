@@ -41,7 +41,9 @@ typedef uint32_t mm_addr_t;
 typedef uint32_t vmm_addr_t;
 
 
-
+/**
+ * @brief Memory info for kernel.
+*/
 typedef struct mem_info{
     uint32_t size;
     uint32_t used_blocks;
@@ -49,7 +51,9 @@ typedef struct mem_info{
     mm_addr_t *map;
 }mem_info_t;
 
-
+/**
+ * @brief Memory info for kernel.
+*/
 typedef struct memory_region {
     uint32_t size;
     uint32_t addr_low;

@@ -41,6 +41,10 @@ struct klist_node {
 	struct kref		n_ref;
 };
 
+
+/**
+ * @brief Kernel list data structure.
+*/
 struct klist {
 	uint16_t		k_lock;
 	struct list_head	k_list;

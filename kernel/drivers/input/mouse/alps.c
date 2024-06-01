@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file alps.c
  ** This file is part of AliNix.
 

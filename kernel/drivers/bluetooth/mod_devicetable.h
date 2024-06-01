@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file mod_devicetable.h
  ** This file is part of AliNix.
 

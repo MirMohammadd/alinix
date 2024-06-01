@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file lm3533-als.c
  ** This file is part of AliNix.
 

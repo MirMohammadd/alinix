@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file binder.c
  ** This file is part of AliNix.
 

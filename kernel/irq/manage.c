@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file manage.c
  ** This file is part of AliNix.
 

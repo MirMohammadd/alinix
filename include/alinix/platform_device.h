@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file platform_device.h
  ** This file is part of AliNix.
 

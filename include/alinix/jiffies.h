@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file jiffies.h
  ** This file is part of AliNix.
 

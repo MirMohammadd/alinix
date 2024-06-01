@@ -1,5 +1,6 @@
 /**
  * @author Ali Mirmohammad
+ * @author Ali Mirmohammad
  * @file textgui.h
  * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
  ** This file is part of AliNix.

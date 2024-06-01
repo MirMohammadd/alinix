@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file lock.hpp
  ** This file is part of AliNix.
 

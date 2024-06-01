@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file vga_switcheroo.h
  ** This file is part of AliNix.
 

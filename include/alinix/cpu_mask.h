@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file cpu_mask.h
  ** This file is part of AliNix.
 

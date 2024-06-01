@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file build_bug.h
  ** This file is part of AliNix.
 

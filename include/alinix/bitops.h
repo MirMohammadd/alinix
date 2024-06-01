@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file bitops.h
  ** This file is part of AliNix.
 

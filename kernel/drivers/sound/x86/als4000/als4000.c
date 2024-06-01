@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file als4000.c
  ** This file is part of AliNix.
 

@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file srm_puts.c
  ** This file is part of AliNix.
 

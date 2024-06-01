@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file vendor.c
  ** This file is part of AliNix.
 

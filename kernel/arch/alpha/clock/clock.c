@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file clock.c
  ** This file is part of AliNix.
 

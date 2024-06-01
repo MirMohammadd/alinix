@@ -35,10 +35,15 @@ Note: this project has been using part of fudge kernel at https://github.com/jez
 
 
 ![Alt text](images/ScreenKernel.png)
+
+------------------------------------------------------------
 **Developing image at kernel.c main file.**
+------------------------------------------------------------
+
 
 # Alinix kernel booting 
 ![Alt text](boot.png)
-
+------------------------------------------------------------
 **alinix kernel 1.5.3 booting**
+------------------------------------------------------------
 

@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file decompress_common.h
  ** This file is part of AliNix.
 

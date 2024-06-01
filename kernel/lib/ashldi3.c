@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file ashldi3.c
  ** This file is part of AliNix.
 

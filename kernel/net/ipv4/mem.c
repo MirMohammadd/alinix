@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file mem.c
  ** This file is part of AliNix.
 

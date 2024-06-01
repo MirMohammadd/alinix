@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file str.c
  ** This file is part of AliNix.
 

@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file mm.c
  ** This file is part of AliNix.
 

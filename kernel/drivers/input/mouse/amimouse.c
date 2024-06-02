@@ -72,6 +72,27 @@ PRIVATE irqreturn_t amimouse_interrupt(int irq,void *data){
 
 }
 
+/**
+ * Initializes the Amiga mouse device.
+ *
+ * @param dev A pointer to the input device structure.
+ *
+ * @return Returns 0 on success, or a negative error code on failure.
+ *
+ * @throws None.
+ *
+ * @details
+ * This function initializes the Amiga mouse device by setting the last x and y
+ * coordinates to the current joystick data. It reads the joystick data from
+ * the `joy0dat` register of the Amiga custom chip and stores the x-coordinate in
+ * the lower 8 bits and the y-coordinate in the upper 8 bits of the `joy0dat`
+ * variable. The function then assigns the values of `joy0dat` to the `amimouse_lastx`
+ * and `amimouse_lasty` variables.
+ *
+ * @note
+ * This function assumes that the `amiga_custom` structure is defined and contains
+ * the `joy0dat` member.
+ */
 PRIVATE int amimouse_open(struct input_dev *dev){
     unsigned short joy0dat;
 	int error;

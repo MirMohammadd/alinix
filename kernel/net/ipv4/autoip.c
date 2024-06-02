@@ -273,6 +273,26 @@ autoip_restart(struct netif *netif)
 }
 
 
+/**
+ * Handle an ARP conflict in the AutoIP process.
+ *
+ * @param netif Pointer to the network interface.
+ *
+ * @note This function handles an ARP conflict in the AutoIP process.
+ *       It takes a pointer to the `netif` structure as a parameter, which represents the network interface.
+ *       The function first determines whether it is defending or retreating based on the value of the `defend` variable.
+ *       If it is defending, it checks if there was a conflicting ARP in the last `DEFEND_INTERVAL` seconds.
+ *       If there was, it logs a debug message indicating that it is defending but in the `DEFEND_INTERVAL`, and then calls the `autoip_restart` function to restart the AutoIP process.
+ *       If there was no conflicting ARP, it logs a debug message indicating that it is defending and sends an ARP announce using the `autoip_arp_announce` function.
+ *       It then updates the `lastconflict` member of the `autoip` structure to `DEFEND_INTERVAL` times `AUTOIP_TICKS_PER_SECOND`.
+ *       If it is not defending, it logs a debug message indicating that it does not defend and calls the `autoip_restart` function to restart the AutoIP process.
+ *       The function does not return any value.
+ *
+ * @see netif
+ * @see autoip
+ * @see autoip_restart
+ * @see autoip_arp_announce
+ */
 PRIVATE VOID
 autoip_handle_arp_conflict(struct netif *netif)
 {
@@ -303,6 +323,25 @@ autoip_handle_arp_conflict(struct netif *netif)
   }
 }
 
+/**
+ * Create an IP address for AutoIP.
+ *
+ * @param netif Pointer to the network interface.
+ * @param ipaddr Pointer to the IP address structure to be filled.
+ *
+ * @note This function creates an IP address for AutoIP within the range 169.254.1.0 to 169.254.254.255,
+ *       compliant to RFC 3927 Section 2.1. It has 254 * 256 possibilities.
+ *       The function takes a pointer to the `netif` structure and a pointer to the `ipaddr` structure as parameters.
+ *       It first creates an IP address by adding the `tried_llipaddr` member of the `autoip` structure of the `netif` to the seed address obtained from `LWIP_AUTOIP_CREATE_SEED_ADDR(netif)`.
+ *       It then applies the necessary mask and shifts to ensure the IP address is within the specified range.
+ *       If the IP address is less than `AUTOIP_RANGE_START`, it adds the difference between `AUTOIP_RANGE_END` and `AUTOIP_RANGE_START` plus 1 to the IP address.
+ *       If the IP address is greater than `AUTOIP_RANGE_END`, it subtracts the difference between `AUTOIP_RANGE_END` and `AUTOIP_RANGE_START` plus 1 from the IP address.
+ *       Finally, it sets the `ipaddr` structure with the created IP address and logs a debug message with the `tried_llipaddr` and the created IP address.
+ *       The function does not return any value.
+ *
+ * @see netif
+ * @see ipaddr
+ */
 static void
 autoip_create_addr(struct netif *netif, ip_addr_t *ipaddr)
 {
@@ -331,6 +370,33 @@ autoip_create_addr(struct netif *netif, ip_addr_t *ipaddr)
     ip4_addr3_16(ipaddr), ip4_addr4_16(ipaddr)));
 }
 
+/**
+ * Send an ARP probe for AutoIP.
+ *
+ * @param netif Pointer to the network interface.
+ *
+ * @return The result of the ARP probe.
+ *
+ * @note This function sends an ARP probe for AutoIP.
+ *       It takes a pointer to the `netif` structure as a parameter, which represents the network interface.
+ *       The function calls the `etharp_raw` function with the following parameters:
+ *       - `netif`: The network interface.
+ *       - `netif->hwaddr`: The hardware address of the network interface.
+ *       - `ethbroadcast`: The broadcast address.
+ *       - `netif->hwaddr`: The hardware address of the network interface.
+ *       - `IP_ADDR_ANY`: The IP address set to `0.0.0.0`.
+ *       - `ethzero`: The zero MAC address.
+ *       - `&netif->autoip->llipaddr`: The AutoIP link-local IP address.
+ *       - `ARP_REQUEST`: The ARP request type.
+ *       The function returns the result of the ARP probe.
+ *
+ * @see netif
+ * @see etharp_raw
+ * @see ethbroadcast
+ * @see ethzero
+ * @see IP_ADDR_ANY
+ * @see ARP_REQUEST
+ */
 static err_t
 autoip_arp_probe(struct netif *netif)
 {

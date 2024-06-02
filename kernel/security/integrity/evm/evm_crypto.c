@@ -54,6 +54,33 @@ static const char evm_hmac[] = "hmac(sha1)";
 
 
 
+/**
+ * @brief Sets the EVM (Envelope Message) key.
+ *
+ * This function sets the EVM key by copying the provided key into the `evmkey`
+ * buffer. It also initializes the `evm_initialized` flag to indicate that the key
+ * has been set. If the key length exceeds the maximum allowed size, the function
+ * returns an error. If the key cannot be set due to a busy state, the function
+ * returns an error.
+ *
+ * @param key A pointer to the key to be set.
+ * @param keylen The length of the key.
+ *
+ * @return If the key is set successfully, the function returns zero. Otherwise,
+ *         it returns a negative error code.
+ *
+ * @note The function assumes that the `evmkey` buffer is large enough to hold the
+ *       key.
+ *
+ * @example
+ * void *key = ...; // Example key
+ * size_t keylen = ...; // Example key length
+ *
+ * int rc = evm_set_key(key, keylen);
+ * if (rc < 0) {
+ *     // Handle error
+ * }
+ */
 int evm_set_key(void *key, size_t keylen){
 	int rc;
     static int evm_initialized;

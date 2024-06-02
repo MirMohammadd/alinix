@@ -53,6 +53,34 @@ static const enum lockdown_reason lockdown_levels[] = {LOCKDOWN_NONE,
  * Put the kernel into lock-down mode.
  */
 
+/**
+ * @brief Locks the kernel down to a specified level.
+ *
+ * This function locks the kernel down to a specified level. It checks if the current
+ * kernel lockdown level is greater than or equal to the requested lockdown level.
+ * If it is, the function returns an error with the code `-EPERM`. Otherwise, it prints
+ * a notice indicating that the kernel is locked down and provides a link to the
+ * `kernel_lockdown.7` manual page. The function then returns zero to indicate success.
+ *
+ * @param where A pointer to a string indicating the location where the lockdown is being
+ *              requested.
+ * @param level An enum value representing the lockdown level to be set.
+ *
+ * @return If the kernel is successfully locked down, the function returns zero.
+ *         Otherwise, it returns an error code with the value `-EPERM`.
+ *
+ * @note The function assumes that the `pr_notice` function is available for printing
+ *       the notice message.
+ *
+ * @example
+ * const char* where = "module initialization";
+ * enum lockdown_reason level = LOCKDOWN_REASON_MODULE_INIT;
+ *
+ * int rc = lock_kernel_down(where, level);
+ * if (rc < 0) {
+ *     // Handle error
+ * }
+ */
 static int lock_kernel_down(const char* where,enum lockdown_reason level){
     if (kernel_locked_down >= level){
         return -EPERM;
@@ -63,6 +91,33 @@ static int lock_kernel_down(const char* where,enum lockdown_reason level){
 }
 
 
+/**
+ * @brief Locks the kernel down based on the provided lockdown level.
+ *
+ * This function locks the kernel down based on the provided lockdown level. It checks
+ * if the `level` parameter is NULL and returns an error with the code `-EINVAL` if it
+ * is. If the `level` parameter is not NULL, it compares it with the strings "integrity"
+ * and "confidentiality". If it matches "integrity", it calls the `lock_kernel_down`
+ * function with the lockdown level `LOCKDOWN_INTEGRITY_MAX`. If it matches "confidentiality",
+ * it calls the `lock_kernel_down` function with the lockdown level `LOCKDOWN_CONFIDENTIALITY_MAX`.
+ * If it does not match either string, the function returns an error with the code `-EINVAL`.
+ *
+ * @param level A pointer to a string representing the lockdown level to be set.
+ *
+ * @return If the kernel is successfully locked down, the function returns zero.
+ *         Otherwise, it returns an error code with the value `-EINVAL`.
+ *
+ * @note The function assumes that the `lock_kernel_down` function is available for
+ *       locking down the kernel.
+ *
+ * @example
+ * char* level = "integrity";
+ *
+ * int rc = lockdown_param(level);
+ * if (rc < 0) {
+ *     // Handle error
+ * }
+ */
 static int __init lockdown_param(char *level){
     if (!level){
         return -EINVAL;
@@ -81,6 +136,36 @@ static int __init lockdown_param(char *level){
     return 0;
 }
 
+/**
+ * @brief Checks if the kernel is locked down for a specific reason.
+ *
+ * This function checks if the kernel is locked down for a specific reason. It takes
+ * an enum value representing the lockdown reason as a parameter. If the provided
+ * reason is greater than or equal to `LOCKDOWN_CONFIDENTIALITY_MAX`, the function
+ * returns an error with the code `-EPERM`. Otherwise, it checks if the current kernel
+ * lockdown level is greater than or equal to the provided reason. If it is, the function
+ * checks if there is a lockdown reason associated with the provided reason. If there is,
+ * it prints a message indicating that the lockdown reason is restricted and provides
+ * a link to the `kernel_lockdown.7` manual page. The function then returns an error with
+ * the code `-EPERM`. If the kernel is not locked down for the provided reason, the function
+ * returns zero.
+ *
+ * @param what An enum value representing the lockdown reason to be checked.
+ *
+ * @return If the kernel is locked down for the provided reason, the function returns an
+ *         error code with the value `-EPERM`. Otherwise, it returns zero.
+ *
+ * @note The function assumes that the `print` function is available for printing the
+ *       lockdown message.
+ *
+ * @example
+ * enum lockdown_reason what = LOCKDOWN_INTEGRITY_MAX;
+ *
+ * int rc = lockdown_is_locked_down(what);
+ * if (rc < 0) {
+ *     // Handle error
+ * }
+ */
 static int lockdown_is_locked_down(enum lockdown_reason what){
 	if (what >= LOCKDOWN_CONFIDENTIALITY_MAX,
 		 "Invalid lockdown reason")
@@ -109,6 +194,39 @@ static int __init lockdown_lsm_init(void){
 }
 
 
+/**
+ * @brief Reads the lockdown levels from the file and returns them as a string.
+ *
+ * This function reads the lockdown levels from the file and returns them as a string.
+ * It iterates over the `lockdown_levels` array and checks if there is a lockdown
+ * reason associated with each level. If there is, it retrieves the label for the
+ * lockdown reason and formats it into a string. If the kernel is locked down at the
+ * current level, it encloses the label in square brackets. The formatted string is
+ * stored in the `temp` buffer. Finally, the function returns the `temp` buffer as the
+ * result of the function.
+ *
+ * @param filp A pointer to the file structure.
+ * @param buf A pointer to the buffer where the result will be stored.
+ * @param count The maximum number of characters to be read.
+ * @param ppos A pointer to the file position.
+ *
+ * @return The number of characters read.
+ *
+ * @note The function assumes that the `printf` function is available for formatting
+ *       the lockdown levels.
+ *
+ * @example
+ * FILE* filp = fopen("lockdown", "r");
+ * char buf[80];
+ * size_t count = sizeof(buf);
+ * loff_t ppos = 0;
+ *
+ * ssize_t rc = lockdown_read(filp, buf, count, &ppos);
+ * if (rc > 0) {
+ *     // Handle the result
+ * }
+ * fclose(filp);
+ */
 static ssize_t lockdown_read(FILE *filp, char  *buf, size_t count,
 			     loff_t *ppos){
 
@@ -134,6 +252,40 @@ static ssize_t lockdown_read(FILE *filp, char  *buf, size_t count,
         return temp; // TODO : FIX HERE
 }
 
+/**
+ * @brief Writes the lockdown level to the file and locks the kernel down accordingly.
+ *
+ * This function writes the lockdown level to the file and locks the kernel down
+ * accordingly. It takes a buffer containing the lockdown level as input. It
+ * copies the buffer to a new string, removes the newline character if present,
+ * and compares it with the labels of the lockdown levels. If a match is found,
+ * it calls the `lock_kernel_down` function to lock the kernel down at the
+ * corresponding lockdown level. The function returns the number of characters
+ * written if successful, or an error code if the lockdown level is invalid or
+ * if an error occurs during the lockdown process.
+ *
+ * @param file A pointer to the file structure.
+ * @param buf A pointer to the buffer containing the lockdown level.
+ * @param n The number of characters to be written.
+ * @param ppos A pointer to the file position.
+ *
+ * @return The number of characters written if successful, or an error code.
+ *
+ * @note The function assumes that the `strcpy`, `strlen`, `strcmp`, and `free`
+ *       functions are available for string manipulation.
+ *
+ * @example
+ * struct file* file = fopen("lockdown", "w");
+ * char buf[] = "integrity\n";
+ * size_t n = strlen(buf);
+ * loff_t ppos = 0;
+ *
+ * ssize_t rc = lockdown_write(file, buf, n, &ppos);
+ * if (rc < 0) {
+ *     // Handle error
+ * }
+ * fclose(file);
+ */
 static ssize_t lockdown_write(struct file *file, const char  *buf,
 			      size_t n, loff_t *ppos)
 {
@@ -164,6 +316,20 @@ static ssize_t lockdown_write(struct file *file, const char  *buf,
 
 /////////////////////////////////////
 
+/**
+ * @brief Locks the kernel down for memory corruption.
+ *
+ * This function locks the kernel down for memory corruption. It calls the
+ * `lock_kernel_down` function to lock the kernel down at the memory corruption
+ * lockdown level. The function takes a string "Kernel configuration" as the
+ * reason for locking down the kernel.
+ *
+ * @note The function assumes that the `lock_kernel_down` function is available
+ *       for locking down the kernel.
+ *
+ * @example
+ * kernelMemoryCorruptionLockDown();
+ */
 void kernelMemoryCorruptionLockDown(){
     lock_kernel_down("Kernel configuration",MEMORY_CORRUPTION);
 }

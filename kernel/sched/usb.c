@@ -32,6 +32,24 @@ MODULE_DESCRIPTION("USB driver")
 MODULE_LICENSE("AGPL")
 MODULE_VERSION("0.1")
 
+/**
+ * @brief Kills a URB (USB Request Block) by cancelling its associated USB transfer.
+ *
+ * This function cancels the USB transfer associated with the provided URB (USB Request Block).
+ * It checks if the URB and the associated USB device are valid, and if so, it calls the
+ * USB host controller driver's `usb_hcd_unlink_urb` function to cancel the transfer.
+ *
+ * @param urb A pointer to the URB to be killed.
+ *
+ * @return This function does not return a value.
+ *
+ * @note The function assumes that the URB is associated with a USB device.
+ *
+ * @example
+ * struct urb *urb = ...; // Example URB
+ *
+ * usb_kill_urb(urb);
+ */
 void usb_kill_urb(struct urb *urb){
     if (!(urb && urb->dev)){
         return;

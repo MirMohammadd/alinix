@@ -78,6 +78,18 @@ size_t offset,u32 len){
     data[offset]   &= ((1ull << rem) - 1);
 }
 
+/**
+ * @brief Validates the given acpi_gas structure.
+ *
+ * This function validates the given `acpi_gas` structure. It checks if the structure is NULL, if the `address` field is 0, if the `address_space_id` is not supported, and if the `access_size` is unsupported.
+ *
+ * @param gas The acpi_gas structure to validate.
+ * @param access_bit_width Pointer to store the access bit width.
+ *
+ * @return The status of the validation. Returns `UACPI_STATUS_INVALID_ARGUMENT` if the `gas` parameter is NULL. Returns `UACPI_STATUS_NOT_FOUND` if the `address` field is 0. Returns `UACPI_STATUS_UNIMPLEMENTED` if the `address_space_id` is not supported or if the `access_size` is unsupported.
+ *
+ * @note This function assumes that the `UACPI_ADDRESS_SPACE_SYSTEM_IO` and `UACPI_ADDRESS_SPACE_SYSTEM_MEMORY` constants are defined and have the correct values.
+ */
 static uacpi_status gas_validate(
     const struct acpi_gas *gas, u8 *access_bit_width
 ){

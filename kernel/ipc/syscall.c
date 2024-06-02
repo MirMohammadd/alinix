@@ -47,6 +47,24 @@ MODULE_LICENSE("AGPLv3")
 MODULE_VERSION("0.1")
 
 
+/**
+ * @brief Perform a system call with the specified interrupt number and arguments.
+ *
+ * This function invokes a system call by executing the `int $0x80` instruction with the provided interrupt number and arguments.
+ * The system call number is passed in the `intNum` parameter, and the arguments are passed in the `arg1`, `arg2`, `arg3`, `arg4`, and `arg5` parameters.
+ * The function returns the value stored in the `a` register after the system call.
+ *
+ * @param intNum The interrupt number of the system call.
+ * @param arg1 The first argument of the system call.
+ * @param arg2 The second argument of the system call.
+ * @param arg3 The third argument of the system call.
+ * @param arg4 The fourth argument of the system call.
+ * @param arg5 The fifth argument of the system call.
+ *
+ * @return The value stored in the `a` register after the system call.
+ *
+ * @throws None
+ */
 int DoSyscall(unsigned int intNum, unsigned int arg1, unsigned int arg2, unsigned int arg3, unsigned int arg4, unsigned int arg5)
 {
     int a;

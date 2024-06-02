@@ -35,7 +35,17 @@ MODULE_VERSION("0.1")
 mouse_info_t *get_mouse_info();
 
 
-
+/**
+ * Paints the desktop background.
+ *
+ * This function is responsible for painting the desktop background.
+ * It calls the `draw_rect()` function to draw the desktop rectangle,
+ * the `paint_windows()` function to paint the windows, and the `paint_mouse()` function to paint the mouse cursor.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void paint_desktop() {
     draw_rect(0, 0, 1024, 768, 0xCE2C2C);
     paint_windows();

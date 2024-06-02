@@ -33,6 +33,26 @@ MODULE_DESCRIPTION("Extended FAT File System")
 MODULE_LICENSE("AGPL-3.0")
 MODULE_VERSION("0.1")
 
+/**
+ * Calculates the checksum for a boot sector or a similar structure.
+ *
+ * This function calculates the checksum for a boot sector or a similar structure.
+ * It takes a pointer to an array of sectors (`Sectors`) and the size of each sector (`BytesPerSector`) as input parameters.
+ * Inside the function, it initializes the `numberOfBytes` variable to the total number of bytes to be included in the checksum calculation.
+ * It also initializes the `checkSum` variable to 0 and the `index` variable to 0.
+ *
+ * The function then iterates over each byte in the `Sectors` array, excluding specific indices (226, 107, and 112) using a `continue` statement.
+ * For each byte, it updates the `checkSum` variable by performing bitwise operations and adding the byte value.
+ *
+ * Finally, the function returns the calculated `checkSum`.
+ *
+ * @param Sectors A pointer to an array of sectors.
+ * @param BytesPerSector The size of each sector.
+ *
+ * @return The calculated checksum.
+ *
+ * @throws None
+ */
 uint32_t BootChecksum(unsigned char * Sectors,unsigned short BytesPerSector){
     uint32_t numberOfBytes = (uint32_t)BytesPerSector * 11;
     uint32_t checkSum = 0;

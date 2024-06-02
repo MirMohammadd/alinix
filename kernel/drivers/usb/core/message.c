@@ -44,12 +44,41 @@ struct api_context{
 };
 
 
+/**
+ * Callback function called when a USB API operation completes.
+ *
+ * This function is a callback function that is called when a USB API operation completes.
+ * It takes a pointer to a `urb` (USB Request Block) structure as input.
+ * Inside the function, it retrieves the `api_context` structure from the `urb` and updates its `status` field with the status of the completed operation.
+ *
+ * @param urb A pointer to the `urb` (USB Request Block) structure.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 static void usb_api_blocking_completion(struct urb *urb){
     struct api_context *ctx = urb->context;
     ctx->status = urb->status;
 
 }
 
+/**
+ * Starts a USB URB and waits for it to complete.
+ *
+ * This function starts a USB URB (USB Request Block) and waits for it to complete.
+ * It takes a pointer to a `urb` structure, a timeout value, and a pointer to an `actual_length` variable as input parameters.
+ * Inside the function, it initializes the `api_context` structure, sets the `actual_length` field of the `urb` structure to 0,
+ * and assigns the address of the `api_context` structure to the `context` field of the `urb` structure.
+ *
+ * @param urb A pointer to the `urb` structure.
+ * @param timeout The timeout value in milliseconds. If set to 0, the function will wait indefinitely.
+ * @param actual_length A pointer to an integer variable that will store the actual length of the completed URB.
+ *
+ * @return 0 if the URB completed successfully, or an error code if there was an error.
+ *
+ * @throws None
+ */
 static int usb_start_wait_urb(struct urb *urb, int timeout, int *actual_length){
     struct api_context ctx;
     unsigned long expire;
@@ -66,6 +95,29 @@ static int usb_start_wait_urb(struct urb *urb, int timeout, int *actual_length){
 
 }
 
+/**
+ * Sends a USB control message to a USB device.
+ *
+ * This function sends a USB control message to a USB device.
+ * It takes various parameters such as the USB device, endpoint, request, request type, value, index,
+ * driver data, size, timeout, and memory flags.
+ * Inside the function, it allocates memory for the data buffer and checks if the allocation was successful.
+ *
+ * @param dev A pointer to the USB device.
+ * @param endpoint The endpoint to send the control message to.
+ * @param request The USB control request.
+ * @param requesttype The type of the USB control request.
+ * @param value The value associated with the USB control request.
+ * @param index The index associated with the USB control request.
+ * @param driver_data A pointer to the driver data to be sent with the control message.
+ * @param size The size of the driver data.
+ * @param timeout The timeout value in milliseconds. If set to 0, the function will wait indefinitely.
+ * @param memflags The memory flags for memory allocation.
+ *
+ * @return 0 if the control message was sent successfully, or an error code if there was an error.
+ *
+ * @throws -ENOMEM if memory allocation fails.
+ */
 int usb_control_msg_send(struct usb_device *dev, u8 endpoint, u8 request,
 			 u8 requesttype, u16 value, u16 index,
 			 const void *driver_data, u16 size, int timeout,

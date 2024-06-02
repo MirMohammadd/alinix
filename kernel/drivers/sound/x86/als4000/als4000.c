@@ -31,13 +31,43 @@ MODULE_LICENSE("AGPL")
 MODULE_VERSION("0.1")
 
 
+/**
+ * Reads the value from a device mixer register.
+ *
+ * This function reads the value from the specified register of the device mixer.
+ * It takes a pointer to the base address of the device mixer and the register number as input parameters.
+ * It uses the `inportl()` function to read the value from the specified register.
+ *
+ * @param base A pointer to the base address of the device mixer.
+ * @param reg The register number to read from.
+ *
+ * @return The value read from the specified register.
+ *
+ * @throws None
+ */
 uint32_t dev_mixer_read(uint32_t *base, uint32_t reg){
     uint32_t res;
     res = inportl(base[0] + REG_SB_BASE); // Use inportl instead of outportb
     return res;
 }
 
-void dev_mixer_write(uint32_t *base, uint32_t reg, uint32_t val){
+/**
+ * Writes a value to a device mixer register.
+ *
+ * This function writes a value to the specified register of the device mixer.
+ * It takes a pointer to the base address of the device mixer, the register number,
+ * and the value to write as input parameters. It reads the current value from the
+ * specified register using the `inportl()` function and then performs the write operation.
+ *
+ * @param base A pointer to the base address of the device mixer.
+ * @param reg The register number to write to.
+ * @param val The value to write to the specified register.
+ *
+ * @return void
+ *
+ * @throws None
+ */
+VOID dev_mixer_write(uint32_t *base, uint32_t reg, uint32_t val){
     uint32_t res;
     res = inportl(base[0] + REG_SB_BASE); // Use inportl instead of outportb
 }

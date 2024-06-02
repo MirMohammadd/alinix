@@ -35,6 +35,26 @@ uint8_t mixer_value[] = {
 	0x00, 0x01
 };
 
+/**
+ * Gets or sets the volume level for different audio devices.
+ *
+ * This function gets or sets the volume level for different audio devices.
+ * It takes a pointer to the base address, a pointer to a `volume_level` structure,
+ * and a flag indicating whether to get or set the volume as input parameters.
+ * It performs different operations based on the device specified in the `volume_level` structure.
+ *
+ * @param base A pointer to the base address.
+ * @param level A pointer to the `volume_level` structure.
+ * @param flag A flag indicating whether to get or set the volume.
+ *              - 0: Get the volume level.
+ *              - 1: Set the volume level.
+ *
+ * @return 0 if successful, or an error code:
+ *              - 22: If the device is Treble or Bass.
+ *              - EINIVAL: If the device is Dac.
+ *
+ * @throws None
+ */
 int get_set_volume(uint8_t *base,struct volume_level *level,int flag){
     int max_level,cmdLeft,cmdRight;
     max_level = 0x1f;

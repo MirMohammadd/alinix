@@ -38,7 +38,18 @@ MODULE_VERSION("0.1")
 
 
 
-void reboot_x86_sys_call(){
+/**
+ * Reboots the system using the x86 system call interface.
+ *
+ * This function calls the `DoSyscall()` function with specific arguments to initiate the reboot.
+ * It uses the `__NR_reboot` system call number and the `LINUX_REBOOT_MAGIC1`, `LINUX_REBOOT_MAGIC2`,
+ * `LINUX_REBOOT_CMD_POWER_OFF`, and `0` arguments to perform the reboot.
+ *
+ * @return void
+ *
+ * @throws None
+ */
+VOID reboot_x86_sys_call(){
     DoSyscall(__NR_reboot, LINUX_REBOOT_MAGIC1, LINUX_REBOOT_MAGIC2, LINUX_REBOOT_CMD_POWER_OFF, 0, 0);
 }
 

@@ -46,6 +46,34 @@ MODULE_VERSION("0.1")
 #define PCI_EXPRESS_ROOT_PNP_ID "PNP0A08"
 
 
+/**
+ * Finds the PCI root node in the ACPI namespace starting from the given node.
+ *
+ * @param node A pointer to the ACPI namespace node to start the search from.
+ *
+ * @return A pointer to the PCI root node in the ACPI namespace, or NULL if not found.
+ *
+ * @throws None.
+ *
+ * @details
+ * This function searches for the PCI root node in the ACPI namespace starting from the given node.
+ * It assumes that the `uacpi_namespace_node` structure and the `uacpi_namespace_root` function are
+ * defined elsewhere in the codebase.
+ *
+ * The function initializes an array of PCI root IDs, which are used to identify the PCI root node.
+ * It then iterates through the parent nodes of the given node until it reaches the root node of the
+ * ACPI namespace.
+ *
+ * During the iteration, the function checks if the parent node's device ID matches any of the PCI
+ * root IDs. If a match is found, the function returns a pointer to the parent node.
+ *
+ * If the iteration reaches the root node without finding a match, the function returns NULL.
+ *
+ * @note
+ * This function assumes that the PCI root IDs are defined as constants elsewhere in the codebase.
+ * It also assumes that the `uacpi_namespace_node` structure and the `uacpi_namespace_root` function
+ * are defined correctly.
+ */
 static uacpi_namespace_node *find_pci_root(uacpi_namespace_node *node){
     static const char *pci_root_ids[] = {
         PCI_ROOT_PNP_ID,

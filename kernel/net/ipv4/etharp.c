@@ -120,6 +120,22 @@ etharp_free_entry(int i)
 
 
 
+/**
+ * Clean up the ARP table for a given network interface.
+ *
+ * @param netif Pointer to the network interface.
+ *
+ * @note This function cleans up the ARP table for a given network interface.
+ *       It takes a pointer to the `netif` structure as a parameter, which represents the network interface.
+ *       The function iterates over the ARP table and checks the state of each entry.
+ *       If the state is not `ETHARP_STATE_EMPTY` and the `netif` member of the entry matches the provided `netif`,
+ *       the function calls the `etharp_free_entry` function to free the entry.
+ *       The function does not return any value.
+ *
+ * @see netif
+ * @see etharp_free_entry
+ * @see ETHARP_STATE_EMPTY
+ */
 void etharp_cleanup_netif(struct netif *netif)
 {
   uint8_t i;
@@ -211,6 +227,34 @@ etharp_raw(struct netif *netif, const struct eth_addr *ethsrc_addr,
 #define ETHARP_FLAG_TRY_HARD     1
 #define ETHARP_FLAG_FIND_ONLY    2
 
+/**
+ * Send an ARP packet with the specified parameters.
+ *
+ * @param netif Pointer to the network interface.
+ * @param ethsrc_addr Pointer to the source Ethernet MAC address.
+ * @param ethdst_addr Pointer to the destination Ethernet MAC address.
+ * @param hwsrc_addr Pointer to the source hardware MAC address.
+ * @param ipsrc_addr Pointer to the source IP address.
+ * @param hwdst_addr Pointer to the destination hardware MAC address.
+ * @param ipdst_addr Pointer to the destination IP address.
+ * @param opcode The ARP opcode.
+ *
+ * @return The result of sending the ARP packet.
+ *
+ * @note This function sends an ARP packet with the specified parameters.
+ *       It takes a pointer to the `netif` structure as a parameter, which represents the network interface.
+ *       The function also takes pointers to various MAC and IP addresses as parameters.
+ *       The function allocates a pbuf for the outgoing ARP packet, and then fills in the necessary fields in the pbuf.
+ *       The function then sends the ARP packet using the `netif->linkoutput` function.
+ *       The function returns the result of sending the ARP packet.
+ *
+ * @see netif
+ * @see eth_addr
+ * @see ip_addr_t
+ * @see etharp_hdr
+ * @see eth_hdr
+ * @see err_t
+ */
 err_t
 etharp_query(struct netif *netif, ip_addr_t *ipaddr, struct pbuf *q)
 {
@@ -365,6 +409,24 @@ etharp_query(struct netif *netif, ip_addr_t *ipaddr, struct pbuf *q)
 //     }
 //   }
 //   return result; }
+/**
+ * Free a pbuf and its optional chain of pbufs.
+ *
+ * @param p Pointer to the pbuf to be freed.
+ *
+ * @return The number of pbufs that were de-allocated.
+ *
+ * @note This function frees a pbuf and its optional chain of pbufs.
+ *       It takes a pointer to the `pbuf` structure as a parameter, which represents the pbuf to be freed.
+ *       The function iterates through the chain of pbufs starting from the given pbuf and frees them one by one.
+ *       The function first checks if the pbuf is NULL and returns 0 if it is.
+ *       Then, it decrements the reference count of each pbuf in the chain.
+ *       If the reference count becomes zero, the pbuf is de-allocated and its memory is freed.
+ *       The function continues iterating through the chain until it reaches a pbuf with a non-zero reference count.
+ *       Finally, the function returns the number of pbufs that were de-allocated.
+ *
+ * @see pbuf
+ */
 uint8_t pbuf_free(struct pbuf *p){
   uint16_t type;
   struct pbuf *q;
@@ -439,6 +501,26 @@ uint8_t pbuf_free(struct pbuf *p){
   return count;
 }
 
+/**
+ * Send an ARP request to resolve the IP address on the network interface.
+ *
+ * @param netif The network interface on which to send the ARP request.
+ * @param ipaddr The IP address for which to resolve.
+ *
+ * @return ERR_OK if the ARP request was sent successfully, an err_t value if an error occurred.
+ *
+ * @note This function sends an ARP request to resolve the IP address on the specified network interface.
+ *       It takes a pointer to the `netif` structure as a parameter, which represents the network interface
+ *       on which to send the ARP request. It also takes a pointer to the `ipaddr` variable, which represents
+ *       the IP address for which to resolve.
+ *       The function constructs an ARP request packet with the appropriate source hardware address, source
+ *       IP address, target hardware address, target IP address, and operation code. It then sends the ARP
+ *       request packet using the `etharp_raw` function.
+ *       If the ARP request is sent successfully, the function returns ERR_OK. Otherwise, it returns an
+ *       err_t value indicating the error that occurred.
+ *
+ * @see etharp_raw
+ */
 err_t
 etharp_request(struct netif *netif, ip_addr_t *ipaddr)
 {
@@ -448,6 +530,33 @@ etharp_request(struct netif *netif, ip_addr_t *ipaddr)
                     ipaddr, ARP_REQUEST);
 }
 
+/**
+ * Find an entry in the ARP table.
+ *
+ * @param ipaddr The IP address to search for in the ARP table.
+ * @param flags The flags to control the search behavior.
+ *
+ * @return The index of the matching entry in the ARP table, or an error code if no match is found.
+ *
+ * @note This function searches for an entry in the ARP table based on the given IP address and flags.
+ *       The search is performed in a single sweep through the ARP table. The function remembers the
+ *       following candidates during the search:
+ *       - The first empty entry (if any).
+ *       - The oldest stable entry (if any).
+ *       - The oldest pending entry without queued packets (if any).
+ *       - The oldest pending entry with queued packets (if any).
+ *       After the search, the function selects the least destructive entry to recycle based on the
+ *       following criteria:
+ *       - An empty entry, if available.
+ *       - The oldest stable entry.
+ *       - The oldest pending entry without queued packets.
+ *       - The oldest pending entry with queued packets.
+ *       If the ETHARP_FLAG_FIND_ONLY flag is set, the function only searches for a matching entry and
+ *       does not create a new one. If the ETHARP_FLAG_TRY_HARD flag is set, the function allows recycling
+ *       of entries.
+ *
+ * @see arp_table
+ */
 static sint8_t
 etharp_find_entry(ip_addr_t *ipaddr, uint8_t flags)
 {

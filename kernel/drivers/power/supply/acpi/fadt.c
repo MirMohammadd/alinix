@@ -47,6 +47,35 @@ bool fadtChecksum(struct ACPISDTHeader *tableHeader){
     }
     return sum == 0;
 }
+
+/**
+ * Finds the FACP (Fixed ACPI Description Table) in the System Descriptor Table (SDT) hierarchy.
+ *
+ * @param RootSDT A pointer to the root System Descriptor Table.
+ *
+ * @return A pointer to the FACP structure, or NULL if not found.
+ *
+ * @throws None.
+ *
+ * @details
+ * This function searches for the FACP (Fixed ACPI Description Table) in the System Descriptor Table
+ * (SDT) hierarchy starting from the given root SDT. It assumes that the `struct RSDT` and `struct SDTH`
+ * structures are defined elsewhere in the codebase.
+ *
+ * The function casts the `RootSDT` parameter to a pointer to a `struct RSDT` and calculates the number
+ * of entries in the RSDT by dividing the length of the RSDT structure by the size of a single entry.
+ *
+ * The function then iterates through the entries in the RSDT, retrieves each entry's header, and checks
+ * if the signature of the header matches the signature of the FACP. If a match is found, the function
+ * returns a pointer to the FACP structure.
+ *
+ * If the iteration reaches the end of the RSDT without finding a match, the function returns NULL.
+ *
+ * @note
+ * This function assumes that the `struct RSDT` and `struct SDTH` structures are defined correctly and
+ * that the `strcmp` function is available for string comparison. It also assumes that the "FACP" string
+ * is defined as a constant elsewhere in the codebase.
+ */
 void *findFACP(void *RootSDT){
     struct RSDT *rsdt = (struct RDST *)RootSDT;
     int entries = (rsdt->h.Length - sizeof(rsdt->h)) / 4;

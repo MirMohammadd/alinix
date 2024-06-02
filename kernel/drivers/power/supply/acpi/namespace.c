@@ -55,6 +55,15 @@ predefined_namespaces[UACPI_PREDEFINED_NAMESPACE_MAX + 1] = {
     [UACPI_PREDEFINED_NAMESPACE_REV] = { .name.text = "_REV" },
 };
 
+/**
+ * @brief Returns a pointer to the root namespace node of the ACPI namespace.
+ *
+ * This function returns a pointer to the root namespace node of the ACPI namespace. The root node represents the top-level node of the namespace hierarchy.
+ *
+ * @return A pointer to the root namespace node.
+ *
+ * @note This function assumes that the `predefined_namespaces` array is defined and has the correct size.
+ */
 uacpi_namespace_node *uacpi_namespace_root(void)
 {
     return &predefined_namespaces[UACPI_PREDEFINED_NAMESPACE_ROOT];

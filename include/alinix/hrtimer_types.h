@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file hrtimer_types.h
  ** This file is part of AliNix.
 

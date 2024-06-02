@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file init_power.h
  ** This file is part of AliNix.
 

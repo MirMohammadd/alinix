@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file alinix-audio-ac97.h
  ** This file is part of AliNix.
 

@@ -1,4 +1,5 @@
 /**
+ * @author Ali Mirmohammad
  * @file video.h
  ** This file is part of AliNix.
 

@@ -33,7 +33,9 @@ MODULE_LICENSE("AGPL")
 MODULE_VERSION("0.1")
 
 
-
+/**
+ * @brief Getting exception name, related to the GPU util.
+*/
 const char* kbase_gpu_exception_name(uint32_t const exception_code){
     const char* e;
     switch(exception_code){

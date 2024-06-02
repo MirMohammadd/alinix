@@ -42,7 +42,44 @@ MODULE_VERSION("0.1")
 #define I8254X_EECD   0x00000010 /* EEPROM/Flash Control - RW */
 #define I8254X_EECD_EE_PRES (1 << 8) /* EEPROM Present */
 
-
+/**
+ * Reads the EEPROM data from the i8254x network device.
+ *
+ * @param addr The address of the EEPROM location to read.
+ * @param dev A pointer to the PCI configuration space structure.
+ *
+ * @return The data read from the EEPROM.
+ *
+ * @throws None.
+ *
+ * @details
+ * This function reads the EEPROM data from the i8254x network device. It assumes that the
+ * `mmio_read_dword` and `mmio_write_dword` functions are defined to read from and write to
+ * memory-mapped I/O (MMIO) addresses, respectively.
+ *
+ * The function first checks if the EEPROM present bit is set in the EECD register. If not,
+ * it logs an informational message indicating that the EEPROM is not present.
+ *
+ * Next, it determines the appropriate address format based on the device version. If the
+ * device version is one of the specified values, it uses a 12-bit address format by left-shifting
+ * the `addr` parameter by 2 bits. Otherwise, it uses an 8-bit address format by left-shifting the
+ * `addr` parameter by 8 bits.
+ *
+ * The function then sets the START bit in the EERD register to initiate the EEPROM read operation.
+ *
+ * It waits until the DONE bit is cleared in the EERD register to indicate that the read operation
+ * is complete.
+ *
+ * The function then obtains the data from the EERD register by right-shifting the read value by
+ * 16 bits.
+ *
+ * Finally, it clears the START bit in the EERD register to stop the EEPROM read operation.
+ *
+ * @note
+ * This function assumes that the `dev` parameter is a valid pointer to a PCI configuration space
+ * structure and that the `mmio.addr` member of the structure is the memory-mapped I/O (MMIO)
+ * address of the i8254x device.
+ */
 static uint16_t i8254x_read_eeprom(uint8_t addr,struct pci_config_space *dev){
     uint16_t tmp;
     uint16_t data;

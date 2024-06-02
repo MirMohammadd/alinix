@@ -34,7 +34,19 @@ MODULE_DESCRIPTION("IRQ Manager")
 MODULE_LICENSE("AGPL")
 MODULE_VERSION("0.1")
 
-
+/**
+ * free_irq - Frees an interrupt request
+ * @irq: The interrupt number to free
+ * @dev_id: A pointer to the device ID associated with the interrupt
+ *
+ * This function releases an interrupt request that was previously allocated
+ * to a device. It removes the specified interrupt handler from the system,
+ * ensuring that it will no longer handle the specified interrupt.
+ *
+ * Return: A constant void pointer to the device name associated with the IRQ if
+ * successful, or NULL if the IRQ cannot be freed due to various conditions
+ * (e.g., invalid descriptor, per-CPU device ID).
+ */
 const void *free_irq(unsigned int irq, void *dev_id)
 {
 	struct irq_desc *desc = irq_to_desc(irq);

@@ -33,6 +33,27 @@ MODULE_DESCRIPTION("Provides the listing directory ability.")
 MODULE_LICENSE("AGPL")
 MODULE_VERSION("0.1")
 
+/**
+ * Begin listing files in a directory.
+ *
+ * @param thread Pointer to the thread structure.
+ * @param pathPtr Pointer to the path string.
+ *
+ * @note This function begins listing files in a directory specified by the `path` parameter.
+ *       It takes a pointer to the `Thread` structure and a pointer to the path string as parameters.
+ *       The `Thread` structure is used to store information about the thread executing the function.
+ *       The `path` parameter is a pointer to the path string, which specifies the directory to list files from.
+ *       The function does not return any value.
+ *
+ * @example
+ * // Begin listing files in a directory
+ * struct Thread* thread = ...;
+ * uint32_t pathPtr = ...;
+ * BeginListing(thread, pathPtr);
+ *
+ * @see EndListing()
+ * @see ListNextFile()
+ */
 int BeginListing(struct Thread* thread, uint32_t pathPtr){
     char* path = (char* )pathPtr;
 }

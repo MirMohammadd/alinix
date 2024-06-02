@@ -52,6 +52,15 @@ volatile uint8_t pbuf_free_ooseq_pending;
 
 
 
+/**
+ * Check if the pbuf pool is empty.
+ *
+ * @note This function checks if the pbuf pool is empty and performs the following actions:
+ *       - If the pbuf pool is empty, it sets the pbuf_free_ooseq_pending flag to 1.
+ *       - If the pbuf pool is not empty, it sets the pbuf_free_ooseq_pending flag to 1 and queues a call to pbuf_free_ooseq if not already queued.
+ *
+ * @see pbuf_pool_is_empty
+ */
 static void
 pbuf_pool_is_empty(void)
 {
@@ -73,7 +82,47 @@ pbuf_pool_is_empty(void)
 
 
 
-
+/**
+ * Allocates a pbuf chain of pbufs for storing packets.
+ *
+ * @param layer The layer of the protocol (e.g., PBUF_TRANSPORT, PBUF_IP, PBUF_LINK, PBUF_RAW).
+ * @param length The length of the pbuf chain.
+ * @param type The type of pbuf (e.g., PBUF_POOL, PBUF_RAM, PBUF_ROM, PBUF_REF).
+ *
+ * @return A pointer to the allocated pbuf chain, or NULL if allocation fails.
+ *
+ * @note The function allocates a chain of pbufs of the requested size. The first pbuf
+ *       in the chain points to a buffer of data that is at least large enough to hold
+ *       the requested amount of data. The remaining pbufs in the chain arept to their
+ *       own separate buffers of data. The pbufs are allocated from the pbuf pool.
+ *
+ * @note The function sets the payload pointer of each pbuf in the chain to point to the
+ *       appropriate location within the pbuf's buffer. The length and total length of
+ *       each pbuf in the chain are set according to the requested size. The reference
+ *       count of each pbuf is set to 1.
+ *
+ * @note If the requested type is PBUF_POOL, the function allocates a chain of pbufs
+ *       from the pbuf pool. If the allocation fails, the function frees the chain
+ *       already allocated and returns NULL.
+ *
+ * @note If the requested type is PBUF_RAM, the function allocates memory for the pbuf
+ *       structure and the payload buffer in one contiguous block. If the allocation fails,
+ *       the function returns NULL.
+ *
+ * @note If the requested type is PBUF_ROM or PBUF_REF, the function allocates memory
+ *       only for the pbuf structure and sets the payload pointer to NULL. If the allocation
+ *       fails, the function returns NULL.
+ *
+ * @note The function sets the type, flags, reference count, and payload pointer of each
+ *       pbuf in the chain accordingly. The function also sets the next pointer of each pbuf
+ *       to point to the next pbuf in the chain, except for the last pbuf, which has its next
+ *       pointer set to NULL.
+ *
+ * @note The function returns a pointer to the allocated pbuf chain, or NULL if the
+ *       allocation fails.
+ *
+ * @see pbuf
+ */
 struct pbuf *
 pbuf_alloc(pbuf_layer layer, uint16_t length, pbuf_type type)
 {
@@ -219,6 +268,31 @@ pbuf_alloc(pbuf_layer layer, uint16_t length, pbuf_type type)
   return p;
 }
 
+/**
+ * Reallocates a pbuf chain to a new length.
+ *
+ * @param p The pbuf chain to be reallocated.
+ * @param new_len The new length of the pbuf chain.
+ *
+ * @note The function reallocates a pbuf chain to a new length. It first steps over any pbufs
+ *       that should remain in the chain, adjusting their length and total length indicators.
+ *       Then, it reallocates and adjusts the length of the pbuf that will be split, if necessary.
+ *       Finally, it adjusts the length fields for the new last pbuf and frees any remaining
+ *       pbufs in the chain.
+ *
+ * @note The function does not currently support shrinking the pbuf chain.
+ *
+ * @note The function assumes that the pbuf chain is of type PBUF_POOL, PBUF_ROM, PBUF_RAM,
+ *       or PBUF_REF.
+ *
+ * @note The function assumes that the pbuf chain is properly linked.
+ *
+ * @pre The pbuf chain must be properly initialized and linked.
+ *
+ * @post The pbuf chain is reallocated to the new length.
+ *
+ * @see pbuf
+ */
 void
 pbuf_realloc(struct pbuf *p, uint16_t new_len)
 {
@@ -318,6 +392,28 @@ pbuf_copy_partial(struct pbuf *buf, void *dataptr, uint16_t len, uint16_t offset
   return copied_total;
 }
 
+/**
+ * Copies a partial portion of a pbuf chain to a data pointer.
+ *
+ * @param buf The pbuf chain to be copied from.
+ * @param dataptr The data pointer to copy to.
+ * @param len The length of the data to be copied.
+ * @param offset The offset into the pbuf chain from which to start copying.
+ *
+ * @return The total number of bytes copied.
+ *
+ * @note The function copies a partial portion of a pbuf chain to a data pointer. It iterates
+ *       over the pbuf chain, copying data from each pbuf until the specified length is reached.
+ *       The function supports copying from an offset within each pbuf.
+ *
+ * @note The function assumes that the pbuf chain is properly initialized and linked.
+ *
+ * @pre The pbuf chain must be properly initialized and linked.
+ *
+ * @post The specified portion of the pbuf chain is copied to the data pointer.
+ *
+ * @see pbuf
+ */
 err_t
 pbuf_copy(struct pbuf *p_to, struct pbuf *p_from)
 {
@@ -373,6 +469,20 @@ pbuf_copy(struct pbuf *p_to, struct pbuf *p_from)
   return ERR_OK;
 }
 
+/**
+ * Increments the reference count of a pbuf.
+ *
+ * @param p The pbuf whose reference count is to be incremented.
+ *
+ * @note The function increments the reference count of a pbuf. This is used to indicate that
+ *       the pbuf is being used or referenced by another part of the code.
+ *
+ * @pre The pbuf must be a valid pointer.
+ *
+ * @post The reference count of the pbuf is incremented.
+ *
+ * @see pbuf
+ */
 void
 pbuf_ref(struct pbuf *p)
 {

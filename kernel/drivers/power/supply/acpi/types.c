@@ -40,6 +40,13 @@ MODULE_DESCRIPTION("UCAPI types")
 MODULE_LICENSE("AGPL-3.0")
 MODULE_VERSION("0.1")
 
+/**
+ * Converts an address space enum value to its string representation.
+ *
+ * @param space The address space enum value to convert.
+ * @return A const char* representing the string representation of the address space.
+ *         If the value of space does not match any of the defined cases, returns "<vendor specific>".
+ */
 const char *uacpi_address_space_to_string(
     enum uacpi_address_space space
 )

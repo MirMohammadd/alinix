@@ -44,6 +44,34 @@ err_t
 udp_sendto_if(struct udp_pcb *pcb, struct pbuf *p,
   ip_addr_t *dst_ip, uint16_t dst_port, struct netif *netif);
 
+/**
+ * Sends a UDP datagram to a specified destination address and port.
+ *
+ * @param pcb The UDP PCB used to send the datagram.
+ * @param p The pbuf(s) containing the data to be sent.
+ * @param dst_ip The destination IP address.
+ * @param dst_port The destination port number.
+ * @param netif The network interface on which to send the datagram.
+ *
+ * @return ERR_OK if the datagram was sent successfully, an err_t value if the datagram
+ *         couldn't be sent.
+ *
+ * @note The function sends a UDP datagram to the specified destination address and port.
+ *       It copies the data from the pbuf(s) to the send buffer and sets up the UDP header.
+ *       It also calculates the checksum of the UDP header and sets it in the header.
+ *
+ * @pre The pcb parameter must be a valid pointer to a UDP PCB.
+ * @pre The p parameter must be a valid pointer to a pbuf.
+ * @pre The dst_ip parameter must be a valid pointer to an IP address.
+ * @pre The netif parameter must be a valid pointer to a network interface.
+ *
+ * @post The UDP datagram is sent to the specified destination.
+ *
+ * @see udp_pcb
+ * @see pbuf
+ * @see ip_addr_t
+ * @see netif
+ */
 err_t
 udp_sendto_if(struct udp_pcb *pcb, struct pbuf *p,
   ip_addr_t *dst_ip, uint16_t dst_port, struct netif *netif)
@@ -52,6 +80,25 @@ udp_sendto_if(struct udp_pcb *pcb, struct pbuf *p,
 //   return udp_sendto_if_chksum(pcb, p, dst_ip, dst_port, netif, 0, 0);
 }
 
+/**
+ * Removes a UDP PCB from the list of UDP PCBs.
+ *
+ * @param pcb The UDP PCB to be removed.
+ *
+ * @note The function removes a UDP PCB from the list of UDP PCBs.
+ *       It checks if the PCB to be removed is the first in the list and
+ *       updates the list accordingly. If the PCB is not the first in the list,
+ *       it searches for the PCB in the list and removes it. Finally, it frees
+ *       the memory occupied by the PCB.
+ *
+ * @pre The pcb parameter must be a valid pointer to a UDP PCB.
+ *
+ * @post The UDP PCB is removed from the list of UDP PCBs.
+ *
+ * @see udp_pcb
+ * @see udp_pcbs
+ * @see memp_free
+ */
 void
 udp_remove(struct udp_pcb *pcb)
 {
@@ -76,6 +123,28 @@ udp_remove(struct udp_pcb *pcb)
 }
 
 
+/**
+ * Sets the default gateway address for a network interface.
+ *
+ * @param netif The network interface for which the default gateway address is to be set.
+ * @param gw The default gateway address to be set.
+ *
+ * @note The function sets the default gateway address for the specified network interface.
+ *       It updates the gateway address field of the netif structure with the provided address.
+ *       It also prints a debug message indicating the new default gateway address.
+ *
+ * @pre The netif parameter must be a valid pointer to a netif structure.
+ * @pre The gw parameter must be a valid pointer to an IP address.
+ *
+ * @post The default gateway address of the network interface is updated.
+ *
+ * @see netif
+ * @see ip_addr_t
+ * @see ip4_addr1_16
+ * @see ip4_addr2_16
+ * @see ip4_addr3_16
+ * @see ip4_addr4_16
+ */
 void
 netif_set_gw(struct netif *netif, ip_addr_t *gw)
 {
@@ -88,6 +157,21 @@ netif_set_gw(struct netif *netif, ip_addr_t *gw)
     ip4_addr4_16(&netif->gw)));
 }
 
+/**
+ * Allocates a new UDP PCB (User Datagram Protocol Control Block).
+ *
+ * @return A pointer to the newly allocated UDP PCB, or NULL if allocation failed.
+ *
+ * @note The function allocates a new UDP PCB from the memory pool.
+ *       It initializes the PCB to all zeroes, which sets the checksum length to zero
+ *       by default, indicating that the checksum is generated over the whole datagram.
+ *
+ * @post A new UDP PCB is allocated and returned.
+ *
+ * @see udp_pcb
+ * @see memp_malloc
+ * @see memset
+ */
 struct udp_pcb *
 udp_new(void)
 {
@@ -176,6 +260,30 @@ udp_bind(struct udp_pcb *pcb, ip_addr_t *ipaddr, uint16_t port)
 //   return ERR_OK;
 }
 
+/**
+ * Connects a UDP PCB to a remote IP address and port.
+ *
+ * @param pcb The UDP PCB to be connected.
+ * @param ipaddr The IP address of the remote host.
+ * @param port The port number of the remote host.
+ *
+ * @return ERR_OK if the UDP PCB was successfully connected, an err_t value if the connection failed.
+ *
+ * @note The function connects a UDP PCB to a remote IP address and port.
+ *       It first checks if the local port of the PCB is zero, and if so, it binds the PCB to a local IP address and port.
+ *       It then sets the remote IP address and port of the PCB.
+ *       Finally, it sets the UDP_FLAGS_CONNECTED flag in the PCB and inserts it into the list of active UDP PCBs.
+ *
+ * @pre The pcb parameter must be a valid pointer to a UDP PCB.
+ * @pre The ipaddr parameter must be a valid pointer to an IP address.
+ *
+ * @post The UDP PCB is connected to the remote IP address and port.
+ *
+ * @see udp_pcb
+ * @see ip_addr_t
+ * @see udp_pcbs
+ * @see udp_bind
+ */
 err_t
 udp_connect(struct udp_pcb *pcb, ip_addr_t *ipaddr, uint16_t port)
 {
@@ -212,6 +320,24 @@ udp_connect(struct udp_pcb *pcb, ip_addr_t *ipaddr, uint16_t port)
 }
 
 
+/**
+ * Sets the receive callback function and user data for a UDP PCB.
+ *
+ * @param pcb The UDP PCB for which the receive callback is to be set.
+ * @param recv The receive callback function to be called when a UDP datagram is received.
+ * @param recv_arg User data to be passed as an argument to the receive callback function.
+ *
+ * @note The function sets the receive callback function and user data for a UDP PCB.
+ *       It updates the recv and recv_arg fields of the PCB structure with the provided values.
+ *
+ * @pre The pcb parameter must be a valid pointer to a UDP PCB.
+ * @pre The recv parameter must be a valid pointer to a receive callback function.
+ *
+ * @post The receive callback function and user data are set for the UDP PCB.
+ *
+ * @see udp_pcb
+ * @see udp_recv_fn
+ */
 void
 udp_recv(struct udp_pcb *pcb, udp_recv_fn recv, void *recv_arg)
 {

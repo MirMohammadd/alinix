@@ -36,7 +36,17 @@ struct memp_malloc_helper
    memp_t poolnr;
 };
 
-
+/**
+ * Free a memory block previously allocated by mem_malloc.
+ *
+ * @param rmem The memory block to free.
+ *
+ * @note This function frees a memory block previously allocated by mem_malloc.
+ *       It first gets the original struct memp_malloc_helper that was saved when the memory block was allocated.
+ *       It then puts the helper back into the pool it was allocated from.
+ *
+ * @see mem_malloc, memp_free
+ */
 void
 mem_free(void *rmem)
 {

@@ -97,6 +97,25 @@ static err_t autoip_bind(struct netif *netif);
 
 /* start sending probes for llipaddr */
 static void autoip_start_probing(struct netif *netif);
+
+/**
+ * Announce the AutoIP address using ARP.
+ *
+ * @param netif Pointer to the network interface.
+ * @return The error code indicating the result of the operation.
+ *
+ * @note This function announces the AutoIP address using ARP.
+ *       It takes a pointer to the `netif` structure as a parameter, which represents the network interface.
+ *       The function calls the `etharp_raw` function to send an ARP request to announce the AutoIP address.
+ *       It passes the necessary parameters to the `etharp_raw` function, including the network interface,
+ *       the hardware address of the network interface, the broadcast address, the hardware address of the network interface,
+ *       the AutoIP local link IP address, the zero address, and the AutoIP local link IP address.
+ *       The function returns the error code indicating the result of the operation.
+ *
+ * @see etharp_raw()
+ * @see netif
+ * @see AutoIP
+ */
 static err_t
 autoip_arp_announce(struct netif *netif)
 {
@@ -136,6 +155,25 @@ autoip_start_probing(struct netif *netif)
   }
 }
 
+/**
+ * Start probing for an AutoIP address.
+ *
+ * @param netif Pointer to the network interface.
+ *
+ * @note This function starts probing for an AutoIP address.
+ *       It takes a pointer to the `netif` structure as a parameter, which represents the network interface.
+ *       The function initializes the `autoip` structure of the `netif` with the appropriate values.
+ *       It sets the `state` of the `autoip` structure to `AUTOIP_STATE_PROBING` to indicate that probing is in progress.
+ *       It sets the `sent_num` member of the `autoip` structure to 0.
+ *       The function then logs a debug message indicating the change in state and the AutoIP address being probed.
+ *       The function generates a random time-to-wait value (`ttw`) for the first probe, which is chosen randomly from 0 to `PROBE_WAIT` seconds.
+ *       The function also checks if the number of conflicts (`tried_llipaddr`) exceeds the maximum allowed conflicts (`MAX_CONFLICTS`).
+ *       If it does, the `ttw` value is set to `RATE_LIMIT_INTERVAL` times `AUTOIP_TICKS_PER_SECOND` to limit the rate of acquiring and probing the address.
+ *       The function does not return any value.
+ *
+ * @see autoip_state_t
+ * @see AUTOIP_STATE_PROBING
+* */
 err_t 
 __autoip_start(struct netif *netif){
   struct autoip *autoip = netif->autoip;

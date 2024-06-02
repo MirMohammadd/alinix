@@ -45,6 +45,10 @@ static enum ScreenMode_t screenMode = TextMode;
  * @brief used to log a message to output.
 */
 void Log(enum LogLevel level, const char* __restrict__ format, ...);
+
+/**
+ * @brief Abstracted Log function.
+*/
 void Print(const char* data, uint32_t length);
 
 #endif /*__ALINIX__LOG_H*/

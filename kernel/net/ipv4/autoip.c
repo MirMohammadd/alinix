@@ -222,7 +222,22 @@ __autoip_start(struct netif *netif){
 }
 
 
-void
+/**
+ * Set the AutoIP structure for a network interface.
+ *
+ * @param netif Pointer to the network interface.
+ * @param autoip Pointer to the AutoIP structure.
+ *
+ * @note This function sets the AutoIP structure for a network interface.
+ *       It takes a pointer to the `netif` structure and a pointer to the `autoip` structure as parameters.
+ *       The function first clears the `autoip` structure by setting all its members to 0 using the `memset` function.
+ *       It then sets the `netif->autoip` member to the `autoip` pointer.
+ *       The function does not return any value.
+ *
+ * @see netif
+ * @see autoip
+ */
+VOID
 autoip_set_struct(struct netif *netif, struct autoip *autoip)
 {
 //   LWIP_ASSERT("netif != NULL", netif != NULL);
@@ -235,6 +250,21 @@ autoip_set_struct(struct netif *netif, struct autoip *autoip)
   netif->autoip = autoip;
 }
 
+/**
+ * Restart the AutoIP process.
+ *
+ * @param netif Pointer to the network interface.
+ *
+ * @note This function restarts the AutoIP process.
+ *       It takes a pointer to the `netif` structure as a parameter, which represents the network interface.
+ *       The function increments the `tried_llipaddr` member of the `autoip` structure of the `netif` by 1.
+ *       It then calls the `__autoip_start` function to start the AutoIP process.
+ *       The function does not return any value.
+ *
+ * @see netif
+ * @see autoip
+ * @see __autoip_start
+ */
 PRIVATE VOID
 autoip_restart(struct netif *netif)
 {

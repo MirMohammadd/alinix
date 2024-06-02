@@ -36,6 +36,31 @@ MODULE_VERSION("0.1")
 /**
  * @brief Get the mac address of the device using I/O ports.
 */
+/**
+ * Retrieves the MAC address of the network interface card (NIC) and stores it in the provided array.
+ *
+ * @param macAddress An array of 6 integers to store the MAC address.
+ *
+ * @return None.
+ *
+ * @throws None.
+ *
+ * @details
+ * This function retrieves the MAC address of the network interface card (NIC) by reading the MAC
+ * address from the I/O port address specified by the `ioaddr` variable. It assumes that the
+ * `ioaddr` variable is defined and contains the I/O port address of the NIC.
+ *
+ * The function reads 6 bytes from the I/O port address and stores them in the `macAddress` array.
+ * Each byte represents a part of the MAC address.
+ *
+ * After reading the MAC address, the function sets the Reset bit (0x10) in the Command Register
+ * (0x37) of the NIC to reset it. It waits until the Reset bit is cleared in the Command Register
+ * before returning.
+ *
+ * @note
+ * This function assumes that the `inportb` and `outportb` functions are defined to read from
+ * and write to I/O ports, respectively.
+ */
 void getMacAddr(int macAddress[]){
     char i;
     for (i = 0;i < 6;i++){

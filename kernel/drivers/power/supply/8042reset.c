@@ -43,6 +43,17 @@ void reboot_x86_sys_call(){
 }
 
 
+/**
+ * Reboots the system.
+ *
+ * This function sends a reboot command to a specific port on the system's hardware.
+ * It waits until the reboot command is accepted by checking the value of the `good` variable.
+ * Once the reboot command is accepted, the function sends the reboot command to the port and then halts the system.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 VOID reboot(){
     uint8_t good = 0x02;
     while (good & 0x2)

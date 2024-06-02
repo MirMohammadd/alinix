@@ -30,6 +30,18 @@ MODULE_DESCRIPTION("VTOC for the file system kernel")
 MODULE_LICENSE("AGPL")
 MODULE_VERSION("0.1")
 
+/**
+ * @brief Get the CHR (Cylinder-Head-Record) information from the VTOC (Volume Table of Contents).
+ *
+ * This function extracts the cylinder, head, and record information from the VTOC buffer.
+ * The VTOC buffer is expected to contain the necessary data at specific offsets.
+ *
+ * @param buffer Pointer to the VTOC buffer.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void GetCHRFromVTOC(void *buffer){
     uint16_t cyl,head;
     uint8_t rec;

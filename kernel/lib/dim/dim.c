@@ -33,7 +33,16 @@ MODULE_DESCRIPTION("DIM driver implementation")
 MODULE_LICENSE("AGPL-3.0")
 MODULE_VERSION("0.1")
 
-
+/**
+ * Check if the dimmer is on top based on the tune state and step counts.
+ *
+ * @param dim Pointer to the dimmer structure.
+ * @return True if the dimmer is on top, false otherwise.
+ *
+ * @note The dimmer is considered on top if the tune state is either DIM_PARKING_ON_TOP or DIM_PARKING_TIRED.
+ *       If the tune state is DIM_GOING_RIGHT, the function checks if the number of steps to the left is 1 and the number of steps to the right is greater than 1.
+ *       If the tune state is DIM_GOING_LEFT, the function checks if the number of steps to the right is 1 and the number of steps to the left is greater than 1.
+ */
 bool dim_on_top(struct dim *dim){
     switch(dim->tune_state){
 	case DIM_PARKING_ON_TOP:

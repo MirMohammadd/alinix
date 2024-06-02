@@ -32,7 +32,9 @@ MODULE_DESCRIPTION("VGA driver module")
 MODULE_LICENSE("AGPL-3.0")
 MODULE_VERSION("0.1")
 
-
+/**
+ * @brief Set the domain name, related to the GPU util.
+*/
 void dev_pm_domain_set(struct device *dev, struct dev_pm_domain *pd)
 {
 	if (dev->pm_domain == pd)

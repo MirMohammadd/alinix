@@ -290,6 +290,21 @@ static uacpi_status do_write_register(
     return ret;
 }
 
+/**
+ * Writes a value to a register.
+ *
+ * @param reg A pointer to the register specification.
+ * @param in_value The value to be written.
+ * @return The status of the write operation.
+ *
+ * This function writes a value to a register specified by the given register specification.
+ * If the register has a preserve mask, it clears the bits specified by the preserve mask from the input value.
+ * If the access kind of the register is `REGISTER_ACCESS_KIND_PRESERVE`, it reads the current value of the register
+ * using the `do_read_register` function and merges the preserved bits from the current value into the input value.
+ * It then writes the input value to the first accessor using the `write_one` function.
+ * If the register has a second accessor, it writes the input value to the second accessor using the `write_one` function.
+ * The function returns the status of the write operation.
+ */
 uacpi_status uacpi_write_register(
     enum uacpi_register reg_enum, u64 in_value
 )
@@ -303,6 +318,21 @@ uacpi_status uacpi_write_register(
     return do_write_register(reg, in_value);
 }
 
+/**
+ * Writes values to multiple registers.
+ *
+ * @param reg_enum The enumeration value representing the register.
+ * @param in_value0 The first value to be written.
+ * @param in_value1 The second value to be written.
+ * @return The status of the write operation.
+ *
+ * This function writes values to multiple registers specified by the given enumeration value.
+ * It first retrieves the register specification using the `get_reg` function.
+ * If the register specification is not found, it returns `UACPI_STATUS_INVALID_ARGUMENT`.
+ * Otherwise, it writes the first value to the first accessor using the `write_one` function.
+ * If the register has a second accessor, it writes the second value to the second accessor using the `write_one` function.
+ * The function returns the status of the write operation.
+ */
 uacpi_status uacpi_write_registers(
     enum uacpi_register reg_enum, u64 in_value0, u64 in_value1
 )
@@ -330,6 +360,17 @@ struct register_field {
     u16 mask;
 };
 
+/**
+ * @brief Array of register fields used in ACPI power management.
+ *
+ * This array contains information about various register fields used in ACPI power management.
+ * Each element of the array represents a specific register field and contains information about the
+ * register it belongs to, its offset within the register, and its mask.
+ *
+ * The array is indexed by the `enum uacpi_register_field` enumeration values.
+ *
+ * @note This array must be kept in sync with the `enum uacpi_register_field` enumeration.
+ */
 static struct register_field fields[UACPI_REGISTER_FIELD_MAX + 1] = {
     [UACPI_REGISTER_FIELD_TMR_STS] = {
         .reg = UACPI_REGISTER_PM1_STS,
@@ -448,6 +489,21 @@ static struct register_field fields[UACPI_REGISTER_FIELD_MAX + 1] = {
     },
 };
 
+/**
+ * @brief Read the value of a register field.
+ *
+ * This function reads the value of a specific register field and returns it through the `out_value`
+ * parameter. The register field to read is specified by the `field_enum` parameter, which must be
+ * a valid value from the `enum uacpi_register_field` enumeration.
+ *
+ * @param field_enum The enumeration value specifying the register field to read.
+ * @param out_value A pointer to a u64 variable where the read value will be stored.
+ *
+ * @return Returns `UACPI_STATUS_OK` on success, or an error status code on failure.
+ *
+ * @throws UACPI_STATUS_INVALID_ARGUMENT If the `field_enum` parameter is not a valid value from
+ * the `enum uacpi_register_field` enumeration.
+ */
 uacpi_status uacpi_read_register_field(
     enum uacpi_register_field field_enum, u64 *out_value
 )
@@ -471,6 +527,23 @@ uacpi_status uacpi_read_register_field(
     return UACPI_STATUS_OK;
 }
 
+
+/**
+ * @brief Write a value to a register field.
+ *
+ * This function writes a value to a specific register field. The register field to write to is
+ * specified by the `field_enum` parameter, which must be a valid value from the
+ * `enum uacpi_register_field` enumeration. The value to write is specified by the `in_value`
+ * parameter.
+ *
+ * @param field_enum The enumeration value specifying the register field to write to.
+ * @param in_value The value to write to the register field.
+ *
+ * @return Returns `UACPI_STATUS_OK` on success, or an error status code on failure.
+ *
+ * @throws UACPI_STATUS_INVALID_ARGUMENT If the `field_enum` parameter is not a valid value from
+ * the `enum uacpi_register_field` enumeration.
+ */
 uacpi_status uacpi_write_register_field(
     enum uacpi_register_field field_enum, u64 in_value
 )

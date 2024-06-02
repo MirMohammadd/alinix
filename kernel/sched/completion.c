@@ -68,12 +68,55 @@ __wait_for_common(struct completion *x,
 	return timeout;
 }
 
+/**
+ * @brief Waits for a completion event with a timeout and state.
+ *
+ * This function waits for a completion event by calling the `__wait_for_common`
+ * function with the provided timeout and state values.
+ *
+ * @param x A pointer to a struct completion object representing the completion event.
+ * @param timeout A long value representing the maximum time to wait for the completion event.
+ * @param state An int value representing the state of the completion event.
+ *
+ * @return A long value representing the timeout value.
+ *
+ * @note The `__wait_for_common` function is called with the provided timeout and state values.
+ *
+ * @example
+ * struct completion completion_obj;
+ * long timeout = 1000; // Example timeout value
+ * int state = 0; // Example state value
+ *
+ * long result = wait_for_common(&completion_obj, timeout, state);
+ * printf("Timeout: %ld\n", result);
+ */
 static long 
 wait_for_common(struct completion *x, long timeout, int state)
 {
 	return __wait_for_common(x, TIME_OUT, timeout, state);
 }
 
+/**
+ * @brief Waits for a completion event with a timeout.
+ *
+ * This function waits for a completion event by calling the `wait_for_common`
+ * function with the provided timeout value and a task state of `TASK_UNINTERRUPTIBLE`.
+ *
+ * @param x A pointer to a struct completion object representing the completion event.
+ * @param timeout An unsigned long value representing the maximum time to wait for the completion event.
+ *
+ * @return An unsigned long value representing the remaining time until the completion event occurs.
+ *         If the completion event occurs before the timeout, the returned value is zero.
+ *
+ * @note The `wait_for_common` function is called with the provided timeout value and a task state of `TASK_UNINTERRUPTIBLE`.
+ *
+ * @example
+ * struct completion completion_obj;
+ * unsigned long timeout = 1000; // Example timeout value
+ *
+ * unsigned long remaining_time = wait_for_completion_timeout(&completion_obj, timeout);
+ * printf("Remaining Time: %lu\n", remaining_time);
+ */
 unsigned long 
 wait_for_completion_timeout(struct completion *x, unsigned long timeout)
 {

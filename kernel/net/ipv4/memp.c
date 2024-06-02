@@ -50,6 +50,18 @@ struct memp {
 static struct memp *memp_tab[MEMP_MAX];
 
 
+/**
+ * Free a memory block previously allocated by memp_malloc.
+ *
+ * @param type The type of the memory block to free.
+ * @param mem The memory block to free.
+ *
+ * @note This function frees a memory block previously allocated by memp_malloc.
+ *       It first gets the original struct memp that was saved when the memory block was allocated.
+ *       Then it puts the memory block back into the pool it was allocated from.
+ *
+ * @see memp_malloc
+ */
 void
 memp_free(memp_t type, void *mem)
 {

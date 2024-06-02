@@ -42,6 +42,21 @@ MODULE_VERSION("0.1")
 
 struct netif *netif_list;
 
+/**
+ * Set the NETIF_FLAG_UP flag for a network interface, indicating that it is up and ready to transmit and receive packets.
+ *
+ * @param netif The network interface to set up.
+ *
+ * @note This function sets the NETIF_FLAG_UP flag for the given network interface, indicating that it is up and ready to transmit and receive packets.
+ *       If the NETIF_FLAG_UP flag is already set, the function does nothing.
+ *       If the NETIF_FLAG_UP flag is not set, the function sets it and performs the following actions:
+ *       - Sets the NETIF_FLAG_LINK_UP flag if it is set for the network interface.
+ *       - Sends a "gratuitous ARP" message for Ethernet network interfaces if the NETIF_FLAG_ETHARP flag is set.
+ *       - Resends IGMP memberships for the network interface if the NETIF_FLAG_IGMP flag is set.
+ *       - Calls the NETIF_STATUS_CALLBACK function for the network interface.
+ *
+ * @see NETIF_FLAG_UP, NETIF_FLAG_LINK_UP, NETIF_FLAG_ETHARP, NETIF_FLAG_IGMP, NETIF_STATUS_CALLBACK
+ */
 void netif_set_up(struct netif *netif)
 {
   if (!(netif->flags & NETIF_FLAG_UP)) {
@@ -71,6 +86,20 @@ void netif_set_up(struct netif *netif)
   }
 }
 
+/**
+ * Set the NETIF_FLAG_DOWN flag for a network interface, indicating that it is down and not ready to transmit or receive packets.
+ *
+ * @param netif The network interface to set down.
+ *
+ * @note This function sets the NETIF_FLAG_DOWN flag for the given network interface, indicating that it is down and not ready to transmit or receive packets.
+ *       If the NETIF_FLAG_UP flag is not set, the function does nothing.
+ *       If the NETIF_FLAG_UP flag is set, the function clears it and performs the following actions:
+ *       - Sets the NETIF_FLAG_LINK_DOWN flag if it is set for the network interface.
+ *       - Cleans up ARP entries for Ethernet network interfaces if the NETIF_FLAG_ETHARP flag is set.
+ *       - Calls the NETIF_STATUS_CALLBACK function for the network interface.
+ *
+ * @see NETIF_FLAG_DOWN, NETIF_FLAG_LINK_DOWN, NETIF_FLAG_ETHARP, NETIF_STATUS_CALLBACK
+ */
 void netif_set_down(struct netif *netif)
 {
   if (netif->flags & NETIF_FLAG_UP) {
@@ -89,6 +118,23 @@ void netif_set_down(struct netif *netif)
 }
 
 
+/**
+ * Set the IP address of a network interface.
+ *
+ * @param netif The network interface to set the IP address for.
+ * @param ipaddr The new IP address to set.
+ *
+ * @note This function sets the IP address of the given network interface to the specified IP address.
+ *       If the IP address is already set to the same value, the function does nothing.
+ *       If the IP address is being changed, the function performs the following actions:
+ *       - Aborts all active TCP connections that are bound to the current local interface address.
+ *       - Updates the listening TCP PCBs to listen on the new IP address.
+ *       - Deletes and re-inserts the IP address index and route index trees in the SNMP subsystem.
+ *       - Sets the new IP address for the network interface.
+ *       - Prints a debug message indicating the new IP address.
+ *
+ * @see ip_addr_t
+ */
 void
 netif_set_ipaddr(struct netif *netif, ip_addr_t *ipaddr)
 {
@@ -147,6 +193,20 @@ netif_set_ipaddr(struct netif *netif, ip_addr_t *ipaddr)
 }
 
 
+/**
+ * Set the netmask of a network interface.
+ *
+ * @param netif The network interface to set the netmask for.
+ * @param netmask The new netmask to set.
+ *
+ * @note This function sets the netmask of the given network interface to the specified netmask.
+ *       It performs the following actions:
+ *       - Deletes and re-inserts the IP route index tree in the SNMP subsystem.
+ *       - Sets the new netmask for the network interface.
+ *       - Prints a debug message indicating the new netmask.
+ *
+ * @see ip_addr_t
+ */
 void
 netif_set_netmask(struct netif *netif, ip_addr_t *netmask)
 {

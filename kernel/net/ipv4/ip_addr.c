@@ -36,6 +36,23 @@ MODULE_VERSION("0.1")
 const ip_addr_t ip_addr_any = { IPADDR_ANY };
 const ip_addr_t ip_addr_broadcast = { IPADDR_BROADCAST };
 
+/**
+ * Check if an IPv4 address is a broadcast address on a given network interface.
+ *
+ * @param addr The IPv4 address to check.
+ * @param netif The network interface to check against.
+ *
+ * @return 1 if the address is a broadcast address on the given network interface, 0 otherwise.
+ *
+ * @note This function checks if the given IPv4 address is a broadcast address on the specified network interface.
+ *       The function first converts the IPv4 address to an `ip_addr_t` structure.
+ *       It then checks if the address is all ones (broadcast) or all zeroes (old school broadcast).
+ *       If the address matches the network interface address exactly, it is not a broadcast address.
+ *       If the network interface supports broadcast and the address is on the same subnet with host identifier bits all ones,
+ *       it is a network broadcast address. Otherwise, it is not a broadcast address.
+ *
+ * @see ip_addr_t, netif
+ */
 uint8_t
 ip4_addr_isbroadcast(uint32_t addr, const struct netif *netif)
 {

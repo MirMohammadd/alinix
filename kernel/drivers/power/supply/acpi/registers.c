@@ -73,6 +73,13 @@ struct register_spec {
     u64 preserve_mask;
 };
 
+/**
+ * @brief Array of register specifications for ACPI registers.
+ *
+ * This array contains the specifications for different registers in the ACPI namespace. Each element in the array represents a specific register and its properties, such as kind, access kind, accessors, and masks.
+ *
+ * @note This array assumes the existence of the `g_uacpi_rt_ctx` global context structure and the `UACPI_REGISTER_MAX` constant.
+ */
 static struct register_spec registers[UACPI_REGISTER_MAX + 1] = {
     [UACPI_REGISTER_PM1_STS] = {
         .kind = REGISTER_KIND_GAS,
@@ -133,6 +140,13 @@ static struct register_spec registers[UACPI_REGISTER_MAX + 1] = {
     },
 };
 
+/**
+ * Retrieves the register specification for the given index.
+ *
+ * @param idx The index of the register.
+ * @return A pointer to the register specification structure if the index is valid,
+ *         otherwise NULL.
+ */
 static struct register_spec *get_reg(u8 idx)
 {
     if (idx > UACPI_REGISTER_MAX)
@@ -158,6 +172,15 @@ static uacpi_status read_one(
     return uacpi_kernel_raw_io_read(*(u32*)reg, byte_width, out_value);
 }
 
+/**
+ * Reads a value from a register.
+ *
+ * @param kind The kind of register (REGISTER_KIND_GAS or other).
+ * @param reg A pointer to the register.
+ * @param byte_width The byte width of the register.
+ * @param out_value A pointer to store the read value.
+ * @return The status of the read operation.
+ */
 static uacpi_status write_one(
     enum register_kind kind, void *reg, u8 byte_width,
     u64 in_value
@@ -175,6 +198,19 @@ static uacpi_status write_one(
     return uacpi_kernel_raw_io_write(*(u32*)reg, byte_width, in_value);
 }
 
+/**
+ * Reads the value of a register.
+ *
+ * @param reg A pointer to the register specification.
+ * @param out_value A pointer to store the read value.
+ * @return The status of the read operation.
+ *
+ * This function reads the value of a register specified by the given register specification.
+ * It first reads the value from the first accessor using the `read_one` function.
+ * If the register has a second accessor, it reads the value from the second accessor using the `read_one` function.
+ * The values are then combined and stored in the `out_value` parameter.
+ * If the register has a write-only mask, the write-only bits are cleared from the value.
+ */
 static uacpi_status do_read_register(
     struct register_spec *reg, u64 *out_value
 )
@@ -199,6 +235,18 @@ static uacpi_status do_read_register(
     return UACPI_STATUS_OK;
 }
 
+/**
+ * Reads the value of a register.
+ *
+ * @param reg_enum The enumeration value representing the register.
+ * @param out_value A pointer to store the read value.
+ * @return The status of the read operation.
+ *
+ * This function reads the value of a register specified by the given enumeration value.
+ * It first retrieves the register specification using the `get_reg` function.
+ * If the register specification is not found, it returns `UACPI_STATUS_INVALID_ARGUMENT`.
+ * Otherwise, it calls the `do_read_register` function to perform the actual read operation.
+ */
 uacpi_status uacpi_read_register(
     enum uacpi_register reg_enum, u64 *out_value
 )

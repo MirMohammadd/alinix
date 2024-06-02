@@ -54,6 +54,16 @@ static inline void settle_io_ports(){
     outportb(fadt->SMI_CommandPort,fadt->AcpiEnable);
 }
 
+
+/**
+ * @brief Initializes the power management by waiting until the PM1aControlBlock register is set to 1.
+ *
+ * This function waits in an infinite loop until the `PM1aControlBlock` register is set to 1. The `PM1aControlBlock` register is read using the `inportw()` function, which reads a 16-bit word from the specified port. The `& 1 == 0` condition checks if the least significant bit of the read value is 0, indicating that the `PM1aControlBlock` register is not set to 1.
+ *
+ * @return This function does not return a value.
+ *
+ * @note This function assumes that the `fadt` pointer is pointing to a valid `FADT` structure.
+ */
 VOID init_port_power(){
     while (inportw(fadt->PM1aControlBlock) & 1 == 0);
 }

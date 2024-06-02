@@ -48,7 +48,17 @@ MODULE_VERSION("0.1")
 
 
 
-
+/**
+ * @brief Rounds up the given length to the nearest multiple of 8 bits and converts it to bytes.
+ *
+ * This function rounds up the given `length` to the nearest multiple of 8 bits. It does this by using the `UACPI_ALIGN_UP()` macro, which aligns the `length` up to the nearest multiple of 8. The result is then divided by 8 to convert it from bits to bytes.
+ *
+ * @param length The length to be rounded up.
+ *
+ * @return The rounded up length in bytes.
+ *
+ * @note This function assumes that the `UACPI_ALIGN_UP()` macro is defined and works correctly.
+ */
 size_t uacpi_round_up_bits_to_bytes(size_t length){
     return UACPI_ALIGN_UP(length,8,size_t) / 8;
 }

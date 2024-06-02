@@ -56,6 +56,21 @@ union tcp_listen_pcbs_t tcp_listen_pcbs;
 
 struct tcp_pcb *tcp_active_pcbs;
 
+/**
+ * Abandons a TCP connection.
+ *
+ * @param pcb The TCP control block of the connection to be abandoned.
+ *
+ * @note The function abandons a TCP connection. It calls the tcp_abandon function with the
+ *       pcb parameter and a flag indicating that the connection is being aborted.
+ *
+ * @pre The TCP control block must be a valid pointer.
+ *
+ * @post The TCP connection is abandoned.
+ *
+ * @see tcp_pcb
+ * @see tcp_abandon
+ */
 void
 tcp_abort(struct tcp_pcb *pcb)
 {
@@ -105,6 +120,24 @@ tcp_abandon(struct tcp_pcb *pcb, int reset)
   }
 }
 
+/**
+ * Abandons a TCP connection.
+ *
+ * @param pcb The TCP control block of the connection to be abandoned.
+ * @param reset Flag indicating whether to send a RST (reset) message to the remote end.
+ *
+ * @note The function abandons a TCP connection. It removes the pcb from the appropriate TCP PCB list
+ *       and frees its memory. If the connection is in the TIME_WAIT state, the pcb is simply removed
+ *       and freed. Otherwise, the function sends a RST message to the remote end if the reset flag is
+ *       set, frees the pcb, and calls the error callback function with the ERR_ABRT error code.
+ *
+ * @pre The TCP control block must be a valid pointer.
+ *
+ * @post The TCP connection is abandoned.
+ *
+ * @see tcp_pcb
+ * @see tcp_err_fn
+ */
 void
 tcp_pcb_remove(struct tcp_pcb **pcblist, struct tcp_pcb *pcb)
 {
@@ -134,6 +167,21 @@ tcp_pcb_remove(struct tcp_pcb **pcblist, struct tcp_pcb *pcb)
 }
 
 
+/**
+ * Frees a linked list of TCP segments.
+ *
+ * @param seg The first segment in the linked list to be freed.
+ *
+ * @note The function frees a linked list of TCP segments by iterating over the list and freeing
+ *       each segment using the tcp_seg_free function.
+ *
+ * @pre The seg parameter must be a valid pointer to a TCP segment.
+ *
+ * @post The linked list of TCP segments is freed.
+ *
+ * @see tcp_seg
+ * @see tcp_seg_free
+ */
 void
 tcp_segs_free(struct tcp_seg *seg)
 {
@@ -144,6 +192,24 @@ tcp_segs_free(struct tcp_seg *seg)
   }
 }
 
+/**
+ * Purges a TCP PCB, freeing its resources.
+ *
+ * @param pcb The TCP PCB to be purged.
+ *
+ * @note The function purges a TCP PCB by freeing its resources. It checks the state of the PCB and
+ *       performs the necessary actions based on the state. If the PCB is not in the CLOSED, TIME_WAIT,
+ *       or LISTEN states, it frees the refused data, checks for unsent and unacked data, stops the
+ *       retransmission timer, and frees the unsent and unacked data segments.
+ *
+ * @pre The pcb parameter must be a valid pointer to a TCP PCB.
+ *
+ * @post The resources of the TCP PCB are freed.
+ *
+ * @see tcp_pcb
+ * @see tcp_seg
+ * @see pbuf_free
+ */
 void
 tcp_pcb_purge(struct tcp_pcb *pcb)
 {

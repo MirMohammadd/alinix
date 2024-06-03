@@ -167,6 +167,21 @@ void paint_window(window_t *window) {
     }
 }
 
+/**
+ * @brief Creates a new text area with the given position and dimensions.
+ *
+ * This function dynamically allocates memory for a new text area and initializes it with the given position and dimensions.
+ * The function also sets the type of the text area to `TYPE_TEXT_AREA`.
+ *
+ * @param x The x-coordinate of the top-left corner of the text area.
+ * @param y The y-coordinate of the top-left corner of the text area.
+ * @param w The width of the text area.
+ * @param h The height of the text area.
+ *
+ * @return A pointer to the newly created text area.
+ *
+ * @throws None
+ */
 text_area_t *create_text_area(int x, int y, int w, int h) {
     text_area_t *text_area = (text_area_t *) kmalloc(sizeof(text_area_t));
     text_area->type = TYPE_TEXT_AREA;
@@ -179,14 +194,53 @@ text_area_t *create_text_area(int x, int y, int w, int h) {
     return text_area;
 }
 
+/**
+ * @brief Sets the text content of the given text area.
+ *
+ * This function copies the given text into the `content` field of the given text area.
+ * The function assumes that the `content` field of the text area is large enough to hold the given text.
+ *
+ * @param text_area The text area whose text content should be set.
+ * @param text The text to be copied into the text area.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void text_area_set_text(text_area_t *text_area, char *text) {
     strcpy(text_area->content, text);
 }
 
+/**
+ * @brief Appends the given text to the content of the given text area.
+ *
+ * This function appends the given text to the existing content of the given text area.
+ * The function assumes that the `content` field of the text area is large enough to hold the appended text.
+ *
+ * @param text_area The text area to which the text should be appended.
+ * @param text The text to be appended to the text area.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void text_area_append(text_area_t *text_area, char *text) {
     strcat(text_area->content, text);
 }
 
+/**
+ * @brief Draws the given text area on the given window.
+ *
+ * This function draws the borders and content of the given text area on the given window.
+ * The function calculates the position of the text area relative to the window and calls the appropriate drawing functions.
+ *
+ * @param window The window on which the text area should be drawn.
+ * @param text_area The text area to be drawn.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void draw_text_area(window_t *window, text_area_t *text_area) {
     draw_rect(window->x + 10 + text_area->x, window->y + 20 + text_area->y, text_area->w, text_area->h, TEXT_AREA_COLOR);
     draw_string(window->x + 10 + text_area->x + text_area->cursorx, window->y + 20 + text_area->y + text_area->cursory, text_area->content);

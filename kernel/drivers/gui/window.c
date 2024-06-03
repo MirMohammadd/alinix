@@ -37,6 +37,18 @@ MODULE_VERSION("0.1")
 
 static window_list_t *list;
 
+/**
+ * @brief Initializes the window list.
+ *
+ * This function dynamically allocates memory for a window list and initializes it.
+ * The window list is a singly linked list where each node contains a pointer to a window.
+ * The list is initialized with a single node where the `next` pointer is set to `NULL`
+ * and the `window` pointer is set to `NULL`.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void windows_list_init() {
     list = (window_list_t *) kmalloc(sizeof(window_list_t));
     if(list) {
@@ -45,6 +57,22 @@ void windows_list_init() {
     }
 }
 
+/**
+ * @brief Creates a new window with the given title, position, and dimensions.
+ *
+ * This function dynamically allocates memory for a new window and initializes it with the given title, position, and dimensions.
+ * The function also adds the new window to the linked list of windows.
+ *
+ * @param title The title of the window.
+ * @param x The x-coordinate of the top-left corner of the window.
+ * @param y The y-coordinate of the top-left corner of the window.
+ * @param w The width of the window.
+ * @param h The height of the window.
+ *
+ * @return A pointer to the newly created window, or `NULL` if memory allocation fails.
+ *
+ * @throws None
+ */
 window_t *window_create(char *title, int x, int y, int w, int h) {
     window_t *window = (window_t *) kmalloc(sizeof(window_t));
     if(!window)
@@ -66,6 +94,20 @@ window_t *window_create(char *title, int x, int y, int w, int h) {
     return window;
 }
 
+/**
+ * @brief Adds a component to the given window.
+ *
+ * This function adds a new component to the linked list of components of the given window.
+ * The function dynamically allocates memory for a new component node and initializes it with the given component.
+ * The new node is added at the beginning of the list.
+ *
+ * @param window The window to which the component should be added.
+ * @param component The component to be added.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void add_component(window_t *window, void *component) {
     components_list_t *app = window->components;
     window->components = (components_list_t *) kmalloc(sizeof(components_list_t));
@@ -73,6 +115,16 @@ void add_component(window_t *window, void *component) {
     window->components->next = app;
 }
 
+/**
+ * @brief Paints all the windows in the linked list.
+ *
+ * This function iterates through the linked list of windows and calls the `paint_window()` function for each window.
+ * The `paint_window()` function is responsible for rendering the window on the screen.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void paint_windows() {
     window_list_t *app = list;
     while(app != NULL) {
@@ -83,6 +135,19 @@ void paint_windows() {
     }
 }
 
+/**
+ * @brief Paints the given window on the screen.
+ *
+ * This function draws the borders, background, and title of the given window on the screen.
+ * It also iterates through the linked list of components of the window and calls the appropriate
+ * drawing function for each component.
+ *
+ * @param window The window to be painted.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void paint_window(window_t *window) {
     draw_rect(window->x, window->y, window->w, window->h, WINDOW_EDGE_COLOR);
     draw_rect(window->x + 10, window->y + 20, window->w - 20, window->h - 35, WINDOW_BACKGROUND_COLOR);

@@ -38,6 +38,25 @@ MODULE_VERSION("0.1")
 
 static struct TSSEntry tss;
 
+/**
+ * Install a Task State Segment (TSS) entry.
+ *
+ * This function installs a TSS entry in the Global Descriptor Table (GDT) and initializes it with the provided parameters.
+ * It performs the following steps:
+ *
+ * 1. Clears the `tss` structure using `memset`.
+ * 2. Calculates the base address of the `tss` structure.
+ * 3. Calls `GGetDescriptor` to retrieve the descriptor for the TSS entry from the GDT.
+ * 4. Initializes the `tss` structure with the provided `kernelSS` and `kernelESP` values.
+ * 5. Sets the `iomap` field of the `tss` structure to the size of the `struct TSSEntry`.
+ * 6. Calls `flush_tss` to invalidate the TSS cache.
+ *
+ * @param idx The index of the TSS entry in the GDT.
+ * @param kernelSS The value to set for the `ss0` field of the TSS.
+ * @param kernelESP The value to set for the `esp0` field of the TSS.
+ *
+ * @return void
+ */
 void TSS_Install(uint32_t idx, uint32_t kernelSS, uint32_t kernelESP){
     memset(&tss,0,sizeof(struct TSSEntry));
 
@@ -58,11 +77,32 @@ void TSS_Install(uint32_t idx, uint32_t kernelSS, uint32_t kernelESP){
 
 }
 
+/**
+ * Set the stack pointer and stack base address in the Task State Segment (TSS).
+ *
+ * This function sets the stack pointer and stack base address in the TSS.
+ * It performs the following steps:
+ *
+ * 1. Sets the `ss0` field of the TSS to the provided `kernelSS` value.
+ * 2. Sets the `esp0` field of the TSS to the provided `kernelESP` value.
+ *
+ * @param kernelSS The value to set for the `ss0` field of the TSS.
+ * @param kernelESP The value to set for the `esp0` field of the TSS.
+ *
+ * @return void
+ */
 void TSS_SetStack(uint32_t kernelSS, uint32_t kernelESP){
     tss.ss0 = kernelSS;
     tss.esp0 = kernelESP;
 }
 
+/**
+ * Get the current Task State Segment (TSS).
+ *
+ * This function returns a pointer to the current TSS.
+ *
+ * @return A pointer to the current TSS.
+ */
 struct TSSEntry* TSS_GetCurrent(){
     return &tss;
 }

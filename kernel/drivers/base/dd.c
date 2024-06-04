@@ -33,6 +33,16 @@ MODULE_LICENSE("AGPL")
 MODULE_VERSION("0.1")
 
 
+/**
+ * Check if a device is bound to a driver.
+ *
+ * This function checks if a device is bound to a driver. It does this by checking if the device's parent pointer
+ * is not NULL and if the klist node for the device's driver is attached to the parent's klist.
+ *
+ * @param dev The device to check if it is bound.
+ *
+ * @return true if the device is bound to a driver, false otherwise.
+ */
 bool device_is_bound(struct device *dev)
 {
 	return dev->p && klist_node_attached(&dev->p->knode_driver);

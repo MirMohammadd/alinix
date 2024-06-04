@@ -42,6 +42,16 @@ static bool fw_devlink_drv_reg_done;
 static bool fw_devlink_best_effort;
 
 
+/**
+ * Release a reference to a device.
+ *
+ * This function releases a reference to a device. It decrements the reference count of the device's kobject.
+ * If the reference count reaches 0, the kobject is destroyed and the device is freed.
+ *
+ * @param dev The device to release the reference for.
+ *
+ * @return void
+ */
 void put_device(struct device *dev)
 {
 	/* might_sleep(); */

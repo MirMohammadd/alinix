@@ -34,6 +34,22 @@ MODULE_VERSION("0.1")
 struct idt_ptr idtr;
 struct idt_info idt[MAX_INTERRUPTS];
 
+/**
+ * @brief Installs an interrupt request (IRQ) handler in the Interrupt Descriptor Table (IDT).
+ *
+ * This function installs an interrupt request handler in the IDT at the specified index.
+ * The function takes the interrupt number, flags, selector, and the address of the IRQ handler as parameters.
+ * The function calculates the base address of the IRQ handler and sets the corresponding fields in the IDT entry.
+ *
+ * @param i The index in the IDT where the IRQ handler should be installed.
+ * @param flags The flags for the IDT entry.
+ * @param sel The selector for the IDT entry.
+ * @param irq The address of the IRQ handler.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void install_ir(uint32_t i, uint16_t flags, uint16_t sel, void *irq) {
     uint32_t ir_addr = (uint32_t) irq;
     

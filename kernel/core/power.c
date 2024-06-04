@@ -200,6 +200,25 @@ int acpiEnable(void)
 //
 // (Pkglength bit 6-7 encode additional PkgLength bytes [shouldn't be the case here])
 //
+/**
+ * Initialize the ACPI subsystem.
+ *
+ * This function initializes the ACPI subsystem by searching for the ACPI tables and parsing the FACP table.
+ * It performs the following steps:
+ *
+ * 1. Get the address of the RSDT (Root System Description Table) using the `acpiGetRSDPtr` function.
+ * 2. Check if the address is valid (if ACPI is available on this PC) by checking the ACPI header.
+ * 3. If the address is valid, iterate over the RSDT entries to find the FACP (Fixed ACPI Description Table).
+ * 4. Parse the FACP table to extract the necessary information for ACPI initialization.
+ * 5. Search for the \_S5 package in the DSDT (Differentiated System Description Table).
+ * 6. Check if the \_S5 package is valid and extract the required values.
+ * 7. Initialize the ACPI subsystem with the extracted values.
+ * 8. Return 0 if the initialization is successful.
+ *
+ * @return 0 if the ACPI subsystem is successfully initialized, -1 otherwise.
+ *
+ * @throws None.
+ */
 int initAcpi(void)
 {
     unsigned int* ptr = acpiGetRSDPtr();
@@ -282,7 +301,19 @@ int initAcpi(void)
 
     return -1;
 }
-
+/**
+ * Initializes the system by enabling page fault auto-fix, initializing ACPI, and disabling page fault auto-fix.
+ *
+ * This function performs the following steps:
+ *
+ * 1. Enables page fault auto-fix to allow accessing physical ACPI memory.
+ * 2. Initializes the ACPI subsystem using the `initAcpi` function.
+ * 3. Disables page fault auto-fix to restore the original behavior.
+ *
+ * @return None.
+ *
+ * @throws None.
+ */
 void Initialize()
 {
     //TODO: Find a better way to access physical ACPI memory
@@ -291,6 +322,22 @@ void Initialize()
     DisablePagefaultAutoFix();
 }
 
+/**
+ * Powers off the system using ACPI.
+ *
+ * This function performs the following steps:
+ *
+ * 1. Check if ACPI shutdown is possible by checking the value of the SCI_EN variable.
+ * 2. If ACPI shutdown is not possible, log an error message and return.
+ * 3. Enable ACPI using the `acpiEnable` function.
+ * 4. Log a message indicating that the system is sending a shutdown command to ACPI.
+ * 5. Send the shutdown command to ACPI by writing to the PM1a_CNT and PM1b_CNT registers.
+ * 6. If ACPI shutdown fails, log an error message and initiate a reboot.
+ *
+ * @return None.
+ *
+ * @throws None.
+ */
 void Poweroff()
 {
     // if(apm->Enabled) {
@@ -325,6 +372,19 @@ void Poweroff()
     Reboot();
 }
 
+/**
+ * Reboots the system by disabling interrupts and performing a system reset.
+ *
+ * This function performs the following steps:
+ *
+ * 1. Disables interrupts to prevent any interruptions during the reboot process.
+ * 2. Flushes the keyboard controller by repeatedly checking if there is data available in the keyboard buffer.
+ * 3. Sends a reset command to the system by writing 0xFE to the keyboard controller's command port.
+ *
+ * @return None.
+ *
+ * @throws None.
+ */
 void Reboot()
 {
     DisableInterrupts();

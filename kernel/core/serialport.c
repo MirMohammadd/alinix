@@ -88,6 +88,28 @@ int SerialportSerialSendReady()
 //     return inportb(PortAddress);
 // }
 
+/**
+ * Initialize the serial port for communication.
+ *
+ * This function initializes the serial port for communication by configuring the necessary settings.
+ * It performs the following steps:
+ *
+ * 1. Set the `PortAddress` to the specified `port`.
+ * 2. Disable all interrupts by writing 0x00 to the appropriate port address.
+ * 3. Enable DLAB (set baud rate divisor) by writing 0x80 to the appropriate port address.
+ * 4. Set the divisor to 3 (lo byte) to achieve a baud rate of 38400.
+ * 5. Set the divisor to 3 (hi byte).
+ * 6. Configure the serial port settings: 8 bits, no parity, one stop bit.
+ * 7. Enable the FIFO (First-In-First-Out) buffer, clear it, and set the threshold to 14 bytes.
+ * 8. Enable IRQs (Interrupt Requests) and set RTS/DSR.
+ * 9. Set the `ConsoleInitialized` flag to true.
+ *
+ * @param port The COM port to initialize.
+ *
+ * @return None.
+ *
+ * @throws None.
+ */
 void SerialportInit(enum COMPort port)
 {
     PortAddress = port;
@@ -103,11 +125,41 @@ void SerialportInit(enum COMPort port)
     ConsoleInitialized = true;
 }
 
+/**
+ * Check if data is available to be received from the serial port.
+ *
+ * This function checks if data is available to be received from the serial port by reading the appropriate port address.
+ * It performs the following steps:
+ *
+ * 1. Read the value from the appropriate port address.
+ * 2. Mask the value with 0x01 to check if the least significant bit is set.
+ * 3. Return 1 if the least significant bit is set, indicating that data is available to be received.
+ * 4. Return 0 otherwise.
+ *
+ * @return 1 if data is available to be received, 0 otherwise.
+ *
+ * @throws None.
+ */
 int SerialportSerialReceiveReady()
 {
     return inportb(PortAddress + 5) & 1;
 }
 
+/**
+ * Write a null-terminated string to the console.
+ *
+ * This function writes a null-terminated string character by character to the console.
+ * It performs the following steps:
+ *
+ * 1. Iterate over each character in the string.
+ * 2. Call the `Write` function to write each character to the console.
+ *
+ * @param str The null-terminated string to be written.
+ *
+ * @return None.
+ *
+ * @throws None.
+ */
 void WriteStr(char* str)
 {
     for(int i = 0; str[i] != '\0'; ++i)

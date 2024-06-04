@@ -35,6 +35,24 @@ MODULE_LICENSE("AGPL-3.0")
 MODULE_VERSION("0.1")
 
 
+/**
+ * Create a copy of a null-terminated string.
+ *
+ * This function creates a copy of a null-terminated string by dynamically allocating memory for the new string and copying the characters from the source string.
+ * It performs the following steps:
+ *
+ * 1. Calculates the length of the source string using the `strlen` function.
+ * 2. Dynamically allocates memory for the new string, including space for the null terminating character.
+ * 3. Copies the characters from the source string to the new string.
+ * 4. Sets the null terminating character at the end of the new string.
+ * 5. Returns the new string.
+ *
+ * @param src The source string to be copied.
+ *
+ * @return A pointer to the newly allocated copy of the string.
+ *
+ * @throws None.
+ */
 char* CopyString(char* src){
     int len = strlen(src);
     char* ret = (char*)malloc(sizeof(char)*(len+1));

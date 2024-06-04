@@ -33,7 +33,24 @@ MODULE_LICENSE("AGPL-3.0")
 MODULE_VERSION("0.1")
 
 
-
+/**
+ * Print a hexadecimal representation of a given byte.
+ *
+ * This function prints a hexadecimal representation of a given byte to the console.
+ * It performs the following steps:
+ *
+ * 1. Create a temporary character array `foo` with a length of 2.
+ * 2. Create a character array `hex` representing the hexadecimal digits.
+ * 3. Set the first character of `foo` to the corresponding hexadecimal digit of the most significant 4 bits of `key`.
+ * 4. Set the second character of `foo` to the corresponding hexadecimal digit of the least significant 4 bits of `key`.
+ * 5. Call the `Write` function to write `foo` to the console.
+ *
+ * @param key The byte to be printed in hexadecimal format.
+ *
+ * @return None.
+ *
+ * @throws None.
+ */
 void printfHex(uint8_t key){
     char *foo = "00";
     char *hex = "0123456789ABCDEF";
@@ -42,6 +59,23 @@ void printfHex(uint8_t key){
     Write(foo);
 }
 
+/**
+ * Print a hexadecimal representation of a given 32-bit unsigned integer.
+ *
+ * This function prints a hexadecimal representation of a given 32-bit unsigned integer to the console.
+ * It performs the following steps:
+ *
+ * 1. Extract the most significant byte of `key` and print it in hexadecimal format using the `printfHex` function.
+ * 2. Extract the second most significant byte of `key` and print it in hexadecimal format using the `printfHex` function.
+ * 3. Extract the third most significant byte of `key` and print it in hexadecimal format using the `printfHex` function.
+ * 4. Extract the least significant byte of `key` and print it in hexadecimal format using the `printfHex` function.
+ *
+ * @param key The 32-bit unsigned integer to be printed in hexadecimal format.
+ *
+ * @return None.
+ *
+ * @throws None.
+ */
 void printfHex32(uint32_t key)
 {
     printfHex((key >> 24) & 0xFF);

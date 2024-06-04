@@ -32,6 +32,25 @@ MODULE_VERSION("0.1")
 
 
 
+/**
+ * Map a virtual address to a physical address in the page table.
+ *
+ * This function maps a virtual address to a physical address in the page table. It performs the following steps:
+ *
+ * 1. Retrieves the page table entry for the virtual address using the `GetPageForAddress` function.
+ * 2. Sets the frame field of the page table entry to the physical address divided by the page size.
+ * 3. Sets the isUser field of the page table entry based on the value of the `kernel` parameter.
+ * 4. Sets the readWrite field of the page table entry based on the value of the `writeable` parameter.
+ * 5. Sets the present field of the page table entry to 1.
+ * 6. Invalidates the TLB entry for the virtual address using the `invlpg` function.
+ *
+ * @param physAddress The physical address to map.
+ * @param virtAddress The virtual address to map.
+ * @param kernel Indicates whether the mapping is for the kernel or user space.
+ * @param writeable Indicates whether the mapping is writeable.
+ *
+ * @return void
+ */
 mapVirtualToPhysical(void* physAddress, void* virtAddress, bool kernel, bool writeable)
 {
     struct PageTableEntry* page = GetPageForAddress((uint32_t)virtAddress, true, writeable, !kernel);

@@ -37,6 +37,25 @@ MODULE_VERSION("0.1")
 
 static int nestexc = 0;
 
+/**
+ * @brief Handles general protection fault (GPF) exceptions.
+ *
+ * This function handles general protection fault (GPF) exceptions by performing the following steps:
+ * 1. Checks if the `nestexc` variable exceeds the `MAX_NESTED_EXCEPTIONS` value. If it does, calls the `Panic` function.
+ * 2. Increments the `nestexc` variable by 1.
+ * 3. Decrements the `nestexc` variable by 1.
+ * 4. Returns without any further action.
+ *
+ * @note The function assumes that the `nestexc` variable is a global variable and that the `MAX_NESTED_EXCEPTIONS`
+ *       macro is defined with an appropriate value. It also assumes that the `Panic` function is available for handling
+ *       the panic situation.
+ *
+ * @example
+ * void gpfExcHandler(void)
+ * {
+ *     gpfExcHandler();
+ * }
+ */
 void gpfExcHandler(void){
     if (nestexc > MAX_NESTED_EXCEPTIONS) Panic();
     nestexc++;

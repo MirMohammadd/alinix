@@ -36,6 +36,25 @@ MODULE_VERSION("0.1")
 struct GDTEntry gdtEntries[6];
 struct GDTPointer gdtPointer;
 
+/**
+ * @brief Set the descriptor in the Global Descriptor Table (GDT).
+ *
+ * This function sets the descriptor in the Global Descriptor Table (GDT) with
+ * the specified number, base address, limit, access flags, and granularity.
+ * The GDT is a data structure used by the x86 architecture to define the
+ * characteristics of different memory segments.
+ *
+ * @param number The index of the descriptor in the GDT.
+ * @param base The base address of the memory segment.
+ * @param limit The limit address of the memory segment.
+ * @param access The access flags for the memory segment.
+ * @param gran The granularity flags for the memory segment.
+ *
+ * @warning This function must be called before using other functions in this module.
+ *
+ * @note The GDT is typically initialized once at boot time and then updated
+ *       as needed.
+ */
 void GSetDescriptor(int number, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran)
 {
     /**
@@ -53,11 +72,36 @@ void GSetDescriptor(int number, uint32_t base, uint32_t limit, uint8_t access, u
     gdtEntries[number].access      = access;
 }
 
+/**
+ * @brief Get the descriptor from the Global Descriptor Table (GDT).
+ *
+ * This function retrieves the descriptor at the specified index from the
+ * Global Descriptor Table (GDT). The GDT is a data structure used by the x86
+ * architecture to define the characteristics of different memory segments.
+ *
+ * @param number The index of the descriptor in the GDT.
+ * @return A pointer to the GDTEntry structure representing the descriptor.
+ *
+ * @note The GDT is typically initialized once at boot time and then updated
+ *       as needed.
+ */
 struct GDTEntry* GGetDescriptor(int number)
 {
     return &gdtEntries[number];
 }
 
+/**
+ * @brief Initialize the Global Descriptor Table (GDT).
+ *
+ * This function initializes the Global Descriptor Table (GDT) with the
+ * appropriate descriptors for the kernel and user mode. It sets up the
+ * null segment, code segment, data segment, user mode code segment, and
+ * user mode data segment. The GDT is a data structure used by the x86
+ * architecture to define the characteristics of different memory segments.
+ *
+ * @note The GDT is typically initialized once at boot time and then updated
+ *       as needed.
+ */
 void GdtInit()
 {
     gdtPointer.limit = (sizeof(struct GDTEntry) * 6) - 1;
@@ -73,6 +117,23 @@ void GdtInit()
     gdt_flush((uint32_t)&gdtPointer);
 }
 
+/**
+ * @brief Set the descriptor in the Global Descriptor Table (GDT).
+ *
+ * This function sets the descriptor in the Global Descriptor Table (GDT) with
+ * the specified number, base address, limit, access flags, and granularity.
+ * The GDT is a data structure used by the x86 architecture to define the
+ * characteristics of different memory segments.
+ *
+ * @param number The index of the descriptor in the GDT.
+ * @param base The base address of the memory segment.
+ * @param limit The limit address of the memory segment.
+ * @param access The access flags for the memory segment.
+ * @param gran The granularity flags for the memory segment.
+ *
+ * @note The GDT is typically initialized once at boot time and then updated
+ *       as needed.
+ */
 void GdtSetDescriptor(int number, uint32_t base, uint32_t limit, uint8_t access, uint8_t gran)
 {
     gdtEntries[number].base_low    = (base & 0xFFFF);

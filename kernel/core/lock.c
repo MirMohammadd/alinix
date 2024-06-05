@@ -29,6 +29,16 @@ MODULE_DESCRIPTION("Locks the kernel/ kernel threads.")
 MODULE_LICENSE("AGPL")
 MODULE_VERSION("0.2")
 
+/**
+ * @brief Pause the CPU to reduce contention.
+ *
+ * This function pauses the CPU to reduce contention in a multi-threaded environment.
+ * It uses the `pause` assembly instruction to temporarily stop the CPU from executing
+ * instructions until the contention is resolved.
+ *
+ * @note This function is typically used in locking mechanisms to reduce the chances
+ *       of race conditions.
+ */
 void Lock(){
     asm ("pause");
 }

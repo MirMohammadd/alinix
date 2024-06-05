@@ -27,6 +27,20 @@ MODULE_LICENSE("AGPL")
 MODULE_VERSION("0.1")
 
 
+/**
+ * @brief Convert a little-endian 32-bit value to the CPU's native endianness.
+ *
+ * This function converts a little-endian 32-bit value to the CPU's native endianness.
+ * If the system is little-endian, no conversion is needed. If the system is big-endian,
+ * the function performs a byte-swapping operation to convert the value from little-endian
+ * to big-endian or vice versa.
+ *
+ * @param le_value The little-endian 32-bit value to convert.
+ * @return The converted 32-bit value in the CPU's native endianness.
+ *
+ * @note This function is useful when dealing with data that is stored in a specific
+ *       endianness, such as network protocols or disk formats.
+ */
 uint32_t le32_to_cpu(uint32_t le_value) {
     // Check if the system is little-endian or big-endian
     uint32_t test = 1;

@@ -46,6 +46,25 @@ uint32_t GetMSSinceBoot()
     return 0;
 }
 
+/**
+ * @brief Logs a message with the specified log level and format.
+ *
+ * This function logs a message with the specified log level and format.
+ * The format follows the printf syntax, allowing the use of format specifiers.
+ * Supported format specifiers are:
+ * - `%c`: char
+ * - `%s`: const char*
+ * - `%d`: int
+ * - `%b`: uint8_t (printed as a hexadecimal number)
+ * - `%w`: uint16_t (printed as a hexadecimal number)
+ * - `%x`: uint32_t (printed as a hexadecimal number)
+ *
+ * @param level The log level of the message.
+ * @param format The format string.
+ * @param ... The arguments for the format string.
+ *
+ * @note This function is thread-safe.
+ */
 void Log(enum LogLevel level, const char* __restrict__ format, ...)
 {
     uint8_t prevColor =ForegroundColor;

@@ -32,7 +32,19 @@ MODULE_DESCRIPTION("FPU module")
 MODULE_LICENSE("AGPL-3.0")
 MODULE_VERSION("0.1")
 
-
+/**
+ * Enable the Floating Point Unit (FPU) and set the control word for floating point operations.
+ *
+ * This function enables the FPU by modifying the CR4 register and sets the control word for
+ * floating point operations. It initializes a `FPUControlWord` struct and sets the exception
+ * masks for invalid operations, divide by zero, overflow, underflow, and precision. It also sets
+ * the precision control and rounding control fields of the control word. Finally, it loads the
+ * control word into the FPU using the `fldcw` instruction.
+ *
+ * Note: This function assumes that the FPU was previously disabled before calling it.
+ *
+ * @return void
+ */
 void Enable(){
     	uint32_t cr4;
 	asm volatile ("mov %%cr4, %0" : "=r"(cr4));

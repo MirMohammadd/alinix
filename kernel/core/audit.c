@@ -64,25 +64,63 @@ void audit_log(struct audit_context *ctx, gfp_t gfp_mask, int type,
 	       const char *fmt, ...)
 { }
 
-
+/**
+ * @brief Starts an audit log by creating a new audit buffer.
+ *
+ * This function starts an audit log by creating a new audit buffer.
+ * The audit buffer contains information about the audit log entry.
+ * The function returns a pointer to the newly created audit buffer, or NULL if the audit log entry cannot be created.
+ *
+ * @param ctx A pointer to the audit context.
+ * @param gfp_mask The memory allocation flags.
+ * @param type The type of the audit log entry.
+ * @return A pointer to the newly created audit buffer, or NULL if the audit log entry cannot be created.
+ */
 PRIVATE __always_inline struct audit_buffer*audit_log_start(struct audit_context *ctx,gfp_t gfp_mask,int type){
     return NULL;
 } 
 
 
 
-
+/**
+ * @brief Initializes the audit NTP data structure by setting all values to 0.
+ *
+ * This function initializes the audit NTP data structure by setting all values to 0.
+ * The audit NTP data structure contains information about NTP auditing.
+ *
+ * @param ad A pointer to the audit NTP data structure to be initialized.
+ */
 PRIVATE inline VOID audit_ntp_init(struct audit_ntp_data *ad){
     // Write the data to the buffer
     memset(ad,0,sizeof(ad));
 }
 
+/**
+ * @brief Sets the old value for the specified audit NTP type in the audit NTP data structure.
+ *
+ * This function sets the old value for the specified audit NTP type in the audit NTP data structure.
+ * The audit NTP data structure contains information about NTP auditing.
+ *
+ * @param ad A pointer to the audit NTP data structure.
+ * @param type The audit NTP type for which to set the old value.
+ * @param val The old value to set.
+ */
 static inline void audit_ntp_set_old(struct audit_ntp_data *ad,
 				     enum audit_ntp_type type, long long val)
 {
 	ad->vals[type].oldval = val;
 }
 
+/**
+ * @brief Sets the new value for the specified audit NTP type in the audit NTP data structure.
+ *
+ * This function sets the new value for the specified audit NTP type in the audit NTP data structure.
+ * The audit NTP data structure contains information about NTP auditing.
+ *
+ * @param ad A pointer to the audit NTP data structure.
+ * @param type The audit NTP type for which to set the new value.
+ * @param val The new value to set.
+ */
 static inline void audit_ntp_set_new(struct audit_ntp_data *ad,
 				     enum audit_ntp_type type, long long val)
 {

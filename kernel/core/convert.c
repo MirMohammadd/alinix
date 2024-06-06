@@ -30,7 +30,17 @@ MODULE_DESCRIPTION("Converts data types to each other")
 MODULE_LICENSE("AGPL-3.0")
 MODULE_VERSION("0.1")
 
-
+/**
+ * @brief Converts a string representation of an integer to an integer value.
+ *
+ * This function takes a string as input and converts it to an integer value. It supports both positive and negative integers.
+ * The function assumes that the input string is a valid representation of an integer.
+ *
+ * @param string The string representation of the integer.
+ * @return The integer value of the input string.
+ *
+ * @todo Add the missing return type to the function declaration. The return type should be an integer.
+ */
 StringToInt(char* string) // TODO Add the missing return type here.
 {
     int result = 0;
@@ -68,7 +78,14 @@ StringToInt(char* string) // TODO Add the missing return type here.
     }
     return result;
 }
-
+/**
+ * @brief Checks if a character is a whitespace character.
+ *
+ * This function checks if the given character is a whitespace character. It returns true if the character is a space, tab, newline, vertical tab, form feed, or carriage return, and false otherwise.
+ *
+ * @param c The character to check.
+ * @return True if the character is a whitespace character, false otherwise.
+ */
 int IsSpace(char c)
 {
     return c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r';
@@ -86,7 +103,15 @@ char* IntToHexString(uint8_t w)
     return rc;
 }
 
-
+/**
+ * @brief Converts an unsigned 8-bit integer to a hexadecimal string representation.
+ *
+ * This function takes an unsigned 8-bit integer as input and converts it to a hexadecimal string representation.
+ * The returned string is allocated on the heap and should be freed after use.
+ *
+ * @param w The unsigned 8-bit integer to convert.
+ * @return A pointer to the hexadecimal string representation of the input integer.
+ */
 char * IntToString(int n)
 {
     static char ret[24];

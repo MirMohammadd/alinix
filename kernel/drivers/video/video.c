@@ -46,6 +46,16 @@ struct vbe_mem vbemem;
 
 #define PRINT_K_BUFFER_SIZE 256
 
+/**
+ * Initializes the video display with the specified height and width.
+ *
+ * @param h The height of the video display.
+ * @param w The width of the video display.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void video_init(int h,int w){
     x = 0;
     y = 0;
@@ -53,6 +63,18 @@ void video_init(int h,int w){
     vram.width = w;
     vram.ram = (uint16_t *) 0xB8000; // Settle the RAM
 }
+
+/**
+ * Checks if the current position is within the bounds of the video display.
+ * If the x-coordinate is greater than or equal to the width of the display,
+ * it resets the x-coordinate to 0 and increments the y-coordinate.
+ * If the y-coordinate is greater than or equal to the height of the display,
+ * it decrements the y-coordinate and calls the scroll function.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void check() {
     if(x >= vram.width) {
         x = 0;
@@ -64,6 +86,14 @@ void check() {
     }
 }
 
+
+/**
+ * Scrolls the video display by one line.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void scroll() {
     for(int i = 0; i < vram.width * (vram.height - 1); i++) {
         vram.ram[i] = vram.ram[i + vram.width];
@@ -73,6 +103,16 @@ void scroll() {
     }
 }
 
+/**
+ * Prints a formatted string to the video display.
+ *
+ * @param buffer The format string to be printed.
+ * @param ... The arguments to be formatted and printed.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void __printk(char *buffer, ...){
     char str[PRINT_K_BUFFER_SIZE];
     va_list args;
@@ -82,6 +122,15 @@ void __printk(char *buffer, ...){
     printk_string(str);
 }
 
+/**
+ * Prints a string to the video display.
+ *
+ * @param buffer The string to be printed.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void printk_string(char *buffer){
     int i = 0;
 
@@ -115,6 +164,14 @@ void printk_string(char *buffer){
 }
 
 
+/**
+ * Clears the video display by resetting the cursor position to (0, 0)
+ * and filling the entire display with spaces.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void clear(){
     x = y = 0;
     for (int i = 0; i < vram.height;i++){
@@ -123,6 +180,16 @@ void clear(){
 }
 
 // Start accessing the computer video hardware
+/**
+ * Initializes the VBE (Video BIOS Extension) video mode.
+ *
+ * @param info A pointer to the multiboot_info_t structure containing information
+ *             about the VBE video mode.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void vbe_init(multiboot_info_t *info){
     vbe_controller_info_t *vbe_contr = (vbe_controller_info_t *) info->vbe_control_info;
     vbe_mode_info_t *vbe_mode = (vbe_mode_info_t *) info->vbe_mode_info;
@@ -152,6 +219,13 @@ void vbe_init(multiboot_info_t *info){
     }
 }
 
+/**
+ * Refreshes the screen by copying the contents of the buffer to the video memory.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void refresh_screen(){
     for (;;){
         // pain
@@ -159,7 +233,19 @@ void refresh_screen(){
     }
 }
 
-
+/**
+ * Draws a rectangle on the screen with the specified coordinates, width, height, and color.
+ *
+ * @param x The x-coordinate of the top-left corner of the rectangle.
+ * @param y The y-coordinate of the top-left corner of the rectangle.
+ * @param w The width of the rectangle.
+ * @param h The height of the rectangle.
+ * @param color The color of the rectangle in ARGB format (e.g., 0xFF0000 for red).
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void draw_rect(int x, int y, int w, int h, uint32_t color) {
     if(x < 0 || x > vbemem.xres || y < 0 || y > vbemem.yres)
         return;
@@ -181,6 +267,17 @@ void draw_rect(int x, int y, int w, int h, uint32_t color) {
     }
 }
 
+/**
+ * Draws a string on the screen with the specified coordinates.
+ *
+ * @param x The x-coordinate of the top-left corner of the string.
+ * @param y The y-coordinate of the top-left corner of the string.
+ * @param string The string to be drawn.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void draw_string(int x, int y, char *string) {
     int startx = x;
     while(*string) {
@@ -209,6 +306,17 @@ void draw_string(int x, int y, char *string) {
     }
 }
 
+/**
+ * Draws a character on the screen at the specified coordinates.
+ *
+ * @param x The x-coordinate of the top-left corner of the character.
+ * @param y The y-coordinate of the top-left corner of the character.
+ * @param font_char A pointer to the character bitmap.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void draw_char(int x, int y, char *font_char) {
     for(int i = 0; i < 8; i++) {
         int l = 0;
@@ -220,6 +328,18 @@ void draw_char(int x, int y, char *font_char) {
         }
     }
 }
+
+/**
+ * Draws a pixel on the screen at the specified coordinates with the specified color.
+ *
+ * @param x The x-coordinate of the pixel.
+ * @param y The y-coordinate of the pixel.
+ * @param color The color of the pixel in ARGB format (e.g., 0xFF0000 for red).
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void draw_pixel(int x, int y, uint32_t color) {
     if(x < 0 || x > vbemem.xres || y < 0 || y > vbemem.yres)
         return;
@@ -232,6 +352,13 @@ void draw_pixel(int x, int y, uint32_t color) {
     pixel[2] = (color >> 16) & 0xFF;
 }
 
+/**
+ * Checks if the system is in text mode.
+ *
+ * @return 0 if the system is in graphics mode, 1 if the system is in text mode.
+ *
+ * @throws None
+ */
 int is_text_mode() {
     if(vbemem.mem != 0) {
         return 0;

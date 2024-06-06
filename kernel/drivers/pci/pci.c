@@ -76,6 +76,17 @@ uint16_t pciCheckVendor(uint8_t bus, uint8_t slot) {
     return (vendor);
 }
 
+/**
+ * @brief Checks if a device has a vendor ID of 0x8086.
+ *
+ * This function checks the vendor ID of a device on a given PCI bus and
+ * device number. If the vendor ID is 0x8086, the function returns immediately.
+ *
+ * @param bus The PCI bus number of the device to check.
+ * @param device The PCI device number of the device to check.
+ *
+ * @return This function does not return any value.
+ */
 void checkDevice(uint8_t bus, uint8_t device){
     uint16_t vendor;
     vendor = pciCheckVendor(bus,device);

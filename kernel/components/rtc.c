@@ -32,17 +32,43 @@ MODULE_DESCRIPTION("RTC module")
 MODULE_LICENSE("AGPL-3.0")
 MODULE_VERSION("0.1")
 
+/**
+ * @brief Checks if an update is in progress on the RTC.
+ *
+ * This function checks if an update is in progress on the Real-Time Clock (RTC).
+ * It reads the status register at address 0x0A on the RTC's I/O port and checks if the 7th bit (0x80) is set.
+ * If the bit is set, it returns true indicating that an update is in progress. Otherwise, it returns false.
+ *
+ * @return True if an update is in progress, false otherwise.
+ */
 bool UpdateInProgress(){
     outportb(0x70, 0x0A);
     return (inportb(0x71) & 0x80);
 }
 
+/**
+ * @brief Reads a value from the specified register on the RTC.
+ *
+ * This function reads a value from the specified register on the Real-Time Clock (RTC).
+ * It writes the register address to the RTC's I/O port and then reads the value from the data port.
+ *
+ * @param reg The register address to read from.
+ * @return The value read from the specified register.
+ */
 uint8_t ReadRegister(int reg){
     outportb(0x70, reg);
     return inportb(0x71);
 }
 
-
+/**
+ * @brief Gets the current second from the RTC.
+ *
+ * This function gets the current second from the Real-Time Clock (RTC).
+ * It waits until an update is not in progress on the RTC and then reads the value from the second register.
+ * If the 2nd bit of the register B is not set, it converts the value to BCD format.
+ *
+ * @return The current second from the RTC.
+ */
 uint32_t GetSecond(){
     while(UpdateInProgress());
     uint32_t value = ReadRegister(0x00);
@@ -53,7 +79,15 @@ uint32_t GetSecond(){
     return value;
 }
 
-
+/**
+ * @brief Gets the current minute from the RTC.
+ *
+ * This function gets the current minute from the Real-Time Clock (RTC).
+ * It waits until an update is not in progress on the RTC and then reads the value from the minute register.
+ * If the 2nd bit of the register B is not set, it converts the value to BCD format.
+ *
+ * @return The current minute from the RTC.
+ */
 uint32_t GetMinute(){
     while(UpdateInProgress());
     uint32_t value = ReadRegister(0x02);
@@ -64,6 +98,16 @@ uint32_t GetMinute(){
     return value;
 }
 
+/**
+ * @brief Gets the current hour from the RTC.
+ *
+ * This function gets the current hour from the Real-Time Clock (RTC).
+ * It waits until an update is not in progress on the RTC and then reads the value from the hour register.
+ * If the 2nd bit of the register B is not set, it converts the value to BCD format.
+ * If the 1st bit of the register B is not set and the 7th bit of the hour value is set, it converts the value to 24-hour format.
+ *
+ * @return The current hour from the RTC.
+ */
 uint32_t GetHour(){
     while(UpdateInProgress());
     uint32_t value = ReadRegister(0x04);
@@ -78,6 +122,15 @@ uint32_t GetHour(){
     return value;
 }
 
+/**
+ * @brief Gets the current day from the RTC.
+ *
+ * This function gets the current day from the Real-Time Clock (RTC).
+ * It waits until an update is not in progress on the RTC and then reads the value from the day register.
+ * If the 2nd bit of the register B is not set, it converts the value to BCD format.
+ *
+ * @return The current day from the RTC.
+ */
 uint32_t GetDay(){
     while(UpdateInProgress());
     uint32_t value = ReadRegister(0x07);
@@ -88,6 +141,15 @@ uint32_t GetDay(){
     return value;
 }
 
+/**
+ * @brief Gets the current month from the RTC.
+ *
+ * This function gets the current month from the Real-Time Clock (RTC).
+ * It waits until an update is not in progress on the RTC and then reads the value from the month register.
+ * If the 2nd bit of the register B is not set, it converts the value to BCD format.
+ *
+ * @return The current month from the RTC.
+ */
 uint32_t GetMonth(){
     while(UpdateInProgress());
     uint32_t value = ReadRegister(0x08);
@@ -98,6 +160,17 @@ uint32_t GetMonth(){
     return value;
 }
 
+/**
+ * @brief Gets the current year from the RTC.
+ *
+ * This function gets the current year from the Real-Time Clock (RTC).
+ * It waits until an update is not in progress on the RTC and then reads the value from the year register.
+ * If the 2nd bit of the register B is not set, it converts the value to BCD format.
+ * It then calculates the full (4-digit) year by adding the current century and the year value.
+ * If the calculated year is less than the current year, it adds 100 to the year value.
+ *
+ * @return The current year from the RTC.
+ */
 uint32_t GetYear(){
     while(UpdateInProgress());
     uint32_t value = ReadRegister(0x09);

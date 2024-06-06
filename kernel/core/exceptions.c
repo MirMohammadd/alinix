@@ -70,7 +70,14 @@ uint32_t DivideByZero(uint32_t esp){
 
 
 } 
-
+/**
+ * @brief Handles a page fault exception.
+ *
+ * This function is called when a page fault exception occurs. It prints an error message to the console, disables all interrupts, retrieves the error address from the CR2 register, retrieves the error code from the CPU state, determines the details of what caused the page fault, prints the details to the console, checks if the memory is intact, maps the error address to physical memory if possible, shows the stack trace, and then reboots the system.
+ *
+ * @param esp The value of the ESP register at the time of the exception.
+ * @return The value of the ESP register passed as a parameter.
+ */
 uint32_t PageFault(uint32_t esp){
     /**
      * @brief  This function is called when there is a page fault

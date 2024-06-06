@@ -31,6 +31,21 @@ MODULE_DESCRIPTION("Vendor ID implementation")
 MODULE_LICENSE("AGPL-3.0")
 MODULE_VERSION("0.1")
 
+/**
+ * Retrieves CPU information using the CPUID instruction.
+ *
+ * This function uses the CPUID instruction to retrieve information about the CPU. It takes a
+ * `code` parameter that specifies the type of information to retrieve, and pointers to `a` and `d`
+ * variables that will store the resulting information. The CPUID instruction writes the information
+ * to the `a` and `d` registers, so this function uses inline assembly to read those registers and
+ * store the information in the provided variables.
+ *
+ * @param code The CPUID code that specifies the type of information to retrieve.
+ * @param a A pointer to a uint32_t variable to store the resulting information in the `a` register.
+ * @param d A pointer to a uint32_t variable to store the resulting information in the `d` register.
+ *
+ * @throws None
+ */
 static inline void cpuid(int code, uint32_t *a, uint32_t *d) {
   asm volatile("cpuid":"=a"(*a),"=d"(*d):"a"(code):"ecx","ebx");
 }

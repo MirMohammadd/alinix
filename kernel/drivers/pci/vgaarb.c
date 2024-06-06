@@ -33,6 +33,20 @@ MODULE_VERSION("0.1")
 
 struct pci_dev *vga_default;
 
+/**
+ * @brief Sets the default VGA device.
+ *
+ * This function sets the default VGA device to the specified device. If the
+ * specified device is already the default device, the function returns
+ * immediately.
+ *
+ * @param pdev A pointer to the PCI device to set as the default VGA device.
+ *
+ * @return This function does not return any value.
+ *
+ * @note The current implementation does not actually set the default device.
+ * The commented out lines are placeholders for future implementation.
+ */
 void vga_set_default_device(struct pci_dev *pdev)
 {
 	if (vga_default == pdev)

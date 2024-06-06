@@ -38,6 +38,15 @@ MODULE_VERSION("0.1")
 
 static uint32_t MMIO_BASE;
 
+/**
+ * @brief Initializes the MMIO base address based on the Raspberry Pi model.
+ *
+ * This function initializes the MMIO base address based on the Raspberry Pi model.
+ * It uses a switch statement to set the MMIO base address based on the value of the `raspi` parameter.
+ * The function sets the MMIO base address to different values depending on the Raspberry Pi model.
+ *
+ * @param raspi The Raspberry Pi model number.
+ */
 static inline void mmio_init(int raspi){
     switch(raspi){
         case 2:
@@ -49,10 +58,28 @@ static inline void mmio_init(int raspi){
 
 /*Memory-Mapped I/O output*/
 
+/**
+ * @brief Writes data to the specified MMIO register.
+ *
+ * This function writes the `data` to the specified MMIO register.
+ * It uses the `MMIO_BASE` address and the `reg` parameter to calculate the memory address and writes the `data` to that address.
+ *
+ * @param reg The register offset from the MMIO base address.
+ * @param data The data to write to the register.
+ */
 static inline void mmio_write(uint32_t reg, uint32_t data){
     *(volatile uint32_t*)(MMIO_BASE+reg) = data;
 }
 
+/**
+ * @brief Reads data from the specified MMIO register.
+ *
+ * This function reads data from the specified MMIO register.
+ * It uses the `MMIO_BASE` address and the `reg` parameter to calculate the memory address and reads the data from that address.
+ *
+ * @param reg The register offset from the MMIO base address.
+ * @return The data read from the register.
+ */
 static inline uint32_t mmio_read(uint32_t reg)
 {
 	return *(volatile uint32_t*)(MMIO_BASE + reg);
@@ -122,7 +149,25 @@ volatile unsigned int  __attribute__((aligned(16))) mbox[9] = {
 };
 
 
- 
+/**
+ * @brief Initializes the UART (Universal Asynchronous Receiver/Transmitter) for communication.
+ *
+ * This function initializes the UART for communication.
+ * It performs the following steps:
+ * - Initializes the MMIO base address using the `mmio_init` function.
+ * - Disables UART0.
+ * - Sets up the GPIO pin 14 and 15.
+ * - Disables pull-up/down for all GPIO pins and delays for 150 cycles.
+ * - Disables pull-up/down for pin 14 and 15 and delays for 150 cycles.
+ * - Writes 0 to GPPUDCLK0 to make the changes take effect.
+ * - Clears pending interrupts.
+ * - Sets the integer and fractional part of the baud rate.
+ * - Enables the FIFO and 8-bit data transmission (1 stop bit, no parity).
+ * - Masks all interrupts.
+ * - Enables UART0, receive, and transmit parts of the UART.
+ *
+ * @param raspi The Raspberry Pi model number.
+ */
 void uart_init(int raspi)
 {
 	mmio_init(raspi);
@@ -177,21 +222,45 @@ void uart_init(int raspi)
 	// Enable UART0, receive & transfer part of UART.
 	mmio_write(UART0_CR, (1 << 0) | (1 << 8) | (1 << 9));
 }
- 
+
+/**
+ * @brief Sends a character over UART.
+ *
+ * This function sends a character over UART.
+ * It waits for the UART to become ready to transmit and then writes the character to the UART data register.
+ *
+ * @param c The character to send over UART.
+ */
 void uart_putc(unsigned char c)
 {
 	// Wait for UART to become ready to transmit.
 	while ( mmio_read(UART0_FR) & (1 << 5) ) { }
 	mmio_write(UART0_DR, c);
 }
- 
+
+/**
+ * @brief Reads a character from UART.
+ *
+ * This function reads a character from UART.
+ * It waits for the UART to have received something and then reads the character from the UART data register.
+ *
+ * @return The character read from UART.
+ */
 unsigned char uart_getc()
 {
     // Wait for UART to have received something.
     while ( mmio_read(UART0_FR) & (1 << 4) ) { }
     return mmio_read(UART0_DR);
 }
- 
+
+/**
+ * @brief Sends a null-terminated string over UART.
+ *
+ * This function sends a null-terminated string over UART.
+ * It iterates over each character in the string and sends it using the `uart_putc` function.
+ *
+ * @param str The null-terminated string to send over UART.
+ */
 void uart_puts(const char* str)
 {
 	for (size_t i = 0; str[i] != '\0'; i ++)

@@ -28,6 +28,17 @@ MODULE_DESCRIPTION("System component utility")
 MODULE_LICENSE("AGPL-3.0")
 MODULE_VERSION("0.1")
 
+/**
+ * @brief Creates a new SystemComponent object.
+ *
+ * This function creates a new SystemComponent object with the given name and description.
+ * It allocates memory for the new object and copies the name and description strings into the object.
+ * The function returns a pointer to the newly created SystemComponent object.
+ *
+ * @param name The name of the SystemComponent.
+ * @param description The description of the SystemComponent.
+ * @return A pointer to the newly created SystemComponent object.
+ */
 SystemComponent* SystemComponent_create(char* name, char* description) {
     SystemComponent* component = (SystemComponent*)malloc(sizeof(SystemComponent));
     component->Name = (char*)malloc(strlen(name) + 1);

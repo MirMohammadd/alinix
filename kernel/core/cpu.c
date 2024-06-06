@@ -33,6 +33,19 @@ MODULE_VERSION("0.1")
 
 
 /*Parameters should be pointer type*/
+/**
+ * @brief Executes the CPUID instruction.
+ *
+ * This function executes the CPUID instruction with the given register value and retrieves the values of the EAX, EBX, ECX, and EDX registers.
+ *
+ * @warning This function is static and should not be declared in any header files. It is only meant to be used internally within this source file.
+ *
+ * @param reg The register value to pass to the CPUID instruction.
+ * @param eax A pointer to store the value of the EAX register.
+ * @param ebx A pointer to store the value of the EBX register.
+ * @param ecx A pointer to store the value of the ECX register.
+ * @param edx A pointer to store the value of the EDX register.
+ */
 static inline void cpuid(uint32_t reg, uint32_t *eax, uint32_t *ebx, uint32_t *ecx, uint32_t *edx){
     /**
      * @warning Do not set this function in any header files, this function is STATIC!!!
@@ -41,7 +54,11 @@ static inline void cpuid(uint32_t reg, uint32_t *eax, uint32_t *ebx, uint32_t *e
     : "=a" (*eax), "=b" (*ebx), "=c" (*ecx), "=d" (*edx)
     : "0" (reg));
 }
-
+/**
+ * @brief Prints the CPU vendor information.
+ *
+ * This function retrieves the CPU vendor information by executing the CPUID instruction with the register value of 0, and prints the vendor information to the console.
+ */
 void PrintCpuVendor(){
     uint32_t LargeStdFunc;
     char vendor[13];
@@ -49,7 +66,12 @@ void PrintCpuVendor(){
     Write("CPU Vendor:");
     Write(vendor);
 }
-
+/**
+ * @brief Enables the CPU features that are necessary for the system to function properly.
+ *
+ * This function checks the CPU features by executing the CPUID instruction with the register value of 0x01, and enables the necessary features for the system to function properly.
+ * If the CPU does not have the required features, the function prints an error message and enters an infinite loop.
+ */
 void enableCpuFeatures(){
     /**
      * @brief  Check CPU features

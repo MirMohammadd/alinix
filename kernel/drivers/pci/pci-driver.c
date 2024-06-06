@@ -30,6 +30,20 @@ MODULE_DESCRIPTION("Kernel PCI implementation")
 MODULE_LICENSE("AGPL")
 MODULE_VERSION("0.1")
 
+/**
+ * @brief Releases a reference to a PCI device.
+ *
+ * This function releases a reference to a PCI device previously obtained by
+ * calling `pci_dev_get()`. When the last reference is released, the device is
+ * freed.
+ *
+ * @param dev A pointer to the PCI device to release.
+ *
+ * @return This function does not return anything.
+ *
+ * @note This function is not yet implemented. The current implementation does
+ * nothing and returns immediately.
+ */
 void pci_dev_put(struct pci_dev *dev)
 {
 	if (dev)

@@ -44,6 +44,14 @@ MODULE_VERSION("0.1")
 bool autoFixPagefaults = false;
 uint8_t ExcForegroundColor;
 
+/**
+ * @brief Handles the case of a zero division error.
+ *
+ * This function is called when a division by zero error occurs. It prints an error message to the console, disables all interrupts, waits for the user to press a key, shows the stack trace, and then reboots the system.
+ *
+ * @param esp The value of the ESP register at the time of the error.
+ * @return The value of the ESP register passed as a parameter.
+ */
 uint32_t DivideByZero(uint32_t esp){
     ExcForegroundColor = VGA_COLOR_RED;   
     WriteLine("Zero division Error");

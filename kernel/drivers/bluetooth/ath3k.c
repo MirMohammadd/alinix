@@ -217,6 +217,17 @@ static const struct usb_device_id ath3k_blist_tbl[] = {
 	{ }	/* Terminating entry */
 };
 
+/**
+ * @brief Logs a message indicating a failure in loading firmware.
+ *
+ * This function logs a message indicating a failure in loading firmware.
+ * It uses the `perror` function to print an error message with the given error code, length, size, and count.
+ *
+ * @param err The error code indicating the reason for the failure.
+ * @param len The length of the data that was loaded.
+ * @param size The size of the data that was loaded.
+ * @param count The number of times the loading failed.
+ */
 PRIVATE __always_inline VOID ath3k_log_failed_loading(int err,int len,int size,int count){
     perror("Firmware loading err = %d, len %d size = %d, count = %d",err,len,size,count);
 }
@@ -227,6 +238,18 @@ PRIVATE __always_inline VOID ath3k_log_failed_loading(int err,int len,int size,i
 #define TIMEGAP_USEC_MIN	50
 #define TIMEGAP_USEC_MAX	100
 
+/**
+ * @brief Loads firmware into the USB device.
+ *
+ * This function loads firmware into the USB device.
+ * It allocates a buffer for sending the firmware data and initializes the variables for tracking the loading progress.
+ * It prints the USB device pointer for debugging purposes.
+ * If the memory allocation fails, it returns an error code.
+ *
+ * @param udev The USB device to load the firmware into.
+ * @param firmware The firmware data to load.
+ * @return 0 on success, negative error code on failure.
+ */
 static int ath3k_load_firmware(struct usb_device *udev,const struct firmware* firmware){
     ////////////////////////////////
     // Sending buffer

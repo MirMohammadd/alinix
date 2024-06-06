@@ -46,17 +46,58 @@ unsigned char day;
 unsigned char month;
 unsigned int year;
 
+/**
+ * Checks if an update is in progress by reading the update-in-progress flag from the RTC.
+ *
+ * @return 1 if an update is in progress, 0 otherwise.
+ *
+ * @throws None
+ */
 
 static inline int get_update_in_progress_flag(){
     outportb(cmos_address,0x0A);
     return inportb((cmos_data) & 0x80);
 }
 
+/**
+ * Reads the value of a specified RTC register.
+ *
+ * @param reg The register address to read from.
+ *
+ * @return The value read from the specified RTC register.
+ *
+ * @throws None
+ */
 static inline unsigned char get_RTC_register(int reg) {
     outportb(cmos_address, reg);
     return inportb(cmos_data);
 }
 
+/**
+ * Reads the real-time clock (RTC) and updates the global variables `second`, `minute`, `hour`, `day`, `month`, and `year` with the current time and date.
+ *
+ * This function first checks if an update is in progress by calling the `get_update_in_progress_flag()` function.
+ * It then reads the values of the RTC registers using the `get_RTC_register()` function and assigns them to the respective variables (`second`, `minute`, `hour`, `day`, `month`, `year`, `century`).
+ *
+ * The function enters a loop and continues reading the RTC registers until the values of all the variables are the same as the previous iteration.
+ * This ensures that the read values are stable.
+ *
+ * After the loop, the function reads the value of register B using the `get_RTC_register()` function and assigns it to the `registerB` variable.
+ *
+ * The function then performs some calculations to convert the binary BCD (Binary-coded decimal) values to decimal values.
+ * If the least significant nibble of `second`, `minute`, `hour`, `day`, `month`, and `year` is greater than 9, it adds the corresponding value of the most significant nibble multiplied by 10.
+ * This is done to convert the BCD values to decimal.
+ *
+ * If the second least significant bit of `registerB` is not set (0x02), it checks if the most significant bit of `hour` is set (0x80).
+ * If it is set, it adds 12 to the `hour` value and takes the modulo 24 to handle the case when the hour value exceeds 23.
+ *
+ * Finally, the function calculates the full (4-digit) year based on the `century` value.
+ * If the `century_register` is not 0, it multiplies the `century` value by 100 and adds it to the `year` value.
+ * If the `century_register` is 0, it multiplies the current year (assumed to be `CURRENT_YEAR`) by 100 and adds it to the `year` value.
+ * If the calculated year is less than the current year, it adds 100 to the `year` value.
+ *
+ * @throws None
+ */
 void read_rtc() {
     unsigned char century;
     unsigned char last_second;

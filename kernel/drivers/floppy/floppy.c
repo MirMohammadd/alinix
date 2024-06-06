@@ -41,6 +41,16 @@ void ResetFloppy()
     WaitForIRQ();
 }
 
+/**
+ * Converts a logical block address (LBA) to cylinder-head-sector (CHS) format.
+ *
+ * @param lba The logical block address to convert.
+ * @param cyl A pointer to an uint16_t variable to store the calculated cylinder value.
+ * @param head A pointer to an uint16_t variable to store the calculated head value.
+ * @param sector A pointer to an uint16_t variable to store the calculated sector value.
+ *
+ * @throws None
+ */
 void lba_2_chs(uint32_t lba, uint16_t* cyl, uint16_t* head, uint16_t* sector){
     *cyl = lba / (2 * FLOPPY_144_SECTORS_PER_TRACK);
     *head   = ((lba % (2 * FLOPPY_144_SECTORS_PER_TRACK)) / FLOPPY_144_SECTORS_PER_TRACK);

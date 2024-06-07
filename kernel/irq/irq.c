@@ -37,6 +37,15 @@ MODULE_VERSION("0.1")
 struct irq_desc irq_desc_array[NR_IRQS];
 
 
+/**
+ * Retrieves the interrupt descriptor for the specified interrupt.
+ *
+ * @param irq The interrupt number.
+ *
+ * @return A pointer to the interrupt descriptor.
+ *
+ * @throws None
+ */
 struct irq_desc *irq_to_desc(unsigned int irq){
     for (int i = 0;i < irq;i++){
         irq_desc_array->parent_irq = i;

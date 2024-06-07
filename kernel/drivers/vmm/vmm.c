@@ -103,10 +103,24 @@ void change_page_directory(page_dir_t *p) {
     load_pdbr((mm_addr_t) current_dir);
 }
 
+/**
+ * Returns the current page directory.
+ *
+ * @return A pointer to the current page directory.
+ *
+ * @throws None
+ */
 page_dir_t *get_page_directory() {
     return current_dir;
 }
 
+/**
+ * Returns the kernel page directory.
+ *
+ * @return A pointer to the kernel page directory.
+ *
+ * @throws None
+ */
 page_dir_t *get_kern_directory() {
     return kern_dir;
 }
@@ -300,6 +314,15 @@ void page_table_free(void *addr) {
     paging_unset_bit(((uint32_t) addr / BLOCKS_LEN) - PAGE_START);
     used_blocks--;
 }
+
+/**
+ * Returns the bitmap representing the page table.
+ *
+ * @return A pointer to the bitmap representing the page table.
+ *
+ * @throws None
+ */
+
 
 uint32_t *get_page_table_bitmap() {
     return bitmap;

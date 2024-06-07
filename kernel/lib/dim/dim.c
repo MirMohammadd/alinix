@@ -55,6 +55,15 @@ bool dim_on_top(struct dim *dim){
     }
 }
 
+/**
+ * Updates the state of a dimmer based on its current state.
+ *
+ * @param dim A pointer to the dimmer structure.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void dim_turn(struct dim* dim){
     	switch (dim->tune_state) {
 	case DIM_PARKING_ON_TOP:
@@ -71,7 +80,15 @@ void dim_turn(struct dim* dim){
 	}
 }
 
-
+/**
+ * Sets the dimmer to the parking on top state.
+ *
+ * @param dim A pointer to the dimmer structure.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void dim_park_on_top(struct dim *dim)
 {
 	dim->steps_right  = 0;
@@ -80,6 +97,16 @@ void dim_park_on_top(struct dim *dim)
 	dim->tune_state   = DIM_PARKING_ON_TOP;
 }
 
+
+/**
+ * Sets the dimmer to the parking tired state.
+ *
+ * @param dim A pointer to the dimmer structure.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void dim_park_tired(struct dim *dim)
 {
 	dim->steps_right  = 0;

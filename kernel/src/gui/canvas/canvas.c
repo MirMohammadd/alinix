@@ -36,17 +36,49 @@ MODULE_DESCRIPTION("Canvas for the GUI kernel implemented.")
 MODULE_LICENSE("AGPL-3.0")
 MODULE_VERSION("0.1")
 
-
+/**
+ * Sets the color of a pixel in the canvas at the specified coordinates.
+ *
+ * @param x The x-coordinate of the pixel.
+ * @param y The y-coordinate of the pixel.
+ * @param color The color of the pixel in ARGB format (e.g., 0xFF0000 for red).
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void Canvas_SetPixel(int x, int y, uint32_t color){
 *(uint32_t*)((uint32_t)bufferPointer + (y * Width * 4 + x * 4)) = color;
 }
 
-
+/**
+ * Retrieves the color of a pixel in the canvas at the specified coordinates.
+ *
+ * @param x The x-coordinate of the pixel.
+ * @param y The y-coordinate of the pixel.
+ *
+ * @return The color of the pixel in ARGB format (e.g., 0xFF0000 for red).
+ *
+ * @throws None
+ */
 uint32_t Canvas_GetPixel(int x, int y){
     return *(uint32_t*)((uint32_t)bufferPointer + (y * Width * 4 + x * 4));
 
 }
 
+/**
+ * Draws a diagonal line on a canvas from (x1, y1) to (x1 + dx, y1 + dy) with the specified color.
+ *
+ * @param color The color of the line in ARGB format (e.g., 0xFF0000 for red).
+ * @param dx The change in x-coordinate of the line.
+ * @param dy The change in y-coordinate of the line.
+ * @param x1 The initial x-coordinate of the line.
+ * @param y1 The initial y-coordinate of the line.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void DrawDiagonalLine(uint32_t color, int dx, int dy, int x1, int y1){
     int i, sdx, sdy, dxabs, dyabs, x, y, px, py;
 
@@ -89,12 +121,37 @@ void DrawDiagonalLine(uint32_t color, int dx, int dy, int x1, int y1){
     }
 }
 
+/**
+ * Draws a vertical line on a canvas from (x1, y1) to (x1, y1 + dy) with the specified color.
+ *
+ * @param color The color of the line in ARGB format (e.g., 0xFF0000 for red).
+ * @param dy The change in y-coordinate of the line.
+ * @param x1 The x-coordinate of the line.
+ * @param y1 The initial y-coordinate of the line.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void DrawVerticalLine(uint32_t color, int dy, int x1, int y1)
 {
     for(int i = 0; i < dy; i++)
         SetPixel(x1, y1 + i, color);
 }
 
+/**
+ * Draws a line on a canvas from (x1, y1) to (x2, y2) with the specified color.
+ *
+ * @param color The color of the line in ARGB format (e.g., 0xFF0000 for red).
+ * @param x1 The x-coordinate of the starting point of the line.
+ * @param y1 The y-coordinate of the starting point of the line.
+ * @param x2 The x-coordinate of the ending point of the line.
+ * @param y2 The y-coordinate of the ending point of the line.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void DrawLine(uint32_t color, int x1, int y1, int x2, int y2)
 {
     int dx, dy;
@@ -126,6 +183,18 @@ void DrawLine(uint32_t color, int x1, int y1, int x2, int y2)
     DrawDiagonalLine(color, dx, dy, x1, y1);
 }
 
+/**
+ * Draws a horizontal line on a canvas from (x1, y1) to (x1 + dx, y1) with the specified color.
+ *
+ * @param color The color of the line in ARGB format (e.g., 0xFF0000 for red).
+ * @param dx The change in x-coordinate of the line.
+ * @param x1 The initial x-coordinate of the line.
+ * @param y1 The y-coordinate of the line.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void DrawHorizontalLine(uint32_t color, int dx, int x1, int y1)
 {
     for (int i = 0; i < dx; i++)
@@ -161,6 +230,20 @@ void FillCircleHelper(int x, int y, int radius, uint32_t corner, int delta, uint
     }
 }
 
+/**
+ * Fills a circle on a canvas with the specified color.
+ *
+ * @param x The x-coordinate of the center of the circle.
+ * @param y The y-coordinate of the center of the circle.
+ * @param radius The radius of the circle.
+ * @param corner The bitwise OR of flags indicating the corners to fill (e.g., 0x1 for the top-left corner).
+ * @param delta The offset to apply to the coordinates of the filled pixels.
+ * @param color The color of the filled pixels in ARGB format (e.g., 0xFF0000 for red).
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void DrawCircleHelper(int x, int y, int radius, uint32_t corner, uint32_t color)
 {
     int f = 1 - radius;
@@ -202,6 +285,20 @@ void DrawCircleHelper(int x, int y, int radius, uint32_t corner, uint32_t color)
 //     memset((void*)bufferPointer, 0, Width*Height*4);
 // }
 
+/**
+ * Draws a filled rounded rectangle on a canvas with the specified color.
+ *
+ * @param color The color of the rectangle in ARGB format (e.g., 0xFF0000 for red).
+ * @param x The x-coordinate of the top-left corner of the rectangle.
+ * @param y The y-coordinate of the top-left corner of the rectangle.
+ * @param width The width of the rectangle.
+ * @param height The height of the rectangle.
+ * @param radius The radius of the rounded corners.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void DrawFillRoundedRect(uint32_t color, int x, int y, int width, int height, int radius)
 {
     // Draw the body
@@ -212,6 +309,19 @@ void DrawFillRoundedRect(uint32_t color, int x, int y, int width, int height, in
     FillCircleHelper(x + radius, y + radius, radius, 2, height - 2 * radius - 1, color);
 }
 
+/**
+ * Draws a filled rectangle on a canvas with the specified color.
+ *
+ * @param color The color of the rectangle in ARGB format (e.g., 0xFF0000 for red).
+ * @param x_start The x-coordinate of the top-left corner of the rectangle.
+ * @param y_start The y-coordinate of the top-left corner of the rectangle.
+ * @param width The width of the rectangle.
+ * @param height The height of the rectangle.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void DrawFillRect(uint32_t color, int x_start, int y_start, int width, int height)
 {
     for (int y = y_start; y < y_start + height; y++)
@@ -220,6 +330,20 @@ void DrawFillRect(uint32_t color, int x_start, int y_start, int width, int heigh
     }
 }
 
+/**
+ * Draws a rounded rectangle on a canvas with the specified color.
+ *
+ * @param color The color of the rectangle in ARGB format (e.g., 0xFF0000 for red).
+ * @param x The x-coordinate of the top-left corner of the rectangle.
+ * @param y The y-coordinate of the top-left corner of the rectangle.
+ * @param width The width of the rectangle.
+ * @param height The height of the rectangle.
+ * @param radius The radius of the rounded corners.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void DrawRoundedRect(uint32_t color, int x, int y, int width, int height, int radius)
 {
     // Draw the four lines
@@ -265,6 +389,19 @@ void DrawRect(uint32_t color, int x, int y, int width, int height)
     DrawLine(color, xc, yc, xd, yd);
 }
 
+/**
+ * Draws a rectangle on a canvas with the specified color.
+ *
+ * @param color The color of the rectangle in ARGB format (e.g., 0xFF0000 for red).
+ * @param x The x-coordinate of the top-left corner of the rectangle.
+ * @param y The y-coordinate of the top-left corner of the rectangle.
+ * @param width The width of the rectangle.
+ * @param height The height of the rectangle.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void DrawString(struct Font* font, char* string, int x, int y, uint32_t color)
 {
     if(font == 0 || string == 0 || color == Transparent)
@@ -319,6 +456,15 @@ void DrawString(struct Font* font, char* string, int x, int y, uint32_t color)
     }
 }
 
+/**
+ * Clears the canvas with the specified color.
+ *
+ * @param color The color to fill the canvas with in ARGB format (e.g., 0xFF0000 for red).
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void Clear(uint32_t color)
 {
     uint32_t* buf = (uint32_t*)bufferPointer;       

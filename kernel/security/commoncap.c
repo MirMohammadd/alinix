@@ -41,6 +41,16 @@ MODULE_VERSION("0.1")
  * @ref https://github.com/torvalds/linux/blob/master/security/commoncap.c
 */
 
+/**
+ * Prints a warning message if a file has both setuid-root and
+ * effective capabilities.
+ *
+ * @param fname The name of the file.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 static void warn_setuid_and_fcaps_mixed(const char *fname){
     static int warned;
     if (!warned){

@@ -38,6 +38,16 @@ static const int GMASK = 0x0000FF00;
 static const int AGMASK = AMASK | GMASK;
 static const int ONEALPHA = 0x01000000;
 
+/**
+ * Performs alpha blending of two colors.
+ *
+ * @param color1 The first color in ARGB format (e.g., 0xFF000000 for black).
+ * @param color2 The second color in ARGB format (e.g., 0xFFFF0000 for red).
+ *
+ * @return The resulting blended color in ARGB format.
+ *
+ * @throws None
+ */
 const uint32_t AlphaBlend(uint32_t color1, uint32_t color2)
 {
     uint32_t a = (color2 & AMASK) >> 24;

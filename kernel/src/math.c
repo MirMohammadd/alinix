@@ -24,6 +24,16 @@ MODULE_DESCRIPTION("Math module")
 MODULE_LICENSE("AGPL-3.0")
 MODULE_VERSION("0.1")
 
+
+/**
+ * Returns the absolute value of a given long integer.
+ *
+ * @param v The long integer to calculate the absolute value of.
+ *
+ * @return The absolute value of the given long integer.
+ *
+ * @throws None
+ */
 long Abs(long v){
     if(v == 0)
         return 0;
@@ -34,6 +44,15 @@ long Abs(long v){
     return v;
 }
 
+/**
+ * Returns the sign of a given long integer.
+ *
+ * @param v The long integer to determine the sign of.
+ *
+ * @return -1 if the long integer is negative, 0 if it is zero, and 1 if it is positive.
+ *
+ * @throws None
+ */
 long Sign(long v)
 {
     if(v < 0)

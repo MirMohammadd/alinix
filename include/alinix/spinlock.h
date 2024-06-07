@@ -28,7 +28,15 @@
 #include <alinix/assert.h>
 #include <alinix/spinlock_types.h>
 
-
+/**
+ * Initializes a spin lock.
+ *
+ * @param lock A pointer to the spin lock to initialize.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 static inline void spin_lock_init(spinlock_t *lock)
 {
 	int r = pthread_spin_init(lock, 0);

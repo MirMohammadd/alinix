@@ -35,6 +35,20 @@ MODULE_LICENSE("AGPL-3.0")
 MODULE_VERSION("0.1")
 
 
+/**
+ * Creates a disk for the file system FAT.
+ *
+ * @param controllerIndex The index of the disk controller.
+ * @param controller A pointer to the disk controller.
+ * @param type The type of the disk.
+ * @param size The size of the disk in bytes.
+ * @param blocks The number of blocks in the disk.
+ * @param blocksize The size of each block in bytes.
+ *
+ * @return A pointer to the newly created disk.
+ *
+ * @throws None
+ */
 Disk* Disk_create(uint32_t controllerIndex, void* controller, DiskType type, uint64_t size, uint32_t blocks, uint32_t blocksize){
     /**
      * @brief Creates a disk for the file system FAT

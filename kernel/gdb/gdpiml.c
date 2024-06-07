@@ -24,15 +24,42 @@
 #include <alinix/kernel.h>
 #include <alinix/init.h>
 
+/**
+ * Writes a character to the debug output.
+ *
+ * @param a The character to be written.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 extern  void _putDebugChar(char a)
 {
     Write(a);
 }
+
+/**
+ * Reads a character from the debug input.
+ *
+ * @return The character read from the debug input.
+ *
+ * @throws None
+ */
 extern  int _getDebugChar()
 {
     return 0;
 }
 
+/**
+ * Prints formatted output to the specified stream.
+ *
+ * @param stream The stream to print the output to.
+ * @param format The format string specifying how the output should be formatted.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 extern  void _fprintf(int stream, const char * format, ...)
 {
     va_list args;

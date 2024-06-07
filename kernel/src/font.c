@@ -31,7 +31,19 @@ MODULE_DESCRIPTION("Kernel font for GUI")
 MODULE_LICENSE("AGPL-3.0")
 MODULE_VERSION("0.1")
 
-
+/**
+ * Calculates the bounding box dimensions for a given string using a provided font data.
+ *
+ * @param string The string to calculate the bounding box for.
+ * @param retW A pointer to store the width of the bounding box.
+ * @param retH A pointer to store the height of the bounding box.
+ * @param data A pointer to the font data.
+ * @param offsetTable A pointer to the offset table for the font data.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void BoundingBox(const char* string, int* retW, int* retH, const void* data, const int* offsetTable){
     if(string == NULL || retW == NULL || retH == NULL)
         return; // Error with arguments

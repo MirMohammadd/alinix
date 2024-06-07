@@ -31,7 +31,19 @@ MODULE_DESCRIPTION("Progress report of kernel.")
 MODULE_LICENSE("AGPL")
 MODULE_VERSION("0.1")
 
-
+/**
+ * Initializes a progress bar with the specified position, dimensions, and colors.
+ *
+ * @param pb A pointer to the ProgressBar struct to initialize.
+ * @param x_p The x-coordinate of the top-left corner of the progress bar.
+ * @param y_p The y-coordinate of the top-left corner of the progress bar.
+ * @param width The width of the progress bar.
+ * @param height The height of the progress bar.
+ *
+ * @return void
+ *
+ * @throws None
+ */
 void ProgressBarInit(ProgressBar *pb, int x_p, int y_p, int width, int height) {
     pb->x = x_p;
     pb->y = y_p;

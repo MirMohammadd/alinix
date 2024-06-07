@@ -32,7 +32,16 @@ MODULE_DESCRIPTION("Kernel Module")
 MODULE_LICENSE("AGPL")
 MODULE_VERSION("0.1")
 
-
+/**
+ * Calls a system service with the specified service number and parameter.
+ *
+ * @param service The service number to call.
+ * @param param A pointer to the parameter to pass to the service.
+ *
+ * @return The result of the system service call.
+ *
+ * @throws None
+ */
 uint syscall(uint service, void *param)
 {
   uint __res = 0;
@@ -43,6 +52,16 @@ uint syscall(uint service, void *param)
                 );
   return __res;
 }
+
+/**
+ * Allocates a block of memory with the specified size.
+ *
+ * @param size The size of the memory block to allocate.
+ *
+ * @return A pointer to the allocated memory block.
+ *
+ * @throws None
+ */
 void *malloc(size_t size)
 {
   return (void*)syscall(SYSCALL_MEM_ALLOCATE, &size);

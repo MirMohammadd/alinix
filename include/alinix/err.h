@@ -26,7 +26,21 @@
 
 #include <alinix/compiler_types.h>
 
-
+/**
+ * @brief Convert a pointer to a long error code.
+ *
+ * The `PTR_ERR` function takes a pointer and converts it to a long integer 
+ * representing an error code. This is often used in Linux kernel code to 
+ * return error codes through pointers.
+ *
+ * @param ptr The pointer to be converted to an error code.
+ *
+ * @return The error code as a long integer.
+ *
+ * @note This function is implemented as a static inline function to avoid 
+ *       function call overhead and to allow the compiler to optimize its 
+ *       usage more effectively.
+ */
 static inline long  PTR_ERR(const void *ptr)
 {
 	return (long) ptr;

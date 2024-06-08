@@ -30,6 +30,23 @@
 #define CAP_SYS_TIME 25
 #define	EPERM		 1	/* Operation not permitted */
 
+/**
+ * @brief Check if the current process has the specified capability.
+ *
+ * The `capable` function checks whether the current process has the specified
+ * capability. In this simplified version, the function always returns `true`,
+ * indicating that the capability check is always successful.
+ *
+ * @param cap The capability to check for. This is an integer value representing
+ *            a specific capability (e.g., `CAP_SYS_ADMIN`, `CAP_NET_ADMIN`).
+ *
+ * @return `true` always. This indicates that the process is always considered
+ *         capable of performing the action associated with the specified capability.
+ *
+ * @note This function is implemented as a static inline function to avoid
+ *       function call overhead and to allow the compiler to optimize its
+ *       usage more effectively.
+ */
 static inline bool capable(int cap)
 {
 	return true;

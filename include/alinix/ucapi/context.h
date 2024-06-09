@@ -81,7 +81,17 @@ struct uacpi_runtime_context {
     struct uacpi_params params;
 };
 
-
+/**
+ * uacpi_rt_should_log - Check if a log message should be logged
+ * @lvl: the log level of the message to be logged
+ *
+ * This function checks if a log message with the specified log level @lvl
+ * should be logged based on the current logging level configuration. It
+ * returns true if the specified log level is less than or equal to the
+ * current logging level configured in the global uacpi_rt_ctx context,
+ * and false otherwise. This function is used to determine whether a log
+ * message should be logged based on the current logging settings.
+ */
 static inline bool uacpi_rt_should_log(enum uacpi_log_level lvl)
 {
     return lvl <= g_uacpi_rt_ctx.params.log_level;

@@ -23,6 +23,15 @@
 #ifndef __ALINIX_KERNEL_PROCESSOR_H
 #define __ALINIX_KERNEL_PROCESSOR_H
 
+/**
+ * local_irq_disable - Disable local IRQs (interrupts) on the current CPU
+ *
+ * This function disables local IRQs (interrupts) on the current CPU. On x86
+ * architecture, it uses inline assembly to set the "Debug (D)" and "Asynchronous
+ * (A)" interrupt flags in the DAIF (Debug, SError, IRQ, FIQ) register to disable
+ * interrupts. Disabling interrupts can be useful for critical sections of code
+ * where interrupt handling should be avoided.
+ */
 static inline void local_irq_disable(void)
 {
 	#if defined(__i386__) && defined(CONFIG_X86)

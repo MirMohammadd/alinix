@@ -36,7 +36,18 @@ struct list_head {
 	struct list_head *next, *prev;
 };
 
-
+/**
+ * __list_add_valid - Check if it is valid to add a new list entry between two existing entries
+ * @new_: pointer to the new list entry
+ * @prev: pointer to the previous list entry
+ * @next: pointer to the next list entry
+ *
+ * This function checks if it is valid to add a new list entry between two existing entries.
+ * It ensures that the pointers of the previous and next entries are correctly set to each other,
+ * and that the new entry is not the same as the previous or next entry.
+ *
+ * Returns: true if it is valid to add the new entry, false otherwise.
+ */
 static inline bool __list_add_valid(struct list_head *new_,
 					     struct list_head *prev,
 					     struct list_head *next){

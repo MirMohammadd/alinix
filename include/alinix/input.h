@@ -177,37 +177,165 @@ struct input_handler {
 void input_event(struct input_dev *dev, unsigned int type, unsigned int code, int value);
 void input_inject_event(struct input_handle *handle, unsigned int type, unsigned int code, int value);
 
+
+/**
+ * input_report_key - Report a key press or release event
+ * @dev: input device to report the event for
+ * @code: key code to report
+ * @value: value to report (0 for key release, non-zero for key press)
+ *
+ * This function generates and reports a key press or release event
+ * for the specified input device. It is typically used in input drivers
+ * to notify the input subsystem of key state changes.
+ *
+ * The function calls `input_event` with the event type set to `EV_KEY`,
+ * the specified key code, and a boolean value indicating whether the key
+ * is pressed (`!!value`).
+ *
+ * Example usage:
+ *     input_report_key(dev, KEY_A, 1); // Report key press for 'A'
+ *     input_report_key(dev, KEY_A, 0); // Report key release for 'A'
+ */
 static inline void input_report_key(struct input_dev *dev, unsigned int code, int value)
 {
 	input_event(dev, EV_KEY, code, !!value);
 }
 
-
+/**
+ * input_report_rel - Report a relative movement event
+ * @dev: input device to report the event for
+ * @code: relative axis code to report
+ * @value: relative movement value
+ *
+ * This function generates and reports a relative movement event
+ * for the specified input device. It is typically used in input drivers
+ * to notify the input subsystem of changes in relative position, such as
+ * mouse movements or scroll wheel activity.
+ *
+ * The function calls `input_event` with the event type set to `EV_REL`,
+ * the specified axis code, and the movement value.
+ *
+ * Example usage:
+ *     input_report_rel(dev, REL_X, 10); // Report relative movement on the X axis
+ *     input_report_rel(dev, REL_Y, -5); // Report relative movement on the Y axis
+ */
 static inline void input_report_rel(struct input_dev *dev, unsigned int code, int value)
 {
 	input_event(dev, EV_REL, code, value);
 }
 
+/**
+ * input_report_abs - Report an absolute axis event
+ * @dev: input device to report the event for
+ * @code: absolute axis code to report
+ * @value: absolute position value
+ *
+ * This function generates and reports an absolute axis event
+ * for the specified input device. It is typically used in input drivers
+ * to notify the input subsystem of changes in absolute position, such as
+ * touch screen coordinates or joystick positions.
+ *
+ * The function calls `input_event` with the event type set to `EV_ABS`,
+ * the specified axis code, and the position value.
+ *
+ * Example usage:
+ *     input_report_abs(dev, ABS_X, 200); // Report absolute position on the X axis
+ *     input_report_abs(dev, ABS_Y, 150); // Report absolute position on the Y axis
+ */
 static inline void input_report_abs(struct input_dev *dev, unsigned int code, int value)
 {
 	input_event(dev, EV_ABS, code, value);
 }
 
+/**
+ * input_report_ff_status - Report force feedback status event
+ * @dev: input device to report the event for
+ * @code: force feedback effect code to report
+ * @value: status value of the force feedback effect
+ *
+ * This function generates and reports a force feedback (FF) status event
+ * for the specified input device. It is typically used in input drivers
+ * to notify the input subsystem of changes in the status of force feedback
+ * effects, such as starting, stopping, or updating an effect.
+ *
+ * The function calls `input_event` with the event type set to `EV_FF_STATUS`,
+ * the specified effect code, and the status value.
+ *
+ * Example usage:
+ *     input_report_ff_status(dev, FF_RUMBLE, 1); // Report starting of rumble effect
+ *     input_report_ff_status(dev, FF_RUMBLE, 0); // Report stopping of rumble effect
+ */
 static inline void input_report_ff_status(struct input_dev *dev, unsigned int code, int value)
 {
 	input_event(dev, EV_FF_STATUS, code, value);
 }
 
+
+/**
+ * input_report_switch - Report a switch state change event
+ * @dev: input device to report the event for
+ * @code: switch code to report
+ * @value: state value of the switch (0 for off, non-zero for on)
+ *
+ * This function generates and reports a switch state change event
+ * for the specified input device. It is typically used in input drivers
+ * to notify the input subsystem of changes in the state of switches,
+ * such as lid open/close or tablet mode switches.
+ *
+ * The function calls `input_event` with the event type set to `EV_SW`,
+ * the specified switch code, and a boolean value indicating whether the
+ * switch is on (`!!value`).
+ *
+ * Example usage:
+ *     input_report_switch(dev, SW_LID, 1); // Report lid switch as closed
+ *     input_report_switch(dev, SW_LID, 0); // Report lid switch as open
+ */
 static inline void input_report_switch(struct input_dev *dev, unsigned int code, int value)
 {
 	input_event(dev, EV_SW, code, !!value);
 }
 
+/**
+ * input_sync - Synchronize input device events
+ * @dev: input device to synchronize
+ *
+ * This function generates and reports a synchronization event for the
+ * specified input device. It is typically used in input drivers to mark
+ * the end of a set of input events, ensuring that the input subsystem
+ * processes the events as a coherent group.
+ *
+ * The function calls `input_event` with the event type set to `EV_SYN`
+ * and the event code set to `SYN_REPORT`. The value parameter is set to 0,
+ * indicating the end of the event reporting.
+ *
+ * Example usage:
+ *     input_report_key(dev, KEY_A, 1); // Report key press for 'A'
+ *     input_sync(dev);                 // Synchronize the event
+ */
 static inline void input_sync(struct input_dev *dev)
 {
 	input_event(dev, EV_SYN, SYN_REPORT, 0);
 }
 
+/**
+ * input_mt_sync - Synchronize multi-touch events
+ * @dev: input device to synchronize
+ *
+ * This function generates and reports a multi-touch synchronization event for the
+ * specified input device. It is typically used in input drivers to mark the end of
+ * a set of multi-touch input events, ensuring that the input subsystem processes
+ * the events as a coherent group.
+ *
+ * The function calls `input_event` with the event type set to `EV_SYN`,
+ * the event code set to `SYN_MT_REPORT`, and the value parameter set to 0,
+ * indicating the end of the multi-touch event reporting.
+ *
+ * Example usage:
+ *     input_mt_slot(dev, 0);          // Select the first touch slot
+ *     input_report_abs(dev, ABS_MT_POSITION_X, 100); // Report X coordinate
+ *     input_report_abs(dev, ABS_MT_POSITION_Y, 150); // Report Y coordinate
+ *     input_mt_sync(dev);             // Synchronize the multi-touch event
+ */
 static inline void input_mt_sync(struct input_dev *dev)
 {
 	input_event(dev, EV_SYN, SYN_MT_REPORT, 0);

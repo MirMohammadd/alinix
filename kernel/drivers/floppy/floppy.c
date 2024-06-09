@@ -34,7 +34,19 @@ MODULE_VERSION("0.1")
 
 
 
-
+/**
+ * @brief Resets the floppy disk controller and waits for the IRQ.
+ * 
+ * This function sends a reset signal to the floppy disk controller and then waits for
+ * an interrupt request (IRQ) to ensure that the reset has been successfully completed.
+ * 
+ * @details The function relies on an external `WaitForIRQ` function to handle the waiting 
+ * for the IRQ. The specifics of the reset process, such as sending the reset signal, 
+ * are assumed to be handled elsewhere in the code.
+ * 
+ * @note Ensure that the `WaitForIRQ` function is correctly implemented to properly wait 
+ * for the IRQ, as this function depends on it for synchronization.
+ */
 void ResetFloppy()
 {
  

@@ -56,17 +56,42 @@ void Init(enum COMPort port)
     ConsoleInitialized = true;
 }
 
+/**
+ * @brief Checks if the serial port is ready to send data.
+ *
+ * This function reads the Line Status Register (LSR) of the serial port and checks if the Transmit Holding Register (THR) is empty.
+ * It determines if the serial port is ready to send data.
+ *
+ * @return A non-zero value if the serial port is ready to send data; returns 0 if it is not ready.
+ */
 int SerialSendReady()
 {
     return inportb(PortAddress + 5) & 0x20;
 }
 
+/**
+ * @brief Writes a null-terminated string to the serial port.
+ *
+ * This function sends each character of the given null-terminated string to the serial port
+ * by calling the `SerialportWrite` function for each character until the null terminator is encountered.
+ *
+ * @param str A pointer to the null-terminated string to be written to the serial port.
+ */
 void SerialportWriteStr(char* str){
     for(int i = 0; str[i] != '\0'; ++i){
         SerialportWrite(str[i]);
     }
 }
 
+
+/**
+ * @brief Writes a single character to the serial port.
+ *
+ * This function waits until the serial port is ready to send data by checking if the Transmit Holding Register (THR) is empty.
+ * Once the serial port is ready, it writes the given character to the serial port.
+ *
+ * @param a The character to be written to the serial port.
+ */
 void SerialportWrite(char a)
 {
     while (SerialSendReady() == 0);
@@ -74,6 +99,14 @@ void SerialportWrite(char a)
     outportb(PortAddress, a);
 }
 
+/**
+ * @brief Checks if the serial port is ready to send data.
+ *
+ * This function reads the Line Status Register (LSR) of the serial port and checks if the Transmit Holding Register (THR) is empty.
+ * It determines if the serial port is ready to send data.
+ *
+ * @return A non-zero value if the serial port is ready to send data; returns 0 if it is not ready.
+ */
 int SerialportSerialSendReady()
 {
     return inportb(PortAddress + 5) & 0x20;

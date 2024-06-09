@@ -148,6 +148,14 @@ static void dhcp_option_hostname(struct dhcp *dhcp, struct netif *netif);
 static void dhcp_option_trailer(struct dhcp *dhcp);
 
 
+/**
+ * @brief Handle a DHCP NAK message.
+ *
+ * This function is called when a DHCP NAK message is received, indicating that the
+ * DHCP server has refused the lease renewal request.
+ *
+ * @param netif The network interface structure for which the DHCP NAK was received.
+ */
 static void
 dhcp_handle_nak(struct netif *netif)
 {
@@ -167,6 +175,14 @@ dhcp_handle_nak(struct netif *netif)
 }
 
 
+/**
+ * @brief Check the DHCP client state.
+ *
+ * This function is called periodically to check the state of the DHCP client and
+ * perform necessary actions based on that state.
+ *
+ * @param netif The network interface structure for which to check the DHCP client state.
+ */
 static void
 dhcp_check(struct netif *netif)
 {
@@ -188,6 +204,15 @@ dhcp_check(struct netif *netif)
   LWIP_DEBUGF(DHCP_DEBUG | LWIP_DBG_TRACE | LWIP_DBG_STATE, ("dhcp_check(): set request timeout %"U16_F" msecs\n", msecs));
 }
 
+/**
+ * @brief Handle a DHCP offer message.
+ *
+ * This function is called when a DHCP offer message is received from a DHCP server.
+ * It obtains the server address and the offered IP address, remembers the offered
+ * address, and selects the offered address for use.
+ *
+ * @param netif The network interface structure for which the DHCP offer was received.
+ */
 static void
 dhcp_handle_offer(struct netif *netif)
 {
@@ -211,6 +236,19 @@ dhcp_handle_offer(struct netif *netif)
   }
 }
 
+/**
+ * @brief Select and send a DHCP request message.
+ *
+ * This function is called to select and send a DHCP request message to the DHCP
+ * server. It sets the DHCP client state to requesting, creates and initializes
+ * the DHCP message header, adds DHCP options to the message, sends the message
+ * as a broadcast to any DHCP server, and sets the request timeout.
+ *
+ * @param netif The network interface structure for which to send the DHCP request.
+ * @return ERR_OK if the DHCP request message was sent successfully, ERR_MEM if
+ * there was a memory allocation failure, or ERR_VAL if there was a problem with
+ * the DHCP message creation.
+ */
 static err_t
 dhcp_select(struct netif *netif)
 {
@@ -260,6 +298,14 @@ dhcp_select(struct netif *netif)
   return result;
 }
 
+/**
+ * @brief DHCP Coarse Timer Handler.
+ *
+ * This function is called periodically to handle DHCP timer events for all
+ * DHCP-configured network interfaces. It decrements the T1 and T2 timers
+ * for each DHCP client and triggers the appropriate timeout functions
+ * when the timers expire.
+ */
 void
 dhcp_coarse_tmr()
 {

@@ -27,6 +27,18 @@
 
 #include <alinix/types.h>
 
+
+/**
+ * hlist_add_tail_rcu - add a new entry to the hash list, at the tail
+ * @n: the new entry to be added
+ * @h: the hash list to add it to
+ *
+ * This function adds a new entry @n to the end of the hash list @h.
+ * This function is safe to call concurrently with traversals and
+ * deletions under RCU read locking.
+ *
+ * Note: write side code, so rcu accessors are not needed.
+ */
 static inline void hlist_add_tail_rcu(struct hlist_node *n,
 				      struct hlist_head *h)
 {

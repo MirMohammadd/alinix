@@ -37,6 +37,12 @@ bool CheckForErrors()
     /*Keep here empty*/
 }
 
+/**
+ * Rounds up an address to the next page boundary (4096-byte boundary).
+ *
+ * @param address The address to be rounded up.
+ * @return The rounded up address.
+ */
 uint32_t pageRoundUp(uint32_t address)
 {
     if((address & 0xFFFFF000) != address)
@@ -47,11 +53,23 @@ uint32_t pageRoundUp(uint32_t address)
     return address;
 }
 
+/**
+ * Rounds down an address to the previous page boundary (4096-byte boundary).
+ *
+ * @param address The address to be rounded down.
+ * @return The rounded down address.
+ */
 uint32_t pageRoundDown(uint32_t address)
 {
     return address & 0xFFFFF000;
 }
 
+
+/**
+ * Frees memory allocated by alignedAlloc.
+ *
+ * @param ptr Pointer to the memory block to be freed.
+ */
 void allignedFree(void* ptr)
 {
     if(ptr == 0)
@@ -64,6 +82,14 @@ void allignedFree(void* ptr)
     Free(p);
 }
 
+
+/**
+ * Allocates memory with a specified alignment.
+ *
+ * @param size  The size of the memory block to allocate.
+ * @param align The alignment requirement (must be a power of two).
+ * @return A pointer to the allocated memory block, or NULL if allocation fails.
+ */
 void* alignedMalloc(uint32_t size, uint32_t align)
 {
     void* ptr = 0;
@@ -87,6 +113,11 @@ void* alignedMalloc(uint32_t size, uint32_t align)
     return ptr;
 }
 
+/**
+ * Frees a memory block previously allocated by the memory allocator.
+ *
+ * @param ptr Pointer to the memory block to be freed.
+ */
 void Free(void* ptr)
 {
     struct MemoryHeader* chunk = (struct MemoryHeader*)((uint32_t)ptr - sizeof(struct MemoryHeader));

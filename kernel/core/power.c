@@ -52,7 +52,15 @@ uint16_t SCI_EN;
 uint8_t PM1_CNT_LEN;
 
 
-
+/**
+ * @brief Checks for a valid ACPI Root System Description Pointer (RSDP).
+ *
+ * This function verifies if the memory pointed to by `ptr` contains a valid RSDP by checking its
+ * signature and checksum. If valid, it returns the address of the Root System Description Table (RSDT).
+ *
+ * @param ptr A pointer to the memory location that potentially contains the RSDP.
+ * @return A pointer to the RSDT if the RSDP is valid; returns 0 if the RSDP is not valid.
+ */
 unsigned int* acpiCheckRSDPtr(unsigned int* ptr)
 {
     char* sig = "RSD PTR ";
@@ -88,6 +96,15 @@ unsigned int* acpiCheckRSDPtr(unsigned int* ptr)
 
 
 // finds the acpi header and returns the address of the rsdt
+
+/**
+ * @brief Searches for the Root System Description Pointer (RSDP) in memory.
+ *
+ * This function searches for the RSDP in the memory range below 1MB and in the Extended BIOS Data Area (EBDA).
+ * If a valid RSDP is found, it returns its address.
+ *
+ * @return A pointer to the RSDP if found; returns 0 if no valid RSDP is found.
+ */
 unsigned int* acpiGetRSDPtr(void)
 {
     unsigned int* addr;
@@ -118,6 +135,16 @@ unsigned int* acpiGetRSDPtr(void)
 
 
 
+/**
+ * @brief Checks for a valid ACPI header by verifying the signature and checksum.
+ *
+ * This function checks if the memory pointed to by `ptr` contains a valid ACPI table header
+ * by comparing the signature and verifying the checksum.
+ *
+ * @param ptr A pointer to the memory location that potentially contains the ACPI table header.
+ * @param sig A string representing the expected signature of the ACPI table header.
+ * @return 0 if the header is valid (signature matches and checksum is correct); returns -1 if the header is not valid.
+ */
 // checks for a given header and validates checksum
 int acpiCheckHeader(unsigned int* ptr, char* sig)
 {
@@ -137,6 +164,14 @@ int acpiCheckHeader(unsigned int* ptr, char* sig)
     return -1;
 }
 
+/**
+ * @brief Enables ACPI (Advanced Configuration and Power Interface) if it is not already enabled.
+ *
+ * This function checks if ACPI is enabled. If not, it attempts to enable ACPI by sending the appropriate command.
+ * It waits for up to 3 seconds to ensure ACPI is enabled. It logs the result of the operation.
+ *
+ * @return 0 if ACPI is successfully enabled or already enabled; returns -1 if ACPI could not be enabled.
+ */
 int acpiEnable(void)
 {
     // check if acpi is enabled

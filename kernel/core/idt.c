@@ -38,6 +38,14 @@ MODULE_VERSION("0.1")
 struct IDTEntry idtEntries[IDT_ENTRY_SIZE];
 struct IDTPointer idtPointer;
 
+
+/**
+ * Sets the descriptor for an Interrupt Descriptor Table (IDT) entry.
+ *
+ * @param number      The index of the IDT entry to be set.
+ * @param handler     A pointer to the interrupt handler function.
+ * @param accesLevel  The access level of the IDT entry.
+ */
 IdtSetDescriptor(uint32_t number, void (*handler)(), int accesLevel){
     uint32_t callerBase = (uint32_t)handler;
     idtEntries[number].handlerLowBits = (uint16_t)(callerBase & 0xFFFF);
@@ -47,6 +55,11 @@ IdtSetDescriptor(uint32_t number, void (*handler)(), int accesLevel){
     idtEntries[number].selector = 0x8;
 }
 
+
+/**
+ * Installs the Interrupt Descriptor Table (IDT) with default exception and interrupt handlers.
+ * Also remaps the Programmable Interrupt Controllers (PIC) for proper interrupt handling.
+ */
 void Install(){
         idtPointer.size = sizeof(struct IDTEntry) * IDT_ENTRY_SIZE - 1;
     idtPointer.base = (uint32_t)&idtEntries[0];
@@ -117,14 +130,26 @@ void Install(){
     asm volatile("lidt %0" : : "m" (idtPointer));
 }
 
+/**
+ * Enables interrupts by setting the Interrupt Flag (IF) in the EFLAGS register.
+ */
 void EnableInterrupts()
 {
     asm volatile ("sti");
 }
+/**
+ * Disables interrupts by clearing the Interrupt Flag (IF) in the EFLAGS register.
+ */
 void DisableInterrupts()
 {
     asm volatile ("cli");
 }
+
+/**
+ * Checks if interrupts are enabled by reading the Interrupt Flag (IF) in the EFLAGS register.
+ *
+ * @return true if interrupts are enabled, false otherwise.
+ */
 bool AreEnabled()
 {
     unsigned long flags;

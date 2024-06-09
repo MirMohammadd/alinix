@@ -73,7 +73,20 @@ struct kset {
 	const struct kset_uevent_ops *uevent_ops;
 } __randomize_layout;
 
-
+/**
+ * kset_put - Release a reference to a kset
+ * @k: pointer to the kset structure
+ *
+ * This function releases a reference to a kset structure, decrementing
+ * its reference count. If the reference count reaches zero, the kset
+ * structure is deallocated.
+ *
+ * The function calls `kobject_put` with the kobject embedded in the kset
+ * structure to release the reference.
+ *
+ * Example usage:
+ *     kset_put(my_kset); // Release reference to my_kset
+ */
 static inline void kset_put(struct kset *k)
 {
 	kobject_put(&k->kobj);

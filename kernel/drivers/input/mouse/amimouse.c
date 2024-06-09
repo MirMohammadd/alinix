@@ -35,6 +35,23 @@ MODULE_VERSION("0.1")
 
 PRIVATE int amimouse_lastx, amimouse_lasty;
 
+/**
+ * @brief Handles mouse interrupts by reading data from the mouse device and calculating movement distance.
+ * 
+ * This function is called when a mouse interrupt occurs. It reads data from the mouse device,
+ * calculates the movement distance in both x and y directions, and reports these movements to the
+ * input subsystem. It also handles button presses.
+ * 
+ * @param irq The interrupt number.
+ * @param data Pointer to the input device structure.
+ * @return irqreturn_t The result of the interrupt handling, typically IRQ_HANDLED.
+ * 
+ * @details The function reads the joystick and potentiometer data, calculates the x and y movements, 
+ * adjusts for overflows, updates the last known positions, and reports the relative movements and button states.
+ * 
+ * @note Ensure that the data passed as a parameter is a valid pointer to an input_dev structure. The function 
+ * relies on global variables `amimouse_lastx` and `amimouse_lasty` to keep track of the last known x and y positions.
+ */
 PRIVATE irqreturn_t amimouse_interrupt(int irq,void *data){
     /**
      * @brief Function that defines  how to handle mouse interrupts.

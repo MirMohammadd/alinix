@@ -60,6 +60,20 @@ MODULE_VERSION("0.1")
 struct JoystickStatus *jst;
 
 using namespace CactusOS::system;
+
+/**
+ * @brief Checks if a specific joystick button is pressed.
+ *
+ * This function iterates over a predefined range of joystick button values
+ * to determine if the specified button is pressed. The function reads the
+ * state of the joystick from the hardware port and returns true if the button
+ * is pressed, and false otherwise.
+ *
+ * @param buttonnum The button number to check.
+ *
+ * @return Returns true if the specified button is pressed. Returns false if the
+ *         button is not pressed or if the button number is out of the valid range.
+ */
 bool joystick_button_cxx(uint8_t buttonnum){
     int i;
     for (i = 4; i <= 8; ++i){
@@ -71,6 +85,17 @@ bool joystick_button_cxx(uint8_t buttonnum){
     return 0;
 }
 
+/**
+ * @brief Retrieves the current status of the joystick.
+ *
+ * This function collects the current status of the joystick, including the
+ * positions of the X and Y axes, the changes in the X and Y positions (deltas),
+ * and the states of several buttons (A, B, C, D). It returns this information
+ * encapsulated in a `JoystickStatus` struct.
+ *
+ * @return A `JoystickStatus` struct containing the current state of the joystick,
+ *         including axis positions, deltas, and button states.
+ */
 struct JoystickStatus joystick_dump(void)
 {
     struct JoystickStatus jst;

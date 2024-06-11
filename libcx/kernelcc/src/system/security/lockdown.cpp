@@ -51,12 +51,41 @@ static const char* lockdown_reasons;
 // Needs for the lockdown reason
 
 
+/**
+ * @brief Locks down the kernel with a specified reason and lockdown level.
+ *
+ * This function logs an error message indicating that the kernel is being
+ * locked down due to a specified reason, and then sets the global variable
+ * `kernel_locked_down` to the specified lockdown level.
+ *
+ * @param where A string describing the reason for the lockdown. This string
+ *              is included in the error message logged.
+ * @param level An enum value representing the level of lockdown to apply.
+ *
+ * @return Returns 0 to indicate the operation was successful.
+ */
 static int lock_kernel_down(const char *where,enum lockdown_reason level){
     Log(Error,"Kernel is locked down due to the %s",where);
     kernel_locked_down = level;
     return 0;
 }
 
+/**
+ * @brief Sets the kernel lockdown level based on the provided parameter.
+ *
+ * This function evaluates the provided `level` string to determine the
+ * appropriate lockdown level to set. It supports two levels: "integrity"
+ * and "confidentiality". If the level is "integrity", the kernel is locked
+ * down to protect data from unauthorized modification, deletion, or disclosure.
+ * If the level is "confidentiality", the kernel is locked down to protect
+ * sensitive information from unauthorized access.
+ *
+ * @param level A string representing the desired lockdown level. Expected
+ *              values are "integrity" or "confidentiality".
+ *
+ * @return Returns 0 on success. Returns -EINVAL if the `level` is NULL or
+ *         not a recognized value.
+ */
 static int lockdown_param(char *level){
     if (!level){
         return -EINVAL;

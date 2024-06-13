@@ -20,6 +20,7 @@
  * @file workqueue.h
  * @abstraction:
  *  - Kernel work queues header file implemented here.
+ *  - Keep this file empty for now.
 */
 #ifndef __ALINIX_KERNEL_WORK_QUEUE_H
 #define __ALINIX_KERNEL_WORK_QUEUE_H

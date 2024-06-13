@@ -47,19 +47,30 @@ struct irq_data {
 };
 
 enum {
+	/** No specific IRQ type */
 	IRQ_TYPE_NONE		= 0x00000000,
+	/** IRQ triggered on a rising edge */
 	IRQ_TYPE_EDGE_RISING	= 0x00000001,
+	/** IRQ triggered on a falling edge */
 	IRQ_TYPE_EDGE_FALLING	= 0x00000002,
+	/** IRQ triggered on both rising and falling edges */
 	IRQ_TYPE_EDGE_BOTH	= (IRQ_TYPE_EDGE_FALLING | IRQ_TYPE_EDGE_RISING),
+	/** IRQ triggered when the level is high */
 	IRQ_TYPE_LEVEL_HIGH	= 0x00000004,
+	/** IRQ triggered when the level is low */
 	IRQ_TYPE_LEVEL_LOW	= 0x00000008,
+	/** Mask for level-triggered IRQ types */
 	IRQ_TYPE_LEVEL_MASK	= (IRQ_TYPE_LEVEL_LOW | IRQ_TYPE_LEVEL_HIGH),
 	IRQ_TYPE_SENSE_MASK	= 0x0000000f,
+	/** Mask for all IRQ sense types */
 	IRQ_TYPE_DEFAULT	= IRQ_TYPE_SENSE_MASK,
-
+	/** Default IRQ sense type */
 	IRQ_TYPE_PROBE		= 0x00000010,
+	/** IRQ probe type */
 
+	/** Level-triggered IRQ flag */
 	IRQ_LEVEL		= (1 <<  8),
+	/** IRQ is per-CPU */
 	IRQ_PER_CPU		= (1 <<  9),
 	IRQ_NOPROBE		= (1 << 10),
 	IRQ_NOREQUEST		= (1 << 11),

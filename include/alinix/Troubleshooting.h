@@ -27,7 +27,7 @@
 
 #define MAX_NESTED_EXCEPTIONS 19
 
-void gpfExcHandler(void);
+void gpfExcHandler(void); // Handle the kernel Exceptions.
 
 
 #endif /*__ALINIX_KERNEL_Troubleshooting_H*/

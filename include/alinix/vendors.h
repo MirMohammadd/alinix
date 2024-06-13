@@ -62,7 +62,7 @@
 
 
 /**
- * @brief CPU vendors enum for vendors util.
+ * @brief CPU vendors enum for different CPU vendors.
 */
 enum {
     CPUID_FEAT_ECX_SSE3         = 1 << 0, 

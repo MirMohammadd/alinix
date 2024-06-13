@@ -341,6 +341,16 @@ extern int power_supply_powers(struct power_supply *psy, struct device *dev);
 extern void *power_supply_get_drvdata(struct power_supply *psy);
 extern int power_supply_for_each_device(void *data, int (*fn)(struct device *dev, void *data));
 
+/**
+ * power_supply_is_amp_property - Check if a power supply property is an ampere property
+ * @psp: The power supply property to check, of type enum power_supply_property
+ *
+ * This function determines if the given power supply property represents a measurement
+ * related to current (in amperes). It checks if the provided property matches any of
+ * the predefined properties that are associated with current measurements.
+ *
+ * Return: true if the property is related to current, false otherwise.
+ */
 static inline bool power_supply_is_amp_property(enum power_supply_property psp)
 {
 	switch (psp) {
@@ -367,6 +377,16 @@ static inline bool power_supply_is_amp_property(enum power_supply_property psp)
 	return false;
 }
 
+/**
+ * power_supply_is_watt_property - Check if a power supply property is a wattage property
+ * @psp: The power supply property to check, of type enum power_supply_property
+ *
+ * This function determines if the given power supply property represents a measurement
+ * related to power (in watts) or voltage. It checks if the provided property matches any of
+ * the predefined properties that are associated with energy measurements.
+ *
+ * Return: true if the property is related to power or voltage, false otherwise.
+ */
 static inline bool power_supply_is_watt_property(enum power_supply_property psp)
 {
 	switch (psp) {
@@ -416,6 +436,21 @@ ssize_t power_supply_charge_behaviour_show(struct device *dev,
 
 int power_supply_charge_behaviour_parse(unsigned int available_behaviours, const char *buf);
 #else
+
+/**
+ * power_supply_charge_behaviour_show - Show the charge behavior of a power supply
+ * @dev: The device representing the power supply
+ * @available_behaviours: Bitmask of available charge behaviors
+ * @behaviour: The current charge behavior of the power supply
+ * @buf: Buffer to store the output string representing the charge behavior
+ *
+ * This function is intended to display the current charge behavior of a power supply
+ * by writing it to the provided buffer. However, the current implementation does not
+ * support this operation and always returns -EOPNOTSUPP, indicating that the operation
+ * is not supported.
+ *
+ * Return: -EOPNOTSUPP, indicating the operation is not supported.
+ */
 static inline
 ssize_t power_supply_charge_behaviour_show(struct device *dev,
 					   unsigned int available_behaviours,
@@ -425,6 +460,17 @@ ssize_t power_supply_charge_behaviour_show(struct device *dev,
 	return -EOPNOTSUPP;
 }
 
+/**
+ * power_supply_charge_behaviour_parse - Parse charge behavior for a power supply
+ * @available_behaviours: Bitmask of available charge behaviors
+ * @buf: Input buffer containing the behavior to be parsed
+ *
+ * This function is intended to parse the charge behavior for a power supply.
+ * However, the current implementation does not support this operation and
+ * always returns -EOPNOTSUPP, indicating that the operation is not supported.
+ *
+ * Return: -EOPNOTSUPP, indicating the operation is not supported.
+ */
 static inline int power_supply_charge_behaviour_parse(unsigned int available_behaviours,
 						      const char *buf)
 {

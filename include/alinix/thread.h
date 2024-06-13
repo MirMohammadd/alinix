@@ -21,7 +21,7 @@
 /**
  * @file thread.h
  * @abstraction:
- *  - Kernel thread implementation.
+ *  - Kernel threading and threads handling implementation.
  *  - Header file.
 */
 #ifndef __ALINIX_KERNEL_THREAD_H

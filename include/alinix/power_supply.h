@@ -419,6 +419,17 @@ static inline bool power_supply_is_watt_property(enum power_supply_property psp)
 int power_supply_add_hwmon_sysfs(struct power_supply *psy);
 void power_supply_remove_hwmon_sysfs(struct power_supply *psy);
 #else
+
+/**
+ * power_supply_add_hwmon_sysfs - Add hwmon sysfs entries for a power supply
+ * @psy: Pointer to the power_supply structure representing the power supply
+ *
+ * This function is intended to add hardware monitoring (hwmon) sysfs entries
+ * for a given power supply. However, the current implementation does not
+ * perform any operation and always returns 0, indicating success.
+ *
+ * Return: 0, indicating success.
+ */
 static inline int power_supply_add_hwmon_sysfs(struct power_supply *psy)
 {
 	return 0;

@@ -35,7 +35,6 @@ int strlen(const char* str);
 bool strcmp(const char* strA, const char* strB);
 bool strncmp(const char* s1, const char* s2, int n);
 int IndexOf(const char* str, char c, uint32_t skip);
-// bool Contains(const char* str, char c);
 
 char* Uppercase(char* str);
 char* Lowercase(char* str);

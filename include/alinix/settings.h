@@ -52,7 +52,17 @@ enum {
 };
 
 
-
+/**
+ * irq_settings_is_per_cpu_devid - Check if IRQ descriptor has a per-CPU device ID
+ * @desc: Pointer to the irq_desc structure representing the interrupt descriptor
+ *
+ * This function checks the status of the given interrupt descriptor to determine
+ * if it has been set to use a per-CPU device ID. It examines the `status_use_accessors`
+ * field of the `irq_desc` structure and returns true if the `_IRQ_PER_CPU_DEVID` flag
+ * is set, otherwise it returns false.
+ *
+ * Return: true if the IRQ descriptor has a per-CPU device ID, false otherwise.
+ */
 static inline bool irq_settings_is_per_cpu_devid(struct irq_desc *desc)
 {
 	return desc->status_use_accessors & _IRQ_PER_CPU_DEVID;

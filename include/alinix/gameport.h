@@ -80,7 +80,7 @@ struct JoystickStatus{
 
 
 /**
- * @brief Joy stick driver function util.
+ * @brief Joy stick driver function util declared here.
 */
 bool joystick_button(uint8_t buttonnum);
 uint16_t joy_stick_status(uint8_t byte);

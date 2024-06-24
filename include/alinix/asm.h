@@ -35,5 +35,6 @@
         : "a" (_data), "Nd" (_port) \
     );
 
+#define PAUSE asm("pause")
 
 #endif /*__ALINIX_KERNEL_ASM_H*/

@@ -59,7 +59,7 @@ static inline void rateOfDriver(void) {
 
     // Wait until we can read back the acknowledge
     while (!(inb(0x64) & 1))
-        PAUSE; // Replace with appropriate delay if necessary
+        PAUSE; // Pause the kernel from asm section
     ack = inb(0x60); // Read back acknowledge. This should be 0xFA
 
     // Tell the controller to address the mouse again
@@ -70,6 +70,6 @@ static inline void rateOfDriver(void) {
 
     // Wait until we can read back the acknowledge
     while (!(inb(0x64) & 1))
-        PAUSE; // Replace with appropriate delay if necessary
+        PAUSE; // Pause the kernel from asm section
     ack = inb(0x60); // Read back acknowledge. This should be 0xFA
 }

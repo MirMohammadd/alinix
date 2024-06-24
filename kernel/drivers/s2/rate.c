@@ -35,6 +35,7 @@ MODULE_LICENSE("AGPLv3")
 MODULE_DESCRIPTION("Simple Driver rate for p/s 2 mouse driver.")
 MODULE_VERSION("1.0")
 
+
 /**
  * @brief Sets the rate of a PS/2 mouse.
  *

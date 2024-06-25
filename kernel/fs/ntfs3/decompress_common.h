@@ -39,7 +39,21 @@
 /* Size of a machine word  */
 #define WORDBYTES (sizeof(size_t))
 
-
+/**
+ * @brief Copies an unaligned word from source to destination.
+ *
+ * This function copies an unaligned word (typically an integer) from the source
+ * address to the destination address. It handles the copying byte by byte to
+ * ensure that alignment issues do not cause problems on architectures that
+ * require aligned access to certain data types.
+ *
+ * @param src Pointer to the source memory location.
+ * @param dst Pointer to the destination memory location.
+ *
+ * @note This function is defined as `inline` for performance reasons and
+ *       should be used in performance-critical code where copying unaligned
+ *       words is necessary.
+ */
 PRIVATE inline void copy_unaligned_word(const void *src, void *dst){
     const uint8_t *src_bytes  = (const uint8_t *)src;
     uint8_t * dst_bytes = (uint8_t *)dst;
@@ -49,6 +63,20 @@ PRIVATE inline void copy_unaligned_word(const void *src, void *dst){
     }
 }
 
+/**
+ * @brief Repeats a byte across all bytes of a word-sized variable.
+ *
+ * This function takes an 8-bit byte and repeats it across all bytes of a
+ * word-sized variable (size_t). It uses bitwise operations to achieve this
+ * repetition efficiently.
+ *
+ * @param b The 8-bit byte to be repeated.
+ * @return A word-sized variable with the byte repeated across all bytes.
+ *
+ * @note This function is defined as `static forceinline` for performance
+ *       reasons and should be used in performance-critical code where such
+ *       byte repetition is necessary.
+ */
 static forceinline size_t repeat_byte(u8 b){
     size_t v;
     v = b;

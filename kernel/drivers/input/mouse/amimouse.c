@@ -31,7 +31,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Amiga Mouse Driver")
 MODULE_LICENSE("AGPL-3.0")
-MODULE_VERSION("0.1")
+MODULE_VERSION("1.0")
 
 PRIVATE int amimouse_lastx, amimouse_lasty;
 

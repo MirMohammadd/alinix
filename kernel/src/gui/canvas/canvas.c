@@ -34,7 +34,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Canvas for the GUI kernel implemented.")
 MODULE_LICENSE("AGPL-3.0")
-MODULE_VERSION("0.1")
+MODULE_VERSION("1.0")
 
 /**
  * Sets the color of a pixel in the canvas at the specified coordinates.

@@ -23,7 +23,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("A simple module to test the module system for networking.")
 MODULE_LICENSE("AGPL3")
-MODULE_VERSION("0.1")
+MODULE_VERSION("1.0")
 
 /**
  * @abstraction:

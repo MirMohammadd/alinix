@@ -39,7 +39,7 @@ SOFTWARE.
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("UCAPI namespace")
 MODULE_LICENSE("AGPL-3.0")
-MODULE_VERSION("0.1")
+MODULE_VERSION("1.0")
 
 uacpi_namespace_node
 predefined_namespaces[UACPI_PREDEFINED_NAMESPACE_MAX + 1] = {

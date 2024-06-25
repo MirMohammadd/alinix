@@ -29,7 +29,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("AC97 Audio Driver")
 MODULE_LICENSE("AGPL-3.0")
-MODULE_VERSION("0.1")
+MODULE_VERSION("1.0")
 
 
 static inline void ac97_write_register(uint16_t reg,uint16_t value,struct ac97_codec* dev){

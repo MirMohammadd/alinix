@@ -30,7 +30,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("USB driver")
 MODULE_LICENSE("AGPL")
-MODULE_VERSION("0.1")
+MODULE_VERSION("1.0")
 
 /**
  * @brief Kills a URB (USB Request Block) by cancelling its associated USB transfer.

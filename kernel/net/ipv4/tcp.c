@@ -38,6 +38,10 @@ uint8_t tcp_active_pcbs_changed;
 
 struct tcp_pcb *tcp_tw_pcbs;
 
+
+/**
+ * @brief Enum defined to define the TCP states for the networking stuff.
+ */
 enum tcp_state {
   CLOSED      = 0,
   LISTEN      = 1,

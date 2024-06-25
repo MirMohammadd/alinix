@@ -37,6 +37,9 @@ MODULE_DESCRIPTION("AliNix IPV4 driver")
 MODULE_LICENSE("AGPL-3.0")
 MODULE_VERSION("0.1")
 
+/**
+ * @brief Useful macro for callback.
+ */
 #define NETIF_STATUS_CALLBACK(n)
 
 

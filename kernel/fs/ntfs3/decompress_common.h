@@ -63,6 +63,20 @@ PRIVATE inline void copy_unaligned_word(const void *src, void *dst){
     }
 }
 
+/**
+ * @brief Repeats a byte across all bytes of a word-sized variable.
+ *
+ * This function takes an 8-bit byte and repeats it across all bytes of a
+ * word-sized variable (size_t). It uses bitwise operations to achieve this
+ * repetition efficiently.
+ *
+ * @param b The 8-bit byte to be repeated.
+ * @return A word-sized variable with the byte repeated across all bytes.
+ *
+ * @note This function is defined as `static forceinline` for performance
+ *       reasons and should be used in performance-critical code where such
+ *       byte repetition is necessary.
+ */
 static forceinline size_t repeat_byte(u8 b){
     size_t v;
     v = b;

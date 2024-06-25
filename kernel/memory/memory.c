@@ -98,6 +98,9 @@ void* memcpy(void* dstptr, const void* srcptr, uint32_t size){
 	return dstptr;
 }
 
+/**
+ * Do NOTHING here
+ */
 void free(void *ptr){
 	
 }

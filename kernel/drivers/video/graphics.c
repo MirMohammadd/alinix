@@ -52,6 +52,9 @@ void paint_desktop() {
     paint_mouse();
 }
 
+/**
+ * @brief Do noting here.
+ */
 void paint_mouse() {
     return;
     // draw_rect(get_mouse_info()->x, get_mouse_info()->y, 10, 10, 0xFFFFFF);

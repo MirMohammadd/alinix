@@ -39,7 +39,21 @@
 /* Size of a machine word  */
 #define WORDBYTES (sizeof(size_t))
 
-
+/**
+ * @brief Copies an unaligned word from source to destination.
+ *
+ * This function copies an unaligned word (typically an integer) from the source
+ * address to the destination address. It handles the copying byte by byte to
+ * ensure that alignment issues do not cause problems on architectures that
+ * require aligned access to certain data types.
+ *
+ * @param src Pointer to the source memory location.
+ * @param dst Pointer to the destination memory location.
+ *
+ * @note This function is defined as `inline` for performance reasons and
+ *       should be used in performance-critical code where copying unaligned
+ *       words is necessary.
+ */
 PRIVATE inline void copy_unaligned_word(const void *src, void *dst){
     const uint8_t *src_bytes  = (const uint8_t *)src;
     uint8_t * dst_bytes = (uint8_t *)dst;

@@ -41,11 +41,55 @@ MODULE_LICENSE("AGPL")
 MODULE_VERSION("0.1")
 
 
+
+
+/**
+ * @def PBUF_POOL_BUFSIZE_ALIGNED
+ * @brief Aligns the buffer size of a pbuf pool to the memory alignment size.
+ *
+ * This macro calculates the aligned buffer size for a pbuf pool by using the
+ * LWIP_MEM_ALIGN_SIZE macro, which ensures that the buffer size is aligned
+ * to the required memory alignment boundary.
+ *
+ * @param PBUF_POOL_BUFSIZE The original buffer size of the pbuf pool.
+ * @return The aligned buffer size.
+ */
 #define PBUF_POOL_BUFSIZE_ALIGNED LWIP_MEM_ALIGN_SIZE(PBUF_POOL_BUFSIZE)
+
+
+/**
+ * @def SIZEOF_STRUCT_PBUF
+ * @brief Aligns the size of the pbuf structure to the memory alignment size.
+ *
+ * This macro calculates the aligned size of the pbuf structure by using the
+ * LWIP_MEM_ALIGN_SIZE macro, which ensures that the size of the structure
+ * is aligned to the required memory alignment boundary.
+ *
+ * @return The aligned size of the pbuf structure.
+ */
 #define SIZEOF_STRUCT_PBUF        LWIP_MEM_ALIGN_SIZE(sizeof(struct pbuf))
 
-
+/**
+ * @def PBUF_POOL_IS_EMPTY
+ * @brief Checks if the pbuf pool is empty.
+ *
+ * This macro provides a shorthand way to check if the pbuf pool is empty by
+ * calling the pbuf_pool_is_empty() function.
+ *
+ * @return 1 if the pbuf pool is empty, 0 otherwise.
+ */
 #define PBUF_POOL_IS_EMPTY() pbuf_pool_is_empty()
+
+
+/**
+ * @var volatile uint8_t pbuf_free_ooseq_pending
+ * @brief Indicates if there is a pending pbuf free operation out of sequence.
+ *
+ * This volatile variable is used to indicate whether there is a pending
+ * operation to free a pbuf that is out of sequence. The volatile keyword
+ * ensures that the variable is not optimized away by the compiler and that
+ * its value is always read from memory.
+ */
 volatile uint8_t pbuf_free_ooseq_pending;
 
 

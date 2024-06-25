@@ -28,7 +28,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Logging and printing utility")
 MODULE_LICENSE("AGPL-3.0")
-MODULE_VERSION("0.1")
+MODULE_VERSION("1.0")
 
 
 

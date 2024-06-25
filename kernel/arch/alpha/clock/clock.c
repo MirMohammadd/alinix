@@ -32,7 +32,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("System clock utility")
 MODULE_LICENSE("AGPL")
-MODULE_VERSION("0.1")
+MODULE_VERSION("1.0")
 
 #define	UMODE	0170000
 #define	SCHMAG	10

@@ -32,7 +32,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("IRQ Manager")
 MODULE_LICENSE("AGPL")
-MODULE_VERSION("0.1")
+MODULE_VERSION("1.0")
 
 /**
  * free_irq - Frees an interrupt request

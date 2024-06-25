@@ -34,7 +34,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("UDP Kernel Module")
 MODULE_LICENSE("AGPL-3.0")
-MODULE_VERSION("0.1")
+MODULE_VERSION("1.0")
 
 void netif_set_gw(struct netif *netif, ip_addr_t *gw);
 

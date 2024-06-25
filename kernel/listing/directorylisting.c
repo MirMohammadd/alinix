@@ -31,7 +31,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Provides the listing directory ability.")
 MODULE_LICENSE("AGPL")
-MODULE_VERSION("0.1")
+MODULE_VERSION("1.0")
 
 /**
  * Begin listing files in a directory.

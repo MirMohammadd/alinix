@@ -28,7 +28,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("VTOC for the file system kernel")
 MODULE_LICENSE("AGPL")
-MODULE_VERSION("0.1")
+MODULE_VERSION("1.0")
 
 /**
  * @brief Get the CHR (Cylinder-Head-Record) information from the VTOC (Volume Table of Contents).

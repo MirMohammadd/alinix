@@ -29,7 +29,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Print utility for logs")
 MODULE_LICENSE("AGPL")
-MODULE_VERSION("0.1")
+MODULE_VERSION("1.0")
 
 unsigned long long __udivdi3(unsigned long long num, unsigned long long den) {
     unsigned long long quot = 0, bit = 1;

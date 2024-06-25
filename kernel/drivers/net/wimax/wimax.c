@@ -31,7 +31,7 @@
 MODULE_AUTHOR("Ali Mirmohammad")
 MODULE_DESCRIPTION("Kernel WIMAX driver for networking.")
 MODULE_LICENSE("AGPL")
-MODULE_VERSION("0.1")
+MODULE_VERSION("1.0")
 
 /**
  * Updates the radio state of a WiMAX device based on the provided RF state.

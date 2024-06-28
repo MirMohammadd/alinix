@@ -201,6 +201,34 @@ void DrawHorizontalLine(uint32_t color, int dx, int x1, int y1)
         SetPixel(x1 + i, y1, color);
 }
 
+
+/**
+ * @brief Draws a filled circle with specified parameters.
+ *
+ * This function draws a filled circle at the given coordinates (x, y) with a 
+ * specified radius and color. The circle can be filled in specific corners 
+ * based on the 'corner' parameter and adjusted by the 'delta' parameter.
+ *
+ * @param x The x-coordinate of the center of the circle.
+ * @param y The y-coordinate of the center of the circle.
+ * @param radius The radius of the circle.
+ * @param corner A bitmask that specifies which corners to fill:
+ *               - Bit 0 (0x1): Fill upper right and lower right corners.
+ *               - Bit 1 (0x2): Fill upper left and lower left corners.
+ * @param delta An additional offset to apply to the fill.
+ * @param color The color to fill the circle with.
+ *
+ * This function uses an incremental algorithm to draw the circle. The circle
+ * is divided into four corners, and the `corner` parameter determines which 
+ * corners will be filled. The `delta` parameter adds an extra offset to the 
+ * filling. The `DrawVerticalLine` function is assumed to draw a vertical line 
+ * with a given color, length, and starting coordinates.
+ *
+ * Example usage:
+ * @code
+ * FillCircleHelper(50, 50, 20, 0x3, 1, 0xFFFFFF);
+ * @endcode
+ */
 void FillCircleHelper(int x, int y, int radius, uint32_t corner, int delta, uint32_t color)
 {
     int f = 1 - radius;

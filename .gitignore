@@ -36,3 +36,5 @@
 # Lets ignore the dialog interface files 
 *.compilation_options
 *.tmp
+
+build/

@@ -47,3 +47,7 @@ Note: this project has been using part of fudge kernel at https://github.com/jez
 **alinix kernel 1.5.3 booting**
 ------------------------------------------------------------
 
+![alt text](pictures/newKernel.png)
+
+**alinix kernel 1.6.0 booting**
+------------------------------------------------------------

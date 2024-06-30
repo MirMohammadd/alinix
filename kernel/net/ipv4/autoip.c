@@ -126,7 +126,18 @@ autoip_arp_announce(struct netif *netif)
 
 
 
-
+/**
+ * @brief Initiates the probing phase for AutoIP address assignment.
+ * 
+ * This function changes the state of the AutoIP instance associated with the given
+ * network interface to `PROBING` and sets the parameters required to begin the probing
+ * process. The probing phase is responsible for ensuring that the chosen link-local IP
+ * address is not already in use by another device on the network.
+ * 
+ * @param netif A pointer to the network interface structure on which the AutoIP process is being performed.
+ * 
+ * @return void This function does not return a value.
+ */
 static void
 autoip_start_probing(struct netif *netif)
 {

@@ -1256,7 +1256,17 @@ dhcp_option_byte(struct dhcp *dhcp, uint8_t value)
   LWIP_ASSERT("dhcp_option_byte: dhcp->options_out_len < DHCP_OPTIONS_LEN", dhcp->options_out_len < DHCP_OPTIONS_LEN);
   dhcp->msg_out->options[dhcp->options_out_len++] = value;
 }
-
+/**
+ * @brief Adds a 16-bit (short) DHCP option to the DHCP message.
+ * 
+ * This function adds a 16-bit value to the options field of the DHCP message being
+ * constructed. The value is split into two 8-bit parts and added sequentially.
+ * 
+ * @param dhcp A pointer to the DHCP structure that contains the DHCP message being constructed.
+ * @param value The 16-bit value to be added to the DHCP options field.
+ * 
+ * @return void This function does not return a value.
+ */
 static void
 dhcp_option_short(struct dhcp *dhcp, uint16_t value)
 {
@@ -1265,6 +1275,17 @@ dhcp_option_short(struct dhcp *dhcp, uint16_t value)
   dhcp->msg_out->options[dhcp->options_out_len++] = (uint8_t) (value & 0x00ffU);
 }
 
+/**
+ * @brief Adds a 32-bit (long) DHCP option to the DHCP message.
+ * 
+ * This function adds a 32-bit value to the options field of the DHCP message being
+ * constructed. The value is split into four 8-bit parts and added sequentially.
+ * 
+ * @param dhcp A pointer to the DHCP structure that contains the DHCP message being constructed.
+ * @param value The 32-bit value to be added to the DHCP options field.
+ * 
+ * @return void This function does not return a value.
+ */
 static void
 dhcp_option_long(struct dhcp *dhcp, uint32_t value)
 {
@@ -1274,7 +1295,19 @@ dhcp_option_long(struct dhcp *dhcp, uint32_t value)
   dhcp->msg_out->options[dhcp->options_out_len++] = (uint8_t)((value & 0x0000ff00UL) >> 8);
   dhcp->msg_out->options[dhcp->options_out_len++] = (uint8_t)((value & 0x000000ffUL));
 }
-
+/**
+ * @brief Adds the hostname option to the DHCP message if the hostname is set.
+ * 
+ * This function adds the hostname option to the DHCP message being constructed.
+ * It checks if the network interface has a hostname set and, if so, adds the hostname
+ * to the options field of the DHCP message. The hostname is truncated if necessary
+ * to fit within the remaining available space in the options field.
+ * 
+ * @param dhcp A pointer to the DHCP structure that contains the DHCP message being constructed.
+ * @param netif A pointer to the network interface structure which may contain the hostname.
+ * 
+ * @return void This function does not return a value.
+ */
 static void
 dhcp_option_hostname(struct dhcp *dhcp, struct netif *netif)
 {

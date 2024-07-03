@@ -29,7 +29,6 @@
 #include <alinix/enums.h>
 
 
-typedef struct udi_buf_t;
 
 #define ATOMIC_INIT(i) { (i) }
 ///////////////////////////////////////////////////////////////////

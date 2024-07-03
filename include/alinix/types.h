@@ -21,6 +21,7 @@
 /**
  * @abstraction:
  *  - Defines kernel needed data types.
+ *  - Defines necessary macros. 
 */
 #ifndef __ALINIX_KERNEL__TYPES_H_HEADER_
 #define __ALINIX_KERNEL__TYPES_H_HEADER_

@@ -21,12 +21,15 @@
 /**
  * @abstraction:
  *  - Defines kernel needed data types.
+ *  - Defines necessary macros. 
 */
 #ifndef __ALINIX_KERNEL__TYPES_H_HEADER_
 #define __ALINIX_KERNEL__TYPES_H_HEADER_
 
 #include <alinix/_types.h>
 #include <alinix/enums.h>
+
+
 
 #define ATOMIC_INIT(i) { (i) }
 ///////////////////////////////////////////////////////////////////
@@ -59,6 +62,7 @@ typedef phys_addr_t resource_size_t;
 typedef sint64_t ktime_t;
 typedef	unsigned int	uint;		/* Sys V compatibility */
 typedef unsigned char byte_t; // For  backward compatibility
+typedef uint8_t udi_ubit8_t;
 //! This might run into problem (size_t)
 typedef unsigned long int size_t;
 typedef size_t ssize_t;
@@ -164,6 +168,12 @@ typedef enum {
 typedef struct {
 	int counter;
 } atomic_t;
+
+typedef struct {
+    void *data;         // Pointer to the buffer's data
+    size_t length;      // Length of the data in the buffer
+    size_t capacity;    // Total capacity of the buffer
+} udi_buf_t;
 
 
 struct hlist_node {

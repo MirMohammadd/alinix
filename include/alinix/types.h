@@ -50,6 +50,8 @@ typedef signed short              sint16_t;
 typedef signed int               sint32_t;
 typedef signed long long int      sint64_t;
 typedef unsigned int            paddr_t;
+typedef int udi_channel_t; // TODO: Fix here(change the defined type)
+typedef int udi_origin_t; //TODO: Fix here('''')
 typedef uint8_t byte;
 typedef uint8_t u8;
 typedef uint16_t u16;
@@ -211,6 +213,19 @@ typedef struct regs16 {
     uint16_t ds;
     uint16_t eflags;
 } __attribute__ ((packed)) regs16_t;
+
+/* The core IPC message type used by UDI. Every IPC message contains
+ * this base type, and new message types can be created by extending
+ * this type. Every UDI IPC message (aka "control block") is based
+ * on this type, the udi_cb_t structure.
+ */
+typedef struct {
+	udi_channel_t channel;
+	void *context;
+	void *scratch;
+	void *initiator_context;
+	udi_origin_t origin;
+} udi_cb_t;
 
 typedef __builtin_va_list va_list;
 #define va_start(ap,last) __builtin_va_start(ap, last)

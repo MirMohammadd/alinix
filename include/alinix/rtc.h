@@ -35,7 +35,7 @@ bool UpdateInProgress();
 
 uint8_t ReadRegister(int reg);
 /// @brief //////////////
-/// @return 
+// Functions to get the data and time for the kernel time settings.
 uint32_t GetSecond();
 uint32_t GetMinute();
 uint32_t GetHour();

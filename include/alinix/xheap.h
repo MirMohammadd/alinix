@@ -48,6 +48,9 @@ typedef struct {
     heap_header_t *first_header;
 } heap_info_t;
 
+/**
+ * @brief X heap function(memory stuff)
+ */
 void heap_init(vmm_addr_t *addr);
 void *umalloc(size_t len, vmm_addr_t *heap);
 void ufree(void *ptr, vmm_addr_t *heap);

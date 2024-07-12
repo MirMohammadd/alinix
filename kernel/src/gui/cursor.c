@@ -24,10 +24,10 @@
 void enable_cursor(uint8_t cursor_start, uint8_t cursor_end)
 {
 	outportb(0x3D4, 0x0A);
-	outportb(0x3D5, (inb(0x3D5) & 0xC0) | cursor_start);
+	outportb(0x3D5, (inportb(0x3D5) & 0xC0) | cursor_start);
 
 	outportb(0x3D4, 0x0B);
-	outportb(0x3D5, (inb(0x3D5) & 0xE0) | cursor_end);
+	outportb(0x3D5, (inportb(0x3D5) & 0xE0) | cursor_end);
 }
 
 void disable_cursor()
@@ -51,8 +51,8 @@ uint16_t get_cursor_position(void)
 {
     uint16_t pos = 0;
     outportb(0x3D4, 0x0F);
-    pos |= inb(0x3D5);
+    pos |= inportb(0x3D5);
     outportb(0x3D4, 0x0E);
-    pos |= ((uint16_t)inb(0x3D5)) << 8;
+    pos |= ((uint16_t)inportb(0x3D5)) << 8;
     return pos;
 }

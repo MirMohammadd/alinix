@@ -1,5 +1,7 @@
 /**
  * @author Ali Mirmohammad
+ * @file signalPic.c
+ * *************************************IMPORTANT ALINIX LICENSE TERM********************************************
  ** This file is part of AliNix.
 
 **AliNix is free software: you can redistribute it and/or modify
@@ -16,35 +18,22 @@
 **along with AliNix. If not, see <https://www.gnu.org/licenses/>.
 */
 
-/**
- * @file asm.h
- * @abstraction:
- *  - Kernel ASM implemented.
-*/
-#ifndef __ALINIX_KERNEL_ASM_H
-#define __ALINIX_KERNEL_ASM_H
+#include <alinix/types.h>
+#include <alinix/kernel.h>
+#include <alinix/init.h>
+#include <alinix/module.h>
+#include <alinix/asm.h>
 
-# define RET    bx      lr
+MODULE_AUTHOR("Ali Mirmohammad")
+MODULE_DESCRIPTION("Signal Picture")
+MODULE_LICENSE("AGPL-3.0")
+MODULE_VERSION("1.0")
 
-/**
- * @brief outing the data to specific port.
-*/
-#define outb(_port, _data)  \
-    asm volatile("outb %b0, %w1" \
-        : \
-        : "a" (_data), "Nd" (_port) \
-    );
-
-#define PAUSE asm("pause")
+#define PIC_EOI		0x20		/* End-of-interrupt command code */
 
 
-
-// Macros for signal stuff
-#define PIC1		0x20		/* IO base address for master PIC */
-#define PIC2		0xA0		/* IO base address for slave PIC */
-#define PIC1_COMMAND	PIC1
-#define PIC1_DATA	(PIC1+1)
-#define PIC2_COMMAND	PIC2
-#define PIC2_DATA	(PIC2+1)
-
-#endif /*__ALINIX_KERNEL_ASM_H*/
+VOID PIC_sendEOI(uint8_t irq){
+    if (irq >= 8)
+        outportb(PIC2_COMMAND,PIC_EOI);
+    outb(PIC1_COMMAND,PIC_EOI);
+}

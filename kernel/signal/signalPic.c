@@ -31,7 +31,17 @@ MODULE_VERSION("1.0")
 
 #define PIC_EOI		0x20		/* End-of-interrupt command code */
 
-
+/**
+ * @brief Send End-of-Interrupt (EOI) signal to the PIC.
+ *
+ * This function sends an EOI signal to the appropriate PIC
+ * based on the IRQ number. If the IRQ number is 8 or higher,
+ * the signal is sent to both the master and slave PICs. This
+ * indicates that the interrupt has been handled and the PICs
+ * can continue processing other interrupts.
+ *
+ * @param irq The IRQ number of the interrupt that has been handled
+ */
 VOID PIC_sendEOI(uint8_t irq){
     if (irq >= 8)
         outportb(PIC2_COMMAND,PIC_EOI);

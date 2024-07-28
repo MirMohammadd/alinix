@@ -46,6 +46,18 @@ MODULE_DESCRIPTION("initSig")
 MODULE_LICENSE("AGPL")
 MODULE_VERSION("1.0.0")
 
+
+
+/**
+ * @brief Remap the PIC with new vector offsets.
+ *
+ * This function initializes the PIC in cascade mode and remaps
+ * the interrupt vectors for the master and slave PICs. The original
+ * interrupt masks are saved and restored after the remapping.
+ *
+ * @param offset1 The new interrupt vector offset for the master PIC
+ * @param offset2 The new interrupt vector offset for the slave PIC
+ */
 void PIC_remap(int offset1, int offset2)
 {
 	uint8_t a1, a2;

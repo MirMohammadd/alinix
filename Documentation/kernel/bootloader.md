@@ -5,7 +5,7 @@ The Alinix bootloader utilizes GRUB (GRand Unified Bootloader) and adopts termin
 ## What is GRUB?
 GRUB is a widely-used bootloader for Unix-like systems. It allows users to select between multiple operating systems or kernel versions at boot time. GRUB is highly configurable and supports various file systems, which makes it a versatile choice for bootloading tasks.
 
-Key Terminology
+## Key Terminology
 Bootloader: Software that loads the operating system kernel into memory during the boot process. GRUB is an example of a bootloader.
 
 Kernel: The core part of an operating system that manages hardware and system resources. In the context of Alinix, GRUB loads the Alinix kernel.

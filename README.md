@@ -25,7 +25,7 @@ sudo apt-get install make
 brew install make
 ```
 
-
+**Installation**
 ```
 make install
 ```

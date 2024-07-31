@@ -17,6 +17,10 @@ Alinix Kernel is a sophisticated operating system kernel designed to embody the 
 ```
 sudo apt-get install make
 ```
+```
+brew install make
+```
+
 
 ```
 make install

@@ -14,8 +14,12 @@ Alinix Kernel is a sophisticated operating system kernel designed to embody the 
 
 # Compilation  and Execution Environment Setup guide:
 1. make sure you have  gcc, g++, make and i686-elf-gcc compiler pack installed.
-2. run "make qemu" in this directory to build the kernel and run it in the virtual machine, you also get the related ISO file.
-3. Enjoy and donate!!!!
+3. run "make qemu" in this directory to build the kernel and run it in the virtual machine, you also get the related ISO file.
+4. Enjoy and donate!!!!
+
+```
+brew install nasm
+```
 
 # How to install
 

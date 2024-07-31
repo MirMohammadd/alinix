@@ -32,6 +32,8 @@ brew install nasm
 ```
 ```
 brew install i686-elf-gcc
+brew install bchunk
+brew install qemu
 ```
 ```
 brew install make

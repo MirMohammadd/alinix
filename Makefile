@@ -39,8 +39,8 @@
 #######################
 
 VERSION = 1
-PATCHLEVEL = 7
-SUBLEVEL = 2
+PATCHLEVEL = 8
+SUBLEVEL = 0
 
 # Check if the make version is exactly 3.80
 ifeq ($(MAKE_VERSION),3.80)
